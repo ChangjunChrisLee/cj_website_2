@@ -1,0 +1,1064 @@
+---
+title: Pre-class R code
+---
+
+Download data
+
+\[[data_for_class.zip](data_2/data_for_class.zip)\]
+
+```{r}
+################################################
+# 1. Syntax 
+################################################
+
+# 1. Iris Data
+str(iris)
+
+# visualization
+plot(iris)
+
+plot(iris$Petal.Width, iris$Petal.Length, col=iris$Species)
+
+names(iris)
+plot(iris$Sepal.Length, iris$Sepal.Width)
+
+# 2. Tip data
+
+tips=read.csv('http://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv')
+str(tips) 
+
+head(tips, 7)
+tail(tips, 7)
+
+summary(tips)
+
+hist(tips$total_bill)
+
+# visualization
+library(dplyr)
+library(ggplot2)
+
+hist(tips$size)
+
+
+tips %>% ggplot(aes(size)) + geom_histogram()
+tips %>% ggplot(aes(total_bill, tip)) + geom_point()
+tips %>% ggplot(aes(total_bill, tip)) + geom_point(aes(col=day))
+tips %>% ggplot(aes(total_bill, tip)) + geom_point(aes(col=day, pch=sex), size=5)
+
+tips %>% ggplot(aes(total_bill, tip)) + 
+  geom_point(aes(col=day)) +
+  geom_line()
+tips %>% ggplot(aes(total_bill, tip, col=day, pch=sex)) + geom_point(size=3)
+```
+
+```{r}
+# 03 Data type #
+
+x = 5
+y = 2
+x/y
+xi = 1 + 2i
+yi = 1 - 2i
+xi+yi
+str = "Hello, World!"
+str
+
+blood.type = factor(c('A', 'B', 'O', 'AB'))
+blood.type
+T
+F
+xinf = Inf
+yinf = -Inf
+xinf/yinf
+
+
+x = 1 		# x에 단순히 1을 넣은 경우 x는 숫자형
+x
+is.integer(x)
+x = 1L 		# x에 1L을 입력한 경우 x는 정수형
+x
+is.integer(x)
+x = as.integer(1) 	# x에 1을 as.integer 함수로 변환하여 입력한 경우 x는 정수형
+x
+is.integer(x)
+
+```
+
+```{r}
+# 05 벡터 #
+1:7 		# 1부터 7까지 1씩 증가시켜 요소가 7개인 벡터 생성
+7:1 		# 7부터 1까지 1씩 감소시켜 요소가 7개인 벡터 생성
+vector(length = 5)
+c(1:5)	 	# 1~5 요소로 구성된 벡터 생성. 1:5와 동일
+c(1, 2, 3, c(4:6)) 	# 1~3 요소와 4~6 요소를 결합한 1~6 요소로 구성된 벡터 생성
+x = c(1, 2, 3) 	# 1~3 요소로 구성된 벡터를 x에 저장
+x 		# x 출력
+y = c() 		# y를 빈 벡터로 생성
+y = c(y, c(1:3)) 	# 기존 y 벡터에 c(1:3) 벡터를 추가해 생성
+y 		# y 출력
+seq(from = 1, to = 10, by = 2) 	# 1부터 10까지 2씩 증가하는 벡터 생성
+seq(1, 10, by = 2) 			# 1부터 10까지 2씩 증가하는 벡터 생성
+seq(0, 1, by = 0.1) 			# 0부터 1까지 0.1씩 증가하는 요소가 11개인 벡터 생성
+seq(0, 1, length.out = 11) 		# 0부터 1까지 요소가 11개인 벡터 생성
+rep(c(1:3), times = 2)		# (1, 2, 3) 벡터를 2번 반복한 벡터 생성
+rep(c(1:3), each = 2) 		# (1, 2, 3) 벡터의 개별 요소를 2번 반복한 벡터 생성
+x = c(2, 4, 6, 8, 10)
+length(x) 		# x 벡터의 길이(크기)를 구함
+x[1] 		# x 벡터의 1번 요소 값을 구함
+# x[1, 2, 3] 		# x 벡터의 1, 2, 3번 요소를 구할 때 이렇게 입력하면 오류
+x[c(1, 2, 3)] 	# x 벡터의 1, 2, 3번 요소를 구할 때는 벡터로 묶어야 함
+x[-c(1, 2, 3)] 	# x 벡터에서 1, 2, 3번 요소를 제외한 값 출력
+x[c(1:3)] 		# x 벡터에서 1번부터 3번 요소를 출력
+x = c(1, 2, 3, 4)
+y = c(5, 6, 7, 8)
+z = c(3, 4)
+w = c(5, 6, 7)
+x+2 		# x 벡터의 개별 요소에 2를 각각 더함
+x + y 		# x 벡터와 y 벡터의 크기가 동일하므로 각 요소별로 더함
+x + z 		# x 벡터가 z 벡터 크기의 정수배인 경우엔 작은 쪽 벡터 요소를 순환하며 더함
+x + w 		# x와 w의 크기가 정수배가 아니므로 연산 오류
+x >5 		# x 벡터의 요소 값이 5보다 큰지 확인
+all(x>5) 		# x 벡터의 요소 값이 모두 5보다 큰지 확인
+any(x>5) 		# x 벡터의 요소 값 중 일부가 5보다 큰지 확인
+x = 1:10
+head(x) 		# 데이터의 앞 6개 요소를 추출
+tail(x) 		# 데이터의 뒤 6개 요소를 추출
+head(x, 3) 	# 데이터의 앞 3개 요소를 추출
+tail(x, 3) 		# 데이터의 뒤 3개 요소를 추출
+
+x = c(1, 2, 3)
+y = c(3, 4, 5)
+z = c(3, 1, 2)
+union(x, y) 	# 합집합
+intersect(x, y) 	# 교집합
+setdiff(x, y) 	# 차집합(x에서 y와 동일한 요소 제외)
+setdiff(y, x) 	# 차집합(y에서 x와 동일 요소 제외)
+setequal(x, y) 	# x와 y에 동일한 요소가 있는지 비교
+setequal(x, z) 	# x와 z에 동일한 요소가 있는지 비교
+```
+
+```{r}
+# 06 행렬 #
+# N차원 배열 생성
+x = array(1:5, c(2, 4)) # 1~5 값을 2× 4 행렬에 할당
+x
+x[1, ] # 1행 요소 값 출력
+x[, 2] # 2열 요소 값 출력
+dimnamex = list(c("1st", "2nd"), c("1st", "2nd", "3rd", "4th")) # 행과 열 이름 설정
+x = array(1:5, c(2, 4), dimnames = dimnamex)
+x
+x["1st", ]
+x[, "4th"]
+# 2차원 배열 생성
+x = 1:12
+x
+matrix(x, nrow = 3)
+matrix(x, nrow = 3, byrow = T)
+# 벡터를 묶어 배열 생성
+v1 = c(1, 2, 3, 4)
+v2 = c(5, 6, 7, 8)
+v3 = c(9, 10, 11, 12)
+cbind(v1, v2, v3) # 열 단위로 묶어 배열 생성
+rbind(v1, v2, v3) # 행 단위로 묶어 배열 생성
+# [표 3-7]의 연산자를 활용한 다양한 행렬 연산
+# 2×2 행렬 2개를 각각 x, y에 저장
+x = array(1:4, dim = c(2, 2))
+y = array(5:8, dim = c(2, 2))
+x
+y
+x + y
+x - y
+x * y # 각 열별 곱셈
+x %*% y # 수학적인 행렬 곱셈
+t(x) # x의 전치 행렬
+solve(x) # x의 역행렬
+det(x) # x의 행렬식
+x = array(1:12, c(3, 4))
+x
+apply(x, 1, mean) # 가운데 값이 1이면 함수를 행별로 적용
+apply(x, 2, mean) # 가운데 값이 2이면 함수를 열별로 적용
+x = array(1:12, c(3, 4))
+dim(x)
+x = array(1:12, c(3, 4))
+sample(x) # 배열 요소를 임의로 섞어 추출
+sample(x, 10) # 배열 요소 중 10개를 골라 추출
+sample(x, 10, prob = c(1:12)/24) # 각 요소별 추출 확률을 달리할 수 있음
+sample(10) # 단순히 숫자만 사용하여 샘플을 만들 수 있음
+```
+
+```{r}
+# 07 데이터 프레임 #
+name = c("철수", "춘향", "길동")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients = data.frame(name, age, gender, blood.type)
+patients
+
+# 다음과 같이 한 행으로 작성할 수도 있음
+patients1 = data.frame(name = c("철수", "춘향", "길동"), age = c(22, 20, 25), gender = factor(c("M", "F", "M")), blood.type = factor(c("A", "O", "B")))
+patients1
+patients$name # name 속성 값 출력
+patients[1, ] # 1행 값 출력
+patients[, 2] # 2열 값 출력
+patients[3, 1] # 3행 1열 값 출력
+patients[patients$name=="철수", ] # 환자 중 철수에 대한 정보 추출
+patients[patients$name=="철수", c("name", "age")] # 철수 이름과 나이 정보만 추출
+head(cars) # cars 데이터 셋 확인. head 함수의 기본 기능은 앞 6개 데이터를 추출함
+# speed
+attach(cars) # attach 함수를 통해 cars의 각 속성을 변수로 이용하게 함
+# speed # speed라는 변수명을 직접 이용할 수 있음.
+detach(cars) # detach 함수를 통해 cars의 각 속성을 변수로 사용하는 것을 해제함
+```
+
+```{r}
+# 데이터 속성을 이용해 함수 적용
+mean(cars$speed)
+max(cars$speed)
+# with 함수를 이용해 함수 적용
+with(cars, mean(speed))
+with(cars, max(speed))
+# 속도가 20 초과인 데이터만 추출
+subset(cars, speed > 20)
+
+# 속도가 20 초과인 dist 데이터만 추출, 여러 열 선택은 c( ) 안을 ,로 구분
+subset(cars, speed > 20, select = c(dist))
+# 속도가 20 초과인 데이터 중 dist를 제외한 데이터만 추출
+subset(cars, speed > 20, select = -c(dist))
+head(airquality) # airquality 데이터에는 NA가 포함되어 있음
+head(na.omit(airquality)) # NA가 포함된 값을 제외하여 추출함
+
+# merge(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all, sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL, ...)
+
+name = c("철수", "춘향", "길동")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients1 = data.frame(name, age, gender)
+patients1
+
+patients2 = data.frame(name, blood.type)
+patients2
+
+patients = merge(patients1, patients2, by = "name")
+patients
+
+# 이름이 같은 열 변수가 없다면, merge 함수의 by.x와 by.y에 합칠 때
+# 사용할 열의 속성명을 각각 기입해주어야 함
+name1 = c("철수", "춘향", "길동")
+name2 = c("민수", "춘향", "길동")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients1 = data.frame(name1, age, gender)
+patients1
+
+patients2 = data.frame(name2, blood.type)
+patients2
+
+patients = merge(patients1, patients2, by.x = "name1", by.y = "name2")
+patients
+
+patients = merge(patients1, patients2, by.x = "name1", by.y = "name2", all = TRUE)
+patients
+x = array(1:12, c(3, 4))
+is.data.frame(x) # 현재 x는 데이터 프레임이 아님
+as.data.frame(x)
+
+# is.data.frame 함수를 호출하는 것만으로 x가 데이터 프레임으로 바뀌지 않음
+is.data.frame(x)
+# as.data.frame 함수로 x를 데이터 프레임 형식으로 변환
+x = as.data.frame(x)
+x
+# x가 데이터 프레임 형식으로 변환되었음을 확인
+is.data.frame(x)
+# 데이터 프레임으로 변환 시 자동 지정되는 열 이름을 names 함수로 재지정함
+names(x) = c("1st", "2nd", "3rd", "4th")
+x
+```
+
+```{r}
+
+# 08 리스트 #
+patients = data.frame(name = c("철수", "춘향", "길동"), age = c(22, 20, 25), gender = factor(c("M", "F", "M")), blood.type = factor(c("A", "O", "B")))
+no.patients = data.frame(day = c(1:6), no = c(50, 60, 55, 52, 65, 58))
+
+
+# 데이터를 단순 추가
+listPatients = list(patients, no.patients) 
+listPatients
+
+
+# 각 데이터에 이름을 부여하면서 추가 
+listPatients = list(patients=patients, no.patients = no.patients) 
+listPatients
+
+listPatients$patients		# 요소명 입력
+
+listPatients[[1]]				# 인덱스 입력
+
+listPatients[["patients"]]			# 요소명을 ""에 입력
+
+listPatients[["no.patients"]]		# 요소명을 ""에 입력
+
+
+# no.patients 요소의 평균을 구해줌
+lapply(listPatients$no.patients, mean) 
+
+# patients 요소의 평균을 구해줌. 숫자 형태가 아닌 것은 평균이 구해지지 않음
+lapply(listPatients$patients, mean) 
+
+sapply(listPatients$no.patients, mean) 
+
+# sapply()의 simplify 옵션을 F로 하면 lapply() 결과와 동일한 결과를 반환함
+sapply(listPatients$no.patients, mean, simplify = F) 
+```
+
+```{r}
+# 01 파일 읽고 쓰기 #
+
+# 파일 마지막 행에서 [Enter]를 누르지 않은 경우
+students = read.table("data_2/students1.txt", header = T, fileEncoding = "CP949", encoding = "UTF-8")
+
+# 파일 마지막 행에서 [Enter]를 누른 경우
+students = read.table("data_2/students2.txt",  header = T, fileEncoding = "CP949", encoding = "UTF-8") 
+
+# 읽은 파일의 구조 확인
+str(students) 
+
+# 파일을 있는 형태 그대로 읽음
+students = read.table("data_2/students1.txt", header = T, as.is = T, fileEncoding = "CP949", encoding = "UTF-8") 
+str(students)
+
+# 파일을 읽을 때 문장을 요인으로 인식하지 않도록 설정
+students = read.table("data_2/students1.txt", header = T, stringsAsFactors = F, fileEncoding = "CP949", encoding = "UTF-8") 
+str(students)
+
+# 구분 기호는 쉼표(,), 첫 행은 header로 인식하여 파일을 있는 그대로 읽어들이면 
+# NA로 인해 math 요소가 문장으로 인식됨
+students = read.table("data_2/students3.txt", sep = ",", header = T, as.is = T, fileEncoding = "CP949", encoding = "UTF-8") 
+str(students)
+
+# "NA" 문장을 결측값 NA로 처리하라고 해도 처리가 안됨. 정확한 문장은 NA 앞에 빈 칸이 있어야 하기 때문
+students = read.table("data_2/students3.txt", sep = ",", header = T, as.is = T, na.strings = "NA", fileEncoding = "CP949", encoding = "UTF-8")  
+str(students)
+
+# "NA"로 정확하게 입력하자 결측값 NA로 처리되면서 math 요소가 모두 숫자로 인식됨
+students = read.table("data_2/students3.txt", sep = ",", header = T, as.is = T, na.strings = " NA", fileEncoding = "CP949", encoding = "UTF-8") 
+str(students)
+
+# strip.white에서 빈칸을 제거하면 na.string의 기본값이 "NA"로 설정되어 math 요소가 모두 숫자로 인식됨.
+students = read.table("data_2/students3.txt", sep = ",", header = T, as.is = T, strip.white = T, fileEncoding = "CP949", encoding = "UTF-8") 
+str(students)
+
+# 첫 행이 header이므로 header 옵션을 지정할 필요가 없음
+students = read.csv("data_2/students.csv", fileEncoding = "CP949", encoding = "UTF-8") 
+students
+
+# 읽은 파일의 구조 확인
+str(students) 
+
+# name 속성을 요인에서 문장으로 변경
+students$name = as.character(students$name) 
+str(students)
+
+# 파일을 읽을 때 문장을 요인으로 인식하지 않도록 설정함
+students = read.csv("data_2/students.csv", stringsAsFactors = FALSE, fileEncoding = "CP949", encoding = "UTF-8") 
+str(students)
+
+# 문장에 큰따옴표가 표시됨.
+write.table(students, file = "data_2/output.txt") 
+
+# 문장에 큰따옴표되지 않음.
+write.table(students, file = "data_2/output.txt", quote = F) 
+```
+
+```{r}
+
+# 02 데이터 정제를 위한 조건문과 반복문 #
+
+test = c(15, 20, 30, NA, 45)	# 벡터인 경우
+test[test<40]	# 값이 40 미만인 요소 추출
+
+test[test%%3!= 0]	# 값이 3으로 나누어 떨어지지 않는 요소 추출
+
+
+test[is.na(test)]	# NA인 요소 추출
+
+
+test[!is.na(test)]			# NA가 아닌 요소 추출
+
+test[test%%2==0 & !is.na(test)]	# 2의 배수면서 NA가 아닌 요소 추출
+
+characters = data.frame(name = c("길동", "춘향", "철수"), 
+                        age = c(30, 16, 21), 
+                        gender = factor(c("M", "F","M")))  
+# 데이터 프레임인 경우
+
+characters
+
+
+characters[characters$gender =="F",1]  # 성별이 여성인 행 추출
+library(dplyr)
+
+characters %>% filter(gender=="F") %>% select(name)
+
+characters[characters$age<30 & characters$gender =="M",] 
+# 30살 미만의 남성 행 추출                    
+characters %>% filter(age<30 & gender=="M")
+
+
+
+x = 5
+if(x %% 2 ==0) {
+  print('x는 짝수')	# 조건식이 참일 때 수행
+}   else {
+  print('x는 홀수')	# 조건식이 거짓일 때 수행
+}
+
+x = 8
+if(x>0) {
+  print('x is a positive value.')	# x가 0보다 크면 출력
+} else if(x<0) {
+  print('x is a negative value.')	# 위 조건을 만족하지 않고 x가 0보다 작으면 출력
+} else {
+  print('x is zero.')		# 위 조건을 모두 만족하지 않으면 출력
+}
+
+
+x = c(-5:5)
+options(digits = 3)		# 숫자 표현 시 유효자릿수를 3자리로 설정
+sqrt(x)
+
+
+sqrt(ifelse(x>=0, x, NA))	# NaN이 발생하지 않게 음수면 NA로 표시
+
+students = read.csv("data_2/students2.csv", fileEncoding = "CP949", encoding = "UTF-8")
+students 	     # 데이터에 100 초과 값과 음수 값이 포함되어 있음.
+
+students[, 2] = ifelse(students[, 2]>= 0 & students[, 2]<= 100, 
+                       students[, 2], NA)
+students[, 3] = ifelse(students[, 3]>= 0 & students[, 3]<= 100, 
+                       students[, 3], NA)
+students[, 4] = ifelse(students[, 4]>= 0 & students[, 4]<= 100, 
+                       students[, 4], NA)
+students 	     # ifelse 문으로 2~4열 값 중 0~100 외의 값은 NA로 처리함.
+
+
+# repeat 문을 이용해 1부터 10까지 숫자 증가시키기
+i = 1	             # i의 시작값은 1
+repeat {
+  if(i>10) {         # i가 10을 넘으면 반복을 중단(break)함
+    break
+  } else {
+    print(i)
+    i = i+1           # i를 1 증가시킴.
+  }
+}
+```
+
+```{r}
+# while 문을 이용해 1부터 10까지 숫자 증가시키기
+i = 1 # i의 시작값은 1임.
+while(i < 10){ # i가 10 이하인 동안에 반복함
+  print(i)
+  i = i+1 # i를 1 증가시킴.
+}
+
+
+# while 문을 이용해 구구단 2단 만들기
+i = 1
+while(i<10) {
+  print(paste(2, "X", i, "=", 2*i))
+  i = i+1
+}
+
+# for 문을 이용한 1부터 10까지 숫자 증가시키기
+for(i in 1:10) {
+  print(i)
+}  
+
+# for 문을 이용해 구구단 2단 만들기
+for(i in 1:9) {
+  print(paste(2, "X", i, "=", 2*i))
+}
+
+# for 문을 이용해 구구단 2~9단 만들기
+for(i in 2:9) {
+  for(j in 1:9) {
+    print(paste(i, "X", j, "=", i*j))
+  }
+}
+
+# 1부터 10까지의 수 중 짝수만 출력하기
+for(i in 1:10) {
+  if(i%%2 == 0) {
+    print(i)
+  }
+}
+
+# 1부터 10까지의 수 중 소수 출력하기
+for(i in 1:10) {
+  check = 0
+  for(j in 1:i) {
+    if(i%%j ==0) {
+      check = check+1
+    }
+  }
+  if(check ==2) { 
+    print(i)
+  }
+}
+
+students = read.csv("data_2/students2.csv", fileEncoding = "CP949", encoding = "UTF-8")
+students	    # 데이터에 100 초과 값과 음수 값이 포함되어 있음
+
+
+for(i in 2:4) {
+  students[, i] = ifelse(students[, i]>= 0 & students[, i]<= 100, 
+                         students[, i], NA)
+}
+
+
+students	    # ifelse 문으로 2~4열 값 중 0~100 외의 값은 NA로 처리함
+
+
+# 03 사용자 정의 함수 : 원하는 기능 묶기 # 
+x=5
+fa = 1  # 계승값을 저장할 변수
+while(x>1) {  # x가 1보다 큰 동안 반복
+  
+  fa = fa*x   # x 값을 fa에 곱한 후 fa에 다시 저장
+  x = x-1  # x 값을 1 감소
+  x
+}  
+fa
+
+
+fact = function(x) {   # 함수의 이름은 fact, 입력은 x
+  fa = 1  # 계승값을 저장할 변수
+  while(x>1) {  # x가 1보다 큰 동안 반복
+    fa = fa*x   # x 값을 fa에 곱한 후 fa에 다시 저장
+    x = x-1  # x 값을 1 감소
+  }  
+  return(fa)   # 최종 계산된 fa 반환
+}
+fact(5)	  # 5!을 계산한 결과 출력
+
+
+my.is.na<-function(x) {	# table(is.na()) 함수를 하나로 묶은 my.is.na 함수를 만듦
+  table(is.na(x))
+}
+
+my.is.na(airquality)	# 이 결과는 table(is.na(airquality))와 같음.
+
+
+table(is.na(airquality))
+```
+
+```{r}
+# 04 데이터 정제 예제 1 : 결측값 처리 # 
+
+# is.na 함수를 이용해 결측값 처리하기
+str(airquality)	# airquality 데이터의 구조를 살펴봄.
+
+# airquality 데이터에서 NA인 것은 TRUE, 아니면 FALSE로 나타냄. 데이터가 많아 head 함수로 추려냄.
+head(airquality)
+head(is.na(airquality))	
+table(is.na(airquality))	# NA가 총 44개 있음.
+sum(is.na(airquality))	# NA가 총 44개 있음.
+
+table(is.na(airquality$Temp))	# Temp에는 NA가 없음을 확인함.
+
+table(is.na(airquality$Ozone))	# Ozone에는 NA가 37개 발견됨.
+
+mean(airquality$Temp)		# NA가 없는 Temp는 평균이 구해짐.
+
+mean(airquality$Ozone)		# NA가 있는 Ozone은 평균이 NA로 나옴.
+
+air_narm = airquality[!is.na(airquality$Ozone), ] # Ozone 속성에서 NA가 없는 값만 추출함. 
+air_narm
+mean(air_narm$Ozone)	# 결측값이 제거된 데이터에서는 mean 함수가 정상적으로 동작함.
+
+# na.omit 함수를 이용해 결측값 처리하기
+air_narm1 = na.omit(airquality)
+mean(air_narm1$Ozone)
+
+# 함수 속성인 na.rm을 이용해 결측값 처리하기
+mean(airquality$Ozone, na.rm = T)
+mean(airquality$Ozone, na.rm = F)
+
+
+table(is.na(airquality))
+
+table(is.na(airquality$Ozone))
+
+table(is.na(airquality$Solar.R))
+
+air_narm = airquality[!is.na(airquality$Ozone) & !is.na(airquality$Solar.R), ]
+mean(air_narm$Ozone)
+```
+
+```{r}
+# 05 데이터 정제 예제 2 : 이상값 처리 # 
+
+# 이상값이 포함된 환자 데이터
+patients = data.frame(name = c("환자1", "환자2", "환자3", "환자4", "환자5"), age = c(22, 20, 25, 30, 27), gender=factor(c("M", "F", "M", "K", "F")), blood.type = factor(c("A", "O", "B", "AB", "C")))
+patients
+
+# 성별에서 이상값 제거
+patients_outrm = patients[patients$gender=="M"|patients$gender=="F", ]
+patients_outrm	
+
+
+# 성별과 혈액형에서 이상값 제거
+patients_outrm1 = patients[(patients$gender == "M"|patients$gender == "F") & 
+                             (patients$blood.type == "A"|
+                                patients$blood.type == "B"|
+                                patients$blood.type == "O"|
+                                patients$blood.type == "AB"), ]
+patients_outrm1	 
+
+# 이상값이 포함된 환자 데이터
+patients = data.frame(name = c("환자1", "환자2", "환자3", "환자4", "환자5"), 
+                      age = c(22, 20, 25, 30, 27), 
+                      gender = c(1, 2, 1, 3, 2), 
+                      blood.type = c(1, 3, 2, 4, 5))
+patients	
+
+# 성별에 있는 이상값을 결측값으로 변경
+patients$gender = ifelse((patients$gender<1|patients$gender>2), NA, patients$gender)
+patients	
+
+# 형액형에 있는 이상값도 결측값으로 변경
+patients$blood.type = ifelse((patients$blood.type<1|patients$blood.type>4), NA, 
+                             patients$blood.type)
+patients
+
+# 결측값을 모두 제거
+patients[!is.na(patients$gender)&!is.na(patients$blood.type), ]
+
+boxplot(airquality[, c(1:4)])    # Ozone, Solar.R, Wind, Temp에 대한 boxplot
+boxplot(airquality[, 1])$stats   # Ozone의 boxplot 통계값 계산
+
+air = airquality                 # 임시 저장 변수로 airquality 데이터 복사
+table(is.na(air$Ozone))          # Ozone의 현재 NA 개수 확인
+
+# 이상값을 NA로 변경
+air$Ozone = ifelse(air$Ozone<1|air$Ozone>122, NA, air$Ozone) 
+table(is.na(air$Ozone)) # 이상값 처리 후 NA 개수 확인(2개 증가)
+
+# NA 제거
+air_narm = air[!is.na(air$Ozone), ] 
+mean(air_narm$Ozone) # 이상값 두 개 제거로 is.na 함수를 이용한 결과보다 값이 줄어듦
+```
+
+```{r}
+# 02 베이스 R을 이용한 데이터 가공 # 
+
+library(gapminder) 
+library(dplyr)
+glimpse(gapminder)
+
+
+gapminder[, c("country", "lifeExp")]
+
+gapminder[, c("country", "lifeExp", "year")]
+
+gapminder[1:15, ]
+library(dplyr)
+gapminder %>% filter(country=="Croatia") %>% select(year, gdpPercap) %>% plot
+gapminder[gapminder$country == "Croatia", ]
+gapminder[gapminder$country == "Korea, Rep.", ]
+
+"Korea, Rep."
+levels(gapminder$country)
+
+gapminder[gapminder$country == "Croatia", "pop"]
+
+
+gapminder[gapminder$country == "Croatia", c("lifeExp","pop")]
+
+gapminder[gapminder$country == "Croatia" & #Croatia extraction
+            gapminder$year > 1990, #1990 after
+          c("lifeExp","pop")] # those variables 
+
+
+apply(gapminder[gapminder$country == "Croatia", 
+                c("lifeExp","pop")], 
+      2, mean)
+
+apply(gapminder[gapminder$country == "Korea, Rep.", 
+                c("lifeExp","pop")], 
+      2, mean)
+
+
+
+# 03 dplyr 라이브러리를 이용한 데이터 가공 # 
+select(gapminder, country, year, lifeExp)
+
+filter(gapminder, country == "Croatia")
+
+summarise(gapminder, pop_avg = mean(pop))
+
+summarise(group_by(gapminder, continent), pop_avg = mean(pop))
+
+summarise(group_by(gapminder, continent, country), pop_avg = mean(pop))
+
+gapminder %>% 
+  group_by(continent, country) %>% 
+  summarise(pop_avg = mean(pop))
+
+
+temp1 = filter(gapminder, country == "Croatia")      
+temp2 = select(temp1, country, year, lifeExp)  
+temp3 = apply(temp2[ , c("lifeExp")], 2, mean)
+temp3
+
+gapminder %>% 
+  filter(country == "Croatia") %>% 
+  select(country, year, lifeExp) %>% 
+  summarise(lifeExp_avg = mean(lifeExp))
+```
+
+```{r}
+# 04 데이터 가공의 실제 # 
+avocado <- read.csv("data_2/avocado.csv", header=TRUE, sep = ",", fileEncoding = "CP949", encoding = "UTF-8")
+
+str(avocado)
+
+(x_avg = avocado %>% group_by(region) %>% summarize(V_avg = mean(Total.Volume), P_avg = mean(AveragePrice)))
+
+(x_avg = avocado %>% group_by(region, year) %>% summarize(V_avg = mean(Total.Volume), P_avg = mean(AveragePrice)))
+
+x_avg = avocado %>% group_by(region, year, type) %>% summarize(V_avg = mean(Total.Volume), P_avg = mean(AveragePrice))
+
+
+avocado %>% 
+  group_by(region, year, type) %>% 
+  summarize(V_avg = mean(Total.Volume), 
+            P_avg = mean(AveragePrice)) -> x_avg
+
+
+x_avg %>% filter(region != "TotalUS") %>% ggplot(aes(year, V_avg, col = type)) + geom_line() + facet_wrap(~region)
+
+# install.packages("ggplot2")
+library(ggplot2)
+
+arrange(x_avg, desc(V_avg))
+
+x_avg1 = x_avg %>% filter(region != "TotalUS")
+
+
+wine <- read.table("data_2/wine.data.txt", header = TRUE, sep = ",", fileEncoding = "CP949", encoding = "UTF-8")
+
+head(wine)
+
+n = readLines("data_2/wine.name.txt")
+n
+
+names(wine)[2:14] <- substr(n, 4, nchar(n))
+names(wine)
+
+
+train_set = sample_frac(wine, 0.6)
+str(train_set)
+
+test_set = setdiff(wine, train_set)
+str(test_set)
+
+elec_gen = read.csv("data_2/electricity_generation_per_person.csv", header = TRUE, sep = ",", fileEncoding = "CP949", encoding = "UTF-8")
+
+names(elec_gen)
+
+names(elec_gen) = substr(names(elec_gen), 2, nchar(names(elec_gen)))
+names(elec_gen)[1]<-"country"
+
+names(elec_gen)
+
+elec_use = read.csv("data_2/electricity_use_per_person.csv", header = TRUE, sep = ",", fileEncoding = "CP949", encoding = "UTF-8")
+names(elec_use)[2:56] = substr(names(elec_use)[2:56], 2, nchar(names(elec_use)[2:56]))
+
+# install.packages("tidyr")
+library(tidyr)
+elec_gen_df = gather(elec_gen, -country, key = "year", value = "ElectricityGeneration")
+elec_use_df = gather(elec_use, -country, key = "year", value = "ElectricityUse")
+
+elec_gen_use = merge(elec_gen_df, elec_use_df)
+```
+
+```{r}
+# Data Visualization
+
+# 평균
+apply(anscombe, 1, mean)
+
+apply(anscombe, 2, mean)
+
+# 분산
+apply(anscombe, 2, var)
+
+
+# 상관관계(상관계수)
+cor(anscombe$x1, anscombe$y1)
+
+cor(anscombe$x2, anscombe$y2)
+
+cor(anscombe$x3, anscombe$y3)
+
+cor(anscombe$x4, anscombe$y4)
+
+library(gapminder)
+library(dplyr)
+y <- gapminder %>% group_by(year, continent) %>% summarize(c_pop = sum(pop)) 
+head(y, 20)
+
+plot(y$year, y$c_pop)
+plot(y$year, y$c_pop, col = y$continent)
+plot(y$year, y$c_pop, col = y$continent, pch = c(1:5))
+plot(y$year, y$c_pop, col = y$continent, pch = c(1:length(levels(y$continent))))
+
+# 범례 개수를 숫자로 지정
+legend("topright", legend = levels((y$continent)), pch = c(1:5), col = c(1:5))
+
+# 범례 개수를 데이터 개수에 맞게 지정
+legend("bottomleft", legend = levels((y$continent)), pch = c(1:length(levels(y$continent))), col = c(1:length(levels(y$continent))))
+
+
+# 02 시각화의 기본 기능 #
+plot(gapminder$gdpPercap, gapminder$lifeExp, col = gapminder$continent)
+legend("bottomright", legend = levels((gapminder$continent)), 
+       pch = c(1:length(levels(gapminder$continent))), 
+       col = c(1:length(levels(y$continent))))
+
+plot(log10(gapminder$gdpPercap), gapminder$lifeExp, col = gapminder$continent)
+legend("bottomright", legend  = levels((gapminder$continent)), pch = c(1:length(levels(gapminder$continent))), col = c(1:length(levels(y$continent))))
+
+# install.packages("ggplot2")
+library(ggplot2)
+# gapminder %>% ggplot(,aes())
+
+ggplot(gapminder, aes(x =  gdpPercap, y = lifeExp, col = continent)) + 
+  geom_point() + 
+  scale_x_log10()
+
+ggplot(gapminder, aes(x =  gdpPercap, y = lifeExp, col = continent, size = pop)) + 
+  geom_point() + 
+  scale_x_log10()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent, size = pop)) + 
+  geom_point(alpha = 0.5) + 
+  scale_x_log10()
+
+
+table(gapminder$year)
+
+gapminder %>% filter(year==1977) %>% 
+  ggplot(., aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) + 
+  geom_point(alpha=0.5) + 
+  scale_x_log10() 
+
+
+gapminder %>% filter(year==2007) %>% 
+  ggplot(., aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) + 
+  geom_point(alpha=0.5) + 
+  scale_x_log10() 
+
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) + 
+  geom_point(alpha=0.5) + 
+  scale_x_log10() + 
+  facet_wrap(~year)
+
+
+gapminder %>% 
+  filter(year == 1952 & continent =="Asia") %>% 
+  ggplot(aes(reorder(country, pop), pop)) + 
+  geom_bar(stat = "identity") + 
+  coord_flip()
+
+gapminder %>% filter(year==1952 & continent== "Asia") %>% ggplot(aes(reorder(country, pop), pop)) + geom_bar(stat  = "identity") + scale_y_log10() + coord_flip()
+
+gapminder %>% 
+  filter(country == "Korea, Rep.") %>% 
+  ggplot(aes(year, lifeExp, col = country)) + 
+  geom_point() + 
+  geom_line()
+
+gapminder %>% 
+  filter(country == "Korea, Rep.") %>% 
+  ggplot(aes(year, lifeExp, col = country)) + 
+  # geom_point() + 
+  geom_line()
+
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, col = continent)) + 
+  geom_point(alpha = 0.2) + 
+  geom_smooth()
+
+x = filter(gapminder, year == 1952)
+hist(x$lifeExp, main = "Histogram of lifeExp in 1952")
+
+x %>% ggplot(aes(lifeExp)) + geom_histogram()
+
+x %>% ggplot(aes(continent, lifeExp)) + geom_boxplot()
+
+plot(log10(gapminder$gdpPercap), gapminder$lifeExp)
+```
+
+```{r}
+# 03 Visualization Tool
+
+head(cars)
+
+# type = "p"는 점 플롯, main = "cars"는 그래프의 제목
+plot(cars, type  = "p", main  = "cars")
+
+plot(cars, type = "l", main = "cars")       # type ="l"은 선을 사용한 플롯
+plot(cars, type="b", main="cars")   # type ="b"는 점과 선을 모두 사용한 플롯
+plot(cars, type = "h", main = "cars")  # type ="h"는 히스토그램과 같은 막대 그래프
+
+x = gapminder %>% filter(year == 1952 & continent == "Asia") %>% mutate(gdp = gdpPercap*pop) %>% select(country, gdp) %>% arrange(desc(gdp)) %>% head()
+pie(x$gdp, x$country)
+barplot(x$gdp, names.arg = x$country)
+
+
+x = gapminder %>% filter(year == 2007 & continent == "Asia") %>% mutate(gdp  = gdpPercap*pop) %>% select(country, gdp) %>% arrange(desc(gdp)) %>% head()
+pie(x$gdp, x$country)
+barplot(x$gdp, names.arg = x$country)
+
+
+matplot(iris[, 1:4], type = "l")
+legend("topleft", names(iris)[1:4], lty = c(1, 2, 3, 4), col = c(1, 2, 3, 4))
+
+
+
+hist(cars$speed)
+
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) + geom_point(alpha = 0.2)
+
+gapminder %>% filter(lifeExp>70) %>% 
+  group_by(continent) %>% 
+  summarize(n = n_distinct(country)) %>% 
+  ggplot(aes(x = continent, y = n)) + 
+  geom_bar(stat = "identity")
+
+
+gapminder %>% filter(year == 2007) %>% 
+  ggplot(aes(lifeExp, col = continent)) + 
+  geom_histogram()
+
+gapminder %>% filter(year == 2007) %>% 
+  ggplot(aes(lifeExp, col = continent)) + 
+  geom_histogram(position = "dodge")
+
+gapminder %>% 
+  filter(year == 2007) %>% 
+  ggplot(aes(continent, lifeExp, col = continent)) + 
+  geom_boxplot()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) + 
+  geom_point(alpha = 0.2)
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) +
+  geom_point(alpha = 0.2) + scale_x_log10() # 가로축을 로그 스케일로 변환함.
+
+
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  ggplot(aes(country, lifeExp)) + 
+  geom_bar(stat  =  "identity")                  # [그림 6-35(a)]
+
+gapminder %>% 
+  filter(continent == "Africa") %>% 
+  ggplot(aes(country, lifeExp)) + 
+  geom_bar(stat  =  "identity") + 
+  coord_flip()    # [그림 6-35(b)] 플롯의 방향을 전환함. 
+
+
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+
+display.brewer.all()
+
+
+# [그림 6-37(a)] : 기본 팔레트를 적용한 그래프
+gapminder %>% filter(lifeExp>70) %>% 
+  group_by(continent) %>% 
+  summarize(n  = n_distinct(country)) %>% 
+  ggplot(aes(x = continent, y = n)) + 
+  geom_bar(stat = "identity", aes(fill = continent)) 
+
+
+# [그림 6-37(c)] Blues 팔레트를 적용한 그래프
+gapminder %>% 
+  filter(lifeExp>70) %>% 
+  group_by(continent) %>% 
+  summarize(n = n_distinct(country)) %>% 
+  ggplot(aes(x = continent, y = n)) + 
+  geom_bar(stat = "identity", aes(fill = continent)) + scale_fill_brewer(palette = "Blues")
+```
+
+```{r}
+# [그림 6-37(d)] Oranges 팔레트를 적용한 그래프
+gapminder %>% 
+  filter(lifeExp>70) %>% 
+  group_by(continent) %>% 
+  summarize(n =  n_distinct(country)) %>% 
+  ggplot(aes(x = continent, y = n)) + 
+  geom_bar(stat = "identity", aes(fill =  continent)) + scale_fill_brewer(palette = "Oranges")
+```
+
+```{r}
+
+# reorder(continent, -n)은 continent를 n을 기준으로 내림차 순으로 정렬하라는 의미
+gapminder %>% 
+  filter(lifeExp >70) %>% 
+  group_by(continent) %>% 
+  summarize(n  =  n_distinct(country)) %>% 
+  ggplot(aes(x = reorder(continent, -n), y =  n)) + 
+  geom_bar(stat = "identity", aes(fill =  continent)) + 
+  scale_fill_brewer(palette  = "Blues")
+
+
+# 실습!!
+gapminder %>%
+  filter(continent == "Africa", year==2007) %>%
+  ggplot(aes(reorder(country, lifeExp), lifeExp, fill=lifeExp)) +
+  geom_bar(stat  =  "identity") +
+  coord_flip()
+# 
+gapminder %>%
+  filter(continent == "Africa", year==2007) %>%
+  ggplot(aes(reorder(country, lifeExp), lifeExp, fill=lifeExp)) +
+  geom_bar(stat  =  "identity") +
+  coord_flip()  + 
+  scale_fill_distiller(palette = "Oranges", direction=1)
+```
+
+```{r}
+
+# 04 시각화를 이용한 데이터 탐색 #
+
+gapminder %>% ggplot(aes(gdpPercap, lifeExp, col = continent)) + geom_point(alpha  =  0.2) + facet_wrap(~year) + scale_x_log10()
+
+gapminder %>% filter(year == 1952 & gdpPercap > 10000 & continent == "Asia") 
+
+gapminder %>% filter(country == "Kuwait") %>% ggplot(aes(year, gdpPercap)) + geom_point() + geom_line()             # [그림 6-40(a)]
+gapminder %>% filter(country == "Kuwait") %>% ggplot(aes(year, pop)) + geom_point() + geom_line()                   # [그림 6-40(b)]
+
+gapminder %>% filter(country == "Korea, Rep.") %>% ggplot(aes(year, gdpPercap)) + geom_point() + geom_line()        # [그림 6-41(a)]
+gapminder %>% filter(country == "Korea, Rep.") %>% ggplot(aes(year, pop)) + geom_point() + geom_line()              # [그림 6-41(b)]
+
+gapminder %>% filter(country == "Kuwait" | country == "Korea, Rep.") %>% mutate(gdp = gdpPercap*pop) %>% ggplot(aes(year, gdp, col = country)) + geom_point() + geom_line()
+
+# [그림 6-43(a)] gdpPercap의 변화 비교 
+gapminder %>% filter(country == "Kuwait"|country == "Saudi Arabia"|country == "Iraq"|country == "Iran"|country == "Korea, Rep."|country == "China"|country == "Japan")  %>% ggplot(aes(year, gdpPercap, col = country)) + geom_point() + geom_line()
+
+# [그림 6-43(b)] pop의 변화 비교 
+gapminder %>% filter(country == "Kuwait"|country=="Saudi Arabia"|country == "Iraq"|country == "Iran"|country == "Korea, Rep."|country == "China"|country == "Japan")  %>% ggplot(aes(year, pop, col=country)) + geom_point() + geom_line()
+
+# [그림 6-43(c)] gdp의 변화 비교 
+gapminder %>% filter(country == "Kuwait"|country == "Saudi Arabia"|country == "Iraq"|country == "Iran"|country == "Korea, Rep."|country == "China"|country == "Japan")  %>% mutate(gdp=gdpPercap*pop) %>% ggplot(aes(year, gdp, col = country)) + geom_point() + geom_line() + scale_y_log10()
+
+```
