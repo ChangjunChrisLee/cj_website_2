@@ -1,0 +1,201 @@
+---
+title: "Cov19 visualization practice"
+---
+
+Import libraries
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(rvest)
+library(stringdist)
+library(reshape2)
+```
+
+존스홉킨스 대학의 COVID19 데이터를 가져오는 코드
+
+```{r}
+clean_jhd_to_long <- function(df) {
+  df_str <- deparse(substitute(df))
+  var_str <- substr(df_str, 1, str_length(df_str) - 4)
+  
+  df %>% group_by(`Country/Region`) %>%
+    filter(`Country/Region` != "Cruise Ship") %>%
+    select(-`Province/State`, -Lat, -Long) %>%
+    mutate_at(vars(-group_cols()), sum) %>% 
+    distinct() %>%
+    ungroup() %>%
+    rename(country = `Country/Region`) %>%
+    pivot_longer(
+      -country, 
+      names_to = "date_str", 
+      values_to = var_str
+    ) %>%
+    mutate(date = mdy(date_str)) %>%
+    select(country, date, !! sym(var_str)) 
+}
+
+confirmed_raw <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+deaths_raw <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
+```
+
+```{r}
+head(confirmed_raw)
+
+```
+
+```{r}
+confirmed_raw[confirmed_raw$'Country/Region'=="US",]
+
+```
+
+```{r}
+confirmed_raw %>% names
+```
+
+확진자 데이터 프레임을 만들어 보자.
+
+```{r}
+confirmed_raw %>% 
+  filter(`Country/Region` %in% c("China", "Italy", "Japan", "United Kingdom", "US", "Korea, South",
+                                 "Spain")) %>%
+  select(-c(`Province/State`, Lat, Long)) %>% 
+  group_by(`Country/Region`) %>% summarise_all(sum) -> test
+
+names(test)[1]<-"country"
+
+melt(data = test, id.vars = "country", measure.vars = names(test)[-1]) %>% 
+  separate(variable, into = c("mon", "day", "year"), sep='/', extra = "merge") %>% 
+  filter(day %in% c(1)) %>%
+  arrange(mon, day) %>% 
+  mutate(date=as.Date(with(.,paste(mon, day, year, sep="/")), format = "%m/%d/%y")) %>% 
+  dcast(country ~ date) -> df.conf.case
+```
+
+```{r}
+df.conf.case
+
+```
+
+사망자 데이터 프레임을 만들어 보자.
+
+```{r}
+deaths_raw %>% 
+  filter(`Country/Region` %in% c("China", "Italy", "Japan", "United Kingdom", "US", "Korea, South",
+                                 "Spain")) %>%
+  select(-c(`Province/State`, Lat, Long)) %>% 
+  group_by(`Country/Region`) %>% summarise_all(sum) -> test
+
+names(test)[1]<-"country"
+
+melt(data = test, id.vars = "country", measure.vars = names(test)[-1]) %>% 
+  separate(variable, into = c("mon", "day", "year"), sep='/', extra = "merge") %>% 
+  filter(day %in% c(1)) %>%
+  arrange(mon, day) %>% 
+  mutate(date=as.Date(with(.,paste(mon, day, year, sep="/")), format = "%m/%d/%y")) %>% 
+  dcast(country ~ date) -> df.death.case
+```
+
+```{r}
+df.death.case
+```
+
+확진자, 사망자 데이터 프레임을 행렬로 만들어보자.¶
+
+```{r}
+# country.name<-c("China","Italy","Japan","Korea","Spain","UK","US")  
+country.name<-unlist(df.conf.case[c(1)])
+
+#str(df.conf.case)
+m.conf.case<-as.matrix(df.conf.case[-1])
+row.names(m.conf.case)<-country.name
+
+m.death.case<-as.matrix(df.death.case[-1])
+row.names(m.death.case)=country.name
+
+m.death.rate<-round(m.death.case/m.conf.case, 2)
+```
+
+-   확진자 행렬: m.conf.case
+-   사망자 행렬: m.death.case
+
+```{r}
+m.conf.case
+
+```
+
+```{r}
+m.death.case
+
+```
+
+선정된 국가에 대한 인구 벡터를 만들어 봅시다. 국가 이름 벡터. 인구 벡터에 이름을 붙여주기 위해 생성
+
+```{r}
+country.name
+
+```
+
+선정된 국가 순서대로 인구 수를 입력한 벡터
+
+```{r}
+pop<-c(1439323776, 60461826, 126476461, 51269185, 46754778, 67886011, 331002651)
+pop
+```
+
+아직은 벡터 값들에 이름이 붙어 있지 않은 것을 알 수 있다.
+
+```{r}
+names(pop)
+
+```
+
+pop 벡터에 각 인구수가 어느 국가이 인구수인지 names() 함수로 지정해줌
+
+```{r}
+pop<-c(1439323776, 60461826, 126476461, 51269185, 46754778, 67886011, 331002651)
+names(pop)<-country.name
+pop
+```
+
+GDP 벡터를 만들어 봅시다 - 마찬가지로 names() 함수로 GDP가 어느 국가에 해당하는 GDP인지에 대한 정보를 준다.
+
+```{r}
+# round(m.conf.case/pop*1000, 2)
+country.name<-c("China","Italy","Japan","Korea","Spain","UK","US")  
+GDP<-c(12237700479375,
+1943835376342,
+4872415104315,
+1530750923149,
+1314314164402,
+2637866340434,
+19485394000000)
+names(GDP)<-country.name
+
+GDP
+```
+
+선정된 국가에 대한 인구밀도 벡터를 만들어 봅시다.
+
+```{r}
+country.name<-c("China","Italy","Japan","Korea","Spain","UK","US")  
+pop.density<-c(148, 205, 347, 530, 94, 275, 36)
+names(pop.density)<-country.name
+```
+
+각국의 GDP 시각화를 해보자.
+
+```{r}
+barplot(GDP)
+
+```
+
+```{r}
+barplot(sort(GDP))
+
+```
+
+```{r}
+barplot(sort(GDP, decreasing = T))
+
+```

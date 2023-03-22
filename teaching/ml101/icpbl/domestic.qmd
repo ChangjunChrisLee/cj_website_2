@@ -1,0 +1,244 @@
+---
+title: IC-PBL
+subtitle: For Domestic Students
+---
+
+### 시나리오
+
+독서어플 리더스에서 데이터를 제공 받아 주어진 문제를 풀게 됨.
+
+-   리더스 소개
+
+    -   소개 [블로그](https://ycaon.tistory.com/entry/%EC%9C%A0%EC%9A%A9%ED%95%9C-%EB%8F%85%EC%84%9C-%EC%96%B4%ED%94%8C-%EC%B6%94%EC%B2%9C-%EB%A6%AC%EB%8D%94%EC%8A%A4-%EC%95%B1%EC%9D%84-%EC%93%B0%EB%8A%94-4%EA%B0%80%EC%A7%80-%EC%9D%B4%EC%9C%A0)
+
+    -   소개 [기사](https://www.mk.co.kr/news/business/9733023)
+
+-   리더스 다운로드
+
+    -   [Android](https://play.google.com/store/apps/details?id=com.readersrn&gl=US)
+
+    -   [iOS](https://apps.apple.com/kr/app/%EB%A6%AC%EB%8D%94%EC%8A%A4-readers-%EC%99%84%EB%B2%BD%ED%95%9C-%EB%8F%85%EC%84%9C%EB%A5%BC-%EC%9C%84%ED%95%9C-%EC%84%9C%EB%B9%84%EC%8A%A4/id1470113337)
+
+::: {.callout-note icon="false"}
+### 문제
+
+독서 앱에서 사용하는 **고객의 독서 관련 데이터를 받아** 수업시간에 배운 **기계학습 모델과 텍스트 분석 방법을 활용하여 새로운 서비스를 제안**한다.
+:::
+
+<br>
+
+### 지난 수업(2022-1) 결과물 모음(참고용)
+
+|                                                                                 |                                                                                                    |                                       |                                       |
+|------------------|------------------|------------------|------------------|
+| [오전 1조](https://www.notion.so/IC-PBL-Team1-369c4e62f0eb4612824ba08890c66b14) | [오전 2조](https://datapredictionandmachinlearning.notion.site/2-d7a1a2137c18409eb51ca2c0dc324117) | [오전 3조](reports/2022_오전_3조.pdf) | [오전 4조](reports/2022_오전_4조.pdf) |
+| [오후 1조](reports/2022_오후_1조.pdf)                                           | [오후 2조](reports/2022_오후_2조.pdf)                                                              | [오후 3조](reports/2022_오후_3조.pdf) | [오후 4조](reports/2022_오후_4조.pdf) |
+
+<br>
+
+### 리더스 제공 데이터
+
+<br>
+
+데이터 다운로드 \[[Here](https://drive.google.com/file/d/1ZNJN44uHimzbr5ohAebY331ecdk5OaSE/view?usp=sharing)\]
+
+> 한양대 계정으로 로그인해야 다운 받을 수 있습니다.
+
+<br>
+
+R 에서 제공 데이터 불러오기
+
+```{r, message=FALSE}
+#####
+# Import readers DB
+#####
+
+# Sys.setlocale("LC_ALL", locale="Korean")
+
+library(readxl)
+
+user <- read_excel("readers/01_user.xlsx")
+user_cat <- read_excel("readers/02_user_cat.xlsx")
+follow  <- read_excel("readers/03_follow.xlsx")
+user_book  <- read_excel("readers/04_user_book.xlsx")
+book  <- read_excel("readers/05_book.xlsx")
+book_cat  <- read_excel("readers/06_book_cat.xlsx")
+cat  <- read_excel("readers/07_cat.xlsx")
+scrap  <- read_excel("readers/08_scrap.xlsx")
+```
+
+<br>
+
+### EDA in brief
+
+<br>
+
+1.  **user: 유저 정보**
+
+```{r, echo=FALSE}
+knitr::kable(head(user, 10))
+```
+
+-   `user_id`: 유저 고유번호
+
+-   `birth_year`: 생년
+
+-   `gender`: 성별
+
+-   `created_at`: 가입 날짜와 시간
+
+-   `직업`
+
+-   `직종`
+
+<br>
+
+2.  **user_cat: 유저의 관심 책 카테고리**
+
+```{r, echo=FALSE}
+knitr::kable(head(user_cat, 10))
+```
+
+-   `user_id`: 유저 고유번호
+
+-   `title`: 해당 유저가 관심 있는 책의 카테고리
+
+> 한 유저가 복수의 카테고리를 선택 가능함. 위의 10936 유저는 언어, 에세이, 습관, 시, 다이어트, 부동산 카테고리 등에 관심이 있음.
+
+<br>
+
+3.  **follow: 유저의 팔로우 팔로워 관계**
+
+```{r, echo=FALSE}
+knitr::kable(head(follow, 10))
+```
+
+-   `user_id`
+
+-   `target_user_id`: user_id의 유저가 팔로우 하는 유저의 고유 번호
+
+<br>
+
+4.  **user_book: 유저의 책장에 담긴 책 고유 번호와 현재 독서 상태**
+
+```{r, echo=FALSE}
+knitr::kable(head(user_book, 10))
+```
+
+-   `user_id`
+
+-   `book_id`: 책의 고유 번호
+
+-   `rate`: 해당 책에 유저가 준 평점 (0\~5)
+
+-   `read_status`: 최종 수정 시각의 독서 상태
+
+    -   READ_STATUS_BEFORE → 읽고 싶은 책 (하지만 아직 읽기 전)
+
+    -   READ_STATUS_DONE → 읽기 완료 (최종 수정 시각에)
+
+    -   READ_STATUS_ING → 읽는 중
+
+    -   READ_STATUS_PAUSE → 독서 (일시) 중단
+
+    -   READ_STATUS_STOP → 독서 중단
+
+-   `modified_at`: read_status 최종 수정 시각: 이 수정 시각에 최종으로 읽기 상태를 수정한 것
+
+> 69249442 유저는 2515 책을 읽고 싶고(BEFORE) 이 레코드를 남긴 최종 시각은 2022년 3월 20일 11시 8분 2초경이다.
+
+<br>
+
+5.  **book: 책에 대한 정보**
+
+```{r, echo=FALSE}
+head(book, 10)
+```
+
+-   `id`: 책의 고유 번호 (주의: 위 테이블의 book_id와 동일)
+
+-   `title`: 책의 제목
+
+-   `sub_title`: 책의 부제목
+
+-   `isbn13`: 책의 isbn(출판 번호)
+
+-   `pub_date`: 책이 출간된 날짜
+
+-   `description`: 책에 대한 간략한 설명
+
+-   `publisher`: 출판사
+
+-   `category_name_aladin`: 해당 책의 알라딘 카테고리
+
+    -   첫 번째 책은 → 국내도서\>전집/중고전집\>창작동화
+
+-   `page`: 책의 총 페이지
+
+-   `full_description`: 책에 대한 설명 (조금 더 긴 버전)
+
+-   `full_description_2`: 다른 source 에서 가져온 책의 설명
+
+-   `toc`: 책의 목차
+
+    -   예를 들어, 4번째 책은 아래 목차
+
+        <div>
+
+        > <p><B>1권</B><BR> 1장 토리스 바의 손님<BR> 2장 가메다<BR> 3장 누보 그룹<BR> 4장 미해결<BR> 5장 종이 날리는 여자 <BR> 6장 방언 분포<BR> 7장 혈흔<BR> 8장 변사<BR> <BR> <B>2권</B> <BR> 9장 모색<BR> 10장 에미코<BR> 11장 그녀의 죽음<BR> 12장 혼미<BR> 13장 실마리<BR> 14장 무성無聲<BR> 15장 항적<BR> 16장 어떤 호적<BR> 17장 방송 <BR> <BR> 해설 \| 일본 근대사회의 집합적 무의식, 그 터부를 비평하다<BR> 마쓰모토 세이초 연보<BR></p>
+
+        </div>
+
+-   `author`: 책의 저자
+
+<br>
+
+6.  **book_cat: 책과 카테고리의 연결 테이블**
+
+```{r, echo=FALSE}
+knitr::kable(head(book_cat, 10))
+```
+
+-   `book_id`: 책의 고유 번호
+
+-   `book_category_id`: 카테고리의 고유 번호
+
+<br>
+
+7.  **cat: 카테고리 고유 번호에 대한 상세 테이블**
+
+```{r, echo=FALSE}
+knitr::kable(head(cat, 10))
+```
+
+-   `book_category_id`: 카테고리의 고유 번호
+
+-   `name`: 카테고리 이름
+
+-   `depth_1`: 카테고리 대분류
+
+-   `depth_2`: 카테고리 중분류
+
+-   `depth_3`: 카테고리 소분류_1
+
+-   `depth_4`: 카테고리 소분류_2
+
+-   `depth_5`: 카테고리 소분류_3
+
+<br>
+
+8.  **scrap: 유저가 책에서 스크랩한 문구**
+
+```{r, echo=FALSE}
+knitr::kable(head(scrap, 10))
+```
+
+-   `user_id`: 유저 고유 번호
+
+-   `content`: 스크랩 문구
+
+-   `book_id`: 스크랩한 책의 고유 번호
+
+-   `page`: 스크랩한 책의 페이지
+
+-   `created_at`: 스크랩한 날짜와 시간 **(중요한점: 날짜와 시간은 UDT 기준입니다.)**

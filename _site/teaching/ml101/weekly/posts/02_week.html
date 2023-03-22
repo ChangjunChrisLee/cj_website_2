@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.262">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>CJL Lab - About ML &amp; Modelling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">CJL Lab</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ds101/index.html">
+ <span class="dropdown-text">Data Science 101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ml101/index.html">
+ <span class="dropdown-text">Machine Learning 101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/media_ds/index.html">
+ <span class="dropdown-text">Media &amp; Data Science</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proj" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proj</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-proj">    
+        <li>
+    <a class="dropdown-item" href="../../../../proj/index.html">
+ <span class="dropdown-text">All Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../proj/proj_01.html">
+ <span class="dropdown-text">생애첫연구</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../proj/proj_02.html">
+ <span class="dropdown-text">신진연구자지원사업</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
+        <li>
+    <a class="dropdown-item" href="../../../../research/index.html">
+ <span class="dropdown-text">Publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../research/working.html">
+ <span class="dropdown-text">Working in progress</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/index.html">
+ <span class="menu-text">Blogs</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
+  <li><a href="#class-content" id="toc-class-content" class="nav-link" data-scroll-target="#class-content">Class content</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">1. Introduction</a></li>
+  <li><a href="#prepare-to-work" id="toc-prepare-to-work" class="nav-link" data-scroll-target="#prepare-to-work">2. Prepare to work</a>
+  <ul class="collapse">
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">2.1 Packages</a></li>
+  <li><a href="#raw-data-import" id="toc-raw-data-import" class="nav-link" data-scroll-target="#raw-data-import">2.2 Raw data import</a></li>
+  <li><a href="#variable-meaning-explanation" id="toc-variable-meaning-explanation" class="nav-link" data-scroll-target="#variable-meaning-explanation">2.3 variable meaning explanation</a></li>
+  <li><a href="#change-the-variables-type" id="toc-change-the-variables-type" class="nav-link" data-scroll-target="#change-the-variables-type">2.4 Change the variables type</a></li>
+  </ul></li>
+  <li><a href="#eda-exploratory-data-analysis" id="toc-eda-exploratory-data-analysis" class="nav-link" data-scroll-target="#eda-exploratory-data-analysis">3. EDA : Exploratory data analysis</a>
+  <ul class="collapse">
+  <li><a href="#data-confirmation-using-numerical-values" id="toc-data-confirmation-using-numerical-values" class="nav-link" data-scroll-target="#data-confirmation-using-numerical-values">3.1 Data confirmation using numerical values</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">3.2 Missing values</a></li>
+  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age">3.3 Age</a></li>
+  <li><a href="#pclass" id="toc-pclass" class="nav-link" data-scroll-target="#pclass">3.4 Pclass</a></li>
+  <li><a href="#fare" id="toc-fare" class="nav-link" data-scroll-target="#fare">3.5 Fare</a></li>
+  <li><a href="#sex" id="toc-sex" class="nav-link" data-scroll-target="#sex">3.6 Sex</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering-data-pre-processing" id="toc-feature-engineering-data-pre-processing" class="nav-link" data-scroll-target="#feature-engineering-data-pre-processing">4. Feature engineering &amp; Data Pre-processing</a>
+  <ul class="collapse">
+  <li><a href="#age---age.group" id="toc-age---age.group" class="nav-link" data-scroll-target="#age---age.group">4.1 Age -&gt; Age.Group</a></li>
+  <li><a href="#sibsp-parch---familysized" id="toc-sibsp-parch---familysized" class="nav-link" data-scroll-target="#sibsp-parch---familysized">4.3 SibSp &amp; Parch -&gt; FamilySized</a></li>
+  <li><a href="#name-sex---title" id="toc-name-sex---title" class="nav-link" data-scroll-target="#name-sex---title">4.4 Name &amp; Sex -&gt; title</a></li>
+  <li><a href="#ticket---ticket.size" id="toc-ticket---ticket.size" class="nav-link" data-scroll-target="#ticket---ticket.size">4.5 Ticket -&gt; ticket.size</a></li>
+  <li><a href="#embarked" id="toc-embarked" class="nav-link" data-scroll-target="#embarked">4.6 Embarked</a></li>
+  <li><a href="#fare-1" id="toc-fare-1" class="nav-link" data-scroll-target="#fare-1">4.7 Fare</a></li>
+  </ul></li>
+  <li><a href="#relationship-to-target-feature-survived-feature-selection" id="toc-relationship-to-target-feature-survived-feature-selection" class="nav-link" data-scroll-target="#relationship-to-target-feature-survived-feature-selection">5. Relationship to target feature <code>Survived</code> &amp; Feature selection</a>
+  <ul class="collapse">
+  <li><a href="#data-set-split" id="toc-data-set-split" class="nav-link" data-scroll-target="#data-set-split">5.0 Data set split</a></li>
+  <li><a href="#pclass-1" id="toc-pclass-1" class="nav-link" data-scroll-target="#pclass-1">5.1 Pclass</a></li>
+  <li><a href="#sex-1" id="toc-sex-1" class="nav-link" data-scroll-target="#sex-1">5.2 Sex</a></li>
+  <li><a href="#embarked-1" id="toc-embarked-1" class="nav-link" data-scroll-target="#embarked-1">5.3 Embarked</a></li>
+  <li><a href="#familysized" id="toc-familysized" class="nav-link" data-scroll-target="#familysized">5.4 FamilySized</a></li>
+  <li><a href="#age.group" id="toc-age.group" class="nav-link" data-scroll-target="#age.group">5.5 Age.Group</a></li>
+  <li><a href="#title" id="toc-title" class="nav-link" data-scroll-target="#title">5.6 title</a></li>
+  <li><a href="#ticket.size" id="toc-ticket.size" class="nav-link" data-scroll-target="#ticket.size">5.7 ticket.size</a></li>
+  <li><a href="#description-of-actual-used-features" id="toc-description-of-actual-used-features" class="nav-link" data-scroll-target="#description-of-actual-used-features">5.8 Description of actual used features</a></li>
+  </ul></li>
+  <li><a href="#machine-learning-model-generation" id="toc-machine-learning-model-generation" class="nav-link" data-scroll-target="#machine-learning-model-generation">6. Machine learning model generation</a>
+  <ul class="collapse">
+  <li><a href="#random-forest-model-generation" id="toc-random-forest-model-generation" class="nav-link" data-scroll-target="#random-forest-model-generation">6.1 Random Forest model generation</a></li>
+  <li><a href="#feature-importance-check" id="toc-feature-importance-check" class="nav-link" data-scroll-target="#feature-importance-check">6.2 Feature importance check</a></li>
+  <li><a href="#predict-test-data-and-create-submit-data" id="toc-predict-test-data-and-create-submit-data" class="nav-link" data-scroll-target="#predict-test-data-and-create-submit-data">6.3 Predict test data and create submit data</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">About ML &amp; Modelling</h1>
+<p class="subtitle lead">EDA Review</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><a href="https://cjleelab.netlify.app/teaching/ml101/weekly/">Weekly design</a></p>
+<p><br></p>
+<p>Before attending class for Week 2, please complete the following tasks:</p>
+<ol type="1">
+<li><p>Watch the pre-class video for Week 2.</p></li>
+<li><p>Submit Discussion #1. Note that submissions will not be accepted after class.</p></li>
+<li><p>Ensure that your laptop has R and RStudio installed and ready to use.</p></li>
+</ol>
+<p><br></p>
+<section id="pre-class-video" class="level3">
+<h3 class="anchored" data-anchor-id="pre-class-video">Pre-class video</h3>
+<ul>
+<li>What is ML?</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/uuCS5MgtcVE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li>What is Modelling?</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/kmRX5DzEB2Q" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li><p>Pre-class PPT</p>
+<ul>
+<li><p>What is ML: <a href="content/ML_pre_02_1.pdf">pdf</a></p></li>
+<li><p>What is Modelling: <a href="content/ML_pre_02_2.pdf">pdf</a></p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="discussion" class="level3">
+<h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
+<p>Discussion #1</p>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe7zzymcuvughLD8TcoiIE78H_GAKCfdzMWGSSqUAArvrmpWQ/viewform?embedded=true" width="640" height="2700" frameborder="0" marginheight="0" marginwidth="0">
+<p>Loading…</p>
+</iframe>
+<hr>
+</section>
+<section id="class-content" class="level1">
+<h1>Class content</h1>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<p><br></p>
+<p>It contains the analysis process of ‘Titanic’, one of the representative ‘Competition’ of ‘<a href="https://www.kaggle.com/">Kaggle</a>’.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+</section>
+<section id="prepare-to-work" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-to-work">2. Prepare to work</h2>
+<p><br></p>
+<section id="packages" class="level3">
+<h3 class="anchored" data-anchor-id="packages">2.1 Packages</h3>
+<p>see “<a href="https://cjleelab.netlify.app/blogs/posts/2_about_a_package.html">What is a package in R</a>”</p>
+<p><br></p>
+<p>This is the process of loading (loading) the <code>Packages</code> I used for analysis, in addition to the representative <code>Packages</code> of <code>R</code>, such as <a href="https://www.tidyverse.org/">tidyverse</a> (including <code>ggplot2</code> and <code>dplyr</code>).</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data input, assesment </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)           <span class="co"># Data input with readr::read_csv()</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(descr)           <span class="co"># descr::CrossTable() - Frequency by category, check with ratio figures</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)             <span class="co"># Missing values assesment used by VIM::aggr()</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)    <span class="co"># Plot color setting</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)          <span class="co"># plot setting - x, y axis</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Feature engineering, Data Pre-processing</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)     <span class="co"># dplyr, ggplot2, purrr, etc..      # Feature Engineering &amp; Data Pre-processing</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Model validation </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)           <span class="co"># caret::confusionMatrix()</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ROCR)            <span class="co"># Plotting ROC Curve</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="raw-data-import" class="level3">
+<h3 class="anchored" data-anchor-id="raw-data-import">2.2 Raw data import</h3>
+<p><br></p>
+<p>In <code>titanic competition</code>, <code>train</code> data used to create <code>Model</code> and <code>test</code> data used for actual prediction (estimation) are separated.</p>
+<p>Here, we will load those two data and combine them into one. The reason for tying the separate data together is to work the same when feature engineering and pre-processing the input variables used in modeling.</p>
+<p>Please see this <a href="https://www.britannica.com/topic/Titanic">link</a> if you want to know about the story of Titanic.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>titanic_train <span class="sc">%&gt;%</span> glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 891
+Columns: 12
+$ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,…
+$ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1…
+$ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3…
+$ Name        &lt;chr&gt; "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl…
+$ Sex         &lt;chr&gt; "male", "female", "female", "female", "male", "male", "mal…
+$ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 14, …
+$ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0…
+$ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0…
+$ Ticket      &lt;chr&gt; "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37…
+$ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.8625,…
+$ Cabin       &lt;chr&gt; "", "C85", "", "C123", "", "", "E46", "", "", "", "G6", "C…
+$ Embarked    &lt;chr&gt; "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "S"…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>titanic_test <span class="sc">%&gt;%</span> glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 418
+Columns: 11
+$ PassengerId &lt;int&gt; 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 902, 903…
+$ Pclass      &lt;int&gt; 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 2, 3, 3, 3…
+$ Name        &lt;chr&gt; "Kelly, Mr. James", "Wilkes, Mrs. James (Ellen Needs)", "M…
+$ Sex         &lt;chr&gt; "male", "female", "male", "male", "female", "male", "femal…
+$ Age         &lt;dbl&gt; 34.5, 47.0, 62.0, 27.0, 22.0, 14.0, 30.0, 26.0, 18.0, 21.0…
+$ SibSp       &lt;int&gt; 0, 1, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0…
+$ Parch       &lt;int&gt; 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ Ticket      &lt;chr&gt; "330911", "363272", "240276", "315154", "3101298", "7538",…
+$ Fare        &lt;dbl&gt; 7.8292, 7.0000, 9.6875, 8.6625, 12.2875, 9.2250, 7.6292, 2…
+$ Cabin       &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "B45", "",…
+$ Embarked    &lt;chr&gt; "Q", "S", "Q", "S", "S", "S", "Q", "S", "C", "S", "S", "S"…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> titanic_train</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>test  <span class="ot">&lt;-</span> titanic_test</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>full <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(train, test)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>full <span class="sc">%&gt;%</span> glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,309
+Columns: 12
+$ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,…
+$ Survived    &lt;int&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1…
+$ Pclass      &lt;int&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3…
+$ Name        &lt;chr&gt; "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl…
+$ Sex         &lt;chr&gt; "male", "female", "female", "female", "male", "male", "mal…
+$ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 14, …
+$ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0…
+$ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0…
+$ Ticket      &lt;chr&gt; "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37…
+$ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.8625,…
+$ Cabin       &lt;chr&gt; "", "C85", "", "C123", "", "", "E46", "", "", "", "G6", "C…
+$ Embarked    &lt;chr&gt; "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "S"…</code></pre>
+</div>
+</div>
+<p>The reason why <code>rbind()</code> was not used even when combining the two data into full is that Survived, the dependent variable (target variable, Y) of Titanic competition, does not exist in test. Therefore, the dimensions (dimension) of the two data do not match, so they are not merged with rbind(). However, if you use dplyr::bind_rows(), Survived in test is treated as <em>NA</em> and merged into one.</p>
+</section>
+<section id="variable-meaning-explanation" class="level3">
+<h3 class="anchored" data-anchor-id="variable-meaning-explanation">2.3 variable meaning explanation</h3>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 79%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">variable name</th>
+<th style="text-align: left;">Interpretation (meaning)</th>
+<th style="text-align: left;">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>PassengerID</strong></td>
+<td style="text-align: left;">Unique ID number that identifies the passenger</td>
+<td style="text-align: left;">Int</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Survived</strong></td>
+<td style="text-align: left;">Indicates whether or not the passenger survived. Survival is 1 and death is 0.</td>
+<td style="text-align: left;">Factor</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Pclass</strong></td>
+<td style="text-align: left;">The class of the cabin, with 3 categories from 1st class (1) to 3rd class (3).</td>
+<td style="text-align: left;">Ord.Factor</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Name</strong></td>
+<td style="text-align: left;">Passenger’s name</td>
+<td style="text-align: left;">Factor</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Sex</strong></td>
+<td style="text-align: left;">Passenger’s gender</td>
+<td style="text-align: left;">Factor</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Age</strong></td>
+<td style="text-align: left;">Age of passenger</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>SibSp</strong></td>
+<td style="text-align: left;">Variable describing the number of siblings or spouses accompanying each passenger. It can range from 0 to 8.</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Parch</strong></td>
+<td style="text-align: left;">Variable describing the number of parents or children accompanying each passenger, from 0 to 9.</td>
+<td style="text-align: left;">Integer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Ticket</strong></td>
+<td style="text-align: left;">String variable for the ticket the passenger boarded</td>
+<td style="text-align: left;">Factor</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Fare</strong></td>
+<td style="text-align: left;">Variable for how much the passenger has paid for the trip so far</td>
+<td style="text-align: left;">Numeric</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Cabin</strong></td>
+<td style="text-align: left;">Variable that distinguishes each passenger’s cabin, with too many categories and missing values.</td>
+<td style="text-align: left;">Factor</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Embarked</strong></td>
+<td style="text-align: left;">Indicates the boarding port and departure port, and consists of three categories: C, Q, and S.</td>
+<td style="text-align: left;">Factor</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</section>
+<section id="change-the-variables-type" class="level3">
+<h3 class="anchored" data-anchor-id="change-the-variables-type">2.4 Change the variables type</h3>
+<p><br></p>
+<p>Before the full-scale EDA and feature engineering, let’s transform some variable properties. For example, Pclass is treated as numeric, but actually 1, 2, 3 are factors representing 1st, 2nd, and 3rd grades.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>full <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Survived =</span> <span class="fu">factor</span>(Survived),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">Pclass   =</span> <span class="fu">factor</span>(Pclass, <span class="at">ordered =</span> T),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">Name     =</span> <span class="fu">factor</span>(Name),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">Sex      =</span> <span class="fu">factor</span>(Sex),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">Ticket   =</span> <span class="fu">factor</span>(Ticket),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">Cabin    =</span> <span class="fu">factor</span>(Cabin),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">Embarked =</span> <span class="fu">factor</span>(Embarked))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="eda-exploratory-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="eda-exploratory-data-analysis">3. EDA : Exploratory data analysis</h2>
+<p><br></p>
+<p>It is the process of exploring and understanding raw data, such as how data is structured and whether there are missing values or outliers in it.</p>
+<p>We will use various functions and visualizations here.</p>
+<p><br></p>
+<section id="data-confirmation-using-numerical-values" class="level3">
+<h3 class="anchored" data-anchor-id="data-confirmation-using-numerical-values">3.1 Data confirmation using numerical values</h3>
+<p>First of all, let’s check the data through the output of various functions such as head() and summary().</p>
+<p><br></p>
+<section id="head" class="level4">
+<h4 class="anchored" data-anchor-id="head">3.1.1 head()</h4>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(full, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   PassengerId Survived Pclass
+1            1        0      3
+2            2        1      1
+3            3        1      3
+4            4        1      1
+5            5        0      3
+6            6        0      3
+7            7        0      1
+8            8        0      3
+9            9        1      3
+10          10        1      2
+                                                  Name    Sex Age SibSp Parch
+1                              Braund, Mr. Owen Harris   male  22     1     0
+2  Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38     1     0
+3                               Heikkinen, Miss. Laina female  26     0     0
+4         Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35     1     0
+5                             Allen, Mr. William Henry   male  35     0     0
+6                                     Moran, Mr. James   male  NA     0     0
+7                              McCarthy, Mr. Timothy J   male  54     0     0
+8                       Palsson, Master. Gosta Leonard   male   2     3     1
+9    Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg) female  27     0     2
+10                 Nasser, Mrs. Nicholas (Adele Achem) female  14     1     0
+             Ticket    Fare Cabin Embarked
+1         A/5 21171  7.2500              S
+2          PC 17599 71.2833   C85        C
+3  STON/O2. 3101282  7.9250              S
+4            113803 53.1000  C123        S
+5            373450  8.0500              S
+6            330877  8.4583              Q
+7             17463 51.8625   E46        S
+8            349909 21.0750              S
+9            347742 11.1333              S
+10           237736 30.0708              C</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Looking at the result of head(), we can see that there is a missing value (NA) in Age.</p>
+<p>If so, is there only Age missing in the entire data?</p>
+<p>For the answer, please refer to 3.2 Missing values.</p>
+<p><br></p>
+</section>
+<section id="str" class="level4">
+<h4 class="anchored" data-anchor-id="str">3.1.2 str()</h4>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   1309 obs. of  12 variables:
+ $ PassengerId: int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Survived   : Factor w/ 2 levels "0","1": 1 2 2 2 1 1 1 1 2 2 ...
+ $ Pclass     : Ord.factor w/ 3 levels "1"&lt;"2"&lt;"3": 3 1 3 1 3 3 1 3 3 2 ...
+ $ Name       : Factor w/ 1307 levels "Abbing, Mr. Anthony",..: 156 287 531 430 23 826 775 922 613 855 ...
+ $ Sex        : Factor w/ 2 levels "female","male": 2 1 1 1 2 2 2 2 1 1 ...
+ $ Age        : num  22 38 26 35 35 NA 54 2 27 14 ...
+ $ SibSp      : int  1 1 0 1 0 0 0 3 0 1 ...
+ $ Parch      : int  0 0 0 0 0 0 0 1 2 0 ...
+ $ Ticket     : Factor w/ 929 levels "110152","110413",..: 721 817 915 66 650 374 110 542 478 175 ...
+ $ Fare       : num  7.25 71.28 7.92 53.1 8.05 ...
+ $ Cabin      : Factor w/ 187 levels "","A10","A11",..: 1 108 1 72 1 1 165 1 1 1 ...
+ $ Embarked   : Factor w/ 4 levels "","C","Q","S": 4 2 4 4 4 3 4 4 4 2 ...</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>By combining the train and test data, the total number of observations (record, row, row) is 1309 (train: 891, test: 418), and the number of variables (column, feature, variable, column) is 12.</p>
+<p>In addition, you can find out what the attributes of each variable are and how many categories there are for variables that are factor attributes.</p>
+<p>In addition, in head(), it can be seen that the missing value (NA), which was thought to exist only in Age, also exists in other variables including Cabin.</p>
+<p><br></p>
+</section>
+<section id="summary" class="level4">
+<h4 class="anchored" data-anchor-id="summary">3.1.3 summary()</h4>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  PassengerId   Survived   Pclass                                Name     
+ Min.   :   1   0   :549   1:323   Connolly, Miss. Kate            :   2  
+ 1st Qu.: 328   1   :342   2:277   Kelly, Mr. James                :   2  
+ Median : 655   NA's:418   3:709   Abbing, Mr. Anthony             :   1  
+ Mean   : 655                      Abbott, Master. Eugene Joseph   :   1  
+ 3rd Qu.: 982                      Abbott, Mr. Rossmore Edward     :   1  
+ Max.   :1309                      Abbott, Mrs. Stanton (Rosa Hunt):   1  
+                                   (Other)                         :1301  
+     Sex           Age            SibSp            Parch            Ticket    
+ female:466   Min.   : 0.17   Min.   :0.0000   Min.   :0.000   CA. 2343:  11  
+ male  :843   1st Qu.:21.00   1st Qu.:0.0000   1st Qu.:0.000   1601    :   8  
+              Median :28.00   Median :0.0000   Median :0.000   CA 2144 :   8  
+              Mean   :29.88   Mean   :0.4989   Mean   :0.385   3101295 :   7  
+              3rd Qu.:39.00   3rd Qu.:1.0000   3rd Qu.:0.000   347077  :   7  
+              Max.   :80.00   Max.   :8.0000   Max.   :9.000   347082  :   7  
+              NA's   :263                                      (Other) :1261  
+      Fare                     Cabin      Embarked
+ Min.   :  0.000                  :1014    :  2   
+ 1st Qu.:  7.896   C23 C25 C27    :   6   C:270   
+ Median : 14.454   B57 B59 B63 B66:   5   Q:123   
+ Mean   : 33.295   G6             :   5   S:914   
+ 3rd Qu.: 31.275   B96 B98        :   4           
+ Max.   :512.329   C22 C26        :   4           
+ NA's   :1         (Other)        : 271           </code></pre>
+</div>
+</div>
+<p><br></p>
+<p>summary() provides a lot of information about the data.</p>
+<p>The representative values of quantitative variables (Integer, Numeric), the number of categories of categorical (Factor) variables, and the number of observations belonging to each category are all shown as numerical values.</p>
+<p>Here are the things to check and move on:</p>
+<ul>
+<li><p>Survived: This is the target variable for this competition, and 418 missing values are due to the test data.</p></li>
+<li><p>Pclass: There are three categories of 1st class, 2nd class, and 3rd class, and 3rd class passengers are the most.</p></li>
+<li><p>Name: There are people with similar names. So you can see that some passengers are traveling alone, while others are traveling with their families.</p></li>
+<li><p>Sex: There are almost twice as many males as females.</p></li>
+<li><p>Age: It ranges from 0.17 to 80 years old, but it seems necessary to check whether it is an outlier that incorrectly entered 17, and there are 263 missing values.</p></li>
+<li><p>SibSp: From 0 to 8, and the 3rd quartile is 1, so it can be seen that you boarded the Titanic with a couple or siblings.</p></li>
+<li><p>Parch: It ranges from 0 to 9, but the fact that the 3rd quartile is 0 indicates that there are very few passengers with parents and children.</p></li>
+<li><p>Both SibSp and Parch are variables representing family relationships. Through this, we will find out the total number of people in the family, although we do not know who was on board, and based on that, we will create a categorical derived variable called FamilySized that represents the size of the family.</p></li>
+<li><p>Ticket: Looking at the result of 3.1.2 str(), you can see that some passengers have exactly the same ticket, some passengers have tickets overlapping only a certain part, and some passengers have completely different tickets. We plan to use this to create a derived variable called ticket.size.</p></li>
+<li><p>Fare: 0 to 512, with 1 missing value. I care that the 3rd quartile is 31.275 and the max is 512.</p></li>
+<li><p>Cabin: It has the most (1014) missing values among a total of 12 features. It’s a variable that represents the ship’s area, but if there’s no way to use it, I think it should be discarded.</p></li>
+<li><p>Embarked: It consists of a total of 3 categories, S is the most, and there are 2 missing values.</p></li>
+</ul>
+<p>When performing a basic exploration of the data, please look at the outputs of various functions besides summary() and str() while comparing them.</p>
+<p><br></p>
+</section>
+</section>
+<section id="missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="missing-values">3.2 Missing values</h3>
+<p><br></p>
+<p>This is the process of checking which variables have missing values mentioned above and how many of them exist.</p>
+<p>I’m going to check it numerically and visually at the same time using the dplyr, ggplot2, and VIM packages.</p>
+<p>You don’t have to use all the code I’ve run, you can use only the parts you think you need or like as you read.</p>
+<p><br></p>
+<section id="vim-packages" class="level4">
+<h4 class="anchored" data-anchor-id="vim-packages">3.2.1 VIM packages</h4>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>VIM<span class="sc">::</span><span class="fu">aggr</span>(full, <span class="at">prop =</span> <span class="cn">FALSE</span>, <span class="at">combined =</span> <span class="cn">TRUE</span>, <span class="at">numbers =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">sortVars =</span> <span class="cn">TRUE</span>, <span class="at">sortCombs =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Variables sorted by number of missings: 
+    Variable Count
+    Survived   418
+         Age   263
+        Fare     1
+ PassengerId     0
+      Pclass     0
+        Name     0
+         Sex     0
+       SibSp     0
+       Parch     0
+      Ticket     0
+       Cabin     0
+    Embarked     0</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="tidyverse-packages" class="level4">
+<h4 class="anchored" data-anchor-id="tidyverse-packages">3.2.2 tidyverse packages</h4>
+<p><br></p>
+<p>In addition to checking missing values at once using the VIM package, these are methods for checking missing values using various packages that exist in the tidyverse.</p>
+<p>First, find the proportion of missing values for each variable with dplyr.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>full <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize_all</span>(<span class="fu">funs</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(.))<span class="sc">/</span><span class="fu">n</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `funs()` was deprecated in dplyr 0.8.0.
+ℹ Please use a list of either functions or lambdas:
+
+# Simple named list: list(mean = mean, median = median)
+
+# Auto named with `tibble::lst()`: tibble::lst(mean, median)
+
+# Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  PassengerId  Survived Pclass Name Sex       Age SibSp Parch Ticket
+1           0 0.3193277      0    0   0 0.2009167     0     0      0
+          Fare Cabin Embarked
+1 0.0007639419     0        0</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>There is a way to check the proportion of missing values that exist in variables, but it can also be checked using visual data.</p>
+<p>Please see the two bar plots below.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the missing value ratio of each feature -&gt; Data Frame property but has a structure of 1 row and 12 columns.</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize_all</span>(<span class="fu">funs</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(.))<span class="sc">/</span><span class="fu">n</span>()))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>missing_values <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  PassengerId  Survived Pclass Name Sex       Age SibSp Parch Ticket
+1           0 0.3193277      0    0   0 0.2009167     0     0      0
+          Fare Cabin Embarked
+1 0.0007639419     0        0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the missing_values obtained above as a 12X2 data frame</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">gather</span>(missing_values,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">key =</span> <span class="st">"feature"</span>, <span class="at">value =</span> <span class="st">"missing_pct"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>missing_values <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       feature  missing_pct
+1  PassengerId 0.0000000000
+2     Survived 0.3193277311
+3       Pclass 0.0000000000
+4         Name 0.0000000000
+5          Sex 0.0000000000
+6          Age 0.2009167303
+7        SibSp 0.0000000000
+8        Parch 0.0000000000
+9       Ticket 0.0000000000
+10        Fare 0.0007639419
+11       Cabin 0.0000000000
+12    Embarked 0.0000000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization with missing_values</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>missing_values <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aesthetic setting : missing_pct 내림차순으로 정렬  </span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(feature, missing_pct), <span class="at">y =</span> missing_pct)) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bar plot </span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Title generation </span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Rate of missing values in each features"</span>) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Title detail setting </span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>,    <span class="co"># 글씨체 </span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">hjust =</span> <span class="fl">0.5</span>,      <span class="co"># Horizon(가로비율) = 0.5</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>)) <span class="sc">+</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x, y axis label setting </span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Feature names"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>) <span class="sc">+</span> </span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot의 x, y축 변환 </span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>If you look at the bar graph above, you can check the percentage of missing values for all <code>features</code>.</p>
+<p>However, what we are actually curious about is which variables have missing values and how many missing values exist in them.</p>
+<p>Therefore, after calculating the proportion of missing values using the <code>purrr</code> package, I extracted only the variables that had at least one and visualized them.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 변수별 결측치 비율 계산</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>miss_pct <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(full, <span class="cf">function</span>(x){<span class="fu">round</span>((<span class="fu">sum</span>(<span class="fu">is.na</span>(x))<span class="sc">/</span><span class="fu">length</span>(x)) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>) })</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측치 비율이 0%보다 큰 변수들만 선택</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>miss_pct <span class="ot">&lt;-</span> miss_pct[miss_pct <span class="sc">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Data Frame 생성 </span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">miss =</span> miss_pct, <span class="at">var =</span> <span class="fu">names</span>(miss_pct), <span class="at">row.names =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aesthetic setting : miss 내림차순으로 정렬 </span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(var, miss), <span class="at">y =</span> miss)) <span class="sc">+</span> </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bar plot </span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">fill =</span> <span class="st">'red'</span>) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot title setting </span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Rate of missing values"</span>) <span class="sc">+</span> </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Title detail setting </span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>,    <span class="co"># 글씨체 </span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">hjust =</span> <span class="fl">0.5</span>,      <span class="co"># Horizon(가로비율) = 0.5</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>)) <span class="sc">+</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x, y axis label setting </span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Feature names'</span>, <span class="at">y =</span> <span class="st">'Rate of missing values'</span>) <span class="sc">+</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot의 x, y축 변환 </span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>Through this, only 4 variables out of a total of 12 variables have missing values (except <code>Survived</code> because it is due to <code>test</code> data), and there are many missing values in the order of <code>Cabin</code>, <code>Age</code>, <code>Embarked</code>, and <code>Fare</code>.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<p>Now, it is the process of analyzing and exploring <code>feature</code> through visualization.</p>
+</section>
+</section>
+<section id="age" class="level3">
+<h3 class="anchored" data-anchor-id="age">3.3 Age</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>age.p1 <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Age)) <span class="sc">+</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">1</span>), <span class="co"># interval setting </span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col    =</span> <span class="st">"red"</span>,              <span class="co"># bar border color</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill   =</span> <span class="st">"green"</span>,            <span class="co"># bar inner color</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha  =</span> .<span class="dv">5</span>) <span class="sc">+</span>               <span class="co"># Bar Transparency = 50%</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot title</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"All Titanic passengers age hitogram"</span>) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>,     </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">hjust =</span> <span class="fl">0.5</span>,      <span class="co"># Horizon (horizontal ratio) = 0.5</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>))</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>age.p2 <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span> </span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude values where Survived == NA in the test dataset  </span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Survived)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Age, <span class="at">fill =</span> Survived)) <span class="sc">+</span> </span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Titanic passengers age density plot"</span>) <span class="sc">+</span> </span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>,</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">size =</span> <span class="dv">15</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>))</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the two graphs created above on one screen</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(age.p1, age.p2, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="pclass" class="level3">
+<h3 class="anchored" data-anchor-id="pclass">3.4 Pclass</h3>
+<p><br></p>
+<p>Let’s visualize the frequency of passengers for each <code>Pclass</code>.</p>
+<p>After grouping (grouping) by <code>Pclass</code> using <code>dplyr</code> package, <code>Data Frame</code> representing frequency by category was created and visualized with <code>ggplot</code>.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>full <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get Pclass frequencies using dplyr::group_by(), summarize()</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Pclass) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aesthetic setting </span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Pclass, N)) <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> N),       </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">5</span>,             </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="fl">1.2</span>,           </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"#FFFFFF"</span>) <span class="sc">+</span>  </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot title </span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Number of each Pclass's passengers"</span>) <span class="sc">+</span> </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Title setting </span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">15</span>)) <span class="sc">+</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x, y axis name change  </span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Pclass"</span>, <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>It can be seen that the largest number of passengers boarded in the 3-class cabin.</p>
+<p><br></p>
+</section>
+<section id="fare" class="level3">
+<h3 class="anchored" data-anchor-id="fare">3.5 Fare</h3>
+<p><br></p>
+<p>This is a visualization of the ‘Fare’ variable, which represents the amount paid by the passenger.</p>
+<p>Two histograms and boxplots were used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram </span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Fare.p1 <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Fare)) <span class="sc">+</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">col    =</span> <span class="st">"yellow"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill   =</span> <span class="st">"blue"</span>, </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha  =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Histogram of passengers Fare"</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">15</span>))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot </span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>Fare.p2 <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Survived)) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Survived, Fare)) <span class="sc">+</span> </span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Observations are drawn as gray dots, but overlapping areas are spread out.  </span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">col =</span> <span class="st">"gray"</span>) <span class="sc">+</span> </span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Boxplot: 50% transparency</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Boxplot of passengers Fare"</span>) <span class="sc">+</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">15</span>))</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(Fare.p1, Fare.p2, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>You can see that the survivors have a higher ‘Fare’ than the deceased passengers, but not by much.</p>
+<p><br></p>
+</section>
+<section id="sex" class="level3">
+<h3 class="anchored" data-anchor-id="sex">3.6 Sex</h3>
+<p>Are there differences in survival rates between men and women? See the <code>plot</code> below.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sex.p1 <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">N =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Sex, N)) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> N), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, <span class="at">color =</span> <span class="st">"#FFFFFF"</span>) <span class="sc">+</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Bar plot of Sex"</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sex"</span>, <span class="at">y =</span> <span class="st">"Count"</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>sex.p2 <span class="ot">&lt;-</span> full[<span class="dv">1</span><span class="sc">:</span><span class="dv">891</span>, ] <span class="sc">%&gt;%</span> </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Sex, <span class="at">fill =</span> Survived)) <span class="sc">+</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Survival Rate by Sex"</span>) <span class="sc">+</span> </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sex"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(sex.p1, sex.p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(Survived <span class="sc">~</span> Sex,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> full[<span class="dv">1</span><span class="sc">:</span><span class="dv">891</span>, ], <span class="at">col =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span> <span class="st">"Survival rate by passengers gender"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>If you interpret the graph, you can see that the survival rate is higher for female passengers, while there are far more males than females.</p>
+<p><br></p>
+</section>
+</section>
+<section id="feature-engineering-data-pre-processing" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering-data-pre-processing">4. Feature engineering &amp; Data Pre-processing</h2>
+<p><br></p>
+<p>This is the process of filling in missing values (‘NA’) based on the contents of ‘Chapter 3 EDA’ and creating derived variables at the same time.</p>
+<p><br></p>
+<section id="age---age.group" class="level3">
+<h3 class="anchored" data-anchor-id="age---age.group">4.1 Age -&gt; Age.Group</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>full <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The missing value (NA) is filled in first, and the average of the values excluding the missing value is filled.</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Age =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(Age), <span class="fu">mean</span>(full<span class="sc">$</span>Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), Age),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a categorical derived variable Age.Group based on Age values</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">Age.Group =</span> <span class="fu">case_when</span>(Age <span class="sc">&lt;</span> <span class="dv">13</span>             <span class="sc">~</span> <span class="st">"Age.0012"</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                               Age <span class="sc">&gt;=</span> <span class="dv">13</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;</span> <span class="dv">18</span> <span class="sc">~</span> <span class="st">"Age.1317"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                               Age <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"Age.1859"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>                               Age <span class="sc">&gt;=</span> <span class="dv">60</span>            <span class="sc">~</span> <span class="st">"Age.60inf"</span>),</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert Chr attribute to Factor</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">Age.Group =</span> <span class="fu">factor</span>(Age.Group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="sibsp-parch---familysized" class="level3">
+<h3 class="anchored" data-anchor-id="sibsp-parch---familysized">4.3 SibSp &amp; Parch -&gt; FamilySized</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>full <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># First create a derived variable called FamilySize by adding SibSp, Parch and 1 (self)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">FamilySize =</span> .<span class="sc">$</span>SibSp <span class="sc">+</span> .<span class="sc">$</span>Parch <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Create a categorical derived variable FamilySized according to the value of FamilySize</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">FamilySized =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(FamilySize <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Single"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                                        FamilySize <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> FamilySize <span class="sc">&lt;</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Small"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                                        FamilySize <span class="sc">&gt;=</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Big"</span>),</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Convert the Chr property FamilySized to a factor</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Assign new levels according to the size of the group size</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">FamilySized =</span> <span class="fu">factor</span>(FamilySized, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Single"</span>, <span class="st">"Small"</span>, <span class="st">"Big"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Ceated <code>FamilySized</code> using <code>SibSp</code> and <code>Parch</code>.</p>
+<p>Reducing these two variables to one has the advantage of simplifying the model.</p>
+<p>A similar use case is to combine height and weight into a BMI index.</p>
+<p><br></p>
+</section>
+<section id="name-sex---title" class="level3">
+<h3 class="anchored" data-anchor-id="name-sex---title">4.4 Name &amp; Sex -&gt; title</h3>
+<p><br></p>
+<p>When looking at the results of ‘Chapter 3.6 Sex’, it was confirmed that the survival rate of women was higher than that of men.</p>
+<p>Therefore, in <code>Name</code>, “Wouldn’t it be useful to extract only names related to gender and categorize them?” I think it is.</p>
+<p>First, extract only the column vector named <code>Name</code> from <code>full</code> data and save it as <code>title</code>.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, extract only the Name column vector and store it in the title vector</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>title <span class="ot">&lt;-</span> full<span class="sc">$</span>Name</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>title <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Braund, Mr. Owen Harris                                
+ [2] Cumings, Mrs. John Bradley (Florence Briggs Thayer)    
+ [3] Heikkinen, Miss. Laina                                 
+ [4] Futrelle, Mrs. Jacques Heath (Lily May Peel)           
+ [5] Allen, Mr. William Henry                               
+ [6] Moran, Mr. James                                       
+ [7] McCarthy, Mr. Timothy J                                
+ [8] Palsson, Master. Gosta Leonard                         
+ [9] Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)      
+[10] Nasser, Mrs. Nicholas (Adele Achem)                    
+[11] Sandstrom, Miss. Marguerite Rut                        
+[12] Bonnell, Miss. Elizabeth                               
+[13] Saundercock, Mr. William Henry                         
+[14] Andersson, Mr. Anders Johan                            
+[15] Vestrom, Miss. Hulda Amanda Adolfina                   
+[16] Hewlett, Mrs. (Mary D Kingcome)                        
+[17] Rice, Master. Eugene                                   
+[18] Williams, Mr. Charles Eugene                           
+[19] Vander Planke, Mrs. Julius (Emelia Maria Vandemoortele)
+[20] Masselmani, Mrs. Fatima                                
+1307 Levels: Abbing, Mr. Anthony ... Zimmerman, Mr. Leo</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using regular expression and gsub(), extract only names that are highly related to gender and save them as title vectors</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>title <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"^.*, (.*?)</span><span class="sc">\\</span><span class="st">..*$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, title)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>title <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Mr"     "Mrs"    "Miss"   "Mrs"    "Mr"     "Mr"     "Mr"     "Master"
+ [9] "Mrs"    "Mrs"    "Miss"   "Miss"   "Mr"     "Mr"     "Miss"   "Mrs"   
+[17] "Master" "Mr"     "Mrs"    "Mrs"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the title vector saved above to full again, but save it as a title derived variable</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>full<span class="sc">$</span>title <span class="ot">&lt;-</span> title</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>full<span class="sc">$</span>title <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Mr"     "Mrs"    "Miss"   "Mrs"    "Mr"     "Mr"     "Mr"     "Master"
+ [9] "Mrs"    "Mrs"    "Miss"   "Miss"   "Mr"     "Mr"     "Miss"   "Mrs"   
+[17] "Master" "Mr"     "Mrs"    "Mrs"   </code></pre>
+</div>
+</div>
+<p><br></p>
+<p><code>gsub("^.*, (.*?)\\..*$", "\\1", title)</code> In short, this code uses <strong><code>gsub</code></strong> to search for and replace a pattern in the <strong><code>title</code></strong> string, where the pattern is defined by the regular expression <strong><code>"^.*, (.*?)\\..*$"</code></strong> and the replacement is defined by the string <strong><code>"\\1"</code></strong>. If you want to understand more about regular expression. Please see my blog post: <a href="https://cjleelab.netlify.app/blogs/posts/3_regular_expression_part_1.html">What are Regular Expressions and How to Use Them in R</a></p>
+<p>Then check what are the <code>Unique</code> <code>title</code>s.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(full<span class="sc">$</span>title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Mr"           "Mrs"          "Miss"         "Master"       "Don"         
+ [6] "Rev"          "Dr"           "Mme"          "Ms"           "Major"       
+[11] "Lady"         "Sir"          "Mlle"         "Col"          "Capt"        
+[16] "the Countess" "Jonkheer"     "Dona"        </code></pre>
+</div>
+</div>
+<p><br></p>
+<p>You can see that there are 18 categories in total.</p>
+<p>If you use this derived variable called ‘title’ as it is, the complexity of the model (especially the tree based model) increases considerably, so you need to reduce the category.</p>
+<p>Before that, let’s check the frequency and rate for each category using the <code>descr</code> package.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check frequency, ratio by category</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>descr<span class="sc">::</span><span class="fu">CrossTable</span>(full<span class="sc">$</span>title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Cell Contents 
+|-------------------------|
+|                       N | 
+|           N / Row Total | 
+|-------------------------|
+
+|         Capt |          Col |          Don |         Dona |           Dr |
+|--------------|--------------|--------------|--------------|--------------|
+|            1 |            4 |            1 |            1 |            8 |
+|        0.001 |        0.003 |        0.001 |        0.001 |        0.006 |
+|--------------|--------------|--------------|--------------|--------------|
+
+|     Jonkheer |         Lady |        Major |       Master |         Miss |
+|--------------|--------------|--------------|--------------|--------------|
+|            1 |            1 |            2 |           61 |          260 |
+|        0.001 |        0.001 |        0.002 |        0.047 |        0.199 |
+|--------------|--------------|--------------|--------------|--------------|
+
+|         Mlle |          Mme |           Mr |          Mrs |           Ms |
+|--------------|--------------|--------------|--------------|--------------|
+|            2 |            1 |          757 |          197 |            2 |
+|        0.002 |        0.001 |        0.578 |        0.150 |        0.002 |
+|--------------|--------------|--------------|--------------|--------------|
+
+|          Rev |          Sir | the Countess |
+|--------------|--------------|--------------|
+|            8 |            1 |            1 |
+|        0.006 |        0.001 |        0.001 |
+|--------------|--------------|--------------|</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>The frequencies and proportions of the 18 categories are very different.</p>
+<p>So let’s narrow these down to a total of five categories.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplify into 5 categories</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>full <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If you use "==" instead of "%in%", it won't work as you want because of Recyling Rule.</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">title =</span> <span class="fu">ifelse</span>(title <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Mlle"</span>, <span class="st">"Ms"</span>, <span class="st">"Lady"</span>, <span class="st">"Dona"</span>), <span class="st">"Miss"</span>, title),</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">ifelse</span>(title <span class="sc">==</span> <span class="st">"Mme"</span>, <span class="st">"Mrs"</span>, title),</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">ifelse</span>(title <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Capt"</span>, <span class="st">"Col"</span>, <span class="st">"Major"</span>, <span class="st">"Dr"</span>, <span class="st">"Rev"</span>, <span class="st">"Don"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"Sir"</span>, <span class="st">"the Countess"</span>, <span class="st">"Jonkheer"</span>), <span class="st">"Officer"</span>, title),</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">factor</span>(title))</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co"># After creating the derived variable, check the frequency and ratio for each category</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>descr<span class="sc">::</span><span class="fu">CrossTable</span>(full<span class="sc">$</span>title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Cell Contents 
+|-------------------------|
+|                       N | 
+|           N / Row Total | 
+|-------------------------|
+
+|  Master |    Miss |      Mr |     Mrs | Officer |
+|---------|---------|---------|---------|---------|
+|      61 |     266 |     757 |     198 |      27 |
+|   0.047 |   0.203 |   0.578 |   0.151 |   0.021 |
+|---------|---------|---------|---------|---------|</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="ticket---ticket.size" class="level3">
+<h3 class="anchored" data-anchor-id="ticket---ticket.size">4.5 Ticket -&gt; ticket.size</h3>
+<p><br></p>
+<p>As we saw in <code>Chapter 3.1.3 Summary()</code>, the number of passengers (<code>train</code> and <code>test</code> together) is 1309. However, all passengers’ tickets are not different.</p>
+<p>See the results of <code>summary()</code> and <code>unique()</code> below.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We used length() to get only the number of unique categories.</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(full<span class="sc">$</span>Ticket))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 929</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing all of them was too messy, so only 10 were printed.</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">summary</span>(full<span class="sc">$</span>Ticket), <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    CA. 2343         1601      CA 2144      3101295       347077       347082 
+          11            8            8            7            7            7 
+    PC 17608 S.O.C. 14879       113781        19950 
+           7            7            6            6 </code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Why are there 929 unique tickets when there are no missing values in <code>feature</code>?</p>
+<p>Even the ticket is <code>CA. There are 11 exactly the same number of people as 2343</code>.</p>
+<p>Let’s see who the passengers are.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>full <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter only 11 passengers with matching tickets</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Ticket <span class="sc">==</span> <span class="st">"CA. 2343"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># We don't need to check for all variables, so we only want to look at the variables below.</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Pclass, Name, Age, FamilySized)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Pclass                              Name      Age FamilySized
+1       3        Sage, Master. Thomas Henry 29.88114         Big
+2       3      Sage, Miss. Constance Gladys 29.88114         Big
+3       3               Sage, Mr. Frederick 29.88114         Big
+4       3          Sage, Mr. George John Jr 29.88114         Big
+5       3           Sage, Miss. Stella Anna 29.88114         Big
+6       3          Sage, Mr. Douglas Bullen 29.88114         Big
+7       3 Sage, Miss. Dorothy Edith "Dolly" 29.88114         Big
+8       3                   Sage, Miss. Ada 29.88114         Big
+9       3             Sage, Mr. John George 29.88114         Big
+10      3       Sage, Master. William Henry 14.50000         Big
+11      3    Sage, Mrs. John (Annie Bullen) 29.88114         Big</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>You can see that the 11 passengers above are all from the same family, brothers.</p>
+<p>While there are passengers whose tickets are exactly the same, there are also passengers whose tickets are partially matched.</p>
+<p>Create a <code>ticket.unique</code> derived variable that represents the number of unique numbers (number of characters) of such a ticket.</p>
+<p>Let’s create a derived variable <code>ticket.size</code> with 3 categories based on <code>ticket.unique</code>.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First of all, ticket.unique is saved as all 0</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>ticket.unique <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">nrow</span>(full))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract only the unique ones from ticket features and store them in the tickets vector</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>tickets <span class="ot">&lt;-</span> <span class="fu">unique</span>(full<span class="sc">$</span>Ticket)</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># After extracting only passengers with the same ticket by using overlapping loops, extract and store the length (number of characters) of each ticket.</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tickets)) {</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  current.ticket <span class="ot">&lt;-</span> tickets[i]</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  party.indexes <span class="ot">&lt;-</span> <span class="fu">which</span>(full<span class="sc">$</span>Ticket <span class="sc">==</span> current.ticket)</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For loop 중첩 </span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(party.indexes)) {</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>    ticket.unique[party.indexes[k]] <span class="ot">&lt;-</span> <span class="fu">length</span>(party.indexes)</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Save ticket.unique calculated above as a derived variable</span></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>full<span class="sc">$</span>ticket.unique <span class="ot">&lt;-</span> ticket.unique</span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create ticket.size variable by dividing it into three categories according to ticket.unique</span></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>full <span class="ot">&lt;-</span> full <span class="sc">%&gt;%</span> </span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ticket.size =</span> <span class="fu">case_when</span>(ticket.unique <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">'Single'</span>,</span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>                                 ticket.unique <span class="sc">&lt;</span> <span class="dv">5</span> <span class="sc">&amp;</span> ticket.unique <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Small"</span>,</span>
+<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a>                                 ticket.unique <span class="sc">&gt;=</span> <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Big"</span>),</span>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">ticket.size =</span> <span class="fu">factor</span>(ticket.size,</span>
+<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Single"</span>, <span class="st">"Small"</span>, <span class="st">"Big"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="embarked" class="level3">
+<h3 class="anchored" data-anchor-id="embarked">4.6 Embarked</h3>
+<p><br></p>
+<p>This is <code>feature</code> with two missing values (<code>NA</code>). In the case of <code>Embarked</code>, replace it with <code>S</code>, which is the most frequent value among the three categories.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>full<span class="sc">$</span>Embarked <span class="ot">&lt;-</span> <span class="fu">replace</span>(full<span class="sc">$</span>Embarked,               <span class="co"># Specify Data$feature to replace</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">which</span>(<span class="fu">is.na</span>(full<span class="sc">$</span>Embarked)), <span class="co"># Find only missing values</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">'S'</span>)                        <span class="co"># specify the value to replace</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="fare-1" class="level3">
+<h3 class="anchored" data-anchor-id="fare-1">4.7 Fare</h3>
+<p><br></p>
+<p>For <code>Fare</code>, there was only one missing value.</p>
+<p>Based on the histogram seen above (<code>Chapter 3.5 Fare</code>), missing values are replaced with 0.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>full<span class="sc">$</span>Fare <span class="ot">&lt;-</span> <span class="fu">replace</span>(full<span class="sc">$</span>Fare, <span class="fu">which</span>(<span class="fu">is.na</span>(full<span class="sc">$</span>Fare)), <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>At this point, data preprocessing is complete.</p>
+<p>The following is the process of selecting the variables to be used for model creation while exploring the derived variables created so far.</p>
+<p>In other words, <code>Feature selection</code>.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+</section>
+</section>
+<section id="relationship-to-target-feature-survived-feature-selection" class="level2">
+<h2 class="anchored" data-anchor-id="relationship-to-target-feature-survived-feature-selection">5. Relationship to target feature <code>Survived</code> &amp; Feature selection</h2>
+<p><br></p>
+<p>Prior to full-scale visualization, since the purpose here is to see how well each variable correlates with the survival rate, we did not use the entire <code>full</code> data, but only the <code>train</code> data set that can determine survival and death.</p>
+<p>Also, please note that the <code>plot</code> used above may be duplicated as it is.</p>
+<p><br></p>
+<section id="data-set-split" class="level3">
+<h3 class="anchored" data-anchor-id="data-set-split">5.0 Data set split</h3>
+<p>First, use the code below to split preprocessed <code>full</code> data into <code>train</code> and <code>test</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Before feature selection, select all variables first.</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> full[<span class="dv">1</span><span class="sc">:</span><span class="dv">891</span>, ]</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> full[<span class="dv">892</span><span class="sc">:</span><span class="dv">1309</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="pclass-1" class="level3">
+<h3 class="anchored" data-anchor-id="pclass-1">5.1 Pclass</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Pclass, <span class="at">fill =</span> Survived)) <span class="sc">+</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set plot theme: Converts to a more vivid color.</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Y axis setting </span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x, y axis names and plot main title, sub title</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Pclass"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>,</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Bar plot"</span>, <span class="at">subtitle =</span> <span class="st">"How many people survived in each Pclass?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="sex-1" class="level3">
+<h3 class="anchored" data-anchor-id="sex-1">5.2 Sex</h3>
+<p><br></p>
+<p><strong>Same as <code>Chapter 3.6 Sex</code>.</strong></p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(Survived <span class="sc">~</span> Sex,</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> train, <span class="at">col =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span> <span class="st">"Survival rate by passengers gender"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="embarked-1" class="level3">
+<h3 class="anchored" data-anchor-id="embarked-1">5.3 Embarked</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Embarked, <span class="at">fill =</span> Survived)) <span class="sc">+</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Embarked"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>,</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Bar plot"</span>, <span class="at">subtitle =</span> <span class="st">"How many people survived in each Embarked?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="familysized" class="level3">
+<h3 class="anchored" data-anchor-id="familysized">5.4 FamilySized</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(FamilySized, <span class="at">fill =</span> Survived)) <span class="sc">+</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span> </span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"FamilySized"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>,</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Bar plot"</span>, <span class="at">subtitle =</span> <span class="st">"Survival rate by FamilySized"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>It can be seen that there is a difference in survival rate depending on the number of people on board, and that ‘FamilySized’ and ‘Survived’ have a non-linear relationship.</p>
+</section>
+<section id="age.group" class="level3">
+<h3 class="anchored" data-anchor-id="age.group">5.5 Age.Group</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Age.Group, <span class="at">fill =</span> Survived)) <span class="sc">+</span> </span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span> </span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age group"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>,</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Bar plot"</span>, <span class="at">subtitle =</span> <span class="st">"Survival rate by Age group"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="title" class="level3">
+<h3 class="anchored" data-anchor-id="title">5.6 title</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(title, <span class="at">fill =</span> Survived)) <span class="sc">+</span> </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span> </span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"title"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>,</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Bar plot"</span>, <span class="at">subtitle =</span> <span class="st">"Survival rate by passengers title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="ticket.size" class="level3">
+<h3 class="anchored" data-anchor-id="ticket.size">5.7 ticket.size</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>train <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ticket.size, <span class="at">fill =</span> Survived)) <span class="sc">+</span> </span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span> </span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"ticket.size"</span>, <span class="at">y =</span> <span class="st">"Rate"</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Bar plot"</span>, <span class="at">subtitle =</span> <span class="st">"Survival rate by ticket.size"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="description-of-actual-used-features" class="level3">
+<h3 class="anchored" data-anchor-id="description-of-actual-used-features">5.8 Description of actual used features</h3>
+<p><br></p>
+<p>Now that all the derived variables created so far have been found to be useful, select and save only the variables you will actually use.</p>
+<p>The table below is a brief description of the actual selected variables.</p>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">variable name</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Survived</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">Target feature, survival == 1, death == 0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Sex</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">gender, <code>male</code> or <code>female</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Pclass</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">Cabin Class, First Class (1), Second Class (2), Third Class (3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Embarked</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">Port of embarkation, Southampton (S), Cherbourg (C), Queenstown (Q)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>FamilySized</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">Family size, a derived variable created using <code>SibSp</code> and <code>Parch</code>, with 3 categories</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Age.Group</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">Age group, a derived variable created using <code>Age</code>, with 4 categories</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>title</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">A part of the name, a derived variable made using <code>Name</code>, and 5 categories</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>ticket.size</strong></td>
+<td style="text-align: left;">factor</td>
+<td style="text-align: left;">The length of the unique part of the ticket, a derived variable created using <code>ticket</code>, with 3 categories</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Excluding ID number, select and save 7 input variables and 1 target variable to actually use</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> train <span class="sc">%&gt;%</span> </span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"Pclass"</span>, <span class="st">"Sex"</span>, <span class="st">"Embarked"</span>, <span class="st">"FamilySized"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Age.Group"</span>, <span class="st">"title"</span>, <span class="st">"ticket.size"</span>, <span class="st">"Survived"</span>)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For Submit, extract the Id column vector and store it in ID</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>ID <span class="ot">&lt;-</span> test<span class="sc">$</span>PassengerId</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and save the remaining 6 variables except for Id and Survived</span></span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test <span class="sc">%&gt;%</span> </span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">"Pclass"</span>, <span class="st">"Sex"</span>, <span class="st">"Embarked"</span>, <span class="st">"FamilySized"</span>,</span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Age.Group"</span>, <span class="st">"title"</span>, <span class="st">"ticket.size"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<hr>
+<p><br></p>
+</section>
+</section>
+<section id="machine-learning-model-generation" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-model-generation">6. Machine learning model generation</h2>
+<p><br></p>
+<p>Now is the time to create a machine learning model using the <code>train</code> data set.</p>
+<p>Originally, it is correct to create <code>train</code>, <code>validation</code>, <code>test</code> data sets first, create various models, and then select the final model through cross validation (<code>CV</code>, Cross Validation), but these processes are omitted here and <code>RandomForest After creating only</code>, we will predict (estimate) the <code>test</code> data and even create data to <code>Submit</code> to <code>competition</code>.</p>
+<p><br></p>
+<section id="random-forest-model-generation" class="level3">
+<h3 class="anchored" data-anchor-id="random-forest-model-generation">6.1 Random Forest model generation</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed number for reproducibility.</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1901</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>titanic.rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(Survived <span class="sc">~</span> ., <span class="at">data =</span> train, <span class="at">importance =</span> T, <span class="at">ntree =</span> <span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+</section>
+<section id="feature-importance-check" class="level3">
+<h3 class="anchored" data-anchor-id="feature-importance-check">6.2 Feature importance check</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(titanic.rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    0        1 MeanDecreaseAccuracy MeanDecreaseGini
+Pclass      47.442449 53.94070             64.73724        36.807804
+Sex         54.250630 37.30378             58.66109        57.223102
+Embarked    -6.328112 38.10930             27.32587         9.632958
+FamilySized 32.430898 31.24383             50.13349        18.086894
+Age.Group   15.203313 26.72696             29.36321        10.201187
+title       48.228450 41.60124             57.02653        73.146999
+ticket.size 39.544367 37.80849             59.59915        22.570142</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(titanic.rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="02_week_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="predict-test-data-and-create-submit-data" class="level3">
+<h3 class="anchored" data-anchor-id="predict-test-data-and-create-submit-data">6.3 Predict test data and create submit data</h3>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prediction </span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>pred.rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> titanic.rf, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frame generation </span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>submit <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">PassengerID =</span> ID, <span class="at">Survived =</span> pred.rf)</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the submit data frame to file : csv is created in the folder designated by setwd().</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(submit, <span class="at">file =</span> <span class="st">'./titanic_submit.csv'</span>, <span class="at">row.names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:changjun.chris.lee@gmail.com">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.262">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>CJL Lab - NLP</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">CJL Lab</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../teaching/ds101/index.html">
+ <span class="dropdown-text">Data Science 101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../teaching/ml101/index.html">
+ <span class="dropdown-text">Machine Learning 101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../teaching/media_ds/index.html">
+ <span class="dropdown-text">Media &amp; Data Science</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proj" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proj</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-proj">    
+        <li>
+    <a class="dropdown-item" href="../../../proj/index.html">
+ <span class="dropdown-text">All Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../proj/proj_01.html">
+ <span class="dropdown-text">생애첫연구</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../proj/proj_02.html">
+ <span class="dropdown-text">신진연구자지원사업</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
+        <li>
+    <a class="dropdown-item" href="../../../research/index.html">
+ <span class="dropdown-text">Publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../research/working.html">
+ <span class="dropdown-text">Working in progress</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/index.html">
+ <span class="menu-text">Blogs</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lda-model" id="toc-lda-model" class="nav-link active" data-scroll-target="#lda-model">LDA Model</a></li>
+  <li><a href="#토픽별-주요-단어" id="toc-토픽별-주요-단어" class="nav-link" data-scroll-target="#토픽별-주요-단어">토픽별 주요 단어</a></li>
+  <li><a href="#문서를-토픽별로-분류" id="toc-문서를-토픽별로-분류" class="nav-link" data-scroll-target="#문서를-토픽별로-분류">문서를 토픽별로 분류</a></li>
+  <li><a href="#토픽-이름-짓기" id="toc-토픽-이름-짓기" class="nav-link" data-scroll-target="#토픽-이름-짓기">토픽 이름 짓기</a></li>
+  <li><a href="#최적의-토픽-수-도출" id="toc-최적의-토픽-수-도출" class="nav-link" data-scroll-target="#최적의-토픽-수-도출">최적의 토픽 수 도출</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">NLP</h1>
+<p class="subtitle lead">Topic model</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="lda-model" class="level3">
+<h3 class="anchored" data-anchor-id="lda-model">LDA Model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 전처리하기</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.0     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.1     ✔ tibble    3.1.8
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raw_news_comment <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/news_comment_parasite.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4150 Columns: 5
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (4): reply, press, title, url
+dttm (1): reg_time
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw_news_comment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,150 × 6
+   reg_time            reply                             press title url      id
+   &lt;dttm&gt;              &lt;chr&gt;                             &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+ 1 2020-02-10 16:59:02 "정말 우리 집에 좋은 일이 생겨 …  MBC   '기…  http…     1
+ 2 2020-02-10 13:32:24 "와 너무 기쁘다! 이 시국에 정말 … SBS   [영…  http…     2
+ 3 2020-02-10 12:30:09 "우리나라의 영화감독분들 그리고 … 한겨… ‘기…  http…     3
+ 4 2020-02-10 13:08:22 "봉준호 감독과 우리나라 대한민국… 한겨… ‘기…  http…     4
+ 5 2020-02-10 16:25:41 "노벨상 탄느낌이네요\r\n축하축하… 한겨… ‘기…  http…     5
+ 6 2020-02-10 12:31:45 "기생충 상 받을때 박수 쳤어요.감… 한겨… ‘기…  http…     6
+ 7 2020-02-10 12:31:33 "대한민국 영화사를 새로 쓰고 계…  한겨… ‘기…  http…     7
+ 8 2020-02-11 09:20:52 "저런게 아카데미상 받으면  '태극… 한겨… ‘기…  http…     8
+ 9 2020-02-10 20:53:27 "다시한번 보여주세요 영화관에서 … 한겨… ‘기…  http…     9
+10 2020-02-10 20:22:41 "대한민국 BTS와함께  봉준호감독…  한겨… ‘기…  http…    10
+# … with 4,140 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기본적인 전처리</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>news_comment <span class="ot">&lt;-</span> raw_news_comment <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reply =</span> <span class="fu">str_replace_all</span>(reply, <span class="st">"[^가-힣]"</span>, <span class="st">" "</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">reply =</span> <span class="fu">str_squish</span>(reply)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(reply, <span class="at">.keep_all =</span> T) <span class="sc">%&gt;%</span> <span class="co"># 중복 댓글 제거</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_count</span>(reply, <span class="fu">boundary</span>(<span class="st">"word"</span>)) <span class="sc">&gt;=</span> <span class="dv">3</span>) <span class="co"># 짧은 문서 제거, 3단어 이상 추출</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 명사 추출하기</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(KoNLP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Checking user defined dictionary!</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 명사 추출</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>comment <span class="ot">&lt;-</span> news_comment <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(<span class="at">input =</span> reply,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">output =</span> word,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">token =</span> extractNoun,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">drop =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_count</span>(word) <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="co"># 댓글 내 중복 단어 제거</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(word, <span class="at">.keep_all =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, word) </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>comment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21,457 × 2
+      id word    
+   &lt;int&gt; &lt;chr&gt;   
+ 1     1 우리    
+ 2     1 행복    
+ 3     2 시국    
+ 4     2 감사    
+ 5     2 하다    
+ 6     2 진심    
+ 7     3 우리나라
+ 8     3 영화감독
+ 9     3 영감    
+10     3 봉감    
+# … with 21,447 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 빈도 높은 단어 제거하기</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>count_word <span class="ot">&lt;-</span> comment <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(word) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&lt;=</span> <span class="dv">200</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>n)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 불용어 제거하기, 유의어 처리하기</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어, 유의어 확인하기</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>count_word <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,022 × 2
+    word             n
+    &lt;chr&gt;        &lt;int&gt;
+  1 작품상         200
+  2 자랑           193
+  3 블랙리스트     173
+  4 조국           170
+  5 한국           165
+  6 대박           148
+  7 세계           140
+  8 수상           135
+  9 미국           128
+ 10 들이           123
+ 11 정치           108
+ 12 역사           102
+ 13 오스카         101
+ 14 우리나라        96
+ 15 감독상          93
+ 16 진심            93
+ 17 좌파            90
+ 18 작품            87
+ 19 한국영화        87
+ 20 사람            86
+ 21 배우            85
+ 22 박근혜          84
+ 23 국민            80
+ 24 하다            80
+ 25 최고            79
+ 26 호감            79
+ 27 우리            78
+ 28 문화            75
+ 29 생각            71
+ 30 수상소감        68
+ 31 감사            67
+ 32 가족            65
+ 33 나라            65
+ 34 오늘            63
+ 35 시상식          61
+ 36 문재인          60
+ 37 자랑스럽습니    60
+ 38 송강호          59
+ 39 소름            57
+ 40 정권            54
+ 41 각본상          53
+ 42 감동            53
+ 43 댓글            51
+ 44 빨갱이          51
+ 45 인정            48
+ 46 소식            47
+ 47 자한            47
+ 48 소감            45
+ 49 이미경          44
+ 50 하나            43
+ 51 한국인          43
+ 52 대통령          42
+ 53 정부            42
+ 54 아카데미상      39
+ 55 하게            39
+ 56 위상            38
+ 57 문재            37
+ 58 쾌거            37
+ 59 감격            36
+ 60 순간            36
+ 61 외국            36
+ 62 전세계          36
+ 63 호가            36
+ 64 하면            35
+ 65 눈물            34
+ 66 보수            34
+ 67 와우            34
+ 68 현실            34
+ 69 기사            33
+ 70 영광            33
+ 71 영화계          33
+ 72 경사            32
+ 73 사회            31
+ 74 한국의          31
+ 75 국제            30
+ 76 누구            30
+ 77 때문            29
+ 78 마지막          29
+ 79 얘기            29
+ 80 인간            29
+ 81 자랑스럽        29
+ 82 해서            29
+ 83 이번            28
+ 84 훌륭            28
+ 85 그네            27
+ 86 기분            27
+ 87 로컬            27
+ 88 사람들          27
+ 89 영화제          27
+ 90 정도            27
+ 91 뉴스            26
+ 92 왜구            26
+ 93 하네            26
+ 94 자유            25
+ 95 추카            25
+ 96 기생            24
+ 97 반미            24
+ 98 영화상          24
+ 99 이야기          24
+100 정경            24
+101 해요            24
+102 내용            23
+103 당신            23
+104 세상            23
+105 수준            23
+106 위대            23
+107 이것            23
+108 일본            23
+109 국위선양        22
+110 니들            22
+111 다시            22
+112 중국            22
+113 진정            22
+114 계획            21
+115 국가            21
+116 네이버          21
+117 숟가락          21
+118 쓰레기          21
+119 왕이            21
+120 재미            21
+121 정신            21
+122 존경            21
+123 행복            21
+124 국격            20
+125 문화계          20
+126 예술            20
+127 코로나          20
+128 하기            20
+129 하지            20
+130 가슴            19
+131 강국            19
+132 사건            19
+133 아시아          19
+134 완전            19
+135 우파            19
+136 중요            19
+137 최초            19
+138 부회장          18
+139 사실            18
+140 소리            18
+141 제작            18
+142 각본            17
+143 발전            17
+144 스텝            17
+145 시절            17
+146 실화            17
+147 올해            17
+148 의미            17
+149 자기            17
+150 자신            17
+151 천재            17
+152 토착            17
+153 한거            17
+154 한번            17
+155 해주            17
+156 그것            16
+157 노벨상          16
+158 다들            16
+159 다음            16
+160 모두            16
+161 박수            16
+162 상상            16
+163 시대            16
+164 어디            16
+165 여기            16
+166 오스카상        16
+167 최우수작품상    16
+168 한국어          16
+169 후보            16
+170 고생            15
+171 기대            15
+172 덕분            15
+173 발표            15
+174 상은            15
+175 예상            15
+176 월드컵          15
+177 응원            15
+178 이해            15
+179 조선            15
+180 한류            15
+181 해외            15
+182 까지            14
+183 대한            14
+184 리스            14
+185 모습            14
+186 바이러스        14
+187 생중계          14
+188 여자            14
+189 예전            14
+190 이거            14
+191 이름            14
+192 장면            14
+193 표현            14
+194 하신            14
+195 한국적          14
+196 한마디          14
+197 황금종려상      14
+198 김연아          13
+199 만큼            13
+200 방탄            13
+# … with 5,822 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 목록 만들기</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>stopword <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"들이"</span>, <span class="st">"하다"</span>, <span class="st">"하게"</span>, <span class="st">"하면"</span>, <span class="st">"해서"</span>, <span class="st">"이번"</span>, <span class="st">"하네"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">"해요"</span>, <span class="st">"이것"</span>, <span class="st">"니들"</span>, <span class="st">"하기"</span>, <span class="st">"하지"</span>, <span class="st">"한거"</span>, <span class="st">"해주"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"그것"</span>, <span class="st">"어디"</span>, <span class="st">"여기"</span>, <span class="st">"까지"</span>, <span class="st">"이거"</span>, <span class="st">"하신"</span>, <span class="st">"만큼"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어, 유의어 처리하기</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>count_word <span class="ot">&lt;-</span> count_word <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> stopword) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">recode</span>(word,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"자랑스럽습니"</span> <span class="ot">=</span> <span class="st">"자랑"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"자랑스럽"</span> <span class="ot">=</span> <span class="st">"자랑"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"자한"</span> <span class="ot">=</span> <span class="st">"자유한국당"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"문재"</span> <span class="ot">=</span> <span class="st">"문재인"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"한국의"</span> <span class="ot">=</span> <span class="st">"한국"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"그네"</span> <span class="ot">=</span> <span class="st">"박근혜"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"추카"</span> <span class="ot">=</span> <span class="st">"축하"</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"정경"</span> <span class="ot">=</span> <span class="st">"정경심"</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"방탄"</span> <span class="ot">=</span> <span class="st">"방탄소년단"</span>))</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># ***불용어 목록을 파일로 만들어 활용하기</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># tibble 구조로 불용어 목록 만들기</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>stopword <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">word =</span> <span class="fu">c</span>(<span class="st">"들이"</span>, <span class="st">"하다"</span>, <span class="st">"하게"</span>, <span class="st">"하면"</span>, <span class="st">"해서"</span>, <span class="st">"이번"</span>, <span class="st">"하네"</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"해요"</span>, <span class="st">"이것"</span>, <span class="st">"니들"</span>, <span class="st">"하기"</span>, <span class="st">"하지"</span>, <span class="st">"한거"</span>, <span class="st">"해주"</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"그것"</span>, <span class="st">"어디"</span>, <span class="st">"여기"</span>, <span class="st">"까지"</span>, <span class="st">"이거"</span>, <span class="st">"하신"</span>, <span class="st">"만큼"</span>))</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 목록 저장하기</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># readr::write_csv(stopword, "stopword.csv")</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 목록 불러오기</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co"># stopword &lt;- read_csv("stopword.csv")</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 제거하기 - filter()</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>count_word <span class="ot">&lt;-</span> count_word <span class="sc">%&gt;%</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> stopword<span class="sc">$</span>word)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 제거하기 - dplyr::anti_join()</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>count_word <span class="ot">&lt;-</span> count_word <span class="sc">%&gt;%</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stopword, <span class="at">by =</span> <span class="st">"word"</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="co"># LDA 모델 만들기</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. DTM 만들기</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 문서별 단어 빈도 구하기</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>count_word_doc <span class="ot">&lt;-</span> count_word <span class="sc">%&gt;%</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(id, word, <span class="at">sort =</span> T)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>count_word_doc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17,592 × 3
+      id word           n
+   &lt;int&gt; &lt;chr&gt;      &lt;int&gt;
+ 1    35 한국           2
+ 2   206 자랑           2
+ 3   566 자랑           2
+ 4   578 자랑           2
+ 5   598 자랑           2
+ 6  1173 한국           2
+ 7  1599 한국           2
+ 8  1762 한국           2
+ 9  2240 한국           2
+10  2307 방탄소년단     2
+# … with 17,582 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DTM 만들기</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tm")</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>dtm_comment <span class="ot">&lt;-</span> count_word_doc <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cast_dtm</span>(<span class="at">document =</span> id, <span class="at">term =</span> word, <span class="at">value =</span> n)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>dtm_comment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;DocumentTermMatrix (documents: 3203, terms: 5995)&gt;&gt;
+Non-/sparse entries: 17592/19184393
+Sparsity           : 100%
+Maximal term length: 35
+Weighting          : term frequency (tf)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. LDA 모델 만들기</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("topicmodels")</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽 모델 만들기</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>lda_model <span class="ot">&lt;-</span> <span class="fu">LDA</span>(dtm_comment,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">k =</span> <span class="dv">8</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"Gibbs"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">control =</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="dv">1234</span>))</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 내용 확인</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(lda_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Formal class 'LDA_Gibbs' [package "topicmodels"] with 16 slots
+  ..@ seedwords      : NULL
+  ..@ z              : int [1:17604] 8 8 4 3 7 4 3 1 1 1 ...
+  ..@ alpha          : num 6.25
+  ..@ call           : language LDA(x = dtm_comment, k = 8, method = "Gibbs", control = list(seed = 1234))
+  ..@ Dim            : int [1:2] 3203 5995
+  ..@ control        :Formal class 'LDA_Gibbscontrol' [package "topicmodels"] with 14 slots
+  ..@ k              : int 8
+  ..@ terms          : chr [1:5995] "한국" "자랑" "방탄소년단" "박근혜" ...
+  ..@ documents      : chr [1:3203] "35" "206" "566" "578" ...
+  ..@ beta           : num [1:8, 1:5995] -7.81 -10.22 -10.25 -5.83 -10.25 ...
+  ..@ gamma          : num [1:3203, 1:8] 0.151 0.15 0.11 0.114 0.11 ...
+  ..@ wordassignments:List of 5
+  .. ..$ i   : int [1:17592] 1 1 1 1 1 1 1 1 1 1 ...
+  .. ..$ j   : int [1:17592] 1 98 99 100 101 102 103 104 105 106 ...
+  .. ..$ v   : num [1:17592] 8 4 3 7 4 3 7 2 8 6 ...
+  .. ..$ nrow: int 3203
+  .. ..$ ncol: int 5995
+  .. ..- attr(*, "class")= chr "simple_triplet_matrix"
+  ..@ loglikelihood  : num -126429
+  ..@ iter           : int 2000
+  ..@ logLiks        : num(0) 
+  ..@ n              : int 17604</code></pre>
+</div>
+</div>
+</section>
+<section id="토픽별-주요-단어" class="level3">
+<h3 class="anchored" data-anchor-id="토픽별-주요-단어">토픽별 주요 단어</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽별 단어 확률, beta 추출하기</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>term_topic <span class="ot">&lt;-</span> <span class="fu">tidy</span>(lda_model, <span class="at">matrix =</span> <span class="st">"beta"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>term_topic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 47,960 × 3
+   topic term       beta
+   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1     1 한국  0.000405 
+ 2     2 한국  0.0000364
+ 3     3 한국  0.0000353
+ 4     4 한국  0.00295  
+ 5     5 한국  0.0000353
+ 6     6 한국  0.0000356
+ 7     7 한국  0.00661  
+ 8     8 한국  0.0593   
+ 9     1 자랑  0.0181   
+10     2 자랑  0.00440  
+# … with 47,950 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽별 단어 수</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  topic     n
+  &lt;int&gt; &lt;int&gt;
+1     1  5995
+2     2  5995
+3     3  5995
+4     4  5995
+5     5  5995
+6     6  5995
+7     7  5995
+8     8  5995</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽 1의 beta 합계</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(topic <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sum_beta =</span> <span class="fu">sum</span>(beta))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  sum_beta
+     &lt;dbl&gt;
+1        1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 특정 단어의 토픽별 확률 살펴보기</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"작품상"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  topic term        beta
+  &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+1     1 작품상 0.0000368
+2     2 작품상 0.000763 
+3     3 작품상 0.0000353
+4     4 작품상 0.0000364
+5     5 작품상 0.0000353
+6     6 작품상 0.0695   
+7     7 작품상 0.000727 
+8     8 작품상 0.000388 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 특정 토픽에서 beta가 높은 단어 살펴보기</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(topic <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5,995 × 3
+   topic term        beta
+   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+ 1     6 작품상   0.0695 
+ 2     6 감독상   0.0318 
+ 3     6 한국영화 0.0228 
+ 4     6 수상     0.0214 
+ 5     6 각본상   0.0154 
+ 6     6 나라     0.0143 
+ 7     6 호감     0.0136 
+ 8     6 감격     0.0129 
+ 9     6 순간     0.0125 
+10     6 눈물     0.00788
+# … with 5,985 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 토픽의 주요 단어 살펴보기</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(lda_model, <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Topic.1 Topic.2 Topic.3    Topic.4    Topic.5  Topic.6    Topic.7
+1      작품    대박    조국       역사       자랑   작품상 블랙리스트
+2      진심  시상식  문재인   우리나라       우리   감독상     박근혜
+3      정치    오늘    가족       세계       최고 한국영화       사람
+4      자랑    국민    문화     오스카       감사     수상     송강호
+5  수상소감    소름  대통령       수상       생각   각본상     이미경
+6      댓글    정치    자랑     빨갱이       소식     나라 자유한국당
+7      외국    배우    때문     영화계   국위선양     호감       정권
+8      경사    계획    인정 아카데미상       감동     감격       소감
+9      훌륭    축하    정부       인간       하나     순간       보수
+10     좌파    위상    강국       얘기 방탄소년단     눈물       인정
+11     왜구    최고    호감       로컬     영화상   전세계     마지막
+12     배우    한번    와우       내용   한국영화     진정       기생
+13     예술    쾌거    사건       좌파       정도   노벨상       하나
+14   전세계    생각    국격       정신       와우     소식     네이버
+15   아시아    중국    고생       의미       조선     기사       한국
+16     호감    다음    덕분       생각       존경     문화     이야기
+17     토착    기분    기대       상상       후보     국제     부회장
+18     발전    왕이    정말       국민       우한     각본     쓰레기
+19   사람들    세상    해도       나라       시대     다들       좌파
+20     수준    자랑    눈물       정부       행복     발표       영광
+        Topic.8
+1          한국
+2          미국
+3        한국인
+4          세계
+5          좌파
+6          배우
+7          감동
+8          누구
+9          사회
+10         자유
+11         현실
+12         영광
+13         위대
+14       영화제
+15         이해
+16         자신
+17 최우수작품상
+18         예상
+19   황금종려상
+20         이유</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽별 주요 단어 시각화하기</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 토픽별로 beta가 가장 높은 단어 추출하기</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽별 beta 상위 10개 단어 추출</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>top_term_topic <span class="ot">&lt;-</span> term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(topic) <span class="sc">%&gt;%</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 막대 그래프 만들기</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("scales") # restart 알림 발생 시, '아니요' 선택</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'scales'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    discard</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:readr':
+
+    col_factor</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_term_topic,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder_within</span>(term, beta, topic),</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> beta,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">factor</span>(topic))) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> topic, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">4</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">number_format</span>(<span class="at">accuracy =</span> .<span class="dv">01</span>)) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NLP_4_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="문서를-토픽별로-분류" class="level3">
+<h3 class="anchored" data-anchor-id="문서를-토픽별로-분류">문서를 토픽별로 분류</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 문서별 토픽 확률 gamma 추출하기</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>doc_topic <span class="ot">&lt;-</span> <span class="fu">tidy</span>(lda_model, <span class="at">matrix =</span> <span class="st">"gamma"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>doc_topic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25,624 × 3
+   document topic  gamma
+   &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;
+ 1 35           1 0.151 
+ 2 206          1 0.15  
+ 3 566          1 0.110 
+ 4 578          1 0.114 
+ 5 598          1 0.110 
+ 6 1173         1 0.110 
+ 7 1599         1 0.114 
+ 8 1762         1 0.0962
+ 9 2240         1 0.125 
+10 2307         1 0.135 
+# … with 25,614 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gamma 살펴보기</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>doc_topic <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  topic     n
+  &lt;int&gt; &lt;int&gt;
+1     1  3203
+2     2  3203
+3     3  3203
+4     4  3203
+5     5  3203
+6     6  3203
+7     7  3203
+8     8  3203</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 문서 1의 gamma 합계</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>doc_topic <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(document <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sum_gamma =</span> <span class="fu">sum</span>(gamma))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  sum_gamma
+      &lt;dbl&gt;
+1         1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 문서별 확률이 가장 높은 토픽으로 분류하기</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 문서별로 확률이 가장 높은 토픽 추출하기</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>doc_class <span class="ot">&lt;-</span> doc_topic <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(document) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(gamma, <span class="at">n =</span> <span class="dv">1</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>doc_class</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5,328 × 3
+# Groups:   document [3,203]
+   document topic gamma
+   &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt;
+ 1 1            5 0.159
+ 2 10           8 0.168
+ 3 100          5 0.153
+ 4 1000         7 0.15 
+ 5 1001         1 0.137
+ 6 1001         3 0.137
+ 7 1001         7 0.137
+ 8 1002         3 0.137
+ 9 1002         7 0.137
+10 1002         8 0.137
+# … with 5,318 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 원문에 확률이 가장 높은 토픽 번호 부여하기</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># integer로 변환</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>doc_class<span class="sc">$</span>document <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(doc_class<span class="sc">$</span>document)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 원문에 토픽 번호 부여</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>news_comment_topic <span class="ot">&lt;-</span> raw_news_comment <span class="sc">%&gt;%</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(doc_class, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="st">"document"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in left_join(., doc_class, by = c(id = "document")): Each row in `x` is expected to match at most 1 row in `y`.
+ℹ Row 2 of `x` matches multiple rows.
+ℹ If multiple matches are expected, set `multiple = "all"` to silence this
+  warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결합 확인</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>news_comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,275 × 2
+      id topic
+   &lt;int&gt; &lt;int&gt;
+ 1     1     5
+ 2     2     1
+ 3     2     5
+ 4     2     6
+ 5     3     2
+ 6     3     8
+ 7     4     4
+ 8     5     5
+ 9     5     6
+10     6     3
+# … with 6,265 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 토픽별 문서 수 살펴보기</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>news_comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  topic     n
+  &lt;int&gt; &lt;int&gt;
+1     1   660
+2     2   704
+3     3   663
+4     4   609
+5     5   708
+6     6   690
+7     7   649
+8     8   645
+9    NA   947</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># topic이 NA인 문서 제거</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>news_comment_topic <span class="ot">&lt;-</span> news_comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>news_comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(topic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  topic     n
+  &lt;int&gt; &lt;int&gt;
+1     1   660
+2     2   704
+3     3   663
+4     4   609
+5     5   708
+6     6   690
+7     7   649
+8     8   645</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽별 문서 수와 단어 시각화하기</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 토픽별 주요 단어 목록 만들기</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>top_terms <span class="ot">&lt;-</span> term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(topic) <span class="sc">%&gt;%</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">6</span>, <span class="at">with_ties =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">term =</span> <span class="fu">paste</span>(term, <span class="at">collapse =</span> <span class="st">", "</span>))</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>top_terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  topic term                                                
+  &lt;int&gt; &lt;chr&gt;                                               
+1     1 작품, 진심, 정치, 자랑, 수상소감, 댓글              
+2     2 대박, 시상식, 오늘, 국민, 소름, 정치                
+3     3 조국, 문재인, 가족, 문화, 대통령, 자랑              
+4     4 역사, 우리나라, 세계, 오스카, 수상, 빨갱이          
+5     5 자랑, 우리, 최고, 감사, 생각, 소식                  
+6     6 작품상, 감독상, 한국영화, 수상, 각본상, 나라        
+7     7 블랙리스트, 박근혜, 사람, 송강호, 이미경, 자유한국당
+8     8 한국, 미국, 한국인, 세계, 좌파, 배우                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 토픽별 문서 빈도 구하기</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>count_topic <span class="ot">&lt;-</span> news_comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(topic)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>count_topic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  topic     n
+  &lt;int&gt; &lt;int&gt;
+1     1   660
+2     2   704
+3     3   663
+4     4   609
+5     5   708
+6     6   690
+7     7   649
+8     8   645</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 문서 빈도에 주요 단어 결합하기</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>count_topic_word <span class="ot">&lt;-</span> count_topic <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(top_terms, <span class="at">by =</span> <span class="st">"topic"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">topic_name =</span> <span class="fu">paste</span>(<span class="st">"Topic"</span>, topic))</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>count_topic_word</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  topic     n term                                                 topic_name
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;                                                &lt;chr&gt;     
+1     1   660 작품, 진심, 정치, 자랑, 수상소감, 댓글               Topic 1   
+2     2   704 대박, 시상식, 오늘, 국민, 소름, 정치                 Topic 2   
+3     3   663 조국, 문재인, 가족, 문화, 대통령, 자랑               Topic 3   
+4     4   609 역사, 우리나라, 세계, 오스카, 수상, 빨갱이           Topic 4   
+5     5   708 자랑, 우리, 최고, 감사, 생각, 소식                   Topic 5   
+6     6   690 작품상, 감독상, 한국영화, 수상, 각본상, 나라         Topic 6   
+7     7   649 블랙리스트, 박근혜, 사람, 송강호, 이미경, 자유한국당 Topic 7   
+8     8   645 한국, 미국, 한국인, 세계, 좌파, 배우                 Topic 8   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 토픽별 문서 수와 주요 단어로 막대 그래프 만들기</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(count_topic_word,</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(topic_name, n),</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> n,</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> topic_name)) <span class="sc">+</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n) , <span class="co"># 문서 빈도 표시</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="co"># 막대 밖에 표시</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> term), <span class="co"># 주요 단어 표시</span></span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust =</span> <span class="fl">1.03</span>, <span class="co"># 막대 안에 표시</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">col =</span> <span class="st">"white"</span>, <span class="co"># 색깔</span></span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="co"># 두껍게</span></span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> <span class="st">"nanumgothic"</span>) <span class="sc">+</span> <span class="co"># 폰트</span></span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="co"># y축-막대 간격 줄이기</span></span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">820</span>)) <span class="sc">+</span> <span class="co"># y축 범위</span></span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+font family not found in Windows font database</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="NLP_4_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="토픽-이름-짓기" class="level3">
+<h3 class="anchored" data-anchor-id="토픽-이름-짓기">토픽 이름 짓기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽별 주요 문서 살펴보고 토픽 이름 짓기</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 원문을 읽기 편하게 전처리하기, gamma가 높은 순으로 정렬하기</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>comment_topic <span class="ot">&lt;-</span> news_comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reply =</span> <span class="fu">str_squish</span>(<span class="fu">replace_html</span>(reply))) <span class="sc">%&gt;%</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>gamma)</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gamma, reply)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5,328 × 2
+   gamma reply                                                                  
+   &lt;dbl&gt; &lt;chr&gt;                                                                  
+ 1 0.264 "도서관서 여자화장실서 나오는 남자사서보고 카메라있는지없는지 확인했다…
+ 2 0.260 "봉준호 송강호 블랙리스트 올리고 CJ 이미경 대표는 박근혜가 보기싫다는 …
+ 3 0.239 "보수정권때 블랙리스트에 오른 봉준호 송강호가 보기싫다는 박근혜의 말한…
+ 4 0.238 "도서관서 여자화장실서 나오는 남자사서보고 카메라있는지없는지 확인했다…
+ 5 0.235 "당초 \"1917\"과 \"기생충\"의 접전을[초기엔 1917이 훨씬 우세]예상했지… 
+ 6 0.234 "박그네 밑에서 블랙리스트 있었는데 ㅋㅋㅋㅋㅋㅋㅋ 이미경이는 박근혜가 …
+ 7 0.226 "위대한 박정희 삼성이 대한민국을 세계에 우뚝 세워 놨기에 가능한 일....…
+ 8 0.225 "기생충 영화보고 좌빨이 얼마나 기생충인지 못느낀 사람 제정신이야? 좌빨…
+ 9 0.225 "봉준호 감독과 송강호 배우는 이명박그네 정권 시절 문화계 블랙리스트 였…
+10 0.224 "나중에 기생충 정부 영화 한편 나오겠네. 남자 주연 문xx ,여자주연 김정x…
+# … with 5,318 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 주요 단어가 사용된 문서 살펴보기</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽 1 내용 살펴보기</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(topic <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(reply, <span class="st">"작품"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(reply)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "봉감독의 'local'이라는 말에 발끈했나요? 미국 아카데미의 놀라운 변화입니다. 기생충이란 영화의 작품적 우수성 뿐만 아니라 '봉준호'라는 개인의 네임벨류와 인간적 매력과 천재성이 이번 아카데미 수상에 큰 역할을 한 것 같네요. 그의 각종 수상소감을 보면 면면히 드러나네요~~"                                                                                           
+ [2] "이 작품을 기준으로 앞으로도 계속 쓰여질 것입니다. 진심으로 축하드립니다^^"                                                                                                                                                                                                                                                                                         
+ [3] "이런 위대한 작품과 감독을 블랙리스트에 올려 대중에게서 뺏어 묻어버릴려고 했던 쥐닥정권 그걸 찬양하는 소시오패스일베충 벌래에게 무한한 저주가 함께하길 기원합니다.^^"                                                                                                                                                                                               
+ [4] "폐쇄적이라는 평가를 받아온 오스카가 외국영화에 작품상을 주는걸 보니 또다른 의미의 권위가 느껴진다"                                                                                                                                                                                                                                                                 
+ [5] "봉준호감독 대단하다 열등감이있는외모 안된다는 편견 자신과의 싸움 결국 그럭게 말하는자 들은 뭐하고사는지?우스꽝스럽다고 비꼬고 놀렸을만한 모습이지만 그들은 이런상 한번이라도 받을수있는 자격이있는지 암튼 대다하고 작품활동열심히 하셔서 멋진사람으로 기억되길,.,,외모비하하는 찌질이들은 아무재능없는 소인배가되고 결국 계속 악플 올렸다간 따돌림이나 당하겠지..."
+ [6] "이런 감독을 박그네 토착왜구 정부에서는 좌파 블랙리스트에 올렸었지 ㅋㅋㅋ 근데 정작 미국에선 작품상 ㅋㅋㅋ"                                                                                                                                                                                                                                                         
+ [7] "축하합니다!! 자랑스럽고 멋져요^^ 앞으로도 멋진 작품 부탁드립니다!"                                                                                                                                                                                                                                                                                                 
+ [8] "정말 대단하다는 말밖에는~ 진심으로 축하드립니다. 앞으로도 좋은 작품 많이 만들어주세요~^^"                                                                                                                                                                                                                                                                          
+ [9] "한류의 또다른 이정표를 봉준호가 해내는구가 오스카상 특히 작품상은 비영어권 국가가 수상하기 어려운 상당히 보수적인데 대단하다 썩은 정치로 한숨쉬는 국민들에게 또 다른 희망과 자부심을 심어줘서 고맙다"                                                                                                                                                              
+[10] "작품이라고 할 수 없는 습작 정도의 물건을 상을 줬으니, 그동안 오스카 상이 얼마나 추접한 상인지 증명하는 것임."                                                                                                                                                                                                                                                      
+[11] "기생충을 재밌게는봤지만,작품성이 그리대단한줄은 몰랐네요,축하합니다"                                                                                                                                                                                                                                                                                               
+[12] "완전감동이네요..제2의기생충같은 작품 많이많이 만들어주세요.."                                                                                                                                                                                                                                                                                                      
+[13] "봉감독님 너무 축하합니다! 앞으로도 훌륭한 작품들 기대합니다♥"                                                                                                                                                                                                                                                                                                      
+[14] "작품도 뛰어났지만 국가 위상이 그만큼 높아진 것. 촛불시민혁명 국민들이 비폭력적으로 정권교체 하는데 성공하고 문 대통령이 남북정상회담 멋지게 해내셨고 그 과정을 거치면서 대한민국이 서구 사회에 유명해진 것. 분위기가 뒷받침 해주지 않으면 아무리 작품이 좋아도 이런 성과는 못냄."                                                                                  
+[15] "각본상받았다고 하길래 그게 끝인줄 알았더니 시작에 불과했었네. 한국영화의 쾌거로구나. 헐리웃영화가 아닌 작품이 작품상을 받은게 최초라는데 역사를 썼다. 와우~"                                                                                                                                                                                                       
+[16] "작품..감독..배우는 말할 것도 없고 샤론최님까지 통역을 잘 해주셔서 외국사람들으 현지호응도..작품 이해도가 높아져서.. 분위기 잘 잡아주셨나보네요."                                                                                                                                                                                                                   
+[17] "개인적으론 봉감독 작품중에 여전히 살인의 추억이 가장 인상깊지만... 기생충은 전세계적으로 화두가 된 주제선정이 탁월했고 풀어내는 모양새도 능수능란하게 과하지도 덜하지도 않게 딱 좋았다. 여유있게 유머를 가지고 오스카를 향한 긴 레이스에서 정치[?]도 잘했다."                                                                                                      
+[18] "백인우월주의가 팽배한 그 나라에서 조차 인정할 수 밖에 없을만큼 대단한 작품이었다는 반증인거지. 그리고 저 영화 보고 기분 더러웠다는 건 제대로 느낀거 아닐까? 기생충 자체가 사회풍자가 들어있으니까. 원래 너무 현실적인게 가장 불편함. 극구 부정하고 싶거든."                                                                                                        
+[19] "각본상 준거보니 작품상은 1917 아니면 조커다"                                                                                                                                                                                                                                                                                                                       
+[20] "축하드려요. 당신은 우리의 자랑입니다. 좋은 작품 앞으로도 기대할게요^^ 짝짝짝"                                                                                                                                                                                                                                                                                      
+[21] "오스카 작품상 탔다 비영어권처음이다"                                                                                                                                                                                                                                                                                                                               
+[22] "축하합니다~^^. 작품상까지 받은 작품인데 주연상이 없음이 좀 아이러니지만...."                                                                                                                                                                                                                                                                                       
+[23] "김기덕 감독님 영화는 이렇게 해야됩니다. 맨날 어둡고 보기 힘든 영화만 만들지 마시고 이런 작품도 만들어 주세요! 봉 감독님 진심 축하드립니다."                                                                                                                                                                                                                        
+[24] "솔직히 작품상은 조커가 타는 게 맞는데 동양인 쿼터 준다고 많이 배려해 준 듯."                                                                                                                                                                                                                                                                                       
+[25] "솔직히 눈물난다ㅡ내가 내 인생영화로 꼽았던 작품! 개봉첫날 두번 봤다 ㅜ.ㅜ"                                                                                                                                                                                                                                                                                         
+[26] "와...햐늘을 찌르는 작품성을 바탕으로 아카데미는 로컬영화제라고 인터뷰하던 그대의 고귀한 자태는정말 멋잇엇어요....자랑스럽습니다"                                                                                                                                                                                                                                   
+[27] "남들은 남감독 작품이 해외서 상을 타니 입에 침이 마르도록 찬양을 한다. 왜 저렇게 남자일을 자기일처럼 좋아할까? 저 자리에 여성은 없고 향후 몇 십년 동안 없을 수도 있단 생각에 난 웃음도 나질 않는다. ㅉ"                                                                                                                                                             
+[28] "우리나라 영화제..10년도 넘은 배우한테..신인신ㅇ 주고 공동수상 남발하고..감독상 받으면 작품상은 포기해야 하는데..외국의 냉철함 너무 보기 좋네"                                                                                                                                                                                                                      
+[29] "축하합니다. 어깨가 으쓱해집니다. 작품상까지 수상하시길 응원합니다."                                                                                                                                                                                                                                                                                                
+[30] "꿈 아니냐?? 작품상??? 전 세계에서 한해 제일 잘만들면서 대중성도 있는 작품에 주는 그상 맞냐? World no.1 ㄷ ㄷ ㄷ ㄷ ㄷ 진짜 개소름"                                                                                                                                                                                                                                 
+[31] "근데 나는 봉준호 송강호도 대단하지만 이선균이 진심 대단함. 이선균 필모는 넘사네 진짜. 작품도 다양하고."                                                                                                                                                                                                                                                            
+[32] "정말 자랑스럽습니다! 눈물흘리며 같이 환호했습니다! 앞으로도 역사에 남을 작품 많이 남겨주세요!"                                                                                                                                                                                                                                                                     
+[33] "다른 작품들도 진짜 쟁쟁했는데.... 이건 대한민국 영화의 새로운 역사입니다!!! 봉 감독님 진짜 축하드려요!!! 그리고 수구꼴통 토착왜구 새끼들아!!! 제발 이런걸 정치적인거랑 엮지마라!!!!! 늬들의 행태 너무나 역겹다!!!!!!"                                                                                                                                              
+[34] "아카데미에서 큰상받은건 축하하고 대한민국인으로서 자랑스럽긴한데, 영알못은 기생충의 어떤점이 작품성이 있는지 잘 모르겠다."                                                                                                                                                                                                                                         
+[35] "일하다가 눈물날뻔..^^ 감격스럽네요 자랑스럽네요 봉감독님의 더 많은 작품, 훌륭한 작품 기대합니다~~^^"                                                                                                                                                                                                                                                               
+[36] "얼마전 괴물 다시보는데도 진짜 봉감독님 작품 너무 재밌어요! 수상 축하드려요!"                                                                                                                                                                                                                                                                                       
+[37] "작품성과 흥행성을 모두 거머쥔 시대상을 딱 반영하는 상이다. 오스카도 반영했을듯 하네ㅋ"                                                                                                                                                                                                                                                                             
+[38] "자본주의 민주주의 아메리카가 인정한 작품. 기생충이 짱개의 유사사회주의 찬양한것처럼 달창 거지기생충들 그냥 좋댄다 ㅋㅋㅋㅋㅋ"                                                                                                                                                                                                                                      
+[39] "작품상은 가능성이 희박하다는 기사를 봤었는데... 기적이네요.... 투표 방식이 이번에 바껴서 그런가"                                                                                                                                                                                                                                                                   
+[40] "봉준호 감독님! 대한민국을 널리 알려주셔서 감사합니다. 수상소감 말씀하실때 눈물이 핑 돌더군요. 앞으로도 좋은 작품 세계적인 영화를 기대합니다. 축하드립니다.기생충! 봉준호 감독님! 화이팅입니다 ^^"                                                                                                                                                                  
+[41] "아마 반백년내에는 한국에서 이런 영화가 나오긴 힘들듯.. 칸 황금종려상과 아카데미 작품상을 동시에 수상한것도 전세계적으로 60년만에 일인거고.. 진짜 어메이징한 올해 한국의 최대 이변일듯.."                                                                                                                                                                           
+[42] "예전 살인의 추억을 극장에서 보고 작품,상업성을 다 갖춘 감독의 출현에 지금껏 응원해왔어요 정말 뭉클합니다"                                                                                                                                                                                                                                                          
+[43] "블랙리스트랑 작품의 완성도랑 무'슨상'관임? 예술적으로 완성도 높은 작품을 만들었으니 상을 받은거지. 문화계 블랙리스트가 뭐 능력떨어지는 예술인들에 대한 리스트도 아니고."                                                                                                                                                                                           
+[44] "축하 합니다 쭉 좋은 작품 부탁 합니다."                                                                                                                                                                                                                                                                                                                             
+[45] "감독님 정말 멋집니다!!! 헐리우드작품 감독님의 영화도 한번 보고싶습니다!! 화이팅~~~~~~"                                                                                                                                                                                                                                                                             
+[46] "작품상 받을 포스인데..."                                                                                                                                                                                                                                                                                                                                           
+[47] "축하합니다. 앞으로도 좋은 작품 기대하겠습니다."                                                                                                                                                                                                                                                                                                                    
+[48] "축하드립니다~ 국제적 작품이 되엇어요 ♡~♡"                                                                                                                                                                                                                                                                                                                          
+[49] "황금종려상에 아카데미 작품상까지 정말 대단합니다"                                                                                                                                                                                                                                                                                                                  
+[50] "대단~^^ 작품상까지~ 올들어 젤 기쁜 기사네요"                                                                                                                                                                                                                                                                                                                       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(topic <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(reply, <span class="st">"진심"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(reply)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "한국문화는 1등수준. 정치는 개돼지 3등수준. 대한민국 문화수준을 엎 그레이드 한 봉준호감독에게 존경을 표한다. 월드컵4강.봉준호감독 오스카수상. 한국국민들 절대로 잊혀지지않는 대사건이다. 정말 진심으로 축하드립니다.특히 CJ가 한국영화 산업에 큰 발전에 국민의 한 사람으로 감사드린다."
+ [2] "진심 축하드립니다. 대한민국 예술처럼 정치, 경제도 발전해서 살기좋은 나라가 되었으면 좋겠네요"                                                                                                                                                                                         
+ [3] "이 작품을 기준으로 앞으로도 계속 쓰여질 것입니다. 진심으로 축하드립니다^^"                                                                                                                                                                                                            
+ [4] "소름이 돋을 정도로 믿기지 않습니다! 진심으로 축하드립니다 살인의추억을 보고 우리나라에도 이렇게 훌륭한 영화를 만드는 감독이 있구나 느꼈고 그 이후로 계속 봉감독님 영화를 챙겨보게 되었는데 이제는 세계인도 인정해주는 감독이 되어 너무나도 벅찹니다 다시한번 진심으로 축하드립니다"   
+ [5] "봉감독님 진심 축하드립니다! 아카데미에서 외국 영화 기생충이 4관왕을 차지했다는 것은 아카데미도 기류가 바뀌고 있다는 ... 험지에서 대단한 업적을 남긴 감독, 배우들, 스텝들에게 찬사를 보냅니다!"                                                                                        
+ [6] "기생충!! 우와~~^^이게 실화인가요? 진심으로 축하드려요"                                                                                                                                                                                                                                
+ [7] "정말 대단하다는 말밖에는~ 진심으로 축하드립니다. 앞으로도 좋은 작품 많이 만들어주세요~^^"                                                                                                                                                                                             
+ [8] "진심으로 축하드립니다. 자랑스럽습니다."                                                                                                                                                                                                                                               
+ [9] "진심 축하드려요 봉준호감독님 진심 응원합니다"                                                                                                                                                                                                                                         
+[10] "한국영화계에 이런일이 생길 줄은 꿈에도 몰랐는데 4관왕 진심으로 축하드립니다."                                                                                                                                                                                                         
+[11] "영화 보면서 봉준호는 천재다 라고 외쳤는데~ 진심 자랑스럽다 축하합니다"                                                                                                                                                                                                                
+[12] "와 진심 대박 ㅜㅜ 화이트 파티인 아카데미에서 ㅠㅜ"                                                                                                                                                                                                                                    
+[13] "와.. 대박 진심 호명순간 소리질렀어여"                                                                                                                                                                                                                                                 
+[14] "김기덕 감독님 영화는 이렇게 해야됩니다. 맨날 어둡고 보기 힘든 영화만 만들지 마시고 이런 작품도 만들어 주세요! 봉 감독님 진심 축하드립니다."                                                                                                                                           
+[15] "세계가 인정하는 대한민국 예술! 진심으로 자랑스럽다ㅠㅠ"                                                                                                                                                                                                                               
+[16] "근데 나는 봉준호 송강호도 대단하지만 이선균이 진심 대단함. 이선균 필모는 넘사네 진짜. 작품도 다양하고."                                                                                                                                                                               
+[17] "이걸 정치적으로 까는거보면 뇌가있나 싶다 진심으로 /"                                                                                                                                                                                                                                  
+[18] "축하드립니다. 대한민국 사람으로서 봉준호감독님 세계적인 거장에 한걸음 다가가신걸 진심으로 축하드려요~~^^"                                                                                                                                                                             
+[19] "우와 !!!!! 진심으로 축하드려요 !!!!"                                                                                                                                                                                                                                                  
+[20] "어~~ 진짜 되네? 진심으로 축하드려요"                                                                                                                                                                                                                                                  
+[21] "진심 축하드립니다~~~ 너무 멋져요!!"                                                                                                                                                                                                                                                   
+[22] "대박입니다~~ 진심으로 축하합니다~!!!"                                                                                                                                                                                                                                                 
+[23] "와 대박이네요 ~ 진심으로 축하드립니다."                                                                                                                                                                                                                                               
+[24] "아카데미 4관왕 거머쥐신 봉준호 감독님 진심 추카드려요"                                                                                                                                                                                                                                
+[25] "미쳤다 진심 비명지르고"                                                                                                                                                                                                                                                               
+[26] "진심 대박이다.와"                                                                                                                                                                                                                                                                     
+[27] "캬 역사를만드셨네 진심 축하드립니다"                                                                                                                                                                                                                                                  
+[28] "와...진심 미쳤다이건."                                                                                                                                                                                                                                                                
+[29] "진심 축하드려요 영화못봤는데 봐야겠네요"                                                                                                                                                                                                                                              
+[30] "진짜 자랑스럽고 하고싶은 말이 많은데 벅차서 글이 안써지네요 봉감독님~♡ 진심으로 축하드려요"                                                                                                                                                                                           
+[31] "너무 자랑스럽다. 진심. 레알."                                                                                                                                                                                                                                                         
+[32] "진심 소름~~축하해요!"                                                                                                                                                                                                                                                                 
+[33] "봉준호 감독관님 진심으로 축하드립니다."                                                                                                                                                                                                                                               
+[34] "와 너무 기쁘다! 이 시국에 정말 내 일같이 기쁘고 감사하다!!! 축하드려요 진심으로!!!"                                                                                                                                                                                                   
+[35] "진심...너무 자랑스럽습니다. ㅠㅠㅠㅠㅠ 너무 감격스러워요 ㅠㅠㅠ"                                                                                                                                                                                                                      
+[36] "진심 역사적인 쾌거입니다."                                                                                                                                                                                                                                                            
+[37] "진심 동시대에 살고 있는 것만으로도 영광스럽다ㅠㅠㅠ"                                                                                                                                                                                                                                  
+[38] "봉준호 감독! 기생충! 송강호외 배우님들 대한민국 진심으로 축하합니다~"                                                                                                                                                                                                                 
+[39] "진심으로 축하하며 여러분들이 진정한 애국자네요"                                                                                                                                                                                                                                       </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>comment_topic <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(topic <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(reply, <span class="st">"정치"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(reply)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "한국문화는 1등수준. 정치는 개돼지 3등수준. 대한민국 문화수준을 엎 그레이드 한 봉준호감독에게 존경을 표한다. 월드컵4강.봉준호감독 오스카수상. 한국국민들 절대로 잊혀지지않는 대사건이다. 정말 진심으로 축하드립니다.특히 CJ가 한국영화 산업에 큰 발전에 국민의 한 사람으로 감사드린다."
+[2] "진심 축하드립니다. 대한민국 예술처럼 정치, 경제도 발전해서 살기좋은 나라가 되었으면 좋겠네요"                                                                                                                                                                                         
+[3] "좌좀세력, 태극기부대, 빨갱이, 일베애들과 이런것들을 이용애 먹는 정치인들만 없어지면 우리나라 엄청 발전할텐데...기업, 문화 모두 선진국인데 저런것들이 발목을 잡고 너무 깍아먹는다."                                                                                                    
+[4] "정치충들 상은 봉준호가 받았는데 왜 정치얘기를하고있냐"                                                                                                                                                                                                                                
+[5] "문화는 일류 정치는 삼류에 개막장"                                                                                                                                                                                                                                                     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 토픽 이름 목록 만들기</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>name_topic <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">topic =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"1. 작품상 수상 축하, 정치적 댓글 비판"</span>,</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"2. 수상 축하, 시상식 감상"</span>,</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"3. 조국 가족, 정치적 해석"</span>,</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"4. 새 역사 쓴 세계적인 영화"</span>,</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"5. 자랑스럽고 감사한 마음"</span>,</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"6. 놀라운 4관왕 수상"</span>,</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"7. 문화계 블랙리스트, 보수 정당 비판"</span>,</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"8. 한국의 세계적 위상"</span>))</span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽 이름과 주요 단어 시각화하기</span></span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽 이름 결합하기</span></span>
+<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>top_term_topic_name <span class="ot">&lt;-</span> top_term_topic <span class="sc">%&gt;%</span></span>
+<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(name_topic, name_topic, <span class="at">by =</span> <span class="st">"topic"</span>)</span>
+<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a>top_term_topic_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 83 × 4
+# Groups:   topic [8]
+   topic term        beta name                                 
+   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;                                
+ 1     1 작품     0.0299  1. 작품상 수상 축하, 정치적 댓글 비판
+ 2     1 진심     0.0240  1. 작품상 수상 축하, 정치적 댓글 비판
+ 3     1 정치     0.0192  1. 작품상 수상 축하, 정치적 댓글 비판
+ 4     1 자랑     0.0181  1. 작품상 수상 축하, 정치적 댓글 비판
+ 5     1 수상소감 0.0166  1. 작품상 수상 축하, 정치적 댓글 비판
+ 6     1 댓글     0.0151  1. 작품상 수상 축하, 정치적 댓글 비판
+ 7     1 외국     0.0122  1. 작품상 수상 축하, 정치적 댓글 비판
+ 8     1 경사     0.0107  1. 작품상 수상 축하, 정치적 댓글 비판
+ 9     1 훌륭     0.00998 1. 작품상 수상 축하, 정치적 댓글 비판
+10     1 좌파     0.00814 1. 작품상 수상 축하, 정치적 댓글 비판
+# … with 73 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 막대 그래프 만들기</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_term_topic_name,</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder_within</span>(term, beta, name),</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> beta,</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="fu">factor</span>(topic))) <span class="sc">+</span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> name, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reordered</span>() <span class="sc">+</span></span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"영화 기생충 아카데미상 수상 기사 댓글 토픽"</span>,</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"토픽별 주요 단어 Top 10"</span>,</span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb70-13"><a href="#cb70-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb70-14"><a href="#cb70-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"nanumgothic"</span>),</span>
+<span id="cb70-15"><a href="#cb70-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb70-16"><a href="#cb70-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb70-17"><a href="#cb70-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+not found in Windows font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+not found in Windows font database
+
+Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+not found in Windows font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, :
+font family not found in Windows font database</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database
+
+Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : font
+family not found in Windows font database</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="NLP_4_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="최적의-토픽-수-도출" class="level3">
+<h3 class="anchored" data-anchor-id="최적의-토픽-수-도출">최적의 토픽 수 도출</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 하이퍼파라미터 튜닝으로 토픽 수 정하기</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 토픽 수 바꿔가며 LDA 모델 여러 개 만들기</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ldatuning") # 사양이 낮은 컴퓨터는 설치가 어려움, 에러 지속적으로 발생되는 것 확인</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ldatuning)  <span class="co"># windows defender 알림 발생 시, '홈 네트워크, 회사 네트워크 등의 개인 네트워크'만 체크 후 '엑세스 허용' 선택</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">FindTopicsNumber</span>(<span class="at">dtm =</span> dtm_comment,  <span class="co"># windows defender 알림 발생 시, '홈 네트워크, 회사 네트워크 등의 개인 네트워크'만 체크 후 '엑세스 허용' 선택</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">topics =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">return_models =</span> T,</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">control =</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="dv">1234</span>))</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>models <span class="sc">%&gt;%</span></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(topics, Griffiths2004)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   topics Griffiths2004
+1      20     -127213.1
+2      19     -127445.4
+3      18     -126984.0
+4      17     -127317.9
+5      16     -127139.2
+6      15     -126643.9
+7      14     -126742.4
+8      13     -126720.4
+9      12     -127429.4
+10     11     -126677.9
+11     10     -127039.5
+12      9     -127133.2
+13      8     -127234.1
+14      7     -128079.5
+15      6     -128948.9
+16      5     -129672.9
+17      4     -131006.8
+18      3     -133171.8
+19      2     -137154.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 최적 토픽 수 정하기</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">FindTopicsNumber_plot</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `&lt;scale&gt;` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+of ggplot2 3.3.4.
+ℹ The deprecated feature was likely used in the ldatuning package.
+  Please report the issue at &lt;https://github.com/nikita-moor/ldatuning/issues&gt;.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="NLP_4_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 모델 추출하기</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 토픽 수가 8개인 모델 추출하기</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>optimal_model <span class="ot">&lt;-</span> models <span class="sc">%&gt;%</span></span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(topics <span class="sc">==</span> <span class="dv">8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(LDA_model) <span class="sc">%&gt;%</span> <span class="co"># 모델 추출</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>  .[[<span class="dv">1</span>]] <span class="co"># list 추출</span></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="co"># optimal_model</span></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(optimal_model, <span class="at">matrix =</span> <span class="st">"beta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 47,960 × 3
+   topic term       beta
+   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1     1 한국  0.000405 
+ 2     2 한국  0.0000364
+ 3     3 한국  0.0000353
+ 4     4 한국  0.00295  
+ 5     5 한국  0.0000353
+ 6     6 한국  0.0000356
+ 7     7 한국  0.00661  
+ 8     8 한국  0.0593   
+ 9     1 자랑  0.0181   
+10     2 자랑  0.00440  
+# … with 47,950 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lda_model</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lda_model, <span class="at">matrix =</span> <span class="st">"beta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 47,960 × 3
+   topic term       beta
+   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1     1 한국  0.000405 
+ 2     2 한국  0.0000364
+ 3     3 한국  0.0000353
+ 4     4 한국  0.00295  
+ 5     5 한국  0.0000353
+ 6     6 한국  0.0000356
+ 7     7 한국  0.00661  
+ 8     8 한국  0.0593   
+ 9     1 자랑  0.0181   
+10     2 자랑  0.00440  
+# … with 47,950 more rows</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:changjun.chris.lee@gmail.com">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.262">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Changjun Lee">
+<meta name="dcterms.date" content="2023-03-21">
+
+<title>CJL Lab - Understanding the Confusion Matrix and ROC Curve in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">CJL Lab</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../teaching/ds101/index.html">
+ <span class="dropdown-text">Data Science 101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../teaching/ml101/index.html">
+ <span class="dropdown-text">Machine Learning 101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../teaching/media_ds/index.html">
+ <span class="dropdown-text">Media &amp; Data Science</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proj" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Proj</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-proj">    
+        <li>
+    <a class="dropdown-item" href="../../proj/index.html">
+ <span class="dropdown-text">All Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../proj/proj_01.html">
+ <span class="dropdown-text">생애첫연구</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../proj/proj_02.html">
+ <span class="dropdown-text">신진연구자지원사업</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
+        <li>
+    <a class="dropdown-item" href="../../research/index.html">
+ <span class="dropdown-text">Publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../research/working.html">
+ <span class="dropdown-text">Working in progress</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../blogs/index.html">
+ <span class="menu-text">Blogs</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><strong>Introduction</strong></a></li>
+  <li><a href="#loading-the-titanic-dataset" id="toc-loading-the-titanic-dataset" class="nav-link" data-scroll-target="#loading-the-titanic-dataset"><strong>Loading the Titanic Dataset</strong></a></li>
+  <li><a href="#confusion-matrix" id="toc-confusion-matrix" class="nav-link" data-scroll-target="#confusion-matrix"><strong>Confusion Matrix</strong></a>
+  <ul class="collapse">
+  <li><a href="#creating-a-confusion-matrix-in-r" id="toc-creating-a-confusion-matrix-in-r" class="nav-link" data-scroll-target="#creating-a-confusion-matrix-in-r"><strong>Creating a Confusion Matrix in R</strong></a></li>
+  <li><a href="#interpreting-the-confusion-matrix" id="toc-interpreting-the-confusion-matrix" class="nav-link" data-scroll-target="#interpreting-the-confusion-matrix"><strong>Interpreting the Confusion Matrix</strong></a></li>
+  </ul></li>
+  <li><a href="#roc-curve" id="toc-roc-curve" class="nav-link" data-scroll-target="#roc-curve"><strong>ROC Curve</strong></a>
+  <ul class="collapse">
+  <li><a href="#creating-an-roc-curve-in-r" id="toc-creating-an-roc-curve-in-r" class="nav-link" data-scroll-target="#creating-an-roc-curve-in-r"><strong>Creating an ROC Curve in R</strong></a></li>
+  <li><a href="#interpreting-the-roc-curve" id="toc-interpreting-the-roc-curve" class="nav-link" data-scroll-target="#interpreting-the-roc-curve"><strong>Interpreting the ROC Curve</strong></a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><strong>Conclusion</strong></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Understanding the Confusion Matrix and ROC Curve in R</h1>
+<p class="subtitle lead">혼동이 찾아오는 혼돈행렬</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Changjun Lee </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 21, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction"><strong>Introduction</strong></h2>
+<p>In this blog post, we will explore two essential concepts in evaluating classification models: the confusion matrix and the Receiver Operating Characteristic (ROC) curve. We will go through the basics, discuss how to interpret these metrics, and provide R code snippets to create and visualize them using the popular <strong><code>caret</code></strong> and <strong><code>pROC</code></strong> packages. We’ll demonstrate these concepts using the Titanic dataset.</p>
+</section>
+<section id="loading-the-titanic-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-titanic-dataset"><strong>Loading the Titanic Dataset</strong></h2>
+<p>The Titanic dataset is not available in R by default, but it can be loaded using the <strong><code>titanic</code></strong> package. First, install and load the package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the titanic package if you haven't already</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if (!requireNamespace("titanic", quietly = TRUE)) {</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   install.packages("titanic")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the titanic package</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.0     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.1     ✔ tibble    3.1.8
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Titanic dataset</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_train"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_test"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the training and testing datasets</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(titanic_train, titanic_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before we proceed, let’s preprocess the dataset by selecting relevant features and handling missing values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant features and remove rows with missing values</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data[, <span class="fu">c</span>(<span class="st">"Survived"</span>, <span class="st">"Pclass"</span>, <span class="st">"Sex"</span>, <span class="st">"Age"</span>, <span class="st">"SibSp"</span>, <span class="st">"Parch"</span>, <span class="st">"Fare"</span>)]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(titanic_data)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the 'Sex' variable to a factor</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>titanic_data<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(titanic_data<span class="sc">$</span>Sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="confusion-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="confusion-matrix"><strong>Confusion Matrix</strong></h2>
+<p>A confusion matrix is a tabular representation of the predictions made by a classification model, showing the number of correct and incorrect predictions for each class. It is a useful tool to evaluate a model’s performance and identify its strengths and weaknesses.</p>
+<section id="creating-a-confusion-matrix-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-confusion-matrix-in-r"><strong>Creating a Confusion Matrix in R</strong></h3>
+<p>To demonstrate the confusion matrix, we will use the preprocessed Titanic dataset and create a logistic regression model. First, let’s load the required packages and split the dataset into training (80%) and testing (20%) sets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'caret'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    lift</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset into training (80%) and testing (20%) sets</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(titanic_data<span class="sc">$</span>Survived, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>titanic_train <span class="ot">&lt;-</span> titanic_data[train_index, ]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>titanic_test <span class="ot">&lt;-</span> titanic_data[<span class="sc">-</span>train_index, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, let’s create a logistic regression model and make predictions on the test set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the logistic regression model</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> ., <span class="at">data =</span> titanic_train, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test dataset</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>predicted_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, titanic_test, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(predicted_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we will create the confusion matrix using the <strong><code>caret</code></strong> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the confusion matrix</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">table</span>(predicted_classes, titanic_test<span class="sc">$</span>Survived))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+                 
+predicted_classes  0  1
+                0 78 17
+                1 11 36
+                                          
+               Accuracy : 0.8028          
+                 95% CI : (0.7278, 0.8648)
+    No Information Rate : 0.6268          
+    P-Value [Acc &gt; NIR] : 4.43e-06        
+                                          
+                  Kappa : 0.5687          
+                                          
+ Mcnemar's Test P-Value : 0.3447          
+                                          
+            Sensitivity : 0.8764          
+            Specificity : 0.6792          
+         Pos Pred Value : 0.8211          
+         Neg Pred Value : 0.7660          
+             Prevalence : 0.6268          
+         Detection Rate : 0.5493          
+   Detection Prevalence : 0.6690          
+      Balanced Accuracy : 0.7778          
+                                          
+       'Positive' Class : 0               
+                                          </code></pre>
+</div>
+</div>
+</section>
+<section id="interpreting-the-confusion-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-confusion-matrix"><strong>Interpreting the Confusion Matrix</strong></h3>
+<p>The confusion matrix displays the following information:</p>
+<ul>
+<li><p><code>True Positives (TP)</code>: 78, the number of correctly predicted non-survivors (class 0)</p></li>
+<li><p><code>True Negatives (TN)</code>: 36, the number of correctly predicted survivors (class 1)</p></li>
+<li><p><code>False Negatives (FN)</code>: 11, the number of non-survivors incorrectly predicted as survivors (class 1)</p></li>
+<li><p><code>False Positives (FP)</code>: 17, the number of survivors incorrectly predicted as non-survivors (class 0)</p></li>
+</ul>
+<p><strong>Statistics:</strong></p>
+<ul>
+<li><p><code>Accuracy</code>: 0.8028 (80.28%), the proportion of correct predictions (both true positives and true negatives) among the total number of cases. The 95% CI (confidence interval) for the accuracy is (0.7278, 0.8648), meaning we can be 95% confident that the true accuracy lies within this range.</p></li>
+<li><p><code>No Information Rate (NIR)</code>: 0.6268, the accuracy that could be obtained by always predicting the majority class (class 0 in this case).</p></li>
+<li><p><code>P-Value [Acc &gt; NIR]</code>: 4.43e-06, the p-value for a statistical test comparing the accuracy of the model to the NIR. A small p-value (typically less than 0.05) indicates that the model’s accuracy is significantly better than the NIR.</p></li>
+<li><p><code>Kappa</code>: 0.5687, a metric that considers both the true positive rate and the false positive rate, providing a more balanced assessment of the model’s performance. Kappa ranges from -1 to 1, with 0 indicating no better than random chance, and 1 indicating perfect agreement between predictions and true values.</p></li>
+<li><p><code>Mcnemar's Test P-Value</code>: 0.3447, the p-value for a statistical test comparing the number of false positives and false negatives. A large p-value (typically greater than 0.05) indicates that there is no significant difference between the number of false positives and false negatives.</p></li>
+</ul>
+<p><strong>Sensitivity, Specificity, and Other Metrics:</strong></p>
+<ul>
+<li><p><code>Sensitivity</code> (Recall or True Positive Rate): 0.8764, the proportion of actual positive cases (survivors) that were correctly identified by the model.</p></li>
+<li><p><code>Specificity</code>: 0.6792, the proportion of actual negative cases (non-survivors) that were correctly identified by the model.</p></li>
+<li><p><code>Positive Predictive Value (PPV)</code>: 0.8211, the proportion of positive predictions (predicted survivors) that were actually positive (true survivors).</p></li>
+<li><p><code>Negative Predictive Value (NPV)</code>: 0.7660, the proportion of negative predictions (predicted non-survivors) that were actually negative (true non-survivors).</p></li>
+<li><p><code>Prevalence</code>: 0.6268, the proportion of the true positive cases (survivors) in the dataset.</p></li>
+<li><p><code>Detection Rate</code>: 0.5493, the proportion of true positive cases that were correctly detected by the model.</p></li>
+<li><p><code>Detection Prevalence</code>: 0.6690, the proportion of cases predicted as positive (survivors) by the model.</p></li>
+<li><p><code>Balanced Accuracy</code>: 0.7778, the average of sensitivity and specificity, providing a balanced assessment of the model’s performance across both classes.</p></li>
+</ul>
+<p>The ‘Positive’ class is set to 0 (non-survivors) in this analysis.</p>
+</section>
+</section>
+<section id="roc-curve" class="level2">
+<h2 class="anchored" data-anchor-id="roc-curve"><strong>ROC Curve</strong></h2>
+<p>The Receiver Operating Characteristic (ROC) curve is a graphical representation of a classifier’s performance across all possible decision thresholds. It plots the True Positive Rate (TPR, also known as sensitivity or recall) against the False Positive Rate (FPR, or 1 - specificity) at various threshold settings.</p>
+<section id="creating-an-roc-curve-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="creating-an-roc-curve-in-r"><strong>Creating an ROC Curve in R</strong></h3>
+<p>To create an ROC curve, we will use the <strong><code>pROC</code></strong> package. First, let’s install and load the required package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the pROC package if you haven't already</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if (!requireNamespace("pROC", quietly = TRUE)) {</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   install.packages("pROC")</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the pROC package</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Type 'citation("pROC")' for a citation.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'pROC'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    cov, smooth, var</code></pre>
+</div>
+</div>
+<p>Now, let’s create the ROC curve using the predicted probabilities from our logistic regression model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ROC curve</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>roc_obj <span class="ot">&lt;-</span> <span class="fu">roc</span>(titanic_test<span class="sc">$</span>Survived, predicted_probs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Setting levels: control = 0, case = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Setting direction: controls &lt; cases</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ROC curve</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_obj, <span class="at">main =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray"</span>)  <span class="co"># Add a reference line for a random classifier</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="4_confusion_mat_and_ROC_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="interpreting-the-roc-curve" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-the-roc-curve"><strong>Interpreting the ROC Curve</strong></h3>
+<p>The ROC curve helps us visualize the trade-off between sensitivity (True Positive Rate) and specificity (1 - False Positive Rate) for various threshold values. A perfect classifier would have an ROC curve that passes through the top-left corner of the plot (100% sensitivity and 100% specificity). In contrast, a random classifier would have an ROC curve that follows the diagonal reference line (gray dashed line in our plot).</p>
+<p>The area under the ROC curve (AUC) is a scalar value that summarizes the performance of the classifier. An AUC of 1.0 indicates a perfect classifier, while an AUC of 0.5 suggests that the classifier is no better than random chance. We can calculate the AUC using the <strong><code>auc</code></strong> function from the <strong><code>pROC</code></strong> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the AUC</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>auc_value <span class="ot">&lt;-</span> <span class="fu">auc</span>(roc_obj)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AUC:"</span>, auc_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUC: 0.8181047 </code></pre>
+</div>
+</div>
+<p>Let’s go through the process of drawing dots and lines in the ROC curve step by step.</p>
+<ol type="1">
+<li><p><strong>Understand the components of the ROC curve</strong>: The ROC curve consists of several points (dots) that represent the true positive rate (sensitivity) and false positive rate (1 - specificity) at various decision thresholds. To draw the curve, you need to connect these points with lines.</p></li>
+<li><p><strong>Determine decision thresholds</strong>: You must first identify the decision thresholds you want to use. These thresholds represent the probability cut-off points for classifying an observation as positive or negative. In most cases, you can use the unique predicted probabilities in your dataset as the thresholds.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract unique predicted probabilities</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">unique</span>(predicted_probs)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the thresholds in descending order</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">sort</span>(thresholds, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><strong>Calculate TPR and FPR for each threshold</strong>: For each threshold, calculate the true positive rate (sensitivity) and false positive rate (1 - specificity).</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize empty vectors for TPR and FPR</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(thresholds))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>fpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(thresholds))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate TPR and FPR for each threshold</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(thresholds)) {</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  threshold <span class="ot">&lt;-</span> thresholds[i]</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Classify observations based on the current threshold</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  predicted_classes <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(predicted_probs <span class="sc">&gt;=</span> threshold)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a confusion matrix</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Predicted =</span> predicted_classes, </span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">Actual =</span> titanic_test<span class="sc">$</span>Survived)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate TPR and FPR</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">sum</span>(<span class="fu">dim</span>(cm))<span class="sc">==</span><span class="dv">4</span>){</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    tpr[i] <span class="ot">&lt;-</span> cm[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">/</span> (cm[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">+</span> cm[<span class="st">"0"</span>, <span class="st">"1"</span>])</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    fpr[i] <span class="ot">&lt;-</span> cm[<span class="st">"1"</span>, <span class="st">"0"</span>] <span class="sc">/</span> (cm[<span class="st">"1"</span>, <span class="st">"0"</span>] <span class="sc">+</span> cm[<span class="st">"0"</span>, <span class="st">"0"</span>])</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li><strong>Plot the ROC curve</strong>: Now that you have calculated the TPR and FPR for each threshold, you can plot the ROC curve by connecting the dots (points) with lines.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>roc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Threshold =</span> thresholds, <span class="at">TPR =</span> tpr, <span class="at">FPR =</span> fpr)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ROC plot</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>roc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(roc_df, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR)) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span>  <span class="co"># Add points (dots)</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Connect the points with lines</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True Positive Rate (Sensitivity)"</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(roc_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="4_confusion_mat_and_ROC_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This will create an ROC curve with dots (points) representing each decision threshold and lines connecting these dots. The resulting plot allows you to visualize the trade-offs between sensitivity and specificity at various threshold settings.</p>
+<p>Let’s see the process of drawing the ROC curve step by step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>animated_roc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(roc_df, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR)) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">seq_along</span>(Threshold), </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="fu">as.factor</span>(<span class="fu">seq_along</span>(Threshold))),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">seq_along</span>(Threshold), </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="fu">as.factor</span>(<span class="fu">seq_along</span>(Threshold))),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True Positive Rate (Sensitivity)"</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(<span class="at">states =</span> <span class="fu">seq_along</span>(roc_df<span class="sc">$</span>Threshold), <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span> <span class="fu">exit_fade</span>() <span class="sc">+</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shadow_mark</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="co"># Add the trajectory</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the animated plot</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(animated_roc_plot, <span class="at">nframes =</span> <span class="dv">200</span>, <span class="at">end_pause =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="4_confusion_mat_and_ROC_files/figure-html/unnamed-chunk-12-1.gif" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h2>
+<p>In this blog post, we have explored the confusion matrix and ROC curve as valuable tools for evaluating classification models. We demonstrated how to create and interpret these metrics using R code snippets and the Titanic dataset. With a solid understanding of these concepts, you can better assess the performance of your classification models and make informed decisions about model selection and tuning.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:changjun.chris.lee@gmail.com">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,101 @@
+---
+title: "What are Regular Expressions and How to Use Them in R"
+subtitle: "외계어가 아니에요!"
+# description: "누구나 퍼블리싱 하는 시대가 온다"
+author: "Changjun Lee"
+date: "2023-03-08"
+categories: [R]
+---
+
+Regular expressions are a powerful tool for searching, matching, and manipulating text. They are a type of pattern language that can be used to describe sets of character strings, such as words or sentences, in a concise and flexible way. In this blog post, we will introduce what regular expressions are, why they are useful, and how to use them in R.
+
+A regular expression is a sequence of characters that define a search pattern. The pattern can be used to match (and sometimes replace) strings, or to perform some other manipulation of strings. Regular expressions are commonly used for searching for patterns in text data, such as extracting specific information from a document, validating input data, or matching and replacing specific characters.
+
+One of the most powerful features of regular expressions is their ability to specify patterns using a compact and flexible syntax. For example, the regular expression a.b will match any string that contains an a followed by any single character followed by a b. The dot (.) is a special character that matches any single character. Similarly, the regular expression \[abc\] will match any string that contains one of the characters a, b, or c.
+
+In R, there are several functions for working with regular expressions, including grep, grepl, sub, and gsub. These functions allow you to search for, match, and replace patterns in strings. For example, the grep function can be used to search for patterns in a vector of strings:
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("^b", text)
+```
+
+This code uses the grep function to search for strings in the text vector that start with the letter b. The \^ symbol is a special character that matches the start of a string. The result of this code will be a vector of the indices of the strings in the text vector that match the pattern:
+
+The grepl function is similar to grep, but returns a logical vector indicating which elements of the input vector match the pattern, rather than the indices:
+
+```{r}
+grepl("^b", text)
+
+```
+
+The sub and gsub functions can be used to replace matches in a string:
+
+```{r}
+sub("b", "B", text)
+gsub("b", "B", text)
+
+```
+
+Regular expressions are a powerful tool for searching, matching, and manipulating text data. They are used to describe patterns in text data in a concise and flexible way, and can be used for a variety of purposes, such as extracting specific information from a document, validating input data, or matching and replacing specific characters. With the grep, grepl, sub, and gsub functions in R, you can easily search for and manipulate patterns in text data.
+
+One of the key features of regular expressions is the ability to use special characters to define patterns. Here are some of the most commonly used special characters in regular expressions:
+
+-   \[\] (brackets): Matches any single character that is contained within the brackets. For example, \[abc\] matches any string that contains one of the characters a, b, or c.
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("^[abc]", text)
+```
+
+This code uses the grep function to search for strings in the text vector that start with the characters a, b, or c. The result of this code will be a vector of the indices of the strings in the text vector that match the pattern:
+
+-   \[\^\] (negated brackets): Matches any single character that is not contained within the brackets. For example, \[\^abc\] matches any string that contains any character other than a, b, or c.
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("^[^abc]", text)
+
+
+```
+
+-   \^ (caret): Matches the start of a string. For example, \^b matches any string that starts with the letter b.
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("^b", text)
+
+```
+
+-   \$ (dollar sign ): Matches the end of a string. For example, b\$ matches any string that ends with the letter b.
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("b$", text)
+
+```
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("e$", text)
+
+```
+
+-   +(plus sign): Matches one or more occurrences of the preceding character or group. For example, a+ matches any string that contains one or more occurrences of the letter a.
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("a+", text)
+
+```
+
+-   ? (question mark): Matches zero or one occurrence of the preceding character or group. For example, a? matches any string that contains zero or one occurrences of the letter a.
+
+```{r}
+text <- c("apple", "banana", "cherry")
+grep("a?", text)
+```
+
+If you want to learn more about regular expressions in R, check out this video tutorial: <https://www.youtube.com/watch?v=q8SzNKib5-4>. The video provides a comprehensive explanation of regular expressions and how to use them in R, with practical examples and hands-on exercises. Whether you're a beginner or an advanced user, this video is a great resource to deepen your understanding of regular expressions and their applications in R.
+
+한글로 된 설명은 안도현 교수님의 eBook 참고: <https://bookdown.org/ahn_media/bookdown-demo/cleantool.html#%EC%A0%95%EA%B7%9C%ED%91%9C%ED%98%84%EC%8B%9Dregular-expressions>
