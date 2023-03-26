@@ -11,15 +11,15 @@ slide-format: revealjs
 
 ### Pre-class video
 
-- Eng ver.
+-   Eng ver.
 
 {{< video https://youtu.be/WmUupb_IQTI >}}
 
-- Kor ver.
+-   Kor ver.
 
 {{< video https://youtu.be/dlaH_NALysY >}}
 
-- Pre-class PPT [pdf](content/ML_pre_05.pdf)
+-   Pre-class PPT [pdf](content/ML_pre_05.pdf)
 
 ------------------------------------------------------------------------
 
@@ -27,10 +27,247 @@ slide-format: revealjs
 
 Discussion #4
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWI3a0R4ldX97_jEzL6ZVf6qogeFv6EgA8CfzW-bljDpQzog/viewform?embedded=true" width="640" height="1908" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWI3a0R4ldX97_jEzL6ZVf6qogeFv6EgA8CfzW-bljDpQzog/viewform?embedded=true" width="640" height="1908" frameborder="0" marginheight="0" marginwidth="0">
+
+Loading...
+
+</iframe>
 
 ------------------------------------------------------------------------
 
 ### Class
 
+**What is Naive Bayes?**
 
+> **Naive Bayes** is a probabilistic classification algorithm that is based on **Bayes' theorem**. It was first introduced by Thomas Bayes, an 18th-century statistician, who used it to develop a method for predicting the probability of an event based on prior knowledge of related events.
+
+**Motivation**
+
+> The main motivation behind Naive Bayes is its **simplicity** and **efficiency**. It is a fast and effective algorithm that can be used for both binary and multi-class classification problems. It is particularly useful in situations [where the number of features is large compared to the number of observations]{.underline}, as it requires a relatively small amount of training data to produce accurate predictions.
+
+**Assumption**
+
+> The Naive Bayes algorithm assumes that the features are conditionally independent given the class label, which is where the "naive" in Naive Bayes comes from. This assumption allows the algorithm to simplify the calculations involved in determining the probability of each class label given the observed features.
+
+**The Naive Bayes Algorithm**
+
+> The Naive Bayes algorithm is a probabilistic classification algorithm that is based on Bayes' theorem. The goal of the algorithm is to predict the probability of each class label given a set of observed features.
+
+**Bayes' Theorem**
+
+> Bayes' theorem is a fundamental theorem in probability theory that describes the relationship between the conditional probabilities of two events. It states that the probability of event A given event B is equal to the probability of event B given event A multiplied by the probability of event A, divided by the probability of event B. Mathematically, this can be written as:
+
+$$
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+$$
+
+where:
+
+-   $P(A|B)$ is the probability of event A given event B (known as the posterior probability)
+
+-   $P(B|A)$ is the probability of event B given event A (known as the likelihood)
+
+-   $P(A)$ is the probability of event A (known as the prior probability)
+
+-   $P(B)$ is the probability of event B (known as the evidence)
+
+<br>
+**The Naive Bayes Algorithm**
+
+> The Naive Bayes algorithm uses Bayes' theorem to predict the probability of each class label given a set of observed features. The algorithm assumes that the features are conditionally independent given the class label, which allows the algorithm to simplify the calculations involved in determining the probability of each class label.
+
+Let $X = (X_1, X_2, ..., X_n)$ represent the set of observed features, and let Y represent the class label. The goal is to predict the probability of each class label given X, i.e. $P(Y|X)$. Using Bayes' theorem, we can write:
+
+$$
+P(Y|X) = \frac{P(X|Y)P(Y)}{P(X)}
+$$
+
+where:
+
+-   $P(Y|X)$ is the posterior probability of Y given X
+
+-   $P(X|Y)$ is the likelihood of X given Y
+
+-   $P(Y)$ is the prior probability of Y
+
+-   $P(X)$ is the evidence
+
+<br>
+
+The Naive Bayes algorithm assumes that the features $X_1, X_2, ..., X_n$ are conditionally independent given Y, which means that:
+
+$$
+P(X|Y) = P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y)
+$$
+
+<br>
+Using this assumption, we can rewrite the equation for $P(Y|X)$ as:
+
+$$
+P(Y|X) = \frac{P(Y)P(X_1|Y)P(X_2|Y) \cdots P(X_n|Y)}{P(X)}
+$$
+
+<br>
+The evidence $P(X)$ is a constant for a given set of features X, so we can ignore it for the purposes of classification. Therefore, we can simplify the equation to:
+
+$$
+P(Y|X) \propto P(Y) \times P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y)
+$$
+
+<br>
+
+The Naive Bayes algorithm calculates the likelihoods $P(X_i|Y)$ for each feature and class label from the training data, and uses these likelihoods to predict the probability of each class label given a new set of features. The algorithm selects the class label with the highest probability as the predicted class label.
+
+<br>
+
+**Pros & Cons**
+
+-   Pros:
+
+    -   Simple and easy to implement
+
+    -   Fast and efficient
+
+    -   Works well with high-dimensional data
+
+    -   Robust to irrelevant features
+
+    -   Can handle both binary and multi-class classification problems
+
+-   Cons:
+
+    -   Assumes independence between features, which may not always be the case
+
+    -   Can be sensitive to outliers and imbalanced datasets
+
+    -   May not perform well if the training data is insufficient or unrepresentative of the population
+
+<br>
+
+**Despite its limiations..**
+
+Naive Bayes remains a popular algorithm in the field of machine learning and is widely used in a variety of applications, including s*pam filtering, sentiment analysis, and medical diagnosis*. Its simplicity, efficiency, and effectiveness make it a valuable tool in any machine learning practitioner's toolkit.
+
+------------------------------------------------------------------------
+
+**Pop-up QZs**
+
+1.  What is Naive Bayes?
+    1.  A regression algorithm
+    2.  A clustering algorithm
+    3.  A probabilistic classification algorithm
+    4.  An unsupervised learning algorithm
+2.  What does the "naive" in Naive Bayes refer to?
+    1.  The fact that the algorithm is simple and easy to implement
+    2.  The assumption that the features are conditionally independent given the class label
+    3.  The fact that the algorithm is fast and efficient
+    4.  The fact that the algorithm works well with high-dimensional data
+3.  What is the main motivation behind Naive Bayes?
+    1.  Its ability to handle imbalanced datasets
+    2.  Its ability to work well with irrelevant features
+    3.  Its simplicity and efficiency
+    4.  Its ability to handle both binary and multi-class classification problems
+4.  What are some pros of Naive Bayes?
+    1.  It is simple and easy to implement
+    2.  It is fast and efficient
+    3.  It works well with high-dimensional data
+    4.  All of the above
+5.  What are some cons of Naive Bayes?
+    1.  It assumes independence between features, which may not always be the case
+    2.  It can be sensitive to outliers and imbalanced datasets
+    3.  It may not perform well if the training data is insufficient or unrepresentative of the population
+    4.  All of the above
+
+------------------------------------------------------------------------
+
+**Hands-on Practice**
+
+For this example, we will be using the "***Breast Cancer Wisconsin (Diagnostic)***" dataset from the UCI Machine Learning Repository. The dataset contains information about breast cancer tumors, including various measurements such as radius, texture, perimeter, and area.
+
+Here is an overview of the steps we will follow:
+
+1.  Load and preprocess the data
+
+2.  Split the data into training and testing sets
+
+3.  Train the Naive Bayes model using the training set
+
+4.  Use the trained model to predict the classes of the testing set
+
+5.  Evaluate the performance of the model
+
+Let's start by loading and preprocessing the data:
+
+```{r}
+library(e1071) # Required library for Naive Bayes
+
+# Load the dataset
+data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data", header = FALSE)
+
+# Assign column names to the dataset
+colnames(data) <- c("id", "diagnosis", "radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean", "compactness_mean", "concavity_mean", "concave.points_mean", "symmetry_mean", "fractal_dimension_mean", "radius_se", "texture_se", "perimeter_se", "area_se", "smoothness_se", "compactness_se", "concavity_se", "concave.points_se", "symmetry_se", "fractal_dimension_se", "radius_worst", "texture_worst", "perimeter_worst", "area_worst", "smoothness_worst", "compactness_worst", "concavity_worst", "concave.points_worst", "symmetry_worst", "fractal_dimension_worst")
+
+# Convert the diagnosis column to a binary variable
+data$diagnosis <- ifelse(data$diagnosis == "M", 1, 0)
+
+# Remove the ID column as it is not useful for modeling
+data <- data[, -1]
+
+head(data)
+```
+
+Next, we will split the data into training and testing sets. We will use 80% of the data for training and 20% for testing.
+
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Split the data into training and testing sets
+train.index <- sample(nrow(data), 0.8 * nrow(data))
+train <- data[train.index, ]
+test <- data[-train.index, ]
+
+```
+
+Now, we can train the Naive Bayes model using the training set. We will use the `naiveBayes` function from the `e1071` library.
+
+```{r}
+# Train the Naive Bayes model
+model <- naiveBayes(diagnosis ~ ., data = train)
+
+```
+
+Next, we can use the trained model to predict the classes of the testing set
+
+```{r}
+# Use the model to predict the classes of the testing set
+predictions <- predict(model, newdata = test)
+
+```
+
+Finally, we can evaluate the performance of the model using various metrics such as accuracy, precision, and recall.
+
+```{r}
+# Calculate the accuracy of the model
+accuracy <- sum(predictions == test$diagnosis) / nrow(test)
+cat("Accuracy:", round(accuracy, 2), "\n")
+
+# Calculate the precision and recall of the model
+TP <- sum(predictions == 1 & test$diagnosis == 1)
+FP <- sum(predictions == 1 & test$diagnosis == 0)
+FN <- sum(predictions == 0 & test$diagnosis == 1)
+
+precision <- TP / (TP + FP)
+recall <- TP / (TP + FN)
+
+cat("Precision:", round(precision, 2), "\n")
+cat("Recall:", round(recall, 2), "\n")
+
+```
+
+In a binary classification problem, a confusion matrix consists of four categories: True Positive (TP), False Positive (FP), True Negative (TN), and False Negative (FN). TP represents the number of positive cases that are correctly classified, FP represents the number of negative cases that are incorrectly classified as positive, TN represents the number of negative cases that are correctly classified, and FN represents the number of positive cases that are incorrectly classified as negative.
+
+
+
+The precision of the model tells us how many of the positive cases that the model predicted were actually positive, while the recall tells us how many of the actual positive cases were correctly predicted by the model. A good model should have both high precision and high recall.
