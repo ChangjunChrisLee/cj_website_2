@@ -7,10 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Changjun Lee">
-<meta name="dcterms.date" content="2023-02-22">
-<meta name="description" content="누구나 퍼블리싱 하는 시대가 온다">
+<meta name="dcterms.date" content="2023-03-29">
 
-<title>CJL Lab - Quarto, the game changer</title>
+<title>CJL Lab - Understanding the AdaBoost</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,6 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -232,25 +232,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>Overview</strong></a></li>
+  <li><a href="#algorithm-steps" id="toc-algorithm-steps" class="nav-link" data-scroll-target="#algorithm-steps"><strong>Algorithm Steps</strong></a></li>
+  <li><a href="#implementing-adaboost-in-r" id="toc-implementing-adaboost-in-r" class="nav-link" data-scroll-target="#implementing-adaboost-in-r"><strong>Implementing AdaBoost in R</strong></a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><strong>Summary</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quarto, the game changer</h1>
-<p class="subtitle lead">날개 달고 날아가는 디지털 퍼블리싱</p>
+<h1 class="title">Understanding the AdaBoost</h1>
+<p class="subtitle lead">The Power of Evolution</p>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
+    <div class="quarto-category">ML</div>
   </div>
   </div>
 
-<div>
-  <div class="description">
-    누구나 퍼블리싱 하는 시대가 온다
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -265,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 22, 2023</p>
+      <p class="date">March 29, 2023</p>
     </div>
   </div>
   
@@ -275,55 +280,122 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>R Markdown을 처음 접하고 “와 멋지다..!” 했었는데 이제는 <a href="https://quarto.org/">Quarto</a> 가 나와 Data communication 영역을 평정해버렸다. Quarto의 등장은 기술 블로그, 특히 데이터 사이언스를 업으로 삼고 있는 사람들에게는 큰 축복이 아닐 수 없다. 기록이 중요한 세상에서 손쉽게 데이터 작업의 흔적들을 남기고 포스팅 할 수 있으니 말이다.</p>
-<p>포스팅의 의미는 두 가지이다.</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview"><strong>Overview</strong></h2>
+<p>The AdaBoost algorithm is a type of ensemble learning algorithm that combines multiple “weak” classifiers to create a “strong” classifier. A weak classifier is one that performs only slightly better than random guessing (i.e., its accuracy is slightly better than 50%). In contrast, a strong classifier is one that performs well on the classification task.</p>
+<p>The basic idea behind AdaBoost is to iteratively train a sequence of weak classifiers, and then combine their predictions using a weighted majority vote to obtain a strong classifier. In each iteration, the algorithm assigns higher weights to the misclassified samples, so that the subsequent classifiers focus more on the difficult samples.</p>
+</section>
+<section id="algorithm-steps" class="level2">
+<h2 class="anchored" data-anchor-id="algorithm-steps"><strong>Algorithm Steps</strong></h2>
+<p>Here are the steps of the AdaBoost algorithm:</p>
+<ol type="1">
+<li><p>Initialize the sample weights <span class="math inline">\(w_i\)</span> to <strong><code>1/n</code></strong>, where <strong><code>n</code></strong> is the number of samples.</p></li>
+<li><p>For <strong><code>t</code></strong> in <strong><code>1:T</code></strong>, where <strong><code>T</code></strong> is the number of iterations:</p></li>
+</ol>
 <ul>
-<li><p>하나는 내가 한 작업들을 잊지 않기 위한 포스팅,</p></li>
-<li><p>두 번째는 다른 사람들에게 보여주기 위한 포스팅</p></li>
+<li><p>Train a weak classifier <span class="math inline">\(h_t(x)\)</span> on the training data using the current weights.</p></li>
+<li><p>Calculate the error rate <span class="math inline">\(ε_t\)</span> of <span class="math inline">\(h_t(x)\)</span> on the training data. The error rate is defined as the weighted sum of the misclassified samples:</p></li>
 </ul>
-<p>둘 다 중요하지만 사실 첫 번째가 조금 더 중요하다. 기록용이라면 <a href="https://obsidian.md/">옵시디언</a>이 더 좋지 않나? 라고 생각할 수 있는데 반은 맞고 반은 틀리다. 생각을 정리하고 엮어 나가는데 옵시디언이 가장 좋은 노트앱이이지만 결국엔 내 생각을 누구에게 보여준다는 생각으로 정리하지 않으면 잘 쌓이지 않는다는 단점이 있기 때문이다.</p>
-<p>Quarto의 가장 큰 장점은 아래와 같이 R이나 파이썬 또는 그 어떤 코드도 자유롭게 임베딩 할 수 있다는 것.</p>
+<p><span class="math display">\[
+ε_t = Σ_i w_i * I(y_i \neq h_t(x_i))
+\]</span></p>
+<blockquote class="blockquote">
+<p>where <span class="math inline">\(y_i\)</span> is the true class label of sample i, <span class="math inline">\(h_t(x_i)\)</span> is the predicted class label of <span class="math inline">\(h_t(x)\)</span> for sample i, and <span class="math inline">\(I()\)</span> is the indicator function that returns 1 if the argument is true and 0 otherwise.</p>
+</blockquote>
+<ul>
+<li><p>Calculate the weight <span class="math inline">\(α_t\)</span> of <span class="math inline">\(h_t(x)\)</span> as <span class="math inline">\(α_t = log((1 - ε_t) / ε_t)\)</span>. The weight <span class="math inline">\(α_t\)</span> measures the “importance” of the weak classifier <span class="math inline">\(h_t(x)\)</span> in the ensemble. The weight is larger for classifiers that perform well (i.e., have a low error rate) and smaller for classifiers that perform poorly (i.e., have a high error rate). Note that <span class="math inline">\(ε_t\)</span> must be strictly less than 0.5 to ensure that <span class="math inline">\(α_t\)</span> is positive.</p></li>
+<li><p>Update the sample weights as <span class="math inline">\(w_i = w_i * exp(α_t * y_i * h_t(x_i))\)</span>. The weight update gives higher weight to the misclassified samples and lower weight to the correctly classified samples. The weight update is equivalent to:</p></li>
+</ul>
+<blockquote class="blockquote">
+<p>if y_i = h_t(x_i), then w_i = w_i * exp(-α_t)</p>
+<p>if y_i ≠ h_t(x_i), then w_i = w_i * exp(α_t)</p>
+</blockquote>
+<ul>
+<li>Normalize the weights so that they sum to 1. The normalization ensures that the weights are valid probability distributions.</li>
+</ul>
+<ol start="3" type="1">
+<li>Combine the weak classifiers using the weighted majority vote rule to obtain the final prediction. The final prediction is given by:</li>
+</ol>
+<p><span class="math display">\[
+H(x) = sign(Σ_t α_t * h_t(x)),
+\]</span></p>
+<p>where <strong><code>sign()</code></strong> is the sign function that returns -1 for negative values and 1 for positive values.</p>
+</section>
+<section id="implementing-adaboost-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="implementing-adaboost-in-r"><strong>Implementing AdaBoost in R</strong></h2>
+<p>To implement AdaBoost in R, we can use the <strong><code>adabag</code></strong> package, which provides an implementation of the algorithm. Here’s an example of how to use <strong><code>adabag</code></strong> to train an AdaBoost classifier on the <strong><code>iris</code></strong> dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(adabag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>Warning: package 'adabag' was built under R version 4.2.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: rpart</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: caret</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: foreach</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: doParallel</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'doParallel' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: iterators</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: parallel</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the iris dataset</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the species to a binary variable</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>iris<span class="sc">$</span>Species <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(iris<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">"setosa"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset into training and testing sets</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>train_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(iris), <span class="at">size =</span> <span class="dv">100</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> iris[train_idx, ]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> iris[<span class="sc">-</span>train_idx, ]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Train an AdaBoost classifier with 50 iterations</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>ada_model <span class="ot">&lt;-</span> <span class="fu">boosting</span>(Species <span class="sc">~</span> ., </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> train_data, </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">boos =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mfinal =</span> <span class="dv">50</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the testing data</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict.boosting</span>(ada_model, <span class="at">newdata =</span> test_data)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the accuracy of the classifier</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>acc <span class="ot">&lt;-</span> <span class="fu">sum</span>(pred<span class="sc">$</span>class <span class="sc">==</span> test_data<span class="sc">$</span>Species) <span class="sc">/</span> <span class="fu">nrow</span>(test_data)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Accuracy: "</span>, acc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<pre><code>[1] "Accuracy: 1"</code></pre>
 </div>
 </div>
-<p>임베딩할 수 있을 뿐만 아니라 결과도 같이 레포팅해준다.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cyl =</span> <span class="fu">as.factor</span>(cyl)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> cyl, <span class="at">size =</span> qsec), </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>)) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">12</span>))  <span class="co"># Adjust the range of points size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="1_first_post_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>정말 멋진 세상이 아닐 수 없다.</p>
-<p>이 홈페이지도 Quarto webpage 를 참고해서 아주 쉽게 만들 수 있었다. Shiny가 data communication 에 interactive 한 새로운 차원을 열었다면 Quarto 는 디지털 퍼블리싱의 높은 문턱을 한참 아래로 낮춘 혁신이라고 말할 수 있다.</p>
-<p>몸 담고 있는 한양대학교 정보사회미디어학과의 슬로건은 <em>“데이터로 세상을 읽고 콘텐츠로 주장하는 지능정보사회의 저널리스트”</em> 이다. 이 슬로건을 실행하기 위해서 앞으로는 R 과 Python과 같은 데이터 사이언스 언어와 분석 역량 뿐만 아니라 Shiny, Quarto와 같은 디지털 문해력을 기를 수 있는 교육이 보완되어야 하겠다.</p>
+<p>In this example, we first load the <strong><code>adabag</code></strong> package and the <strong><code>iris</code></strong> dataset. We then convert the species variable to a binary variable (-1 for “setosa” and 1 for “versicolor” and “virginica”). We split the dataset into a training set (100 samples) and a testing set (50 samples).</p>
+<p>Next, we train an AdaBoost classifier with 50 iterations using the <strong><code>boosting()</code></strong> function from <strong><code>adabag</code></strong>. We specify the formula (<strong><code>Species ~ .</code></strong>) and the training data (<strong><code>train_data</code></strong>), and set the <strong><code>boos</code></strong> parameter to <strong><code>TRUE</code></strong> to enable AdaBoost.</p>
+<p>We then make predictions on the testing data using the <strong><code>predict.boosting()</code></strong> function, and calculate the accuracy of the classifier by comparing the predicted class labels to the true class labels.</p>
+<p>You can modify this example by changing the number of iterations (<strong><code>mfinal</code></strong>) or the dataset to fit your specific needs. Additionally, you can try using other weak classifiers, such as decision trees or logistic regression, and compare their performance to AdaBoost.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary"><strong>Summary</strong></h2>
+<p>The AdaBoost algorithm is a powerful ensemble learning algorithm that can improve the performance of weak classifiers by combining their predictions. It works by iteratively training a sequence of weak classifiers, and then combining their predictions using a weighted majority vote to obtain a strong classifier. The algorithm assigns higher weights to the misclassified samples in each iteration, so that the subsequent classifiers focus more on the difficult samples. The weight updates and normalization ensure that the subsequent classifiers focus more on the difficult samples, and the final prediction is based on the weighted majority vote rule, which gives more weight to the predictions of the strong classifiers.</p>
+<p>Overall, AdaBoost is a powerful and widely used algorithm in machine learning, particularly for classification problems. It is relatively simple to implement and can be applied to a wide range of classification tasks. Additionally, it has been shown to perform well even with noisy and unbalanced datasets.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
