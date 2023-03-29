@@ -1,6 +1,6 @@
 ---
 title: "Understanding the AdaBoost"
-subtitle: "The Power of Evolution"
+subtitle: "오답노트의 힘"
 # description: "누구나 퍼블리싱 하는 시대가 온다"
 author: "Changjun Lee"
 date: "2023-03-29"
@@ -28,14 +28,18 @@ Here are the steps of the AdaBoost algorithm:
 -   Calculate the error rate $ε_t$ of $h_t(x)$ on the training data. The error rate is defined as the weighted sum of the misclassified samples:
 
 $$
-ε_t = Σ_i w_i * I(y_i \neq h_t(x_i))
+ε_t = Σ_i w_i \times I(y_i \neq h_t(x_i))
 $$
 
 > where $y_i$ is the true class label of sample i, $h_t(x_i)$ is the predicted class label of $h_t(x)$ for sample i, and $I()$ is the indicator function that returns 1 if the argument is true and 0 otherwise.
 
--   Calculate the weight $α_t$ of $h_t(x)$ as $α_t = log((1 - ε_t) / ε_t)$. The weight $α_t$ measures the "importance" of the weak classifier $h_t(x)$ in the ensemble. The weight is larger for classifiers that perform well (i.e., have a low error rate) and smaller for classifiers that perform poorly (i.e., have a high error rate). Note that $ε_t$ must be strictly less than 0.5 to ensure that $α_t$ is positive.
+-   Calculate the weight $α_t$ of $h_t(x)$ as $α_t = \frac{log((1 - ε_t)}{ε_t}$. The weight $α_t$ measures the "importance" of the weak classifier $h_t(x)$ in the ensemble. The weight is larger for classifiers that perform well (i.e., have a low error rate) and smaller for classifiers that perform poorly (i.e., have a high error rate).
 
--   Update the sample weights as $w_i = w_i * exp(α_t * y_i * h_t(x_i))$. The weight update gives higher weight to the misclassified samples and lower weight to the correctly classified samples. The weight update is equivalent to:
+::: callout-note
+Note that $ε_t$ must be strictly less than 0.5 to ensure that $α_t$ is positive.
+:::
+
+-   Update the sample weights as $w_i = w_i \times exp(α_t)$. The weight update gives higher weight to the misclassified samples and lower weight to the correctly classified samples. The weight update is equivalent to:
 
 > if y_i = h_t(x_i), then w_i = w_i \* exp(-α_t)
 >
@@ -46,7 +50,7 @@ $$
 3.  Combine the weak classifiers using the weighted majority vote rule to obtain the final prediction. The final prediction is given by:
 
 $$
-H(x) = sign(Σ_t α_t * h_t(x)),
+H(x) = sign(Σ_t (α_t \times h_t(x))),
 $$
 
 where **`sign()`** is the sign function that returns -1 for negative values and 1 for positive values.
@@ -92,6 +96,28 @@ Next, we train an AdaBoost classifier with 50 iterations using the **`boosting()
 We then make predictions on the testing data using the **`predict.boosting()`** function, and calculate the accuracy of the classifier by comparing the predicted class labels to the true class labels.
 
 You can modify this example by changing the number of iterations (**`mfinal`**) or the dataset to fit your specific needs. Additionally, you can try using other weak classifiers, such as decision trees or logistic regression, and compare their performance to AdaBoost.
+
+## **Similarities & Difference with Random Forest** 
+
+**Similarities**
+
+-   Both Random Forest and AdaBoost are ensemble learning algorithms that combine multiple "weak" models to create a "strong" model.
+
+-   Both algorithms use a form of bootstrap sampling to generate multiple training sets, which helps to reduce overfitting and improve the generalization performance of the models.
+
+-   Both algorithms are widely used in machine learning and can be applied to a wide range of classification and regression tasks.
+
+**Differences**
+
+-   Random Forest combines multiple decision trees, each trained on a different subset of the features and samples, and uses a majority vote to make predictions. In contrast, AdaBoost combines multiple weak models, with each model trained on the same dataset but with different weights assigned to the samples.
+
+-   Random Forest places equal weight on all the samples, while AdaBoost assigns higher weights to the misclassified samples in each iteration, so that the subsequent models focus more on the difficult samples.
+
+-   Random Forest uses a simple majority vote to make predictions, while AdaBoost combines the predictions of the weak models using weighted majority vote, with each model weighted by its importance in the ensemble.
+
+-   Random Forest can handle a wide range of datasets and is less sensitive to outliers and noise, while AdaBoost is more sensitive to noisy and unbalanced datasets and may require more data preprocessing.
+
+-   Random Forest typically performs well with large feature sets and high-dimensional data, while AdaBoost may require careful feature selection or dimensionality reduction to prevent overfitting and improve performance.
 
 ## **Summary**
 

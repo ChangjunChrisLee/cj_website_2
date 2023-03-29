@@ -239,6 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>Overview</strong></a></li>
   <li><a href="#algorithm-steps" id="toc-algorithm-steps" class="nav-link" data-scroll-target="#algorithm-steps"><strong>Algorithm Steps</strong></a></li>
   <li><a href="#implementing-adaboost-in-r" id="toc-implementing-adaboost-in-r" class="nav-link" data-scroll-target="#implementing-adaboost-in-r"><strong>Implementing AdaBoost in R</strong></a></li>
+  <li><a href="#similarities-difference-with-random-forest" id="toc-similarities-difference-with-random-forest" class="nav-link" data-scroll-target="#similarities-difference-with-random-forest"><strong>Similarities &amp; Difference with Random Forest</strong></a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><strong>Summary</strong></a></li>
   </ul>
 </nav>
@@ -249,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Understanding the AdaBoost</h1>
-<p class="subtitle lead">The Power of Evolution</p>
+<p class="subtitle lead">오답노트의 힘</p>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
     <div class="quarto-category">ML</div>
@@ -297,14 +298,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Calculate the error rate <span class="math inline">\(ε_t\)</span> of <span class="math inline">\(h_t(x)\)</span> on the training data. The error rate is defined as the weighted sum of the misclassified samples:</p></li>
 </ul>
 <p><span class="math display">\[
-ε_t = Σ_i w_i * I(y_i \neq h_t(x_i))
+ε_t = Σ_i w_i \times I(y_i \neq h_t(x_i))
 \]</span></p>
 <blockquote class="blockquote">
 <p>where <span class="math inline">\(y_i\)</span> is the true class label of sample i, <span class="math inline">\(h_t(x_i)\)</span> is the predicted class label of <span class="math inline">\(h_t(x)\)</span> for sample i, and <span class="math inline">\(I()\)</span> is the indicator function that returns 1 if the argument is true and 0 otherwise.</p>
 </blockquote>
 <ul>
-<li><p>Calculate the weight <span class="math inline">\(α_t\)</span> of <span class="math inline">\(h_t(x)\)</span> as <span class="math inline">\(α_t = log((1 - ε_t) / ε_t)\)</span>. The weight <span class="math inline">\(α_t\)</span> measures the “importance” of the weak classifier <span class="math inline">\(h_t(x)\)</span> in the ensemble. The weight is larger for classifiers that perform well (i.e., have a low error rate) and smaller for classifiers that perform poorly (i.e., have a high error rate). Note that <span class="math inline">\(ε_t\)</span> must be strictly less than 0.5 to ensure that <span class="math inline">\(α_t\)</span> is positive.</p></li>
-<li><p>Update the sample weights as <span class="math inline">\(w_i = w_i * exp(α_t * y_i * h_t(x_i))\)</span>. The weight update gives higher weight to the misclassified samples and lower weight to the correctly classified samples. The weight update is equivalent to:</p></li>
+<li>Calculate the weight <span class="math inline">\(α_t\)</span> of <span class="math inline">\(h_t(x)\)</span> as <span class="math inline">\(α_t = \frac{log((1 - ε_t)}{ε_t}\)</span>. The weight <span class="math inline">\(α_t\)</span> measures the “importance” of the weak classifier <span class="math inline">\(h_t(x)\)</span> in the ensemble. The weight is larger for classifiers that perform well (i.e., have a low error rate) and smaller for classifiers that perform poorly (i.e., have a high error rate).</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that <span class="math inline">\(ε_t\)</span> must be strictly less than 0.5 to ensure that <span class="math inline">\(α_t\)</span> is positive.</p>
+</div>
+</div>
+<ul>
+<li>Update the sample weights as <span class="math inline">\(w_i = w_i \times exp(α_t)\)</span>. The weight update gives higher weight to the misclassified samples and lower weight to the correctly classified samples. The weight update is equivalent to:</li>
 </ul>
 <blockquote class="blockquote">
 <p>if y_i = h_t(x_i), then w_i = w_i * exp(-α_t)</p>
@@ -317,7 +333,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Combine the weak classifiers using the weighted majority vote rule to obtain the final prediction. The final prediction is given by:</li>
 </ol>
 <p><span class="math display">\[
-H(x) = sign(Σ_t α_t * h_t(x)),
+H(x) = sign(Σ_t (α_t \times h_t(x))),
 \]</span></p>
 <p>where <strong><code>sign()</code></strong> is the sign function that returns -1 for negative values and 1 for positive values.</p>
 </section>
@@ -388,6 +404,23 @@ H(x) = sign(Σ_t α_t * h_t(x)),
 <p>Next, we train an AdaBoost classifier with 50 iterations using the <strong><code>boosting()</code></strong> function from <strong><code>adabag</code></strong>. We specify the formula (<strong><code>Species ~ .</code></strong>) and the training data (<strong><code>train_data</code></strong>), and set the <strong><code>boos</code></strong> parameter to <strong><code>TRUE</code></strong> to enable AdaBoost.</p>
 <p>We then make predictions on the testing data using the <strong><code>predict.boosting()</code></strong> function, and calculate the accuracy of the classifier by comparing the predicted class labels to the true class labels.</p>
 <p>You can modify this example by changing the number of iterations (<strong><code>mfinal</code></strong>) or the dataset to fit your specific needs. Additionally, you can try using other weak classifiers, such as decision trees or logistic regression, and compare their performance to AdaBoost.</p>
+</section>
+<section id="similarities-difference-with-random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="similarities-difference-with-random-forest"><strong>Similarities &amp; Difference with Random Forest</strong></h2>
+<p><strong>Similarities</strong></p>
+<ul>
+<li><p>Both Random Forest and AdaBoost are ensemble learning algorithms that combine multiple “weak” models to create a “strong” model.</p></li>
+<li><p>Both algorithms use a form of bootstrap sampling to generate multiple training sets, which helps to reduce overfitting and improve the generalization performance of the models.</p></li>
+<li><p>Both algorithms are widely used in machine learning and can be applied to a wide range of classification and regression tasks.</p></li>
+</ul>
+<p><strong>Differences</strong></p>
+<ul>
+<li><p>Random Forest combines multiple decision trees, each trained on a different subset of the features and samples, and uses a majority vote to make predictions. In contrast, AdaBoost combines multiple weak models, with each model trained on the same dataset but with different weights assigned to the samples.</p></li>
+<li><p>Random Forest places equal weight on all the samples, while AdaBoost assigns higher weights to the misclassified samples in each iteration, so that the subsequent models focus more on the difficult samples.</p></li>
+<li><p>Random Forest uses a simple majority vote to make predictions, while AdaBoost combines the predictions of the weak models using weighted majority vote, with each model weighted by its importance in the ensemble.</p></li>
+<li><p>Random Forest can handle a wide range of datasets and is less sensitive to outliers and noise, while AdaBoost is more sensitive to noisy and unbalanced datasets and may require more data preprocessing.</p></li>
+<li><p>Random Forest typically performs well with large feature sets and high-dimensional data, while AdaBoost may require careful feature selection or dimensionality reduction to prevent overfitting and improve performance.</p></li>
+</ul>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary"><strong>Summary</strong></h2>
