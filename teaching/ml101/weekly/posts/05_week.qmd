@@ -27,7 +27,7 @@ slide-format: revealjs
 
 Discussion #4
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWI3a0R4ldX97_jEzL6ZVf6qogeFv6EgA8CfzW-bljDpQzog/viewform?embedded=true" width="640" height="1908" frameborder="0" marginheight="0" marginwidth="0">
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWI3a0R4ldX97_jEzL6ZVf6qogeFv6EgA8CfzW-bljDpQzog/viewform?embedded=true" width="640" height="1930" frameborder="0" marginheight="0" marginwidth="0">
 
 Loading...
 
@@ -39,23 +39,19 @@ Loading...
 
 **What is Naive Bayes?**
 
-> **Naive Bayes** is a probabilistic classification algorithm that is based on **Bayes' theorem**. It was first introduced by Thomas Bayes, an 18th-century statistician, who used it to develop a method for predicting the probability of an event based on prior knowledge of related events.
+> **Naive Bayes** is a probabilistic classification algorithm that is based on **Bayes' theorem**. It was first introduced by Thomas Bayes, an 18th-century statistician, who used it to develop a method for predicting the probability of an event based on prior knowledge of related events. The goal of the algorithm is to predict the probability of each class label given a set of observed features.
 
 **Motivation**
 
-> The main motivation behind Naive Bayes is its **simplicity** and **efficiency**. It is a fast and effective algorithm that can be used for both binary and multi-class classification problems. It is particularly useful in situations [where the number of features is large compared to the number of observations]{.underline}, as it requires a relatively small amount of training data to produce accurate predictions.
+> The main motivation behind **Naive Bayes** is its **simplicity** and **efficiency**. It is a fast and effective algorithm that can be used for both binary and multi-class classification problems. It is particularly useful in situations [where the number of features is large compared to the number of observations]{.underline}, as it requires a relatively small amount of training data to produce accurate predictions.
 
 **Assumption**
 
-> The Naive Bayes algorithm assumes that the features are conditionally independent given the class label, which is where the "naive" in Naive Bayes comes from. This assumption allows the algorithm to simplify the calculations involved in determining the probability of each class label given the observed features.
-
-**The Naive Bayes Algorithm**
-
-> The Naive Bayes algorithm is a probabilistic classification algorithm that is based on Bayes' theorem. The goal of the algorithm is to predict the probability of each class label given a set of observed features.
+> The **Naive Bayes** algorithm assumes that [the features are conditionally independent given the class label]{.underline}, which is where the "*naive*" in Naive Bayes comes from. This assumption allows the algorithm to simplify the calculations involved in determining the probability of each class label given the observed features.
 
 **Bayes' Theorem**
 
-> Bayes' theorem is a fundamental theorem in probability theory that describes the relationship between the conditional probabilities of two events. It states that the probability of event A given event B is equal to the probability of event B given event A multiplied by the probability of event A, divided by the probability of event B. Mathematically, this can be written as:
+> Bayes' theorem is a fundamental theorem in probability theory that describes the relationship between the conditional probabilities of two events (here, A and B). It states that the probability of event A given event B is equal to the probability of event B given event A multiplied by the probability of event A, divided by the probability of event B. Mathematically, this can be written as:
 
 $$
 P(A|B) = \frac{P(B|A)P(A)}{P(B)}
@@ -63,15 +59,16 @@ $$
 
 where:
 
--   $P(A|B)$ is the probability of event A given event B (known as the posterior probability)
+-   $P(A|B)$ is the probability of event A given event B (known as the ***posterior probability***)
 
--   $P(B|A)$ is the probability of event B given event A (known as the likelihood)
+-   $P(B|A)$ is the probability of event B given event A (known as the ***likelihood***)
 
--   $P(A)$ is the probability of event A (known as the prior probability)
+-   $P(A)$ is the probability of event A (known as the ***prior probability***)
 
--   $P(B)$ is the probability of event B (known as the evidence)
+-   $P(B)$ is the probability of event B (known as the ***evidence***)
 
 <br>
+
 **The Naive Bayes Algorithm**
 
 > The Naive Bayes algorithm uses Bayes' theorem to predict the probability of each class label given a set of observed features. The algorithm assumes that the features are conditionally independent given the class label, which allows the algorithm to simplify the calculations involved in determining the probability of each class label.
@@ -101,6 +98,7 @@ P(X|Y) = P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y)
 $$
 
 <br>
+
 Using this assumption, we can rewrite the equation for $P(Y|X)$ as:
 
 $$
@@ -108,6 +106,7 @@ P(Y|X) = \frac{P(Y)P(X_1|Y)P(X_2|Y) \cdots P(X_n|Y)}{P(X)}
 $$
 
 <br>
+
 The evidence $P(X)$ is a constant for a given set of features X, so we can ignore it for the purposes of classification. Therefore, we can simplify the equation to:
 
 $$
@@ -157,7 +156,7 @@ Naive Bayes remains a popular algorithm in the field of machine learning and is 
     2.  A clustering algorithm
     3.  A probabilistic classification algorithm
     4.  An unsupervised learning algorithm
-2.  What does the "naive" in Naive Bayes refer to?
+2.  What does the "*naive*" in Naive Bayes refer to?
     1.  The fact that the algorithm is simple and easy to implement
     2.  The assumption that the features are conditionally independent given the class label
     3.  The fact that the algorithm is fast and efficient
@@ -218,7 +217,6 @@ head(data)
 
 Next, we will split the data into training and testing sets. We will use 80% of the data for training and 20% for testing.
 
-
 ```{r}
 # Set seed for reproducibility
 set.seed(123)
@@ -266,8 +264,44 @@ cat("Recall:", round(recall, 2), "\n")
 
 ```
 
-In a binary classification problem, a confusion matrix consists of four categories: True Positive (TP), False Positive (FP), True Negative (TN), and False Negative (FN). TP represents the number of positive cases that are correctly classified, FP represents the number of negative cases that are incorrectly classified as positive, TN represents the number of negative cases that are correctly classified, and FN represents the number of positive cases that are incorrectly classified as negative.
+In a binary classification problem, a [confusion matrix](https://changjunlee.com/blogs/posts/4_confusion_mat_and_roc) consists of four categories:
 
+|                      | Positive (Actual)   | Negative (Actual)   |
+|----------------------|---------------------|---------------------|
+| Positive (Predicted) | True Positive (TP)  | False Positive (FP) |
+| Negative (Predicted) | False Negative (FN) | True Negative (TN)  |
 
+-   `True Positive (TP)`: Number of (actual) positive cases that are **correctly (True)** classified
 
-The precision of the model tells us how many of the positive cases that the model predicted were actually positive, while the recall tells us how many of the actual positive cases were correctly predicted by the model. A good model should have both high precision and high recall.
+-   `False Positive (FP)`: Number of (actual) negative cases that are incorrectly classified as (predicted) positive
+
+-   `True Negative (TN)`: Number of (actual) negative cases that are correctly classified
+
+-   `False Negative (FN)`: Number of (actual) positive cases that are incorrectly classified as (predicted) negative
+
+**Precision & Recall**
+
+-   The `precision` of the model tells us how many of the positive cases that the model predicted were actually positive,
+
+    -   The accuracy of the positive predictions made by the model
+
+        $$
+        \frac{TP}{TP+FP}
+        $$
+
+-   while the `recall` tells us how many of the actual positive cases were correctly predicted by the model.
+
+    -   The ability of the model to correctly identify all positive instances
+
+        $$
+        \frac{TP}{TP+FN}
+        $$
+
+-   In general, **precision is more important when we want to avoid false positives**. For example, in a spam classification task, we would want to have high precision to ensure that legitimate emails are not classified as spam. False positives can be costly and can lead to important messages being missed.
+
+-   On the other hand, **recall is more important when we want to avoid false negatives**. For example, in a medical diagnosis task, we would want to have high recall to ensure that all instances of a disease are correctly identified, even if it means that some healthy individuals are identified as having the disease. False negatives can be costly and can lead to delayed treatment and potentially life-threatening consequences.
+
+```{=html}
+<!-- -->
+```
+-   In summary, precision and recall are used differently depending on the task and the costs associated with false positives and false negatives.
