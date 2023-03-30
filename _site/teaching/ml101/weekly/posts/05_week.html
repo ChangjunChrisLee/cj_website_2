@@ -410,6 +410,8 @@ P(Y|X) \propto P(Y) \times P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y
 <hr>
 <p><strong>Hands-on Practice</strong></p>
 <p>For this example, we will be using the “<strong><em>Breast Cancer Wisconsin (Diagnostic)</em></strong>” dataset from the UCI Machine Learning Repository. The dataset contains information about breast cancer tumors, including various measurements such as radius, texture, perimeter, and area.</p>
+<p>The dataset contains a total of 569 instances or samples, each with 32 features or attributes. The target variable is binary, with a value of either 0 (indicating a <em>benign</em> <em>tumor</em><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>) or 1 (indicating a <em>malignant</em> <em>tumor</em>). The dataset was originally created by Dr.&nbsp;William H. Wolberg, a physician at the University of Wisconsin Hospitals, Madison, and has been used extensively in research and machine learning competitions.</p>
+<p>The 32 features in the dataset are computed from a digitized image of a fine needle aspirate (FNA) of a breast mass. The FNA is a non-invasive method for diagnosing breast cancer, where a thin needle is used to extract cells from the mass, which are then examined under a microscope. The features in the dataset include various characteristics of the cell nuclei present in the FNA, such as the radius, texture, area, smoothness, compactness, concavity, symmetry, and fractal dimension.</p>
 <p>Here is an overview of the steps we will follow:</p>
 <ol type="1">
 <li><p>Load and preprocess the data</p></li>
@@ -517,19 +519,19 @@ P(Y|X) \propto P(Y) \times P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the precision and recall of the model</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>TP <span class="ot">&lt;-</span> <span class="fu">sum</span>(predictions <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> test<span class="sc">$</span>diagnosis <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>FP <span class="ot">&lt;-</span> <span class="fu">sum</span>(predictions <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> test<span class="sc">$</span>diagnosis <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>FN <span class="ot">&lt;-</span> <span class="fu">sum</span>(predictions <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> test<span class="sc">$</span>diagnosis <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>FP <span class="ot">&lt;-</span> <span class="fu">sum</span>(predictions <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> test<span class="sc">$</span>diagnosis <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>FN <span class="ot">&lt;-</span> <span class="fu">sum</span>(predictions <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> test<span class="sc">$</span>diagnosis <span class="sc">==</span> <span class="dv">0</span>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>precision <span class="ot">&lt;-</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FP)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>recall <span class="ot">&lt;-</span> TP <span class="sc">/</span> (TP <span class="sc">+</span> FN)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Precision:"</span>, <span class="fu">round</span>(precision, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Precision: 0.94 </code></pre>
+<pre><code>Precision: 0.91 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Recall:"</span>, <span class="fu">round</span>(recall, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Recall: 0.91 </code></pre>
+<pre><code>Recall: 0.94 </code></pre>
 </div>
 </div>
 <p>In a binary classification problem, a <a href="https://changjunlee.com/blogs/posts/4_confusion_mat_and_roc">confusion matrix</a> consists of four categories:</p>
@@ -555,7 +557,7 @@ P(Y|X) \propto P(Y) \times P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y
 </tbody>
 </table>
 <ul>
-<li><p><code>True Positive (TP)</code>: Number of (actual) positive cases that are <strong>correctly (True)</strong> classified</p></li>
+<li><p><code>True Positive (TP)</code>: Number of (actual) positive cases that are correctly (True) classified</p></li>
 <li><p><code>False Positive (FP)</code>: Number of (actual) negative cases that are incorrectly classified as (predicted) positive</p></li>
 <li><p><code>True Negative (TN)</code>: Number of (actual) negative cases that are correctly classified</p></li>
 <li><p><code>False Negative (FN)</code>: Number of (actual) positive cases that are incorrectly classified as (predicted) negative</p></li>
@@ -587,7 +589,13 @@ P(Y|X) \propto P(Y) \times P(X_1|Y) \times P(X_2|Y) \times \ldots \times P(X_n|Y
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>A benign tumor is a non-cancerous growth that does not spread to other parts of the body. It is made up of cells that are similar in appearance to normal cells, and it usually grows slowly. While a benign tumor is not usually life-threatening, it can still cause health problems depending on its location and size. In some cases, a benign tumor may need to be removed if it is causing symptoms or is at risk of becoming cancerous. Unlike a malignant tumor, which is cancerous and can spread to other parts of the body, a benign tumor does not invade nearby tissues or organs or spread to other parts of the body.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

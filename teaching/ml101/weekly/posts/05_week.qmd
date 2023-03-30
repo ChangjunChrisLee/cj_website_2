@@ -183,6 +183,12 @@ Naive Bayes remains a popular algorithm in the field of machine learning and is 
 
 For this example, we will be using the "***Breast Cancer Wisconsin (Diagnostic)***" dataset from the UCI Machine Learning Repository. The dataset contains information about breast cancer tumors, including various measurements such as radius, texture, perimeter, and area.
 
+The dataset contains a total of 569 instances or samples, each with 32 features or attributes. The target variable is binary, with a value of either 0 (indicating a *benign* *tumor*[^1]) or 1 (indicating a *malignant* *tumor*). The dataset was originally created by Dr. William H. Wolberg, a physician at the University of Wisconsin Hospitals, Madison, and has been used extensively in research and machine learning competitions.
+
+[^1]: A benign tumor is a non-cancerous growth that does not spread to other parts of the body. It is made up of cells that are similar in appearance to normal cells, and it usually grows slowly. While a benign tumor is not usually life-threatening, it can still cause health problems depending on its location and size. In some cases, a benign tumor may need to be removed if it is causing symptoms or is at risk of becoming cancerous. Unlike a malignant tumor, which is cancerous and can spread to other parts of the body, a benign tumor does not invade nearby tissues or organs or spread to other parts of the body.
+
+The 32 features in the dataset are computed from a digitized image of a fine needle aspirate (FNA) of a breast mass. The FNA is a non-invasive method for diagnosing breast cancer, where a thin needle is used to extract cells from the mass, which are then examined under a microscope. The features in the dataset include various characteristics of the cell nuclei present in the FNA, such as the radius, texture, area, smoothness, compactness, concavity, symmetry, and fractal dimension.
+
 Here is an overview of the steps we will follow:
 
 1.  Load and preprocess the data
@@ -253,8 +259,8 @@ cat("Accuracy:", round(accuracy, 2), "\n")
 
 # Calculate the precision and recall of the model
 TP <- sum(predictions == 1 & test$diagnosis == 1)
-FP <- sum(predictions == 1 & test$diagnosis == 0)
-FN <- sum(predictions == 0 & test$diagnosis == 1)
+FP <- sum(predictions == 0 & test$diagnosis == 1)
+FN <- sum(predictions == 1 & test$diagnosis == 0)
 
 precision <- TP / (TP + FP)
 recall <- TP / (TP + FN)
@@ -271,7 +277,7 @@ In a binary classification problem, a [confusion matrix](https://changjunlee.com
 | Positive (Predicted) | True Positive (TP)  | False Positive (FP) |
 | Negative (Predicted) | False Negative (FN) | True Negative (TN)  |
 
--   `True Positive (TP)`: Number of (actual) positive cases that are **correctly (True)** classified
+-   `True Positive (TP)`: Number of (actual) positive cases that are correctly (True) classified
 
 -   `False Positive (FP)`: Number of (actual) negative cases that are incorrectly classified as (predicted) positive
 
