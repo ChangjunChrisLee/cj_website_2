@@ -25,14 +25,270 @@ slide-format: revealjs
 
 ### Discussion
 
-Discussion #5 
+Discussion #5
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfKih4BTRim28ac6EssMaVwIDsKc3k6I7-NPmxqRGRFUNeVEw/viewform?embedded=true" width="640" height="1910" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfKih4BTRim28ac6EssMaVwIDsKc3k6I7-NPmxqRGRFUNeVEw/viewform?embedded=true" width="640" height="2100" frameborder="0" marginheight="0" marginwidth="0">
+
+Loading...
+
+</iframe>
 
 ------------------------------------------------------------------------
 
 ### Class
 
--   Check out this blog for the concepts of Precision(정밀도), Recall(재현율) and Accuracy(정확도)
+#### Introduction
 
-    -   <https://sumniya.tistory.com/26>
+**Overview of k-nearest neighbor algorithm**
+
+The k-nearest neighbor algorithm is a non-parametric algorithm that works by finding the k closest data points in the training set to a new, unseen data point, and then predicting the class or value of that data point based on the labels of its k-nearest neighbors. The algorithm is simple to implement and has a wide range of applications, including image recognition, text classification, and recommendation systems.
+
+For example, let's say you want to predict whether a new flower is a setosa, versicolor, or virginica based on its sepal length and width. You can use the k-nearest neighbor algorithm to find the k closest flowers in the training set to the new flower, and then predict the most common species among those k flowers.
+
+**Applications of k-nearest neighbor algorithm**
+
+The k-nearest neighbor algorithm has a wide range of applications, including:
+
+-   Image recognition: identifying the content of an image based on its features
+
+-   Text classification: categorizing text documents based on their content
+
+-   Recommendation systems: suggesting products or services based on the preferences of similar users
+
+-   Bioinformatics: identifying similar genes or proteins based on their expression patterns
+
+-   Anomaly detection: identifying unusual data points based on their distance from other data points
+
+**Advantages and disadvantages of k-nearest neighbor algorithm**
+
+The k-nearest neighbor algorithm has several advantages, including:
+
+-   Intuitive and easy to understand
+
+-   No assumption about the distribution of the data
+
+-   Non-parametric: can work with any type of data
+
+-   Can handle multi-class classification problems
+
+However, the k-nearest neighbor algorithm also has some disadvantages, including:
+
+-   Can be computationally expensive for large data sets
+
+-   Sensitive to irrelevant features and noisy data
+
+-   Requires a good distance metric for accurate predictions
+
+-   Choosing the right value of k can be challenging
+
+Despite these limitations, the k-nearest neighbor algorithm remains a popular and effective machine learning algorithm that is widely used in various fields.
+
+#### Theory
+
+In the previous part of this series, we introduced the k-nearest neighbor algorithm and discussed its applications and advantages and disadvantages. In this part, we'll dive deeper into the theory behind the k-nearest neighbor algorithm and explore different distance metrics used in the algorithm.
+
+**Distance metrics: Euclidean distance, Manhattan distance, etc.**
+
+One of the key components of the k-nearest neighbor algorithm is the distance metric used to measure the similarity between two data points. The most commonly used distance metrics are:
+
+-   `Euclidean distance`: this is the straight-line distance between two points in Euclidean space. The formula for Euclidean distance between two points, x and y, is:
+
+    $$
+    d(x,y) = \sqrt {\sum(x_i - y_i)^2}
+    $$
+
+    **`d(x, y) = sqrt(sum((xi - yi)^2))`**
+
+-   `Manhattan distance`: this is the distance between two points measured along the axes at right angles. The formula for Manhattan distance between two points, x and y, is:
+
+    $$
+    d(x,y) = \sum|x_i - y_i|
+    $$
+
+    **`d(x, y) = sum(|xi - yi|)`**
+
+-   `Minkowski distance`: this is a generalization of Euclidean and Manhattan distance that allows us to control the "shape" of the distance metric. The formula for Minkowski distance between two points, x and y, is:
+
+    $$
+    d(x,y) = (\sum|x_i - y_i|^p)^\frac{1}{p}
+    $$
+
+    **`d(x, y) = (sum(|xi - yi|^p))^(1/p)`**
+
+    where p is a parameter that controls the "shape" of the distance metric. When p=1, the Minkowski distance is equivalent to Manhattan distance, and when p=2, the Minkowski distance is equivalent to Euclidean distance.
+
+Choosing the right distance metric is important for accurate predictions in the k-nearest neighbor algorithm. You should choose a distance metric that is appropriate for your data and the problem you are trying to solve.
+
+**Choosing the value of k**
+
+Another important component of the k-nearest neighbor algorithm is the value of k, which represents the number of nearest neighbors used to make the prediction. Choosing the right value of k is crucial for the performance of the algorithm.
+
+If k is too small, the algorithm may be too sensitive to noise and outliers in the data, leading to overfitting. On the other hand, if k is too large, the algorithm may be too general and fail to capture the nuances of the data, leading to underfitting.
+
+One common approach to choosing the value of k is to use cross-validation to evaluate the performance of the algorithm on different values of k and choose the value that gives the best performance.
+
+**Weighted versus unweighted k-nearest neighbor algorithm**
+
+In the basic k-nearest neighbor algorithm, all k nearest neighbors are treated equally when making the prediction. However, in some cases, it may be more appropriate to assign different weights to the nearest neighbors based on their distance from the new data point.
+
+For example, you may want to give more weight to the nearest neighbors that are closer to the new data point and less weight to the neighbors that are farther away. This can be done by using a weighted k-nearest neighbor algorithm, where the weights are inversely proportional to the distance between the neighbors and the new data point.
+
+**Handling ties in k-nearest neighbor algorithm**
+
+In some cases, there may be a tie in the labels of the k nearest neighbors, making it difficult to make a prediction. For example, if k=3 and two neighbors are labeled as class A and one neighbor is labeled as class B, there is a tie between class A and class B.
+
+There are several ways to handle ties in the k-nearest neighbor algorithm. One common approach is to assign the new data point to the class that has the nearest neighbor among the tied classes.
+
+#### 
+
+#### Implementation
+
+In the previous parts of this series, we introduced the k-nearest neighbor algorithm and discussed its theory, including distance metrics, choosing the value of k, weighted versus unweighted k-nearest neighbor algorithm, and handling ties in k-nearest neighbor algorithm. In this part, we'll show you how to implement the k-nearest neighbor algorithm in R, step by step.
+
+**Loading data into R**
+
+The first step in implementing the k-nearest neighbor algorithm is to load the data into R. In this example, we'll use the **`iris`** dataset, which contains measurements of iris flowers.
+
+```{r}
+data(iris)
+```
+
+**Splitting data into training and testing sets**
+
+The next step is to split the data into training and testing sets. We'll use 70% of the data for training and 30% of the data for testing.
+
+```{r}
+set.seed(123)
+train_index <- sample(nrow(iris), 0.7 * nrow(iris))
+train_data <- iris[train_index, ]
+test_data <- iris[-train_index, ]
+```
+
+**Preprocessing data: scaling and centering**
+
+Before applying the k-nearest neighbor algorithm, it's important to preprocess the data by scaling and centering the features. We'll use the **`scale`** function in R to scale and center the data.
+
+```{r}
+train_data_scaled <- scale(train_data[, -5])
+test_data_scaled <- scale(test_data[, -5])
+```
+
+**Writing a function to calculate distances**
+
+Next, we'll write a function to calculate distances between two data points using the Euclidean distance metric.
+
+```{r}
+euclidean_distance <- function(x, y) {
+  sqrt(sum((x - y)^2))
+}
+```
+
+**Implementing k-nearest neighbor algorithm using class package**
+
+We'll use the **`class`** package in R to implement the k-nearest neighbor algorithm. We'll use the **`knn`** function in the **`class`** package to make predictions based on the k nearest neighbors.
+
+```{r}
+library(class)
+k <- 5
+predicted_classes <- knn(train = train_data_scaled, test = test_data_scaled, cl = train_data[, 5], k = k, prob = TRUE)
+```
+
+In the code above, we set **`k`** to 5, which means we'll use the 5 nearest neighbors to make the prediction. The **`knn`** function returns the predicted classes of the test data, based on the labels of the nearest neighbors in the training data.
+
+**Evaluating model performance using confusion matrix, accuracy, precision, recall, and F1-score**
+
+Finally, we'll evaluate the performance of the k-nearest neighbor algorithm using a confusion matrix, accuracy, precision, recall, and F1-score.
+
+```{r}
+library(caret)
+confusion_matrix <- confusionMatrix(predicted_classes, test_data[, 5])
+accuracy <- confusion_matrix$overall["Accuracy"]
+precision <- confusion_matrix$byClass["Precision"]
+recall <- confusion_matrix$byClass["Recall"]
+f1_score <- confusion_matrix$byClass["F1"]
+```
+
+In the code above, we use the **`confusionMatrix`** function in the **`caret`** package to generate a confusion matrix based on the predicted classes and the true labels of the test data. We then extract the overall accuracy and the precision, recall, and F1-score for each class from the confusion matrix.
+
+That's it! We've successfully implemented the k-nearest neighbor algorithm in R and evaluated its performance using various metrics. With this knowledge, you can apply the k-nearest neighbor algorithm to your own data and solve classification and regression problems.
+
+**What is F1 score?**
+
+F1 score is a measure of a machine learning algorithm's accuracy that combines precision and recall. It is the harmonic mean of precision and recall, and ranges from 0 to 1, with higher values indicating better performance.
+
+F1 score is calculated using the following formula:
+
+`F1 score = 2 * (precision * recall) / (precision + recall)`
+
+where **`precision`** is the number of true positives divided by the total number of positive predictions, and **`recall`** is the number of true positives divided by the total number of actual positives.
+
+**Why use F1 score?**
+
+F1 score is useful when the dataset is imbalanced, meaning that the number of positive and negative examples is not equal. In such cases, accuracy alone is not a good measure of the algorithm's performance, as a high accuracy can be achieved by simply predicting the majority class all the time.
+
+Instead, we need a metric that takes into account both precision and recall, as precision measures the algorithm's ability to make correct positive predictions, and recall measures the algorithm's ability to find all positive examples in the dataset.
+
+**How to interpret F1 score?**
+
+F1 score ranges from 0 to 1, with higher values indicating better performance. An F1 score of 1 means perfect precision and recall, while an F1 score of 0 means that either the precision or recall is 0.
+
+In practice, we aim to achieve a high F1 score while balancing precision and recall based on the problem and its requirements. For example, in medical diagnosis, we may want to prioritize recall over precision to avoid missing any positive cases, while in fraud detection, we may want to prioritize precision over recall to avoid false positives.
+
+#### 
+QZs
+
+1.  Which of the following is a distance metric commonly used in the k-nearest neighbor algorithm?
+    a) Correlation distance
+    b) Chebyshev distance
+    c) Hamming distance
+    d) All of the above
+
+2.  How do you choose the value of k in the k-nearest neighbor algorithm?
+    a) Choose a small value of k to avoid overfitting
+    b) Choose a large value of k to avoid overfitting
+    c) Use cross-validation to evaluate the performance of the algorithm on different values of k and choose the value that gives the best performance
+    d) None of the above
+
+3.  What is the difference between weighted and unweighted k-nearest neighbor algorithm?
+    a) Weighted k-nearest neighbor algorithm gives more weight to the nearest neighbors that are farther away
+    b) Unweighted k-nearest neighbor algorithm gives more weight to the nearest neighbors that are closer
+    c) Weighted k-nearest neighbor algorithm assigns different weights to the nearest neighbors based on their distance from the new data point
+    d) Unweighted k-nearest neighbor algorithm assigns different weights to the nearest neighbors based on their distance from the new data point
+
+4.  What is F1 score?
+    a) A measure of a machine learning algorithm's accuracy that combines precision and recall
+    b) The average of precision and recall
+    c) The harmonic mean of precision and recall
+    d) None of the above
+
+5.  What is the formula for calculating Euclidean distance between two points in Euclidean space?
+    a) d(x, y) = sqrt(sum((xi - yi)\^2))
+    b) d(x, y) = sum(\|xi - yi\|)
+    c) d(x, y) = (sum(\|xi - yi\|\^p))\^(1/p)
+    d) None of the above
+
+6.  What is the purpose of scaling and centering the features in the k-nearest neighbor algorithm?
+    a) To make the features easier to interpret
+    b) To make the features more accurate
+    c) To make the features more comparable
+    d) None of the above
+
+7.  How can you handle ties in the k-nearest neighbor algorithm?
+    a) Assign the new data point to the class that has the nearest neighbor among the tied classes
+    b) Assign the new data point to the class that has the farthest neighbor among the tied classes
+    c) Assign the new data point to the class that has the most neighbors among the tied classes
+    d) None of the above
+
+Ans) dcccaca
+
+#### Conclusion
+
+In this week's class, we learned about the k-nearest neighbor algorithm, a popular machine learning algorithm used for classification and regression problems. We started with an overview of the algorithm and its applications, and discussed the advantages and disadvantages of the algorithm.
+
+We then delved into the theory behind the k-nearest neighbor algorithm, including distance metrics such as Euclidean distance and Manhattan distance, choosing the value of k, weighted versus unweighted k-nearest neighbor algorithm, and handling ties in k-nearest neighbor algorithm.
+
+We also showed you how to implement the k-nearest neighbor algorithm in R step by step, including loading data into R, splitting data into training and testing sets, preprocessing data, writing a function to calculate distances, and evaluating model performance using confusion matrix, accuracy, precision, recall, and F1-score.
+
+Finally, we gave you the opportunity to practice implementing the k-nearest neighbor algorithm on your own data set and evaluate the model's performance.
+
+By understanding the k-nearest neighbor algorithm and its theory, as well as its implementation in R, you can apply this algorithm to your own machine learning problems and make informed decisions about your data. Keep practicing and exploring different machine learning algorithms to expand your knowledge and skills in data science.
