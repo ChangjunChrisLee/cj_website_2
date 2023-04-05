@@ -237,6 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
+  <li><a href="#model-comparison-with-tidymodels-in-r" id="toc-model-comparison-with-tidymodels-in-r" class="nav-link" data-scroll-target="#model-comparison-with-tidymodels-in-r"><strong>Model Comparison with tidymodels in R</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -291,17 +292,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introduction" class="level4">
 <h4 class="anchored" data-anchor-id="introduction"><strong>Introduction</strong></h4>
 <p><strong>Overview of k-nearest neighbor algorithm</strong></p>
-<p>The k-nearest neighbor algorithm is a non-parametric algorithm that works by finding the k closest data points in the training set to a new, unseen data point, and then predicting the class or value of that data point based on the labels of its k-nearest neighbors. The algorithm is simple to implement and has a wide range of applications, including image recognition, text classification, and recommendation systems.</p>
+<p>The k-nearest neighbor algorithm is a <strong><em>non-parametric algorithm</em></strong> that works <u>by finding the k closest data points in the training set to a new, unseen data point</u>, and then <u>predicting the class or value of that data point based on the labels of its k-nearest neighbors</u>. The algorithm is simple to implement and has a wide range of applications, including image recognition, text classification, and recommendation systems.</p>
 <p>For example, let’s say you want to predict whether a new flower is a setosa, versicolor, or virginica based on its sepal length and width. You can use the k-nearest neighbor algorithm to find the k closest flowers in the training set to the new flower, and then predict the most common species among those k flowers.</p>
+<p><br></p>
 <p><strong>Applications of k-nearest neighbor algorithm</strong></p>
 <p>The k-nearest neighbor algorithm has a wide range of applications, including:</p>
 <ul>
-<li><p>Image recognition: identifying the content of an image based on its features</p></li>
-<li><p>Text classification: categorizing text documents based on their content</p></li>
-<li><p>Recommendation systems: suggesting products or services based on the preferences of similar users</p></li>
-<li><p>Bioinformatics: identifying similar genes or proteins based on their expression patterns</p></li>
-<li><p>Anomaly detection: identifying unusual data points based on their distance from other data points</p></li>
+<li><p><strong>Image recognition</strong>: identifying the content of an image based on its features</p></li>
+<li><p><strong>Text classification</strong>: categorizing text documents based on their content</p></li>
+<li><p><strong>Recommendation systems</strong>: suggesting products or services based on the preferences of similar users</p></li>
+<li><p><strong>Bioinformatics</strong>: identifying similar genes or proteins based on their expression patterns</p></li>
+<li><p><strong>Anomaly detection</strong>: identifying unusual data points based on their distance from other data points</p></li>
 </ul>
+<p><br></p>
 <p><strong>Advantages and disadvantages of k-nearest neighbor algorithm</strong></p>
 <p>The k-nearest neighbor algorithm has several advantages, including:</p>
 <ul>
@@ -322,9 +325,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="theory" class="level4">
 <h4 class="anchored" data-anchor-id="theory"><strong>Theory</strong></h4>
-<p>In the previous part of this series, we introduced the k-nearest neighbor algorithm and discussed its applications and advantages and disadvantages. In this part, we’ll dive deeper into the theory behind the k-nearest neighbor algorithm and explore different distance metrics used in the algorithm.</p>
+<p>Let’s dive deeper into the theory behind the k-nearest neighbor algorithm and explore different distance metrics used in the algorithm.</p>
 <p><strong>Distance metrics: Euclidean distance, Manhattan distance, etc.</strong></p>
-<p>One of the key components of the k-nearest neighbor algorithm is the distance metric used to measure the similarity between two data points. The most commonly used distance metrics are:</p>
+<p>One of the key components of the k-nearest neighbor algorithm is the <em>distance metric</em> used to <u>measure the similarity between two data points</u>. The most commonly used distance metrics are:</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*vAtQZbROuTdp36aQQ8cqBA.png" class="img-fluid"></p>
+<p>Find out more (<a href="https://tuhinmukherjee74.medium.com/different-types-of-distances-used-in-machine-learning-explained-550e2979752c">here</a>)</p>
 <ul>
 <li><p><code>Euclidean distance</code>: this is the straight-line distance between two points in Euclidean space. The formula for Euclidean distance between two points, x and y, is:</p>
 <p><span class="math display">\[
@@ -344,21 +349,27 @@ d(x,y) = (\sum|x_i - y_i|^p)^\frac{1}{p}
 <p>where p is a parameter that controls the “shape” of the distance metric. When p=1, the Minkowski distance is equivalent to Manhattan distance, and when p=2, the Minkowski distance is equivalent to Euclidean distance.</p></li>
 </ul>
 <p>Choosing the right distance metric is important for accurate predictions in the k-nearest neighbor algorithm. You should choose a distance metric that is appropriate for your data and the problem you are trying to solve.</p>
+<p><br></p>
 <p><strong>Choosing the value of k</strong></p>
-<p>Another important component of the k-nearest neighbor algorithm is the value of k, which represents the number of nearest neighbors used to make the prediction. Choosing the right value of k is crucial for the performance of the algorithm.</p>
+<p>Another important component of the k-nearest neighbor algorithm is the value of <strong><em>k</em></strong>, which represents the number of nearest neighbors used to make the prediction. Choosing the right value of k is crucial for the performance of the algorithm.</p>
+<blockquote class="blockquote">
 <p>If k is too small, the algorithm may be too sensitive to noise and outliers in the data, leading to overfitting. On the other hand, if k is too large, the algorithm may be too general and fail to capture the nuances of the data, leading to underfitting.</p>
+</blockquote>
 <p>One common approach to choosing the value of k is to use cross-validation to evaluate the performance of the algorithm on different values of k and choose the value that gives the best performance.</p>
+<p><br></p>
 <p><strong>Weighted versus unweighted k-nearest neighbor algorithm</strong></p>
 <p>In the basic k-nearest neighbor algorithm, all k nearest neighbors are treated equally when making the prediction. However, in some cases, it may be more appropriate to assign different weights to the nearest neighbors based on their distance from the new data point.</p>
 <p>For example, you may want to give more weight to the nearest neighbors that are closer to the new data point and less weight to the neighbors that are farther away. This can be done by using a weighted k-nearest neighbor algorithm, where the weights are inversely proportional to the distance between the neighbors and the new data point.</p>
+<p><br></p>
 <p><strong>Handling ties in k-nearest neighbor algorithm</strong></p>
-<p>In some cases, there may be a tie in the labels of the k nearest neighbors, making it difficult to make a prediction. For example, if k=3 and two neighbors are labeled as class A and one neighbor is labeled as class B, there is a tie between class A and class B.</p>
+<p>In some cases, there may be a tie in the labels of the k nearest neighbors, making it difficult to make a prediction. For example, if k=4 and two neighbors are labeled as class A and also two neighbors are labeled as class B, there is a tie between class A and class B.</p>
 <p>There are several ways to handle ties in the k-nearest neighbor algorithm. One common approach is to assign the new data point to the class that has the nearest neighbor among the tied classes.</p>
 <hr>
 </section>
 <section id="implementation" class="level4">
 <h4 class="anchored" data-anchor-id="implementation"><strong>Implementation</strong></h4>
-<p>In the previous parts of this series, we introduced the k-nearest neighbor algorithm and discussed its theory, including distance metrics, choosing the value of k, weighted versus unweighted k-nearest neighbor algorithm, and handling ties in k-nearest neighbor algorithm. In this part, we’ll show you how to implement the k-nearest neighbor algorithm in R, step by step.</p>
+<p>We introduced the k-nearest neighbor algorithm and discussed its theory, including distance metrics, choosing the value of k, weighted versus unweighted k-nearest neighbor algorithm, and handling ties in k-nearest neighbor algorithm. Let’s learn how to implement the k-nearest neighbor algorithm in R, step by step.</p>
+<p><br></p>
 <p><strong>Loading data into R</strong></p>
 <p>The first step in implementing the k-nearest neighbor algorithm is to load the data into R. In this example, we’ll use the <strong><code>iris</code></strong> dataset, which contains measurements of iris flowers.</p>
 <div class="cell">
@@ -376,44 +387,164 @@ d(x,y) = (\sum|x_i - y_i|^p)^\frac{1}{p}
 <p>Before applying the k-nearest neighbor algorithm, it’s important to preprocess the data by scaling and centering the features. We’ll use the <strong><code>scale</code></strong> function in R to scale and center the data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>train_data_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(train_data[, <span class="sc">-</span><span class="dv">5</span>])</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>test_data_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(test_data[, <span class="sc">-</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>test_data_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(test_data[, <span class="sc">-</span><span class="dv">5</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(train_data_scaled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width
+14   -1.76664631  -0.1186139   -1.4793538  -1.4471163
+50   -0.96560680   0.5607204   -1.3126884  -1.3157877
+118   2.12411700   1.6929443    1.6317336   1.3107847
+43   -1.65221209   0.3342756   -1.3682435  -1.3157877
+150   0.06430113  -0.1186139    0.7428515   0.7854702
+148   0.75090642  -0.1186139    0.7984066   1.0481275</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(train_data_scaled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length       Sepal.Width       Petal.Length      Petal.Width     
+ Min.   :-1.76665   Min.   :-1.9302   Min.   :-1.5349   Min.   :-1.4471  
+ 1st Qu.:-0.85117   1st Qu.:-0.5715   1st Qu.:-1.2016   1st Qu.:-1.1845  
+ Median :-0.05013   Median :-0.1186   Median : 0.3540   Median : 0.2602  
+ Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+ 3rd Qu.: 0.63647   3rd Qu.: 0.7872   3rd Qu.: 0.7429   3rd Qu.: 0.7855  
+ Max.   : 2.35299   Max.   : 3.0516   Max.   : 1.7428   Max.   : 1.7048  </code></pre>
+</div>
+</div>
+<p>When working with machine learning algorithms, especially <em>distance-based methods</em> such as k-nearest neighbors (kNN), <u>it is crucial to preprocess the data by scaling and centering the features</u>. This ensures that all features contribute equally to the model’s performance and prevents features with larger magnitudes from dominating the algorithm.</p>
+<p><br></p>
+<p><strong>Scaling</strong> and centering involve transforming the data such that the features have a mean of 0 and a standard deviation of 1. The transformation is performed using the following equations:</p>
+<ol type="1">
+<li><p>Centering (Mean subtraction):</p>
+<p><strong><code>X_centered = X - mean(X)</code></strong></p>
+<p>This step involves subtracting the mean of the feature from each data point, effectively centering the data around 0.</p></li>
+<li><p>Scaling (Divide by standard deviation):</p>
+<p><strong><code>X_scaled = X_centered / sd(X)</code></strong></p>
+<p>In this step, we divide the centered data by the standard deviation, resulting in a transformed feature with a standard deviation of 1.</p></li>
+</ol>
+<p>In R, we can use the <strong><code>scale()</code></strong> function to perform both centering and scaling in one step. Here’s how to apply it to the train_data and test_data.</p>
+<p><br></p>
+<p><strong>Min-max normalization</strong> is another preprocessing technique used to scale the features within a specific range, usually [0, 1]. This method can be particularly useful when working with algorithms sensitive to feature magnitudes or when we want to maintain the same unit of measurement across features.</p>
+<p>Min-max normalization is performed using the following equation:</p>
+<p><strong><code>X_normalized = (X - min(X)) / (max(X) - min(X))</code></strong></p>
+<p>This transformation scales the data linearly between the minimum and maximum values of each feature.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the min-max normalization function</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>min_max_normalize <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>train_data_normalized <span class="ot">&lt;-</span> <span class="fu">min_max_normalize</span>(train_data[, <span class="sc">-</span><span class="dv">5</span>])</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(train_data_normalized)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width
+14     0.5384615   0.3717949    0.1282051  0.00000000
+50     0.6282051   0.4102564    0.1666667  0.01282051
+118    0.9743590   0.4743590    0.8461538  0.26923077
+43     0.5512821   0.3974359    0.1538462  0.01282051
+150    0.7435897   0.3717949    0.6410256  0.21794872
+148    0.8205128   0.3717949    0.6538462  0.24358974</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(train_data_normalized)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length     Sepal.Width      Petal.Length     Petal.Width     
+ Min.   :0.5385   Min.   :0.2692   Min.   :0.1154   Min.   :0.00000  
+ 1st Qu.:0.6410   1st Qu.:0.3462   1st Qu.:0.1923   1st Qu.:0.02564  
+ Median :0.7308   Median :0.3718   Median :0.5513   Median :0.16667  
+ Mean   :0.7364   Mean   :0.3785   Mean   :0.4696   Mean   :0.14127  
+ 3rd Qu.:0.8077   3rd Qu.:0.4231   3rd Qu.:0.6410   3rd Qu.:0.21795  
+ Max.   :1.0000   Max.   :0.5513   Max.   :0.8718   Max.   :0.30769  </code></pre>
+</div>
 </div>
 <p><strong>Writing a function to calculate distances</strong></p>
 <p>Next, we’ll write a function to calculate distances between two data points using the Euclidean distance metric.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>euclidean_distance <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">sum</span>((x <span class="sc">-</span> y)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>euclidean_distance <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">sum</span>((x <span class="sc">-</span> y)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Implementing k-nearest neighbor algorithm using class package</strong></p>
 <p>We’ll use the <strong><code>class</code></strong> package in R to implement the k-nearest neighbor algorithm. We’ll use the <strong><code>knn</code></strong> function in the <strong><code>class</code></strong> package to make predictions based on the k nearest neighbors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(class)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">knn</span>(<span class="at">train =</span> train_data_scaled, <span class="at">test =</span> test_data_scaled, <span class="at">cl =</span> train_data[, <span class="dv">5</span>], <span class="at">k =</span> k, <span class="at">prob =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(class)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">knn</span>(<span class="at">train =</span> train_data_scaled, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">test =</span> test_data_scaled, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cl =</span> train_data[, <span class="dv">5</span>], </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">k =</span> k, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">prob =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In the code above, we set <strong><code>k</code></strong> to 5, which means we’ll use the 5 nearest neighbors to make the prediction. The <strong><code>knn</code></strong> function returns the predicted classes of the test data, based on the labels of the nearest neighbors in the training data.</p>
+<p>In the code above, we set <strong><code>k</code></strong> to 5, which means we’ll use the 5 nearest neighbors to make the prediction. The <strong><code>knn</code></strong> function returns the predicted classes of the test data, based on the labels of the nearest neighbors in the training data. The option <code>cl</code> means class, <code>prop</code> means that the result comes with the probability.</p>
+<p><br></p>
 <p><strong>Evaluating model performance using confusion matrix, accuracy, precision, recall, and F1-score</strong></p>
 <p>Finally, we’ll evaluate the performance of the k-nearest neighbor algorithm using a confusion matrix, accuracy, precision, recall, and F1-score.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: ggplot2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: lattice</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(predicted_classes, test_data[, <span class="dv">5</span>])</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>accuracy <span class="ot">&lt;-</span> confusion_matrix<span class="sc">$</span>overall[<span class="st">"Accuracy"</span>]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>precision <span class="ot">&lt;-</span> confusion_matrix<span class="sc">$</span>byClass[<span class="st">"Precision"</span>]</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>recall <span class="ot">&lt;-</span> confusion_matrix<span class="sc">$</span>byClass[<span class="st">"Recall"</span>]</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>f1_score <span class="ot">&lt;-</span> confusion_matrix<span class="sc">$</span>byClass[<span class="st">"F1"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(predicted_classes, test_data[, <span class="dv">5</span>])</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>confusion_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+            Reference
+Prediction   setosa versicolor virginica
+  setosa         14          0         0
+  versicolor      0         17         0
+  virginica       0          1        13
+
+Overall Statistics
+                                          
+               Accuracy : 0.9778          
+                 95% CI : (0.8823, 0.9994)
+    No Information Rate : 0.4             
+    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+                                          
+                  Kappa : 0.9664          
+                                          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: setosa Class: versicolor Class: virginica
+Sensitivity                 1.0000            0.9444           1.0000
+Specificity                 1.0000            1.0000           0.9688
+Pos Pred Value              1.0000            1.0000           0.9286
+Neg Pred Value              1.0000            0.9643           1.0000
+Prevalence                  0.3111            0.4000           0.2889
+Detection Rate              0.3111            0.3778           0.2889
+Detection Prevalence        0.3111            0.3778           0.3111
+Balanced Accuracy           1.0000            0.9722           0.9844</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix<span class="sc">$</span>byClass[,<span class="st">"Precision"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Class: setosa Class: versicolor  Class: virginica 
+        1.0000000         1.0000000         0.9285714 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix<span class="sc">$</span>byClass[,<span class="st">"Recall"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Class: setosa Class: versicolor  Class: virginica 
+        1.0000000         0.9444444         1.0000000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix<span class="sc">$</span>byClass[,<span class="st">"F1"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Class: setosa Class: versicolor  Class: virginica 
+        1.0000000         0.9714286         0.9629630 </code></pre>
+</div>
 </div>
 <p>In the code above, we use the <strong><code>confusionMatrix</code></strong> function in the <strong><code>caret</code></strong> package to generate a confusion matrix based on the predicted classes and the true labels of the test data. We then extract the overall accuracy and the precision, recall, and F1-score for each class from the confusion matrix.</p>
-<p>That’s it! We’ve successfully implemented the k-nearest neighbor algorithm in R and evaluated its performance using various metrics. With this knowledge, you can apply the k-nearest neighbor algorithm to your own data and solve classification and regression problems.</p>
+<p><br></p>
 <p><strong>What is F1 score?</strong></p>
-<p>F1 score is a measure of a machine learning algorithm’s accuracy that combines precision and recall. It is the harmonic mean of precision and recall, and ranges from 0 to 1, with higher values indicating better performance.</p>
+<p><code>F1 score</code> is a measure of a machine learning algorithm’s accuracy that combines precision and recall. It is the <strong>harmonic mean of precision and recall</strong>, and ranges from 0 to 1, with higher values indicating better performance.</p>
 <p>F1 score is calculated using the following formula:</p>
+<p><span class="math display">\[
+F1 = 2 \times \frac{Precision \times Recall}{Precesion + Recall}
+\]</span></p>
 <p><code>F1 score = 2 * (precision * recall) / (precision + recall)</code></p>
 <p>where <strong><code>precision</code></strong> is the number of true positives divided by the total number of positive predictions, and <strong><code>recall</code></strong> is the number of true positives divided by the total number of actual positives.</p>
 <p><strong>Why use F1 score?</strong></p>
@@ -479,17 +610,259 @@ d(x,y) = (\sum|x_i - y_i|^p)^\frac{1}{p}
 </ol>
 <p>Ans) dcccaca</p>
 <hr>
-</section>
-<section id="conclusion" class="level4">
-<h4 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h4>
-<p>In this week’s class, we learned about the k-nearest neighbor algorithm, a popular machine learning algorithm used for classification and regression problems. We started with an overview of the algorithm and its applications, and discussed the advantages and disadvantages of the algorithm.</p>
+<p>In this week, we learned about the k-nearest neighbor algorithm, a popular machine learning algorithm used for classification and regression problems. We started with an overview of the algorithm and its applications, and discussed the advantages and disadvantages of the algorithm.</p>
 <p>We then delved into the theory behind the k-nearest neighbor algorithm, including distance metrics such as Euclidean distance and Manhattan distance, choosing the value of k, weighted versus unweighted k-nearest neighbor algorithm, and handling ties in k-nearest neighbor algorithm.</p>
 <p>We also showed you how to implement the k-nearest neighbor algorithm in R step by step, including loading data into R, splitting data into training and testing sets, preprocessing data, writing a function to calculate distances, and evaluating model performance using confusion matrix, accuracy, precision, recall, and F1-score.</p>
 <p>Finally, we gave you the opportunity to practice implementing the k-nearest neighbor algorithm on your own data set and evaluate the model’s performance.</p>
 <p>By understanding the k-nearest neighbor algorithm and its theory, as well as its implementation in R, you can apply this algorithm to your own machine learning problems and make informed decisions about your data. Keep practicing and exploring different machine learning algorithms to expand your knowledge and skills in data science.</p>
-
-
+<hr>
+<p><br></p>
 </section>
+</section>
+<section id="model-comparison-with-tidymodels-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="model-comparison-with-tidymodels-in-r"><strong>Model Comparison with tidymodels in R</strong></h3>
+<p>Let’s learn how to compare four different machine learning models using the <a href="https://www.tidymodels.org/"><code>tidymodels</code></a> package in R. We will be using the classic <code>Iris</code> dataset to showcase this comparison. The models we will compare are Decision Trees, Random Forests, Naive Bayes, and k-Nearest Neighbors (kNN).</p>
+<p><br> First, let’s load the necessary libraries and the Iris dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the required libraries</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.0.0 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ broom        1.0.4     ✔ rsample      1.1.1
+✔ dials        1.1.0     ✔ tibble       3.1.8
+✔ dplyr        1.1.0     ✔ tidyr        1.3.0
+✔ infer        1.0.4     ✔ tune         1.0.1
+✔ modeldata    1.0.1     ✔ workflows    1.1.2
+✔ parsnip      1.0.3     ✔ workflowsets 1.0.0
+✔ purrr        1.0.1     ✔ yardstick    1.1.0
+✔ recipes      1.0.4     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ purrr::discard()         masks scales::discard()
+✖ dplyr::filter()          masks stats::filter()
+✖ dplyr::lag()             masks stats::lag()
+✖ purrr::lift()            masks caret::lift()
+✖ yardstick::precision()   masks caret::precision()
+✖ yardstick::recall()      masks caret::recall()
+✖ yardstick::sensitivity() masks caret::sensitivity()
+✖ yardstick::specificity() masks caret::specificity()
+✖ recipes::step()          masks stats::step()
+• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ readr     2.1.4
+✔ lubridate 1.9.2     ✔ stringr   1.5.0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ readr::col_factor() masks scales::col_factor()
+✖ purrr::discard()    masks scales::discard()
+✖ dplyr::filter()     masks stats::filter()
+✖ stringr::fixed()    masks recipes::fixed()
+✖ dplyr::lag()        masks stats::lag()
+✖ purrr::lift()       masks caret::lift()
+✖ readr::spec()       masks yardstick::spec()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rpart'
+
+The following object is masked from 'package:dials':
+
+    prune</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(discrim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'discrim' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'discrim'
+
+The following object is masked from 'package:dials':
+
+    smoothness</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naivebayes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'naivebayes' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>naivebayes 0.9.7 loaded</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kknn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'kknn' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kknn'
+
+The following object is masked from 'package:caret':
+
+    contr.dummy</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Iris dataset</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before we begin modeling, we need to <strong>preprocess the data</strong>. We will split the dataset into training (75%) and testing (25%) sets.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(iris, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we will <strong>create the models</strong> using tidymodels’ <strong><code>parsnip</code></strong> package. Each model will be created using a similar structure, specifying the model type and the mode (classification in this case).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Decision Tree</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>decision_tree <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>random_forest <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"randomForest"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Naive Bayes</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>naive_bayes <span class="ot">&lt;-</span> <span class="fu">naive_Bayes</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"naivebayes"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="co"># k-Nearest Neighbors (kNN)</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>knn <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kknn"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Next, we will <strong>create a workflow</strong> for each model. In this example, we don’t require any preprocessing steps, so we will directly specify the model in the workflow.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Decision Tree Workflow</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>workflow_dt <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(decision_tree) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(Species <span class="sc">~</span> .)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest Workflow</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>workflow_rf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(random_forest) <span class="sc">%&gt;%</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(Species <span class="sc">~</span> .)</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Naive Bayes Workflow</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>workflow_nb <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(naive_bayes) <span class="sc">%&gt;%</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(Species <span class="sc">~</span> .)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># kNN Workflow</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>workflow_knn <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(knn) <span class="sc">%&gt;%</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_formula</span>(Species <span class="sc">~</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>We will now <strong>fit each model</strong> using the training data and make predictions on the test data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the models</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>fit_dt <span class="ot">&lt;-</span> <span class="fu">fit</span>(workflow_dt, <span class="at">data =</span> train_data)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>fit_rf <span class="ot">&lt;-</span> <span class="fu">fit</span>(workflow_rf, <span class="at">data =</span> train_data)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>fit_nb <span class="ot">&lt;-</span> <span class="fu">fit</span>(workflow_nb, <span class="at">data =</span> train_data)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>fit_knn <span class="ot">&lt;-</span> <span class="fu">fit</span>(workflow_knn, <span class="at">data =</span> train_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Finally, we will evaluate the performance of each model using accuracy as the metric.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_dt, test_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_dt, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the true outcome data back in</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(Species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 × 5
+   .pred_class .pred_setosa .pred_versicolor .pred_virginica Species
+   &lt;fct&gt;              &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt; &lt;fct&gt;  
+ 1 setosa                 1                0               0 setosa 
+ 2 setosa                 1                0               0 setosa 
+ 3 setosa                 1                0               0 setosa 
+ 4 setosa                 1                0               0 setosa 
+ 5 setosa                 1                0               0 setosa 
+ 6 setosa                 1                0               0 setosa 
+ 7 setosa                 1                0               0 setosa 
+ 8 setosa                 1                0               0 setosa 
+ 9 setosa                 1                0               0 setosa 
+10 setosa                 1                0               0 setosa 
+# … with 28 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_dt, test_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_dt, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(Species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add accuracy function from yardstick</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> Species, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy multiclass     0.947</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All together </span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>accuracy_dt <span class="ot">&lt;-</span> </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(fit_dt, test_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_dt, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(Species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> Species, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Do the same things for the other models</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>accuracy_rf <span class="ot">&lt;-</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(fit_rf, test_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_rf, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(Species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> Species, .pred_class)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>accuracy_nb <span class="ot">&lt;-</span> </span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(fit_nb, test_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_nb, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(Species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> Species, .pred_class)</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>accuracy_knn <span class="ot">&lt;-</span> </span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(fit_knn, test_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_knn, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data <span class="sc">%&gt;%</span> </span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(Species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(<span class="at">truth =</span> Species, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>calculates the accuracy for each model and displays the results in a sorted data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>accuracy_dt <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(accuracy_rf, accuracy_nb, accuracy_knn) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">models =</span> <span class="fu">c</span>(<span class="st">"Decision Tree"</span>, <span class="st">"Random Forest"</span>, <span class="st">"Naive Bayes"</span>, <span class="st">"kNN"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(.estimate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  .metric  .estimator .estimate models       
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;        
+1 accuracy multiclass     0.974 kNN          
+2 accuracy multiclass     0.947 Decision Tree
+3 accuracy multiclass     0.947 Random Forest
+4 accuracy multiclass     0.947 Naive Bayes  </code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
