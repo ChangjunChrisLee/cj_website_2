@@ -1,0 +1,630 @@
+---
+title: "Data Wranggling with tidyverse in R"
+# subtitle: "주차별 계획 및 학습도구"
+---
+
+::: callout-note
+## Object
+
+Learn how to clean, manipulate, and transform data using the tidyverse package in R
+:::
+
+### Introduction
+
+Data wrangling is the process of cleaning, manipulating, and transforming raw data into a more suitable format for data analysis. In R, the tidyverse package is an essential tool for data wrangling. It is a collection of R packages designed for data science, including dplyr, tidyr, ggplot2, and readr. In this tutorial, we will focus on using dplyr and tidyr for data wrangling tasks.
+
+> Dataset: For this tutorial, we will use the `mtcars` dataset, which is a built-in dataset in R. It contains data about 32 cars, including their miles per gallon (mpg), number of cylinders (cyl), and horsepower (hp), among other variables.
+
+Let's get started!
+
+#### Load the required packages and dataset
+
+First, we will install and load the tidyverse package and then load the mtcars dataset.
+
+```{r}
+# Install the tidyverse package if not already installed
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
+
+# Load the tidyverse package
+library(tidyverse)
+
+# Load the mtcars dataset
+data(mtcars)
+
+```
+
+### About Tidyverse
+
+The [`tidyverse`](https://www.tidyverse.org/) is a collection of R packages designed to make data science tasks more efficient, consistent, and enjoyable. The main philosophy behind the tidyverse is **the concept of "tidy data,"** which emphasizes a [consistent structure for data manipulation and visualization]{.underline}. Tidy data has a simple structure, where each variable forms a column, each observation forms a row, and each cell contains a single value.
+
+**Motivation:**
+
+The motivation for the tidyverse came from the need for a coherent set of tools for data manipulation and analysis that adhere to a consistent grammar and data structure. This consistency reduces the cognitive load for users, making it easier to learn and apply various tools across different stages of the data science pipeline.
+
+The tidyverse was created by *Hadley Wickham* and is now maintained by a team of developers. The main goals of the tidyverse are:
+
+1.  Encourage **a consistent and efficient workflow** for data manipulation and visualization.
+
+2.  Make data analysis more **intuitive**, reducing the learning curve for newcomers.
+
+3.  Provide **a comprehensive set of tools** for common data science tasks.
+
+4.  Promote best practices in data science, including **reproducibility** and **clear communication**.
+
+**Main packages:**
+
+Some of the key packages included in the tidyverse are:
+
+1.  **`dplyr`**: A package for data manipulation that provides a set of functions for filtering, sorting, selecting, and mutating data, as well as performing grouped operations and joining datasets. You can find a [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf) for this package.
+
+2.  **`ggplot2`**: A powerful package for data visualization based on the Grammar of Graphics, which allows for the creation of complex and customizable plots using a layered approach. You can find a [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf) for this package.
+
+3.  **`tidyr`**: A package for cleaning and reshaping data, with functions for pivoting data between wide and long formats, handling missing values, and more. Please see this [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) for this package.
+
+4.  **`readr`**: A package for reading and writing data that provides functions for importing and exporting data in various formats, including CSV, TSV, and fixed-width files.
+
+5.  **`tibble`**: A modern take on data frames that offers a more consistent and user-friendly interface, with enhanced printing and subsetting capabilities.
+
+6.  **`stringr`**: A package for working with strings, offering a consistent set of functions for common string manipulation tasks, such as concatenation, splitting, and pattern matching.
+
+7.  **`forcats`**: A package for working with categorical data, providing functions for creating, modifying, and summarizing factors.
+
+### Exploring the dataset
+
+Before diving into data wrangling, let's explore the mtcars dataset.
+
+```{r}
+# View the first few rows of the dataset
+head(mtcars)
+
+# Get a summary of the dataset
+summary(mtcars)
+
+```
+
+The mtcars dataset is a classic built-in dataset in R, often used for teaching and demonstrating various data analysis and visualization techniques. It originates from the 1974 Motor Trend US magazine and contains information about 32 different car models, primarily from the 1973-1974 model years.
+
+The dataset consists of 11 variables, which include various specifications and performance metrics for each car. The variables in the mtcars dataset are:
+
+1.  **mpg**: Miles per gallon (fuel efficiency)
+
+2.  **cyl**: Number of cylinders in the engine
+
+3.  **disp**: Engine displacement, measured in cubic inches
+
+4.  **hp**: Gross horsepower
+
+5.  **drat**: Rear axle ratio
+
+6.  **wt**: Weight of the car, in thousands of pounds
+
+7.  **qsec**: 1/4 mile time, a measure of acceleration
+
+8.  **vs**: Engine type (0 = V-shaped, 1 = straight)
+
+9.  **am**: Transmission type (0 = automatic, 1 = manual)
+
+10. **gear**: Number of forward gears
+
+11. **carb**: Number of carburetors
+
+<br>
+
+**Glimpse!**
+
+```{r}
+glimpse(mtcars)
+```
+
+### Data Wrangling tasks
+
+**Selecting columns**
+
+Let's say you're only interested in analyzing the mpg, hp, and wt (weight) columns. You can use dplyr's `select()` function to choose specific columns.
+
+```{r}
+# Select mpg, hp, and wt columns
+selected_data <- mtcars %>%
+  select(mpg, hp, wt)
+
+head(selected_data)
+
+```
+
+Sometimes, we need to `pull()` only a vector from the dataset.
+
+```{r}
+# pull mpg as a vector
+mtcars %>%
+  pull(mpg)
+```
+
+Use `sample_frac()` to select a random fraction of the dataset:
+
+```{r}
+# Select a random 50% of the dataset
+sampled_frac <- mtcars %>%
+  sample_frac(0.5)
+
+glimpse(sampled_frac)
+
+```
+
+Use `sample_n()` to select a random number of rows from the dataset:
+
+```{r}
+# Select a random 10 rows from the dataset
+sampled_n <- mtcars %>%
+  sample_n(10)
+
+glimpse(sampled_n)
+
+```
+
+Use `slice()` to select specific rows by index:
+
+```{r}
+# Select rows 1, 5, and 10 from the dataset
+sliced_rows <- mtcars %>%
+  slice(c(1, 5, 10))
+
+head(sliced_rows)
+
+```
+
+Use `top_n()` to select the top n rows based on a specific variable:
+
+```{r}
+# Select the top 5 cars with the highest mpg
+top_cars <- mtcars %>%
+  top_n(5, wt = mpg)
+
+head(top_cars)
+
+```
+
+These functions provide various ways to sample, select, and filter rows in the mtcars dataset, allowing you to explore and analyze the data more effectively.
+
+**Filtering rows**
+
+You might want to analyze cars with specific characteristics. For instance, let's filter the dataset to include only cars with mpg greater than 20 and hp less than 150.
+
+```{r}
+# Filter cars with mpg > 20 and hp < 150
+filtered_data <- mtcars %>%
+  filter(mpg > 20, hp < 150)
+
+head(filtered_data)
+
+```
+
+#### **Sorting data**
+
+To sort the dataset by a specific column, use the `arrange()` function. Let's sort the filtered_data by mpg in descending order.
+
+```{r}
+# Sort filtered_data by mpg in descending order
+sorted_data <- filtered_data %>%
+  arrange(desc(mpg))
+
+head(sorted_data)
+
+```
+
+#### **Creating new columns**
+
+You might want to create a new column based on existing columns. For instance, let's create a column called "performance" calculated as hp / wt.
+
+```{r}
+# Create a new column 'performance'
+with_performance <- mtcars %>%
+  mutate(performance = hp / wt)
+
+glimpse(with_performance)
+
+```
+
+Functions that are too convenient to use with `select()`: `contains()`, `ends_with()`, `starts_with()`
+
+Firstly, we add new columns to the mtcars dataset:
+
+```{r}
+# Add new columns to the mtcars dataset
+mtcars_new <- mtcars %>%
+  mutate(hp_disp_ratio = hp / disp,
+         disp_hp_ratio = disp / hp,
+         wt_mpg_ratio = wt / mpg)
+
+glimpse(mtcars_new)
+
+```
+
+Use `contains()` to select columns that contain a specific string:
+
+```{r}
+# Select columns containing the string 'ratio'
+ratio_columns <- mtcars_new %>%
+  select(contains("ratio"))
+
+head(ratio_columns)
+
+```
+
+Use `ends_with()` to select columns that end with a specific string:
+
+```{r}
+# Select columns ending with the string 'ratio'
+ending_ratio_columns <- mtcars_new %>%
+  select(ends_with("ratio"))
+
+head(ending_ratio_columns)
+
+```
+
+Use `starts_with()` to select columns that start with a specific string:
+
+```{r}
+# Select columns starting with the string 'hp'
+starting_hp_columns <- mtcars_new %>%
+  select(starts_with("hp"))
+
+head(starting_hp_columns)
+
+```
+
+These functions are helpful when you need to select multiple columns that share a specific naming pattern, such as a common prefix or suffix. They can simplify your code and make it more readable, especially when working with large datasets containing numerous columns.
+
+<br>
+
+Use `transmute()` to create a new dataset with transformed columns:
+
+```{r}
+# Create a new dataset with the mpg to km/l conversion, and engine displacement from cubic inches to liters
+mtcars_transformed <- mtcars %>%
+  transmute(mpg_to_kml = mpg * 0.425144, # 1 mile per gallon is approximately 0.425144 km/l
+            liters = disp * 0.0163871)   # 1 cubic inch is approximately 0.0163871 liters
+
+head(mtcars_transformed)
+
+```
+
+Use `rename()` to rename columns in the mtcars dataset:
+
+```{r}
+# Rename the 'mpg' column to 'miles_per_gallon' and the 'disp' column to 'displacement'
+mtcars_renamed <- mtcars %>%
+  rename(miles_per_gallon = mpg,
+         displacement = disp)
+
+head(mtcars_renamed)
+
+```
+
+#### **Grouping and summarizing data**
+
+Grouping data can help you understand it better. Let's group the dataset by the number of cylinders (cyl) and calculate the average mpg for each group.
+
+```{r}
+# Group data by 'cyl' and calculate average 'mpg'
+grouped_data <- mtcars %>%
+  group_by(cyl) %>%
+  summarize(avg_mpg = mean(mpg))
+
+grouped_data
+
+```
+
+Calculate the median, minimum, and maximum mpg for each number of cylinders:
+
+```{r}
+grouped_data_2 <- mtcars %>%
+  group_by(cyl) %>%
+  summarize(median_mpg = median(mpg),
+            min_mpg = min(mpg),
+            max_mpg = max(mpg))
+
+grouped_data_2
+
+```
+
+Group data by the number of gears and calculate the average horsepower and engine displacement:
+
+```{r}
+grouped_data_3 <- mtcars %>%
+  group_by(gear) %>%
+  summarize(avg_hp = mean(hp),
+            avg_disp = mean(disp))
+
+grouped_data_3
+
+```
+
+Group data by transmission type (automatic or manual) and calculate the average mpg, total horsepower, and number of cars in each group:
+
+```{r}
+grouped_data_4 <- mtcars %>%
+  group_by(am) %>%
+  summarize(avg_mpg = mean(mpg),
+            total_hp = sum(hp),
+            num_cars = n())
+
+grouped_data_4
+
+```
+
+**Handling missing values**
+
+If your dataset has missing values, you can use tidyr's drop_na() function to remove rows with missing values or replace_na() function to replace missing values with a specified value.
+
+For this tutorial, let's artificially introduce missing values in the mtcars dataset and then perform missing value handling.
+
+```{r}
+# Introduce missing values to mtcars dataset
+set.seed(42)
+mtcars_with_na <- mtcars %>%
+  mutate(mpg = ifelse(runif(n()) < 0.1, NA, mpg))
+
+# Check for missing values
+summary(mtcars_with_na)
+
+```
+
+Removing rows with missing values
+
+```{r}
+# Remove rows with missing values in 'mpg' column
+no_na_rows <- mtcars_with_na %>%
+  drop_na(mpg)
+
+summary(no_na_rows)
+
+```
+
+#### **Replacing missing values**
+
+If you want to replace missing values with a specific value or the mean value of the column, use the replace_na() function.
+
+```{r}
+# Replace missing values in 'mpg' column with the mean value
+mean_mpg <- mean(mtcars$mpg, na.rm = TRUE)
+replaced_na <- mtcars_with_na %>%
+  mutate(mpg = replace_na(mpg, mean_mpg))
+
+summary(replaced_na)
+
+```
+
+#### **QZs**
+
+1.  Using the mtcars dataset, filter the data to only include cars with a manual transmission (am = 1) and sort the result by miles per gallon (mpg) in descending order. What are the top 3 cars in terms of mpg?
+
+-   Mazda RX4, Mazda RX4 Wag, Datsun 710
+-   Fiat 128, Honda Civic, Toyota Corolla
+-   Lotus Europa, Porsche 914-2, Ford Pantera L
+
+<br>
+
+2.  Using the mtcars dataset, group the data by the number of cylinders (cyl) and calculate the average miles per gallon (mpg) for each group. Which group of cars has the highest average mpg?
+
+-   4 cylinders
+-   6 cylinders
+-   8 cylinders
+
+<br>
+
+3.  Using the mtcars dataset, create a new column called "mpg_kml" that converts the mpg values to km/l (1 mile per gallon is approximately 0.425144 km/l). Then, rename the "mpg" column to "miles_per_gallon".
+
+<br>
+
+4.  Let's use gapminder dataset. Calculate the average GDP per capita for each continent and display the results in descending order.
+
+```{r}
+if (!requireNamespace("gapminder", quietly = TRUE)) {
+  install.packages("gapminder")
+}
+
+library(gapminder)
+gapminder %>% head
+```
+
+<br>
+
+5.  Filter the dataset for the year 2007 and randomly select 100 countries. Then, arrange these countries in descending order of life expectancy and display the top 5 countries with the highest life expectancy.
+
+<br>
+
+### Combining datasets
+
+Sometimes, you may need to combine datasets. You can use dplyr's `bind_rows()` function to combine datasets vertically (by rows) and bind_cols() function to combine datasets horizontally (by columns).
+
+For this tutorial, let's create two datasets and then combine them.
+
+```{r}
+# Create two datasets
+dataset_1 <- mtcars %>%
+  filter(cyl == 4) %>% 
+  head(3)
+
+dataset_1
+
+dataset_2 <- mtcars %>%
+  filter(cyl == 6) %>% 
+  head(3)
+
+dataset_2
+
+# Combine datasets vertically
+combined_data <- bind_rows(dataset_1, dataset_2)
+
+# Check the combined data
+combined_data
+
+```
+
+#### **Table Joining**
+
+In this section, we'll demonstrate how to join tables using dplyr's join functions. We will use a new dataset called "car_brands" that contains information about each car's brand.
+
+```{r}
+# Create a car_brands dataset
+car_brands <- tibble(
+  car_name = rownames(mtcars),
+  brand = c(rep("Mazda", 2), rep("Datsun", 1), rep("Hornet", 2), 
+            rep("Valiant", 1), rep("Duster", 1), rep("Merc", 7), 
+            rep("Cadillac", 1), rep("Lincoln", 1), rep("Chrysler", 1), 
+            rep("Fiat", 2), rep("Honda", 1), rep("Toyota", 2), 
+            rep("Dodge", 1), rep("AMC", 1), rep("Camaro", 1), 
+            rep("Pontiac", 1), rep("Porsche", 1), rep("Lotus", 1), 
+            rep("Ford", 1), rep("Ferrari", 1), rep("Maserati", 1), 
+            rep("Volvo", 1))
+)
+
+car_brands
+
+# Convert rownames of mtcars to a column called "car_name"
+mtcars <- mtcars %>%
+  rownames_to_column(var = "car_name")
+
+mtcars %>% glimpse
+
+```
+
+**Inner join**
+
+Inner join returns only the rows with matching keys in both tables.
+
+See the types of joins below.
+
+![](https://tavareshugo.github.io/r-intro-tidyverse-gapminder/fig/07-dplyr_joins.svg)
+
+```{r}
+# Perform inner join
+inner_joined <- mtcars %>%
+  inner_join(car_brands, by = "car_name")
+
+head(inner_joined)
+
+```
+
+**Left join**
+
+Left join returns all the rows from the left table and the matched rows from the right table. If no match is found, NA values are returned for right table columns.
+
+```{r}
+# Perform left join
+left_joined <- mtcars %>%
+  left_join(car_brands, by = "car_name")
+
+head(left_joined)
+
+```
+
+### Pivoting
+
+#### **pivot_longer**
+
+pivot_longer() is used to transform a dataset from "wide" to "long" format. It takes multiple columns and collapses them into key-value pairs.
+
+![](https://epirhandbook.com/en/images/pivoting/pivot_longer_new.png)
+
+For this example, we'll create a dataset called "car_data" to demonstrate the pivot_longer() function.
+
+```{r}
+# Create a car_data dataset
+car_data <- tibble(
+  car_name = c("Mazda RX4", "Mazda RX4 Wag", "Datsun 710"),
+  mpg = c(21.0, 21.0, 22.8),
+  hp = c(110, 110, 93),
+  wt = c(2.620, 2.875, 2.320)
+)
+car_data
+
+```
+
+Use pivot_longer to collapse the 'mpg', 'hp', and 'wt' columns into key-value pairs.
+
+```{r}
+# Transform car_data from wide to long format
+long_car_data <- car_data %>%
+  pivot_longer(cols = c(mpg, hp, wt),
+               names_to = "variable",
+               values_to = "value")
+
+long_car_data
+```
+
+#### **pivot_wider**
+
+pivot_wider() is used to transform a dataset from "long" to "wide" format. It spreads key-value pairs across multiple columns.
+
+![](https://epirhandbook.com/en/images/pivoting/pivot_wider_new.png)
+
+For this example, we'll use the "long_car_data" dataset created in the previous step.
+
+```{r}
+# Transform long_car_data back to wide format
+wide_car_data <- long_car_data %>%
+  pivot_wider(names_from = variable,
+              values_from = value)
+
+print(wide_car_data)
+
+```
+
+### Additional data wrangling tasks
+
+#### Counting occurrences
+
+To count the occurrences of a specific value or group of values in a dataset, use the `count()` function.
+
+```{r}
+# Count the occurrences of each brand in the car_brands dataset
+brand_counts <- car_brands %>%
+  count(brand, sort = TRUE)
+
+brand_counts
+
+```
+
+#### Nesting and unnesting
+
+Nesting and unnesting data can be useful for performing operations on grouped data. Let's demonstrate this by calculating the mean mpg for each brand.
+
+```{r}
+# Nest the mtcars dataset by brand
+head(left_joined)
+
+nested_data <- left_joined %>%
+  group_by(brand) %>%
+  nest()
+
+nested_data
+
+# Calculate mean mpg for each brand
+mean_mpg_by_brand <- nested_data %>%
+  mutate(mean_mpg = map_dbl(data, ~ mean(.x$mpg, na.rm = TRUE)))
+mean_mpg_by_brand
+
+# Unnest the nested data
+unnested_data <- mean_mpg_by_brand %>%
+  unnest(cols = data)
+
+head(unnested_data)
+
+```
+
+#### Window functions
+
+Window functions perform calculations across a set of rows related to the current row. Let's calculate the rank of each car within its brand based on mpg.
+
+```{r}
+# Calculate rank within brand by mpg
+ranking_by_mpg <- left_joined %>%
+  group_by(brand) %>%
+  mutate(rank = dense_rank(desc(mpg)))
+
+head(ranking_by_mpg)
+
+```
