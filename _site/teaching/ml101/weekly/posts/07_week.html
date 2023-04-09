@@ -307,11 +307,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="real-world-applications">Real-world Applications</h4>
 <p>Linear regression has a wide range of applications in social science research. Some examples include:</p>
 <ul>
-<li><p>Economics: Linear regression can be used to study the impact of various factors on economic indicators, such as GDP growth, unemployment rate, and inflation.</p></li>
-<li><p>Political Science: Researchers can use linear regression to analyze the effects of political factors on election outcomes, public opinion, or policy decisions.</p></li>
-<li><p>Sociology: Linear regression can help us understand the relationship between social variables, such as education level, income, and various social outcomes like crime rates, health status, and life satisfaction.</p></li>
-<li><p>Psychology: Researchers can use linear regression to study the effects of different psychological factors on human behavior, mental health, and well-being.</p></li>
-<li><p>Education: Linear regression can be used to analyze the impact of various factors on educational outcomes, such as standardized test scores, graduation rates, and college enrollment.</p></li>
+<li><p><strong>Economics</strong>: Linear regression can be used to study the impact of various factors on economic indicators, such as GDP growth, unemployment rate, and inflation.</p></li>
+<li><p><strong>Political Science</strong>: Researchers can use linear regression to analyze the effects of political factors on election outcomes, public opinion, or policy decisions.</p></li>
+<li><p><strong>Sociology</strong>: Linear regression can help us understand the relationship between social variables, such as education level, income, and various social outcomes like crime rates, health status, and life satisfaction.</p></li>
+<li><p><strong>Psychology</strong>: Researchers can use linear regression to study the effects of different psychological factors on human behavior, mental health, and well-being.</p></li>
+<li><p><strong>Education</strong>: Linear regression can be used to analyze the impact of various factors on educational outcomes, such as standardized test scores, graduation rates, and college enrollment.</p></li>
 </ul>
 <p>Overall, linear regression is a versatile and powerful tool for social scientists, enabling them to gain insights into the relationships between variables and make evidence-based predictions.</p>
 <hr>
@@ -322,17 +322,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>Simple linear regression is a statistical method that helps us understand the relationship between one dependent variable (y) and one independent variable (x). It models the relationship as a linear function.</p>
 </blockquote>
+<p><img src="http://cdn-0.r-statistics.co/screenshots/linear-regression-small.png" class="img-fluid"></p>
 <p><strong>Equation</strong>:</p>
 <p><span class="math display">\[
-y = β₀ + β₁x + ε
+y = β_1 + β_2x + ε
 \]</span></p>
 <ul>
 <li><p><span class="math inline">\(y\)</span> : dependent variable (outcome)</p></li>
 <li><p><span class="math inline">\(x\)</span> : independent variable (predictor)</p></li>
-<li><p><span class="math inline">\(β₀\)</span> : intercept (value of y when x = 0)</p></li>
-<li><p><span class="math inline">\(β₁\)</span> : slope (change in y for a one-unit increase in x)</p></li>
+<li><p><span class="math inline">\(β_1\)</span> : intercept (value of y when x = 0)</p></li>
+<li><p><span class="math inline">\(β_2\)</span> : slope (change in y for a one-unit increase in x)</p></li>
 <li><p><span class="math inline">\(ε\)</span> : error term (difference between the predicted and observed values of y)</p></li>
 </ul>
+<p><br></p>
 <p><strong>Multiple Linear Regression</strong></p>
 <blockquote class="blockquote">
 <p>Multiple linear regression is an extension of simple linear regression that allows us to model the relationship between one dependent variable (y) and multiple independent variables (x₁, x₂, …, xₙ). It is useful when we want to analyze the impact of several predictors on an outcome variable.</p>
@@ -348,6 +350,7 @@ y = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ + ε
 <li><p><span class="math inline">\(β₁, β₂, …, βₙ\)</span> : coefficients (change in y for a one-unit increase in the corresponding x)</p></li>
 <li><p><span class="math inline">\(ε\)</span> : error term (difference between the predicted and observed values of y)</p></li>
 </ul>
+<p><br></p>
 <p><strong>Assumptions of Linear Regression</strong></p>
 <ul>
 <li><p><code>Linearity</code>: The relationship between the dependent variable and the independent variables is linear.</p></li>
@@ -356,7 +359,8 @@ y = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ + ε
 <li><p><code>Normality</code>: The error term follows a normal distribution.</p></li>
 <li><p><code>No multicollinearity</code>: The independent variables are not highly correlated with each other.</p></li>
 </ul>
-<p><strong>Coefficient Estimation: Least Squares Method</strong></p>
+<p><br></p>
+<p><strong>Coefficient Estimation: Least Squares (LS) Method</strong></p>
 <blockquote class="blockquote">
 <p>Minimize the sum of the squared differences between the observed and predicted values of the dependent variable.</p>
 </blockquote>
@@ -368,9 +372,33 @@ y = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ + ε
 </ul>
 <p><strong>Model Evaluation Metrics</strong></p>
 <ul>
-<li><p>R-squared (Coefficient of Determination): Proportion of the variance in the dependent variable that can be explained by the independent variables. Ranges from 0 to 1.</p></li>
-<li><p>Adjusted R-squared: R-squared adjusted for the number of predictors in the model. Useful for comparing models with different numbers of predictors.</p></li>
-<li><p>Root Mean Squared Error (RMSE): The square root of the average squared differences between the observed and predicted values of the dependent variable. A measure of the model’s prediction accuracy.</p></li>
+<li><p>R-squared (Coefficient of Determination): Proportion of the variance in the dependent variable that can be explained by the independent variables. Ranges from 0 to 1.</p>
+<p><span class="math display">\[
+R^2 = 1- \frac{SSE}{SST}
+\]</span></p>
+<p><span class="math display">\[
+SSE = \sum(y_i - \hat{y_i})^2
+\]</span></p>
+<p><span class="math display">\[
+SST=\sum(y_i - \bar{y_i})^2
+\]</span></p>
+<blockquote class="blockquote">
+<p>where <em>SSE</em> is the sum of squared errors and <em>SST</em> is the sum of squared total</p>
+</blockquote></li>
+<li><p>Adjusted R-squared: R-squared adjusted for the number of predictors in the model. Useful for comparing models with different numbers of predictors.</p>
+<p><span class="math display">\[
+Adj.R^2=1-\frac{(1-R^2)(N-1)}{N-p-1}
+\]</span></p>
+<blockquote class="blockquote">
+<p>where <span class="math inline">\(R^2\)</span> is sample R-squared, <span class="math inline">\(N\)</span> is Total Sample Size, and <span class="math inline">\(p\)</span> is the number of independent variables</p>
+</blockquote></li>
+<li><p>Root Mean Squared Error (RMSE): The square root of the average squared differences between the observed and predicted values of the dependent variable. A measure of the model’s prediction accuracy.</p>
+<p><span class="math display">\[
+RMSE = \sqrt{\frac{\sum_{i=1}^{N}{(y_i-\hat{y_i})^2}}{N}}
+\]</span></p>
+<blockquote class="blockquote">
+<p>where N is the number of data points (observations)</p>
+</blockquote></li>
 </ul>
 <hr>
 </section>
@@ -418,7 +446,7 @@ y = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ + ε
 </section>
 <section id="hands-on-practice" class="level4">
 <h4 class="anchored" data-anchor-id="hands-on-practice">Hands-on Practice</h4>
-<p>For this hands-on practice, we will use the ‘mtcars’ dataset, which is built into R. The dataset contains information about various car models, including miles per gallon (mpg), number of cylinders (cyl), horsepower (hp), and weight (wt). The goal is to predict miles per gallon based on the number of cylinders, horsepower, and weight using linear regression.</p>
+<p>For this hands-on practice, we will use the <code>mtcars</code> dataset, which is built into R. The dataset contains information about various car models, including miles per gallon (mpg), number of cylinders (cyl), horsepower (hp), and weight (wt). The goal is to predict miles per gallon based on the number of cylinders, horsepower, and weight using linear regression.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -515,6 +543,52 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
 <p><img src="07_week_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><strong>Hypothesis Testing and Statistical Significance in Linear Regression</strong></p>
+<p>T-statistics and p-values are essential concepts in statistical hypothesis testing and linear regression analysis.</p>
+<ul>
+<li><p>T-statistics</p>
+<blockquote class="blockquote">
+<p>A t-statistic is a measure of how many standard deviations a regression coefficient is from zero. It is used to test the null hypothesis that there is no relationship between the independent and dependent variables (i.e., the coefficient is zero). A higher t-statistic value indicates a stronger relationship between the variables.</p>
+</blockquote>
+<p>The t-statistic for a regression coefficient can be calculated as:</p>
+<p><span class="math display">\[
+t = \frac{\beta - H₀}{se(\beta)}
+\]</span></p>
+<blockquote class="blockquote">
+<p>where <span class="math inline">\(t\)</span> is the t-statistic, <span class="math inline">\(\beta\)</span> is the estimated regression coefficient, <span class="math inline">\(H₀\)</span> is the null hypothesis value (usually 0), and <span class="math inline">\(se(\beta)\)</span> is the standard error of the estimated coefficient.</p>
+</blockquote></li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>t-통계량은 클 수록 좋음 -&gt; 분자는 클 수록, 분모는 작을 수록 좋음</p></li>
+<li><p>분자가 크려면: 회귀 계수 (Beta의 추정값)이 커야함</p></li>
+<li><p>분모가 작으려면: 회귀 계수의 표준 오차가 작아야함</p></li>
+<li><p>회귀 계수의 표준 오차가 작으려면: 표준오차(Beta) = MSE / (X의 표준편차 * 표본수) 이므로 MSE가 작아야 하고 표본수가 커야함.</p></li>
+<li><p><strong>종합하면, 회귀 계수가 크고, MSE가 작고, 표본 수가 커질 수록 t-통계량이 커진다</strong></p></li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li><p>P-values</p>
+<blockquote class="blockquote">
+<p>A p-value is the probability of obtaining a test statistic as extreme as the observed value under the null hypothesis. It helps us determine the statistical significance of a regression coefficient. In general, a smaller p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis, suggesting that the coefficient is significantly different from zero.</p>
+</blockquote>
+<p>To calculate the p-value for a t-statistic, we use the cumulative distribution function (CDF) of the t-distribution with n - k degrees of freedom, where n is the number of observations and k is the number of estimated coefficients (including the intercept).</p>
+<p><span class="math display">\[
+P(T &gt; |t|) = 1 - CDF(t, df = n - k)
+\]</span></p></li>
+</ul>
+<p><br></p>
 <p><strong>Multiple Linear Regression in R</strong> (Adding number of cylinders and horsepower as predictors)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a multiple linear regression model</span></span>
@@ -615,10 +689,10 @@ Attaching package: 'car'</code></pre>
 4.757456 3.258481 2.580486 </code></pre>
 </div>
 </div>
+<p><strong>Variance Inflation Factor (VIF)</strong> is a measure used to detect the presence and severity of multicollinearity in a multiple linear regression model. Multicollinearity occurs when two or more independent variables in the model are highly correlated, which can lead to instability in the estimated regression coefficients and make it difficult to interpret their individual effects on the dependent variable.</p>
 <blockquote class="blockquote">
 <p>If VIF values are significantly greater than 1 (&gt; 5 or 10), consider removing or combining correlated predictors</p>
 </blockquote>
-<p><code>Variance Inflation Factor (VIF)</code> is a measure used to detect the presence and severity of multicollinearity in a multiple linear regression model. Multicollinearity occurs when two or more independent variables in the model are highly correlated, which can lead to instability in the estimated regression coefficients and make it difficult to interpret their individual effects on the dependent variable.</p>
 <p>VIF for the j-th independent variable can be calculated as:</p>
 <p><span class="math display">\[
 VIF(j) = \frac{1}{1 - R²(j)}
@@ -637,8 +711,7 @@ VIF(j) = \frac{1}{1 - R²(j)}
 <p><br></p>
 <p>Lasso, Ridge, and Elastic Net are <strong>regularization techniques</strong> used in linear regression models to address issues like <em>multicollinearity</em>, <em>overfitting</em>, and <em>feature selection</em>. They work by adding a penalty term to the linear regression’s objective function, which helps to shrink the coefficients towards zero and simplify the model. Here’s a brief explanation of each technique along with the relevant equations:</p>
 <ol type="1">
-<li><strong>Lasso Regression</strong> (Least Absolute Shrinkage and Selection Operator)</li>
-</ol>
+<li><p><strong>Lasso Regression</strong> (Least Absolute Shrinkage and Selection Operator)</p>
 <p>Lasso regression adds an <strong>L1</strong> penalty term to the linear regression’s objective function. The L1 penalty term is the sum of the absolute values of the coefficients. The objective function for Lasso regression is:</p>
 <p><span class="math display">\[
 Objective = RSS + λ Σ|β_j|
@@ -649,48 +722,57 @@ Objective = RSS + λ Σ|β_j|
 <li><p><span class="math inline">\(β_j\)</span> represents the j-th coefficient in the model.</p></li>
 <li><p><span class="math inline">\(λ\)</span> (lambda) is the regularization parameter that controls the strength of the L1 penalty. Higher values of λ result in more shrinkage and simpler models.</p></li>
 </ul>
-<p>Lasso regression can drive some coefficients to zero, effectively performing feature selection by excluding irrelevant variables from the model.</p>
+<p>Lasso regression can drive some coefficients to zero, effectively performing feature selection by excluding irrelevant variables from the model.</p></li>
+</ol>
 <p><br></p>
 <ol start="2" type="1">
 <li><strong>Ridge Regression</strong></li>
 </ol>
 <p>Ridge regression adds an <strong>L2</strong> penalty term to the linear regression’s objective function. The L2 penalty term is the sum of the squares of the coefficients. The objective function for Ridge regression is:</p>
-<p><span class="math display">\[
+<pre><code>$$
 Objective = RSS + λ  Σ(β_j)^2
-\]</span></p>
-<p>where:</p>
-<ul>
-<li><p><span class="math inline">\(RSS\)</span> is the residual sum of squares.</p></li>
-<li><p><span class="math inline">\(β_j\)</span> represents the j-th coefficient in the model.</p></li>
-<li><p><span class="math inline">\(λ\)</span> (lambda) is the regularization parameter that controls the strength of the L2 penalty. Higher values of λ result in more shrinkage and simpler models.</p></li>
-</ul>
-<p><u>Ridge regression doesn’t drive coefficients to zero but can shrink them close to zero</u>, leading to a more <em>stable</em> and <em>interpretable</em> model, especially when multicollinearity is present.</p>
+$$
+
+where:
+
+-   $RSS$ is the residual sum of squares.
+
+-   $β_j$ represents the j-th coefficient in the model.
+
+-   $λ$ (lambda) is the regularization parameter that controls the strength of the L2 penalty. Higher values of λ result in more shrinkage and simpler models.
+
+&gt; [Ridge regression doesn't drive coefficients to zero but can shrink them close to zero]{.underline}, leading to a more *stable* and *interpretable* model, especially when multicollinearity is present.</code></pre>
 <p><br></p>
 <ol start="3" type="1">
 <li><strong>Elastic Net Regression</strong></li>
 </ol>
 <p>Elastic Net regression combines both L1 and L2 penalty terms, effectively blending Lasso and Ridge regression (진리의 반반). The objective function for Elastic Net regression is:</p>
-<p><span class="math display">\[
+<pre><code>$$
 Objective = RSS + λ [(1 - α)  Σ(β_j)^2 + α  Σ|β_j|]
-\]</span></p>
-<p>where:</p>
-<ul>
-<li><p><span class="math inline">\(RSS\)</span> is the residual sum of squares.</p></li>
-<li><p><span class="math inline">\(β_j\)</span> represents the j-th coefficient in the model.</p></li>
-<li><p><span class="math inline">\(λ\)</span> (lambda) is the regularization parameter that controls the overall strength of the penalty.</p></li>
-<li><p><span class="math inline">\(α\)</span> (alpha) is the mixing parameter that determines the balance between L1 (Lasso) and L2 (Ridge) penalties.</p>
-<ul>
-<li><p>α = 1 results in Lasso regression,</p></li>
-<li><p>α = 0 results in Ridge regression,</p></li>
-<li><p>and values between 0 and 1 produce a mix of both.</p></li>
-</ul></li>
-</ul>
-<p>Elastic Net regression can be useful when there are many correlated predictors, as it can perform feature selection like Lasso while maintaining the stability and robustness of Ridge regression.</p>
-<p><br>
-Let’s learn how to code lasso, ridge, and elastic net regression.</p>
+$$
+
+where:
+
+-   $RSS$ is the residual sum of squares.
+
+-   $β_j$ represents the j-th coefficient in the model.
+
+-   $λ$ (lambda) is the regularization parameter that controls the overall strength of the penalty.
+
+-   $α$ (alpha) is the mixing parameter that determines the balance between L1 (Lasso) and L2 (Ridge) penalties.
+
+  -   α = 1 results in Lasso regression,
+
+  -   α = 0 results in Ridge regression,
+
+  -   and values between 0 and 1 produce a mix of both.
+
+&gt; Elastic Net regression can be useful when there are many correlated predictors, as it can perform feature selection like Lasso while maintaining the stability and robustness of Ridge regression.</code></pre>
+<p><br></p>
+<p>Let’s learn how to code lasso, ridge, and elastic net regression.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'glmnet' was built under R version 4.2.3</code></pre>
 </div>
@@ -709,61 +791,61 @@ Attaching package: 'Matrix'</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loaded glmnet 4.1-7</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for regularization</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)[, <span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Lasso, Ridge, and Elastic Net models</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>ridge_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>elastic_net_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-validation to find the optimal lambda value</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>cv_lasso <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>cv_ridge <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>cv_elastic_net <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Model summary and interpretation</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso - Optimal Lambda:"</span>, cv_lasso<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for regularization</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mpg <span class="sc">~</span> cyl <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit Lasso, Ridge, and Elastic Net models</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>ridge_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>elastic_net_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Cross-validation to find the optimal lambda value</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>cv_lasso <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>cv_ridge <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="dv">0</span>)</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>cv_elastic_net <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Model summary and interpretation</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso - Optimal Lambda:"</span>, cv_lasso<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Lasso - Optimal Lambda: 0.2176783 </code></pre>
+<pre><code>Lasso - Optimal Lambda: 0.1646657 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge - Optimal Lambda:"</span>, cv_ridge<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge - Optimal Lambda:"</span>, cv_ridge<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Ridge - Optimal Lambda: 0.5146981 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net - Optimal Lambda:"</span>, cv_elastic_net<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net - Optimal Lambda:"</span>, cv_elastic_net<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Elastic Net - Optimal Lambda: 0.5243886 </code></pre>
+<pre><code>Elastic Net - Optimal Lambda: 0.1884555 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using Lasso, Ridge, and Elastic Net models:</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for predictions</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cyl =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">hp =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>),</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">wt =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>)</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare new data for predictions</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>new_data_x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> cyl <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> new_data)[, <span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>lasso_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cv_lasso, new_data_x, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>ridge_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cv_ridge, new_data_x, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>elastic_net_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cv_elastic_net, new_data_x, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="co"># View predictions</span></span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso Predictions:"</span>, lasso_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using Lasso, Ridge, and Elastic Net models:</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for predictions</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cyl =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">hp =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">wt =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.5</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare new data for predictions</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>new_data_x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> cyl <span class="sc">+</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> new_data)[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>lasso_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cv_lasso, new_data_x, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>ridge_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cv_ridge, new_data_x, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>elastic_net_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(cv_elastic_net, new_data_x, <span class="at">s =</span> <span class="st">"lambda.min"</span>)</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co"># View predictions</span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso Predictions:"</span>, lasso_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Lasso Predictions: 25.06234 20.87144 16.68053 </code></pre>
+<pre><code>Lasso Predictions: 25.11153 20.87729 16.64306 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge Predictions:"</span>, ridge_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge Predictions:"</span>, ridge_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Ridge Predictions: 25.13371 20.8278 16.52189 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net Predictions:"</span>, elastic_net_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net Predictions:"</span>, elastic_net_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Elastic Net Predictions: 24.95365 20.82945 16.70526 </code></pre>
+<pre><code>Elastic Net Predictions: 25.15607 20.87114 16.58621 </code></pre>
 </div>
 </div>
 </section>
@@ -816,9 +898,9 @@ logL(β_0, β_1, σ^2) = Σ log(f(y_i | x_i, β_0, β_1, σ^2))
 </ul>
 <p>Let’s demonstrate the similarity of the estimates by fitting a linear regression model using both LS and MLE, and then visualize the fitted lines. To do this, we’ll predict miles per gallon (mpg) based on the weight (wt) of a car using the ‘mtcars’ dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'MASS'</code></pre>
@@ -828,15 +910,15 @@ Attaching package: 'MASS'</code></pre>
 
     select</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the 'mtcars' dataset</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the 'mtcars' dataset</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Fit the linear regression model using LS (lm function):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model using LS</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ls_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model using LS</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>ls_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ls_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -860,8 +942,8 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
 </div>
 <p>Fit the linear regression model using MLE (fit a normal linear model with mle2 function):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bbmle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bbmle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'bbmle' was built under R version 4.2.3</code></pre>
 </div>
@@ -877,25 +959,25 @@ Attaching package: 'bbmle'</code></pre>
 
     slice</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the log-likelihood function for MLE</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>loglik_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(beta0, beta1, sigma) {</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>wt</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> x</span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  epsilon <span class="ot">&lt;-</span> y <span class="sc">-</span> mu</span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  loglik <span class="ot">&lt;-</span> <span class="sc">-</span>n<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> pi) <span class="sc">-</span> n<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(sigma<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> sigma<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">sum</span>(epsilon<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span>loglik) <span class="co"># The optimization function will minimize the function, so we need to negate the log-likelihood</span></span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model using MLE</span></span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>mle_model <span class="ot">&lt;-</span> <span class="fu">mle2</span>(loglik_fn, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">beta0 =</span> <span class="fu">coef</span>(ls_model)[<span class="dv">1</span>], </span>
-<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">beta1 =</span> <span class="fu">coef</span>(ls_model)[<span class="dv">2</span>], </span>
-<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">sigma =</span> <span class="dv">1</span>))</span>
-<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mle_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the log-likelihood function for MLE</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>loglik_fn <span class="ot">&lt;-</span> <span class="cf">function</span>(beta0, beta1, sigma) {</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>wt</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> x</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  epsilon <span class="ot">&lt;-</span> y <span class="sc">-</span> mu</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>  loglik <span class="ot">&lt;-</span> <span class="sc">-</span>n<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> pi) <span class="sc">-</span> n<span class="sc">/</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(sigma<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> sigma<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">sum</span>(epsilon<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span>loglik) <span class="co"># The optimization function will minimize the function, so we need to negate the log-likelihood</span></span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model using MLE</span></span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>mle_model <span class="ot">&lt;-</span> <span class="fu">mle2</span>(loglik_fn, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">beta0 =</span> <span class="fu">coef</span>(ls_model)[<span class="dv">1</span>], </span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">beta1 =</span> <span class="fu">coef</span>(ls_model)[<span class="dv">2</span>], </span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">sigma =</span> <span class="dv">1</span>))</span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mle_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Maximum likelihood estimation
 
@@ -916,24 +998,24 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 </div>
 <p>Visualize the fitted lines:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficients from the LS and MLE models</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>ls_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(ls_model)</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>mle_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(mle_model)</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot of mpg vs. wt</span></span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>mtcars_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="fl">1.5</span>, <span class="fl">5.5</span>)) <span class="sc">+</span></span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">40</span>))</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the LS and MLE fitted lines to the plot</span></span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>mtcars_plot <span class="sc">+</span></span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> ls_coefs[<span class="dv">1</span>], <span class="at">slope =</span> ls_coefs[<span class="dv">2</span>], <span class="at">color =</span> <span class="st">"LS"</span>, <span class="at">linetype =</span> <span class="st">"LS"</span>), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> mle_coefs[<span class="dv">1</span>], <span class="at">slope =</span> mle_coefs[<span class="dv">2</span>], <span class="at">color =</span> <span class="st">"MLE"</span>, <span class="at">linetype =</span> <span class="st">"MLE"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Model"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"LS"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"MLE"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="st">"Model"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"LS"</span> <span class="ot">=</span> <span class="st">"solid"</span>, <span class="st">"MLE"</span> <span class="ot">=</span> <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
-<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linear Regression: LS vs. MLE"</span>, <span class="at">x =</span> <span class="st">"Weight"</span>, <span class="at">y =</span> <span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
-<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficients from the LS and MLE models</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>ls_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(ls_model)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>mle_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(mle_model)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot of mpg vs. wt</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>mtcars_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="fl">1.5</span>, <span class="fl">5.5</span>)) <span class="sc">+</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">40</span>))</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the LS and MLE fitted lines to the plot</span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>mtcars_plot <span class="sc">+</span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> ls_coefs[<span class="dv">1</span>], <span class="at">slope =</span> ls_coefs[<span class="dv">2</span>], <span class="at">color =</span> <span class="st">"LS"</span>, <span class="at">linetype =</span> <span class="st">"LS"</span>), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> mle_coefs[<span class="dv">1</span>], <span class="at">slope =</span> mle_coefs[<span class="dv">2</span>], <span class="at">color =</span> <span class="st">"MLE"</span>, <span class="at">linetype =</span> <span class="st">"MLE"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="st">"Model"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"LS"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"MLE"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="st">"Model"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"LS"</span> <span class="ot">=</span> <span class="st">"solid"</span>, <span class="st">"MLE"</span> <span class="ot">=</span> <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linear Regression: LS vs. MLE"</span>, <span class="at">x =</span> <span class="st">"Weight"</span>, <span class="at">y =</span> <span class="st">"Miles per Gallon"</span>) <span class="sc">+</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>

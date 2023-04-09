@@ -59,15 +59,15 @@ Linear regression is widely used in social science research for several reasons:
 
 Linear regression has a wide range of applications in social science research. Some examples include:
 
--   Economics: Linear regression can be used to study the impact of various factors on economic indicators, such as GDP growth, unemployment rate, and inflation.
+-   **Economics**: Linear regression can be used to study the impact of various factors on economic indicators, such as GDP growth, unemployment rate, and inflation.
 
--   Political Science: Researchers can use linear regression to analyze the effects of political factors on election outcomes, public opinion, or policy decisions.
+-   **Political Science**: Researchers can use linear regression to analyze the effects of political factors on election outcomes, public opinion, or policy decisions.
 
--   Sociology: Linear regression can help us understand the relationship between social variables, such as education level, income, and various social outcomes like crime rates, health status, and life satisfaction.
+-   **Sociology**: Linear regression can help us understand the relationship between social variables, such as education level, income, and various social outcomes like crime rates, health status, and life satisfaction.
 
--   Psychology: Researchers can use linear regression to study the effects of different psychological factors on human behavior, mental health, and well-being.
+-   **Psychology**: Researchers can use linear regression to study the effects of different psychological factors on human behavior, mental health, and well-being.
 
--   Education: Linear regression can be used to analyze the impact of various factors on educational outcomes, such as standardized test scores, graduation rates, and college enrollment.
+-   **Education**: Linear regression can be used to analyze the impact of various factors on educational outcomes, such as standardized test scores, graduation rates, and college enrollment.
 
 Overall, linear regression is a versatile and powerful tool for social scientists, enabling them to gain insights into the relationships between variables and make evidence-based predictions.
 
@@ -79,21 +79,25 @@ Overall, linear regression is a versatile and powerful tool for social scientist
 
 > Simple linear regression is a statistical method that helps us understand the relationship between one dependent variable (y) and one independent variable (x). It models the relationship as a linear function.
 
+![](http://cdn-0.r-statistics.co/screenshots/linear-regression-small.png)
+
 **Equation**:
 
 $$
-y = β₀ + β₁x + ε
+y = β_1 + β_2x + ε
 $$
 
 -   $y$ : dependent variable (outcome)
 
 -   $x$ : independent variable (predictor)
 
--   $β₀$ : intercept (value of y when x = 0)
+-   $β_1$ : intercept (value of y when x = 0)
 
--   $β₁$ : slope (change in y for a one-unit increase in x)
+-   $β_2$ : slope (change in y for a one-unit increase in x)
 
 -   $ε$ : error term (difference between the predicted and observed values of y)
+
+<br>
 
 **Multiple Linear Regression**
 
@@ -115,6 +119,8 @@ $$
 
 -   $ε$ : error term (difference between the predicted and observed values of y)
 
+<br>
+
 **Assumptions of Linear Regression**
 
 -   `Linearity`: The relationship between the dependent variable and the independent variables is linear.
@@ -127,7 +133,9 @@ $$
 
 -   `No multicollinearity`: The independent variables are not highly correlated with each other.
 
-**Coefficient Estimation: Least Squares Method**
+<br>
+
+**Coefficient Estimation: Least Squares (LS) Method**
 
 > Minimize the sum of the squared differences between the observed and predicted values of the dependent variable.
 
@@ -141,9 +149,35 @@ $$
 
 -   R-squared (Coefficient of Determination): Proportion of the variance in the dependent variable that can be explained by the independent variables. Ranges from 0 to 1.
 
+    $$
+    R^2 = 1- \frac{SSE}{SST} 
+    $$
+
+    $$
+    SSE = \sum(y_i - \hat{y_i})^2
+    $$
+
+    $$
+    SST=\sum(y_i - \bar{y_i})^2
+    $$
+
+    > where *SSE* is the sum of squared errors and *SST* is the sum of squared total
+
 -   Adjusted R-squared: R-squared adjusted for the number of predictors in the model. Useful for comparing models with different numbers of predictors.
 
+    $$
+    Adj.R^2=1-\frac{(1-R^2)(N-1)}{N-p-1}
+    $$
+    
+    > where $R^2$ is sample R-squared, $N$ is Total Sample Size, and $p$ is the number of independent variables
+
 -   Root Mean Squared Error (RMSE): The square root of the average squared differences between the observed and predicted values of the dependent variable. A measure of the model's prediction accuracy.
+
+    $$
+    RMSE = \sqrt{\frac{\sum_{i=1}^{N}{(y_i-\hat{y_i})^2}}{N}}
+    $$
+    
+    > where N is the number of data points (observations)
 
 ------------------------------------------------------------------------
 
@@ -190,7 +224,7 @@ $$
 
 #### Hands-on Practice
 
-For this hands-on practice, we will use the 'mtcars' dataset, which is built into R. The dataset contains information about various car models, including miles per gallon (mpg), number of cylinders (cyl), horsepower (hp), and weight (wt). The goal is to predict miles per gallon based on the number of cylinders, horsepower, and weight using linear regression.
+For this hands-on practice, we will use the `mtcars` dataset, which is built into R. The dataset contains information about various car models, including miles per gallon (mpg), number of cylinders (cyl), horsepower (hp), and weight (wt). The goal is to predict miles per gallon based on the number of cylinders, horsepower, and weight using linear regression.
 
 ```{r}
 # Load necessary libraries
@@ -229,6 +263,49 @@ summary(simple_model)
 plot(simple_model, which = 1)
 
 ```
+
+**Hypothesis Testing and Statistical Significance in Linear Regression**
+
+T-statistics and p-values are essential concepts in statistical hypothesis testing and linear regression analysis.
+
+-   T-statistics
+
+    > A t-statistic is a measure of how many standard deviations a regression coefficient is from zero. It is used to test the null hypothesis that there is no relationship between the independent and dependent variables (i.e., the coefficient is zero). A higher t-statistic value indicates a stronger relationship between the variables.
+
+    The t-statistic for a regression coefficient can be calculated as:
+
+    $$
+    t = \frac{\beta - H₀}{se(\beta)}
+    $$
+    
+    > where $t$ is the t-statistic, $\beta$ is the estimated regression coefficient, $H₀$ is the null hypothesis value (usually 0), and $se(\beta)$ is the standard error of the estimated coefficient.
+
+::: callout-note
+
+-   t-통계량은 클 수록 좋음 -\> 분자는 클 수록, 분모는 작을 수록 좋음
+
+-   분자가 크려면: 회귀 계수 (Beta의 추정값)이 커야함
+
+-   분모가 작으려면: 회귀 계수의 표준 오차가 작아야함
+
+-   회귀 계수의 표준 오차가 작으려면: 표준오차(Beta) = MSE / (X의 표준편차 \* 표본수) 이므로 MSE가 작아야 하고 표본수가 커야함.
+
+-   **종합하면, 회귀 계수가 크고, MSE가 작고, 표본 수가 커질 수록 t-통계량이 커진다**
+:::
+
+<br>
+
+-   P-values
+
+    > A p-value is the probability of obtaining a test statistic as extreme as the observed value under the null hypothesis. It helps us determine the statistical significance of a regression coefficient. In general, a smaller p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis, suggesting that the coefficient is significantly different from zero.
+
+    To calculate the p-value for a t-statistic, we use the cumulative distribution function (CDF) of the t-distribution with n - k degrees of freedom, where n is the number of observations and k is the number of estimated coefficients (including the intercept).
+    
+    $$
+    P(T > |t|) = 1 - CDF(t, df = n - k)
+    $$
+
+<br>
 
 **Multiple Linear Regression in R** (Adding number of cylinders and horsepower as predictors)
 
@@ -288,9 +365,9 @@ vif(multiple_model)
 
 ```
 
-> If VIF values are significantly greater than 1 (\> 5 or 10), consider removing or combining correlated predictors
+**Variance Inflation Factor (VIF)** is a measure used to detect the presence and severity of multicollinearity in a multiple linear regression model. Multicollinearity occurs when two or more independent variables in the model are highly correlated, which can lead to instability in the estimated regression coefficients and make it difficult to interpret their individual effects on the dependent variable.
 
-`Variance Inflation Factor (VIF)` is a measure used to detect the presence and severity of multicollinearity in a multiple linear regression model. Multicollinearity occurs when two or more independent variables in the model are highly correlated, which can lead to instability in the estimated regression coefficients and make it difficult to interpret their individual effects on the dependent variable.
+> If VIF values are significantly greater than 1 (\> 5 or 10), consider removing or combining correlated predictors
 
 VIF for the j-th independent variable can be calculated as:
 
@@ -322,21 +399,21 @@ Lasso, Ridge, and Elastic Net are **regularization techniques** used in linear r
 
 1.  **Lasso Regression** (Least Absolute Shrinkage and Selection Operator)
 
-Lasso regression adds an **L1** penalty term to the linear regression's objective function. The L1 penalty term is the sum of the absolute values of the coefficients. The objective function for Lasso regression is:
-
-$$
-Objective = RSS + λ Σ|β_j|
-$$
-
-where:
-
--   $RSS$ is the residual sum of squares.
-
--   $β_j$ represents the j-th coefficient in the model.
-
--   $λ$ (lambda) is the regularization parameter that controls the strength of the L1 penalty. Higher values of λ result in more shrinkage and simpler models.
-
-Lasso regression can drive some coefficients to zero, effectively performing feature selection by excluding irrelevant variables from the model.
+    Lasso regression adds an **L1** penalty term to the linear regression's objective function. The L1 penalty term is the sum of the absolute values of the coefficients. The objective function for Lasso regression is:
+    
+    $$
+    Objective = RSS + λ Σ|β_j|
+    $$
+    
+    where:
+    
+    -   $RSS$ is the residual sum of squares.
+    
+    -   $β_j$ represents the j-th coefficient in the model.
+    
+    -   $λ$ (lambda) is the regularization parameter that controls the strength of the L1 penalty. Higher values of λ result in more shrinkage and simpler models.
+    
+    Lasso regression can drive some coefficients to zero, effectively performing feature selection by excluding irrelevant variables from the model.
 
 <br>
 
@@ -344,19 +421,19 @@ Lasso regression can drive some coefficients to zero, effectively performing fea
 
 Ridge regression adds an **L2** penalty term to the linear regression's objective function. The L2 penalty term is the sum of the squares of the coefficients. The objective function for Ridge regression is:
 
-$$
-Objective = RSS + λ  Σ(β_j)^2
-$$
+    $$
+    Objective = RSS + λ  Σ(β_j)^2
+    $$
 
-where:
+    where:
 
--   $RSS$ is the residual sum of squares.
+    -   $RSS$ is the residual sum of squares.
 
--   $β_j$ represents the j-th coefficient in the model.
+    -   $β_j$ represents the j-th coefficient in the model.
 
--   $λ$ (lambda) is the regularization parameter that controls the strength of the L2 penalty. Higher values of λ result in more shrinkage and simpler models.
+    -   $λ$ (lambda) is the regularization parameter that controls the strength of the L2 penalty. Higher values of λ result in more shrinkage and simpler models.
 
-[Ridge regression doesn't drive coefficients to zero but can shrink them close to zero]{.underline}, leading to a more *stable* and *interpretable* model, especially when multicollinearity is present.
+    > [Ridge regression doesn't drive coefficients to zero but can shrink them close to zero]{.underline}, leading to a more *stable* and *interpretable* model, especially when multicollinearity is present.
 
 <br>
 
@@ -364,29 +441,30 @@ where:
 
 Elastic Net regression combines both L1 and L2 penalty terms, effectively blending Lasso and Ridge regression (진리의 반반). The objective function for Elastic Net regression is:
 
-$$
-Objective = RSS + λ [(1 - α)  Σ(β_j)^2 + α  Σ|β_j|]
-$$
+    $$
+    Objective = RSS + λ [(1 - α)  Σ(β_j)^2 + α  Σ|β_j|]
+    $$
 
-where:
+    where:
 
--   $RSS$ is the residual sum of squares.
+    -   $RSS$ is the residual sum of squares.
 
--   $β_j$ represents the j-th coefficient in the model.
+    -   $β_j$ represents the j-th coefficient in the model.
 
--   $λ$ (lambda) is the regularization parameter that controls the overall strength of the penalty.
+    -   $λ$ (lambda) is the regularization parameter that controls the overall strength of the penalty.
 
--   $α$ (alpha) is the mixing parameter that determines the balance between L1 (Lasso) and L2 (Ridge) penalties.
+    -   $α$ (alpha) is the mixing parameter that determines the balance between L1 (Lasso) and L2 (Ridge) penalties.
 
-    -   α = 1 results in Lasso regression,
+      -   α = 1 results in Lasso regression,
 
-    -   α = 0 results in Ridge regression,
+      -   α = 0 results in Ridge regression,
 
-    -   and values between 0 and 1 produce a mix of both.
+      -   and values between 0 and 1 produce a mix of both.
 
-Elastic Net regression can be useful when there are many correlated predictors, as it can perform feature selection like Lasso while maintaining the stability and robustness of Ridge regression.
+    > Elastic Net regression can be useful when there are many correlated predictors, as it can perform feature selection like Lasso while maintaining the stability and robustness of Ridge regression.
 
-\
+<br>
+
 Let's learn how to code lasso, ridge, and elastic net regression.
 
 ```{r}
@@ -578,9 +656,3 @@ mtcars_plot +
 ```
 
 In the resulting plot, you'll notice that the LS and MLE fitted lines are almost indistinguishable, which confirms that the estimates are the same when the error terms follow a normal distribution.
-
-
-
-
-
-
