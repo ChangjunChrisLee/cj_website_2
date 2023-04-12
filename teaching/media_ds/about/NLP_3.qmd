@@ -104,7 +104,9 @@ library(tidygraph)
 graph_comment <- pair %>%
   filter(n >= 25) %>%
   as_tbl_graph()
-graph_comment 
+
+graph_comment
+str(graph_comment)
 
 # 네트워크 그래프 만들기
 # install.packages("ggraph")
@@ -201,6 +203,8 @@ ggraph(graph_comment, layout = "fr") + # 레이아웃
 # 3. 네트워크의 주요 단어 살펴보기
 graph_comment %>%
   filter(name == "봉준호")
+
+graph_comment
 
 # 같은 커뮤니티로 분류된 단어 살펴보기
 graph_comment %>%
