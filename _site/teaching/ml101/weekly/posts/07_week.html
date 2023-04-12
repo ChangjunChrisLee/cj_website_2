@@ -178,25 +178,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proj" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Proj</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-proj">    
-        <li>
-    <a class="dropdown-item" href="../../../../proj/index.html">
- <span class="dropdown-text">All Projects</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../proj/proj_01.html">
- <span class="dropdown-text">생애첫연구</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../proj/proj_02.html">
- <span class="dropdown-text">신진연구자지원사업</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Research</span>
     </a>
@@ -209,12 +190,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../../../research/working.html">
  <span class="dropdown-text">Work in progress</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../research/team.html">
- <span class="dropdown-text">Team</span></a>
-  </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../proj/index.html">
+ <span class="menu-text">Proj</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../../../blogs/index.html">
  <span class="menu-text">Blogs</span></a>
@@ -808,7 +789,7 @@ Attaching package: 'Matrix'</code></pre>
 <span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Model summary and interpretation</span></span>
 <span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso - Optimal Lambda:"</span>, cv_lasso<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Lasso - Optimal Lambda: 0.1646657 </code></pre>
+<pre><code>Lasso - Optimal Lambda: 0.05917777 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge - Optimal Lambda:"</span>, cv_ridge<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -816,7 +797,7 @@ Attaching package: 'Matrix'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net - Optimal Lambda:"</span>, cv_elastic_net<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Elastic Net - Optimal Lambda: 0.1884555 </code></pre>
+<pre><code>Elastic Net - Optimal Lambda: 0.3000745 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using Lasso, Ridge, and Elastic Net models:</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for predictions</span></span>
@@ -837,7 +818,7 @@ Attaching package: 'Matrix'</code></pre>
 <span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co"># View predictions</span></span>
 <span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso Predictions:"</span>, lasso_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Lasso Predictions: 25.11153 20.87729 16.64306 </code></pre>
+<pre><code>Lasso Predictions: 25.21131 20.88909 16.56687 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge Predictions:"</span>, ridge_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -845,7 +826,7 @@ Attaching package: 'Matrix'</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net Predictions:"</span>, elastic_net_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Elastic Net Predictions: 25.15607 20.87114 16.58621 </code></pre>
+<pre><code>Elastic Net Predictions: 25.08941 20.857 16.62459 </code></pre>
 </div>
 </div>
 </section>

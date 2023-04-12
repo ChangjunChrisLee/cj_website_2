@@ -178,25 +178,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proj" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Proj</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-proj">    
-        <li>
-    <a class="dropdown-item" href="../../../../proj/index.html">
- <span class="dropdown-text">All Projects</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../proj/proj_01.html">
- <span class="dropdown-text">생애첫연구</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../proj/proj_02.html">
- <span class="dropdown-text">신진연구자지원사업</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Research</span>
     </a>
@@ -209,12 +190,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../../../research/working.html">
  <span class="dropdown-text">Work in progress</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../research/team.html">
- <span class="dropdown-text">Team</span></a>
-  </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../proj/index.html">
+ <span class="menu-text">Proj</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../../../blogs/index.html">
  <span class="menu-text">Blogs</span></a>
@@ -650,7 +631,7 @@ F1 = 2 \times \frac{Precision \times Recall}{Precesion + Recall}
 ✖ yardstick::sensitivity() masks caret::sensitivity()
 ✖ yardstick::specificity() masks caret::specificity()
 ✖ recipes::step()          masks stats::step()
-• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
+• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -800,7 +781,7 @@ The following object is masked from 'package:caret':
  8 setosa                 1                0               0 setosa 
  9 setosa                 1                0               0 setosa 
 10 setosa                 1                0               0 setosa 
-# … with 28 more rows</code></pre>
+# ℹ 28 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_dt, test_data) <span class="sc">%&gt;%</span> </span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="fu">predict</span>(fit_dt, test_data, <span class="at">type =</span> <span class="st">"prob"</span>)) <span class="sc">%&gt;%</span> </span>
