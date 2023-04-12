@@ -286,10 +286,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.0     ✔ readr     2.1.4
+✔ dplyr     1.1.1     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.1     ✔ tibble    3.1.8
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
 ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
 ✔ purrr     1.0.1     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -297,21 +306,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Titanic dataset</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_train"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_test"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the training and testing datasets</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(titanic_train, titanic_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Titanic dataset</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_train"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"titanic_test"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the training and testing datasets</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(titanic_train, titanic_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Before we proceed, let’s preprocess the dataset by selecting relevant features and handling missing values:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant features and remove rows with missing values</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data[, <span class="fu">c</span>(<span class="st">"Survived"</span>, <span class="st">"Pclass"</span>, <span class="st">"Sex"</span>, <span class="st">"Age"</span>, <span class="st">"SibSp"</span>, <span class="st">"Parch"</span>, <span class="st">"Fare"</span>)]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(titanic_data)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the 'Sex' variable to a factor</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>titanic_data<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(titanic_data<span class="sc">$</span>Sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select relevant features and remove rows with missing values</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data[, <span class="fu">c</span>(<span class="st">"Survived"</span>, <span class="st">"Pclass"</span>, <span class="st">"Sex"</span>, <span class="st">"Age"</span>, <span class="st">"SibSp"</span>, <span class="st">"Parch"</span>, <span class="st">"Fare"</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(titanic_data)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the 'Sex' variable to a factor</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>titanic_data<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(titanic_data<span class="sc">$</span>Sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="confusion-matrix" class="level2">
@@ -321,10 +330,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="creating-a-confusion-matrix-in-r"><strong>Creating a Confusion Matrix in R</strong></h3>
 <p>To demonstrate the confusion matrix, we will use the preprocessed Titanic dataset and create a logistic regression model. First, let’s load the required packages and split the dataset into training (80%) and testing (20%) sets:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'caret' was built under R version 4.2.3</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lattice' was built under R version 4.2.3</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -335,26 +350,26 @@ Attaching package: 'caret'</code></pre>
 
     lift</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset into training (80%) and testing (20%) sets</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(titanic_data<span class="sc">$</span>Survived, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>titanic_train <span class="ot">&lt;-</span> titanic_data[train_index, ]</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>titanic_test <span class="ot">&lt;-</span> titanic_data[<span class="sc">-</span>train_index, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset into training (80%) and testing (20%) sets</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>train_index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(titanic_data<span class="sc">$</span>Survived, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>titanic_train <span class="ot">&lt;-</span> titanic_data[train_index, ]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>titanic_test <span class="ot">&lt;-</span> titanic_data[<span class="sc">-</span>train_index, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, let’s create a logistic regression model and make predictions on the test set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the logistic regression model</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> ., <span class="at">data =</span> titanic_train, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test dataset</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>predicted_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, titanic_test, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(predicted_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the logistic regression model</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(Survived <span class="sc">~</span> ., <span class="at">data =</span> titanic_train, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test dataset</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>predicted_probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, titanic_test, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>predicted_classes <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(predicted_probs <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we will create the confusion matrix using the <strong><code>caret</code></strong> package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the confusion matrix</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">table</span>(predicted_classes, titanic_test<span class="sc">$</span>Survived))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the confusion matrix</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cm <span class="ot">&lt;-</span> <span class="fu">confusionMatrix</span>(<span class="fu">table</span>(predicted_classes, titanic_test<span class="sc">$</span>Survived))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix and Statistics
 
@@ -424,13 +439,13 @@ predicted_classes  0  1
 <h3 class="anchored" data-anchor-id="creating-an-roc-curve-in-r"><strong>Creating an ROC Curve in R</strong></h3>
 <p>To create an ROC curve, we will use the <strong><code>pROC</code></strong> package. First, let’s install and load the required package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the pROC package if you haven't already</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if (!requireNamespace("pROC", quietly = TRUE)) {</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   install.packages("pROC")</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the pROC package</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install the pROC package if you haven't already</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if (!requireNamespace("pROC", quietly = TRUE)) {</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   install.packages("pROC")</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the pROC package</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Type 'citation("pROC")' for a citation.</code></pre>
 </div>
@@ -446,17 +461,17 @@ Attaching package: 'pROC'</code></pre>
 </div>
 <p>Now, let’s create the ROC curve using the predicted probabilities from our logistic regression model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ROC curve</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>roc_obj <span class="ot">&lt;-</span> <span class="fu">roc</span>(titanic_test<span class="sc">$</span>Survived, predicted_probs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ROC curve</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>roc_obj <span class="ot">&lt;-</span> <span class="fu">roc</span>(titanic_test<span class="sc">$</span>Survived, predicted_probs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting levels: control = 0, case = 1</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting direction: controls &lt; cases</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ROC curve</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_obj, <span class="at">main =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray"</span>)  <span class="co"># Add a reference line for a random classifier</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ROC curve</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(roc_obj, <span class="at">main =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray"</span>)  <span class="co"># Add a reference line for a random classifier</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="4_confusion_mat_and_ROC_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -467,9 +482,9 @@ Attaching package: 'pROC'</code></pre>
 <p>The ROC curve helps us visualize the trade-off between sensitivity (True Positive Rate) and specificity (1 - False Positive Rate) for various threshold values. A perfect classifier would have an ROC curve that passes through the top-left corner of the plot (100% sensitivity and 100% specificity). In contrast, a random classifier would have an ROC curve that follows the diagonal reference line (gray dashed line in our plot).</p>
 <p>The area under the ROC curve (AUC) is a scalar value that summarizes the performance of the classifier. An AUC of 1.0 indicates a perfect classifier, while an AUC of 0.5 suggests that the classifier is no better than random chance. We can calculate the AUC using the <strong><code>auc</code></strong> function from the <strong><code>pROC</code></strong> package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the AUC</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>auc_value <span class="ot">&lt;-</span> <span class="fu">auc</span>(roc_obj)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AUC:"</span>, auc_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the AUC</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>auc_value <span class="ot">&lt;-</span> <span class="fu">auc</span>(roc_obj)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"AUC:"</span>, auc_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>AUC: 0.8181047 </code></pre>
 </div>
@@ -480,64 +495,64 @@ Attaching package: 'pROC'</code></pre>
 <li><p><strong>Determine decision thresholds</strong>: You must first identify the decision thresholds you want to use. These thresholds represent the probability cut-off points for classifying an observation as positive or negative. In most cases, you can use the unique predicted probabilities in your dataset as the thresholds.</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract unique predicted probabilities</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">unique</span>(predicted_probs)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the thresholds in descending order</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">sort</span>(thresholds, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract unique predicted probabilities</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">unique</span>(predicted_probs)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the thresholds in descending order</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>thresholds <span class="ot">&lt;-</span> <span class="fu">sort</span>(thresholds, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li><strong>Calculate TPR and FPR for each threshold</strong>: For each threshold, calculate the true positive rate (sensitivity) and false positive rate (1 - specificity).</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize empty vectors for TPR and FPR</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(thresholds))</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>fpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(thresholds))</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate TPR and FPR for each threshold</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(thresholds)) {</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  threshold <span class="ot">&lt;-</span> thresholds[i]</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Classify observations based on the current threshold</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  predicted_classes <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(predicted_probs <span class="sc">&gt;=</span> threshold)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a confusion matrix</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Predicted =</span> predicted_classes, </span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">Actual =</span> titanic_test<span class="sc">$</span>Survived)</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate TPR and FPR</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">sum</span>(<span class="fu">dim</span>(cm))<span class="sc">==</span><span class="dv">4</span>){</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    tpr[i] <span class="ot">&lt;-</span> cm[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">/</span> (cm[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">+</span> cm[<span class="st">"0"</span>, <span class="st">"1"</span>])</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    fpr[i] <span class="ot">&lt;-</span> cm[<span class="st">"1"</span>, <span class="st">"0"</span>] <span class="sc">/</span> (cm[<span class="st">"1"</span>, <span class="st">"0"</span>] <span class="sc">+</span> cm[<span class="st">"0"</span>, <span class="st">"0"</span>])</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize empty vectors for TPR and FPR</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>tpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(thresholds))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>fpr <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(thresholds))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate TPR and FPR for each threshold</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(thresholds)) {</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  threshold <span class="ot">&lt;-</span> thresholds[i]</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Classify observations based on the current threshold</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  predicted_classes <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(predicted_probs <span class="sc">&gt;=</span> threshold)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a confusion matrix</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  cm <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">Predicted =</span> predicted_classes, </span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">Actual =</span> titanic_test<span class="sc">$</span>Survived)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate TPR and FPR</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">sum</span>(<span class="fu">dim</span>(cm))<span class="sc">==</span><span class="dv">4</span>){</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    tpr[i] <span class="ot">&lt;-</span> cm[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">/</span> (cm[<span class="st">"1"</span>, <span class="st">"1"</span>] <span class="sc">+</span> cm[<span class="st">"0"</span>, <span class="st">"1"</span>])</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    fpr[i] <span class="ot">&lt;-</span> cm[<span class="st">"1"</span>, <span class="st">"0"</span>] <span class="sc">/</span> (cm[<span class="st">"1"</span>, <span class="st">"0"</span>] <span class="sc">+</span> cm[<span class="st">"0"</span>, <span class="st">"0"</span>])</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li><strong>Plot the ROC curve</strong>: Now that you have calculated the TPR and FPR for each threshold, you can plot the ROC curve by connecting the dots (points) with lines.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>roc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Threshold =</span> thresholds, <span class="at">TPR =</span> tpr, <span class="at">FPR =</span> fpr)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ROC plot</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>roc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(roc_df, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR)) <span class="sc">+</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span>  <span class="co"># Add points (dots)</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Connect the points with lines</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True Positive Rate (Sensitivity)"</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>roc_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Threshold =</span> thresholds, <span class="at">TPR =</span> tpr, <span class="at">FPR =</span> fpr)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the ROC plot</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>roc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(roc_df, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR)) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span>  <span class="co"># Add points (dots)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Connect the points with lines</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True Positive Rate (Sensitivity)"</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ℹ Please use `linewidth` instead.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(roc_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(roc_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="4_confusion_mat_and_ROC_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -545,28 +560,28 @@ Attaching package: 'pROC'</code></pre>
 <p>This will create an ROC curve with dots (points) representing each decision threshold and lines connecting these dots. The resulting plot allows you to visualize the trade-offs between sensitivity and specificity at various threshold settings.</p>
 <p>Let’s see the process of drawing the ROC curve step by step.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>animated_roc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(roc_df, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR)) <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">seq_along</span>(Threshold), </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="fu">as.factor</span>(<span class="fu">seq_along</span>(Threshold))),</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">seq_along</span>(Threshold), </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="fu">as.factor</span>(<span class="fu">seq_along</span>(Threshold))),</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>,</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True Positive Rate (Sensitivity)"</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(<span class="at">states =</span> <span class="fu">seq_along</span>(roc_df<span class="sc">$</span>Threshold), <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span> <span class="fu">exit_fade</span>() <span class="sc">+</span></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shadow_mark</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="co"># Add the trajectory</span></span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the animated plot</span></span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(animated_roc_plot, <span class="at">nframes =</span> <span class="dv">200</span>, <span class="at">end_pause =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>animated_roc_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(roc_df, <span class="fu">aes</span>(<span class="at">x =</span> FPR, <span class="at">y =</span> TPR)) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">seq_along</span>(Threshold), </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="fu">as.factor</span>(<span class="fu">seq_along</span>(Threshold))),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> <span class="fu">seq_along</span>(Threshold), </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="fu">as.factor</span>(<span class="fu">seq_along</span>(Threshold))),</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"ROC Curve for the Logistic Regression Model"</span>,</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"False Positive Rate (1 - Specificity)"</span>,</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"True Positive Rate (Sensitivity)"</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(<span class="at">states =</span> <span class="fu">seq_along</span>(roc_df<span class="sc">$</span>Threshold), <span class="at">transition_length =</span> <span class="dv">2</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span> <span class="fu">exit_fade</span>() <span class="sc">+</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shadow_mark</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="co"># Add the trajectory</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the animated plot</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(animated_roc_plot, <span class="at">nframes =</span> <span class="dv">200</span>, <span class="at">end_pause =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="4_confusion_mat_and_ROC_files/figure-html/unnamed-chunk-12-1.gif" class="img-fluid"></p>
 </div>
