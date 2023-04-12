@@ -123,7 +123,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -167,24 +166,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../../teaching/media_ds/index.html">
  <span class="dropdown-text">Media &amp; Data Science</span></a>
   </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-proj" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Proj</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-proj">    
         <li>
-    <a class="dropdown-item" href="../../../proj/index.html">
- <span class="dropdown-text">All Projects</span></a>
+    <a class="dropdown-item" href="../../../teaching/cul_tech/index.html">
+ <span class="dropdown-text">Culture &amp; Technology</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../proj/proj_01.html">
- <span class="dropdown-text">생애첫연구</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../proj/proj_02.html">
- <span class="dropdown-text">신진연구자지원사업</span></a>
+    <a class="dropdown-item" href="../../../teaching/data_journalism/index.html">
+ <span class="dropdown-text">Data Journalism</span></a>
   </li>  
     </ul>
   </li>
@@ -199,10 +187,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
         <li>
     <a class="dropdown-item" href="../../../research/working.html">
- <span class="dropdown-text">Working in progress</span></a>
+ <span class="dropdown-text">Work in progress</span></a>
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../proj/index.html">
+ <span class="menu-text">Proj</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../../blogs/index.html">
  <span class="menu-text">Blogs</span></a>
@@ -330,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 moon      ""                                                                 
  9 moon      ""                                                                 
 10 moon      "우리나라 대통령 이 되겠습니다"                                    
-# … with 203 more rows</code></pre>
+# ℹ 203 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 토큰화</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
@@ -357,7 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 moon      "하겠습니"
  9 moon      ""        
 10 moon      "불비불명"
-# … with 2,987 more rows</code></pre>
+# ℹ 2,987 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 하위 집단별 단어 빈도 구하기 - count()</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 샘플 텍스트로 작동 원리 알아보기</span></span>
@@ -419,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8     8
  9     9
 10    10
-# … with 90 more rows</code></pre>
+# ℹ 90 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">slice_max</span>(x, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -450,7 +442,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 moon      대통령    12
  9 moon      정치      12
 10 moon      하게      12
-# … with 12 more rows</code></pre>
+# ℹ 12 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 단어 빈도 동점 처리 제외하고 추출하기, slice_max(with_ties = F) - 원본 데이터의 정렬 순서에 따라 행 추출</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="sc">%&gt;%</span> </span>
@@ -660,7 +652,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 각종         1     0
  9 감당         1     0
 10 강력         3     0
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 오즈비 구하기</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 단어의 비중을 나타낸 변수 추가하기</span></span>
@@ -682,7 +674,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 각종         1     0   0.000749    0      
  9 감당         1     0   0.000749    0      
 10 강력         3     0   0.00225     0      
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도/오즈비 0, 단어 비중 비교 불가, 빈도가 0보다 큰 값이 되도록 모든 값에 +1</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="ot">&lt;-</span> frequency_wide <span class="sc">%&gt;%</span></span>
@@ -703,7 +695,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 각종         1     0   0.000873   0.000552
  9 감당         1     0   0.000873   0.000552
 10 강력         3     0   0.00175    0.000552
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 오즈비 변수 추가하기</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="ot">&lt;-</span> frequency_wide <span class="sc">%&gt;%</span> </span>
@@ -723,7 +715,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 각종         1     0   0.000873   0.000552      1.58 
  9 감당         1     0   0.000873   0.000552      1.58 
 10 강력         3     0   0.00175    0.000552      3.17 
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="sc">%&gt;%</span> </span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>odds_ratio) <span class="co"># moon에서 상대적인 비중이 클수록 1보다 큰 값</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -741,7 +733,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 보통         5     0    0.00262   0.000552       4.75
  9 상생         5     0    0.00262   0.000552       4.75
 10 지방         5     0    0.00262   0.000552       4.75
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="sc">%&gt;%</span> </span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(odds_ratio) <span class="co"># park에서 상대적인 비중이 클수록 1보다 작은 값</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -759,7 +751,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 국정운영     0     4   0.000436    0.00276     0.158 
  9 시작         0     4   0.000436    0.00276     0.158 
 10 지식         0     4   0.000436    0.00276     0.158 
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="sc">%&gt;%</span> </span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">abs</span>(<span class="dv">1</span><span class="sc">-</span>odds_ratio)) <span class="co"># 두 연설문에서 단어 비중이 같으면 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -777,7 +769,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 교체       2     1    0.00131    0.00110      1.19 
  9 근본적     2     1    0.00131    0.00110      1.19 
 10 기반       2     1    0.00131    0.00110      1.19 
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상대적으로 중요한 단어 추출하기</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 오즈비가 가장 높거나 가장 낮은 단어 추출하기</span></span>
@@ -887,7 +879,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 moon      "그 동안 정치와 거리를 둬 왔습니다."                              
  9 moon      "그러나 암울한 시대가 저를 정치로 불러냈습니다."                  
 10 moon      "더 이상 남쪽 나뭇가지에 머무를 수 없었습니다."                   
-# … with 319 more rows</code></pre>
+# ℹ 319 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(speeches_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -991,7 +983,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 각종         1     0   0.000873   0.000552      1.58           0.459
  9 감당         1     0   0.000873   0.000552      1.58           0.459
 10 강력         3     0   0.00175    0.000552      3.17           1.15 
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># moon에서 비중이 큰 단어, 0보다 큰 양수</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="sc">%&gt;%</span></span>
@@ -1010,7 +1002,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 보통         5     0    0.00262   0.000552       4.75           1.56
  9 상생         5     0    0.00262   0.000552       4.75           1.56
 10 지방         5     0    0.00262   0.000552       4.75           1.56
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># park에서 비중이 큰 단어, 0보다 작은 음수</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="sc">%&gt;%</span></span>
@@ -1029,7 +1021,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 국정운영     0     4   0.000436    0.00276     0.158           -1.84
  9 시작         0     4   0.000436    0.00276     0.158           -1.84
 10 지식         0     4   0.000436    0.00276     0.158           -1.84
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 비중이 비슷한 단어, 0에 가까운</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>frequency_wide <span class="sc">%&gt;%</span></span>
@@ -1048,7 +1040,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 교체       2     1    0.00131    0.00110      1.19          0.171 
  9 근본적     2     1    0.00131    0.00110      1.19          0.171 
 10 기반       2     1    0.00131    0.00110      1.19          0.171 
-# … with 945 more rows</code></pre>
+# ℹ 945 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 오즈비를 이용해 중요한 단어 비교하기</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> frequency_wide <span class="sc">%&gt;%</span> </span>
@@ -1058,29 +1050,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 8
 # Groups:   president [2]
-   word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio presid…¹
-   &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;   
- 1 복지국가     8     0   0.00393    0.000552     7.12             1.96 moon    
- 2 세상         6     0   0.00306    0.000552     5.54             1.71 moon    
- 3 여성         6     0   0.00306    0.000552     5.54             1.71 moon    
- 4 정의         6     0   0.00306    0.000552     5.54             1.71 moon    
- 5 강자         5     0   0.00262    0.000552     4.75             1.56 moon    
- 6 공평         5     0   0.00262    0.000552     4.75             1.56 moon    
- 7 대통령의     5     0   0.00262    0.000552     4.75             1.56 moon    
- 8 보통         5     0   0.00262    0.000552     4.75             1.56 moon    
- 9 상생         5     0   0.00262    0.000552     4.75             1.56 moon    
-10 지방         5     0   0.00262    0.000552     4.75             1.56 moon    
-11 박근혜       0     8   0.000436   0.00496      0.0879          -2.43 park    
-12 여러분       2    20   0.00131    0.0116       0.113           -2.18 park    
-13 행복         3    23   0.00175    0.0132       0.132           -2.03 park    
-14 실천         0     5   0.000436   0.00331      0.132           -2.03 park    
-15 정보         0     5   0.000436   0.00331      0.132           -2.03 park    
-16 투명         0     5   0.000436   0.00331      0.132           -2.03 park    
-17 과제         0     4   0.000436   0.00276      0.158           -1.84 park    
-18 국정운영     0     4   0.000436   0.00276      0.158           -1.84 park    
-19 시작         0     4   0.000436   0.00276      0.158           -1.84 park    
-20 지식         0     4   0.000436   0.00276      0.158           -1.84 park    
-# … with abbreviated variable name ¹​president</code></pre>
+   word     moon  park ratio_moon ratio_park odds_ratio log_odds_ratio president
+   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;    
+ 1 복지국…     8     0   0.00393    0.000552     7.12             1.96 moon     
+ 2 세상        6     0   0.00306    0.000552     5.54             1.71 moon     
+ 3 여성        6     0   0.00306    0.000552     5.54             1.71 moon     
+ 4 정의        6     0   0.00306    0.000552     5.54             1.71 moon     
+ 5 강자        5     0   0.00262    0.000552     4.75             1.56 moon     
+ 6 공평        5     0   0.00262    0.000552     4.75             1.56 moon     
+ 7 대통령…     5     0   0.00262    0.000552     4.75             1.56 moon     
+ 8 보통        5     0   0.00262    0.000552     4.75             1.56 moon     
+ 9 상생        5     0   0.00262    0.000552     4.75             1.56 moon     
+10 지방        5     0   0.00262    0.000552     4.75             1.56 moon     
+11 박근혜      0     8   0.000436   0.00496      0.0879          -2.43 park     
+12 여러분      2    20   0.00131    0.0116       0.113           -2.18 park     
+13 행복        3    23   0.00175    0.0132       0.132           -2.03 park     
+14 실천        0     5   0.000436   0.00331      0.132           -2.03 park     
+15 정보        0     5   0.000436   0.00331      0.132           -2.03 park     
+16 투명        0     5   0.000436   0.00331      0.132           -2.03 park     
+17 과제        0     4   0.000436   0.00276      0.158           -1.84 park     
+18 국정운…     0     4   0.000436   0.00276      0.158           -1.84 park     
+19 시작        0     4   0.000436   0.00276      0.158           -1.84 park     
+20 지식        0     4   0.000436   0.00276      0.158           -1.84 park     </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 주요 변수 추출</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="sc">%&gt;%</span></span>
@@ -1175,7 +1166,7 @@ chr (2): president, value
  8 노무현    건국      1
  9 노무현    경선      1
 10 노무현    경쟁      1
-# … with 1,503 more rows</code></pre>
+# ℹ 1,503 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.4.2 TF-IDF 구하기</span></span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
@@ -1199,7 +1190,7 @@ chr (2): president, value
  8 이명박    동지         4 0.0105  1.39  0.0146
  9 이명박    일류국가     4 0.0105  1.39  0.0146
 10 박근혜    박근혜       8 0.00962 1.39  0.0133
-# … with 1,503 more rows</code></pre>
+# ℹ 1,503 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TF-IDF가 높은 단어 살펴보기</span></span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"문재인"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1217,7 +1208,7 @@ chr (2): president, value
  8 문재인    우리나라    10 0.00760 0.693 0.00527
  9 문재인    지방         5 0.00380 1.39  0.00527
 10 문재인    확대        10 0.00760 0.693 0.00527
-# … with 678 more rows</code></pre>
+# ℹ 678 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"박근혜"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1234,7 +1225,7 @@ chr (2): president, value
  8 박근혜    개개인       3 0.00361 1.39  0.00500
  9 박근혜    개인         3 0.00361 1.39  0.00500
 10 박근혜    공개         3 0.00361 1.39  0.00500
-# … with 397 more rows</code></pre>
+# ℹ 397 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"이명박"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1251,7 +1242,7 @@ chr (2): president, value
  8 이명박    일하         3 0.00789 1.39  0.0109 
  9 이명박    사랑         5 0.0132  0.693 0.00912
 10 이명박    인생         5 0.0132  0.693 0.00912
-# … with 192 more rows</code></pre>
+# ℹ 192 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"노무현"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1268,7 +1259,7 @@ chr (2): president, value
  8 노무현    총리         3 0.00817 1.39  0.0113 
  9 노무현    가훈         2 0.00545 1.39  0.00755
 10 노무현    개혁         4 0.0109  0.693 0.00755
-# … with 206 more rows</code></pre>
+# ℹ 206 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TF-IDF가 낮은 단어 살펴보기, 4개가 동일한 값으로 출력됨</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span></span>
@@ -1288,7 +1279,7 @@ chr (2): president, value
  8 문재인    동안       2 0.00152      0      0
  9 문재인    들이       9 0.00684      0      0
 10 문재인    마음       2 0.00152      0      0
-# … with 678 more rows</code></pre>
+# ℹ 678 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span></span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"박근혜"</span>) <span class="sc">%&gt;%</span></span>
@@ -1307,7 +1298,7 @@ chr (2): president, value
  8 박근혜    동안       3 0.00361     0      0
  9 박근혜    들이       3 0.00361     0      0
 10 박근혜    마음       3 0.00361     0      0
-# … with 397 more rows</code></pre>
+# ℹ 397 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span></span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"이명박"</span>) <span class="sc">%&gt;%</span></span>
@@ -1326,7 +1317,7 @@ chr (2): president, value
  8 이명박    동안       1 0.00263     0      0
  9 이명박    들이       1 0.00263     0      0
 10 이명박    마음       1 0.00263     0      0
-# … with 192 more rows</code></pre>
+# ℹ 192 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>frequecy <span class="sc">%&gt;%</span></span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(president <span class="sc">==</span> <span class="st">"노무현"</span>) <span class="sc">%&gt;%</span></span>
@@ -1345,7 +1336,7 @@ chr (2): president, value
  8 노무현    동안       2 0.00545     0      0
  9 노무현    들이       4 0.0109      0      0
 10 노무현    마음       1 0.00272     0      0
-# … with 206 more rows</code></pre>
+# ℹ 206 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 막대 그래프 만들기</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 주요 단어 추출</span></span>
@@ -1368,7 +1359,7 @@ chr (2): president, value
  8 노무현    총리         3 0.00817 1.39  0.0113 
  9 노무현    가훈         2 0.00545 1.39  0.00755
 10 노무현    개혁         4 0.0109  0.693 0.00755
-# … with 30 more rows</code></pre>
+# ℹ 30 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 순서 정하기</span></span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>top10<span class="sc">$</span>president <span class="ot">&lt;-</span> <span class="fu">factor</span>(top10<span class="sc">$</span>president,</span>
@@ -1427,7 +1418,7 @@ dbl (1): polarity
  8 가볍고 환하게            2
  9 가운데에서 뛰어남        2
 10 가장 거룩한              2
-# … with 2,592 more rows</code></pre>
+# ℹ 2,592 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부정 단어</span></span>
 <span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>dic <span class="sc">%&gt;%</span></span>
@@ -1447,7 +1438,7 @@ dbl (1): polarity
  8 가난하게              -2
  9 가난하고              -2
 10 가난하고 어렵다       -2
-# … with 4,789 more rows</code></pre>
+# ℹ 4,789 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 감정 단어의 종류 살펴보기</span></span>
 <span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>dic <span class="sc">%&gt;%</span></span>
@@ -1487,7 +1478,7 @@ dbl (1): polarity
  8 (^_^)        1
  9 (^_^;       -1
 10 (^o^)        1
-# … with 67 more rows</code></pre>
+# ℹ 67 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 총 14,854개 단어</span></span>
 <span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>dic <span class="sc">%&gt;%</span></span>
@@ -1598,7 +1589,7 @@ dttm (1): reg_time
  8 2020-02-11 09:20:52 "저런게 아카데미상 받으면  '태극기 휘…  한겨… ‘기…  http…
  9 2020-02-10 20:53:27 "다시한번 보여주세요 영화관에서 보고싶… 한겨… ‘기…  http…
 10 2020-02-10 20:22:41 "대한민국 BTS와함께  봉준호감독님까지\… 한겨… ‘기…  http…
-# … with 4,140 more rows</code></pre>
+# ℹ 4,140 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기본적인 전처리</span></span>
 <span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span>
@@ -1620,7 +1611,7 @@ dttm (1): reg_time
  8 2020-02-11 09:20:52 저런게 아카데미상 받으면 '태극기… 한겨… ‘기…  http…     8
  9 2020-02-10 20:53:27 다시한번 보여주세요 영화관에서 …  한겨… ‘기…  http…     9
 10 2020-02-10 20:22:41 대한민국 BTS와함께 봉준호감독님…  한겨… ‘기…  http…    10
-# … with 4,140 more rows</code></pre>
+# ℹ 4,140 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 구조 확인</span></span>
 <span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(news_comment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1658,7 +1649,7 @@ $ id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
  8 행복한 정말 우리 집에 좋은 일이 생겨 기쁘고 행복한 것처럼!! 나의 일인 양 행…
  9 것처럼 정말 우리 집에 좋은 일이 생겨 기쁘고 행복한 것처럼!! 나의 일인 양 행…
 10 나의   정말 우리 집에 좋은 일이 생겨 기쁘고 행복한 것처럼!! 나의 일인 양 행…
-# … with 37,708 more rows</code></pre>
+# ℹ 37,708 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 감정 점수 부여</span></span>
 <span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>word_comment <span class="ot">&lt;-</span> word_comment <span class="sc">%&gt;%</span></span>
@@ -1681,7 +1672,7 @@ $ id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
  8 행복한        2
  9 것처럼        0
 10 나의          0
-# … with 37,708 more rows</code></pre>
+# ℹ 37,708 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 자주 사용된 감정 단어 살펴보기</span></span>
 <span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 감정 분류하기</span></span>
@@ -1722,7 +1713,7 @@ $ id       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
  8 neg       어려운     5
  9 neg       힘든       5
 10 neg       더러운     4
-# … with 12 more rows</code></pre>
+# ℹ 12 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top10_sentiment, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word, n),</span>
 <span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> n,</span>
@@ -1762,7 +1753,7 @@ argument.</code></pre>
  8     0 저런게 아카데미상 받으면 '태극기 휘날리며'' '광해' '명량''은 전부문 휩…
  9     0 다시한번 보여주세요 영화관에서 보고싶은디                              
 10     2 대한민국 BTS와함께 봉준호감독님까지 대단하고 한국의 문화에 자긍심을 가…
-# … with 4,130 more rows</code></pre>
+# ℹ 4,130 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 감정 점수 높은 댓글 살펴보기</span></span>
 <span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 긍정 댓글</span></span>
@@ -1783,7 +1774,7 @@ argument.</code></pre>
  8     6 축하!!!! 축하!!!!! 오스카의 정복은 무엇보다 시나리오의 힘이다. 작가의 …
  9     6 조여정 ㆍ예쁜얼굴때문에 연기력을 제대로 평가받지 못해 안타깝던 내가 좋…
 10     6 좋은 걸 좋다고 말하지 못하는 인간들이 참 불쌍해지네....댓글 보니 인생… 
-# … with 4,130 more rows</code></pre>
+# ℹ 4,130 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부정 댓글</span></span>
 <span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>score_comment <span class="sc">%&gt;%</span></span>
@@ -1803,7 +1794,7 @@ argument.</code></pre>
  8    -4 축하합니다. 근데 현실 세계인 한국에선 그보다 훨씬 나쁜 넘인 조로남불 … 
  9    -4 큰일이다....국제적 망신이다...전 세계사람들이 우리나라를 기생충으로 보…
 10    -4 더럽고 추잡한 그들만의 리그                                            
-# … with 4,130 more rows</code></pre>
+# ℹ 4,130 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 감정 경향 살펴보기</span></span>
 <span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 감정 점수 빈도 구하기</span></span>
@@ -1940,7 +1931,7 @@ argument.</code></pre>
  8 pos       봉준호           106
  9 pos       정말              97
 10 neu       자랑스럽습니다    96
-# … with 19,213 more rows</code></pre>
+# ℹ 19,213 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 긍정 댓글 고빈도 단어</span></span>
 <span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a>frequency_word <span class="sc">%&gt;%</span></span>
@@ -1959,7 +1950,7 @@ argument.</code></pre>
  8 pos       영화          58
  9 pos       멋지다        55
 10 pos       기생충        53
-# … with 5,224 more rows</code></pre>
+# ℹ 5,224 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부정 댓글 고빈도 단어</span></span>
 <span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>frequency_word <span class="sc">%&gt;%</span></span>
@@ -1978,7 +1969,7 @@ argument.</code></pre>
  8 neg       너무            20
  9 neg       블랙리스트에    19
 10 neg       영화            18
-# … with 4,070 more rows</code></pre>
+# ℹ 4,070 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상대적으로 자주 사용된 단어 비교하기</span></span>
 <span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 로그 오즈비 구하기</span></span>
@@ -2003,7 +1994,7 @@ argument.</code></pre>
  8 영화          58    18
  9 멋지다        55     0
 10 기생충        53    33
-# … with 8,370 more rows</code></pre>
+# ℹ 8,370 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 오즈비 구하기</span></span>
 <span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>comment_wide <span class="ot">&lt;-</span> comment_wide <span class="sc">%&gt;%</span></span>
@@ -2024,7 +2015,7 @@ argument.</code></pre>
  8 영화          58    18          0.920
  9 멋지다        55     0          3.81 
 10 기생충        53    33          0.250
-# … with 8,370 more rows</code></pre>
+# ℹ 8,370 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 로그 오즈비가 가장 큰 단어 10개씩 추출하기</span></span>
 <span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> comment_wide <span class="sc">%&gt;%</span></span>
@@ -2092,7 +2083,7 @@ argument.</code></pre>
  8 소름 돋네요. 축하합니다                                                     
  9 소름.... 기생충 각본집 산거 다시한번 잘했다는 생각이ㅠㅠㅠ 축하해요!!!!!!   
 10 소름끼쳤어요 너무 멋집니다 ^^!!!!                                           
-# … with 121 more rows</code></pre>
+# ℹ 121 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># "미친"이 사용된 댓글</span></span>
 <span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>score_comment <span class="sc">%&gt;%</span></span>
@@ -2171,7 +2162,7 @@ argument.</code></pre>
  8     6 축하 축하 축하 모두들 수고 하셨어요 기생충 화이팅                      
  9     6 생중계 보며 봉준호 할 때 소름이~~~!! ㅠㅠ 수상소감들으며 함께 가슴이 … 
 10     6 축하!!!! 축하!!!!! 오스카의 정복은 무엇보다 시나리오의 힘이다. 작가의 …
-# … with 4,130 more rows</code></pre>
+# ℹ 4,130 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 전반적인 감정 경향 살펴보기</span></span>
 <span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 감정 분류하기</span></span>
@@ -2293,7 +2284,7 @@ argument.</code></pre>
  8 한국영화 100년사에 한횟을 긋네요. 정말 축하 합니다                           
  9 와 대단하다 진짜 축하드려요!!! 대박 진짜                                     
 10 각본상, 국제 영화상 수상 축하. 편집상은 꽝남.                                
-# … with 179 more rows</code></pre>
+# ℹ 179 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb211"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a>new_score_comment <span class="sc">%&gt;%</span></span>
 <span id="cb211-2"><a href="#cb211-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sentiment <span class="sc">==</span> <span class="st">"pos"</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(reply, <span class="st">"소름"</span>)) <span class="sc">%&gt;%</span></span>
@@ -2312,7 +2303,7 @@ argument.</code></pre>
  8 추카해요. 봉준호하는데 막 완전 소름 돋았어요.                                
  9 소름돋아서 닭살돋고.. 그냥 막 감동이라 눈물이 나려했어요.. 대단하고 자랑스럽…
 10 한국 영화 최초 아카데미상 수상, 92년 역사의 국제 장편 영화상과 최우수작품상 …
-# … with 67 more rows</code></pre>
+# ℹ 67 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부정 댓글 원문</span></span>
 <span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a>new_score_comment <span class="sc">%&gt;%</span></span>
@@ -2332,7 +2323,7 @@ argument.</code></pre>
  8 우선 축하합니다.그리고 다음에는 조씨가족을 모델로한 뻔뻔하고 거짓말을 밥 먹… 
  9 Korea 대단합니다 김연아 방탄 봉준호 스포츠 음악 영화 못하는게 없어요 좌빨 감…
 10 좌빨 감독이라고 블랙리스트에 올랐던 사람을 세계인이 인정해주네. 방구석에 앉… 
-# … with 24 more rows</code></pre>
+# ℹ 24 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a>new_score_comment <span class="sc">%&gt;%</span></span>
 <span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sentiment <span class="sc">==</span> <span class="st">"neg"</span> <span class="sc">&amp;</span> <span class="fu">str_detect</span>(reply, <span class="st">"못한"</span>)) <span class="sc">%&gt;%</span></span>

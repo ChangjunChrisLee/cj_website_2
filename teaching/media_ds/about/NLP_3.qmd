@@ -10,7 +10,7 @@ subtitle: 동시 출현 단어
 raw_news_comment <- readr::read_csv("data/news_comment_parasite.csv")
 
 # 전처리
-library(dplyr)
+library(tidyverse)
 library(stringr)
 library(textclean)
 news_comment <- raw_news_comment %>%
@@ -99,6 +99,7 @@ pair %>% filter(item1 == "봉준호")
 # 네트워크 그래프 데이터 만들기
 # install.packages("tidygraph")
 library(tidygraph)
+
 
 graph_comment <- pair %>%
   filter(n >= 25) %>%
