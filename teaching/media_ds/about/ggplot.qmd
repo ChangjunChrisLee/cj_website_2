@@ -1,0 +1,365 @@
+---
+title: "Data Visualization with ggplot2 in R"
+---
+
+> `ggplot2` is a powerful data visualization package in R that allows you to create complex and aesthetically pleasing visualizations using a simple and consistent syntax. This course aims to provide a detailed guide to ggplot2, from basic concepts to advanced techniques, along with hands-on practice to help you master this versatile package.
+
+-   ggplot2 cheat sheet ([download](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf))
+
+-   [ggplot2: elegant graphics for data analysis](https://ggplot2-book.org/index.html) *published by Springer*
+
+## Import libraries
+
+```{r}
+library(tidyverse)
+```
+
+## Key components
+
+Every ggplot2 plot has three key components:
+
+1.  **data**,
+
+2.  A set of **aesthetic mappings** between variables in the data and visual properties, and
+
+3.  At least one layer which describes how to render each observation. Layers are usually created with a **geom** function.
+
+Here\'s a simple example:
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point()
+```
+
+### **Color, size, shape and other aesthetic attributes**
+
+-   `aes(displ, hwy, colour = class)`
+
+-   `aes(displ, hwy, shape = drv)`
+
+-   `aes(displ, hwy, size = cyl)`
+
+```{r}
+ggplot(mpg, aes(displ, hwy, colour = class)) + 
+  geom_point()
+
+```
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) + 
+  geom_point(aes(colour = "blue"))
+
+ggplot(mpg, aes(displ, hwy)) + 
+  geom_point(colour = "blue")
+```
+
+### Faceting
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) + 
+  geom_point() + 
+  facet_wrap(~class)
+```
+
+## 
+One variable (Discrete)
+
+```{r}
+b <- ggplot(mpg, aes(fl))
+b + geom_bar()
+```
+
+## One variable (Cont.)
+
+```{r}
+
+a <- ggplot(mpg, aes(hwy))
+
+a + geom_area(stat = "bin")
+a + geom_density(kernel = "gaussian")
+a + geom_dotplot()
+a + geom_freqpoly()
+a + geom_histogram(binwidth = 5)
+
+```
+
+## 
+
+## Two variables (Cont. & Cont.)
+
+```{r}
+f <- ggplot(mpg, aes(cty, hwy))
+f + geom_blank()
+f + geom_jitter()
+f + geom_point()
+
+# install.packages("quantreg")
+library(quantreg)
+f + geom_quantile() + 
+  geom_jitter()
+
+f + geom_rug(sides = "bl") + 
+  geom_jitter()
+
+f + geom_rug(sides = "bl") + 
+  geom_point()
+
+f + geom_smooth(model = lm) +  
+  geom_point()
+
+f + geom_text(aes(label = cty)) + 
+  geom_jitter()
+
+f + geom_text(aes(label = fl))
+
+# install.packages("ggimage")
+library(ggimage)
+
+img <- list.files(system.file("extdata", 
+                              package="ggimage"),
+                  pattern="png", full.names=TRUE)
+
+f + geom_image(aes(image=img[2]))
+
+```
+
+## Two variables (Discrete & Cont.)
+
+```{r}
+g <- ggplot(mpg, aes(class, hwy))
+
+levels(as.factor(mpg$class))
+
+str(mpg$class)
+
+levels(as.factor(mpg$class))
+
+unique(mpg$class)
+
+g + geom_bar(stat = "identity")
+
+g + geom_boxplot() 
+
+# Let's specify some cars
+mpg %>% 
+  select(manufacturer, class, hwy) %>% 
+  group_by(class) %>% 
+  arrange(desc(hwy)) %>% 
+  head(10) -> text_in_graph
+text_in_graph
+
+g + geom_boxplot() +
+  geom_text(data=text_in_graph, 
+            aes(label = manufacturer))
+
+g + geom_dotplot(binaxis = "y",
+                 stackdir = "center")
+
+g + geom_violin(scale = "area")
+
+```
+
+## Two variables (Discrete & Discrete)
+
+```{r}
+
+head(diamonds)
+
+h <- ggplot(diamonds, aes(cut, color))
+h + geom_jitter()
+
+```
+
+## Continuous Bivariate Distribution
+
+```{r}
+# install.packages("ggplot2movies")
+library(ggplot2movies)
+i <- ggplot(movies, aes(year, rating))
+i + geom_bin2d(binwidth = c(5, 0.5))
+i + geom_density2d()
+# install.packages("hexbin")
+library(hexbin)
+i + geom_hex()
+```
+
+## Continuous functions (time-series)
+
+```{r}
+j <- ggplot(economics, aes(date, unemploy))
+j + geom_area()
+j + geom_line()
+j + geom_step(direction = "hv")
+```
+
+## Visualizing bars with errors
+
+```{r}
+# Visualizing error
+df <- data.frame(grp = c("A", "B"), fit = 4:5, se = 1:2)
+k <- ggplot(df, aes(grp, fit, ymin = fit-se, ymax = fit+se))
+
+k + geom_crossbar(fatten = 2)
+k + geom_errorbar()
+k + geom_linerange()
+k + geom_pointrange()
+```
+
+## Three variables
+
+```{r}
+seals$z <- with(seals, sqrt(delta_long^2 + delta_lat^2))
+m <- ggplot(seals, aes(long, lat))
+
+m + geom_tile(aes(fill = z))
+m + geom_contour(aes(z = z))
+m + geom_raster(aes(fill = z), hjust=0.5,
+                vjust=0.5, interpolate=FALSE)
+```
+
+## Scales
+
+```{r}
+
+n <- b + geom_bar(aes(fill = fl))
+n
+n + scale_fill_manual(
+  values = c("skyblue", "royalblue", "blue", "navy"),
+  limits = c("d", "e", "p", "r"), breaks =c("d", "e", "p", "r"),
+  name = "fuel", labels = c("D", "E", "P", "R"))
+
+# Color and fill scales
+n <- b + geom_bar(aes(fill = fl))
+o <- a + geom_dotplot(aes(fill = ..x..))
+
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+n + scale_fill_brewer(palette = "Blues")
+
+display.brewer.all()
+n + scale_fill_grey(
+  start = 0.2, end = 0.8,
+  na.value = "red")
+o + scale_fill_gradient(
+  low = "red",
+  high = "yellow")
+o + scale_fill_gradientn(
+  colours = terrain.colors(6))
+# Also: rainbow(), heat.colors(),
+# topo.colors(), cm.colors(),
+# RColorBrewer::brewer.pal()
+
+# Shape scales
+f
+p <- f + geom_point(aes(shape = fl))
+p
+
+p + scale_shape(solid = FALSE)
+
+p + scale_shape_manual(values = c(3:7))
+
+# Size scales
+q <- f + geom_point(aes(size = cyl))
+
+
+```
+
+## Coordinate systems
+
+```{r}
+r <- b+geom_bar()
+r + coord_cartesian(xlim = c(0, 5))
+r + coord_fixed(ratio = 1/2)
+r + coord_fixed(ratio = 1/10)
+r + coord_fixed(ratio = 1/100)
+r + coord_flip()
+r + coord_polar(theta = "x", direction=1 )
+```
+
+## Position adjustments
+
+```{r}
+s <- ggplot(mpg, aes(fl, fill = drv))
+
+s + geom_bar(position = "dodge")
+# Arrange elements side by side
+s + geom_bar(position = "fill")
+# Stack elements on top of one another, normalize height
+s + geom_bar(position = "stack")
+# Stack elements on top of one another
+f + geom_point(position = "jitter")
+# Add random noise to X and Y position of each element to avoid overplotting
+
+
+```
+
+## Themes
+
+```{r}
+# Theme
+r + theme_bw()
+r + theme_classic()
+r + theme_grey()
+r + theme_minimal()
+
+
+```
+
+## Faceting
+
+```{r}
+# Faceting
+
+t <- ggplot(mpg, aes(cty, hwy)) + geom_point()
+t + facet_grid(. ~ fl)
+t + facet_grid(fl ~ .)
+# facet into columns based on fl
+t + facet_grid(year ~ .)
+# facet into rows based on year
+t + facet_grid(year ~ fl)
+# facet into both rows and columns
+t + facet_wrap(~ fl)
+# wrap facets into a rectangular layout
+
+
+```
+
+## Labels
+
+```{r}
+# Labels
+t + ggtitle("New Plot Title ")
+# Add a main title above the plot
+t + xlab("New X label")
+# Change the label on the X axis
+t + ylab("New Y label")
+# Change the label on the Y axis
+t + labs(title =" New title", x = "New x", y = "New y")
+# All of the above
+
+```
+
+## Qz
+
+Question:
+Using the **`mpg`** dataset in R, create a horizontal bar chart that displays the average highway miles per gallon (MPG) for each car manufacturer. Arrange the data in descending order based on the average highway MPG. Use a gradient color scale ranging from red (low values) to green (high values) for the bars. Remove the x-axis label.
+
+Hint: Use **`dplyr`** and **`ggplot2`** functions such as **`group_by()`**, **`summarise()`**, **`arrange()`**, **`aes()`**, **`geom_bar()`**, **`coord_flip()`**, and **`scale_fill_gradient()`**.
+
+```{r, echo=F}
+
+mpg %>% 
+  group_by(manufacturer) %>% 
+  summarise(avg_hwy=mean(hwy)) %>% 
+  arrange(desc(avg_hwy)) %>% 
+  ggplot(aes(x=reorder(manufacturer, avg_hwy),
+             y=avg_hwy,
+             fill=avg_hwy))+
+  scale_fill_gradient(
+    low = "red",
+    high = "green")+
+  coord_flip()+
+  geom_bar(stat='identity')+
+  xlab("")
+
+```

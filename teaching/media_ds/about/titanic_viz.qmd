@@ -1,0 +1,440 @@
+---
+title: "Titanic data visualiztion practice in R"
+# subtitle: "주차별 계획 및 학습도구"
+---
+
+
+
+```{r}
+# Titanic dataset Visualization!! from Kaggle
+
+
+# Load packages and Data
+# readr will be used to read in the Data using the read_csv function
+# dplyr will be used for most of the data processing and manipulation
+# ggplot2 will be used for data visualization
+
+library(readr) # Reading in data
+library(tidyverse)
+library(ggthemes) # Data visualization
+library(RColorBrewer) # Data visualization
+titanic <- read_csv("data/titanic.csv")
+nrow(titanic)
+head(titanic)
+table(titanic$Pclass)
+
+# Convert Variable into Factors
+# Convert Pclass, Survived and Sex Variables into Factors using the mutate function
+# Keep Age numeric
+
+str(titanic)
+
+titanic <- titanic %>%
+  mutate(Pclass = factor(Pclass), 
+         Survived = factor(Survived), 
+         Sex = factor(Sex))
+
+# titanic %>%
+#   mutate(Pclass = factor(Pclass), 
+#          Survived = factor(Survived), 
+#          Sex = factor(Sex)) -> titanic
+
+
+str(titanic)
+# Age has some missing values (NA). Missing values will be ignored for now
+
+
+#######################################
+# 1. Look at the Total Survival Rate
+# Use table function to look at the Survival rates
+# Convert table to a tibble (similar to dataframe) to use later when plotting with ggplot2 to add text to the graph
+# Use rename function to rename default Column names
+
+str(table(titanic$Survived))
+
+
+as.data.frame(table(titanic$Survived))
+
+survival <- table(titanic$Survived) %>%
+  as.data.frame() %>%
+  rename(Survived = Var1, Count = Freq)
+
+survival
+
+
+titanic %>% 
+  group_by(Survived) %>% 
+  summarize(Count=n())
+
+
+# Look at the Total Survival Rate Proportion
+# Use prop.table to get the proportion
+
+survival_ratio <- table(titanic$Survived) %>% prop.table %>% 
+  as.data.frame() %>%
+  rename(Survived = Var1, Percentage = Freq) %>%
+  mutate(Percentage = round(Percentage, 2)*100)
+
+survival_ratio
+
+
+# Plot the Total Survival Rate
+# Using a barplot with theme_few theme from the ggthemes package
+# Add some styling to the plot: Center the Title and color, Edit the Legends
+# Use tibble of survival data in geom_text to add the Count to the plot
+# Use tibble of survival data ratio in geom_label to add the Percentages to the bars
+
+
+
+# survival_ratio %>% 
+#   mutate(y=c(300, 200)) ->survival_ratio
+
+survival %>% 
+  mutate(lab=c("NS", "S"))-> survival
+
+survival_ratio %>% 
+  mutate(cordi=c(300, 190)) -> survival_ratio
+
+
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Survived, fill = Survived)) +
+  geom_text(data = survival, 
+            aes(x = Survived, y = Count, label = Count), 
+            position = position_dodge(width=0.1),
+            vjust=-0.25,
+            fontface = "bold") +
+  geom_label(data = survival_ratio, 
+             aes(x = Survived, y = Percentage, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 5)) +
+  theme_few() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Total Survival Rate") +
+  scale_x_discrete(name= "Survival Rate", labels = c("Did Not Survive", "Survived")) +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# 2. Look at Survival Rate by Gender
+# Group the data by Sex using the group_by function
+# Get the total Count of passengers in each gender group with summarise function
+
+gender <- titanic %>%
+  group_by(Sex) %>%
+  summarise(Count = n())
+
+table(titanic$Sex) %>% 
+  as.data.frame %>% 
+  rename(Sex=Var1,Count=Freq)
+gender
+
+# Look at the Gender Survival Rate Proportion
+# Group by Sex and Survived to get the Count of survived by gender using summarise function
+# Use mutate to add a new Percentage variable
+gender_ratio <- titanic %>%
+  group_by(Sex, Survived) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+gender_ratio
+
+# Plot the Gender Survival Rate
+# Using a barplot
+# Represent Gender on the x-axis
+# Use Color to represent Survival on the Plot
+# Add the Count and Percentage using geom_text and geom_label respectively
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Sex, fill = Survived)) +
+  geom_text(data = gender, 
+            aes(x = Sex, y = Count, label = Count), 
+            # position = position_dodge(width=0.9), 
+            vjust=-0.25, 
+            fontface = "bold") +
+  geom_label(data = gender_ratio, 
+             aes(x = Sex, y = Count, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 0.5)) +
+  theme_few() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Survival Rate") +
+  scale_x_discrete(name= "Gender") +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# 3. Look at Survival Rate by Ticket Class
+# Group the data by Pclass using the group_by function
+# Get the total Count of passengers in each Pclass with summarise function
+
+pclass <- titanic %>%
+  group_by(Pclass) %>%
+  summarise(Count = n())
+
+pclass
+
+# Look at the Pclass Survival Rate Proportion
+# Group by Pclass and Survived to get the Count of survived in each Pclass using summarise function
+# Use mutate to add a new Percentage variable
+pclass_ratio <- titanic %>%
+  group_by(Pclass, Survived) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+pclass_ratio
+
+# Plot the Gender Survival Rate
+# Using a barplot using black and white theme theme_bw from ggplot2
+# Represent Pclass on the x-axis
+# Use Color to represent Survival on the Plot
+# Add the Count and Percentage using geom_text and geom_label respectively
+
+# pclass %>% 
+#   mutate(lab=c("First", "Business", "Economy"))->pclass
+
+
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Pclass, fill = Survived)) +
+  geom_text(data = pclass, 
+            aes(x = Pclass, y = Count, label = Count), 
+            position = position_dodge(width=0.9), 
+            vjust=-0.25, 
+            fontface = "bold") +
+  geom_label(data = pclass_ratio, 
+             aes(x = Pclass, y = Count, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 0.5)) +
+  theme_solarized(base_size = 12, base_family = "", light = TRUE) + 
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Pclass Survival Rate") +
+  scale_x_discrete(name= "Pclass") +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# 4. Look at Gender Proportion in each Class
+# Before looking at the proportion of Males and Females that Survived in each Pclass, let's look at the Gender proportion in each class
+pclass_gender <- titanic %>%
+  group_by(Pclass) %>%
+  summarise(Count = n())
+
+pclass_gender
+
+
+# Look at the Pclass Gender Proportion
+pclass_gender_ratio <- titanic %>%
+  group_by(Pclass, Sex) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+pclass_gender_ratio
+
+# Plot the Pclass Gender Proportion
+# Represent Pclass on the x-axis
+# Use Color to represent Gender on the Plot using the RColorBrewer package
+# Add the Count and Percentage using geom_text and geom_label respectively
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Pclass, fill = Sex)) +
+  geom_text(data = pclass_gender, 
+            aes(x = Pclass, y = Count, label = Count), 
+            position = position_dodge(width=0.9), 
+            vjust=-0.25, 
+            fontface = "bold") +
+  geom_label(data = pclass_gender_ratio, 
+             aes(x = Pclass, y = Count, label = paste0(Percentage, "%"), group = Sex), 
+             position = position_stack(vjust = 0.5)) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Proportion by Ticket Class") +
+  scale_x_discrete(name= "Pclass") +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_brewer(name = "Gender", labels = c("Female", "Male"), palette = "Paired")
+
+
+# 5. Look at Survival Rate by Gender in each Pclass
+# First look at Pclass Gender Proportion
+# Second look at Survival Rate by Gender in each Pclass
+
+
+pclass_gender_ratio <- titanic %>%
+  group_by(Pclass, Sex) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+pclass_gender_ratio
+
+pclass_gender_survived_ratio <- titanic %>%
+  group_by(Pclass, Sex, Survived) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+pclass_gender_survived_ratio
+
+
+# Plot the Gender Survival Proportion by Pclass
+# Represent Sex on the x-axis
+# Use Color to represent Survival
+# Use faceting to separate by Pclass using facet_wrap
+# Add the Count and Percentage using geom_text and geom_label respectively
+
+
+
+# Using facet_wrap(~ Pclass)
+
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Sex, fill = Survived)) +
+  facet_wrap(~ Pclass) +
+  geom_text(data = pclass_gender_ratio, 
+            aes(x = Sex, y = Count, label = Count), 
+            position = position_dodge(width=0.9), 
+            vjust= -0.5, 
+            fontface = "bold") +
+  geom_label(data = pclass_gender_survived_ratio, 
+             aes(x = Sex, y = Count, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 0.5))
+
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Sex, fill = Survived)) +
+  facet_wrap(~ Pclass) +
+  geom_text(data = pclass_gender_ratio, 
+            aes(x = Sex, y = Count, label = Count), 
+            position = position_dodge(width=0.9), 
+            vjust= -1.5, 
+            fontface = "bold") +
+  geom_label(data = pclass_gender_survived_ratio, 
+             aes(x = Sex, y = Count, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 0.5)) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Survival Rate by Pclass") +
+  scale_x_discrete(name= "Gender by Pclass ") +
+  scale_y_continuous(name = "Passenger Count", limits = c(0,360)) +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# Using facet_grid(Sex ~ Pclass) to separate Gender and Pclass
+
+titanic %>%
+  ggplot() +
+  geom_bar(aes(x = Survived, fill = Survived)) +
+  facet_grid(Sex ~ Pclass) +
+  geom_text(data = pclass_gender_survived_ratio, 
+            aes(x = Survived, y = Count, label = paste0(Percentage, "%")), 
+            position = position_dodge(width=0.9), 
+            vjust= -0.5, 
+            fontface = "bold") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Survival Rate by Pclass") +
+  scale_x_discrete(name= "Survival Rate", labels = c("No", "Yes")) +
+  scale_y_continuous(name = "Passenger Count", limits = c(0,360)) +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# 6. Look at Survival Rate by Age
+# First look at the Age distribution
+# Second look at Survival rate by Age
+# Find the Average Age of Passengers
+# Remove Missing Values (177 NA Values)
+median(titanic$Age, na.rm = TRUE)
+# Plot the Age Distribution
+# Using a Histogram (Continious Data)
+# Using binwidth = 5 years
+# Ignoring 177 observations with missing Age
+titanic %>%
+  ggplot() +
+  geom_histogram(aes(x = Age), 
+                 binwidth = 5, color = "#355a63", 
+                 fill = "#96e4f7") +
+  theme_few() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Age Distribution") +
+  scale_x_continuous(name= "Passenger Age", breaks = 5*c(0:18)) +
+  scale_y_continuous(name = "Passenger Count")
+
+# Plot the Survival Rate by Age
+# Use automatic fill based on Survived
+# Ignoring 177 observations with missing Age
+titanic %>%
+  ggplot() +
+  geom_histogram(aes(x = Age, fill = Survived), binwidth = 5, color = "#355a63") +
+  theme_few() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Survival Rate by Age") +
+  scale_x_continuous(name= "Passenger Age", breaks = 5*c(0:18)) +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# 7. Look at Survival Rates by Age when segmented by Gender and Class
+# Look At Survival Rate based on Gender and Class Segmented by Age
+# Females that Did NOT Survive in 1st and 2nd Class (3% and 8%) seem to be randomly distributed by Age
+titanic %>%
+  ggplot() +
+  geom_histogram(aes(x = Age, fill = Survived), binwidth = 5, color = "#355a63")+
+  facet_grid(Sex ~ Pclass)
+
+
+
+titanic %>%
+  ggplot() +
+  geom_histogram(aes(x = Age, fill = Survived), binwidth = 5, color = "#355a63") +
+  facet_grid(Sex ~ Pclass) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Survival Rate by Age, Gender and Class") +
+  scale_x_continuous(name= "Passenger Age", breaks = 10*c(0:8)) +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+
+# 8. Look at Survival Based on Family Size
+# Add a Varibale for Family Size
+# Combine SibSp and Parch variables together and add 1 (for self)
+# Use the mutate function to add FamilySize to the dataset
+titanic <- titanic %>%
+  mutate(FamilySize = 1 + SibSp + Parch)
+
+# Look at Survival Rate Based on Family Size
+titanic %>%
+  group_by(FamilySize, Survived) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+titanic %>%
+  ggplot() +
+  geom_histogram(aes(x = FamilySize, fill = Survived), binwidth = 1) +
+  facet_grid(Sex ~ Pclass) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Survival Rate by Family Size") +
+  scale_x_continuous(name = "Family Size") +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+# 9. Looking At Survival by Gender, Class, Age and FamilySize
+# Segment by Pclass and Sex
+# Represent Age on the x-axis (grouped by 10 years) and FamilySize on the y-axis
+# Represent Survival with color
+titanic %>%
+  ggplot() +
+  geom_point(aes(x = Age, y = FamilySize, color = Survived), alpha = 0.7) +
+  facet_grid(Sex ~ Pclass) +
+  theme_bw() +
+  theme(plot.title = element_text(size=18, color = "#054354")) +
+  ggtitle("Survival Rate by Gender, Class, Age, and Family Size") +
+  scale_x_continuous(name= "Passenger Age", breaks = 10*c(0:8)) +
+  scale_y_continuous(name = "Family Size") +
+  scale_color_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+
+# https://www.kaggle.com/romabash/titanic-data-visualization
+```
+
