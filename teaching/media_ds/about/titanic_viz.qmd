@@ -3,17 +3,20 @@ title: "Titanic data visualiztion practice in R"
 # subtitle: "주차별 계획 및 학습도구"
 ---
 
+## Titanic dataset Visualization (from *Kaggle*)
 
+-   The original source is here below
+
+    \[<https://www.kaggle.com/romabash/titanic-data-visualization>\]
+
+-   Download [titanic.csv](data/titanic.csv)
+
+<br>
+
+### Import required packages and data
 
 ```{r}
-# Titanic dataset Visualization!! from Kaggle
-
-
 # Load packages and Data
-# readr will be used to read in the Data using the read_csv function
-# dplyr will be used for most of the data processing and manipulation
-# ggplot2 will be used for data visualization
-
 library(readr) # Reading in data
 library(tidyverse)
 library(ggthemes) # Data visualization
@@ -22,7 +25,11 @@ titanic <- read_csv("data/titanic.csv")
 nrow(titanic)
 head(titanic)
 table(titanic$Pclass)
+```
 
+### Pre-processing
+
+```{r}
 # Convert Variable into Factors
 # Convert Pclass, Survived and Sex Variables into Factors using the mutate function
 # Keep Age numeric
@@ -34,16 +41,13 @@ titanic <- titanic %>%
          Survived = factor(Survived), 
          Sex = factor(Sex))
 
-# titanic %>%
-#   mutate(Pclass = factor(Pclass), 
-#          Survived = factor(Survived), 
-#          Sex = factor(Sex)) -> titanic
-
-
-str(titanic)
+titanic %>% glimpse
 # Age has some missing values (NA). Missing values will be ignored for now
+```
 
+### 1. Look at the Total Survival Rate
 
+```{r}
 #######################################
 # 1. Look at the Total Survival Rate
 # Use table function to look at the Survival rates
@@ -115,8 +119,11 @@ titanic %>%
   scale_y_continuous(name = "Passenger Count") +
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
+```
 
-# 2. Look at Survival Rate by Gender
+### 2. Look at Survival Rate by Gender
+
+```{r}
 # Group the data by Sex using the group_by function
 # Get the total Count of passengers in each gender group with summarise function
 
@@ -164,6 +171,11 @@ titanic %>%
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
 
+```
+
+### 3. Look at Survival Rate by Ticket Class
+
+```{r}
 # 3. Look at Survival Rate by Ticket Class
 # Group the data by Pclass using the group_by function
 # Get the total Count of passengers in each Pclass with summarise function
@@ -214,6 +226,11 @@ titanic %>%
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
 
+```
+
+### 4. Look at Gender Proportion in each Class
+
+```{r}
 # 4. Look at Gender Proportion in each Class
 # Before looking at the proportion of Males and Females that Survived in each Pclass, let's look at the Gender proportion in each class
 pclass_gender <- titanic %>%
@@ -255,6 +272,11 @@ titanic %>%
   scale_fill_brewer(name = "Gender", labels = c("Female", "Male"), palette = "Paired")
 
 
+```
+
+### 5. Look at Survival Rate by Gender in each Pclass
+
+```{r}
 # 5. Look at Survival Rate by Gender in each Pclass
 # First look at Pclass Gender Proportion
 # Second look at Survival Rate by Gender in each Pclass
@@ -338,7 +360,11 @@ titanic %>%
   scale_y_continuous(name = "Passenger Count", limits = c(0,360)) +
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
+```
 
+### 6. Look at Survival Rate by Age
+
+```{r}
 # 6. Look at Survival Rate by Age
 # First look at the Age distribution
 # Second look at Survival rate by Age
@@ -374,6 +400,11 @@ titanic %>%
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
 
+```
+
+### 7. Look at Survival Rates by Age when segmented by Gender and Class
+
+```{r}
 # 7. Look at Survival Rates by Age when segmented by Gender and Class
 # Look At Survival Rate based on Gender and Class Segmented by Age
 # Females that Did NOT Survive in 1st and 2nd Class (3% and 8%) seem to be randomly distributed by Age
@@ -396,6 +427,11 @@ titanic %>%
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
 
+```
+
+### 8. Look at Survival Based on Family Size
+
+```{r}
 # 8. Look at Survival Based on Family Size
 # Add a Varibale for Family Size
 # Combine SibSp and Parch variables together and add 1 (for self)
@@ -420,6 +456,11 @@ titanic %>%
   scale_y_continuous(name = "Passenger Count") +
   scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
 
+```
+
+### 9. Looking At Survival by Gender, Class, Age and FamilySize
+
+```{r}
 # 9. Looking At Survival by Gender, Class, Age and FamilySize
 # Segment by Pclass and Sex
 # Represent Age on the x-axis (grouped by 10 years) and FamilySize on the y-axis
@@ -434,7 +475,4 @@ titanic %>%
   scale_x_continuous(name= "Passenger Age", breaks = 10*c(0:8)) +
   scale_y_continuous(name = "Family Size") +
   scale_color_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
-
-# https://www.kaggle.com/romabash/titanic-data-visualization
 ```
-
