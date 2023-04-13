@@ -168,7 +168,7 @@ $$
     $$
     Adj.R^2=1-\frac{(1-R^2)(N-1)}{N-p-1}
     $$
-    
+
     > where $R^2$ is sample R-squared, $N$ is Total Sample Size, and $p$ is the number of independent variables
 
 -   Root Mean Squared Error (RMSE): The square root of the average squared differences between the observed and predicted values of the dependent variable. A measure of the model's prediction accuracy.
@@ -176,7 +176,7 @@ $$
     $$
     RMSE = \sqrt{\frac{\sum_{i=1}^{N}{(y_i-\hat{y_i})^2}}{N}}
     $$
-    
+
     > where N is the number of data points (observations)
 
 ------------------------------------------------------------------------
@@ -277,11 +277,10 @@ T-statistics and p-values are essential concepts in statistical hypothesis testi
     $$
     t = \frac{\beta - H₀}{se(\beta)}
     $$
-    
+
     > where $t$ is the t-statistic, $\beta$ is the estimated regression coefficient, $H₀$ is the null hypothesis value (usually 0), and $se(\beta)$ is the standard error of the estimated coefficient.
 
 ::: callout-note
-
 -   t-통계량은 클 수록 좋음 -\> 분자는 클 수록, 분모는 작을 수록 좋음
 
 -   분자가 크려면: 회귀 계수 (Beta의 추정값)이 커야함
@@ -300,7 +299,7 @@ T-statistics and p-values are essential concepts in statistical hypothesis testi
     > A p-value is the probability of obtaining a test statistic as extreme as the observed value under the null hypothesis. It helps us determine the statistical significance of a regression coefficient. In general, a smaller p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis, suggesting that the coefficient is significantly different from zero.
 
     To calculate the p-value for a t-statistic, we use the cumulative distribution function (CDF) of the t-distribution with n - k degrees of freedom, where n is the number of observations and k is the number of estimated coefficients (including the intercept).
-    
+
     $$
     P(T > |t|) = 1 - CDF(t, df = n - k)
     $$
@@ -400,26 +399,26 @@ Lasso, Ridge, and Elastic Net are **regularization techniques** used in linear r
 1.  **Lasso Regression** (Least Absolute Shrinkage and Selection Operator)
 
     Lasso regression adds an **L1** penalty term to the linear regression's objective function. The L1 penalty term is the sum of the absolute values of the coefficients. The objective function for Lasso regression is:
-    
+
     $$
     Objective = RSS + λ Σ|β_j|
     $$
-    
+
     where:
-    
+
     -   $RSS$ is the residual sum of squares.
-    
+
     -   $β_j$ represents the j-th coefficient in the model.
-    
+
     -   $λ$ (lambda) is the regularization parameter that controls the strength of the L1 penalty. Higher values of λ result in more shrinkage and simpler models.
-    
+
     Lasso regression can drive some coefficients to zero, effectively performing feature selection by excluding irrelevant variables from the model.
 
 <br>
 
 2.  **Ridge Regression**
 
-Ridge regression adds an **L2** penalty term to the linear regression's objective function. The L2 penalty term is the sum of the squares of the coefficients. The objective function for Ridge regression is:
+    Ridge regression adds an **L2** penalty term to the linear regression's objective function. The L2 penalty term is the sum of the squares of the coefficients. The objective function for Ridge regression is:
 
     $$
     Objective = RSS + λ  Σ(β_j)^2
@@ -433,13 +432,13 @@ Ridge regression adds an **L2** penalty term to the linear regression's objectiv
 
     -   $λ$ (lambda) is the regularization parameter that controls the strength of the L2 penalty. Higher values of λ result in more shrinkage and simpler models.
 
-    > [Ridge regression doesn't drive coefficients to zero but can shrink them close to zero]{.underline}, leading to a more *stable* and *interpretable* model, especially when multicollinearity is present.
+    > [Ridge regression doesn't drive coefficients to zero but can shrink them close to zero]{.underline}, leading to a more **stable** and **interpretable** model, especially when multicollinearity is present.
 
 <br>
 
 3.  **Elastic Net Regression**
 
-Elastic Net regression combines both L1 and L2 penalty terms, effectively blending Lasso and Ridge regression (진리의 반반). The objective function for Elastic Net regression is:
+    Elastic Net regression combines both L1 and L2 penalty terms, effectively blending Lasso and Ridge regression (진리의 반반). The objective function for Elastic Net regression is:
 
     $$
     Objective = RSS + λ [(1 - α)  Σ(β_j)^2 + α  Σ|β_j|]
@@ -455,11 +454,11 @@ Elastic Net regression combines both L1 and L2 penalty terms, effectively blendi
 
     -   $α$ (alpha) is the mixing parameter that determines the balance between L1 (Lasso) and L2 (Ridge) penalties.
 
-      -   α = 1 results in Lasso regression,
+        -   α = 1 results in Lasso regression,
 
-      -   α = 0 results in Ridge regression,
+        -   α = 0 results in Ridge regression,
 
-      -   and values between 0 and 1 produce a mix of both.
+        -   and values between 0 and 1 produce a mix of both.
 
     > Elastic Net regression can be useful when there are many correlated predictors, as it can perform feature selection like Lasso while maintaining the stability and robustness of Ridge regression.
 
