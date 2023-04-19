@@ -1,41 +1,40 @@
 ---
 title: NLP
-subtitle: 텍스트 전처리 및 분석
+subtitle: Text Pre-processing & Basic Analysis
 ---
 
-### Download example data
+## Download example data
 
 1.  [speech_moon.txt](data/speech_moon.txt)
 2.  [speech_park.txt](data/speech_park.txt)
 
-<br>
 
-### 
 
-Text Pre-processing
-
-<br>
-
-#### Install required packages
+## Install required packages
 
 ```{r}
-# install.packages('strigr') # 최신 R 버전에서 다운로드 불가능, 아래 코드들을 실행하여 수동설치로 대체
-# install.packages('magrittr') # 만약 반복해서 'Updating Loaded Packages' 알림 발생 시, '아니요' 선택
+# install.packages('stringr') 
+# install.packages('magrittr')
 # install.packages('glue')
 # install.packages('stringi')
-# install.packages('https://cran.r-project.org/src/contrib/Archive/stringr/stringr_1.4.1.tar.gz', repos = NULL, type = 'source')
 # install.packages('tidytext')
+
+# stringr 설치가 안되면 아래 코드로 설치
+# install.packages('https://cran.r-project.org/src/contrib/Archive/stringr/stringr_1.4.1.tar.gz', repos = NULL, type = 'source')
+
 ```
 
-#### Import required libraries
+## Import required libraries
 
 ```{r}
+#| output: false
+
 library(tidyverse)
 library(stringr)
 library(tidytext)
 ```
 
-#### Text Pre-processing (텍스트 전처리)
+## Text Pre-processing
 
 Import speeches
 
@@ -46,7 +45,7 @@ head(raw_moon)
 
 ```
 
-Remove unnecessary characters - str_replace_all
+Remove unnecessary characters - `str_replace_all()`
 
 ```{r}
 # Learn how it works with sample text
@@ -80,48 +79,68 @@ moon <- moon %>%
 head(moon)
 ```
 
-Convert data to tibble structure - as_tibble()
+Convert data to tibble structure - `as_tibble()`
 
 ```{r}
 moon <- dplyr::as_tibble(moon)
 moon
 ```
 
-Pre-processing at once (feat. %\>%)
+Pre-processing at once (feat. `%>%`)
 
 ```{r}
 moon <- raw_moon %>% 
   str_replace_all('[^가-힣]', ' ') %>% # 한글만 남기기
   str_squish() %>% # 연속된 공백 제거
   as_tibble() # tibble로 변환
+moon
 ```
 
-#### Tokenization - unnest_tokens()
+## Tokenization - `unnest_tokens()`
 
 Practice with sample data
 
 ```{r}
-
-# 샘플 텍스트로 작동 원리 알아보기
 text <- tibble(value = "대한민국은 민주공화국이다. 대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다.")
 text
+```
 
+Sentence-based tokenization
 
+```{r}
 text %>% # 문장 기준 토큰화
   unnest_tokens(input = value, # 토큰화할 텍스트
                 output = word, # 토큰을 담을 변수명
                 token = 'sentences') # 문장 기준
+```
+
+Words-based Tokenization (Tokenization by spacing)
+
+```{r}
 
 text %>% # 띄어쓰기 기준 토큰화
   unnest_tokens(input = value,
                 output = word,
                 token = 'words')
 
+
+```
+
+
+Character-Based Tokenization
+
+```{r}
 text %>% # 문자 기준 토큰화
   unnest_tokens(input = value,
                 output = word,
                 token = 'characters')
 
+
+```
+
+
+Tokenizing speeches (Words-based)
+```{r}
 # 연설문 토큰화하기 
 word_space <- moon %>% 
   unnest_tokens(input = value,
@@ -130,35 +149,59 @@ word_space <- moon %>%
 word_space
 ```
 
-#### Word frequency visualization
 
+## Word frequency visualization
+
+
+Find word frequency - `count()`
 ```{r}
 # 단어 빈도 구하기 - count()
 temp_word_space <- word_space %>% 
   count(word, sort = T)
 temp_word_space
+```
 
+Remove single-letter words - `filter(str_count())`
+`str_count()` = Count the number of characters in a string
+
+```{r}
 # 한 글자로 된 단어 제거하기 - filter(str_count())
 # str_count = 문자열의 글자 수 구하기
 str_count('배')
 str_count('사과')
+```
 
+leave no more than two characters
+```{r}
 # 두 글자 이상만 남기기
 temp_word_space <- temp_word_space %>% 
   filter(str_count(word) > 1)
 temp_word_space
+```
 
+
+
+Let's work at once
+```{r}
 # 한 번에 작업하기
 word_space <- word_space %>% 
   count(word, sort = T) %>% 
   filter(str_count(word) > 1)
 word_space
+```
 
+
+Extract frequently used words (Top 20)
+```{r}
 # 자주 사용된 단어 추출하기
 top20 <- word_space %>% 
   head(20)
 top20
 ```
+
+
+
+Create a bar graph - `geom_col()`
 
 ```{r}
 # 막대 그래프 만들기 - geom_col()
@@ -169,8 +212,9 @@ ggplot2::ggplot(top20, aes(x = reorder(word, n), y = n)) + # 단어 빈도순 �
   coord_flip() # 회전
 ```
 
+
+Graph Refinement
 ```{r}
-# 그래프 다듬기
 ggplot(top20, aes(x = reorder(word, n), y = n)) +
   geom_col() + 
   coord_flip() +
@@ -179,6 +223,10 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
        x = NULL, y = NULL) +
   theme(title = element_text(size = 12))
 
+```
+
+Creating a word cloud - `geom_text_wordcloud()`
+```{r}
 # 워드 클라우드 만들기 - geom_text_wordcloud() 
 # install.packages('ggwordcloud')
 library(ggwordcloud)
@@ -187,8 +235,10 @@ ggplot(word_space, aes(label = word, size = n)) +
   geom_text_wordcloud(seed = 1234) +
   scale_radius(limits = c(3, NA), # 최소, 최대 단어 빈도
                range = c(3, 30)) # 최소, 최대 글자 크기
+```
 
-# 그래프 다듬기
+Graph Refinement
+```{r}
 ggplot(word_space, 
        aes(label = word, 
            size = n,
@@ -199,11 +249,13 @@ ggplot(word_space,
   scale_color_gradient(low = '#66aaf2', # 최소 빈도 색깔
                        high = '#004EA1') + # 최대 빈도 색깔
   theme_minimal() # 배경 없는 테마 적용
+
 ```
 
-### Morphological analysis
+## Morphological analysis (형태소 단위 분석)
 
-형태소 단위 분석
+Change the graph font
+1. Loading Google Fonts - `font_add_google()`
 
 ```{r, warning=F}
 
@@ -217,6 +269,24 @@ library(showtext)
 
 font_add_google(name = 'Nanum Gothic', family = 'nanumgothic')
 showtext_auto()
+```
+
+2. Assign fonts to graphs
+
+> To prevent errors (or warnings), extrafont is installed and fonts in the operating system are imported into R with font_import. -> Takes some time..
+
+(시간이 매우 오래 걸리니 수업 후에 실행해줍니다, 한 시간 정도 걸림)
+
+```{r}
+# install.packages("extrafont")
+library(extrafont)
+# font_import(paths=NULL, recursive = TRUE, prompt=TRUE, pattern=NULL)
+```
+
+
+
+```{r}
+#| warning: false
 
 # 2. 그래프에 폰트 지정하기
 ggplot(word_space,
@@ -230,6 +300,13 @@ ggplot(word_space,
   scale_color_gradient(low = '#66aaf2',
                        high = '#004EA1') +
   theme_minimal()
+```
+
+Font change (Black Gothick)
+
+```{r}
+#| warning: false
+
 
 # '검은고딕' 폰트 적용
 font_add_google(name = 'Black Han Sans', family = 'blackhansans')
@@ -247,6 +324,14 @@ ggplot(word_space,
                        high = '#004EA1') +
   theme_minimal()
 
+
+```
+
+
+
+Font change (gamjaflower family)
+
+```{r}
 # 3. ggplot2 패키지로 만든 그래프의 폰트 바꾸기
 font_add_google(name = 'Gamja Flower', family = 'gamjaflower')
 showtext_auto()
@@ -259,36 +344,41 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
        x = NULL, y = NULL) +
   theme(title = element_text(size = 12), text = element_text(family = 'gamjaflower')) # 폰트 적용
 
+
+```
+
+
+Optional: If you don't' want to specify the font using theme() every time, set the default theme font of the `ggplot2` package like below. 
+
+```{r}
 # ggplot2 기본 테마 폰트 변경하기 --------------------------------------------------------
 # 매번 theme()를 이용해 폰트를 지정하는게 번거롭다면 ggplot2 패키지 기본 테마 폰트 설정
 theme_set(theme_gray(base_family = 'nanumgothic'))
-
 ```
 
-KoNLP 한글 형태소 분석 패키지 설치하기
+`[KoNLP](https://github.com/youngwoos/Doit_R/blob/master/FAQ/install_KoNLP.md)` Installing the Korean Morphological Analysis Package. The order of installation is important, so be sure to do it in that order.
 
-<https://github.com/youngwoos/Doit_R/blob/master/FAQ/install_KoNLP.md>
+
+1. Install Java and rJava packages
 
 ```{r}
-# 1. 자바와 rJava 패키지 설치하기
 # install.packages('multilinguer')
 library(multilinguer)
- 
 ```
 
-반드시 Amazon Corretto 설치 후, RStudio 종료 + 재시작하기
+2. After installing Amazon Corretto, close RStudio + restart
 
 ```{r}
 # install_jdk()
 ```
 
-KoNLP 의존성 패키지 설치하기
+3. Installing KoNLP dependencies
 
 ```{r}
 # install.packages(c('stringr', 'hash', 'tau', 'Sejong', 'RSQLite', 'devtools'), type = 'binary')
 ```
 
-KoNLP 패키지 설치하기
+4. Installing KoNLP dependencies
 
 ```{r}
 # install.packages('remotes')
@@ -305,25 +395,36 @@ KoNLP 패키지 설치하기
 
 ```{r, warning=FALSE}
 library(KoNLP) # Fail to locate 
-# Checking user defined dictionary! <- 해당 문구는 에러가 아니고 아래 useNIADic() 실행하여 사전을 설정
+# Checking user defined dictionary! <- This is not an error
 
 # useNIADic() 
 # 다운로드 항목 출력 시, 'All' 선택하여 다운로드
+# When printing download items, select 'All' to download
 ```
 
 <br>
 
-형태소 분석기를 이용해 토큰화하기 - 명사 추출 샘플 텍스트로 작동 원리 알아보기
+Tokenize using a morpheme analyzer(형태소 분석기) - see how it works with noun extraction sample text
+
 
 ```{r, warning=FALSE}
 text <- tibble(
   value = c("대한민국은 민주공화국이다.",
             "대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다."))
 text
+```
 
+`extraNoun()`: Output nouns extracted from sentences in a list structure
+
+```{r}
 # extraNoun(): 문장에서 추출한 명사를 list 구조로 출력
 extractNoun(text$value)
 
+
+```
+Extracting nouns using `unnest_tokens()`, outputting nouns in a tractable tibble structure
+
+```{r}
 # unnest_tokens()를 이용해 명사 추출하기, 다루기 쉬운 tibble 구조로 명사 출력
 library(tidytext)
 
@@ -331,27 +432,26 @@ text %>%
   unnest_tokens(input = value, # 분석 대상
                 output = word, # 출력 변수명
                 token = extractNoun) # 토큰화 함수
+```
 
-# 띄어쓰기 기준 추출
+Let's compare with spacing-based extraction
+```{r}
+# 띄어쓰기 기준 추출과 비교해보자
 text %>% 
   unnest_tokens(input = value,
                 output = word,
                 token = 'words')
+```
 
-# 명사 추출
-text %>% 
-  unnest_tokens(input = value,
-                output = word,
-                token = extractNoun)
 
+Extracting **Nouns** from Speeches
+```{r}
 # 연설문에서 명사 추출하기
 # 문재인 대통령 연설문 불러오기
 
 raw_moon <- readLines('data/speech_moon.txt', encoding = 'UTF-8')
 
-# 기본적인 전처리
 library(stringr)
-# install.packages('textclean')
 library(textclean)
 
 moon <- raw_moon %>% 
@@ -368,21 +468,31 @@ word_noun <- moon %>%
 word_noun
 ```
 
+
+
+Find word frequency
 ```{r, warning=FALSE}
 # 단어 빈도 구하기
 word_noun <- word_noun %>% 
   count(word, sort = T) %>% # 단어 빈도 구해 내림차순 정렬
   filter(str_count(word) > 1) # 두 글자 이상만 남기기
 word_noun
+```
 
-# 띄어쓰기 기준 추출
+
+Comparison with the previous spacing-based extraction
+```{r}
+# 띄어쓰기 기준 추출과 비교
 moon %>% 
   unnest_tokens(input = value,
                 output = word,
                 token = 'words') %>% 
   count(word, sort = T) %>% 
   filter(str_count(word) > 1)
+```
 
+Do at once (Noun extraction from the speech)
+```{r}
 # 명사 추출
 moon %>% 
   unnest_tokens(input = value,
@@ -390,7 +500,11 @@ moon %>%
                 token = extractNoun) %>% 
   count(word, sort = T) %>% 
   filter(str_count(word) > 1)
+```
 
+
+Extract Top 20 Nouns and create a bar graph
+```{r}
 # 상위 20개 단어 추출
 top20 <- word_noun %>% 
   head(20)
@@ -407,9 +521,14 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
   geom_text(aes(label = n), hjust = -0.3) +
   labs(x = NULL) +
   theme(text = element_text(family = 'nanumgothic'))
+```
+
+Word Cloud of Nouns extracted from the speec
+
+```{r}
+#| warning: false
 
 # 워드 클라우드 만들기
-# 폰트 설정
 font_add_google(name = 'Black Han Sans', family = 'blackhansans')
 showtext_auto()
 
@@ -422,6 +541,10 @@ ggplot(word_noun, aes(label = word, size = n, col = n)) +
   theme_minimal()
 ```
 
+## Extract sentences with specific words
+
+
+1. Tokenize by sentence
 ```{r}
 # 문장 기준으로 토큰화하기
 sentences_moon <- raw_moon %>% 
@@ -431,17 +554,29 @@ sentences_moon <- raw_moon %>%
                 output = sentence,
                 token = 'sentences')
 sentences_moon
+```
 
+Extract sentences with specific words - `str_detect()`
+```{r}
 # 특정 단어가 사용된 문장 추출하기 - str_detect()
 # 예시
 str_detect('치킨은 맛있다', '치킨')
 str_detect('치킨은 맛있다', '피자')
+```
 
+Example (1): Extract sentences with "국민"
+
+```{r}
 # 특정 단어가 사용된 문장 추출하기, '국민'
 sentences_moon %>% 
   filter(str_detect(sentence, '국민'))
+```
 
+Example (2): Extract sentences with "일자리"
+```{r}
 # 특정 단어가 사용된 문장 추출하기, '일자리'
 sentences_moon %>% 
   filter(str_detect(sentence, '일자리'))
 ```
+
+
