@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -211,6 +274,2080 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
+<p>caret package 를 이용한 데이터 학습 간편화 - 기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을 사용할 것이든 공통으로 필요한 과정은 학습 - 학습의 대상은 전통적으로 훈련데이터(Training dataset)이고, 훈련데이터를 학습시키는 아주 다양한 방법들이 존재 - 방법별로 원리와 특징 및 색깔이 다르며, 다양한 방법들이 존재. 모든 알고리즘을 아는것이 한계가 존재. - 무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들 수 있을지 현실적인 문제에 부딪힘 - caret 패키지는 예측모델을 만들기 위한 데이터 학습 시 간편한 함수를 제공 - 300여개의 머신러닝 알고리즘을 표준화된 인터페이스를 통해 테스트 해 볼 수 있음 - 다양한 파라미터 시나리오를 구성해 손쉽게 튜닝, 변수의 중요도를 측정 - 편리한 훈련데이터의 학습을 통해 적절한 알고리즘 선택 의사결정에 도움을 받을 수 있음</p>
+<p>caret package: Classification And REgression Training 종속변수(예측변수)가 명목형 변수라면 “Classification”, 연속형 변수라면 “Regression” 으로 “Training”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># for tidy tools (pipe operation, tibble, etc..)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.1     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice
+
+Attaching package: 'caret'
+
+The following object is masked from 'package:purrr':
+
+    lift</code></pre>
+</div>
+</div>
+<p>Data: Sonar: Mines Vs. Rocks This is the data set used by Gorman and Sejnowski in their study of the classification of sonar signals using a neural network. The task is to train a network to discriminate between sonar signals bounced off a metal cylinder and those bounced off a roughly cylindrical rock. Each pattern is a set of 60 numbers in the range 0.0 to 1.0. Each number represents the energy within a particular frequency band, integrated over a certain period of time. The integration aperture for higher frequencies occur later in time, since these frequencies are transmitted later during the chirp. The label associated with each record contains the letter “R” if the object is a rock and “M” if it is a mine (metal cylinder). The numbers in the labels are in increasing order of aspect angle, but they do not encode the angle directly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("mlbench")</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Sonar, <span class="at">package =</span> <span class="st">"mlbench"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Sonar <span class="sc">%&gt;%</span> glimpse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 208
+Columns: 61
+$ V1    &lt;dbl&gt; 0.0200, 0.0453, 0.0262, 0.0100, 0.0762, 0.0286, 0.0317, 0.0519, …
+$ V2    &lt;dbl&gt; 0.0371, 0.0523, 0.0582, 0.0171, 0.0666, 0.0453, 0.0956, 0.0548, …
+$ V3    &lt;dbl&gt; 0.0428, 0.0843, 0.1099, 0.0623, 0.0481, 0.0277, 0.1321, 0.0842, …
+$ V4    &lt;dbl&gt; 0.0207, 0.0689, 0.1083, 0.0205, 0.0394, 0.0174, 0.1408, 0.0319, …
+$ V5    &lt;dbl&gt; 0.0954, 0.1183, 0.0974, 0.0205, 0.0590, 0.0384, 0.1674, 0.1158, …
+$ V6    &lt;dbl&gt; 0.0986, 0.2583, 0.2280, 0.0368, 0.0649, 0.0990, 0.1710, 0.0922, …
+$ V7    &lt;dbl&gt; 0.1539, 0.2156, 0.2431, 0.1098, 0.1209, 0.1201, 0.0731, 0.1027, …
+$ V8    &lt;dbl&gt; 0.1601, 0.3481, 0.3771, 0.1276, 0.2467, 0.1833, 0.1401, 0.0613, …
+$ V9    &lt;dbl&gt; 0.3109, 0.3337, 0.5598, 0.0598, 0.3564, 0.2105, 0.2083, 0.1465, …
+$ V10   &lt;dbl&gt; 0.2111, 0.2872, 0.6194, 0.1264, 0.4459, 0.3039, 0.3513, 0.2838, …
+$ V11   &lt;dbl&gt; 0.1609, 0.4918, 0.6333, 0.0881, 0.4152, 0.2988, 0.1786, 0.2802, …
+$ V12   &lt;dbl&gt; 0.1582, 0.6552, 0.7060, 0.1992, 0.3952, 0.4250, 0.0658, 0.3086, …
+$ V13   &lt;dbl&gt; 0.2238, 0.6919, 0.5544, 0.0184, 0.4256, 0.6343, 0.0513, 0.2657, …
+$ V14   &lt;dbl&gt; 0.0645, 0.7797, 0.5320, 0.2261, 0.4135, 0.8198, 0.3752, 0.3801, …
+$ V15   &lt;dbl&gt; 0.0660, 0.7464, 0.6479, 0.1729, 0.4528, 1.0000, 0.5419, 0.5626, …
+$ V16   &lt;dbl&gt; 0.2273, 0.9444, 0.6931, 0.2131, 0.5326, 0.9988, 0.5440, 0.4376, …
+$ V17   &lt;dbl&gt; 0.3100, 1.0000, 0.6759, 0.0693, 0.7306, 0.9508, 0.5150, 0.2617, …
+$ V18   &lt;dbl&gt; 0.2999, 0.8874, 0.7551, 0.2281, 0.6193, 0.9025, 0.4262, 0.1199, …
+$ V19   &lt;dbl&gt; 0.5078, 0.8024, 0.8929, 0.4060, 0.2032, 0.7234, 0.2024, 0.6676, …
+$ V20   &lt;dbl&gt; 0.4797, 0.7818, 0.8619, 0.3973, 0.4636, 0.5122, 0.4233, 0.9402, …
+$ V21   &lt;dbl&gt; 0.5783, 0.5212, 0.7974, 0.2741, 0.4148, 0.2074, 0.7723, 0.7832, …
+$ V22   &lt;dbl&gt; 0.5071, 0.4052, 0.6737, 0.3690, 0.4292, 0.3985, 0.9735, 0.5352, …
+$ V23   &lt;dbl&gt; 0.4328, 0.3957, 0.4293, 0.5556, 0.5730, 0.5890, 0.9390, 0.6809, …
+$ V24   &lt;dbl&gt; 0.5550, 0.3914, 0.3648, 0.4846, 0.5399, 0.2872, 0.5559, 0.9174, …
+$ V25   &lt;dbl&gt; 0.6711, 0.3250, 0.5331, 0.3140, 0.3161, 0.2043, 0.5268, 0.7613, …
+$ V26   &lt;dbl&gt; 0.6415, 0.3200, 0.2413, 0.5334, 0.2285, 0.5782, 0.6826, 0.8220, …
+$ V27   &lt;dbl&gt; 0.7104, 0.3271, 0.5070, 0.5256, 0.6995, 0.5389, 0.5713, 0.8872, …
+$ V28   &lt;dbl&gt; 0.8080, 0.2767, 0.8533, 0.2520, 1.0000, 0.3750, 0.5429, 0.6091, …
+$ V29   &lt;dbl&gt; 0.6791, 0.4423, 0.6036, 0.2090, 0.7262, 0.3411, 0.2177, 0.2967, …
+$ V30   &lt;dbl&gt; 0.3857, 0.2028, 0.8514, 0.3559, 0.4724, 0.5067, 0.2149, 0.1103, …
+$ V31   &lt;dbl&gt; 0.1307, 0.3788, 0.8512, 0.6260, 0.5103, 0.5580, 0.5811, 0.1318, …
+$ V32   &lt;dbl&gt; 0.2604, 0.2947, 0.5045, 0.7340, 0.5459, 0.4778, 0.6323, 0.0624, …
+$ V33   &lt;dbl&gt; 0.5121, 0.1984, 0.1862, 0.6120, 0.2881, 0.3299, 0.2965, 0.0990, …
+$ V34   &lt;dbl&gt; 0.7547, 0.2341, 0.2709, 0.3497, 0.0981, 0.2198, 0.1873, 0.4006, …
+$ V35   &lt;dbl&gt; 0.8537, 0.1306, 0.4232, 0.3953, 0.1951, 0.1407, 0.2969, 0.3666, …
+$ V36   &lt;dbl&gt; 0.8507, 0.4182, 0.3043, 0.3012, 0.4181, 0.2856, 0.5163, 0.1050, …
+$ V37   &lt;dbl&gt; 0.6692, 0.3835, 0.6116, 0.5408, 0.4604, 0.3807, 0.6153, 0.1915, …
+$ V38   &lt;dbl&gt; 0.6097, 0.1057, 0.6756, 0.8814, 0.3217, 0.4158, 0.4283, 0.3930, …
+$ V39   &lt;dbl&gt; 0.4943, 0.1840, 0.5375, 0.9857, 0.2828, 0.4054, 0.5479, 0.4288, …
+$ V40   &lt;dbl&gt; 0.2744, 0.1970, 0.4719, 0.9167, 0.2430, 0.3296, 0.6133, 0.2546, …
+$ V41   &lt;dbl&gt; 0.0510, 0.1674, 0.4647, 0.6121, 0.1979, 0.2707, 0.5017, 0.1151, …
+$ V42   &lt;dbl&gt; 0.2834, 0.0583, 0.2587, 0.5006, 0.2444, 0.2650, 0.2377, 0.2196, …
+$ V43   &lt;dbl&gt; 0.2825, 0.1401, 0.2129, 0.3210, 0.1847, 0.0723, 0.1957, 0.1879, …
+$ V44   &lt;dbl&gt; 0.4256, 0.1628, 0.2222, 0.3202, 0.0841, 0.1238, 0.1749, 0.1437, …
+$ V45   &lt;dbl&gt; 0.2641, 0.0621, 0.2111, 0.4295, 0.0692, 0.1192, 0.1304, 0.2146, …
+$ V46   &lt;dbl&gt; 0.1386, 0.0203, 0.0176, 0.3654, 0.0528, 0.1089, 0.0597, 0.2360, …
+$ V47   &lt;dbl&gt; 0.1051, 0.0530, 0.1348, 0.2655, 0.0357, 0.0623, 0.1124, 0.1125, …
+$ V48   &lt;dbl&gt; 0.1343, 0.0742, 0.0744, 0.1576, 0.0085, 0.0494, 0.1047, 0.0254, …
+$ V49   &lt;dbl&gt; 0.0383, 0.0409, 0.0130, 0.0681, 0.0230, 0.0264, 0.0507, 0.0285, …
+$ V50   &lt;dbl&gt; 0.0324, 0.0061, 0.0106, 0.0294, 0.0046, 0.0081, 0.0159, 0.0178, …
+$ V51   &lt;dbl&gt; 0.0232, 0.0125, 0.0033, 0.0241, 0.0156, 0.0104, 0.0195, 0.0052, …
+$ V52   &lt;dbl&gt; 0.0027, 0.0084, 0.0232, 0.0121, 0.0031, 0.0045, 0.0201, 0.0081, …
+$ V53   &lt;dbl&gt; 0.0065, 0.0089, 0.0166, 0.0036, 0.0054, 0.0014, 0.0248, 0.0120, …
+$ V54   &lt;dbl&gt; 0.0159, 0.0048, 0.0095, 0.0150, 0.0105, 0.0038, 0.0131, 0.0045, …
+$ V55   &lt;dbl&gt; 0.0072, 0.0094, 0.0180, 0.0085, 0.0110, 0.0013, 0.0070, 0.0121, …
+$ V56   &lt;dbl&gt; 0.0167, 0.0191, 0.0244, 0.0073, 0.0015, 0.0089, 0.0138, 0.0097, …
+$ V57   &lt;dbl&gt; 0.0180, 0.0140, 0.0316, 0.0050, 0.0072, 0.0057, 0.0092, 0.0085, …
+$ V58   &lt;dbl&gt; 0.0084, 0.0049, 0.0164, 0.0044, 0.0048, 0.0027, 0.0143, 0.0047, …
+$ V59   &lt;dbl&gt; 0.0090, 0.0052, 0.0095, 0.0040, 0.0107, 0.0051, 0.0036, 0.0048, …
+$ V60   &lt;dbl&gt; 0.0032, 0.0044, 0.0078, 0.0117, 0.0094, 0.0062, 0.0103, 0.0053, …
+$ Class &lt;fct&gt; R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Sonar<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  M   R 
+111  97 </code></pre>
+</div>
+</div>
+<p>Scatterplot Matrix A scatterplot matrix shows a grid of scatterplots where each attribute is plotted against all other attributes. It can be read by column or row, and each plot appears twice, allowing you to consider the spatial relationships from two perspectives. An improvement of just plotting the scatterplots, is to further include class information. This is commonly done by coloring dots in each scatterplot by their class value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig <span class="ot">&lt;-</span> <span class="cf">function</span>(width, heigth){</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">options</span>(<span class="at">repr.plot.width =</span> width, <span class="at">repr.plot.height =</span> heigth)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fig</span>(<span class="dv">10</span>,<span class="dv">10</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x=</span>Sonar[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">y=</span>Sonar[,<span class="dv">61</span>], </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot=</span><span class="st">"pairs"</span>, <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">columns=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fig</span>(<span class="dv">10</span>,<span class="dv">10</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x=</span>iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">y=</span>iris[,<span class="dv">5</span>], <span class="at">plot=</span><span class="st">"pairs"</span>, <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">columns=</span><span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Density Plots Density estimation plots (density plots for short) summarize the distribution of the data. Like a histogram, the relationship between the attribute values and number of observations is summarized, but rather than a frequency, the relationship is summarized as a continuous probability density function (PDF). This is the probability that a given observation has a given value. The density plots can further be improved by separating each attribute by their class value for the observation. This can be useful to understand the single-attribute relationship with the class values and highlight useful structures like linear separability of attribute values into classes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fig</span>(<span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x=</span>Sonar[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">y=</span>Sonar[,<span class="dv">61</span>], </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot=</span><span class="st">"density"</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">scales=</span><span class="fu">list</span>(<span class="at">x=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>), <span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)), <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">columns=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fig</span>(<span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x=</span>iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">y=</span>iris[,<span class="dv">5</span>], <span class="at">plot=</span><span class="st">"density"</span>, <span class="at">scales=</span><span class="fu">list</span>(<span class="at">x=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>), <span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)), <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">columns=</span><span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Hold out method: 7:3</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Without package</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>indexTrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(Sonar), <span class="fu">round</span>(<span class="fu">nrow</span>(Sonar) <span class="sc">*</span> .<span class="dv">7</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>training <span class="ot">&lt;-</span> Sonar[ indexTrain, ]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>testing  <span class="ot">&lt;-</span> Sonar[<span class="sc">-</span>indexTrain, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(training<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ M  R 
+75 71 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(testing<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ M  R 
+36 26 </code></pre>
+</div>
+</div>
+<p>createDataPartition() - 인자가 있어 특정비율로 파티셔닝할 때 편함 - sample() 함수를 이용할 때는 완전무작위추출이 되기 때문에 종속변수의 요인별 비율을 고려하지 않지만 createDataPartition() 함수를 이용할 경우 종속변수의 요인별 비율만큼 층화랜덤추출을 지원, 더욱 효과적임 - 반환되는 타입이 기본적으로 list: list 인자값을 FALSE로 하면 vector로 출력</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>indexTrain <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(Sonar<span class="sc">$</span>Class, <span class="at">p =</span> .<span class="dv">7</span>, <span class="at">list =</span> F)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>training <span class="ot">&lt;-</span> Sonar[ indexTrain, ]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>testing  <span class="ot">&lt;-</span> Sonar[<span class="sc">-</span>indexTrain, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(training<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ M  R 
+78 68 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(testing<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ M  R 
+33 29 </code></pre>
+</div>
+</div>
+<p>For the best parameter tuning - KNN(K-Neareast Neighbors): k / 랜덤포레스트(RandomForest): mtry, ntre 와 같이 각각의 ML 모델은 각각의 parameter 를 셋팅해 주어야 함 - With caret, “Tuning parameters”: LOOCV, K-fold cross validation 등과 같은 방법을 통해서 데이터에 근거한 최적의 parameter 를 찾을 수 있도록 도와줌 - 알고리즘별로 튜닝 파라미터 개수는 달라지는데 p개의 파라미터일 경우 3P 의 그리드를 탐색하여 후보모델들을 테스트 - 예를 들면 KNN은 모수가 K 하나이므로 3^1=3 인 3가지 K 값들을 후보로 두고 모델을 비교 - 모수가 두 개인 모델은 3^2 = 9 가지 파라미터의 조합들을 후보로 두고 모델을 비교 - 만약에 비교하는 방식이 K-fold cross validation 이라면 몇 번을 접어 cross validation 을 할지에 대한 부분도 정해 것이냐 란 질문의 K 를 정해야 함 - trainControl() 함수: 일관된 비교방법을 각 후보에게 통일되게 적용하여 평가할 수 있게 도와줌</p>
+<p>아래 코드는 10-fold cross validation 을 5번 반복하여 가장 좋은 후보의 파라미터 그리드를 찾게 해주는 일종의 장치를 만드는 코드 비교방법에 대한 정보가 담겨있는 fitControl 객체는 추후에 학습 과정에서 사용하게 됨</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fitControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"repeatedcv"</span>, <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>이제 훈련 데이터 셋으로 학습을 시켜보자! 학습을 위한 표준화된 인터페이스는 바로 train() 함수: 함수 안에서 method 인자만 바꿔주면 원하는 학습모델 알고리즘을 구현할 수 있음 e.g.) model=‘rf’ / model=‘dt’ 등등 여러가지 성능 평가 지표에 대해 정리해보자</p>
+<p><img src="https://miro.medium.com/max/1750/1*2TrcVyRb0ZKwyiojOt5jCA.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"rf"</span>, <span class="at">trControl =</span> fitControl, <span class="at">verbose =</span> F)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>rf_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Random Forest 
+
+146 samples
+ 60 predictor
+  2 classes: 'M', 'R' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold, repeated 5 times) 
+Summary of sample sizes: 131, 131, 132, 131, 132, 131, ... 
+Resampling results across tuning parameters:
+
+  mtry  Accuracy   Kappa    
+   2    0.8025714  0.5995588
+  31    0.7763810  0.5476392
+  60    0.7608571  0.5146801
+
+Accuracy was used to select the optimal model using the largest value.
+The final value used for the model was mtry = 2.</code></pre>
+</div>
+</div>
+<ul>
+<li>mtry 후보는 2, 31, 60 개로 자동설정</li>
+<li>이 중 Kappa 통계량과 정확도에 의해서 mtry = 2 가 최종적으로 선정</li>
+<li>선정과정을 자세하게 보고 싶을 경우엔 verbose = F 로 놓고 실행</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>여러 가지 지표들을 활용하여 공평하게 모델들을 경쟁시켜보자 (Model validation)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  model           parameter
+1                   ada                iter
+2                   ada            maxdepth
+3                   ada                  nu
+4                AdaBag              mfinal
+5                AdaBag            maxdepth
+9              adaboost               nIter
+10             adaboost              method
+6           AdaBoost.M1              mfinal
+7           AdaBoost.M1            maxdepth
+8           AdaBoost.M1           coeflearn
+11                amdai               model
+12                ANFIS          num.labels
+13                ANFIS            max.iter
+14               avNNet                size
+15               avNNet               decay
+16               avNNet                 bag
+17                 awnb              smooth
+18                awtan               score
+19                awtan              smooth
+20                  bag                vars
+21             bagEarth              nprune
+22             bagEarth              degree
+23          bagEarthGCV              degree
+24               bagFDA              degree
+25               bagFDA              nprune
+26            bagFDAGCV              degree
+27                  bam              select
+28                  bam              method
+29          bartMachine           num_trees
+30          bartMachine                   k
+31          bartMachine               alpha
+32          bartMachine                beta
+33          bartMachine                  nu
+34             bayesglm           parameter
+35                binda        lambda.freqs
+36           blackboost               mstop
+37           blackboost            maxdepth
+38               blasso            sparsity
+39       blassoAveraged           parameter
+40               bridge           parameter
+41                 brnn             neurons
+42                BstLm               mstop
+43                BstLm                  nu
+44                bstSm               mstop
+45                bstSm                  nu
+46              bstTree               mstop
+47              bstTree            maxdepth
+48              bstTree                  nu
+49                 C5.0              trials
+50                 C5.0               model
+51                 C5.0              winnow
+52             C5.0Cost              trials
+53             C5.0Cost               model
+54             C5.0Cost              winnow
+55             C5.0Cost                cost
+56            C5.0Rules           parameter
+57             C5.0Tree           parameter
+58              cforest                mtry
+59                chaid              alpha2
+60                chaid              alpha3
+61                chaid              alpha4
+62               CSimca           parameter
+63                ctree        mincriterion
+64               ctree2            maxdepth
+65               ctree2        mincriterion
+66               cubist          committees
+67               cubist           neighbors
+68                  dda               model
+69                  dda           shrinkage
+70            deepboost            num_iter
+71            deepboost          tree_depth
+72            deepboost                beta
+73            deepboost              lambda
+74            deepboost           loss_type
+75               DENFIS                Dthr
+76               DENFIS            max.iter
+77                  dnn              layer1
+78                  dnn              layer2
+79                  dnn              layer3
+80                  dnn      hidden_dropout
+81                  dnn     visible_dropout
+82            dwdLinear              lambda
+83            dwdLinear                qval
+84              dwdPoly              lambda
+85              dwdPoly                qval
+86              dwdPoly              degree
+87              dwdPoly               scale
+88            dwdRadial              lambda
+89            dwdRadial                qval
+90            dwdRadial               sigma
+91                earth              nprune
+92                earth              degree
+93                  elm                nhid
+94                  elm              actfun
+95                 enet            fraction
+96                 enet              lambda
+97               evtree               alpha
+98           extraTrees                mtry
+99           extraTrees       numRandomCuts
+100                 fda              degree
+101                 fda              nprune
+102             FH.GBML        max.num.rule
+103             FH.GBML           popu.size
+104             FH.GBML             max.gen
+105              FIR.DM          num.labels
+106              FIR.DM            max.iter
+107                foba                   k
+108                foba              lambda
+109           FRBCS.CHI          num.labels
+110           FRBCS.CHI             type.mf
+111             FRBCS.W          num.labels
+112             FRBCS.W             type.mf
+113              FS.HGD          num.labels
+114              FS.HGD            max.iter
+115                 gam              select
+116                 gam              method
+117            gamboost               mstop
+118            gamboost               prune
+119            gamLoess                span
+120            gamLoess              degree
+121           gamSpline                  df
+122       gaussprLinear           parameter
+123         gaussprPoly              degree
+124         gaussprPoly               scale
+125       gaussprRadial               sigma
+131                 gbm             n.trees
+132                 gbm   interaction.depth
+133                 gbm           shrinkage
+134                 gbm      n.minobsinnode
+126             gbm_h2o              ntrees
+127             gbm_h2o           max_depth
+128             gbm_h2o            min_rows
+129             gbm_h2o          learn_rate
+130             gbm_h2o     col_sample_rate
+135            gcvEarth              degree
+136        GFS.FR.MOGUL             max.gen
+137        GFS.FR.MOGUL            max.iter
+138        GFS.FR.MOGUL            max.tune
+139           GFS.LT.RS           popu.size
+140           GFS.LT.RS          num.labels
+141           GFS.LT.RS             max.gen
+142          GFS.THRIFT           popu.size
+143          GFS.THRIFT          num.labels
+144          GFS.THRIFT             max.gen
+146                 glm           parameter
+145              glm.nb                link
+147            glmboost               mstop
+148            glmboost               prune
+151              glmnet               alpha
+152              glmnet              lambda
+149          glmnet_h2o               alpha
+150          glmnet_h2o              lambda
+153          glmStepAIC           parameter
+154                gpls              K.prov
+155                 hda               gamma
+156                 hda              lambda
+157                 hda              newdim
+158                hdda           threshold
+159                hdda               model
+160               hdrda               gamma
+161               hdrda              lambda
+162               hdrda      shrinkage_type
+163               HYFIS          num.labels
+164               HYFIS            max.iter
+165                 icr              n.comp
+166                 J48                   C
+167                 J48                   M
+168                JRip              NumOpt
+169                JRip            NumFolds
+170                JRip          MinWeights
+171           kernelpls               ncomp
+172                kknn                kmax
+173                kknn            distance
+174                kknn              kernel
+175                 knn                   k
+176            krlsPoly              lambda
+177            krlsPoly              degree
+178          krlsRadial              lambda
+179          krlsRadial               sigma
+180                lars            fraction
+181               lars2                step
+182               lasso            fraction
+183                 lda           parameter
+184                lda2               dimen
+185        leapBackward               nvmax
+186         leapForward               nvmax
+187             leapSeq               nvmax
+188               Linda           parameter
+189                  lm           intercept
+190           lmStepAIC           parameter
+191                 LMT                iter
+192              loclda                   k
+193            logicBag             nleaves
+194            logicBag              ntrees
+195          LogitBoost               nIter
+196              logreg            treesize
+197              logreg              ntrees
+198         lssvmLinear                 tau
+199           lssvmPoly              degree
+200           lssvmPoly               scale
+201           lssvmPoly                 tau
+202         lssvmRadial               sigma
+203         lssvmRadial                 tau
+204                 lvq                size
+205                 lvq                   k
+206                  M5              pruned
+207                  M5            smoothed
+208                  M5               rules
+209             M5Rules              pruned
+210             M5Rules            smoothed
+211                manb              smooth
+212                manb               prior
+213                 mda          subclasses
+214                Mlda           parameter
+215                 mlp                size
+216       mlpKerasDecay                size
+217       mlpKerasDecay              lambda
+218       mlpKerasDecay          batch_size
+219       mlpKerasDecay                  lr
+220       mlpKerasDecay                 rho
+221       mlpKerasDecay               decay
+222       mlpKerasDecay          activation
+223   mlpKerasDecayCost                size
+224   mlpKerasDecayCost              lambda
+225   mlpKerasDecayCost          batch_size
+226   mlpKerasDecayCost                  lr
+227   mlpKerasDecayCost                 rho
+228   mlpKerasDecayCost               decay
+229   mlpKerasDecayCost                cost
+230   mlpKerasDecayCost          activation
+231     mlpKerasDropout                size
+232     mlpKerasDropout             dropout
+233     mlpKerasDropout          batch_size
+234     mlpKerasDropout                  lr
+235     mlpKerasDropout                 rho
+236     mlpKerasDropout               decay
+237     mlpKerasDropout          activation
+238 mlpKerasDropoutCost                size
+239 mlpKerasDropoutCost             dropout
+240 mlpKerasDropoutCost          batch_size
+241 mlpKerasDropoutCost                  lr
+242 mlpKerasDropoutCost                 rho
+243 mlpKerasDropoutCost               decay
+244 mlpKerasDropoutCost                cost
+245 mlpKerasDropoutCost          activation
+246               mlpML              layer1
+247               mlpML              layer2
+248               mlpML              layer3
+249              mlpSGD                size
+250              mlpSGD               l2reg
+251              mlpSGD              lambda
+252              mlpSGD          learn_rate
+253              mlpSGD            momentum
+254              mlpSGD               gamma
+255              mlpSGD         minibatchsz
+256              mlpSGD             repeats
+257      mlpWeightDecay                size
+258      mlpWeightDecay               decay
+259    mlpWeightDecayML              layer1
+260    mlpWeightDecayML              layer2
+261    mlpWeightDecayML              layer3
+262    mlpWeightDecayML               decay
+263              monmlp             hidden1
+264              monmlp          n.ensemble
+265             msaenet              alphas
+266             msaenet              nsteps
+267             msaenet               scale
+268            multinom               decay
+269               mxnet              layer1
+270               mxnet              layer2
+271               mxnet              layer3
+272               mxnet       learning.rate
+273               mxnet            momentum
+274               mxnet             dropout
+275               mxnet          activation
+276           mxnetAdam              layer1
+277           mxnetAdam              layer2
+278           mxnetAdam              layer3
+279           mxnetAdam             dropout
+280           mxnetAdam               beta1
+281           mxnetAdam               beta2
+282           mxnetAdam        learningrate
+283           mxnetAdam          activation
+284         naive_bayes             laplace
+285         naive_bayes           usekernel
+286         naive_bayes              adjust
+287                  nb                  fL
+288                  nb           usekernel
+289                  nb              adjust
+290          nbDiscrete              smooth
+291            nbSearch                   k
+292            nbSearch             epsilon
+293            nbSearch              smooth
+294            nbSearch        final_smooth
+295            nbSearch           direction
+296           neuralnet              layer1
+297           neuralnet              layer2
+298           neuralnet              layer3
+299                nnet                size
+300                nnet               decay
+301                nnls           parameter
+302         nodeHarvest            maxinter
+303         nodeHarvest                mode
+304                null           parameter
+305                OneR           parameter
+306          ordinalNet               alpha
+307          ordinalNet            criteria
+308          ordinalNet                link
+309          ordinalNet              lambda
+310          ordinalNet           modeltype
+311          ordinalNet              family
+312           ordinalRF               nsets
+313           ordinalRF         ntreeperdiv
+314           ordinalRF          ntreefinal
+315              ORFlog                mtry
+316              ORFpls                mtry
+317            ORFridge                mtry
+318              ORFsvm                mtry
+319                ownn                   K
+320                 pam           threshold
+321               parRF                mtry
+322                PART           threshold
+323                PART              pruned
+324             partDSA      cut.off.growth
+325             partDSA                 MPD
+326             pcaNNet                size
+327             pcaNNet               decay
+328                 pcr               ncomp
+329                 pda              lambda
+330                pda2                  df
+331           penalized             lambda1
+332           penalized             lambda2
+333        PenalizedLDA              lambda
+334        PenalizedLDA                   K
+335                 plr              lambda
+336                 plr                  cp
+337                 pls               ncomp
+338             plsRglm                  nt
+339             plsRglm   alpha.pvals.expli
+340                polr              method
+341                 ppr              nterms
+342                 pre            sampfrac
+343                 pre            maxdepth
+344                 pre           learnrate
+345                 pre                mtry
+346                 pre            use.grad
+347                 pre     penalty.par.val
+348                PRIM          peel.alpha
+349                PRIM         paste.alpha
+350                PRIM            mass.min
+351          protoclass                 eps
+352          protoclass           Minkowski
+353                 qda           parameter
+354              QdaCov           parameter
+355                 qrf                mtry
+356                qrnn            n.hidden
+357                qrnn             penalty
+358                qrnn                 bag
+359           randomGLM maxInteractionOrder
+360              ranger                mtry
+361              ranger           splitrule
+362              ranger       min.node.size
+363                 rbf                size
+364              rbfDDA   negativeThreshold
+365             Rborist           predFixed
+366             Rborist             minNode
+367                 rda               gamma
+368                 rda              lambda
+369         regLogistic                cost
+370         regLogistic                loss
+371         regLogistic             epsilon
+372              relaxo              lambda
+373              relaxo                 phi
+374                  rf                mtry
+375              rFerns               depth
+376               RFlda                   q
+377             rfRules                mtry
+378             rfRules            maxdepth
+379               ridge              lambda
+380                rlda           estimator
+381                 rlm           intercept
+382                 rlm                 psi
+383                rmda                   K
+384                rmda               model
+385                rocc              xgenes
+386      rotationForest                   K
+387      rotationForest                   L
+388    rotationForestCp                   K
+389    rotationForestCp                   L
+390    rotationForestCp                  cp
+391               rpart                  cp
+392            rpart1SE           parameter
+393              rpart2            maxdepth
+394           rpartCost                  cp
+395           rpartCost                Cost
+396          rpartScore                  cp
+397          rpartScore               split
+398          rpartScore               prune
+399             rqlasso              lambda
+400                rqnc              lambda
+401                rqnc             penalty
+402                 RRF                mtry
+403                 RRF             coefReg
+404                 RRF             coefImp
+405           RRFglobal                mtry
+406           RRFglobal             coefReg
+407               rrlda              lambda
+408               rrlda                  hp
+409               rrlda             penalty
+410              RSimca           parameter
+411           rvmLinear           parameter
+412             rvmPoly               scale
+413             rvmPoly              degree
+414           rvmRadial               sigma
+415                 SBC                 r.a
+416                 SBC            eps.high
+417                 SBC             eps.low
+418                 sda            diagonal
+419                 sda              lambda
+420                sdwd              lambda
+421                sdwd             lambda2
+422              simpls               ncomp
+423               SLAVE          num.labels
+424               SLAVE            max.iter
+425               SLAVE             max.gen
+426                slda           parameter
+427                smda             NumVars
+428                smda              lambda
+429                smda                   R
+430                 snn              lambda
+431           sparseLDA             NumVars
+432           sparseLDA              lambda
+433           spikeslab                vars
+434                spls                   K
+435                spls                 eta
+436                spls               kappa
+437             stepLDA              maxvar
+438             stepLDA           direction
+439             stepQDA              maxvar
+440             stepQDA           direction
+441             superpc           threshold
+442             superpc        n.components
+443 svmBoundrangeString              length
+444 svmBoundrangeString                   C
+445       svmExpoString              lambda
+446       svmExpoString                   C
+447           svmLinear                   C
+448          svmLinear2                cost
+449          svmLinear3                cost
+450          svmLinear3                Loss
+451    svmLinearWeights                cost
+452    svmLinearWeights              weight
+453   svmLinearWeights2                cost
+454   svmLinearWeights2                Loss
+455   svmLinearWeights2              weight
+456             svmPoly              degree
+457             svmPoly               scale
+458             svmPoly                   C
+459           svmRadial               sigma
+460           svmRadial                   C
+461       svmRadialCost                   C
+462      svmRadialSigma               sigma
+463      svmRadialSigma                   C
+464    svmRadialWeights               sigma
+465    svmRadialWeights                   C
+466    svmRadialWeights              Weight
+467   svmSpectrumString              length
+468   svmSpectrumString                   C
+469                 tan               score
+470                 tan              smooth
+471           tanSearch                   k
+472           tanSearch             epsilon
+473           tanSearch              smooth
+474           tanSearch        final_smooth
+475           tanSearch                  sp
+476             treebag           parameter
+477          vbmpRadial       estimateTheta
+478          vglmAdjCat            parallel
+479          vglmAdjCat                link
+480       vglmContRatio            parallel
+481       vglmContRatio                link
+482      vglmCumulative            parallel
+483      vglmCumulative                link
+484       widekernelpls               ncomp
+485                  WM          num.labels
+486                  WM             type.mf
+487                wsrf                mtry
+488             xgbDART             nrounds
+489             xgbDART           max_depth
+490             xgbDART                 eta
+491             xgbDART               gamma
+492             xgbDART           subsample
+493             xgbDART    colsample_bytree
+494             xgbDART           rate_drop
+495             xgbDART           skip_drop
+496             xgbDART    min_child_weight
+497           xgbLinear             nrounds
+498           xgbLinear              lambda
+499           xgbLinear               alpha
+500           xgbLinear                 eta
+501             xgbTree             nrounds
+502             xgbTree           max_depth
+503             xgbTree                 eta
+504             xgbTree               gamma
+505             xgbTree    colsample_bytree
+506             xgbTree    min_child_weight
+507             xgbTree           subsample
+508                 xyf                xdim
+509                 xyf                ydim
+510                 xyf        user.weights
+511                 xyf                topo
+                                                                                      label
+1                                                                                    #Trees
+2                                                                            Max Tree Depth
+3                                                                             Learning Rate
+4                                                                                    #Trees
+5                                                                            Max Tree Depth
+9                                                                                    #Trees
+10                                                                                   Method
+6                                                                                    #Trees
+7                                                                            Max Tree Depth
+8                                                                          Coefficient Type
+11                                                                               Model Type
+12                                                                             #Fuzzy Terms
+13                                                                          Max. Iterations
+14                                                                            #Hidden Units
+15                                                                             Weight Decay
+16                                                                                  Bagging
+17                                                                      Smoothing Parameter
+18                                                                           Score Function
+19                                                                      Smoothing Parameter
+20                                                            #Randomly Selected Predictors
+21                                                                                   #Terms
+22                                                                           Product Degree
+23                                                                           Product Degree
+24                                                                           Product Degree
+25                                                                                   #Terms
+26                                                                           Product Degree
+27                                                                        Feature Selection
+28                                                                                   Method
+29                                                                                   #Trees
+30                                                                           Prior Boundary
+31                                                        Base Terminal Node Hyperparameter
+32                                                       Power Terminal Node Hyperparameter
+33                                                                       Degrees of Freedom
+34                                                                                parameter
+35                                                                      Shrinkage Intensity
+36                                                                                   #Trees
+37                                                                           Max Tree Depth
+38                                                                       Sparsity Threshold
+39                                                                                parameter
+40                                                                                parameter
+41                                                                                # Neurons
+42                                                                    # Boosting Iterations
+43                                                                                Shrinkage
+44                                                                    # Boosting Iterations
+45                                                                                Shrinkage
+46                                                                    # Boosting Iterations
+47                                                                           Max Tree Depth
+48                                                                                Shrinkage
+49                                                                    # Boosting Iterations
+50                                                                               Model Type
+51                                                                                   Winnow
+52                                                                    # Boosting Iterations
+53                                                                               Model Type
+54                                                                                   Winnow
+55                                                                                     Cost
+56                                                                                     none
+57                                                                                     none
+58                                                            #Randomly Selected Predictors
+59                                                                        Merging Threshold
+60                                                        Splitting former Merged Threshold
+61  \n                                                    Splitting former Merged Threshold
+62                                                                                parameter
+63                                                                    1 - P-Value Threshold
+64                                                                           Max Tree Depth
+65                                                                    1 - P-Value Threshold
+66                                                                              #Committees
+67                                                                               #Instances
+68                                                                                    Model
+69                                                                           Shrinkage Type
+70                                                                    # Boosting Iterations
+71                                                                               Tree Depth
+72                                                                        L1 Regularization
+73                                                                Tree Depth Regularization
+74                                                                                     Loss
+75                                                                                Threshold
+76                                                                          Max. Iterations
+77                                                                           Hidden Layer 1
+78                                                                           Hidden Layer 2
+79                                                                           Hidden Layer 3
+80                                                                          Hidden Dropouts
+81                                                                          Visible Dropout
+82                                                                 Regularization Parameter
+83                                                                                        q
+84                                                                 Regularization Parameter
+85                                                                                        q
+86                                                                        Polynomial Degree
+87                                                                                    Scale
+88                                                                 Regularization Parameter
+89                                                                                        q
+90                                                                                    Sigma
+91                                                                                   #Terms
+92                                                                           Product Degree
+93                                                                            #Hidden Units
+94                                                                      Activation Function
+95                                                                Fraction of Full Solution
+96                                                                             Weight Decay
+97                                                                     Complexity Parameter
+98                                                           # Randomly Selected Predictors
+99                                                                            # Random Cuts
+100                                                                          Product Degree
+101                                                                                  #Terms
+102                                                                             Max. #Rules
+103                                                                         Population Size
+104                                                                        Max. Generations
+105                                                                            #Fuzzy Terms
+106                                                                         Max. Iterations
+107                                                                     #Variables Retained
+108                                                                              L2 Penalty
+109                                                                            #Fuzzy Terms
+110                                                                     Membership Function
+111                                                                            #Fuzzy Terms
+112                                                                     Membership Function
+113                                                                            #Fuzzy Terms
+114                                                                         Max. Iterations
+115                                                                       Feature Selection
+116                                                                                  Method
+117                                                                   # Boosting Iterations
+118                                                                              AIC Prune?
+119                                                                                    Span
+120                                                                                  Degree
+121                                                                      Degrees of Freedom
+122                                                                               Parameter
+123                                                                       Polynomial Degree
+124                                                                                   Scale
+125                                                                                   Sigma
+131                                                                   # Boosting Iterations
+132                                                                          Max Tree Depth
+133                                                                               Shrinkage
+134                                                                 Min. Terminal Node Size
+126                                                                   # Boosting Iterations
+127                                                                          Max Tree Depth
+128                                                                 Min. Terminal Node Size
+129                                                                               Shrinkage
+130                                                           #Randomly Selected Predictors
+135                                                                          Product Degree
+136                                                                        Max. Generations
+137                                                                         Max. Iterations
+138                                                                  Max. Tuning Iterations
+139                                                                         Population Size
+140                                                                          # Fuzzy Labels
+141                                                                        Max. Generations
+142                                                                         Population Size
+143                                                                          # Fuzzy Labels
+144                                                                        Max. Generations
+146                                                                               parameter
+145                                                                           Link Function
+147                                                                   # Boosting Iterations
+148                                                                              AIC Prune?
+151                                                                       Mixing Percentage
+152                                                                Regularization Parameter
+149                                                                       Mixing Percentage
+150                                                                Regularization Parameter
+153                                                                               parameter
+154                                                                             #Components
+155                                                                                   Gamma
+156                                                                                  Lambda
+157                                                Dimension of the Discriminative Subspace
+158                                                                               Threshold
+159                                                                              Model Type
+160                                                                                   Gamma
+161                                                                                  Lambda
+162                                                                          Shrinkage Type
+163                                                                            #Fuzzy Terms
+164                                                                         Max. Iterations
+165                                                                             #Components
+166                                                                    Confidence Threshold
+167                                                              Minimum Instances Per Leaf
+168                                                                         # Optimizations
+169                                                                                 # Folds
+170                                                                             Min Weights
+171                                                                             #Components
+172                                                                         Max. #Neighbors
+173                                                                                Distance
+174                                                                                  Kernel
+175                                                                              #Neighbors
+176                                                                Regularization Parameter
+177                                                                       Polynomial Degree
+178                                                                Regularization Parameter
+179                                                                                   Sigma
+180                                                                                Fraction
+181                                                                                  #Steps
+182                                                               Fraction of Full Solution
+183                                                                               parameter
+184                                                                 #Discriminant Functions
+185                                                            Maximum Number of Predictors
+186                                                            Maximum Number of Predictors
+187                                                            Maximum Number of Predictors
+188                                                                                    none
+189                                                                               intercept
+190                                                                               parameter
+191                                                                             # Iteratons
+192                                                                      #Nearest Neighbors
+193                                                                Maximum Number of Leaves
+194                                                                         Number of Trees
+195                                                                   # Boosting Iterations
+196                                                                Maximum Number of Leaves
+197                                                                         Number of Trees
+198                                                                Regularization Parameter
+199                                                                       Polynomial Degree
+200                                                                                   Scale
+201                                                                Regularization Parameter
+202                                                                                   Sigma
+203                                                                Regularization Parameter
+204                                                                           Codebook Size
+205                                                                             #Prototypes
+206                                                                                  Pruned
+207                                                                                Smoothed
+208                                                                                   Rules
+209                                                                                  Pruned
+210                                                                                Smoothed
+211                                                                     Smoothing Parameter
+212                                                                       Prior Probability
+213                                                                   #Subclasses Per Class
+214                                                                               parameter
+215                                                                           #Hidden Units
+216                                                                           #Hidden Units
+217                                                                       L2 Regularization
+218                                                                              Batch Size
+219                                                                           Learning Rate
+220                                                                                     Rho
+221                                                                     Learning Rate Decay
+222                                                                     Activation Function
+223                                                                           #Hidden Units
+224                                                                       L2 Regularization
+225                                                                              Batch Size
+226                                                                           Learning Rate
+227                                                                                     Rho
+228                                                                     Learning Rate Decay
+229                                                                                    Cost
+230                                                                     Activation Function
+231                                                                           #Hidden Units
+232                                                                            Dropout Rate
+233                                                                              Batch Size
+234                                                                           Learning Rate
+235                                                                                     Rho
+236                                                                     Learning Rate Decay
+237                                                                     Activation Function
+238                                                                           #Hidden Units
+239                                                                            Dropout Rate
+240                                                                              Batch Size
+241                                                                           Learning Rate
+242                                                                                     Rho
+243                                                                     Learning Rate Decay
+244                                                                                    Cost
+245                                                                     Activation Function
+246                                                                    #Hidden Units layer1
+247                                                                    #Hidden Units layer2
+248                                                                    #Hidden Units layer3
+249                                                                           #Hidden Units
+250                                                                       L2 Regularization
+251                                                                   RMSE Gradient Scaling
+252                                                                           Learning Rate
+253                                                                                Momentum
+254                                                                     Learning Rate Decay
+255                                                                              Batch Size
+256                                                                                 #Models
+257                                                                           #Hidden Units
+258                                                                            Weight Decay
+259                                                                    #Hidden Units layer1
+260                                                                    #Hidden Units layer2
+261                                                                    #Hidden Units layer3
+262                                                                            Weight Decay
+263                                                                           #Hidden Units
+264                                                                                 #Models
+265                                                                                   Alpha
+266                                                              #Adaptive Estimation Steps
+267                                                          Adaptive Weight Scaling Factor
+268                                                                            Weight Decay
+269                                                                #Hidden Units in Layer 1
+270                                                                #Hidden Units in Layer 2
+271                                                                #Hidden Units in Layer 3
+272                                                                           Learning Rate
+273                                                                                Momentum
+274                                                                            Dropout Rate
+275                                                                     Activation Function
+276                                                                #Hidden Units in Layer 1
+277                                                                #Hidden Units in Layer 2
+278                                                                #Hidden Units in Layer 3
+279                                                                            Dropout Rate
+280                                                                                   beta1
+281                                                                                   beta2
+282                                                                           Learning Rate
+283                                                                     Activation Function
+284                                                                      Laplace Correction
+285                                                                       Distribution Type
+286                                                                    Bandwidth Adjustment
+287                                                                      Laplace Correction
+288                                                                       Distribution Type
+289                                                                    Bandwidth Adjustment
+290                                                                     Smoothing Parameter
+291                                                                                  #Folds
+292                                                            Minimum Absolute Improvement
+293                                                                     Smoothing Parameter
+294                                                               Final Smoothing Parameter
+295                                                                        Search Direction
+296                                                                #Hidden Units in Layer 1
+297                                                                #Hidden Units in Layer 2
+298                                                                #Hidden Units in Layer 3
+299                                                                           #Hidden Units
+300                                                                            Weight Decay
+301                                                                               parameter
+302                                                               Maximum Interaction Depth
+303                                                                         Prediction Mode
+304                                                                               parameter
+305                                                                                    none
+306                                                                       Mixing Percentage
+307                                                                     Selection criterion
+308                                                                           Link Function
+309                                                                       Penalty Parameter
+310                                                                              Model Form
+311                                                                            Model Family
+312                                           # score sets tried prior to the approximation
+313                                                                  # of trees (small RFs)
+314                                                                   # of trees (final RF)
+315                                                           #Randomly Selected Predictors
+316                                                           #Randomly Selected Predictors
+317                                                           #Randomly Selected Predictors
+318                                                           #Randomly Selected Predictors
+319                                                                              #Neighbors
+320                                                                     Shrinkage Threshold
+321                                                           #Randomly Selected Predictors
+322                                                                    Confidence Threshold
+323                                                                                 Pruning
+324                                                           Number of Terminal Partitions
+325                                                              Minimum Percent Difference
+326                                                                           #Hidden Units
+327                                                                            Weight Decay
+328                                                                             #Components
+329                                                           Shrinkage Penalty Coefficient
+330                                                                      Degrees of Freedom
+331                                                                              L1 Penalty
+332                                                                              L2 Penalty
+333                                                                              L1 Penalty
+334                                                                 #Discriminant Functions
+335                                                                              L2 Penalty
+336                                                                    Complexity Parameter
+337                                                                             #Components
+338                                                                         #PLS Components
+339                                                                       p-Value threshold
+340                                                                               parameter
+341                                                                                 # Terms
+342                                                                    Subsampling Fraction
+343                                                                          Max Tree Depth
+344                                                                               Shrinkage
+345                                                          # Randomly Selected Predictors
+346                                                                Employ Gradient Boosting
+347                                                                Regularization Parameter
+348                                                                        peeling quantile
+349                                                                        pasting quantile
+350                                                                            minimum mass
+351                                                                               Ball Size
+352                                                                          Distance Order
+353                                                                               parameter
+354                                                                               parameter
+355                                                           #Randomly Selected Predictors
+356                                                                           #Hidden Units
+357                                                                            Weight Decay
+358                                                                          Bagged Models?
+359                                                                       Interaction Order
+360                                                           #Randomly Selected Predictors
+361                                                                          Splitting Rule
+362                                                                       Minimal Node Size
+363                                                                           #Hidden Units
+364                                                Activation Limit for Conflicting Classes
+365                                                           #Randomly Selected Predictors
+366                                                                       Minimal Node Size
+367                                                                                   Gamma
+368                                                                                  Lambda
+369                                                                                    Cost
+370                                                                           Loss Function
+371                                                                               Tolerance
+372                                                                       Penalty Parameter
+373                                                                    Relaxation Parameter
+374                                                           #Randomly Selected Predictors
+375                                                                              Fern Depth
+376                                                                               # Factors
+377                                                           #Randomly Selected Predictors
+378                                                                      Maximum Rule Depth
+379                                                                            Weight Decay
+380                                                                   Regularization Method
+381                                                                               intercept
+382                                                                                     psi
+383                                                                   #Subclasses Per Class
+384                                                                                   Model
+385                                                                     #Variables Retained
+386                                                                       #Variable Subsets
+387                                                                           Ensemble Size
+388                                                                       #Variable Subsets
+389                                                                           Ensemble Size
+390                                                                    Complexity Parameter
+391                                                                    Complexity Parameter
+392                                                                               parameter
+393                                                                          Max Tree Depth
+394                                                                    Complexity Parameter
+395                                                                                    Cost
+396                                                                    Complexity Parameter
+397                                                                          Split Function
+398                                                                         Pruning Measure
+399                                                                              L1 Penalty
+400                                                                              L1 Penalty
+401                                                                            Penalty Type
+402                                                           #Randomly Selected Predictors
+403                                                                    Regularization Value
+404                                                                  Importance Coefficient
+405                                                           #Randomly Selected Predictors
+406                                                                    Regularization Value
+407                                                                       Penalty Parameter
+408                                                                    Robustness Parameter
+409                                                                            Penalty Type
+410                                                                               parameter
+411                                                                               parameter
+412                                                                                   Scale
+413                                                                       Polynomial Degree
+414                                                                                   Sigma
+415                                                                                  Radius
+416                                                                         Upper Threshold
+417                                                                         Lower Threshold
+418                                                                             Diagonalize
+419                                                                               shrinkage
+420                                                                              L1 Penalty
+421                                                                              L2 Penalty
+422                                                                             #Components
+423                                                                            #Fuzzy Terms
+424                                                                         Max. Iterations
+425                                                                        Max. Generations
+426                                                                                    none
+427                                                                            # Predictors
+428                                                                                  Lambda
+429                                                                            # Subclasses
+430                                                                 Stabilization Parameter
+431                                                                            # Predictors
+432                                                                                  Lambda
+433                                                                      Variables Retained
+434                                                                             #Components
+435                                                                               Threshold
+436                                                                                   Kappa
+437                                                                      Maximum #Variables
+438                                                                        Search Direction
+439                                                                      Maximum #Variables
+440                                                                        Search Direction
+441                                                                               Threshold
+442                                                                             #Components
+443                                                                                  length
+444                                                                                    Cost
+445                                                                                  lambda
+446                                                                                    Cost
+447                                                                                    Cost
+448                                                                                    Cost
+449                                                                                    Cost
+450                                                                           Loss Function
+451                                                                                    Cost
+452                                                                            Class Weight
+453                                                                                    Cost
+454                                                                           Loss Function
+455                                                                            Class Weight
+456                                                                       Polynomial Degree
+457                                                                                   Scale
+458                                                                                    Cost
+459                                                                                   Sigma
+460                                                                                    Cost
+461                                                                                    Cost
+462                                                                                   Sigma
+463                                                                                    Cost
+464                                                                                   Sigma
+465                                                                                    Cost
+466                                                                                  Weight
+467                                                                                  length
+468                                                                                    Cost
+469                                                                          Score Function
+470                                                                     Smoothing Parameter
+471                                                                                  #Folds
+472                                                            Minimum Absolute Improvement
+473                                                                     Smoothing Parameter
+474                                                               Final Smoothing Parameter
+475                                                                            Super-Parent
+476                                                                               parameter
+477                                                                         Theta Estimated
+478                                                                         Parallel Curves
+479                                                                           Link Function
+480                                                                         Parallel Curves
+481                                                                           Link Function
+482                                                                         Parallel Curves
+483                                                                           Link Function
+484                                                                             #Components
+485                                                                            #Fuzzy Terms
+486                                                                     Membership Function
+487                                                           #Randomly Selected Predictors
+488                                                                   # Boosting Iterations
+489                                                                          Max Tree Depth
+490                                                                               Shrinkage
+491                                                                  Minimum Loss Reduction
+492                                                                    Subsample Percentage
+493                                                              Subsample Ratio of Columns
+494                                                               Fraction of Trees Dropped
+495                                                              Prob. of Skipping Drop-out
+496                                                          Minimum Sum of Instance Weight
+497                                                                   # Boosting Iterations
+498                                                                       L2 Regularization
+499                                                                       L1 Regularization
+500                                                                           Learning Rate
+501                                                                   # Boosting Iterations
+502                                                                          Max Tree Depth
+503                                                                               Shrinkage
+504                                                                  Minimum Loss Reduction
+505                                                              Subsample Ratio of Columns
+506                                                          Minimum Sum of Instance Weight
+507                                                                    Subsample Percentage
+508                                                                                    Rows
+509                                                                                 Columns
+510                                                                            Layer Weight
+511                                                                                Topology
+    forReg forClass probModel
+1    FALSE     TRUE      TRUE
+2    FALSE     TRUE      TRUE
+3    FALSE     TRUE      TRUE
+4    FALSE     TRUE      TRUE
+5    FALSE     TRUE      TRUE
+9    FALSE     TRUE      TRUE
+10   FALSE     TRUE      TRUE
+6    FALSE     TRUE      TRUE
+7    FALSE     TRUE      TRUE
+8    FALSE     TRUE      TRUE
+11   FALSE     TRUE      TRUE
+12    TRUE    FALSE     FALSE
+13    TRUE    FALSE     FALSE
+14    TRUE     TRUE      TRUE
+15    TRUE     TRUE      TRUE
+16    TRUE     TRUE      TRUE
+17   FALSE     TRUE      TRUE
+18   FALSE     TRUE      TRUE
+19   FALSE     TRUE      TRUE
+20    TRUE     TRUE      TRUE
+21    TRUE     TRUE      TRUE
+22    TRUE     TRUE      TRUE
+23    TRUE     TRUE      TRUE
+24   FALSE     TRUE      TRUE
+25   FALSE     TRUE      TRUE
+26   FALSE     TRUE      TRUE
+27    TRUE     TRUE      TRUE
+28    TRUE     TRUE      TRUE
+29    TRUE     TRUE      TRUE
+30    TRUE     TRUE      TRUE
+31    TRUE     TRUE      TRUE
+32    TRUE     TRUE      TRUE
+33    TRUE     TRUE      TRUE
+34    TRUE     TRUE      TRUE
+35   FALSE     TRUE      TRUE
+36    TRUE     TRUE      TRUE
+37    TRUE     TRUE      TRUE
+38    TRUE    FALSE     FALSE
+39    TRUE    FALSE     FALSE
+40    TRUE    FALSE     FALSE
+41    TRUE    FALSE     FALSE
+42    TRUE     TRUE     FALSE
+43    TRUE     TRUE     FALSE
+44    TRUE     TRUE     FALSE
+45    TRUE     TRUE     FALSE
+46    TRUE     TRUE     FALSE
+47    TRUE     TRUE     FALSE
+48    TRUE     TRUE     FALSE
+49   FALSE     TRUE      TRUE
+50   FALSE     TRUE      TRUE
+51   FALSE     TRUE      TRUE
+52   FALSE     TRUE     FALSE
+53   FALSE     TRUE     FALSE
+54   FALSE     TRUE     FALSE
+55   FALSE     TRUE     FALSE
+56   FALSE     TRUE      TRUE
+57   FALSE     TRUE      TRUE
+58    TRUE     TRUE      TRUE
+59   FALSE     TRUE      TRUE
+60   FALSE     TRUE      TRUE
+61   FALSE     TRUE      TRUE
+62   FALSE     TRUE     FALSE
+63    TRUE     TRUE      TRUE
+64    TRUE     TRUE      TRUE
+65    TRUE     TRUE      TRUE
+66    TRUE    FALSE     FALSE
+67    TRUE    FALSE     FALSE
+68   FALSE     TRUE      TRUE
+69   FALSE     TRUE      TRUE
+70   FALSE     TRUE     FALSE
+71   FALSE     TRUE     FALSE
+72   FALSE     TRUE     FALSE
+73   FALSE     TRUE     FALSE
+74   FALSE     TRUE     FALSE
+75    TRUE    FALSE     FALSE
+76    TRUE    FALSE     FALSE
+77    TRUE     TRUE      TRUE
+78    TRUE     TRUE      TRUE
+79    TRUE     TRUE      TRUE
+80    TRUE     TRUE      TRUE
+81    TRUE     TRUE      TRUE
+82   FALSE     TRUE      TRUE
+83   FALSE     TRUE      TRUE
+84   FALSE     TRUE      TRUE
+85   FALSE     TRUE      TRUE
+86   FALSE     TRUE      TRUE
+87   FALSE     TRUE      TRUE
+88   FALSE     TRUE      TRUE
+89   FALSE     TRUE      TRUE
+90   FALSE     TRUE      TRUE
+91    TRUE     TRUE      TRUE
+92    TRUE     TRUE      TRUE
+93    TRUE     TRUE     FALSE
+94    TRUE     TRUE     FALSE
+95    TRUE    FALSE     FALSE
+96    TRUE    FALSE     FALSE
+97    TRUE     TRUE      TRUE
+98    TRUE     TRUE      TRUE
+99    TRUE     TRUE      TRUE
+100  FALSE     TRUE      TRUE
+101  FALSE     TRUE      TRUE
+102  FALSE     TRUE     FALSE
+103  FALSE     TRUE     FALSE
+104  FALSE     TRUE     FALSE
+105   TRUE    FALSE     FALSE
+106   TRUE    FALSE     FALSE
+107   TRUE    FALSE     FALSE
+108   TRUE    FALSE     FALSE
+109  FALSE     TRUE     FALSE
+110  FALSE     TRUE     FALSE
+111  FALSE     TRUE     FALSE
+112  FALSE     TRUE     FALSE
+113   TRUE    FALSE     FALSE
+114   TRUE    FALSE     FALSE
+115   TRUE     TRUE      TRUE
+116   TRUE     TRUE      TRUE
+117   TRUE     TRUE      TRUE
+118   TRUE     TRUE      TRUE
+119   TRUE     TRUE      TRUE
+120   TRUE     TRUE      TRUE
+121   TRUE     TRUE      TRUE
+122   TRUE     TRUE      TRUE
+123   TRUE     TRUE      TRUE
+124   TRUE     TRUE      TRUE
+125   TRUE     TRUE      TRUE
+131   TRUE     TRUE      TRUE
+132   TRUE     TRUE      TRUE
+133   TRUE     TRUE      TRUE
+134   TRUE     TRUE      TRUE
+126   TRUE     TRUE      TRUE
+127   TRUE     TRUE      TRUE
+128   TRUE     TRUE      TRUE
+129   TRUE     TRUE      TRUE
+130   TRUE     TRUE      TRUE
+135   TRUE     TRUE      TRUE
+136   TRUE    FALSE     FALSE
+137   TRUE    FALSE     FALSE
+138   TRUE    FALSE     FALSE
+139   TRUE    FALSE     FALSE
+140   TRUE    FALSE     FALSE
+141   TRUE    FALSE     FALSE
+142   TRUE    FALSE     FALSE
+143   TRUE    FALSE     FALSE
+144   TRUE    FALSE     FALSE
+146   TRUE     TRUE      TRUE
+145   TRUE    FALSE     FALSE
+147   TRUE     TRUE      TRUE
+148   TRUE     TRUE      TRUE
+151   TRUE     TRUE      TRUE
+152   TRUE     TRUE      TRUE
+149   TRUE     TRUE      TRUE
+150   TRUE     TRUE      TRUE
+153   TRUE     TRUE      TRUE
+154  FALSE     TRUE      TRUE
+155  FALSE     TRUE      TRUE
+156  FALSE     TRUE      TRUE
+157  FALSE     TRUE      TRUE
+158  FALSE     TRUE      TRUE
+159  FALSE     TRUE      TRUE
+160  FALSE     TRUE      TRUE
+161  FALSE     TRUE      TRUE
+162  FALSE     TRUE      TRUE
+163   TRUE    FALSE     FALSE
+164   TRUE    FALSE     FALSE
+165   TRUE    FALSE     FALSE
+166  FALSE     TRUE      TRUE
+167  FALSE     TRUE      TRUE
+168  FALSE     TRUE      TRUE
+169  FALSE     TRUE      TRUE
+170  FALSE     TRUE      TRUE
+171   TRUE     TRUE      TRUE
+172   TRUE     TRUE      TRUE
+173   TRUE     TRUE      TRUE
+174   TRUE     TRUE      TRUE
+175   TRUE     TRUE      TRUE
+176   TRUE    FALSE     FALSE
+177   TRUE    FALSE     FALSE
+178   TRUE    FALSE     FALSE
+179   TRUE    FALSE     FALSE
+180   TRUE    FALSE     FALSE
+181   TRUE    FALSE     FALSE
+182   TRUE    FALSE     FALSE
+183  FALSE     TRUE      TRUE
+184  FALSE     TRUE      TRUE
+185   TRUE    FALSE     FALSE
+186   TRUE    FALSE     FALSE
+187   TRUE    FALSE     FALSE
+188  FALSE     TRUE      TRUE
+189   TRUE    FALSE     FALSE
+190   TRUE    FALSE     FALSE
+191  FALSE     TRUE      TRUE
+192  FALSE     TRUE      TRUE
+193   TRUE     TRUE      TRUE
+194   TRUE     TRUE      TRUE
+195  FALSE     TRUE      TRUE
+196   TRUE     TRUE      TRUE
+197   TRUE     TRUE      TRUE
+198  FALSE     TRUE     FALSE
+199  FALSE     TRUE     FALSE
+200  FALSE     TRUE     FALSE
+201  FALSE     TRUE     FALSE
+202  FALSE     TRUE     FALSE
+203  FALSE     TRUE     FALSE
+204  FALSE     TRUE     FALSE
+205  FALSE     TRUE     FALSE
+206   TRUE    FALSE     FALSE
+207   TRUE    FALSE     FALSE
+208   TRUE    FALSE     FALSE
+209   TRUE    FALSE     FALSE
+210   TRUE    FALSE     FALSE
+211  FALSE     TRUE      TRUE
+212  FALSE     TRUE      TRUE
+213  FALSE     TRUE      TRUE
+214  FALSE     TRUE     FALSE
+215   TRUE     TRUE      TRUE
+216   TRUE     TRUE      TRUE
+217   TRUE     TRUE      TRUE
+218   TRUE     TRUE      TRUE
+219   TRUE     TRUE      TRUE
+220   TRUE     TRUE      TRUE
+221   TRUE     TRUE      TRUE
+222   TRUE     TRUE      TRUE
+223  FALSE     TRUE      TRUE
+224  FALSE     TRUE      TRUE
+225  FALSE     TRUE      TRUE
+226  FALSE     TRUE      TRUE
+227  FALSE     TRUE      TRUE
+228  FALSE     TRUE      TRUE
+229  FALSE     TRUE      TRUE
+230  FALSE     TRUE      TRUE
+231   TRUE     TRUE      TRUE
+232   TRUE     TRUE      TRUE
+233   TRUE     TRUE      TRUE
+234   TRUE     TRUE      TRUE
+235   TRUE     TRUE      TRUE
+236   TRUE     TRUE      TRUE
+237   TRUE     TRUE      TRUE
+238  FALSE     TRUE      TRUE
+239  FALSE     TRUE      TRUE
+240  FALSE     TRUE      TRUE
+241  FALSE     TRUE      TRUE
+242  FALSE     TRUE      TRUE
+243  FALSE     TRUE      TRUE
+244  FALSE     TRUE      TRUE
+245  FALSE     TRUE      TRUE
+246   TRUE     TRUE      TRUE
+247   TRUE     TRUE      TRUE
+248   TRUE     TRUE      TRUE
+249   TRUE     TRUE      TRUE
+250   TRUE     TRUE      TRUE
+251   TRUE     TRUE      TRUE
+252   TRUE     TRUE      TRUE
+253   TRUE     TRUE      TRUE
+254   TRUE     TRUE      TRUE
+255   TRUE     TRUE      TRUE
+256   TRUE     TRUE      TRUE
+257   TRUE     TRUE      TRUE
+258   TRUE     TRUE      TRUE
+259   TRUE     TRUE      TRUE
+260   TRUE     TRUE      TRUE
+261   TRUE     TRUE      TRUE
+262   TRUE     TRUE      TRUE
+263   TRUE     TRUE      TRUE
+264   TRUE     TRUE      TRUE
+265   TRUE     TRUE      TRUE
+266   TRUE     TRUE      TRUE
+267   TRUE     TRUE      TRUE
+268  FALSE     TRUE      TRUE
+269   TRUE     TRUE      TRUE
+270   TRUE     TRUE      TRUE
+271   TRUE     TRUE      TRUE
+272   TRUE     TRUE      TRUE
+273   TRUE     TRUE      TRUE
+274   TRUE     TRUE      TRUE
+275   TRUE     TRUE      TRUE
+276   TRUE     TRUE      TRUE
+277   TRUE     TRUE      TRUE
+278   TRUE     TRUE      TRUE
+279   TRUE     TRUE      TRUE
+280   TRUE     TRUE      TRUE
+281   TRUE     TRUE      TRUE
+282   TRUE     TRUE      TRUE
+283   TRUE     TRUE      TRUE
+284  FALSE     TRUE      TRUE
+285  FALSE     TRUE      TRUE
+286  FALSE     TRUE      TRUE
+287  FALSE     TRUE      TRUE
+288  FALSE     TRUE      TRUE
+289  FALSE     TRUE      TRUE
+290  FALSE     TRUE      TRUE
+291  FALSE     TRUE      TRUE
+292  FALSE     TRUE      TRUE
+293  FALSE     TRUE      TRUE
+294  FALSE     TRUE      TRUE
+295  FALSE     TRUE      TRUE
+296   TRUE    FALSE     FALSE
+297   TRUE    FALSE     FALSE
+298   TRUE    FALSE     FALSE
+299   TRUE     TRUE      TRUE
+300   TRUE     TRUE      TRUE
+301   TRUE    FALSE     FALSE
+302   TRUE     TRUE      TRUE
+303   TRUE     TRUE      TRUE
+304   TRUE     TRUE      TRUE
+305  FALSE     TRUE      TRUE
+306  FALSE     TRUE      TRUE
+307  FALSE     TRUE      TRUE
+308  FALSE     TRUE      TRUE
+309  FALSE     TRUE      TRUE
+310  FALSE     TRUE      TRUE
+311  FALSE     TRUE      TRUE
+312  FALSE     TRUE      TRUE
+313  FALSE     TRUE      TRUE
+314  FALSE     TRUE      TRUE
+315  FALSE     TRUE      TRUE
+316  FALSE     TRUE      TRUE
+317  FALSE     TRUE      TRUE
+318  FALSE     TRUE      TRUE
+319  FALSE     TRUE     FALSE
+320  FALSE     TRUE      TRUE
+321   TRUE     TRUE      TRUE
+322  FALSE     TRUE      TRUE
+323  FALSE     TRUE      TRUE
+324   TRUE     TRUE     FALSE
+325   TRUE     TRUE     FALSE
+326   TRUE     TRUE      TRUE
+327   TRUE     TRUE      TRUE
+328   TRUE    FALSE     FALSE
+329  FALSE     TRUE      TRUE
+330  FALSE     TRUE      TRUE
+331   TRUE    FALSE     FALSE
+332   TRUE    FALSE     FALSE
+333  FALSE     TRUE     FALSE
+334  FALSE     TRUE     FALSE
+335  FALSE     TRUE      TRUE
+336  FALSE     TRUE      TRUE
+337   TRUE     TRUE      TRUE
+338   TRUE     TRUE      TRUE
+339   TRUE     TRUE      TRUE
+340  FALSE     TRUE      TRUE
+341   TRUE    FALSE     FALSE
+342   TRUE     TRUE      TRUE
+343   TRUE     TRUE      TRUE
+344   TRUE     TRUE      TRUE
+345   TRUE     TRUE      TRUE
+346   TRUE     TRUE      TRUE
+347   TRUE     TRUE      TRUE
+348  FALSE     TRUE      TRUE
+349  FALSE     TRUE      TRUE
+350  FALSE     TRUE      TRUE
+351  FALSE     TRUE     FALSE
+352  FALSE     TRUE     FALSE
+353  FALSE     TRUE      TRUE
+354  FALSE     TRUE      TRUE
+355   TRUE    FALSE     FALSE
+356   TRUE    FALSE     FALSE
+357   TRUE    FALSE     FALSE
+358   TRUE    FALSE     FALSE
+359   TRUE     TRUE      TRUE
+360   TRUE     TRUE      TRUE
+361   TRUE     TRUE      TRUE
+362   TRUE     TRUE      TRUE
+363   TRUE     TRUE      TRUE
+364   TRUE     TRUE      TRUE
+365   TRUE     TRUE      TRUE
+366   TRUE     TRUE      TRUE
+367  FALSE     TRUE      TRUE
+368  FALSE     TRUE      TRUE
+369  FALSE     TRUE      TRUE
+370  FALSE     TRUE      TRUE
+371  FALSE     TRUE      TRUE
+372   TRUE    FALSE     FALSE
+373   TRUE    FALSE     FALSE
+374   TRUE     TRUE      TRUE
+375  FALSE     TRUE     FALSE
+376  FALSE     TRUE     FALSE
+377   TRUE     TRUE     FALSE
+378   TRUE     TRUE     FALSE
+379   TRUE    FALSE     FALSE
+380  FALSE     TRUE      TRUE
+381   TRUE    FALSE     FALSE
+382   TRUE    FALSE     FALSE
+383  FALSE     TRUE      TRUE
+384  FALSE     TRUE      TRUE
+385  FALSE     TRUE     FALSE
+386  FALSE     TRUE      TRUE
+387  FALSE     TRUE      TRUE
+388  FALSE     TRUE      TRUE
+389  FALSE     TRUE      TRUE
+390  FALSE     TRUE      TRUE
+391   TRUE     TRUE      TRUE
+392   TRUE     TRUE      TRUE
+393   TRUE     TRUE      TRUE
+394  FALSE     TRUE     FALSE
+395  FALSE     TRUE     FALSE
+396  FALSE     TRUE     FALSE
+397  FALSE     TRUE     FALSE
+398  FALSE     TRUE     FALSE
+399   TRUE    FALSE     FALSE
+400   TRUE    FALSE     FALSE
+401   TRUE    FALSE     FALSE
+402   TRUE     TRUE      TRUE
+403   TRUE     TRUE      TRUE
+404   TRUE     TRUE      TRUE
+405   TRUE     TRUE      TRUE
+406   TRUE     TRUE      TRUE
+407  FALSE     TRUE      TRUE
+408  FALSE     TRUE      TRUE
+409  FALSE     TRUE      TRUE
+410  FALSE     TRUE     FALSE
+411   TRUE    FALSE     FALSE
+412   TRUE    FALSE     FALSE
+413   TRUE    FALSE     FALSE
+414   TRUE    FALSE     FALSE
+415   TRUE    FALSE     FALSE
+416   TRUE    FALSE     FALSE
+417   TRUE    FALSE     FALSE
+418  FALSE     TRUE      TRUE
+419  FALSE     TRUE      TRUE
+420  FALSE     TRUE      TRUE
+421  FALSE     TRUE      TRUE
+422   TRUE     TRUE      TRUE
+423  FALSE     TRUE     FALSE
+424  FALSE     TRUE     FALSE
+425  FALSE     TRUE     FALSE
+426  FALSE     TRUE      TRUE
+427  FALSE     TRUE     FALSE
+428  FALSE     TRUE     FALSE
+429  FALSE     TRUE     FALSE
+430  FALSE     TRUE     FALSE
+431  FALSE     TRUE      TRUE
+432  FALSE     TRUE      TRUE
+433   TRUE    FALSE     FALSE
+434   TRUE     TRUE      TRUE
+435   TRUE     TRUE      TRUE
+436   TRUE     TRUE      TRUE
+437  FALSE     TRUE      TRUE
+438  FALSE     TRUE      TRUE
+439  FALSE     TRUE      TRUE
+440  FALSE     TRUE      TRUE
+441   TRUE    FALSE     FALSE
+442   TRUE    FALSE     FALSE
+443   TRUE     TRUE      TRUE
+444   TRUE     TRUE      TRUE
+445   TRUE     TRUE      TRUE
+446   TRUE     TRUE      TRUE
+447   TRUE     TRUE      TRUE
+448   TRUE     TRUE      TRUE
+449   TRUE     TRUE     FALSE
+450   TRUE     TRUE     FALSE
+451  FALSE     TRUE      TRUE
+452  FALSE     TRUE      TRUE
+453  FALSE     TRUE     FALSE
+454  FALSE     TRUE     FALSE
+455  FALSE     TRUE     FALSE
+456   TRUE     TRUE      TRUE
+457   TRUE     TRUE      TRUE
+458   TRUE     TRUE      TRUE
+459   TRUE     TRUE      TRUE
+460   TRUE     TRUE      TRUE
+461   TRUE     TRUE      TRUE
+462   TRUE     TRUE      TRUE
+463   TRUE     TRUE      TRUE
+464  FALSE     TRUE      TRUE
+465  FALSE     TRUE      TRUE
+466  FALSE     TRUE      TRUE
+467   TRUE     TRUE      TRUE
+468   TRUE     TRUE      TRUE
+469  FALSE     TRUE      TRUE
+470  FALSE     TRUE      TRUE
+471  FALSE     TRUE      TRUE
+472  FALSE     TRUE      TRUE
+473  FALSE     TRUE      TRUE
+474  FALSE     TRUE      TRUE
+475  FALSE     TRUE      TRUE
+476   TRUE     TRUE      TRUE
+477  FALSE     TRUE      TRUE
+478  FALSE     TRUE      TRUE
+479  FALSE     TRUE      TRUE
+480  FALSE     TRUE      TRUE
+481  FALSE     TRUE      TRUE
+482  FALSE     TRUE      TRUE
+483  FALSE     TRUE      TRUE
+484   TRUE     TRUE      TRUE
+485   TRUE    FALSE     FALSE
+486   TRUE    FALSE     FALSE
+487  FALSE     TRUE      TRUE
+488   TRUE     TRUE      TRUE
+489   TRUE     TRUE      TRUE
+490   TRUE     TRUE      TRUE
+491   TRUE     TRUE      TRUE
+492   TRUE     TRUE      TRUE
+493   TRUE     TRUE      TRUE
+494   TRUE     TRUE      TRUE
+495   TRUE     TRUE      TRUE
+496   TRUE     TRUE      TRUE
+497   TRUE     TRUE      TRUE
+498   TRUE     TRUE      TRUE
+499   TRUE     TRUE      TRUE
+500   TRUE     TRUE      TRUE
+501   TRUE     TRUE      TRUE
+502   TRUE     TRUE      TRUE
+503   TRUE     TRUE      TRUE
+504   TRUE     TRUE      TRUE
+505   TRUE     TRUE      TRUE
+506   TRUE     TRUE      TRUE
+507   TRUE     TRUE      TRUE
+508   TRUE     TRUE      TRUE
+509   TRUE     TRUE      TRUE
+510   TRUE     TRUE      TRUE
+511   TRUE     TRUE      TRUE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelLookup</span>(<span class="st">"rpart"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  model parameter                label forReg forClass probModel
+1 rpart        cp Complexity Parameter   TRUE     TRUE      TRUE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dt_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"rpart"</span>, <span class="at">trControl =</span> fitControl)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>rf_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"rf"</span>, <span class="at">trControl =</span> fitControl)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>knn_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"knn"</span>, <span class="at">trControl =</span> fitControl)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>nb_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"nb"</span>, <span class="at">trControl =</span> fitControl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in FUN(X[[i]], ...): Numerical 0 probability for all classes with
+observation 10</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in FUN(X[[i]], ...): Numerical 0 probability for all classes with
+observation 11
+
+Warning in FUN(X[[i]], ...): Numerical 0 probability for all classes with
+observation 11
+
+Warning in FUN(X[[i]], ...): Numerical 0 probability for all classes with
+observation 11</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in FUN(X[[i]], ...): Numerical 0 probability for all classes with
+observation 10</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>resamp<span class="ot">=</span><span class="fu">resamples</span>(<span class="fu">list</span>(<span class="at">DecisionTree=</span>dt_fit, <span class="at">RandomForest=</span>rf_fit, <span class="at">kNN=</span>knn_fit, <span class="at">NaiveBayes=</span>nb_fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>resamp<span class="ot">=</span><span class="fu">resamples</span>(<span class="fu">list</span>(<span class="at">DecisionTree=</span>dt_fit, <span class="at">RandomForest=</span>rf_fit, <span class="at">kNN=</span>knn_fit, <span class="at">NaiveBayes=</span>nb_fit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dotplot</span>(resamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Testing models 제너릭 함수인 predict() 를 이용</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_fit, <span class="at">newdata =</span> testing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] M R R R R R M M R R R R R R R M R R R R R R R R M R R R R M M M R M R M M M
+[39] M M M M M M M M M M M M M M M R M M M M M M M M
+Levels: M R</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">predict</span>(rf_fit, <span class="at">newdata =</span> testing), testing<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+     M  R
+  M 30  5
+  R  3 24</code></pre>
+</div>
+</div>
+<p>caret package 의 confusionMatrix() 를 곁들이면 혼돈메트릭스(Confusion Matrix) 및 정확도외 다양한 통계량까지 출력</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(rf_fit, <span class="at">newdata =</span> testing) <span class="sc">%&gt;%</span> <span class="fu">confusionMatrix</span>(testing<span class="sc">$</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  M  R
+         M 30  5
+         R  3 24
+                                          
+               Accuracy : 0.871           
+                 95% CI : (0.7615, 0.9426)
+    No Information Rate : 0.5323          
+    P-Value [Acc &gt; NIR] : 1.5e-08         
+                                          
+                  Kappa : 0.7398          
+                                          
+ Mcnemar's Test P-Value : 0.7237          
+                                          
+            Sensitivity : 0.9091          
+            Specificity : 0.8276          
+         Pos Pred Value : 0.8571          
+         Neg Pred Value : 0.8889          
+             Prevalence : 0.5323          
+         Detection Rate : 0.4839          
+   Detection Prevalence : 0.5645          
+      Balanced Accuracy : 0.8683          
+                                          
+       'Positive' Class : M               
+                                          </code></pre>
+</div>
+</div>
+<p>Tuning parameters 의 그리드 조정 사용자 검색 그리드(custom search grid) - 최적 파라미터 선정 시 탐색범위와 그리드를 수동으로 조절 가능 - 자동으로 3P 공식에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개로 설정 - 만약 더 많은 후보와 상대평가하고 싶을 경우 후보를 사용자가 직접 설정 가능 - 아래 코드는 mtry 의 후보를 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 로 바꾸어 설정, 이 중에서 채택해 보는 코드</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>customGrid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">mtry =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>rf_fit2 <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"rf"</span>, <span class="at">trControl =</span> fitControl, <span class="at">tuneGrid =</span> customGrid, <span class="at">verbose =</span> F)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>rf_fit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Random Forest 
+
+146 samples
+ 60 predictor
+  2 classes: 'M', 'R' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold, repeated 5 times) 
+Summary of sample sizes: 131, 132, 131, 132, 131, 131, ... 
+Resampling results across tuning parameters:
+
+  mtry  Accuracy   Kappa    
+   1    0.7942784  0.5805762
+   2    0.8014505  0.5967626
+   3    0.8041978  0.6031289
+   4    0.8038022  0.6023856
+   5    0.7965348  0.5875659
+   6    0.8005201  0.5949173
+   7    0.8029963  0.5991999
+   8    0.8018681  0.5975455
+   9    0.7996117  0.5931190
+  10    0.7993114  0.5929248
+
+Accuracy was used to select the optimal model using the largest value.
+The final value used for the model was mtry = 3.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf_fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>랜덤 검색 그리드(random selection of tuning parameter combinations) - 튜닝 파라미터의 개수가 많으면 많아질수록 탐색그리드의 개수는 지수적으로 증가, 동일한 간격의 그리드 구성으로 인해 탐색과정이 비효율적이 될 수 있음 - 튜닝 파라미터가 2개인 RDA(Regularized Discriminant Analysis) 를 통해 훈련을 해보자</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>rda_fit <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, <span class="at">method =</span> <span class="st">"rda"</span>, <span class="at">trControl =</span> fitControl, <span class="at">verbose =</span> F)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>rda_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Regularized Discriminant Analysis 
+
+146 samples
+ 60 predictor
+  2 classes: 'M', 'R' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold, repeated 5 times) 
+Summary of sample sizes: 131, 132, 131, 132, 132, 131, ... 
+Resampling results across tuning parameters:
+
+  gamma  lambda  Accuracy   Kappa     
+  0.0    0.0     0.5604762  0.07758973
+  0.0    0.5     0.7583810  0.51039188
+  0.0    1.0     0.6845714  0.35894233
+  0.5    0.0     0.7892381  0.56724332
+  0.5    0.5     0.7835238  0.55523021
+  0.5    1.0     0.7415238  0.47753750
+  1.0    0.0     0.6467619  0.28747059
+  1.0    0.5     0.6508571  0.29649203
+  1.0    1.0     0.6607619  0.31605195
+
+Accuracy was used to select the optimal model using the largest value.
+The final values used for the model were gamma = 0.5 and lambda = 0.</code></pre>
+</div>
+</div>
+<ul>
+<li>총 9개의 파라미터 조합을 비교하는 것을 볼 수 있음</li>
+<li>바로 위에 소개한 사용자 검색 그리드 역시 expand.grid() 함수를 이용하여 동일간격 그리드를 검색할 수도 있지만, 이번에는 랜덤 검색 그리드를 이용하면 동일간격이 아닌 파라미터 조합을 구성해보자.</li>
+<li>trainControl() 함수의 search = “random”, 검색 타입을 랜덤으로 바꾼다.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rda_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fitControl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"repeatedcv"</span>, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">number =</span> <span class="dv">10</span>, </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">repeats =</span> <span class="dv">5</span>, </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">search =</span> <span class="st">"random"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>rda_fit2 <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., <span class="at">data =</span> training, </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">"rda"</span>, </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> fitControl, </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">verbose =</span> F)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>rda_fit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Regularized Discriminant Analysis 
+
+146 samples
+ 60 predictor
+  2 classes: 'M', 'R' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold, repeated 5 times) 
+Summary of sample sizes: 131, 131, 132, 131, 132, 131, ... 
+Resampling results across tuning parameters:
+
+  gamma      lambda     Accuracy   Kappa    
+  0.1028932  0.7653744  0.7679267  0.5290507
+  0.2431458  0.1114396  0.7786886  0.5494464
+  0.5760511  0.1579374  0.7845128  0.5593490
+
+Accuracy was used to select the optimal model using the largest value.
+The final values used for the model were gamma = 0.5760511 and lambda
+ = 0.1579374.</code></pre>
+</div>
+</div>
+<ul>
+<li>튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간 3P 공식으로 후보군을 설정하지 않는 것을 확인할 수 있음</li>
+<li>수동으로 튜닝파라미터 조합개수를 늘리고 싶을 땐 train() 함수의 tuneLength 인자를 이용</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>rda_fit2 <span class="ot">&lt;-</span> <span class="fu">train</span>(Class <span class="sc">~</span> ., </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> training, </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">"rda"</span>, </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">trControl =</span> fitControl, </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">tuneLength =</span> <span class="dv">50</span>, </span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">verbose =</span> F)</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>rda_fit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Regularized Discriminant Analysis 
+
+146 samples
+ 60 predictor
+  2 classes: 'M', 'R' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold, repeated 5 times) 
+Summary of sample sizes: 132, 131, 131, 132, 131, 131, ... 
+Resampling results across tuning parameters:
+
+  gamma         lambda      Accuracy   Kappa    
+  0.0007485631  0.74191082  0.7589084  0.5144843
+  0.0414835601  0.01287166  0.7601758  0.5158588
+  0.0783394738  0.52302887  0.7627179  0.5177754
+  0.0981407929  0.34136666  0.7629084  0.5187975
+  0.1215299605  0.93627195  0.7394799  0.4679774
+  0.1290835007  0.63893257  0.7604176  0.5107336
+  0.1291675451  0.37643517  0.7682418  0.5286955
+  0.1332780691  0.60682541  0.7659560  0.5224079
+  0.1338704182  0.74118555  0.7476703  0.4841626
+  0.1602785466  0.97047875  0.7409084  0.4712820
+  0.1618139972  0.20392341  0.7891136  0.5719495
+  0.1777139497  0.42049942  0.7629084  0.5168299
+  0.1794137117  0.58848017  0.7699560  0.5298930
+  0.1810493851  0.02484183  0.7931136  0.5803734
+  0.2031416909  0.18328472  0.7928938  0.5790880
+  0.2145218640  0.93273889  0.7490989  0.4860594
+  0.2352795987  0.96551055  0.7435751  0.4758013
+  0.2794060404  0.48901564  0.7685128  0.5254606
+  0.3231490329  0.99972542  0.7489084  0.4872199
+  0.3873158591  0.12334491  0.7833700  0.5562390
+  0.3908691760  0.19369314  0.7863223  0.5619009
+  0.3929732225  0.53632580  0.7654505  0.5172339
+  0.4569480976  0.22765241  0.7836557  0.5550322
+  0.4665695983  0.46639755  0.7724029  0.5308909
+  0.4692936756  0.78518915  0.7545275  0.4967273
+  0.4850399913  0.50985965  0.7695458  0.5249073
+  0.5070618326  0.96435422  0.7541465  0.4979233
+  0.5164007600  0.14748781  0.7810842  0.5493820
+  0.5246395844  0.43766934  0.7764029  0.5389038
+  0.6293819949  0.65953016  0.7559267  0.4989787
+  0.6405648568  0.36828794  0.7764982  0.5381764
+  0.6644365741  0.40821422  0.7710696  0.5275948
+  0.6681491192  0.75535534  0.7518608  0.4919304
+  0.6803096321  0.66944697  0.7518315  0.4908615
+  0.7028437410  0.76722496  0.7503370  0.4883800
+  0.7059634458  0.47948041  0.7710696  0.5283761
+  0.7216346122  0.79049471  0.7544322  0.4969646
+  0.7362087339  0.85754167  0.7490989  0.4878771
+  0.7754983467  0.03475408  0.7658315  0.5161669
+  0.8180513082  0.68751588  0.7495604  0.4872603
+  0.8333342015  0.05593821  0.7646886  0.5140673
+  0.8594429099  0.86730980  0.7274652  0.4452287
+  0.8617005984  0.50849207  0.7491648  0.4837251
+  0.8719446701  0.77311713  0.7345275  0.4579433
+  0.8930286658  0.75939288  0.7207985  0.4307518
+  0.8987579306  0.63752126  0.7274505  0.4421286
+  0.9058322918  0.19435659  0.7534505  0.4908708
+  0.9212931057  0.34698021  0.7396410  0.4637153
+  0.9602838892  0.64811097  0.6875458  0.3651033
+  0.9788019210  0.24244529  0.6807692  0.3499658
+
+Accuracy was used to select the optimal model using the largest value.
+The final values used for the model were gamma = 0.1810494 and lambda
+ = 0.02484183.</code></pre>
+</div>
+</div>
+<ul>
+<li>파라미터를 랜덤하게 50개로 설정하여 조금 더 융통성 있는 최적의 파라미터 튜닝 방법을 고려함</li>
+<li>비교해 보면 채택된 파라미터의 값이 소수점이 더 많아져 자연스럽게 정밀해 진 것을 확인할 수 있다.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rda_fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="12_week_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>

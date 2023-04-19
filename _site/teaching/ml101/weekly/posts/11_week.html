@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -199,12 +262,466 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
 <p>Discussion #9</p>
 <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeYV_VGdkbGlz6HR4FotAd4G2aKn_6ZLb6_363_pMPBQ2ZUxQ/viewform?embedded=true" width="640" height="2800" frameborder="0" marginheight="0" marginwidth="0">
-Loading…
+<p>Loading…</p>
 </iframe>
 <hr>
 </section>
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
+<p>Apriori Algorithm Implementation in R using ‘arules’ library Association mining is usually done on transactions data from a retail market or from an online e-commerce store. Since most transactions data is large, the apriori algorithm makes it easier to find these patterns or rules quickly. Association Rules are widely used to analyze retail basket or transaction data, and are intended to identify strong rules discovered in transaction data using measures of interestingness, based on the concept of strong rules.</p>
+<p>Apriori uses a “bottom up” approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data. The algorithm terminates when no further successful extensions are found.</p>
+<p>Download the grocery dataset</p>
+<p>[<a href="content/Groceries_dataset.csv">Grocery data</a>]</p>
+<p>Import Required libraries and data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.1     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>------------------------------------------------------------------------------
+You have loaded plyr after dplyr - this is likely to cause problems.
+If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+library(plyr); library(dplyr)
+------------------------------------------------------------------------------
+
+Attaching package: 'plyr'
+
+The following objects are masked from 'package:dplyr':
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+The following object is masked from 'package:purrr':
+
+    compact</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>groceries <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"content/Groceries_dataset.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(groceries, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Member_number       Date           itemDescription
+1           1808 21-07-2015            tropical fruit
+2           2552 05-01-2015                whole milk
+3           2300 19-09-2015                 pip fruit
+4           1187 12-12-2015          other vegetables
+5           3037 01-02-2015                whole milk
+6           4941 14-02-2015                rolls/buns
+7           4501 08-05-2015          other vegetables
+8           3803 23-12-2015                pot plants
+9           2762 20-03-2015                whole milk
+10          4119 12-02-2015            tropical fruit
+11          1340 24-02-2015              citrus fruit
+12          2193 14-04-2015                      beef
+13          1997 21-07-2015               frankfurter
+14          4546 03-09-2015                   chicken
+15          4736 21-07-2015                    butter
+16          1959 30-03-2015     fruit/vegetable juice
+17          1974 03-05-2015 packaged fruit/vegetables
+18          2421 02-09-2015                 chocolate
+19          1513 03-08-2015             specialty bar
+20          1905 07-07-2015          other vegetables</code></pre>
+</div>
+</div>
+<p>Data Cleaning and Exploration</p>
+<p>Checking NA values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(groceries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 38,765
+Columns: 3
+$ Member_number   &lt;int&gt; 1808, 2552, 2300, 1187, 3037, 4941, 4501, 3803, 2762, …
+$ Date            &lt;chr&gt; "21-07-2015", "05-01-2015", "19-09-2015", "12-12-2015"…
+$ itemDescription &lt;chr&gt; "tropical fruit", "whole milk", "pip fruit", "other ve…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(groceries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Member_number      Date           itemDescription   
+ Min.   :1000   Length:38765       Length:38765      
+ 1st Qu.:2002   Class :character   Class :character  
+ Median :3005   Mode  :character   Mode  :character  
+ Mean   :3004                                        
+ 3rd Qu.:4007                                        
+ Max.   :5000                                        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(groceries))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>Group all the items that were bought together by the same customer on the same date</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="ot">&lt;-</span> <span class="fu">ddply</span>(groceries, <span class="fu">c</span>(<span class="st">"Member_number"</span>,<span class="st">"Date"</span>), <span class="cf">function</span>(df1)<span class="fu">paste</span>(df1<span class="sc">$</span>itemDescription,<span class="at">collapse =</span> <span class="st">","</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(itemList,<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Member_number       Date                                            V1
+1           1000 15-03-2015 sausage,whole milk,semi-finished bread,yogurt
+2           1000 24-06-2014                 whole milk,pastry,salty snack
+3           1000 24-07-2015                   canned beer,misc. beverages
+4           1000 25-11-2015                      sausage,hygiene articles
+5           1000 27-05-2015                       soda,pickled vegetables
+6           1001 02-05-2015                              frankfurter,curd
+7           1001 07-02-2014                 sausage,whole milk,rolls/buns
+8           1001 12-12-2014                               whole milk,soda
+9           1001 14-04-2015                              beef,white bread
+10          1001 20-01-2015           frankfurter,soda,whipped/sour cream
+11          1002 09-02-2014            frozen vegetables,other vegetables
+12          1002 26-04-2014                             butter,whole milk
+13          1002 26-04-2015                          tropical fruit,sugar
+14          1002 30-08-2015               butter milk,specialty chocolate
+15          1003 10-02-2015                            sausage,rolls/buns</code></pre>
+</div>
+</div>
+<p>Remove member number and date</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="sc">%&gt;%</span> <span class="fu">select</span>(V1) <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"itemList"</span>)) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                       itemList
+1 sausage,whole milk,semi-finished bread,yogurt
+2                 whole milk,pastry,salty snack
+3                   canned beer,misc. beverages
+4                      sausage,hygiene articles
+5                       soda,pickled vegetables
+6                              frankfurter,curd</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>itemList<span class="ot">&lt;-</span>itemList <span class="sc">%&gt;%</span> <span class="fu">select</span>(V1) <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"itemList"</span>)) </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(itemList,<span class="st">"ItemList.csv"</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">row.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Convert CSV file to Basket Format</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arules)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Matrix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'arules'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    abbreviate, write</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arulesViz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>txn <span class="ot">=</span> <span class="fu">read.transactions</span>(<span class="at">file=</span><span class="st">"ItemList.csv"</span>, <span class="at">rm.duplicates=</span> <span class="cn">TRUE</span>, <span class="at">format=</span><span class="st">"basket"</span>,<span class="at">sep=</span><span class="st">","</span>,<span class="at">cols=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>distribution of transactions with duplicates:
+items
+  1   2   3   4 
+662  39   5   1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(txn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>transactions in sparse format with
+ 14964 transactions (rows) and
+ 168 items (columns)</code></pre>
+</div>
+</div>
+<p>Most Frequent Products</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">itemFrequencyPlot</span>(txn, <span class="at">topN =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Apriori Algorithm The apriori() generates the most relevent set of rules from a given transaction data. It also shows the support, confidence and lift of those rules. These three measure can be used to decide the relative strength of the rules. So what do these terms mean?</p>
+<p>Lets consider the rule X =&gt; Y in order to compute these metrics.</p>
+<p><img src="https://s3.ap-south-1.amazonaws.com/techleer/243.jpg" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>basket_rules <span class="ot">&lt;-</span> <span class="fu">apriori</span>(txn, <span class="at">parameter =</span> <span class="fu">list</span>(<span class="at">minlen=</span><span class="dv">2</span>, <span class="at">sup =</span> <span class="fl">0.001</span>, <span class="at">conf =</span> <span class="fl">0.05</span>, <span class="at">target=</span><span class="st">"rules"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Apriori
+
+Parameter specification:
+ confidence minval smax arem  aval originalSupport maxtime support minlen
+       0.05    0.1    1 none FALSE            TRUE       5   0.001      2
+ maxlen target  ext
+     10  rules TRUE
+
+Algorithmic control:
+ filter tree heap memopt load sort verbose
+    0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+
+Absolute minimum support count: 14 
+
+set item appearances ...[0 item(s)] done [0.00s].
+set transactions ...[168 item(s), 14964 transaction(s)] done [0.00s].
+sorting and recoding items ... [149 item(s)] done [0.00s].
+creating transaction tree ... done [0.00s].
+checking subsets of size 1 2 3 4 done [0.00s].
+writing ... [450 rule(s)] done [0.00s].
+creating S4 object  ... done [0.00s].</code></pre>
+</div>
+</div>
+<p>Total rules generated</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(basket_rules))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 450</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(basket_rules)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>set of 450 rules
+
+rule length distribution (lhs + rhs):sizes
+  2   3 
+423  27 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2.00    2.00    2.00    2.06    2.00    3.00 
+
+summary of quality measures:
+    support           confidence         coverage             lift       
+ Min.   :0.001002   Min.   :0.05000   Min.   :0.005346   Min.   :0.5195  
+ 1st Qu.:0.001270   1st Qu.:0.06397   1st Qu.:0.015972   1st Qu.:0.7673  
+ Median :0.001938   Median :0.08108   Median :0.023590   Median :0.8350  
+ Mean   :0.002760   Mean   :0.08759   Mean   :0.033723   Mean   :0.8859  
+ 3rd Qu.:0.003341   3rd Qu.:0.10482   3rd Qu.:0.043705   3rd Qu.:0.9601  
+ Max.   :0.014836   Max.   :0.25581   Max.   :0.157912   Max.   :2.1831  
+     count      
+ Min.   : 15.0  
+ 1st Qu.: 19.0  
+ Median : 29.0  
+ Mean   : 41.3  
+ 3rd Qu.: 50.0  
+ Max.   :222.0  
+
+mining info:
+ data ntransactions support confidence
+  txn         14964   0.001       0.05
+                                                                                          call
+ apriori(data = txn, parameter = list(minlen = 2, sup = 0.001, conf = 0.05, target = "rules"))</code></pre>
+</div>
+</div>
+<p>Inspecting the basket rules</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(basket_rules[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lhs                            rhs                support     confidence
+[1]  {frozen fish}               =&gt; {whole milk}       0.001069233 0.1568627 
+[2]  {seasonal products}         =&gt; {rolls/buns}       0.001002406 0.1415094 
+[3]  {pot plants}                =&gt; {other vegetables} 0.001002406 0.1282051 
+[4]  {pot plants}                =&gt; {whole milk}       0.001002406 0.1282051 
+[5]  {pasta}                     =&gt; {whole milk}       0.001069233 0.1322314 
+[6]  {pickled vegetables}        =&gt; {whole milk}       0.001002406 0.1119403 
+[7]  {packaged fruit/vegetables} =&gt; {rolls/buns}       0.001202887 0.1417323 
+[8]  {detergent}                 =&gt; {yogurt}           0.001069233 0.1240310 
+[9]  {detergent}                 =&gt; {rolls/buns}       0.001002406 0.1162791 
+[10] {detergent}                 =&gt; {whole milk}       0.001403368 0.1627907 
+[11] {semi-finished bread}       =&gt; {other vegetables} 0.001002406 0.1056338 
+[12] {semi-finished bread}       =&gt; {whole milk}       0.001670676 0.1760563 
+[13] {red/blush wine}            =&gt; {rolls/buns}       0.001336541 0.1273885 
+[14] {red/blush wine}            =&gt; {other vegetables} 0.001136060 0.1082803 
+[15] {flour}                     =&gt; {tropical fruit}   0.001069233 0.1095890 
+[16] {flour}                     =&gt; {whole milk}       0.001336541 0.1369863 
+[17] {herbs}                     =&gt; {yogurt}           0.001136060 0.1075949 
+[18] {herbs}                     =&gt; {whole milk}       0.001136060 0.1075949 
+[19] {processed cheese}          =&gt; {root vegetables}  0.001069233 0.1052632 
+[20] {processed cheese}          =&gt; {rolls/buns}       0.001470195 0.1447368 
+     coverage    lift      count
+[1]  0.006816359 0.9933534 16   
+[2]  0.007083667 1.2864807 15   
+[3]  0.007818765 1.0500611 15   
+[4]  0.007818765 0.8118754 15   
+[5]  0.008086073 0.8373723 16   
+[6]  0.008954825 0.7088763 15   
+[7]  0.008487036 1.2885066 18   
+[8]  0.008620690 1.4443580 16   
+[9]  0.008620690 1.0571081 15   
+[10] 0.008620690 1.0308929 21   
+[11] 0.009489441 0.8651911 15   
+[12] 0.009489441 1.1148993 25   
+[13] 0.010491847 1.1581057 20   
+[14] 0.010491847 0.8868668 17   
+[15] 0.009756750 1.6172489 16   
+[16] 0.009756750 0.8674833 20   
+[17] 0.010558674 1.2529577 17   
+[18] 0.010558674 0.6813587 17   
+[19] 0.010157712 1.5131200 16   
+[20] 0.010157712 1.3158214 22   </code></pre>
+</div>
+</div>
+<p>Visualizing the Association Rules¶</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules, <span class="at">jitter =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules, <span class="at">method =</span> <span class="st">"grouped"</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">k =</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Graph of first 20 rules</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="at">method=</span><span class="st">"graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Graph of first 50 rules</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], <span class="at">method=</span><span class="st">"graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Parallel coordinates plot¶</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="at">method=</span><span class="st">"paracoord"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Changing hyperparameters¶</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>basket_rules2 <span class="ot">&lt;-</span> <span class="fu">apriori</span>(txn, <span class="at">parameter =</span> <span class="fu">list</span>(<span class="at">minlen=</span><span class="dv">3</span>, <span class="at">sup =</span> <span class="fl">0.001</span>, <span class="at">conf =</span> <span class="fl">0.1</span>, <span class="at">target=</span><span class="st">"rules"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Apriori
+
+Parameter specification:
+ confidence minval smax arem  aval originalSupport maxtime support minlen
+        0.1    0.1    1 none FALSE            TRUE       5   0.001      3
+ maxlen target  ext
+     10  rules TRUE
+
+Algorithmic control:
+ filter tree heap memopt load sort verbose
+    0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+
+Absolute minimum support count: 14 
+
+set item appearances ...[0 item(s)] done [0.00s].
+set transactions ...[168 item(s), 14964 transaction(s)] done [0.00s].
+sorting and recoding items ... [149 item(s)] done [0.00s].
+creating transaction tree ... done [0.00s].
+checking subsets of size 1 2 3 4 done [0.00s].
+writing ... [17 rule(s)] done [0.00s].
+creating S4 object  ... done [0.00s].</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(basket_rules2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(basket_rules2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>set of 17 rules
+
+rule length distribution (lhs + rhs):sizes
+ 3 
+17 
+
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      3       3       3       3       3       3 
+
+summary of quality measures:
+    support           confidence        coverage             lift       
+ Min.   :0.001002   Min.   :0.1018   Min.   :0.005346   Min.   :0.7214  
+ 1st Qu.:0.001136   1st Qu.:0.1172   1st Qu.:0.008086   1st Qu.:0.8897  
+ Median :0.001136   Median :0.1269   Median :0.008955   Median :1.1081  
+ Mean   :0.001207   Mean   :0.1437   Mean   :0.008821   Mean   :1.1794  
+ 3rd Qu.:0.001337   3rd Qu.:0.1642   3rd Qu.:0.010559   3rd Qu.:1.2297  
+ Max.   :0.001470   Max.   :0.2558   Max.   :0.011160   Max.   :2.1831  
+     count      
+ Min.   :15.00  
+ 1st Qu.:17.00  
+ Median :17.00  
+ Mean   :18.06  
+ 3rd Qu.:20.00  
+ Max.   :22.00  
+
+mining info:
+ data ntransactions support confidence
+  txn         14964   0.001        0.1
+                                                                                         call
+ apriori(data = txn, parameter = list(minlen = 3, sup = 0.001, conf = 0.1, target = "rules"))</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(basket_rules2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lhs                               rhs                support    
+[1]  {sausage, yogurt}              =&gt; {whole milk}       0.001470195
+[2]  {sausage, whole milk}          =&gt; {yogurt}           0.001470195
+[3]  {whole milk, yogurt}           =&gt; {sausage}          0.001470195
+[4]  {sausage, soda}                =&gt; {whole milk}       0.001069233
+[5]  {sausage, whole milk}          =&gt; {soda}             0.001069233
+[6]  {rolls/buns, sausage}          =&gt; {whole milk}       0.001136060
+[7]  {sausage, whole milk}          =&gt; {rolls/buns}       0.001136060
+[8]  {rolls/buns, yogurt}           =&gt; {whole milk}       0.001336541
+[9]  {whole milk, yogurt}           =&gt; {rolls/buns}       0.001336541
+[10] {other vegetables, yogurt}     =&gt; {whole milk}       0.001136060
+[11] {whole milk, yogurt}           =&gt; {other vegetables} 0.001136060
+[12] {rolls/buns, soda}             =&gt; {other vegetables} 0.001136060
+[13] {other vegetables, soda}       =&gt; {rolls/buns}       0.001136060
+[14] {other vegetables, rolls/buns} =&gt; {soda}             0.001136060
+[15] {rolls/buns, soda}             =&gt; {whole milk}       0.001002406
+[16] {other vegetables, soda}       =&gt; {whole milk}       0.001136060
+[17] {other vegetables, rolls/buns} =&gt; {whole milk}       0.001202887
+     confidence coverage    lift      count
+[1]  0.2558140  0.005747126 1.6199746 22   
+[2]  0.1641791  0.008954825 1.9118880 22   
+[3]  0.1317365  0.011160118 2.1830624 22   
+[4]  0.1797753  0.005947608 1.1384500 16   
+[5]  0.1194030  0.008954825 1.2296946 16   
+[6]  0.2125000  0.005346164 1.3456835 17   
+[7]  0.1268657  0.008954825 1.1533523 17   
+[8]  0.1709402  0.007818765 1.0825005 20   
+[9]  0.1197605  0.011160118 1.0887581 20   
+[10] 0.1404959  0.008086073 0.8897081 17   
+[11] 0.1017964  0.011160118 0.8337610 17   
+[12] 0.1404959  0.008086073 1.1507281 17   
+[13] 0.1172414  0.009689922 1.0658566 17   
+[14] 0.1075949  0.010558674 1.1080872 17   
+[15] 0.1239669  0.008086073 0.7850365 15   
+[16] 0.1172414  0.009689922 0.7424460 17   
+[17] 0.1139241  0.010558674 0.7214386 18   </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules2, <span class="at">method=</span><span class="st">"graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules2, <span class="at">method=</span><span class="st">"paracoord"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="11_week_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>

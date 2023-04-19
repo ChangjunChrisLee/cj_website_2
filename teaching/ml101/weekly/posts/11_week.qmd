@@ -11,25 +11,184 @@ slide-format: revealjs
 
 ### Pre-class video
 
-- Eng ver.
+-   Eng ver.
 
 {{< video https://youtu.be/_F4xOCXiCaM >}}
 
-- Kor ver.
+-   Kor ver.
 
 {{< video https://youtu.be/h6cXDDC1pA0 >}}
 
-- Pre-class PPT [pdf](content/ML_pre_10.pdf)
+-   Pre-class PPT [pdf](content/ML_pre_10.pdf)
 
 ------------------------------------------------------------------------
 
 ### Discussion
 
-Discussion #9 
+Discussion #9
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeYV_VGdkbGlz6HR4FotAd4G2aKn_6ZLb6_363_pMPBQ2ZUxQ/viewform?embedded=true" width="640" height="2800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeYV_VGdkbGlz6HR4FotAd4G2aKn_6ZLb6_363_pMPBQ2ZUxQ/viewform?embedded=true" width="640" height="2800" frameborder="0" marginheight="0" marginwidth="0">
+
+Loading...
+
+</iframe>
 
 ------------------------------------------------------------------------
 
-
 ### Class
+
+Apriori Algorithm Implementation in R using 'arules' library Association mining is usually done on transactions data from a retail market or from an online e-commerce store. Since most transactions data is large, the apriori algorithm makes it easier to find these patterns or rules quickly. Association Rules are widely used to analyze retail basket or transaction data, and are intended to identify strong rules discovered in transaction data using measures of interestingness, based on the concept of strong rules.
+
+Apriori uses a "bottom up" approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data. The algorithm terminates when no further successful extensions are found.
+
+Download the grocery dataset
+
+\[[Grocery data](content/Groceries_dataset.csv)\]
+
+Import Required libraries and data
+
+```{r}
+library(tidyverse)
+library(plyr)
+
+groceries <- read.csv("content/Groceries_dataset.csv")
+head(groceries, 20)
+
+
+```
+
+Data Cleaning and Exploration
+
+Checking NA values
+
+```{r}
+glimpse(groceries)
+summary(groceries)
+sum(is.na(groceries))
+```
+
+Group all the items that were bought together by the same customer on the same date
+
+```{r}
+itemList <- ddply(groceries, c("Member_number","Date"), function(df1)paste(df1$itemDescription,collapse = ","))
+                  
+head(itemList,15)
+```
+
+Remove member number and date
+
+```{r}
+itemList %>% select(V1) %>% setNames(c("itemList")) %>% head
+itemList<-itemList %>% select(V1) %>% setNames(c("itemList")) 
+write.csv(itemList,"ItemList.csv", quote = FALSE, row.names = TRUE)
+
+```
+
+Convert CSV file to Basket Format
+
+```{r}
+library(arules)
+library(arulesViz)
+```
+
+```{r}
+txn = read.transactions(file="ItemList.csv", rm.duplicates= TRUE, format="basket",sep=",",cols=1);
+print(txn)
+```
+
+Most Frequent Products
+
+```{r}
+itemFrequencyPlot(txn, topN = 20)
+
+```
+
+Apriori Algorithm The apriori() generates the most relevent set of rules from a given transaction data. It also shows the support, confidence and lift of those rules. These three measure can be used to decide the relative strength of the rules. So what do these terms mean?
+
+Lets consider the rule X =\> Y in order to compute these metrics.
+
+![](https://s3.ap-south-1.amazonaws.com/techleer/243.jpg)
+
+```{r}
+basket_rules <- apriori(txn, parameter = list(minlen=2, sup = 0.001, conf = 0.05, target="rules"))
+```
+
+Total rules generated
+
+```{r}
+print(length(basket_rules))
+summary(basket_rules)
+
+```
+
+Inspecting the basket rules
+
+```{r}
+inspect(basket_rules[1:20])
+
+```
+
+Visualizing the Association Rules¶
+
+```{r}
+plot(basket_rules, jitter = 0)
+
+```
+
+```{r}
+plot(basket_rules, method = "grouped", control = list(k = 5))
+
+```
+
+Graph of first 20 rules
+
+```{r}
+plot(basket_rules[1:20], method="graph")
+
+```
+
+Graph of first 50 rules
+
+```{r}
+plot(basket_rules[1:50], method="graph")
+
+```
+
+Parallel coordinates plot¶
+
+```{r}
+plot(basket_rules[1:20], method="paracoord")
+
+```
+
+Changing hyperparameters¶
+
+```{r}
+basket_rules2 <- apriori(txn, parameter = list(minlen=3, sup = 0.001, conf = 0.1, target="rules"))
+
+```
+
+```{r}
+print(length(basket_rules2))
+
+```
+
+```{r}
+summary(basket_rules2)
+
+```
+
+```{r}
+inspect(basket_rules2)
+
+```
+
+```{r}
+plot(basket_rules2, method="graph")
+
+```
+
+```{r}
+plot(basket_rules2, method="paracoord")
+
+```
