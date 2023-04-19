@@ -11,27 +11,265 @@ slide-format: revealjs
 
 ### Pre-class video
 
-- Eng ver.
+-   Eng ver.
 
 {{< video https://youtu.be/1sUnquImsbo >}}
 
-- Kor ver.
+-   Kor ver.
 
 {{< video https://youtu.be/fMpR4LWGV5w >}}
 
-- Pre-class PPT [pdf](content/ML_pre_08.pdf)
+-   Pre-class PPT [pdf](content/ML_pre_08.pdf)
 
 ------------------------------------------------------------------------
 
 ### Discussion
 
-Discussion #7 
+Discussion #7
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdYRn_Z99BI-nbjRkC-94iDtZ73bjn1sOlQZvzwH9eVFEYGzQ/viewform?embedded=true" width="640" height="3100" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdYRn_Z99BI-nbjRkC-94iDtZ73bjn1sOlQZvzwH9eVFEYGzQ/viewform?embedded=true" width="640" height="3100" frameborder="0" marginheight="0" marginwidth="0">
 
+Loading...
+
+</iframe>
 
 ------------------------------------------------------------------------
 
 ### Class
+
+#### **Motivation**
+
+In many real-world applications, the relationship between the dependent variable and independent variables is not always linear. Non-linear regression is a versatile tool that can be used to model complex relationships between variables, allowing for a more accurate representation of the underlying processes.
+
+#### **Theory**
+
+Non-linear regression seeks to find the best-fit curve or surface through the data points by minimizing the sum of the squared residuals, which represent the difference between the observed and predicted values. The general form of a non-linear regression model can be written as:
+
+$$
+y = f(x, β) + ε
+$$
+
+where y is the dependent variable, x is the independent variable, β represents the vector of parameters to be estimated, f(x, β) is the non-linear function, and ε is the error term.
+
+Generalized Linear Model (GLM)
+
+GLM stands for Generalized Linear Model in R. It is a flexible extension of the ordinary linear regression that allows for response variables with error distribution models other than the normal distribution, such as the binomial or Poisson distributions. The GLM is used to model the relationship between a response variable and one or more predictor variables by combining a linear predictor function with a specified probability distribution for the response variable.
+
+The glm() function in R is used to fit generalized linear models, and its general syntax is:
+
+`glm(formula, data, family)`
+
+where:
+
+formula: A symbolic description of the model to be fitted, such as y \~ x1 + x2. data: A data frame containing the variables in the model. family: A description of the error distribution and link function to be used in the model. Common choices include binomial, poisson, and gaussian. The link function, which can be specified using the link argument within the family function, determines how the expected value of the response variable is related to the linear predictor function. Examples of link functions are logit, probit, and log.
+
+<br>
+
+The GLM can be applied to various types of regression problems, including linear regression, logistic regression, and Poisson regression, by specifying the appropriate distribution family and link function. This versatility makes the GLM a powerful and widely used tool for modeling relationships between variables in various fields.
+
+Then, what is the difference btw GLM & LM? See the link below.
+
+[The Difference Between glm and lm in R](https://www.statology.org/glm-vs-lm-in-r/)
+
+<br>
+
+**Logit Model** (A representative model in GLM)
+
+> Logistic regression, specifically the logit model, is a popular technique for handling non-linear dependent variables, allowing us to predict the probability of an event occurring given a set of input variables.
+
+$$
+P(Y=1) = \frac{1}{(1 + exp(-z))}
+$$ where z is a linear function of the predictor variables: $$
+z = β_0 + β_1X_1 + β_2X_2 + ... + β_kX_k
+$$
+
+The logit transformation, which is the log-odds of the probability, is given by:
+
+$$
+logit(P(Y=1)) = \log{\frac {P(Y=1)}{P(Y=0)}} = z
+$$ The coefficients $(β_0, β_1, ... β_k)$ are estimated using *maximum likelihood estimation*, which seeks to maximize the likelihood of observing the data given the logistic model.
+
+Let's use R to fit a logit model to a simple dataset. First, we will check if the required library is installed, and if not, install and load it:
+
+```{r}
+
+# install.packages("glm2")
+library(glm2)
+
+```
+
+Next, let's create a synthetic dataset for our example:
+
+```{r}
+set.seed(42)
+x1 <- runif(100, 0, 10)
+x2 <- runif(100, 0, 10)
+z <- 0.5 + 0.7 * x1 - 0.3 * x2
+p <- 1 / (1 + exp(-z))
+y <- ifelse(p > 0.5, 1, 0)
+data <- data.frame(x1, x2, y)
+
+```
+
+Here, we have generated 100 data points with two predictor variables, x1 and x2, and a binary outcome variable, y.
+
+Now, let's fit the logit model using the `glm()` function:
+
+```{r}
+model <- glm(y ~ x1 + x2, data = data, family = binomial(link = "logit"))
+
+```
+
+To view the estimated coefficients, we can use the `summary()` function:
+
+```{r}
+summary(model)
+
+```
+
+To make predictions on new data, we can use the `predict()` function:
+
+```{r}
+new_data <- data.frame(x1 = c(5, 7), x2 = c(3, 9))
+new_data
+
+predicted_prob <- predict(model, newdata = new_data, type = "response")
+predicted_prob
+
+predicted_class <- ifelse(predicted_prob > 0.5, 1, 0)
+predicted_class
+
+```
+
+<br>
+
+#### Second practice with another dataset
+
+Let's use `haberman` dataset
+
+```{r}
+library(tidyverse)
+
+haberman<-read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/haberman/haberman.data", header=F)
+names(haberman)<-c("age", "op_year", "no_nodes", "survival")
+
+glimpse(haberman)
+```
+
+The Haberman dataset, also known as the Haberman's Survival dataset, is a dataset containing cases from a study conducted between 1958 and 1970 at the University of Chicago's Billings Hospital on the survival of patients who underwent surgery for breast cancer. The dataset is often used for classification and data analysis tasks in machine learning and statistics.
+
+The Haberman dataset contains 306 instances (rows) and 4 attributes (columns). The attributes are:
+
+1.  Age: The patient's age at the time of the operation, represented as an integer.
+
+2.  Year: The year of the operation, represented as an integer from 58 (1958) to 69 (1969).
+
+3.  Nodes: The number of positive axillary nodes detected, represented as an integer. A positive axillary node is a lymph node containing cancer cells. A higher number of positive axillary nodes generally indicates a more advanced stage of cancer.
+
+4.  Status: The survival status of the patient, represented as an integer. A value of 1 indicates that the patient survived for 5 years or longer after the surgery, while a value of 2 indicates that the patient died within 5 years of the surgery.
+
+5.  Response var: Survival in 5 years
+
+The goal of analyzing the Haberman dataset is usually to predict a patient's survival status based on the other three attributes (age, year, and nodes). This is typically treated as a binary classification problem, with survival status as the dependent variable and the other attributes as independent variables. Various machine learning algorithms, including logistic regression, support vector machines, and decision trees, can be applied to this dataset for predictive modeling and analysis.
+
+```{r}
+table(haberman$survival)
+prop.table(table(haberman$survival))
+
+```
+
+```{r}
+haberman %>% mutate(n_survival=ifelse(survival==2,1,0)) %>% head
+
+```
+
+```{r}
+haberman %>% mutate(n_survival=ifelse(survival==2,1,0)) %>% select(-survival) -> haberman
+summary(haberman)
+```
+
+```{r}
+par(mfrow=c(1,3))
+plot(density(haberman$age))
+plot(density(haberman$op_year))
+plot(density(haberman$no_nodes))
+```
+
+```{r}
+par(mfrow=c(1,3))
+boxplot(haberman$age)
+boxplot(haberman$op_year)
+boxplot(haberman$no_nodes)
+```
+
+```{r}
+corr <- round(cor(haberman), 2)
+corr
+```
+
+```{r}
+library(ggcorrplot)
+ggcorrplot(corr, method = "circle")
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(haberman$age, haberman$n_survival)
+plot(haberman$op_year, haberman$n_survival)
+plot(haberman$no_nodes, haberman$n_survival)
+```
+
+```{r}
+haberman %>% ggplot(aes(x=age, y=n_survival)) + geom_jitter(aes(col=factor(n_survival)), height=0.1, width=0.1)
+```
+
+```{r}
+haberman %>% ggplot(aes(x=op_year, y=n_survival)) + geom_jitter(aes(col=factor(n_survival)), height=0.1, width=0.1)
+```
+
+```{r}
+haberman %>% ggplot(aes(x=age, y=n_survival)) + geom_jitter(aes(col=factor(n_survival)), height=0.1, width=0.1)
+```
+
+Fit the data to the simple linear model
+
+```{r}
+linear.model<-glm("n_survival~.", data=haberman)
+summary(linear.model)
+```
+
+Fit the data to the generalized linear model
+
+```{r}
+logit.model<-glm("n_survival~.", data=haberman, family="binomial")
+summary(logit.model)
+```
+
+**Odds ratio!**
+
+```{r}
+exp(logit.model$coefficients)
+
+exp(cbind(OR = coef(logit.model), confint(logit.model)))
+
+newdata<-data.frame(age=c(10,20,30), op_year=c(40,50,60), no_nodes=c(1,3,5))
+newdata
+```
+
+Prediction
+
+```{r}
+predict(linear.model, newdata)
+```
+
+type of prediction is a predicted probability (type="response").
+
+```{r}
+predict(logit.model, newdata, type = "response")
+
+```
+
+\
+
 
 

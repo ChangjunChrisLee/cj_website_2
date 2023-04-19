@@ -4,9 +4,9 @@
 
 
 # Install 'remotes' packages to import 'palmerpenguins' dataset
-install.packages("remotes")
+# install.packages("remotes")
 # Install 'palmerpenguins' package
-remotes::install_github("allisonhorst/palmerpenguins")
+# remotes::install_github("allisonhorst/palmerpenguins")
 
 # Import required libraries
 library(palmerpenguins)

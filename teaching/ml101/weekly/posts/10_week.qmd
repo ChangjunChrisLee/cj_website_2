@@ -35,3 +35,231 @@ Discussion #8
 ### Class
 
 
+K-Means Clustering in R
+The basic idea behind k-means clustering consists of defining clusters so that the total intra-cluster variation (known as total within-cluster variation) is minimized.
+There are several k-means algorithms available. The standard algorithm is the Hartigan-Wong algorithm (Hartigan and Wong 1979), which defines the total within-cluster variation as the sum of squared distances Euclidean distances between items and the corresponding centroid
+
+
+Data
+We’ll use the demo data sets “USArrests”. The data must contains only continuous variables, as the k-means algorithm uses variable means.
+
+
+```{r}
+library(tidyverse)
+
+data("USArrests")      # Loading the data set
+head(USArrests)
+```
+
+Visualize the data
+See the link for the detail https://givitallugot.github.io/articles/2020-03/R-visualization-2-usmap
+
+
+```{r}
+crime <- rownames_to_column(USArrests, var="state") #change row names to column (variable)
+head(crime)
+```
+
+```{r}
+crime$state <- tolower(crime$state) #change the upper letter to lower character in state variable
+head(crime)
+```
+
+
+
+```{r}
+states_map <- map_data("state")
+head(states_map)
+```
+
+
+```{r}
+# install.packages("ggiraphExtra")
+```
+
+```{r}
+library(ggiraphExtra)
+
+ggChoropleth(data=crime, aes(fill=Murder, map_id=state), map=states_map)
+
+```
+
+
+
+```{r}
+library(ggthemes)
+ggChoropleth(data=crime, aes(fill=Murder, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+
+
+
+
+```{r}
+ggChoropleth(data=crime, aes(fill=UrbanPop, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+
+```{r}
+ggChoropleth(data=crime, aes(fill=Assault, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+
+```{r}
+ggChoropleth(data=crime, aes(fill=Rape, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+
+
+Required R packages and functions
+The standard R function for k-means clustering is kmeans() [stats package], which simplified format is as follow:
+
+
+kmeans(x, centers, iter.max = 10, nstart = 1)
+
+
+```{r}
+glimpse(USArrests)
+```
+Z-score Standardization for k-means clustering
+
+
+
+```{r}
+df <- scale(USArrests) # Scaling the data
+head(df)
+summary(df)
+```
+
+To create a beautiful graph of the clusters generated with the kmeans() function, will use the factoextra package.
+
+
+```{r}
+library(factoextra)
+```
+
+
+How many clusters (k) is the best?
+
+```{r}
+g1<-fviz_nbclust(df, kmeans, method = "wss")
+g1
+
+```
+
+
+
+```{r}
+g2<-fviz_nbclust(df, kmeans, method = "silhouette")
+g2
+```
+
+
+Let's run unsupervised clustering given k=4
+
+
+```{r}
+# Compute k-means with k = 4
+set.seed(123)
+km.res <- kmeans(df, 4, nstart = 25)
+```
+
+
+
+As the final result of k-means clustering result is sensitive to the random starting assignments, we specify nstart = 25. This means that R will try 25 different random starting assignments and then select the best results corresponding to the one with the lowest within cluster variation. The default value of nstart in R is one. But, it’s strongly recommended to compute k-means clustering with a large value of nstart such as 25 or 50, in order to have a more stable result.
+
+
+
+```{r}
+# Print the results
+print(km.res)
+```
+
+
+The printed output displays:
+the cluster means or centers: a matrix, which rows are cluster number (1 to 4) and columns are variables the clustering vector: A vector of integers (from 1:k) indicating the cluster to which each point is allocated
+
+
+If you want to add the point classifications to the original data, use this:
+
+```{r}
+str(km.res)
+km.res$cluster
+
+```
+
+
+```{r}
+dd <- data.frame(USArrests, cluster = km.res$cluster)
+head(dd)
+```
+
+
+```{r}
+dd %>% 
+  group_by(cluster) %>% 
+  summarize_all(mean)
+```
+
+
+Cluster number for each of the observations
+
+```{r}
+table(dd$cluster)
+```
+
+```{r}
+library(reshape2)
+dd %>% melt(id.vars="cluster") %>% 
+mutate(cluster=as.factor(cluster)) %>% head(20)
+```
+
+
+```{r}
+dd %>% melt(id.vars="cluster") %>% 
+mutate(cluster=as.factor(cluster)) %>% 
+ggplot(aes(x=cluster, y=value))+geom_boxplot()+facet_wrap(~variable, scale="free_y")
+
+```
+
+
+-   cluster 1: Rural area with high murder, assault
+-   cluster 2: Peaceful rural areas
+-   cluster 3: Good city with low crime
+-   cluster 4: City Gotham..
+
+
+
+```{r}
+
+fviz_cluster(km.res, data = df)
+
+```
+Let's play with different k (number of clusters)
+
+```{r}
+k2 <- kmeans(df, centers = 2, nstart = 25)
+k3 <- kmeans(df, centers = 3, nstart = 25)
+k4 <- kmeans(df, centers = 4, nstart = 25)
+k5 <- kmeans(df, centers = 5, nstart = 25)
+
+# plots to compare
+p1 <- fviz_cluster(k2, geom = "point", data = df) + ggtitle("k = 2")
+p2 <- fviz_cluster(k3, geom = "point",  data = df) + ggtitle("k = 3")
+p3 <- fviz_cluster(k4, geom = "point",  data = df) + ggtitle("k = 4")
+p4 <- fviz_cluster(k5, geom = "point",  data = df) + ggtitle("k = 5")
+
+library(gridExtra)
+grid.arrange(p1, p2, p3, p4, nrow = 2)
+```
+
+
+
+
+
+
+
