@@ -217,7 +217,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
+  <li><a href="#about-qz-1" id="toc-about-qz-1" class="nav-link" data-scroll-target="#about-qz-1">About QZ #1</a></li>
   <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
+  <li><a href="#second-practice-with-another-dataset" id="toc-second-practice-with-another-dataset" class="nav-link" data-scroll-target="#second-practice-with-another-dataset">Second practice with another dataset</a></li>
   </ul>
 </nav>
     </div>
@@ -267,11 +269,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </iframe>
 <hr>
 </section>
+<section id="about-qz-1" class="level3">
+<h3 class="anchored" data-anchor-id="about-qz-1">About QZ #1</h3>
+<p><br></p>
+</section>
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
 <section id="motivation" class="level4">
 <h4 class="anchored" data-anchor-id="motivation"><strong>Motivation</strong></h4>
-<p>In many real-world applications, the relationship between the dependent variable and independent variables is not always linear. Non-linear regression is a versatile tool that can be used to model complex relationships between variables, allowing for a more accurate representation of the underlying processes.</p>
+<p>In many real-world applications, the relationship between the dependent variable and independent variables <u>is not always linear.</u> <strong>Non-linear regression</strong> is <u>a versatile tool that can be used to model complex relationships between variables</u>, allowing for a more accurate representation of the underlying processes.</p>
 </section>
 <section id="theory" class="level4">
 <h4 class="anchored" data-anchor-id="theory"><strong>Theory</strong></h4>
@@ -279,17 +285,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[
 y = f(x, β) + ε
 \]</span></p>
-<p>where y is the dependent variable, x is the independent variable, β represents the vector of parameters to be estimated, f(x, β) is the non-linear function, and ε is the error term.</p>
-<p>Generalized Linear Model (GLM)</p>
+<p>where</p>
+<ul>
+<li><p>y is the dependent variable,</p></li>
+<li><p>x is the independent variable,</p></li>
+<li><p>β represents the vector of parameters to be estimated,</p></li>
+<li><p>f(x, β) is the non-linear function, and</p></li>
+<li><p>ε is the error term.</p></li>
+</ul>
+<p><br></p>
+<p><strong>Generalized Linear Model (GLM)</strong></p>
 <p>GLM stands for Generalized Linear Model in R. It is a flexible extension of the ordinary linear regression that allows for response variables with error distribution models other than the normal distribution, such as the binomial or Poisson distributions. The GLM is used to model the relationship between a response variable and one or more predictor variables by combining a linear predictor function with a specified probability distribution for the response variable.</p>
 <p>The glm() function in R is used to fit generalized linear models, and its general syntax is:</p>
 <p><code>glm(formula, data, family)</code></p>
 <p>where:</p>
-<p>formula: A symbolic description of the model to be fitted, such as y ~ x1 + x2. data: A data frame containing the variables in the model. family: A description of the error distribution and link function to be used in the model. Common choices include binomial, poisson, and gaussian. The link function, which can be specified using the link argument within the family function, determines how the expected value of the response variable is related to the linear predictor function. Examples of link functions are logit, probit, and log.</p>
+<ul>
+<li><p><strong>formula</strong>: A symbolic description of the model to be fitted, such as <code>y ~ x1 + x2</code>.</p></li>
+<li><p><strong>data</strong>: A data frame containing the variables in the model.</p></li>
+<li><p><strong>family</strong>: A description of the error distribution and link function to be used in the model. Common choices include binomial, poisson, and gaussian. The link function, which can be specified using the link argument within the family function, determines how the expected value of the response variable is related to the linear predictor function. Examples of link functions are <em>Logit</em> and <em>Probit</em>.</p></li>
+</ul>
 <p><br></p>
+<blockquote class="blockquote">
 <p>The GLM can be applied to various types of regression problems, including linear regression, logistic regression, and Poisson regression, by specifying the appropriate distribution family and link function. This versatility makes the GLM a powerful and widely used tool for modeling relationships between variables in various fields.</p>
-<p>Then, what is the difference btw GLM &amp; LM? See the link below.</p>
-<p><a href="https://www.statology.org/glm-vs-lm-in-r/">The Difference Between glm and lm in R</a></p>
+</blockquote>
+<ul>
+<li><p>Then, what is the difference btw GLM &amp; LM? See the link below.</p>
+<p><a href="https://www.statology.org/glm-vs-lm-in-r/">The Difference Between glm and lm in R</a></p></li>
+</ul>
 <p><br></p>
 <p><strong>Logit Model</strong> (A representative model in GLM)</p>
 <blockquote class="blockquote">
@@ -303,7 +325,7 @@ z = β_0 + β_1X_1 + β_2X_2 + ... + β_kX_k
 <p>The logit transformation, which is the log-odds of the probability, is given by:</p>
 <p><span class="math display">\[
 logit(P(Y=1)) = \log{\frac {P(Y=1)}{P(Y=0)}} = z
-\]</span> The coefficients <span class="math inline">\((β_0, β_1, ... β_k)\)</span> are estimated using <em>maximum likelihood estimation</em>, which seeks to maximize the likelihood of observing the data given the logistic model.</p>
+\]</span> The coefficients <span class="math inline">\((β_0, β_1, ... β_k)\)</span> are estimated using <em>Maximum Likelihood Estimation (MLE)</em>, which seeks to maximize the likelihood of observing the data given the logistic model.</p>
 <p>Let’s use R to fit a logit model to a simple dataset. First, we will check if the required library is installed, and if not, install and load it:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("glm2")</span></span>
@@ -317,12 +339,116 @@ logit(P(Y=1)) = \log{\frac {P(Y=1)}{P(Y=0)}} = z
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">+</span> <span class="fl">0.7</span> <span class="sc">*</span> x1 <span class="sc">-</span> <span class="fl">0.3</span> <span class="sc">*</span> x2</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>z))</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(p <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2, y)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             x1         x2 y
+1   9.148060435 6.26245345 1
+2   9.370754133 2.17157698 1
+3   2.861395348 2.16567311 1
+4   8.304476261 3.88945029 1
+5   6.417455189 9.42455692 1
+6   5.190959491 9.62608014 1
+7   7.365883146 7.39855279 1
+8   1.346665972 7.33245906 0
+9   6.569922904 5.35761290 1
+10  7.050647840 0.02272966 1
+11  4.577417762 6.08937453 1
+12  7.191122517 8.36801559 1
+13  9.346722472 7.51522563 1
+14  2.554288243 4.52731573 1
+15  4.622928225 5.35789994 1
+16  9.400145228 5.37376695 1
+17  9.782264284 0.01380844 1
+18  1.174873617 3.55665954 1
+19  4.749970816 6.12133090 1
+20  5.603327462 8.28942131 1
+21  9.040313873 3.56721999 1
+22  1.387101677 4.10635126 1
+23  9.888917289 5.73475899 1
+24  9.466682326 5.89678304 1
+25  0.824375581 7.19657292 0
+26  5.142117843 3.94973045 1
+27  3.902034671 9.19203929 1
+28  9.057381309 9.62570294 1
+29  4.469696281 2.33523526 1
+30  8.360042600 7.24497600 1
+31  7.375956178 9.03634525 1
+32  8.110551413 6.03474085 1
+33  3.881082828 6.31507299 1
+34  6.851697294 9.37385850 1
+35  0.039483388 8.50482751 0
+36  8.329160803 5.79820899 1
+37  0.073341469 8.21403924 0
+38  2.076589728 1.13718609 1
+39  9.066014078 7.64507759 1
+40  6.117786434 6.23613457 1
+41  3.795592405 1.48446607 1
+42  4.357715850 0.80264467 1
+43  0.374310329 4.64069551 0
+44  9.735399138 7.79368161 1
+45  4.317512489 7.33527960 1
+46  9.575765966 8.17230444 1
+47  8.877549055 1.70162481 1
+48  6.399787695 9.44720326 1
+49  9.709666104 2.93623841 1
+50  6.188382073 1.49072052 1
+51  3.334272113 7.19378591 1
+52  3.467482482 3.24085952 1
+53  3.984854114 7.78809499 1
+54  7.846927757 3.94441002 1
+55  0.389364911 6.78592868 0
+56  7.487953862 7.75825043 1
+57  6.772768302 1.87869044 1
+58  1.712643304 0.29085819 1
+59  2.610879638 1.35713797 1
+60  5.144129347 6.80164178 1
+61  6.756072745 9.34822954 1
+62  9.828171979 5.50494084 1
+63  7.595442676 6.01766235 1
+64  5.664884241 1.96994488 1
+65  8.496897186 5.35236611 1
+66  1.894739354 1.79555739 1
+67  2.712866147 4.51886494 1
+68  8.281584852 3.17053352 1
+69  6.932048204 1.16174670 1
+70  2.405447396 1.86102157 1
+71  0.429887960 7.29730097 0
+72  1.404790941 4.11872071 1
+73  2.163854151 4.14049682 1
+74  4.793985642 4.80310129 1
+75  1.974103423 4.27494466 1
+76  7.193558377 1.36490360 1
+77  0.078847387 8.24679406 0
+78  3.754899646 5.92304243 1
+79  5.144077083 7.94396978 1
+80  0.015705542 7.69032426 0
+81  5.816040025 9.18056417 1
+82  1.579052082 8.62629777 0
+83  3.590283059 3.16975238 1
+84  6.456318784 2.59260576 1
+85  7.758233626 7.42266452 1
+86  5.636468416 7.47361117 1
+87  2.337033986 9.17904034 0
+88  0.899805163 7.93191209 0
+89  0.856120649 1.33329618 1
+90  3.052183695 2.87749752 1
+91  6.674265147 1.94676144 1
+92  0.002388966 7.84109383 0
+93  2.085699569 1.28872162 1
+94  9.330341273 1.29089284 1
+95  9.256447486 0.72253111 1
+96  7.340943010 0.53129483 1
+97  3.330719834 5.31874436 1
+98  5.150633298 1.12308242 1
+99  7.439746463 7.43187720 1
+100 6.191592400 7.31315477 1</code></pre>
+</div>
 </div>
 <p>Here, we have generated 100 data points with two predictor variables, x1 and x2, and a binary outcome variable, y.</p>
 <p>Now, let’s fit the logit model using the <code>glm()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: glm.fit: algorithm did not converge</code></pre>
 </div>
@@ -332,7 +458,7 @@ logit(P(Y=1)) = \log{\frac {P(Y=1)}{P(Y=0)}} = z
 </div>
 <p>To view the estimated coefficients, we can use the <code>summary()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -360,21 +486,22 @@ Number of Fisher Scoring iterations: 25</code></pre>
 </div>
 <p>To make predictions on new data, we can use the <code>predict()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>), <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>new_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>), <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>new_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x1 x2
 1  5  3
 2  7  9</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>predicted_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> new_data, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>predicted_prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>predicted_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> new_data, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>predicted_prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1 2 
 1 1 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>predicted_class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(predicted_prob <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>predicted_class</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>predicted_class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(predicted_prob <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>predicted_class</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1 2 
 1 1 </code></pre>
@@ -382,11 +509,12 @@ Number of Fisher Scoring iterations: 25</code></pre>
 </div>
 <p><br></p>
 </section>
-<section id="second-practice-with-another-dataset" class="level4">
-<h4 class="anchored" data-anchor-id="second-practice-with-another-dataset">Second practice with another dataset</h4>
+</section>
+<section id="second-practice-with-another-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="second-practice-with-another-dataset">Second practice with another dataset</h3>
 <p>Let’s use <code>haberman</code> dataset</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.1     ✔ readr     2.1.4
@@ -399,10 +527,10 @@ Number of Fisher Scoring iterations: 25</code></pre>
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>haberman<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"https://archive.ics.uci.edu/ml/machine-learning-databases/haberman/haberman.data"</span>, <span class="at">header=</span>F)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(haberman)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"op_year"</span>, <span class="st">"no_nodes"</span>, <span class="st">"survival"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(haberman)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>haberman<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"https://archive.ics.uci.edu/ml/machine-learning-databases/haberman/haberman.data"</span>, <span class="at">header=</span>F)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(haberman)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"age"</span>, <span class="st">"op_year"</span>, <span class="st">"no_nodes"</span>, <span class="st">"survival"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(haberman)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 306
 Columns: 4
@@ -412,32 +540,35 @@ $ no_nodes &lt;int&gt; 1, 3, 0, 2, 4, 10, 0, 0, 9, 30, 1, 10, 7, 0, 13, 0, 1, 0,
 $ survival &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</code></pre>
 </div>
 </div>
-<p>The Haberman dataset, also known as the Haberman’s Survival dataset, is a dataset containing cases from a study conducted between 1958 and 1970 at the University of Chicago’s Billings Hospital on the survival of patients who underwent surgery for breast cancer. The dataset is often used for classification and data analysis tasks in machine learning and statistics.</p>
+<p>The <strong>Haberman dataset</strong>, also known as the Haberman’s Survival dataset, is a dataset containing cases from a study conducted between 1958 and 1970 at the University of Chicago’s Billings Hospital on the survival of patients who underwent surgery for breast cancer. The dataset is often used for classification and data analysis tasks in machine learning and statistics.</p>
 <p>The Haberman dataset contains 306 instances (rows) and 4 attributes (columns). The attributes are:</p>
 <ol type="1">
-<li><p>Age: The patient’s age at the time of the operation, represented as an integer.</p></li>
-<li><p>Year: The year of the operation, represented as an integer from 58 (1958) to 69 (1969).</p></li>
-<li><p>Nodes: The number of positive axillary nodes detected, represented as an integer. A positive axillary node is a lymph node containing cancer cells. A higher number of positive axillary nodes generally indicates a more advanced stage of cancer.</p></li>
-<li><p>Status: The survival status of the patient, represented as an integer. A value of 1 indicates that the patient survived for 5 years or longer after the surgery, while a value of 2 indicates that the patient died within 5 years of the surgery.</p></li>
-<li><p>Response var: Survival in 5 years</p></li>
+<li><p><strong>Age</strong>: The patient’s age at the time of the operation, represented as an integer.</p></li>
+<li><p><strong>Year</strong>: The year of the operation, represented as an integer from 58 (1958) to 69 (1969).</p></li>
+<li><p><strong>Nodes</strong>: The number of positive axillary nodes detected, represented as an integer. A positive axillary node is a lymph node containing cancer cells. A higher number of positive axillary nodes generally indicates a more advanced stage of cancer.</p></li>
+<li><p><strong>Status</strong>: The survival status of the patient, represented as an integer. A value of 1 indicates that the patient survived for 5 years or longer after the surgery, while a value of 2 indicates that the patient died within 5 years of the surgery.</p></li>
+<li><p><strong>Response var</strong>: Survival in 5 years</p></li>
 </ol>
 <p>The goal of analyzing the Haberman dataset is usually to predict a patient’s survival status based on the other three attributes (age, year, and nodes). This is typically treated as a binary classification problem, with survival status as the dependent variable and the other attributes as independent variables. Various machine learning algorithms, including logistic regression, support vector machines, and decision trees, can be applied to this dataset for predictive modeling and analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(haberman<span class="sc">$</span>survival)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(haberman<span class="sc">$</span>survival)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   1   2 
 225  81 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(haberman<span class="sc">$</span>survival))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(haberman<span class="sc">$</span>survival))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
         1         2 
 0.7352941 0.2647059 </code></pre>
 </div>
 </div>
+<p>Adding a Binary Survival Indicator to the Haberman Dataset Using mutate and ifelse</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">n_survival=</span><span class="fu">ifelse</span>(survival<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_survival=</span><span class="fu">ifelse</span>(survival<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  age op_year no_nodes survival n_survival
 1  30      64        1        1          0
@@ -449,8 +580,10 @@ $ survival &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">n_survival=</span><span class="fu">ifelse</span>(survival<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>survival) <span class="ot">-&gt;</span> haberman</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(haberman)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_survival=</span><span class="fu">ifelse</span>(survival<span class="sc">==</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>survival) <span class="ot">-&gt;</span> haberman</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(haberman)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      age           op_year         no_nodes        n_survival    
  Min.   :30.00   Min.   :58.00   Min.   : 0.000   Min.   :0.0000  
@@ -461,27 +594,30 @@ $ survival &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
  Max.   :83.00   Max.   :69.00   Max.   :52.000   Max.   :1.0000  </code></pre>
 </div>
 </div>
+<p>Visualize the density of age, op_year, and no_nodes</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(haberman<span class="sc">$</span>age))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(haberman<span class="sc">$</span>op_year))</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(haberman<span class="sc">$</span>no_nodes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(haberman<span class="sc">$</span>age))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(haberman<span class="sc">$</span>op_year))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(haberman<span class="sc">$</span>no_nodes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Make them box_plot as well</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(haberman<span class="sc">$</span>age)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(haberman<span class="sc">$</span>op_year)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(haberman<span class="sc">$</span>no_nodes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(haberman<span class="sc">$</span>age)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(haberman<span class="sc">$</span>op_year)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(haberman<span class="sc">$</span>no_nodes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Check correlation between vars in the data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(haberman), <span class="dv">2</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(haberman), <span class="dv">2</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             age op_year no_nodes n_survival
 age         1.00    0.09    -0.06       0.07
@@ -490,44 +626,59 @@ no_nodes   -0.06    0.00     1.00       0.29
 n_survival  0.07    0.00     0.29       1.00</code></pre>
 </div>
 </div>
+<p>Make it cor_plot</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr, <span class="at">method =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr, <span class="at">method =</span> <span class="st">"circle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>See the relationship between Xs &amp; Y</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(haberman<span class="sc">$</span>age, haberman<span class="sc">$</span>n_survival)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(haberman<span class="sc">$</span>op_year, haberman<span class="sc">$</span>n_survival)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(haberman<span class="sc">$</span>no_nodes, haberman<span class="sc">$</span>n_survival)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(haberman<span class="sc">$</span>age, haberman<span class="sc">$</span>n_survival)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(haberman<span class="sc">$</span>op_year, haberman<span class="sc">$</span>n_survival)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(haberman<span class="sc">$</span>no_nodes, haberman<span class="sc">$</span>n_survival)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Age &amp; Survival</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>n_survival)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col=</span><span class="fu">factor</span>(n_survival)), <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>n_survival)) <span class="sc">+</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col=</span><span class="fu">factor</span>(n_survival)), </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Op_year &amp; Survival</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>op_year, <span class="at">y=</span>n_survival)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col=</span><span class="fu">factor</span>(n_survival)), <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>op_year, <span class="at">y=</span>n_survival)) <span class="sc">+</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col=</span><span class="fu">factor</span>(n_survival)), </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>no_nodes &amp; survival</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>n_survival)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col=</span><span class="fu">factor</span>(n_survival)), <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>haberman <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>no_nodes, <span class="at">y=</span>n_survival)) <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col=</span><span class="fu">factor</span>(n_survival)), </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">width=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="09_week_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Fit the data to the simple linear model</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>linear.model<span class="ot">&lt;-</span><span class="fu">glm</span>(<span class="st">"n_survival~."</span>, <span class="at">data=</span>haberman)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linear.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>linear.model<span class="ot">&lt;-</span><span class="fu">glm</span>(<span class="st">"n_survival~."</span>, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data=</span>haberman)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linear.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -557,8 +708,10 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </div>
 <p>Fit the data to the generalized linear model</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>logit.model<span class="ot">&lt;-</span><span class="fu">glm</span>(<span class="st">"n_survival~."</span>, <span class="at">data=</span>haberman, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>logit.model<span class="ot">&lt;-</span><span class="fu">glm</span>(<span class="st">"n_survival~."</span>, </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data=</span>haberman, </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -586,14 +739,14 @@ AIC: 336.26
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
-<p><strong>Odds ratio!</strong></p>
+<p><strong>Odds ratio</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(logit.model<span class="sc">$</span>coefficients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(logit.model<span class="sc">$</span>coefficients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age     op_year    no_nodes 
   0.1554198   1.0200987   0.9902638   1.0924714 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="at">OR =</span> <span class="fu">coef</span>(logit.model), <span class="fu">confint</span>(logit.model)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">cbind</span>(<span class="at">OR =</span> <span class="fu">coef</span>(logit.model), <span class="fu">confint</span>(logit.model)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Waiting for profiling to be done...</code></pre>
 </div>
@@ -604,36 +757,43 @@ age         1.0200987 0.995033131  1.046136
 op_year     0.9902638 0.911586214  1.075310
 no_nodes    1.0924714 1.052631312  1.137984</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>newdata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="at">op_year=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>), <span class="at">no_nodes=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>))</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>newdata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Prediction</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>newdata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">age=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">op_year=</span><span class="fu">c</span>(<span class="dv">40</span>,<span class="dv">50</span>,<span class="dv">60</span>), </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">no_nodes=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>))</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>newdata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  age op_year no_nodes
 1  10      40        1
 2  20      50        3
 3  30      60        5</code></pre>
 </div>
-</div>
-<p>Prediction</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(linear.model, newdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(linear.model, newdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         1          2          3 
 0.09422042 0.15027781 0.20633519 </code></pre>
 </div>
 </div>
-<p>type of prediction is a predicted probability (type=“response”).</p>
+<p>Type of prediction is a predicted probability (type=“response”).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(logit.model, newdata, <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(logit.model, newdata, <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        1         2         3 
 0.1228683 0.1561044 0.1963186 </code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pred_prob <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit.model, newdata, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>predicted_class <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pred_prob <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>predicted_class</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 2 3 
+0 0 0 </code></pre>
 </div>
-<p><br>
-</p>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
