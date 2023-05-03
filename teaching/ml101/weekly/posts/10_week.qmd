@@ -3,6 +3,9 @@ title: "Unsupervised Learning"
 subtitle: "Clustering"
 Week: 10
 slide-format: revealjs
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 [Weekly design](https://changjunlee.com/teaching/ml101/weekly/)
@@ -11,38 +14,48 @@ slide-format: revealjs
 
 ### Pre-class video
 
-- Eng ver.
+-   Eng ver.
 
 {{< video https://youtu.be/Hqrax2hgiM4 >}}
 
-- Kor ver.
+-   Kor ver.
 
 {{< video https://youtu.be/ocauaL0BgnU >}}
 
-- Pre-class PPT [pdf](content/ML_pre_09.pdf)
+-   Pre-class PPT [pdf](content/ML_pre_09.pdf)
 
 ------------------------------------------------------------------------
 
 ### Discussion
 
-Discussion #8 
+Discussion #8
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc8eic1GukZRFUCpxM19eSP7mMioTvJJSIuJSnWy5ioooIMTA/viewform?embedded=true" width="640" height="1750" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc8eic1GukZRFUCpxM19eSP7mMioTvJJSIuJSnWy5ioooIMTA/viewform?embedded=true" width="640" height="1750" frameborder="0" marginheight="0" marginwidth="0">
+
+Loading...
+
+</iframe>
 
 ------------------------------------------------------------------------
 
-
 ### Class
 
+**K-Means Clustering in R**
 
-K-Means Clustering in R
-The basic idea behind k-means clustering consists of defining clusters so that the total intra-cluster variation (known as total within-cluster variation) is minimized.
-There are several k-means algorithms available. The standard algorithm is the Hartigan-Wong algorithm (Hartigan and Wong 1979), which defines the total within-cluster variation as the sum of squared distances Euclidean distances between items and the corresponding centroid
+> The basic idea behind k-means clustering consists of defining clusters
+> so that the total intra-cluster variation (known as *total
+> within-cluster variation*) is minimized. There are several k-means
+> algorithms available. The standard algorithm is the Hartigan-Wong
+> algorithm (Hartigan and Wong 1979), which defines the total
+> within-cluster variation as the sum of squared distances Euclidean
+> distances between items and the corresponding centroid
 
+<br>
 
-Data
-We’ll use the demo data sets “USArrests”. The data must contains only continuous variables, as the k-means algorithm uses variable means.
+**Hands-on practice**
 
+Data we'll use is `USArrests`. The data must [contains only continuous
+variables]{.underline}, as the k-means algorithm uses variable means.
 
 ```{r}
 library(tidyverse)
@@ -51,40 +64,125 @@ data("USArrests")      # Loading the data set
 head(USArrests)
 ```
 
-Visualize the data
-See the link for the detail https://givitallugot.github.io/articles/2020-03/R-visualization-2-usmap
+The **`USArrests`** dataset is a built-in dataset in R that contains
+data on crime rates (number of arrests per 100,000 residents) in the
+United States in 1973. The dataset has 50 observations, corresponding to
+the 50 US states, and 4 variables:
 
+-   **`Murder`**: Murder arrests (number of arrests for murder per
+    100,000 residents).
+
+-   **`Assault`**: Assault arrests (number of arrests for assault per
+    100,000 residents).
+
+-   **`UrbanPop`**: Urban population (percentage of the population
+    living in urban areas).
+
+-   **`Rape`**: Rape arrests (number of arrests for rape per 100,000
+    residents).
+
+<br>
+
+**Visualize the data**
+
+See the
+[link](https://givitallugot.github.io/articles/2020-03/R-visualization-2-usmap)
+for the detail (in Korean)
+
+-   Let's create a new column for the state name
 
 ```{r}
-crime <- rownames_to_column(USArrests, var="state") #change row names to column (variable)
+#change row names to column (variable)
+crime <- rownames_to_column(USArrests, var="state") 
 head(crime)
 ```
 
 ```{r}
-crime$state <- tolower(crime$state) #change the upper letter to lower character in state variable
+#change the upper letter to lower character in state variable
+crime$state <- tolower(crime$state) 
 head(crime)
 ```
 
+The **`states_map <- map_data("state")`** code is used to create a
+dataframe that contains map data for the 50 states in the United States.
 
+The **`map_data()`** function is from the **`ggplot2`** package, and it
+returns a dataframe that contains latitude and longitude coordinates for
+the boundaries of each state, along with additional information that can
+be used to plot the map.
+
+The argument to the **`map_data()`** function is the name of the region
+for which to retrieve the map data. In this case, the argument is
+**`"state"`**, which indicates that we want map data for the 50 states
+in the US.
+
+The resulting **`states_map`** dataframe contains the following columns:
+
+-   **`long`**: A vector of longitudes representing the boundaries of
+    the state.
+
+-   **`lat`**: A vector of latitudes representing the boundaries of the
+    state.
+
+-   **`group`**: An integer indicating the group to which each point
+    belongs. This is used to group the points together when plotting the
+    map.
+
+-   **`order`**: An integer indicating the order in which the points
+    should be plotted.
+
+-   **`region`**: A character string indicating the name of the state.
+
+-   **`subregion`**: A character string indicating the name of a
+    subregion within the state, if applicable. This is usually **`NA`**
+    for the state maps.
 
 ```{r}
+
 states_map <- map_data("state")
 head(states_map)
 ```
 
-
 ```{r}
-# install.packages("ggiraphExtra")
+
 ```
 
+The code **`library(ggiraphExtra)`** loads the **`ggiraphExtra`**
+package, which extends the functionality of the **`ggplot2`** package to
+allow for interactive graphics in R.
+
+The **`ggChoropleth()`** function is from the **`ggiraphExtra`** package
+and is used to create a choropleth map in which each state is colored
+according to its value of a specified variable.
+
+The first argument to **`ggChoropleth()`** is the data frame containing
+the data to be plotted, which is **`crime`** in this case.
+
+The second argument is the **`aes()`** function, which is used to map
+variables in the data frame to visual properties of the plot. The
+**`fill`** aesthetic is used to specify that the color of each state
+should be determined by the value of the **`Murder`** variable in the
+**`crime`** data frame. The **`map_id`** aesthetic is used to specify
+that each state should be identified by its name, which is found in the
+**`state`** variable in the **`crime`** data frame.
+
+The third argument is the **`map`** argument, which specifies the data
+frame containing the map data. In this case, the **`states_map`** data
+frame is used, which was created earlier using the **`map_data()`**
+function.
+
 ```{r}
+
+# install.packages("ggiraphExtra")
 library(ggiraphExtra)
 
 ggChoropleth(data=crime, aes(fill=Murder, map_id=state), map=states_map)
 
 ```
 
+-   Remove legend and change background color
 
+-   Murder rate by state
 
 ```{r}
 library(ggthemes)
@@ -92,42 +190,38 @@ ggChoropleth(data=crime, aes(fill=Murder, map_id=state), map=states_map) +
   theme_map() + theme(legend.position="right")
 ```
 
-
-
-
+-   Urban pop by state
 
 ```{r}
 ggChoropleth(data=crime, aes(fill=UrbanPop, map_id=state), map=states_map) + 
   theme_map() + theme(legend.position="right")
 ```
 
+-   Assault rate by state
 
 ```{r}
 ggChoropleth(data=crime, aes(fill=Assault, map_id=state), map=states_map) + 
   theme_map() + theme(legend.position="right")
 ```
 
+-   Rape rate by state
 
 ```{r}
 ggChoropleth(data=crime, aes(fill=Rape, map_id=state), map=states_map) + 
   theme_map() + theme(legend.position="right")
 ```
 
+Required R packages and functions The standard R function for k-means
+clustering is `kmeans()` \[stats package\], which simplified format is
+as follow:
 
-
-Required R packages and functions
-The standard R function for k-means clustering is kmeans() [stats package], which simplified format is as follow:
-
-
-kmeans(x, centers, iter.max = 10, nstart = 1)
-
+`kmeans(x, centers, iter.max = 10, nstart = 1)`
 
 ```{r}
 glimpse(USArrests)
 ```
-Z-score Standardization for k-means clustering
 
-
+-   **Z-score Standardization** for k-means clustering
 
 ```{r}
 df <- scale(USArrests) # Scaling the data
@@ -135,15 +229,15 @@ head(df)
 summary(df)
 ```
 
-To create a beautiful graph of the clusters generated with the kmeans() function, will use the factoextra package.
-
+To create a beautiful graph of the clusters generated with the
+`kmeans()` function, will use the `factoextra` package.
 
 ```{r}
+# install.packages("factoextra")
 library(factoextra)
 ```
 
-
-How many clusters (k) is the best?
+-   How many clusters (k) is the best?
 
 ```{r}
 g1<-fviz_nbclust(df, kmeans, method = "wss")
@@ -151,16 +245,38 @@ g1
 
 ```
 
-
-
 ```{r}
 g2<-fviz_nbclust(df, kmeans, method = "silhouette")
 g2
 ```
 
+This code uses the **`fviz_nbclust()`** function from the
+**`factoextra`** package in R to determine the optimal number of
+clusters to use in a K-means clustering analysis.
 
-Let's run unsupervised clustering given k=4
+The first argument of **`fviz_nbclust()`** is the data frame **`df`**
+that contains the variables to be used in the clustering analysis.
 
+The second argument is the clustering function **`kmeans`** that
+specifies the algorithm to be used for clustering.
+
+The third argument **`method`** specifies the method to be used to
+determine the optimal number of clusters. In this case, two methods are
+used:
+
+-   **`"wss"`**: **Within-cluster sum of squares**. This method computes
+    the sum of squared distances between each observation and its
+    assigned cluster center, and then adds up these values across all
+    clusters. The goal is to find the number of clusters that minimize
+    the within-cluster sum of squares.
+
+-   **`"silhouette"`**: **Silhouette width**. This method computes a
+    silhouette width for each observation, which measures [how similar
+    the observation is to its own cluster compared to other
+    clusters]{.underline}. The goal is to find the number of clusters
+    that maximize the average silhouette width across all observations.
+
+Let's run unsupervised clustering given ***k=4***
 
 ```{r}
 # Compute k-means with k = 4
@@ -168,23 +284,28 @@ set.seed(123)
 km.res <- kmeans(df, 4, nstart = 25)
 ```
 
+As the final result of k-means clustering result is sensitive to the
+random starting assignments, we specify `nstart = 25`. This means that R
+will try 25 different random starting assignments and then select the
+best results corresponding to the one with the lowest within cluster
+variation. The default value of nstart in R is one. But, it's strongly
+recommended to compute k-means clustering with a large value of nstart
+such as 25 or 50, in order to have a more stable result.
 
-
-As the final result of k-means clustering result is sensitive to the random starting assignments, we specify nstart = 25. This means that R will try 25 different random starting assignments and then select the best results corresponding to the one with the lowest within cluster variation. The default value of nstart in R is one. But, it’s strongly recommended to compute k-means clustering with a large value of nstart such as 25 or 50, in order to have a more stable result.
-
-
+-   Print the result
 
 ```{r}
 # Print the results
 print(km.res)
 ```
 
+> The printed output displays: the cluster means or centers: a matrix,
+> which rows are cluster number (1 to 4) and columns are variables the
+> clustering vector: A vector of integers (from 1:k) indicating the
+> cluster to which each point is allocated
 
-The printed output displays:
-the cluster means or centers: a matrix, which rows are cluster number (1 to 4) and columns are variables the clustering vector: A vector of integers (from 1:k) indicating the cluster to which each point is allocated
-
-
-If you want to add the point classifications to the original data, use this:
+If you want to add the point classifications to the original data, use
+this:
 
 ```{r}
 str(km.res)
@@ -192,12 +313,14 @@ km.res$cluster
 
 ```
 
+-   Create a new data frame including cluster information
 
 ```{r}
 dd <- data.frame(USArrests, cluster = km.res$cluster)
 head(dd)
 ```
 
+-   Check groups' characteristics
 
 ```{r}
 dd %>% 
@@ -205,40 +328,47 @@ dd %>%
   summarize_all(mean)
 ```
 
-
-Cluster number for each of the observations
+-   Cluster number for each of the observations
 
 ```{r}
 table(dd$cluster)
 ```
 
+-   Reshape the dataset to visualize
+
 ```{r}
 library(reshape2)
-dd %>% melt(id.vars="cluster") %>% 
-mutate(cluster=as.factor(cluster)) %>% head(20)
+dd %>% 
+  melt(id.vars="cluster") %>% 
+  mutate(cluster=as.factor(cluster)) %>% 
+  head(20)
 ```
 
+-   Check groups' characteristics with ggplot
 
 ```{r}
-dd %>% melt(id.vars="cluster") %>% 
-mutate(cluster=as.factor(cluster)) %>% 
-ggplot(aes(x=cluster, y=value))+geom_boxplot()+facet_wrap(~variable, scale="free_y")
+dd %>% 
+  melt(id.vars="cluster") %>% 
+  mutate(cluster=as.factor(cluster)) %>% 
+  ggplot(aes(x=cluster, y=value))+
+  geom_boxplot()+
+  facet_wrap(~variable, scale="free_y")
 
 ```
-
 
 -   cluster 1: Rural area with high murder, assault
 -   cluster 2: Peaceful rural areas
 -   cluster 3: Good city with low crime
--   cluster 4: City Gotham..
+-   cluster 4: City Gotham...?
 
-
+Let's see clusters are well made
 
 ```{r}
 
 fviz_cluster(km.res, data = df)
 
 ```
+
 Let's play with different k (number of clusters)
 
 ```{r}
@@ -256,10 +386,3 @@ p4 <- fviz_cluster(k5, geom = "point",  data = df) + ggtitle("k = 5")
 library(gridExtra)
 grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
-
-
-
-
-
-
-
