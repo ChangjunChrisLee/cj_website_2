@@ -5,6 +5,8 @@ subtitle: TF-IDF, 감정 분석
 
 ### Comparing the frequency of words
 
+Data import
+
 ```{r}
 library(tidyverse)
 
@@ -17,23 +19,30 @@ raw_park <- readLines('data/speech_park.txt', encoding = 'UTF-8')
 park <- raw_park %>% 
   as_tibble() %>% 
   mutate(president = 'park')
+```
 
+Data merge
+```{r}
 # 데이터 합치기
 bind_speeches <- bind_rows(moon, park) %>% 
   select(president, value)
 
 head(bind_speeches)
 tail(bind_speeches)
+```
 
-# 집단별 단어 빈도 구하기
-# 1. 기본적인 전처리 및 토큰화
+집단별 단어 빈도 구하기
+1. 기본적인 전처리 및 토큰화
+```{r}
 # 기본적인 전처리
 library(stringr)
 speeches <- bind_speeches %>% 
   mutate(value = str_replace_all(value, '[^가-힣]', ' '),
          value = str_squish(value))
 speeches
-
+```
+Tokenization
+```{r}
 # 토큰화
 library(tidytext)
 library(KoNLP)
@@ -43,36 +52,59 @@ speeches <- speeches %>%
                 output = word,
                 token = extractNoun)
 speeches
+```
 
-# 하위 집단별 단어 빈도 구하기 - count()
+하위 집단별 단어 빈도 구하기 - `count()`
+```{r}
 # 샘플 텍스트로 작동 원리 알아보기
 df <- tibble(class = c('a','a','a','b','b','b'),
              sex = c('female','male','female','male','male','female'))
 df
 df %>% count(class, sex)
 
+```
+
+두 연설문의 단어 빈도 구하기
+```{r}
 # 두 연설문의 단어 빈도 구하기
 frequency <- speeches %>% 
   count(president, word) %>% 
   filter(str_count(word) > 1)
 head(frequency)
+```
 
-# 자주 사용된 단어 추출하기, dplyr::slice_max() - 값이 큰 상위 n개의 행을 추출해 내림차순 정렬
+
+자주 사용된 단어 추출하기, `dplyr::slice_max()` 
+
+-   값이 큰 상위 n개의 행을 추출해 내림차순 정렬
+
+```{r}
 # 샘플 텍스트로 작동 원리 알아보기
 df <- tibble(x = c(1:100))
 df
 df %>% slice_max(x, n = 3)
+```
 
+
+연설문에 가장 많이 사용된 단어 추출하기
+
+```{r}
 # 연설문에 가장 많이 사용된 단어 추출하기
 top10 <- frequency %>% 
   group_by(president) %>% 
   slice_max(n, n = 10)
 top10
+```
 
+
+```{r}
 # 단어 빈도 동점 처리 제외하고 추출하기, slice_max(with_ties = F) - 원본 데이터의 정렬 순서에 따라 행 추출
 top10 %>% 
   filter(president == 'park') # 박근혜 전 대통령의 연설문은 동점 처리로 인해, 단어 12개가 모두 추출되어버림
+```
 
+
+```{r}
 # 샘플 데이터로 작동 원리 알아보기
 df <- tibble(x = c('A','B','C','D'), y = c(4,3,2,2))
 df %>% 
@@ -80,13 +112,22 @@ df %>%
 
 df %>% 
   slice_max(y, n = 3, with_ties = F)
+```
 
+
+
+```{r}
 # 연설문에 적용하기
 top10 <- frequency %>% 
   group_by(president) %>% 
   slice_max(n, n = 10, with_ties = F)
 top10
+```
 
+
+Visualization
+
+```{r}
 # 막대 그래프 만들기
 # 1. 변수의 항목별로 그래프 만들기 - facet_wrap()
 ggplot(top10, aes(x = reorder(word, n),
@@ -95,7 +136,11 @@ ggplot(top10, aes(x = reorder(word, n),
   geom_col() +
   coord_flip() +
   facet_wrap(~ president)
+```
 
+facet_wrap: scale free!
+
+```{r}
 # 2. 그래프별 y축 설정하기
 ggplot(top10, aes(x = reorder(word, n),
                   y = n,
@@ -105,6 +150,10 @@ ggplot(top10, aes(x = reorder(word, n),
   facet_wrap(~ president, # president별 그래프 생성
              scales = 'free_y') # y축 통일하지 않음
 
+```
+
+
+```{r}
 # 3. 특정 단어 제외하고 막대 그래프 만들기
 top10 <- frequency %>% 
   filter(word != '국민') %>% 
@@ -117,7 +166,11 @@ ggplot(top10, aes(x = reorder(word, n),
   geom_col() +
   coord_flip() +
   facet_wrap(~ president, scales = 'free_y')
+```
 
+reorder_within!
+
+```{r}
 # 4. 축 정렬하기
 ggplot(top10, aes(x = reorder_within(word, n, president),
                   y = n,
@@ -125,7 +178,10 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   geom_col() +
   coord_flip() +
   facet_wrap(~ president, scales = 'free_y')
+```
 
+
+```{r}
 # 5. 변수 항목 제거하기
 ggplot(top10, aes(x = reorder_within(word, n, president),
                   y = n,
@@ -140,7 +196,6 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 ### Odds Ratio
 상대적으로 중요한 단어 찾기
 
-
 ```{r}
 # Long form을 Wide form으로 변환하기
 # Long form 데이터 살펴보기
@@ -149,54 +204,78 @@ df_long <- frequency %>%
   slice_max(n, n = 10) %>% 
   filter(word %in% c('국민','우리','정치','행복'))
 df_long
+```
 
+```{r}
 # Long form을 Wide form으로 변형하기
 df_wide <- df_long %>% 
   pivot_wider(names_from = president,
               values_from = n)
 df_wide
+```
 
+```{r}
 # NA를 0으로 바꾸기
 df_wide <- df_long %>% 
   pivot_wider(names_from = president,
               values_from = n,
               values_fill = list(n = 0))
 df_wide
+```
 
+```{r}
 # 연설문 단어 빈도를 Wide form으로 변환하기
 frequency_wide <- frequency %>% 
   pivot_wider(names_from = president,
               values_from = n,
               values_fill = list(n = 0))
 frequency_wide
+```
 
+
+Odds Ratio!
+```{r}
 # 오즈비 구하기
 # 1. 단어의 비중을 나타낸 변수 추가하기
 frequency_wide <- frequency_wide %>%
   mutate(ratio_moon = ((moon)/(sum(moon))), # moon 에서 단어의 비중
          ratio_park = ((park)/(sum(park)))) # park 에서 단어의 비중
 frequency_wide
+```
 
-# 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도/오즈비 0, 단어 비중 비교 불가, 빈도가 0보다 큰 값이 되도록 모든 값에 +1
+```{r}
+# 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도/오즈비 0, 단어 비중 비교 불가, 
+#빈도가 0보다 큰 값이 되도록 모든 값에 +1
 frequency_wide <- frequency_wide %>%
   mutate(ratio_moon = ((moon + 1)/(sum(moon + 1))), # moon에서 단어의 비중
          ratio_park = ((park + 1)/(sum(park + 1)))) # park에서 단어의 비중
 frequency_wide
+```
+
+Create a new odds ratio variable
+```{r}
 
 # 2. 오즈비 변수 추가하기
 frequency_wide <- frequency_wide %>% 
   mutate(odds_ratio = ratio_moon / ratio_park)
 frequency_wide
+```
 
+```{r}
 frequency_wide %>% 
   arrange(-odds_ratio) # moon에서 상대적인 비중이 클수록 1보다 큰 값
 
 frequency_wide %>% 
   arrange(odds_ratio) # park에서 상대적인 비중이 클수록 1보다 작은 값
 
+```
+
+```{r}
 frequency_wide %>% 
   arrange(abs(1-odds_ratio)) # 두 연설문에서 단어 비중이 같으면 1
+```
 
+```{r}
 # 상대적으로 중요한 단어 추출하기
 # 오즈비가 가장 높거나 가장 낮은 단어 추출하기
 top10 <- frequency_wide %>% 
@@ -204,7 +283,11 @@ top10 <- frequency_wide %>%
 
 top10 %>% 
   arrange(-odds_ratio)
+```
 
+Visualization of relative importance
+
+```{r}
 # 막대 그래프 만들기
 # 1. 비중이 큰 연설문을 나타낸 변수 추가하기
 top10 <- top10 %>%
@@ -220,7 +303,8 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   coord_flip() +
   facet_wrap(~ president, scales = 'free_y') +
   scale_x_reordered()
-
+```
+```{r}
 # 3. 그래프별로 축 설정하기
 ggplot(top10, aes(x = reorder_within(word, n, president),
                   y = n,
@@ -230,8 +314,11 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   facet_wrap(~ president, scales = "free") +
   scale_x_reordered() +
   labs(x = NULL) 
+```
 
-# 주요 단어가 사용된 문장 살펴보기
+주요 단어가 사용된 문장 살펴보기
+
+```{r}
 # 1. 원문을 문장 기준으로 토큰화하기
 speeches_sentence <- bind_speeches %>% 
   as_tibble() %>% 
@@ -242,11 +329,18 @@ speeches_sentence
 
 head(speeches_sentence)
 tail(speeches_sentence)
+```
 
+```{r}
 # 2. 주요 단어가 사용된 문장 추출하기 - str_detect()
 speeches_sentence %>% 
   filter(president == 'moon' & str_detect(sentence, '복지국가'))
+```
 
+
+두 연설문 모두에서 중요했던 단어들은?
+
+```{r}
 # 중요도가 비슷한 단어 살펴보기
 frequency_wide %>% 
   arrange(abs(1 - odds_ratio)) %>% 
@@ -261,31 +355,42 @@ frequency_wide %>%
 
 
 ### Log Odds Ratio
-
 ```{r}
 # 로그 오즈비 구하기
 frequency_wide <- frequency_wide %>% 
   mutate(log_odds_ratio = log(odds_ratio))
 frequency_wide
+```
 
+
+```{r}
 # moon에서 비중이 큰 단어, 0보다 큰 양수
 frequency_wide %>%
   arrange(-log_odds_ratio)
+```
 
+```{r}
 # park에서 비중이 큰 단어, 0보다 작은 음수
 frequency_wide %>%
   arrange(log_odds_ratio)
+```
 
+```{r}
 # 비중이 비슷한 단어, 0에 가까운
 frequency_wide %>%
   arrange(abs(log_odds_ratio))
+```
 
+```{r}
 # 로그 오즈비를 이용해 중요한 단어 비교하기
 top10 <- frequency_wide %>% 
   group_by(president = ifelse(log_odds_ratio > 0, 'moon', 'park')) %>% 
   slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
 top10
+```
 
+
+```{r}
 # 주요 변수 추출
 top10 %>%
   arrange(-log_odds_ratio) %>%
@@ -300,8 +405,66 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   labs(x = NULL)
 ```
 
-### TD-IDF
+### TF-IDF
 
+Term Frequency-Inverse Document Frequency (TF-IDF)
+
+> Weighting words $W_{(t,d)}$ based on their importance within and across
+> documents to see how the term ***t*** is original (or unique) is in a
+> document ***d***
+
+$$
+W_{(t,d)}=tf_{(t,d)} \times idf_{(t)}
+$$ $$
+W_{(t,d)}=tf_{(t,d)} \times log(\frac{N}{df_{t}})
+$$ - $t$ = a term
+
+-   $d$ = a document
+
+-   $tf_{t,d}$ = frequency of term $t$ (e.g. a word) in doc $d$ (e.g. a
+    sentence or an article)
+
+-   $df_{term}$ = \# of documents containing the term
+
+> A high $tf_{t,d}$ indicates that the term is highly significant within
+> the document, while a high $df_{t}$ suggests that the term is widely used
+> across various documents (e.g., common verbs). Multiplying by $idf_{t}$
+> helps to account for the term's universality. Ultimately, tf-idf
+> effectively captures a term's uniqueness and importance, taking into
+> consideration its prevalence across documents.
+
+As an example,
+
+```{r}
+
+texts <- c("Text mining is important in academic research.",
+           "Feature extraction is a crucial step in text mining.",
+           "Cats and dogs are popular pets.",
+           "Elephants are large animals.",
+           "Whales are mammals that live in the ocean.")
+
+text_df <- tibble(doc_id = 1:length(texts), text = texts)
+text_df
+
+tokens <- text_df %>%
+  unnest_tokens(word, text)
+tokens
+# Calculate the TF-IDF scores
+tf_idf <- tokens %>%
+  count(doc_id, word) %>%
+  bind_tf_idf(word, doc_id, n)
+tf_idf
+
+# Spread into a wide format
+tf_idf_matrix <- tf_idf %>%
+  select(doc_id, word, tf_idf) %>%
+  spread(key = word, value = tf_idf, fill = 0)
+tf_idf_matrix
+
+```
+
+
+import data & basic preprocessing
 ```{r}
 raw_speeches <- readr::read_csv("data/speeches_presidents.csv")
 raw_speeches
@@ -315,13 +478,22 @@ speeches <- speeches %>%
   unnest_tokens(input = value,
                 output = word,
                 token = extractNoun)
+```
+Word frequency
+
+```{r}
 # 단어 빈도 구하기
 frequecy <- speeches %>%
   count(president, word) %>%
   filter(str_count(word) > 1)
 frequecy
+```
 
-# 3.4.2 TF-IDF 구하기
+
+TF-IDF calculation
+
+```{r}
+# TF-IDF 구하기
 library(tidytext)
 frequecy <- frequecy %>%
   bind_tf_idf(term = word, # 단어
@@ -329,7 +501,9 @@ frequecy <- frequecy %>%
               n = n) %>% # 단어 빈도
   arrange(-tf_idf)
 frequecy
+```
 
+```{r}
 # TF-IDF가 높은 단어 살펴보기
 frequecy %>% filter(president == "문재인")
 
@@ -338,7 +512,9 @@ frequecy %>% filter(president == "박근혜")
 frequecy %>% filter(president == "이명박")
 
 frequecy %>% filter(president == "노무현")
+```
 
+```{r}
 # TF-IDF가 낮은 단어 살펴보기, 4개가 동일한 값으로 출력됨
 frequecy %>%
   filter(president == "문재인") %>%
@@ -356,17 +532,24 @@ frequecy %>%
   filter(president == "노무현") %>%
   arrange(tf_idf)
 
+```
+
+```{r}
 # 막대 그래프 만들기
 # 주요 단어 추출
 top10 <- frequecy %>%
   group_by(president) %>%
   slice_max(tf_idf, n = 10, with_ties = F)
 top10
+```
 
+```{r}
 # 그래프 순서 정하기
 top10$president <- factor(top10$president,
                           levels = c("문재인", "박근혜", "이명박", "노무현"))
+```
 
+```{r}
 # 막대 그래프 만들기
 library(ggplot2)
 library(showtext)
@@ -381,7 +564,12 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
   labs(x = NULL)
 ```
 
+
+
 ### Sentimental Analysis
+
+군산대 감성사전 [csv](data/knu_sentiment_lexicon.csv)
+
 ```{r}
 # 감정 사전 불러오기
 dic <- read_csv('data/knu_sentiment_lexicon.csv')
@@ -395,26 +583,39 @@ dic %>%
 dic %>%
   filter(polarity == -2) %>%
   arrange(word)
+```
 
+
+```{r}
 # 감정 단어의 종류 살펴보기
 dic %>%
   filter(word %in% c("좋은", "나쁜"))
 dic %>%
   filter(word %in% c("기쁜", "슬픈"))
+```
+
+
+```{r}
+
 
 # 이모티콘
 library(stringr)
 dic %>%
   filter(!str_detect(word, "[가-힣]")) %>%
   arrange(word)
+```
 
+
+```{r}
 # 총 14,854개 단어
 dic %>%
   mutate(sentiment = ifelse(polarity >= 1, "pos",
                             ifelse(polarity <= -1, "neg", "neu"))) %>%
   count(sentiment)
+```
 
 
+```{r}
 # 문장의 감정 점수 구하기
 # 1. 단어 기준으로 토큰화하기
 df <- tibble(sentence = c("디자인 예쁘고 마감도 좋아서 만족스럽다.",
@@ -427,42 +628,57 @@ df <- df %>%
                 token = "words",
                 drop = F)
 df
+```
 
+
+```{r}
 # 2. 단어에 감정 점수 부여하기
 df <- df %>%
   left_join(dic, by = "word") %>%
   mutate(polarity = ifelse(is.na(polarity), 0, polarity))
 df
+```
+
+
+```{r}
 
 # 3. 문장별로 감정 점수 합산하기
 score_df <- df %>%
   group_by(sentence) %>%
   summarise(score = sum(polarity))
 score_df
-
 ```
-
-
 
 ### Sentimental Analysis for the comments 
 댓글 감성 분석
-
 
 ```{r}
 # 데이터 불러오기
 raw_news_comment <- read_csv("data/news_comment_parasite.csv")
 raw_news_comment
+```
 
+
+```{r}
 # 기본적인 전처리
 library(textclean)
 news_comment <- raw_news_comment %>%
   mutate(id = row_number(),
          reply = str_squish(replace_html(reply)))
 news_comment
+```
 
+
+
+```{r}
 # 데이터 구조 확인
 glimpse(news_comment)
 
+```
+
+
+
+```{r}
 # 단어 기준으로 토큰화하고 감정 점수 부여하기
 # 토큰화
 word_comment <- news_comment %>%
@@ -474,6 +690,11 @@ word_comment <- news_comment %>%
 word_comment %>%
   select(word, reply)
 
+```
+
+
+
+```{r}
 # 감정 점수 부여
 word_comment <- word_comment %>%
   left_join(dic, by = "word") %>%
@@ -481,6 +702,11 @@ word_comment <- word_comment %>%
 
 word_comment %>%
   select(word, polarity)
+```
+
+
+
+```{r}
 
 # 자주 사용된 감정 단어 살펴보기
 # 1. 감정 분류하기
@@ -490,7 +716,11 @@ word_comment <- word_comment %>%
 
 word_comment %>%
   count(sentiment)
+```
 
+
+
+```{r}
 # 2. 막대 그래프 만들기
 top10_sentiment <- word_comment %>%
   filter(sentiment != "neu") %>%
@@ -499,8 +729,11 @@ top10_sentiment <- word_comment %>%
   slice_max(n, n = 10)
 
 top10_sentiment
+```
 
 
+
+```{r}
 ggplot(top10_sentiment, aes(x = reorder(word, n),
                             y = n,
                             fill = sentiment)) +
@@ -510,8 +743,12 @@ ggplot(top10_sentiment, aes(x = reorder(word, n),
   facet_wrap(~ sentiment, scales = "free") +
   scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
   labs(x = NULL) 
+```
 
-# 댓글별 감정 점수 구하고 댓글 살펴보기
+
+댓글별 감정 점수 구하고 댓글 살펴보기
+
+```{r}
 # 1. 댓글별 감정 점수 구하기
 score_comment <- word_comment %>%
   group_by(id, reply) %>%
@@ -521,40 +758,68 @@ score_comment <- word_comment %>%
 score_comment %>%
   select(score, reply)
 
+```
+
+
+```{r}
 # 2. 감정 점수 높은 댓글 살펴보기
 # 긍정 댓글
 score_comment %>%
   select(score, reply) %>%
   arrange(-score)
+```
 
+
+
+```{r}
 # 부정 댓글
 score_comment %>%
   select(score, reply) %>%
   arrange(score)
+```
 
+
+
+```{r}
 # 감정 경향 살펴보기
 # 1. 감정 점수 빈도 구하기
 score_comment %>%
   count(score)
 
+```
+
+```{r}
 # 2. 감정 분류하고 막대 그래프 만들기
 # 감정 분류하기
 score_comment <- score_comment %>%
   mutate(sentiment = ifelse(score >= 1, "pos",
                             ifelse(score <= -1, "neg", "neu")))
 
+```
+
+
+```{r}
+
 # 감정 빈도와 비율 구하기
 frequency_score <- score_comment %>%
   count(sentiment) %>%
   mutate(ratio = n/sum(n)*100)
 frequency_score
+```
 
+
+```{r}
 # 막대 그래프 만들기
 ggplot(frequency_score, aes(x = sentiment, y = n, fill = sentiment)) +
   geom_col() +
   geom_text(aes(label = n), vjust = -0.3) +
   scale_x_discrete(limits = c("pos", "neu", "neg"))
 
+```
+
+
+
+```{r}
 # 3. 비율 누적 막대 그래프 만들기
 df <- tibble(contry = c("Korea", "Korea", "Japen", "Japen"), # 축
              sex = c("M", "F", "M", "F"), # 누적 막대
@@ -563,11 +828,20 @@ df
 
 ggplot(df, aes(x = contry, y = ratio, fill = sex)) + geom_col()
 
+
+```
+
+
+
+```{r}
 ggplot(df, aes(x = contry, y = ratio, fill = sex)) +
   geom_col() +
   geom_text(aes(label = paste0(ratio, "%")), # % 표시
             position = position_stack(vjust = 0.5)) # 가운데 표시
+```
 
+
+```{r}
 # 댓글의 감정 비율로 누적 막대 그래프 만들기
 # 더미 변수 생성
 frequency_score$dummy <- 0
@@ -586,7 +860,6 @@ ggplot(frequency_score, aes(x = dummy, y = ratio, fill = sentiment)) +
 ### Word Frequency by Sentiment Category
 감정 범주별 단어 빈도
 
-
 ```{r}
 # 감정 범주별 단어 빈도 구하기
 # 1. 토큰화하고 두 글자 이상 한글 단어만 남기기
@@ -597,21 +870,35 @@ comment <- score_comment %>%
                 drop = F) %>%
   filter(str_detect(word, "[가-힣]") & # 한글 추출
            str_count(word) >= 2) # 두 글자 이상 추출
+```
+
+
+```{r}
+
 
 # 2. 감정 범주별 빈도 구하기
 frequency_word <- comment %>%
   filter(str_count(word) >= 2) %>%
   count(sentiment, word, sort = T)
 frequency_word
+```
 
+
+```{r}
 # 긍정 댓글 고빈도 단어
 frequency_word %>%
   filter(sentiment == "pos")
+```
 
+
+```{r}
 # 부정 댓글 고빈도 단어
 frequency_word %>%
   filter(sentiment == "neg")
+```
 
+
+```{r}
 # 상대적으로 자주 사용된 단어 비교하기
 # 1. 로그 오즈비 구하기
 # wide form으로 변환
@@ -647,7 +934,6 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
 ### Modify Emotion Words
 감정 단어 수정
 
-
 ```{r}
 # 감정 단어가 사용된 원문 살펴보기
 # "소름"이 사용된 댓글
@@ -661,7 +947,9 @@ score_comment %>%
   select(reply)
 
 dic %>% filter(word %in% c("소름", "소름이", "미친"))
+```
 
+```{r}
 # 감정 사전 수정하기
 new_dic <- dic %>%
   mutate(polarity = ifelse(word %in% c("소름", "소름이", "미친"), 2, polarity))
@@ -682,7 +970,9 @@ new_score_comment <- new_word_comment %>%
 new_score_comment %>%
   select(score, reply) %>%
   arrange(-score)
+```
 
+```{r}
 # 전반적인 감정 경향 살펴보기
 # 1. 감정 분류하기
 # 1점 기준으로 긍정 중립 부정 분류
@@ -700,7 +990,9 @@ score_comment %>%
 new_score_comment %>%
   count(sentiment) %>%
   mutate(ratio = n/sum(n)*100)
+```
 
+```{r}
 # 3. 분석 결과 비교하기
 word <- "소름|소름이|미친"
 
@@ -713,7 +1005,9 @@ score_comment %>%
 new_score_comment %>%
   filter(str_detect(reply, word)) %>%
   count(sentiment)
+```
 
+```{r}
 # 감정 범주별 주요 단어 살펴보기
 # 1. 두 글자 이상 한글 단어만 남기고 단어 빈도 구하기
 # 토큰화 및 전처리
@@ -754,6 +1048,9 @@ ggplot(new_top10, aes(x = reorder(word, log_odds_ratio),
   coord_flip() +
   labs(x = NULL) 
 
+
+```
+```{r}
 # 4. 주요 단어가 사용된 댓글 살펴보기
 # 긍정 댓글 원문
 new_score_comment %>%
@@ -772,6 +1069,9 @@ new_score_comment %>%
 new_score_comment %>%
   filter(sentiment == "neg" & str_detect(reply, "못한")) %>%
   select(reply)
+
+```
+```{r}
 
 # 5. 분석 결과 비교하기
 # 수정한 감정 사전 활용
