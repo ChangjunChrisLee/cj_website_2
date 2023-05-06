@@ -19,6 +19,12 @@ news_comment <- raw_news_comment %>%
          reply = str_squish(reply),
          id = row_number())
 
+
+news_comment %>% head(10)
+```
+
+
+```{r}
 # 토큰화하기
 # 1. 형태소 분석기를 이용해 품사 기준으로 토큰화하기
 library(tidytext)
@@ -31,7 +37,11 @@ comment_pos <- news_comment %>%
 
 comment_pos %>%
   select(reply, word)
+```
 
+
+
+```{r}
 # 2. 품사 분리하여 행 구성하기
 library(tidyr)
 comment_pos <- comment_pos %>%
@@ -39,7 +49,10 @@ comment_pos <- comment_pos %>%
 
 comment_pos %>%
   select(word, reply)
+```
 
+
+```{r}
 # 3. 품사 추출하기
 # 명사 추출하기
 noun <- comment_pos %>%
@@ -48,11 +61,17 @@ noun <- comment_pos %>%
 
 noun %>%
   select(word, reply)
+```
 
+```{r}
 # 명사 빈도 구하기
 noun %>%
   count(word, sort = T)
+```
 
+
+동사와 형용사! - 명사와 어떻게 연결되는지 알기 위해
+```{r}
 # 동사, 형용사 추출하기
 pvpa <- comment_pos %>%
   filter(str_detect(word, "/pv|/pa")) %>% # "/pv", "/pa" 추출
@@ -60,7 +79,10 @@ pvpa <- comment_pos %>%
 
 pvpa %>%
   select(word, reply)
+```
 
+
+```{r}
 # 품사 결합
 comment <- bind_rows(noun, pvpa) %>%
   filter(str_count(word) >= 2) %>%
@@ -68,7 +90,9 @@ comment <- bind_rows(noun, pvpa) %>%
 
 comment %>%
   select(word, reply)
+```
 
+```{r}
 # ***명사, 동사, 형용사를 한 번에 추출하기
 comment_new <- comment_pos %>%
   separate_rows(word, sep = "[+]") %>%
@@ -79,6 +103,15 @@ comment_new <- comment_pos %>%
   filter(str_count(word) >= 2) %>%
   arrange(id)
 
+comment_new %>% head(10)
+
+```
+
+
+
+동시 출현 빈도 by using `pairwise_count()`
+
+```{r}
 # 단어 동시 출현 빈도 구하기
 # install.packages("widyr")
 library(widyr)
@@ -87,6 +120,10 @@ pair <- comment %>%
                  feature = id,
                  sort = T)
 pair
+```
+
+
+```{r}
 
 # 특정 단어와 자주 함께 사용된 단어 살펴보기
 pair %>% filter(item1 == "영화")
@@ -95,6 +132,8 @@ pair %>% filter(item1 == "봉준호")
 ```
 ### 동시 출현 네트워크
 
+
+네트워크 그래프 데이터 만들기
 ```{r}
 # 네트워크 그래프 데이터 만들기
 # install.packages("tidygraph")
@@ -107,7 +146,12 @@ graph_comment <- pair %>%
 
 graph_comment
 str(graph_comment)
+```
 
+
+Table to Graph object
+
+```{r}
 # 네트워크 그래프 만들기
 # install.packages("ggraph")
 library(ggraph)
@@ -116,7 +160,12 @@ ggraph(graph_comment) +
   geom_edge_link() + # 엣지
   geom_node_point() + # 노드
   geom_node_text(aes(label = name)) # 텍스트
+```
 
+
+Refine the graph
+
+```{r}
 # 그래프 다듬기
 # 한글 폰트 설정
 library(showtext)
@@ -137,6 +186,11 @@ ggraph(graph_comment, layout = "fr") + # 레이아웃
                  family = "nanumgothic") + # 폰트
   theme_graph() # 배경 삭제
 
+```
+
+네트워크 그래프 함수 만들기
+
+```{r}
 # 네트워크 그래프 함수 만들기
 word_network <- function(x) {
   ggraph(x, layout = "fr") +
@@ -151,9 +205,21 @@ word_network <- function(x) {
     theme_graph()
 }
 
+```
+
+
+함수를 활용해서 그래프 그리기
+
+```{r}
 set.seed(1234)
 word_network(graph_comment)
+```
 
+
+유의어 처리하기
+
+
+```{r}
 # 유의어 처리하기
 comment <- comment %>%
   mutate(word = ifelse(str_detect(word, "감독") &
@@ -161,11 +227,13 @@ comment <- comment %>%
          word = ifelse(word == "오르다", "올리다", word),
          word = ifelse(str_detect(word, "축하"), "축하", word))
 
+
 # 단어 동시 출현 빈도 구하기
 pair <- comment %>%
   pairwise_count(item = word,
                  feature = id,
                  sort = T)
+
 
 # 네트워크 그래프 데이터 만들기
 graph_comment <- pair %>%
@@ -176,6 +244,13 @@ graph_comment <- pair %>%
 set.seed(1234)
 word_network(graph_comment)
 
+```
+
+
+
+
+```{r}
+
 # 연결중심성과 커뮤니티 표현하기
 # 1. 네트워크 그래프 데이터에 연결 중심성, 커뮤니티 변수 추가하기
 set.seed(1234)
@@ -185,7 +260,12 @@ graph_comment <- pair %>%
   mutate(centrality = centrality_degree(), # 연결 중심성
          group = as.factor(group_infomap())) # 커뮤니티
 graph_comment
+```
 
+
+
+
+```{r}
 # 2. 네트워크 그래프에 연결 중심성, 커뮤니티 표현하기
 set.seed(1234)
 ggraph(graph_comment, layout = "fr") + # 레이아웃
@@ -199,38 +279,73 @@ ggraph(graph_comment, layout = "fr") + # 레이아웃
                  repel = T, # 노드밖 표시
                  size = 5) + # 폰트
   theme_graph() # 배경 삭제
+```
 
+
+
+
+```{r}
 # 3. 네트워크의 주요 단어 살펴보기
 graph_comment %>%
   filter(name == "봉준호")
 
 graph_comment
+```
 
+
+
+
+```{r}
 # 같은 커뮤니티로 분류된 단어 살펴보기
 graph_comment %>%
   filter(group == 4) %>%
   arrange(-centrality) %>%
   data.frame()
+```
 
+
+
+
+```{r}
 # 연결 중심성이 높은 주요 단어 살펴보기
 graph_comment %>%
   arrange(-centrality)
+```
 
+
+
+
+```{r}
 # "2번" 커뮤니티로 분류된 단어
 graph_comment %>%
   filter(group == 2) %>%
   arrange(-centrality) %>%
   data.frame()
+```
 
+
+
+
+```{r}
 # 4. 주요 단어가 사용된 원문 살펴보기
 news_comment %>%
   filter(str_detect(reply, "봉준호") & str_detect(reply, "대박")) %>%
   select(reply)
+```
 
+
+
+
+```{r}
 news_comment %>%
   filter(str_detect(reply, "박근혜") & str_detect(reply, "블랙리스트")) %>%
   select(reply)
+```
 
+
+
+
+```{r}
 news_comment %>%
   filter(str_detect(reply, "기생충") & str_detect(reply, "조국")) %>%
   select(reply)
@@ -247,14 +362,24 @@ word_cors <- comment %>%
                feature = id,
                sort = T)
 word_cors
+```
 
+
+
+
+```{r}
 # 특정 단어와 관련성이 큰 단어 살펴보기
 word_cors %>%
   filter(item1 == "대한민국")
 
 word_cors %>%
   filter(item1 == "역사")
+```
 
+
+
+
+```{r}
 # 파이 계수로 막대 그래프 만들기
 # 1. 관심 단어별로 파이 계수가 큰 단어 추출하기
 # 관심 단어 목록 생성
@@ -263,7 +388,12 @@ top_cors <- word_cors %>%
   filter(item1 %in% target) %>%
   group_by(item1) %>%
   slice_max(correlation, n = 8)
+```
 
+
+
+
+```{r}
 # 2. 막대 그래프 만들기
 # 그래프 순서 정하기
 top_cors$item1 <- factor(top_cors$item1, levels = target)
@@ -277,7 +407,12 @@ ggplot(top_cors, aes(x = reorder_within(item2, correlation, item1),
   scale_x_reordered() +
   labs(x = NULL) +
   theme(text = element_text(family = "nanumgothic"))
+```
 
+
+
+
+```{r}
 # 파이 계수로 네트워크 그래프 만들기
 # 1. 네트워크 그래프 데이터 만들기, 연결 중심성과 커뮤니티 추가하기
 set.seed(1234)
@@ -286,7 +421,12 @@ graph_cors <- word_cors %>%
   as_tbl_graph(directed = F) %>%
   mutate(centrality = centrality_degree(),
          group = as.factor(group_infomap()))
+```
 
+
+
+
+```{r}
 # 2. 네트워크 그래프 만들기
 set.seed(1234)
 ggraph(graph_cors, layout = "fr") +
@@ -305,33 +445,56 @@ ggraph(graph_cors, layout = "fr") +
                  family = "nanumgothic") +
   theme_graph()
 ```
+
+
+
 ### 연이어 사용된 단어쌍
 ```{r}
 # 엔그램으로 토큰화하기
 text <- tibble(value = "대한민국은 민주공화국이다. 대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다.")
 text
+```
 
+
+
+
+```{r}
 # 바이그램 토큰화
 text %>%
   unnest_tokens(input = value,
                 output = word,
                 token = "ngrams",
                 n = 2)
+```
 
+
+
+
+```{r}
 # 트라이그램 토큰화
 text %>%
   unnest_tokens(input = value,
                 output = word,
                 token = "ngrams",
                 n = 3)
+```
 
+
+
+
+```{r}
 # 유니그램 토큰화 = 단어 기준 토큰화
 text %>%
   unnest_tokens(input = value,
                 output = word,
                 token = "ngrams",
                 n = 1)
+```
 
+
+
+
+```{r}
 # 기사 댓글로 바이그램 만들기
 # 1. 명사, 동사, 형용사 추출하기
 comment_new <- comment_pos %>%
@@ -342,7 +505,12 @@ comment_new <- comment_pos %>%
                        str_remove(word, "/.*$"))) %>%
   filter(str_count(word) >= 2) %>%
   arrange(id)
+```
 
+
+
+
+```{r}
 # 2. 유의어 처리하기
 comment_new <- comment_new %>%
   mutate(word = ifelse(str_detect(word, "감독") &
@@ -350,16 +518,33 @@ comment_new <- comment_new %>%
          word = ifelse(word == "오르다", "올리다", word),
          word = ifelse(str_detect(word, "축하"), "축하", word))
 
+```
+
+
+
+
+```{r}
+
 # 3. 한 댓글이 하나의 행이 되도록 결합하기
 comment_new %>%
   select(word)
+```
 
+
+
+
+```{r}
 line_comment <- comment_new %>%
   group_by(id) %>%
   summarise(sentence = paste(word, collapse = " "))
 
 line_comment
+```
 
+
+
+
+```{r}
 # 4. 바이그램으로 토큰화하기
 bigram_comment <- line_comment %>%
   unnest_tokens(input = sentence,
@@ -367,34 +552,64 @@ bigram_comment <- line_comment %>%
                 token = "ngrams",
                 n = 2)
 bigram_comment
+```
 
+
+
+
+```{r}
 # 연이어 사용된 단어쌍 빈도 구하기
 # 1. 바이그램 분리하기
 bigram_seprated <- bigram_comment %>%
   separate(bigram, c("word1", "word2"), sep = " ")
 bigram_seprated
+```
 
+
+
+
+```{r}
 # 2. 단어쌍 빈도 구하기
 pair_bigram <- bigram_seprated %>%
   count(word1, word2, sort = T) %>%
   na.omit()
 pair_bigram
+```
 
+
+
+
+```{r}
 # 3. 단어쌍 살펴보기
 # 동시 출현 단어쌍
 pair %>%
   filter(item1 == "대한민국")
+```
 
+
+
+
+```{r}
 # 바이그램 단어쌍
 pair_bigram %>%
   filter(word1 == "대한민국")
+```
 
+
+
+
+```{r}
 # 엔그램으로 네트워크 그래프 만들기
 # 네트워크 그래프 데이터 만들기
 graph_bigram <- pair_bigram %>%
   filter(n >= 8) %>%
   as_tbl_graph()
+```
 
+
+
+
+```{r}
 # 네트워크 그래프 만들기
 set.seed(1234)
 word_network(graph_bigram)
@@ -409,12 +624,22 @@ bigram_seprated <- bigram_seprated %>%
          word1 = ifelse(str_detect(word1, "짝짝짝"), "짝짝짝", word1),
          word2 = ifelse(str_detect(word2, "짝짝짝"), "짝짝짝", word2)) %>%
   filter(word1 != word2) # 같은 단어 연속 제거
+```
 
+
+
+
+```{r}
 # 단어쌍 빈도 구하기
 pair_bigram <- bigram_seprated %>%
   count(word1, word2, sort = T) %>%
   na.omit()
+```
 
+
+
+
+```{r}
 # 네트워크 그래프 데이터 만들기
 set.seed(1234)
 graph_bigram <- pair_bigram %>%
@@ -422,7 +647,12 @@ graph_bigram <- pair_bigram %>%
   as_tbl_graph(directed = F) %>%
   mutate(centrality = centrality_degree(), # 중심성
          group = as.factor(group_infomap())) # 커뮤니티
+```
 
+
+
+
+```{r}
 # 네트워크 그래프 만들기
 set.seed(1234)
 ggraph(graph_bigram, layout = "fr") + # 레이아웃
