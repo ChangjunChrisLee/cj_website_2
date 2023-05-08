@@ -1,0 +1,90 @@
+---
+title: "Topic Modeling in R"
+# subtitle: "Unveiling Hidden Structures in Text Data" 
+description: "Unveiling Hidden Structures in Text Data"
+author: "Changjun Lee"
+date: "2023-05-6"
+image: "img/figure_10.png"
+categories: 
+  - ML
+  - Topic modeling
+  - LDA
+  - Text mining
+  - R
+  - unsupervised learning
+---
+
+### Introduction:
+
+Topic modeling is an unsupervised machine learning technique used to discover latent structures within a large collection of documents or text data. This technique is particularly useful for exploring, organizing, and understanding vast text corpora. One popular method for topic modeling is Latent Dirichlet Allocation (LDA), which is a generative probabilistic model that assumes a mixture of topics over documents and words within topics. In this blog post, we will delve into the details of LDA and demonstrate how to perform topic modeling in R using the '`topicmodels`' package.
+
+Latent Dirichlet Allocation (LDA):
+
+LDA is based on the idea that documents are mixtures of topics, where each topic is a probability distribution over a fixed vocabulary. The generative process for LDA can be summarized as follows:
+
+1.  For each topic k, sample a word distribution $φ_k$ \~ Dir(β).
+
+2.  For each document d, sample a topic distribution $θ_d$ \~ Dir(α).
+
+3.  For each word w in document d, sample a topic $z_d$, w \~ Multinomial($θ_d$), then sample the word $w_d$, n \~ Multinomial($φ_z$).
+
+Here, Dir(α) and Dir(β) denote Dirichlet distributions with parameters α and β, respectively. α and β are hyperparameters controlling the shape of the distributions. The main goal of LDA is to infer the latent topic structures θ and φ by observing the documents.
+
+### Performing LDA in R:
+
+We will use the 'topicmodels' package in R to perform LDA. First, let's install and load the necessary packages:
+
+```{r}
+# install.packages("topicmodels")
+# install.packages("tm")
+library(topicmodels)
+library(tm)
+
+```
+
+Now, let's preprocess our text data using the 'tm' package. For this example, we will use the 'AssociatedPress' dataset, which is available within the 'topicmodels' package:
+
+```{r}
+data("AssociatedPress")
+dtm <- AssociatedPress
+head(dtm)
+
+
+```
+
+Now, we are ready to fit the LDA model using the 'LDA' function from the 'topicmodels' package. We will specify the number of topics (K) and the hyperparameters α and β:
+
+```{r}
+K <- 10 # Number of topics
+alpha <- 50/K
+beta <- 0.1
+lda_model <- LDA(dtm, K, method = "Gibbs", control = list(alpha = alpha, delta = beta, iter = 1000, verbose = 50))
+
+```
+
+Here, we use the Gibbs sampling method to estimate the LDA parameters with 1000 iterations. The 'verbose' option is set to 50, which means that the progress will be displayed every 50 iterations.
+
+Once the model is fitted, we can extract the topic-word and document-topic distributions using the 'posterior' function:
+
+```{r}
+posterior_lda <- posterior(lda_model)
+summary(posterior_lda)
+```
+
+To visualize the results, we can display the top words for each topic:
+
+```{r}
+top_words <- 10
+top_terms <- terms(lda_model, top_words)
+
+for (k in 1:K) {
+  cat("Topic", k, ":", paste(top_terms[k,], collapse = " "), "\n")
+}
+
+```
+
+This will output the top 10 words for each of the 10 topics in our LDA model.
+
+### Conclusion:
+
+In this blog post, we introduced the Latent Dirichlet Allocation (LDA) method for topic modeling and demonstrated
