@@ -37,9 +37,11 @@ Loading...
 
 ### Class
 
-Apriori Algorithm Implementation in R using 'arules' library Association mining is usually done on transactions data from a retail market or from an online e-commerce store. Since most transactions data is large, the apriori algorithm makes it easier to find these patterns or rules quickly. Association Rules are widely used to analyze retail basket or transaction data, and are intended to identify strong rules discovered in transaction data using measures of interestingness, based on the concept of strong rules.
+***Apriori Algorithm*** Implementation in R using '`arules`' library Association mining is usually done on [transactions data from a retail market]{.underline} or from an online e-commerce store. Since most transactions data is large, the `apriori` algorithm makes it easier to find these patterns or rules quickly. Association Rules are widely used to analyze `retail basket` or `transaction data`, and are intended [**to identify strong rules**]{.underline} discovered in transaction data [**using measures of interestingness**]{.underline}, based on the concept of strong rules.
 
-Apriori uses a "bottom up" approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data. The algorithm terminates when no further successful extensions are found.
+Apriori uses a *"bottom up"* approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data. The algorithm terminates when no further successful extensions are found.
+
+<hr>
 
 Download the grocery dataset
 
@@ -70,7 +72,10 @@ sum(is.na(groceries))
 Group all the items that were bought together by the same customer on the same date
 
 ```{r}
-itemList <- ddply(groceries, c("Member_number","Date"), function(df1)paste(df1$itemDescription,collapse = ","))
+itemList <- ddply(groceries, 
+                  c("Member_number","Date"), 
+                  function(df1) paste(df1$itemDescription, collapse = ",")
+                  )
                   
 head(itemList,15)
 ```
@@ -78,8 +83,15 @@ head(itemList,15)
 Remove member number and date
 
 ```{r}
-itemList %>% select(V1) %>% setNames(c("itemList")) %>% head
-itemList<-itemList %>% select(V1) %>% setNames(c("itemList")) 
+itemList %>% 
+  select(V1) %>% 
+  setNames(c("itemList")) %>% 
+  head
+
+itemList <- itemList %>% 
+  select(V1) %>% 
+  setNames(c("itemList")) 
+
 write.csv(itemList,"ItemList.csv", quote = FALSE, row.names = TRUE)
 
 ```
@@ -92,9 +104,23 @@ library(arulesViz)
 ```
 
 ```{r}
-txn = read.transactions(file="ItemList.csv", rm.duplicates= TRUE, format="basket",sep=",",cols=1);
+# read the transactional dataset from a CSV file and convert it into a transaction object
+txn = read.transactions(file = "ItemList.csv", 
+                         rm.duplicates = TRUE, # remove duplicate transactions
+                         format = "basket", # dataset is in basket format (each row represents a single transaction)
+                         sep = ",", # CSV file is comma-separated
+                         cols = 1) # transaction IDs are stored in the first column of the CSV file
+
 print(txn)
 ```
+
+<br>
+
+1.  The first line of output shows the distribution of transactions by item. In this case, there are four items (items 1, 2, 3, and 4), and the numbers indicate how many transactions in the dataset contain each item. For example, there are 662 transactions that contain item 1, 39 transactions that contain item 2, 5 transactions that contain item 3, and 1 transaction that contains item 4. This information is useful for understanding the frequency of different items in the dataset and identifying which items are most commonly associated with each other.
+
+2.  The second line of output shows the total number of transactions in the dataset and the number of unique items that appear in those transactions. Specifically, there are 14964 transactions (rows) and 168 unique items (columns). The transactions are in sparse format, meaning that the majority of the entries in the transaction matrix are zero (i.e., most transactions do not contain most of the items). This format is used to save memory when working with large datasets that have many items.
+
+<br>
 
 Most Frequent Products
 
@@ -103,15 +129,37 @@ itemFrequencyPlot(txn, topN = 20)
 
 ```
 
-Apriori Algorithm The apriori() generates the most relevent set of rules from a given transaction data. It also shows the support, confidence and lift of those rules. These three measure can be used to decide the relative strength of the rules. So what do these terms mean?
+Apriori Algorithm The `apriori()` generates the most relevent set of rules from a given transaction data. It also shows the support, confidence and lift of those rules. These three measure can be used to decide the relative strength of the rules. So what do these terms mean?
 
-Lets consider the rule X =\> Y in order to compute these metrics.
+Lets consider the rule {X → Y} in order to compute these metrics.
 
-![](https://s3.ap-south-1.amazonaws.com/techleer/243.jpg)
+$$
+Support(X,Y) = \frac{frq(X,Y)}{N}
+$$
+
+$$
+Confidence(X → Y) = \frac{frq(X,Y)}{frq(X)}
+$$
+
+$$
+Lift(X → Y) = \frac{Confidence(X → Y)}{Support(Y)}
+$$
+
+<br>
 
 ```{r}
-basket_rules <- apriori(txn, parameter = list(minlen=2, sup = 0.001, conf = 0.05, target="rules"))
+basket_rules <- apriori(txn, 
+                        parameter = list(
+                          minlen = 2, # Minimum number of items in a rule (in this case, 2)
+                          sup = 0.001, # Minimum support threshold (a rule must be present in at least 0.1% of transactions)
+                          conf = 0.05, # Minimum confidence threshold (rules must have at least 5% confidence)
+                          target = "rules" # Specifies that we want to generate association rules
+                        ))
 ```
+
+> The **`apriori`** function takes several parameters, including the transaction dataset (**`txn`**) and a list of parameters (**`parameter`**) that control the behavior of the algorithm. The **`minlen`** parameter sets the minimum number of items in a rule to 2, which means that the algorithm will only consider rules that involve at least 2 items. The **`sup`** parameter sets the minimum support threshold to 0.001, which means that a rule must be present in at least 0.1% of transactions in order to be considered significant. The **`conf`** parameter sets the minimum confidence threshold to 0.05, which means that a rule must have at least 5% confidence (i.e., be correct at least 5% of the time) to be considered significant. Finally, the **`target`** parameter specifies that we want to generate association rules rather than just frequent itemsets.
+
+<br>
 
 Total rules generated
 
@@ -128,7 +176,7 @@ inspect(basket_rules[1:20])
 
 ```
 
-Visualizing the Association Rules¶
+Visualizing the Association Rules
 
 ```{r}
 plot(basket_rules, jitter = 0)
@@ -154,17 +202,21 @@ plot(basket_rules[1:50], method="graph")
 
 ```
 
-Parallel coordinates plot¶
+Parallel coordinates plot
 
 ```{r}
 plot(basket_rules[1:20], method="paracoord")
 
 ```
 
-Changing hyperparameters¶
+Changing hyperparameters:
 
 ```{r}
-basket_rules2 <- apriori(txn, parameter = list(minlen=3, sup = 0.001, conf = 0.1, target="rules"))
+basket_rules2 <- apriori(txn, 
+                         parameter = list(minlen=3, 
+                                          sup = 0.001, 
+                                          conf = 0.1,
+                                          target="rules"))
 
 ```
 

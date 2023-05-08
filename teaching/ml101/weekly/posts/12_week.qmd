@@ -3,6 +3,9 @@ title: "Model Improvement"
 subtitle: "Enhancing Predictive Performance with Model Evaluation"
 Week: 12
 slide-format: revealjs
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 [Weekly design](https://changjunlee.com/teaching/ml101/weekly/)
@@ -11,54 +14,75 @@ slide-format: revealjs
 
 ### Pre-class video
 
-- Eng ver.
+-   Eng ver.
 
 {{< video https://youtu.be/L-_mGMoII3I >}}
 
-- Kor ver.
+-   Kor ver.
 
 {{< video https://youtu.be/I3y5yEk5YH0 >}}
 
-- Pre-class PPT [pdf](content/ML_pre_11.pdf)
+-   Pre-class PPT [pdf](content/ML_pre_11.pdf)
 
-
-------------------------------------------------------------------------
-### Discussion
-
-Discussion #10 
-
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScmmosKUF9iLZAiJqZ-IDM-EcbBI2urfn_1ybc6vd-6xmgpdg/viewform?embedded=true" width="640" height="2950" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-
-------------------------------------------------------------------------
+|                                                                                                                                                                                                                                |
+|:-----------------------------------------------------------------------|
+| \### Discussion                                                                                                                                                                                                                |
+| Discussion #10                                                                                                                                                                                                                 |
+| <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScmmosKUF9iLZAiJqZ-IDM-EcbBI2urfn_1ybc6vd-6xmgpdg/viewform?embedded=true" width="640" height="2950" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> |
 
 ### Class
 
+#### caret package 를 이용한 데이터 학습 간편화 
 
-caret package 를 이용한 데이터 학습 간편화
-- 기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을 사용할 것이든 공통으로 필요한 과정은 학습
-- 학습의 대상은 전통적으로 훈련데이터(Training dataset)이고, 훈련데이터를 학습시키는 아주 다양한 방법들이 존재
-- 방법별로 원리와 특징 및 색깔이 다르며, 다양한 방법들이 존재. 모든 알고리즘을 아는것이 한계가 존재.
-- 무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들 수 있을지 현실적인 문제에 부딪힘
-- caret 패키지는 예측모델을 만들기 위한 데이터 학습 시 간편한 함수를 제공
-- 300여개의 머신러닝 알고리즘을 표준화된 인터페이스를 통해 테스트 해 볼 수 있음
-- 다양한 파라미터 시나리오를 구성해 손쉽게 튜닝, 변수의 중요도를 측정
-- 편리한 훈련데이터의 학습을 통해 적절한 알고리즘 선택 의사결정에 도움을 받을 수 있음
+-   기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을
+    사용할 것이든 공통으로 필요한 과정은 학습
 
+-   학습의 대상은 전통적으로 훈련데이터(Training dataset)이고,
+    훈련데이터를 학습시키는 아주 다양한 방법들이 존재
 
+-   방법별로 원리와 특징 및 색깔이 다르며, 다양한 방법들이 존재. 모든
+    알고리즘을 아는것이 한계가 존재.
 
-caret package: Classification And REgression Training
-종속변수(예측변수)가 명목형 변수라면 "Classification", 연속형 변수라면 "Regression" 으로 "Training"
+-   무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들
+    수 있을지 현실적인 문제에 부딪힘
 
+-   `caret` 패키지는 예측모델을 만들기 위한 데이터 학습 시 간편한 함수를
+    제공
+
+-   300여개의 머신러닝 알고리즘을 표준화된 인터페이스를 통해 테스트 해
+    볼 수 있음
+
+-   다양한 파라미터 시나리오를 구성해 손쉽게 튜닝, 변수의 중요도를 측정
+
+-   편리한 훈련데이터의 학습을 통해 적절한 알고리즘 선택 의사결정에
+    도움을 받을 수 있음
+
+#### caret package: Classification And REgression Training 
+
+-   종속변수(예측변수)가 명목형 변수라면 "Classification"
+
+-   연속형 변수라면 "Regression" 으로 "Training"
 
 ```{r}
 library(tidyverse) # for tidy tools (pipe operation, tibble, etc..)
 library(caret)
 ```
-Data: Sonar: Mines Vs. Rocks
-This is the data set used by Gorman and Sejnowski in their study of the classification of sonar signals using a neural network. The task is to train a network to discriminate between sonar signals bounced off a metal cylinder and those bounced off a roughly cylindrical rock. Each pattern is a set of 60 numbers in the range 0.0 to 1.0. Each number represents the energy within a particular frequency band, integrated over a certain period of time. The integration aperture for higher frequencies occur later in time, since these frequencies are transmitted later during the chirp. The label associated with each record contains the letter "R" if the object is a rock and "M" if it is a mine (metal cylinder). The numbers in the labels are in increasing order of aspect angle, but they do not encode the angle directly.
 
+-   Data: ***Sonar: Mines Vs. Rocks***
 
-
+> This is the data set used by Gorman and Sejnowski in their study of
+> the classification of sonar signals using a neural network. The task
+> is to train a network to discriminate between sonar signals bounced
+> off a metal cylinder and those bounced off a roughly cylindrical rock.
+> Each pattern is a set of 60 numbers in the range 0.0 to 1.0. Each
+> number represents the energy within a particular frequency band,
+> integrated over a certain period of time. The integration aperture for
+> higher frequencies occur later in time, since these frequencies are
+> transmitted later during the chirp. The label associated with each
+> record contains the letter "R" if the object is a rock and "M" if it
+> is a mine (metal cylinder). The numbers in the labels are in
+> increasing order of aspect angle, but they do not encode the angle
+> directly.
 
 ```{r}
 # install.packages("mlbench")
@@ -69,17 +93,18 @@ data(Sonar, package = "mlbench")
 Sonar %>% glimpse
 ```
 
-
-
 ```{r}
 table(Sonar$Class)
 ```
 
+**Scatterplot Matrix**
 
-Scatterplot Matrix
-A scatterplot matrix shows a grid of scatterplots where each attribute is plotted against all other attributes. It can be read by column or row, and each plot appears twice, allowing you to consider the spatial relationships from two perspectives.
-An improvement of just plotting the scatterplots, is to further include class information. This is commonly done by coloring dots in each scatterplot by their class value.
-
+A scatterplot matrix shows a grid of scatterplots where each attribute
+is plotted against all other attributes. It can be read by column or
+row, and each plot appears twice, allowing you to consider the spatial
+relationships from two perspectives. An improvement of just plotting the
+scatterplots, is to further include class information. This is commonly
+done by coloring dots in each scatterplot by their class value.
 
 ```{r}
 fig <- function(width, heigth){
@@ -87,45 +112,65 @@ fig <- function(width, heigth){
 }
 ```
 
+```{r}
+fig(10,10)
+featurePlot(x=Sonar[,1:4], 
+            y=Sonar[,61], 
+            plot="pairs", 
+            auto.key=list(columns=2))
+```
+
+For example, in Iris dataset,
 
 ```{r}
 fig(10,10)
-featurePlot(x=Sonar[,1:4], y=Sonar[,61], 
-            plot="pairs", auto.key=list(columns=2))
+featurePlot(x=iris[,1:4], 
+            y=iris[,5], 
+            plot="pairs",
+            auto.key=list(columns=3))
 ```
 
+**Density Plots**
 
-
-```{r}
-fig(10,10)
-featurePlot(x=iris[,1:4], y=iris[,5], plot="pairs", auto.key=list(columns=3))
-```
-
-Density Plots
-Density estimation plots (density plots for short) summarize the distribution of the data. Like a histogram, the relationship between the attribute values and number of observations is summarized, but rather than a frequency, the relationship is summarized as a continuous probability density function (PDF). This is the probability that a given observation has a given value.
-The density plots can further be improved by separating each attribute by their class value for the observation. This can be useful to understand the single-attribute relationship with the class values and highlight useful structures like linear separability of attribute values into classes.
-
+***Density estimation plots (density plots for short)*** summarize the
+distribution of the data. Like a histogram, the relationship between the
+attribute values and number of observations is summarized, but rather
+than a frequency, the relationship is summarized as a continuous
+probability density function (PDF). This is the probability that a given
+observation has a given value. The density plots can further be improved
+by separating each attribute by their class value for the observation.
+This can be useful to understand the single-attribute relationship with
+the class values and highlight useful structures like linear
+separability of attribute values into classes.
 
 ```{r}
 fig(10, 5)
-featurePlot(x=Sonar[,1:4], y=Sonar[,61], 
+featurePlot(x=Sonar[,1:4], 
+            y=Sonar[,61], 
             plot="density", 
-            scales=list(x=list(relation="free"), y=list(relation="free")), auto.key=list(columns=2))
+            scales=list(x=list(relation="free"), 
+                        y=list(relation="free")), 
+            auto.key=list(columns=2))
 ```
+
+For example, in Iris dataset,
 
 ```{r}
 fig(10, 5)
-featurePlot(x=iris[,1:4], y=iris[,5], plot="density", scales=list(x=list(relation="free"), y=list(relation="free")), auto.key=list(columns=3))
+caret::featurePlot(x=iris[,1:4], 
+            y=iris[,5], 
+            plot="density", 
+            scales=list(x=list(relation="free"), 
+                        y=list(relation="free")), 
+            auto.key=list(columns=3))
 ```
-
 
 Hold out method: 7:3
 
-
-
 ```{r}
 # Without package
-indexTrain <- sample(1:nrow(Sonar), round(nrow(Sonar) * .7))
+indexTrain <- sample(1:nrow(Sonar), 
+                     round(nrow(Sonar) * .7))
 training <- Sonar[ indexTrain, ]
 testing  <- Sonar[-indexTrain, ]
 ```
@@ -135,11 +180,17 @@ table(training$Class)
 table(testing$Class)
 ```
 
-createDataPartition()
--   인자가 있어 특정비율로 파티셔닝할 때 편함
--   sample() 함수를 이용할 때는 완전무작위추출이 되기 때문에 종속변수의 요인별 비율을 고려하지 않지만 createDataPartition() 함수를 이용할 경우 종속변수의 요인별 비율만큼 층화랜덤추출을 지원, 더욱 효과적임
--   반환되는 타입이 기본적으로 list: list 인자값을 FALSE로 하면 vector로 출력
+`createDataPartition()`
 
+-   인자가 있어 특정비율로 파티셔닝할 때 편함
+
+-   `sample()` 함수를 이용할 때는 완전무작위추출이 되기 때문에
+    종속변수의 요인별 비율을 고려하지 않지만 `createDataPartition()`
+    함수를 이용할 경우 종속변수의 요인별 비율만큼 ***층화랜덤추출***을
+    지원, 더욱 효과적임
+
+-   반환되는 타입이 기본적으로 list: list 인자값을 FALSE로 하면 vector로
+    출력
 
 ```{r}
 indexTrain <- createDataPartition(Sonar$Class, p = .7, list = F)
@@ -152,53 +203,74 @@ table(training$Class)
 table(testing$Class)
 ```
 
-
 For the best parameter tuning
--   KNN(K-Neareast Neighbors): k / 랜덤포레스트(RandomForest): mtry, ntre 와 같이 각각의 ML 모델은 각각의 parameter 를 셋팅해 주어야 함
--   With caret, "Tuning parameters": LOOCV, K-fold cross validation 등과 같은 방법을 통해서 데이터에 근거한 최적의 parameter 를 찾을 수 있도록 도와줌
--   알고리즘별로 튜닝 파라미터 개수는 달라지는데 p개의 파라미터일 경우 3P 의 그리드를 탐색하여 후보모델들을 테스트
--   예를 들면 KNN은 모수가 K 하나이므로 3^1=3 인 3가지 K 값들을 후보로 두고 모델을 비교
--   모수가 두 개인 모델은 3^2 = 9 가지 파라미터의 조합들을 후보로 두고 모델을 비교
--   만약에 비교하는 방식이 K-fold cross validation 이라면 몇 번을 접어 cross validation 을 할지에 대한 부분도 정해 것이냐 란 질문의 K 를 정해야 함
--   trainControl() 함수: 일관된 비교방법을 각 후보에게 통일되게 적용하여 평가할 수 있게 도와줌
 
-아래 코드는 10-fold cross validation 을 5번 반복하여 가장 좋은 후보의 파라미터 그리드를 찾게 해주는 일종의 장치를 만드는 코드
-비교방법에 대한 정보가 담겨있는 fitControl 객체는 추후에 학습 과정에서 사용하게 됨
+-   KNN(K-Neareast Neighbors): k / 랜덤포레스트(RandomForest): mtry,
+    ntre 와 같이 각각의 ML 모델은 각각의 parameter 를 셋팅해 주어야 함
 
+-   With caret, "Tuning parameters": LOOCV, K-fold cross validation 등과
+    같은 방법을 통해서 데이터에 근거한 최적의 parameter 를 찾을 수
+    있도록 도와줌
 
+-   알고리즘별로 튜닝 파라미터 개수는 달라지는데 p개의 파라미터일 경우
+    3P 의 그리드를 탐색하여 후보모델들을 테스트
+
+-   예를 들면 KNN은 모수가 K 하나이므로 3\^1=3 인 3가지 K 값들을 후보로
+    두고 모델을 비교
+
+-   모수가 두 개인 모델은 3\^2 = 9 가지 파라미터의 조합들을 후보로 두고
+    모델을 비교
+
+-   만약에 비교하는 방식이 K-fold cross validation 이라면 몇 번을 접어
+    cross validation 을 할지에 대한 부분도 정해 것이냐 란 질문의 K 를
+    정해야 함
+
+-   `trainControl()` 함수: 일관된 비교방법을 각 후보에게 통일되게
+    적용하여 평가할 수 있게 도와줌
+
+아래 코드는 10-fold cross validation 을 5번 반복하여 가장 좋은 후보의
+파라미터 그리드를 찾게 해주는 일종의 장치를 만드는 코드 비교방법에 대한
+정보가 담겨있는 fitControl 객체는 추후에 학습 과정에서 사용하게 됨
 
 ```{r}
 fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 5)
 
 ```
-이제 훈련 데이터 셋으로 학습을 시켜보자!
-학습을 위한 표준화된 인터페이스는 바로 train() 함수: 함수 안에서 method 인자만 바꿔주면 원하는 학습모델 알고리즘을 구현할 수 있음
-e.g.) model='rf' / model='dt' 등등
-여러가지 성능 평가 지표에 대해 정리해보자
 
+이제 훈련 데이터 셋으로 학습을 시켜보자!
+
+학습을 위한 표준화된 인터페이스는 바로 `train()` 함수: 함수 안에서
+method 인자만 바꿔주면 원하는 학습모델 알고리즘을 구현할 수 있음 e.g.)
+model='rf' / model='dt' 등등 여러가지 성능 평가 지표에 대해 정리해보자
 
 ![](https://miro.medium.com/max/1750/1*2TrcVyRb0ZKwyiojOt5jCA.png)
 
-
-
 ```{r}
-rf_fit <- train(Class ~ ., data = training, method = "rf", trControl = fitControl, verbose = F)
+rf_fit <- train(Class ~ ., 
+                data = training, 
+                method = "rf", 
+                trControl = fitControl, 
+                verbose = F)
 rf_fit
 ```
+
 -   mtry 후보는 2, 31, 60 개로 자동설정
 -   이 중 Kappa 통계량과 정확도에 의해서 mtry = 2 가 최종적으로 선정
 -   선정과정을 자세하게 보고 싶을 경우엔 verbose = F 로 놓고 실행
-
 
 ```{r}
 plot(rf_fit)
 
 ```
-여러 가지 지표들을 활용하여 공평하게 모델들을 경쟁시켜보자 (Model validation)
+
+여러 가지 지표들을 활용하여 공평하게 모델들을 경쟁시켜보자 (Model
+validation)
+
 ```{r}
 modelLookup()
 
 ```
+
 ```{r}
 modelLookup("rpart")
 
@@ -211,14 +283,10 @@ knn_fit <- train(Class ~ ., data = training, method = "knn", trControl = fitCont
 nb_fit <- train(Class ~ ., data = training, method = "nb", trControl = fitControl)
 ```
 
-
 ```{r}
 resamp=resamples(list(DecisionTree=dt_fit, RandomForest=rf_fit, kNN=knn_fit, NaiveBayes=nb_fit))
 
 ```
-
-
-
 
 ```{r}
 resamp=resamples(list(DecisionTree=dt_fit, RandomForest=rf_fit, kNN=knn_fit, NaiveBayes=nb_fit))
@@ -230,9 +298,7 @@ dotplot(resamp)
 
 ```
 
-
-Testing models
-제너릭 함수인 predict() 를 이용
+Testing models 제너릭 함수인 `predict()` 를 이용
 
 ```{r}
 predict(rf_fit, newdata = testing)
@@ -243,56 +309,76 @@ predict(rf_fit, newdata = testing)
 table(predict(rf_fit, newdata = testing), testing$Class)
 
 ```
-caret package 의 confusionMatrix() 를 곁들이면 혼돈메트릭스(Confusion Matrix) 및 정확도외 다양한 통계량까지 출력
 
+caret package 의 `confusionMatrix()` 를 곁들이면 혼돈메트릭스(Confusion
+Matrix) 및 정확도외 다양한 통계량까지 출력
 
 ```{r}
 predict(rf_fit, newdata = testing) %>% confusionMatrix(testing$Class)
 
 ```
 
+Tuning parameters 의 그리드 조정 사용자 검색 그리드(custom search grid)
 
-Tuning parameters 의 그리드 조정
-사용자 검색 그리드(custom search grid)
 -   최적 파라미터 선정 시 탐색범위와 그리드를 수동으로 조절 가능
--   자동으로 3P 공식에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개로 설정
--   만약 더 많은 후보와 상대평가하고 싶을 경우 후보를 사용자가 직접 설정 가능
--   아래 코드는 mtry 의 후보를 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 로 바꾸어 설정, 이 중에서 채택해 보는 코드
+
+-   자동으로 3P 공식에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개로
+    설정
+
+-   만약 더 많은 후보와 상대평가하고 싶을 경우 후보를 사용자가 직접 설정
+    가능
+
+-   아래 코드는 mtry 의 후보를 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 로 바꾸어
+    설정, 이 중에서 채택해 보는 코드
 
 ```{r}
 customGrid <- expand.grid(mtry = 1:10)
-rf_fit2 <- train(Class ~ ., data = training, method = "rf", trControl = fitControl, tuneGrid = customGrid, verbose = F)
+rf_fit2 <- train(Class ~ ., 
+                 data = training, 
+                 method = "rf", 
+                 trControl = fitControl, 
+                 tuneGrid = customGrid, 
+                 verbose = F)
 
 rf_fit2
 ```
+
 ```{r}
 plot(rf_fit2)
 
 ```
 
-
-
 랜덤 검색 그리드(random selection of tuning parameter combinations)
--   튜닝 파라미터의 개수가 많으면 많아질수록 탐색그리드의 개수는 지수적으로 증가, 동일한 간격의 그리드 구성으로 인해 탐색과정이 비효율적이 될 수 있음
--   튜닝 파라미터가 2개인 RDA(Regularized Discriminant Analysis) 를 통해 훈련을 해보자
 
+-   튜닝 파라미터의 개수가 많으면 많아질수록 탐색그리드의 개수는
+    지수적으로 증가, 동일한 간격의 그리드 구성으로 인해 탐색과정이
+    비효율적이 될 수 있음
+
+-   튜닝 파라미터가 2개인 RDA(Regularized Discriminant Analysis) 를 통해
+    훈련을 해보자
 
 ```{r}
-rda_fit <- train(Class ~ ., data = training, method = "rda", trControl = fitControl, verbose = F)
+rda_fit <- train(Class ~ ., 
+                 data = training, 
+                 method = "rda", 
+                 trControl = fitControl, 
+                 verbose = F)
 
 rda_fit
 
 ```
 
 -   총 9개의 파라미터 조합을 비교하는 것을 볼 수 있음
--   바로 위에 소개한 사용자 검색 그리드 역시 expand.grid() 함수를 이용하여 동일간격 그리드를 검색할 수도 있지만, 이번에는 랜덤 검색 그리드를 이용하면 동일간격이 아닌 파라미터 조합을 구성해보자.
--   trainControl() 함수의 search = "random", 검색 타입을 랜덤으로 바꾼다.
+-   바로 위에 소개한 사용자 검색 그리드 역시 expand.grid() 함수를
+    이용하여 동일간격 그리드를 검색할 수도 있지만, 이번에는 랜덤 검색
+    그리드를 이용하면 동일간격이 아닌 파라미터 조합을 구성해보자.
+-   `trainControl()` 함수의 `search = "random"`, 검색 타입을 랜덤으로
+    바꾼다.
 
 ```{r}
 plot(rda_fit)
 
 ```
-
 
 ```{r}
 fitControl <- trainControl(method = "repeatedcv", 
@@ -309,9 +395,11 @@ rda_fit2 <- train(Class ~ ., data = training,
                   verbose = F)
 rda_fit2
 ```
--   튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간 3P 공식으로 후보군을 설정하지 않는 것을 확인할 수 있음
--   수동으로 튜닝파라미터 조합개수를 늘리고 싶을 땐 train() 함수의 tuneLength 인자를 이용
 
+-   튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간
+    3P 공식으로 후보군을 설정하지 않는 것을 확인할 수 있음
+-   수동으로 튜닝파라미터 조합개수를 늘리고 싶을 땐 `train()` 함수의
+    tuneLength 인자를 이용
 
 ```{r}
 rda_fit2 <- train(Class ~ ., 
@@ -323,13 +411,11 @@ rda_fit2 <- train(Class ~ .,
 rda_fit2
 ```
 
-
--   파라미터를 랜덤하게 50개로 설정하여 조금 더 융통성 있는 최적의 파라미터 튜닝 방법을 고려함
--   비교해 보면 채택된 파라미터의 값이 소수점이 더 많아져 자연스럽게 정밀해 진 것을 확인할 수 있다.
-
+-   파라미터를 랜덤하게 50개로 설정하여 조금 더 융통성 있는 최적의
+    파라미터 튜닝 방법을 고려함
+-   비교해 보면 채택된 파라미터의 값이 소수점이 더 많아져 자연스럽게
+    정밀해 진 것을 확인할 수 있다.
 
 ```{r}
 plot(rda_fit2)
 ```
-
-

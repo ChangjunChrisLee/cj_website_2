@@ -122,6 +122,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -268,8 +269,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
-<p>Apriori Algorithm Implementation in R using ‘arules’ library Association mining is usually done on transactions data from a retail market or from an online e-commerce store. Since most transactions data is large, the apriori algorithm makes it easier to find these patterns or rules quickly. Association Rules are widely used to analyze retail basket or transaction data, and are intended to identify strong rules discovered in transaction data using measures of interestingness, based on the concept of strong rules.</p>
-<p>Apriori uses a “bottom up” approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data. The algorithm terminates when no further successful extensions are found.</p>
+<p><strong><em>Apriori Algorithm</em></strong> Implementation in R using ‘<code>arules</code>’ library Association mining is usually done on <u>transactions data from a retail market</u> or from an online e-commerce store. Since most transactions data is large, the <code>apriori</code> algorithm makes it easier to find these patterns or rules quickly. Association Rules are widely used to analyze <code>retail basket</code> or <code>transaction data</code>, and are intended <u><strong>to identify strong rules</strong></u> discovered in transaction data <u><strong>using measures of interestingness</strong></u>, based on the concept of strong rules.</p>
+<p>Apriori uses a <em>“bottom up”</em> approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data. The algorithm terminates when no further successful extensions are found.</p>
+<hr>
 <p>Download the grocery dataset</p>
 <p>[<a href="content/Groceries_dataset.csv">Grocery data</a>]</p>
 <p>Import Required libraries and data</p>
@@ -360,9 +362,12 @@ $ itemDescription &lt;chr&gt; "tropical fruit", "whole milk", "pip fruit", "othe
 </div>
 <p>Group all the items that were bought together by the same customer on the same date</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="ot">&lt;-</span> <span class="fu">ddply</span>(groceries, <span class="fu">c</span>(<span class="st">"Member_number"</span>,<span class="st">"Date"</span>), <span class="cf">function</span>(df1)<span class="fu">paste</span>(df1<span class="sc">$</span>itemDescription,<span class="at">collapse =</span> <span class="st">","</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(itemList,<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="ot">&lt;-</span> <span class="fu">ddply</span>(groceries, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">c</span>(<span class="st">"Member_number"</span>,<span class="st">"Date"</span>), </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">function</span>(df1) <span class="fu">paste</span>(df1<span class="sc">$</span>itemDescription, <span class="at">collapse =</span> <span class="st">","</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(itemList,<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Member_number       Date                                            V1
 1           1000 15-03-2015 sausage,whole milk,semi-finished bread,yogurt
@@ -384,7 +389,10 @@ $ itemDescription &lt;chr&gt; "tropical fruit", "whole milk", "pip fruit", "othe
 </div>
 <p>Remove member number and date</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="sc">%&gt;%</span> <span class="fu">select</span>(V1) <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"itemList"</span>)) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(V1) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"itemList"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                       itemList
 1 sausage,whole milk,semi-finished bread,yogurt
@@ -394,8 +402,11 @@ $ itemDescription &lt;chr&gt; "tropical fruit", "whole milk", "pip fruit", "othe
 5                       soda,pickled vegetables
 6                              frankfurter,curd</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>itemList<span class="ot">&lt;-</span>itemList <span class="sc">%&gt;%</span> <span class="fu">select</span>(V1) <span class="sc">%&gt;%</span> <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"itemList"</span>)) </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(itemList,<span class="st">"ItemList.csv"</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">row.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>itemList <span class="ot">&lt;-</span> itemList <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(V1) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setNames</span>(<span class="fu">c</span>(<span class="st">"itemList"</span>)) </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(itemList,<span class="st">"ItemList.csv"</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">row.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Convert CSV file to Basket Format</p>
 <div class="cell">
@@ -429,7 +440,12 @@ Attaching package: 'arules'</code></pre>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arulesViz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>txn <span class="ot">=</span> <span class="fu">read.transactions</span>(<span class="at">file=</span><span class="st">"ItemList.csv"</span>, <span class="at">rm.duplicates=</span> <span class="cn">TRUE</span>, <span class="at">format=</span><span class="st">"basket"</span>,<span class="at">sep=</span><span class="st">","</span>,<span class="at">cols=</span><span class="dv">1</span>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read the transactional dataset from a CSV file and convert it into a transaction object</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>txn <span class="ot">=</span> <span class="fu">read.transactions</span>(<span class="at">file =</span> <span class="st">"ItemList.csv"</span>, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">rm.duplicates =</span> <span class="cn">TRUE</span>, <span class="co"># remove duplicate transactions</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">format =</span> <span class="st">"basket"</span>, <span class="co"># dataset is in basket format (each row represents a single transaction)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">sep =</span> <span class="st">","</span>, <span class="co"># CSV file is comma-separated</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cols =</span> <span class="dv">1</span>) <span class="co"># transaction IDs are stored in the first column of the CSV file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>distribution of transactions with duplicates:
 items
@@ -443,6 +459,12 @@ items
  168 items (columns)</code></pre>
 </div>
 </div>
+<p><br></p>
+<ol type="1">
+<li><p>The first line of output shows the distribution of transactions by item. In this case, there are four items (items 1, 2, 3, and 4), and the numbers indicate how many transactions in the dataset contain each item. For example, there are 662 transactions that contain item 1, 39 transactions that contain item 2, 5 transactions that contain item 3, and 1 transaction that contains item 4. This information is useful for understanding the frequency of different items in the dataset and identifying which items are most commonly associated with each other.</p></li>
+<li><p>The second line of output shows the total number of transactions in the dataset and the number of unique items that appear in those transactions. Specifically, there are 14964 transactions (rows) and 168 unique items (columns). The transactions are in sparse format, meaning that the majority of the entries in the transaction matrix are zero (i.e., most transactions do not contain most of the items). This format is used to save memory when working with large datasets that have many items.</p></li>
+</ol>
+<p><br></p>
 <p>Most Frequent Products</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">itemFrequencyPlot</span>(txn, <span class="at">topN =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -450,11 +472,26 @@ items
 <p><img src="11_week_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Apriori Algorithm The apriori() generates the most relevent set of rules from a given transaction data. It also shows the support, confidence and lift of those rules. These three measure can be used to decide the relative strength of the rules. So what do these terms mean?</p>
-<p>Lets consider the rule X =&gt; Y in order to compute these metrics.</p>
-<p><img src="https://s3.ap-south-1.amazonaws.com/techleer/243.jpg" class="img-fluid"></p>
+<p>Apriori Algorithm The <code>apriori()</code> generates the most relevent set of rules from a given transaction data. It also shows the support, confidence and lift of those rules. These three measure can be used to decide the relative strength of the rules. So what do these terms mean?</p>
+<p>Lets consider the rule {X → Y} in order to compute these metrics.</p>
+<p><span class="math display">\[
+Support(X,Y) = \frac{frq(X,Y)}{N}
+\]</span></p>
+<p><span class="math display">\[
+Confidence(X → Y) = \frac{frq(X,Y)}{frq(X)}
+\]</span></p>
+<p><span class="math display">\[
+Lift(X → Y) = \frac{Confidence(X → Y)}{Support(Y)}
+\]</span></p>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>basket_rules <span class="ot">&lt;-</span> <span class="fu">apriori</span>(txn, <span class="at">parameter =</span> <span class="fu">list</span>(<span class="at">minlen=</span><span class="dv">2</span>, <span class="at">sup =</span> <span class="fl">0.001</span>, <span class="at">conf =</span> <span class="fl">0.05</span>, <span class="at">target=</span><span class="st">"rules"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>basket_rules <span class="ot">&lt;-</span> <span class="fu">apriori</span>(txn, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">parameter =</span> <span class="fu">list</span>(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">minlen =</span> <span class="dv">2</span>, <span class="co"># Minimum number of items in a rule (in this case, 2)</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sup =</span> <span class="fl">0.001</span>, <span class="co"># Minimum support threshold (a rule must be present in at least 0.1% of transactions)</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">conf =</span> <span class="fl">0.05</span>, <span class="co"># Minimum confidence threshold (rules must have at least 5% confidence)</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">target =</span> <span class="st">"rules"</span> <span class="co"># Specifies that we want to generate association rules</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                        ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Apriori
 
@@ -479,6 +516,10 @@ writing ... [450 rule(s)] done [0.00s].
 creating S4 object  ... done [0.00s].</code></pre>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>The <strong><code>apriori</code></strong> function takes several parameters, including the transaction dataset (<strong><code>txn</code></strong>) and a list of parameters (<strong><code>parameter</code></strong>) that control the behavior of the algorithm. The <strong><code>minlen</code></strong> parameter sets the minimum number of items in a rule to 2, which means that the algorithm will only consider rules that involve at least 2 items. The <strong><code>sup</code></strong> parameter sets the minimum support threshold to 0.001, which means that a rule must be present in at least 0.1% of transactions in order to be considered significant. The <strong><code>conf</code></strong> parameter sets the minimum confidence threshold to 0.05, which means that a rule must have at least 5% confidence (i.e., be correct at least 5% of the time) to be considered significant. Finally, the <strong><code>target</code></strong> parameter specifies that we want to generate association rules rather than just frequent itemsets.</p>
+</blockquote>
+<p><br></p>
 <p>Total rules generated</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(basket_rules))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -567,7 +608,7 @@ mining info:
 [20] 0.010157712 1.3158214 22   </code></pre>
 </div>
 </div>
-<p>Visualizing the Association Rules¶</p>
+<p>Visualizing the Association Rules</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules, <span class="at">jitter =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -594,16 +635,20 @@ mining info:
 <p><img src="11_week_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Parallel coordinates plot¶</p>
+<p>Parallel coordinates plot</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(basket_rules[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="at">method=</span><span class="st">"paracoord"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="11_week_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Changing hyperparameters¶</p>
+<p>Changing hyperparameters:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>basket_rules2 <span class="ot">&lt;-</span> <span class="fu">apriori</span>(txn, <span class="at">parameter =</span> <span class="fu">list</span>(<span class="at">minlen=</span><span class="dv">3</span>, <span class="at">sup =</span> <span class="fl">0.001</span>, <span class="at">conf =</span> <span class="fl">0.1</span>, <span class="at">target=</span><span class="st">"rules"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>basket_rules2 <span class="ot">&lt;-</span> <span class="fu">apriori</span>(txn, </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">parameter =</span> <span class="fu">list</span>(<span class="at">minlen=</span><span class="dv">3</span>, </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">sup =</span> <span class="fl">0.001</span>, </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">conf =</span> <span class="fl">0.1</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">target=</span><span class="st">"rules"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Apriori
 
