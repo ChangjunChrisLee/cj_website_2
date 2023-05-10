@@ -243,6 +243,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>This material is the contents of a seminar held at Sogang University on the subject of <code>Text mining in academic research</code>. [<a href="https://changjunlee.com/blogs/posts/8_text_mining_talk.html">Link</a>]</p>
+<hr>
 <section id="lda-model" class="level3">
 <h3 class="anchored" data-anchor-id="lda-model">LDA Model</h3>
 <div class="cell">
@@ -626,7 +628,7 @@ dttm (1): reg_time
 </div>
 <p>아래 둘 중 하나 선택</p>
 <ol type="1">
-<li>불용여 제거 by using <code>filter()</code></li>
+<li>불용어 제거 by using <code>filter()</code></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 제거하기 - filter()</span></span>
@@ -634,7 +636,7 @@ dttm (1): reg_time
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> stopword<span class="sc">$</span>word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li>불용여 제거 by using <code>anti_join()</code></li>
+<li>불용어 제거 by using <code>anti_join()</code></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 불용어 제거하기 - dplyr::anti_join()</span></span>
@@ -665,7 +667,7 @@ dttm (1): reg_time
 # ℹ 18,705 more rows</code></pre>
 </div>
 </div>
-<p>DTM : long form to wide</p>
+<p><strong>DTM</strong> : long form to wide</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DTM 만들기</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tm")</span></span>
@@ -680,7 +682,7 @@ Maximal term length: 35
 Weighting          : term frequency (tf)</code></pre>
 </div>
 </div>
-<p>LDA Model: <code>LDA()</code> No.&nbsp;of topics: k</p>
+<p><strong>LDA Model:</strong> <code>LDA()</code> No.&nbsp;of topics: k</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. LDA 모델 만들기</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("topicmodels")</span></span>

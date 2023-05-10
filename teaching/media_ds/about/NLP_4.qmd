@@ -3,6 +3,10 @@ title: NLP
 subtitle: Topic model
 ---
 
+This material is the contents of a seminar held at Sogang University on the subject of `Text mining in academic research`. \[[Link](https://changjunlee.com/blogs/posts/8_text_mining_talk.html)\]
+
+<hr>
+
 ### LDA Model
 
 ```{r}
@@ -15,7 +19,6 @@ raw_news_comment <- read_csv("data/news_comment_parasite.csv") %>%
 raw_news_comment
 ```
 
-
 ```{r}
 # 기본적인 전처리
 library(stringr)
@@ -27,7 +30,6 @@ news_comment <- raw_news_comment %>%
   filter(str_count(reply, boundary("word")) >= 3) # 짧은 문서 제거, 3단어 이상 추출
 news_comment
 ```
-
 
 ```{r}
 # 2. 명사 추출하기
@@ -47,7 +49,6 @@ comment <- news_comment %>%
 comment
 ```
 
-
 ```{r}
 # 3. 빈도 높은 단어 제거하기
 count_word <- comment %>%
@@ -57,7 +58,6 @@ count_word <- comment %>%
 count_word
 ```
 
-
 ```{r}
 # 4. 불용어 제거하기, 유의어 처리하기
 # 불용어, 유의어 확인하기
@@ -66,8 +66,7 @@ count_word %>%
   print(n = 200)
 ```
 
-
-이 부분은 상당히 context dependent 하면서 labour intensive 한 작업들.. 
+이 부분은 상당히 context dependent 하면서 labour intensive 한 작업들..
 
 ```{r}
 # 불용어 목록 만들기
@@ -75,7 +74,6 @@ stopword <- c("들이", "하다", "하게", "하면", "해서", "이번", "하�
               "해요", "이것", "니들", "하기", "하지", "한거", "해주",
               "그것", "어디", "여기", "까지", "이거", "하신", "만큼")
 ```
-
 
 ```{r}
 # 불용어, 유의어 처리하기
@@ -93,7 +91,6 @@ count_word <- count_word %>%
                        "방탄" = "방탄소년단"))
 ```
 
-
 ```{r}
 # ***불용어 목록을 파일로 만들어 활용하기
 # tibble 구조로 불용어 목록 만들기
@@ -107,23 +104,23 @@ stopword <- tibble(word = c("들이", "하다", "하게", "하면", "해서", "�
 # stopword <- read_csv("stopword.csv")
 ```
 
-
 아래 둘 중 하나 선택
 
-(1) 불용여 제거 by using `filter()`
+(1) 불용어 제거 by using `filter()`
+
 ```{r}
 # 불용어 제거하기 - filter()
 count_word <- count_word %>%
   filter(!word %in% stopword$word)
 ```
 
-(2) 불용여 제거 by using `anti_join()`
+(2) 불용어 제거 by using `anti_join()`
+
 ```{r}
 # 불용어 제거하기 - dplyr::anti_join()
 count_word <- count_word %>%
   anti_join(stopword, by = "word")
 ```
-
 
 ```{r}
 # LDA 모델 만들기
@@ -134,7 +131,7 @@ count_word_doc <- count_word %>%
 count_word_doc
 ```
 
-DTM : long form to wide
+**DTM** : long form to wide
 
 ```{r}
 # DTM 만들기
@@ -144,8 +141,7 @@ dtm_comment <- count_word_doc %>%
 dtm_comment
 ```
 
-LDA Model: `LDA()`
-No. of topics: k
+**LDA Model:** `LDA()` No. of topics: k
 
 ```{r}
 # 2. LDA 모델 만들기
@@ -159,26 +155,24 @@ lda_model <- LDA(dtm_comment,
                  control = list(seed = 1234))
 ```
 
-
 ```{r}
 # 모델 내용 확인
 glimpse(lda_model)
 ```
 
 ### 토픽별 주요 단어
+
 ```{r}
 # 토픽별 단어 확률, beta 추출하기
 term_topic <- tidy(lda_model, matrix = "beta")
 term_topic
 ```
 
-
 ```{r}
 # 토픽별 단어 수
 term_topic %>%
   count(topic)
 ```
-
 
 ```{r}
 # 토픽 1의 beta 합계
@@ -187,13 +181,11 @@ term_topic %>%
   summarise(sum_beta = sum(beta))
 ```
 
-
 ```{r}
 # 특정 단어의 토픽별 확률 살펴보기
 term_topic %>%
   filter(term == "작품상")
 ```
-
 
 ```{r}
 # 특정 토픽에서 beta가 높은 단어 살펴보기
@@ -202,13 +194,11 @@ term_topic %>%
   arrange(-beta)
 ```
 
-
 ```{r}
 # 모든 토픽의 주요 단어 살펴보기
 terms(lda_model, 20) %>%
   data.frame()
 ```
-
 
 ```{r}
 # 토픽별 주요 단어 시각화하기
@@ -219,7 +209,6 @@ top_term_topic <- term_topic %>%
   slice_max(beta, n = 10)
 top_term_topic
 ```
-
 
 ```{r}
 # 2. 막대 그래프 만들기
@@ -237,6 +226,7 @@ ggplot(top_term_topic,
                      labels = number_format(accuracy = .01)) +
   labs(x = NULL) 
 ```
+
 ### 문서를 토픽별로 분류
 
 ```{r}
@@ -245,13 +235,11 @@ doc_topic <- tidy(lda_model, matrix = "gamma")
 doc_topic
 ```
 
-
 ```{r}
 # gamma 살펴보기
 doc_topic %>%
   count(topic)
 ```
-
 
 ```{r}
 # 문서 1의 gamma 합계
@@ -259,7 +247,6 @@ doc_topic %>%
   filter(document == 1) %>%
   summarise(sum_gamma = sum(gamma))
 ```
-
 
 ```{r}
 # 문서별 확률이 가장 높은 토픽으로 분류하기
@@ -270,13 +257,11 @@ doc_class <- doc_topic %>%
 doc_class
 ```
 
-
 ```{r}
 # 2. 원문에 확률이 가장 높은 토픽 번호 부여하기
 # integer로 변환
 doc_class$document <- as.integer(doc_class$document)
 ```
-
 
 ```{r}
 # 원문에 토픽 번호 부여
@@ -284,13 +269,11 @@ news_comment_topic <- raw_news_comment %>%
   left_join(doc_class, by = c("id" = "document"))
 ```
 
-
 ```{r}
 # 결합 확인
 news_comment_topic %>%
   select(id, topic)
 ```
-
 
 ```{r}
 # 3. 토픽별 문서 수 살펴보기
@@ -298,19 +281,16 @@ news_comment_topic %>%
   count(topic)
 ```
 
-
 ```{r}
 # topic이 NA인 문서 제거
 news_comment_topic <- news_comment_topic %>%
   na.omit()
 ```
 
-
 ```{r}
 news_comment_topic %>%
   count(topic)
 ```
-
 
 ```{r}
 # 토픽별 문서 수와 단어 시각화하기
@@ -322,14 +302,12 @@ top_terms <- term_topic %>%
 top_terms
 ```
 
-
 ```{r}
 # 2. 토픽별 문서 빈도 구하기
 count_topic <- news_comment_topic %>%
   count(topic)
 count_topic
 ```
-
 
 ```{r}
 # 3. 문서 빈도에 주요 단어 결합하기
@@ -338,7 +316,6 @@ count_topic_word <- count_topic %>%
   mutate(topic_name = paste("Topic", topic))
 count_topic_word
 ```
-
 
 ```{r}
 # 4. 토픽별 문서 수와 주요 단어로 막대 그래프 만들기
@@ -373,7 +350,6 @@ comment_topic %>%
   select(gamma, reply)
 ```
 
-
 ```{r}
 # 2. 주요 단어가 사용된 문서 살펴보기
 # 토픽 1 내용 살펴보기
@@ -383,7 +359,6 @@ comment_topic %>%
   pull(reply)
 ```
 
-
 ```{r}
 comment_topic %>%
   filter(topic == 1 & str_detect(reply, "진심")) %>%
@@ -391,14 +366,12 @@ comment_topic %>%
   pull(reply)
 ```
 
-
 ```{r}
 comment_topic %>%
   filter(topic == 1 & str_detect(reply, "정치")) %>%
   head(5) %>%
   pull(reply)
 ```
-
 
 ```{r}
 # 3. 토픽 이름 목록 만들기
@@ -413,7 +386,6 @@ name_topic <- tibble(topic = 1:8,
                               "8. 한국의 세계적 위상"))
 ```
 
-
 ```{r}
 # 토픽 이름과 주요 단어 시각화하기
 # 토픽 이름 결합하기
@@ -422,7 +394,6 @@ top_term_topic_name <- top_term_topic %>%
 
 top_term_topic_name
 ```
-
 
 ```{r}
 # 막대 그래프 만들기
@@ -460,12 +431,10 @@ models %>%
   select(topics, Griffiths2004)
 ```
 
-
 ```{r}
 # 2. 최적 토픽 수 정하기
 FindTopicsNumber_plot(models)
 ```
-
 
 ```{r}
 # 3. 모델 추출하기
@@ -476,15 +445,12 @@ optimal_model <- models %>%
   .[[1]] # list 추출
 ```
 
-
 ```{r}
 # optimal_model
 tidy(optimal_model, matrix = "beta")
 ```
 
-
 ```{r}
 # lda_model
 tidy(lda_model, matrix = "beta")
 ```
-
