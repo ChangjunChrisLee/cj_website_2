@@ -24,44 +24,52 @@ editor:
 
 -   Pre-class PPT [pdf](content/ML_pre_11.pdf)
 
-|                                                                                                                                                                                                                                |
-|:-----------------------------------------------------------------------|
-| \### Discussion                                                                                                                                                                                                                |
-| Discussion #10                                                                                                                                                                                                                 |
-| <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScmmosKUF9iLZAiJqZ-IDM-EcbBI2urfn_1ybc6vd-6xmgpdg/viewform?embedded=true" width="640" height="2950" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe> |
+### Discussion
+
+Discussion #10
+
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScmmosKUF9iLZAiJqZ-IDM-EcbBI2urfn_1ybc6vd-6xmgpdg/viewform?embedded=true" width="640" height="2800" frameborder="0" marginheight="0" marginwidth="0">
+
+Loading...
+
+</iframe>
 
 ### Class
 
-#### caret package 를 이용한 데이터 학습 간편화 
+#### Training data to fit diverse models using `caret` package
 
--   기계학습(Machine Learning) 에서 기법이 무엇이 되든, 어떤 알고리즘을
-    사용할 것이든 공통으로 필요한 과정은 학습
+-   Regardless of the technique or algorithm used in ML, [the common
+    process required is **learning**]{.underline}.
 
--   학습의 대상은 전통적으로 훈련데이터(Training dataset)이고,
-    훈련데이터를 학습시키는 아주 다양한 방법들이 존재
+-   The object of learning is the training dataset, and there are
+    numerous ways to learn from the training data.
 
--   방법별로 원리와 특징 및 색깔이 다르며, 다양한 방법들이 존재. 모든
-    알고리즘을 아는것이 한계가 존재.
+    -   Each method has distinct principles, characteristics, and
+        nuances, and there are various approaches. Knowing all
+        algorithms has its limits.
 
--   무엇을 채택해서 어느 정도의 파라미터값을 부여해야 알맞은 모델을 만들
-    수 있을지 현실적인 문제에 부딪힘
+-   When faced with a practical problem, one must consider [what to
+    adopt and determine **the appropriate parameter values** to create a
+    suitable model]{.underline}.
 
--   `caret` 패키지는 예측모델을 만들기 위한 데이터 학습 시 간편한 함수를
-    제공
+-   The `caret` package offers convenient functions for training data to
+    develop predictive models.
 
--   300여개의 머신러닝 알고리즘을 표준화된 인터페이스를 통해 테스트 해
-    볼 수 있음
+    -   A standardized interface allows for testing around 300 machine
+        learning algorithms.
 
--   다양한 파라미터 시나리오를 구성해 손쉽게 튜닝, 변수의 중요도를 측정
+    -   Easy tuning is possible by configuring different parameter
+        scenarios and measuring variable importance.
 
--   편리한 훈련데이터의 학습을 통해 적절한 알고리즘 선택 의사결정에
-    도움을 받을 수 있음
+    -   Through convenient training data learning, you can receive
+        assistance in making an informed algorithm selection decision.
 
-#### caret package: Classification And REgression Training 
+#### `caret` package: Classification And REgression Training
 
--   종속변수(예측변수)가 명목형 변수라면 "Classification"
+-   `Classification` if the dependent variable (predictor) is a nominal
+    (categorical) variable
 
--   연속형 변수라면 "Regression" 으로 "Training"
+-   `Regression` if it is a continuous variable
 
 ```{r}
 library(tidyverse) # for tidy tools (pipe operation, tibble, etc..)
@@ -107,27 +115,30 @@ scatterplots, is to further include class information. This is commonly
 done by coloring dots in each scatterplot by their class value.
 
 ```{r}
+
 fig <- function(width, heigth){
      options(repr.plot.width = width, repr.plot.height = heigth)
 }
-```
 
-```{r}
 fig(10,10)
+
 featurePlot(x=Sonar[,1:4], 
             y=Sonar[,61], 
             plot="pairs", 
             auto.key=list(columns=2))
+
 ```
 
 For example, in Iris dataset,
 
 ```{r}
+
 fig(10,10)
 featurePlot(x=iris[,1:4], 
             y=iris[,5], 
             plot="pairs",
             auto.key=list(columns=3))
+
 ```
 
 **Density Plots**
@@ -180,17 +191,21 @@ table(training$Class)
 table(testing$Class)
 ```
 
-`createDataPartition()`
+Partitioning using `createDataPartition()`
 
--   인자가 있어 특정비율로 파티셔닝할 때 편함
+-   There is a factor, making it convenient for partitioning based on a
+    specific ratio.
 
--   `sample()` 함수를 이용할 때는 완전무작위추출이 되기 때문에
-    종속변수의 요인별 비율을 고려하지 않지만 `createDataPartition()`
-    함수를 이용할 경우 종속변수의 요인별 비율만큼 ***층화랜덤추출***을
-    지원, 더욱 효과적임
+    -   p = .7 means 70% training 30% test
 
--   반환되는 타입이 기본적으로 list: list 인자값을 FALSE로 하면 vector로
-    출력
+-   When using the `sample()` function, it performs complete random
+    sampling, disregarding the factor ratio of the dependent variable.
+    However, when using the `createDataPartition()` function, it
+    supports ***stratified random sampling*** based on the factor ratio
+    of the dependent variable, which is more effective.
+
+-   By default, the returned type is a list. If the list argument value
+    is set to FALSE, a vector is output.
 
 ```{r}
 indexTrain <- createDataPartition(Sonar$Class, p = .7, list = F)
@@ -205,45 +220,84 @@ table(testing$Class)
 
 For the best parameter tuning
 
--   KNN(K-Neareast Neighbors): k / 랜덤포레스트(RandomForest): mtry,
-    ntre 와 같이 각각의 ML 모델은 각각의 parameter 를 셋팅해 주어야 함
+-   The parameters must be set accordingly, such as k in KNN, mtry and
+    ntre in RF
 
--   With caret, "Tuning parameters": LOOCV, K-fold cross validation 등과
-    같은 방법을 통해서 데이터에 근거한 최적의 parameter 를 찾을 수
-    있도록 도와줌
+-   With `caret`, the "Tuning parameters" feature helps identify optimal
+    parameters based on data using methods like LOOCV, K-fold
+    cross-validation, and more.
 
--   알고리즘별로 튜닝 파라미터 개수는 달라지는데 p개의 파라미터일 경우
-    3P 의 그리드를 탐색하여 후보모델들을 테스트
+-   The number of tuning parameters varies for each algorithm. For
+    instance, in the case of the number of parameters is $p$, candidate
+    models are tested by searching a grid of $3^p$.
 
--   예를 들면 KNN은 모수가 K 하나이므로 3\^1=3 인 3가지 K 값들을 후보로
-    두고 모델을 비교
+-   For example, in KNN, which has a single parameter K, three K values
+    ($3^1 = 3$) are used as candidates, and the models are compared.
 
--   모수가 두 개인 모델은 3\^2 = 9 가지 파라미터의 조합들을 후보로 두고
-    모델을 비교
+-   For a model with two parameters, there are 9 combinations
+    ($3^2 = 9$) of parameter values used as candidates, and the models
+    are compared.
 
--   만약에 비교하는 방식이 K-fold cross validation 이라면 몇 번을 접어
-    cross validation 을 할지에 대한 부분도 정해 것이냐 란 질문의 K 를
-    정해야 함
+-   If K-fold cross-validation is chosen as the comparison method,
+    determining the number of folds (K) is also necessary.
 
--   `trainControl()` 함수: 일관된 비교방법을 각 후보에게 통일되게
-    적용하여 평가할 수 있게 도와줌
+-   The `trainControl()` function helps evaluate by consistently
+    applying a uniform comparison method to each candidate.
 
-아래 코드는 10-fold cross validation 을 5번 반복하여 가장 좋은 후보의
-파라미터 그리드를 찾게 해주는 일종의 장치를 만드는 코드 비교방법에 대한
-정보가 담겨있는 fitControl 객체는 추후에 학습 과정에서 사용하게 됨
+The following code creates a configuration that repeats 10-fold
+cross-validation five times to find the best candidate's parameter grid.
+The ***fitControl*** object, which contains information on how to
+compare models, is later utilized in the learning process.
 
 ```{r}
 fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 5)
 
 ```
 
-이제 훈련 데이터 셋으로 학습을 시켜보자!
+Now let's train with the training data set!
 
-학습을 위한 표준화된 인터페이스는 바로 `train()` 함수: 함수 안에서
-method 인자만 바꿔주면 원하는 학습모델 알고리즘을 구현할 수 있음 e.g.)
-model='rf' / model='dt' 등등 여러가지 성능 평가 지표에 대해 정리해보자
+The standardized interface for learning is the `train()` function: You
+can implement the desired learning model algorithm by changing the
+method argument in the function
 
-![](https://miro.medium.com/max/1750/1*2TrcVyRb0ZKwyiojOt5jCA.png)
+-   e.g.) Let's summarize various performance evaluation indicators such
+    as model='rf' / model='dt'
+
+-   **Precision**: Proportion of true positive predictions among all
+    positive predictions. High precision means fewer false positives.
+
+    $\frac{TP}{TP + FP}$
+
+-   **Accuracy**: Overall correctness of the model's predictions.
+    Measures the proportion of correct predictions.
+
+    $\frac{TP + TN}{TP + TN + FP + FN}$
+
+-   **Recall**: Proportion of true positive predictions among all actual
+    positive instances. Also known as sensitivity or true positive rate.
+
+    $\frac{TP}{TP + FN}$
+
+-   **Specificity**: Proportion of true negative predictions among all actual
+        negative instances. Also known as true negative rate.
+        
+    $\frac{TN}{TN + FP}$
+
+-   **FP Rate**: Proportion of false positive predictions among all actual
+        negative instances. Also known as false positive rate.
+        
+    $\frac{FP}{FP + TN}$
+
+-   **F1 Score**: Harmonic mean of precision and recall. Provides a balanced
+        measure between the two.
+    
+    $\frac{2 \cdot (Precision \cdot Recall)}{Precision + Recall}$
+
+-   **Kappa**: Measures the agreement between the model's predictions and the
+        expected outcomes, taking into account the possibility of
+        agreement by chance.
+        
+    $\frac{Accuracy - RandomAccuracy}{1 - RandomAccuracy}$
 
 ```{r}
 rf_fit <- train(Class ~ ., 
@@ -254,20 +308,23 @@ rf_fit <- train(Class ~ .,
 rf_fit
 ```
 
--   mtry 후보는 2, 31, 60 개로 자동설정
--   이 중 Kappa 통계량과 정확도에 의해서 mtry = 2 가 최종적으로 선정
--   선정과정을 자세하게 보고 싶을 경우엔 verbose = F 로 놓고 실행
+
+-   `mtry` candidates are automatically set to 2, 31, and 60
+-   Of these, `mtry = 2` was finally selected based on Kappa statistics and accuracy.
+-   If you want to see the selection process in detail, set `verbose = F` and run
+
 
 ```{r}
 plot(rf_fit)
 
 ```
 
-여러 가지 지표들을 활용하여 공평하게 모델들을 경쟁시켜보자 (Model
-validation)
+**Model Validation**
+
+Let's compete fairly among the models using various indicators
 
 ```{r}
-modelLookup()
+modelLookup() %>% head(10)
 
 ```
 
@@ -298,7 +355,7 @@ dotplot(resamp)
 
 ```
 
-Testing models 제너릭 함수인 `predict()` 를 이용
+Use `predict()` which is a generic function of Testing models
 
 ```{r}
 predict(rf_fit, newdata = testing)
@@ -310,26 +367,25 @@ table(predict(rf_fit, newdata = testing), testing$Class)
 
 ```
 
-caret package 의 `confusionMatrix()` 를 곁들이면 혼돈메트릭스(Confusion
-Matrix) 및 정확도외 다양한 통계량까지 출력
+If you add `confusionMatrix()` of the caret package, you can output various statistics including confusion matrix and accuracy.
+
+
 
 ```{r}
 predict(rf_fit, newdata = testing) %>% confusionMatrix(testing$Class)
 
 ```
 
-Tuning parameters 의 그리드 조정 사용자 검색 그리드(custom search grid)
 
--   최적 파라미터 선정 시 탐색범위와 그리드를 수동으로 조절 가능
+***Custom search grid***: Grid adjustment of tuning parameters
 
--   자동으로 3P 공식에 의해 정해진 mtry 의 후보는 2, 31, 60 로 3개로
-    설정
+-   When selecting the optimal parameters, the search range and grid can be manually adjusted
 
--   만약 더 많은 후보와 상대평가하고 싶을 경우 후보를 사용자가 직접 설정
-    가능
+-   The candidates for mtry, which are automatically determined by the 3P formula: 2, 31, and 60
 
--   아래 코드는 mtry 의 후보를 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 로 바꾸어
-    설정, 이 중에서 채택해 보는 코드
+-   If you want to compare with more candidates, you set the candidates yourself
+
+-   The code below changes the mtry candidates to 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 and sets them up.
 
 ```{r}
 customGrid <- expand.grid(mtry = 1:10)
@@ -348,14 +404,12 @@ plot(rf_fit2)
 
 ```
 
-랜덤 검색 그리드(random selection of tuning parameter combinations)
+***Random Search Grid***: random selection of tuning parameter combinations
 
--   튜닝 파라미터의 개수가 많으면 많아질수록 탐색그리드의 개수는
-    지수적으로 증가, 동일한 간격의 그리드 구성으로 인해 탐색과정이
-    비효율적이 될 수 있음
+-   As the number of tuning parameters increases, the number of search grids increases exponentially, and the search process may become inefficient due to the grid configuration with equal intervals
 
--   튜닝 파라미터가 2개인 RDA(Regularized Discriminant Analysis) 를 통해
-    훈련을 해보자
+-   Let's train through RDA (Regularized Discriminant Analysis) with two tuning parameters
+
 
 ```{r}
 rda_fit <- train(Class ~ ., 
@@ -368,12 +422,13 @@ rda_fit
 
 ```
 
--   총 9개의 파라미터 조합을 비교하는 것을 볼 수 있음
--   바로 위에 소개한 사용자 검색 그리드 역시 expand.grid() 함수를
-    이용하여 동일간격 그리드를 검색할 수도 있지만, 이번에는 랜덤 검색
-    그리드를 이용하면 동일간격이 아닌 파라미터 조합을 구성해보자.
--   `trainControl()` 함수의 `search = "random"`, 검색 타입을 랜덤으로
-    바꾼다.
+-   You can see a total of 9 parameter combinations being compared
+
+-   The user search grid introduced just above can also be searched for equally spaced grids using the `expand.grid()` function, but this time, let's configure a parameter combination that is not equally spaced using a random search grid.
+
+-   `search = "random"` in the `trainControl()` function, change the search type to random.
+
+
 
 ```{r}
 plot(rda_fit)
@@ -396,10 +451,11 @@ rda_fit2 <- train(Class ~ ., data = training,
 rda_fit2
 ```
 
--   튜닝파라미터가 gamma, lambda 2개인데 검색타입을 랜덤으로 바꾸는 순간
-    3P 공식으로 후보군을 설정하지 않는 것을 확인할 수 있음
--   수동으로 튜닝파라미터 조합개수를 늘리고 싶을 땐 `train()` 함수의
-    tuneLength 인자를 이용
+
+-   There are two tuning parameters, `gamma` and `lambda`, but the moment you change the search type to random, you can see that the candidate group is not set with the 3P formula.
+
+-   To manually increase the number of tuning parameter combinations, use the `tuneLength` argument of the `train()` function.
+
 
 ```{r}
 rda_fit2 <- train(Class ~ ., 
@@ -411,10 +467,10 @@ rda_fit2 <- train(Class ~ .,
 rda_fit2
 ```
 
--   파라미터를 랜덤하게 50개로 설정하여 조금 더 융통성 있는 최적의
-    파라미터 튜닝 방법을 고려함
--   비교해 보면 채택된 파라미터의 값이 소수점이 더 많아져 자연스럽게
-    정밀해 진 것을 확인할 수 있다.
+
+-   By randomly setting 50 parameters, we consider the optimal parameter tuning method that is slightly more flexible.
+
+-   In comparison, it can be seen that the value of the adopted parameter has more decimal points and has naturally become more precise.
 
 ```{r}
 plot(rda_fit2)
