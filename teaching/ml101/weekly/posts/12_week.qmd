@@ -78,16 +78,16 @@ library(caret)
 
 -   Data: ***Sonar: Mines Vs. Rocks***
 
+![](https://storage.googleapis.com/kaggle-datasets-images/1662635/2727659/3493b9309a1cf4f0c07aa6175b820060/dataset-cover.jpg?t=2021-11-13-14-25-59)
+
 > This is the data set used by Gorman and Sejnowski in their study of
 > the classification of sonar signals using a neural network. The task
 > is to train a network to discriminate between sonar signals bounced
-> off a metal cylinder and those bounced off a roughly cylindrical rock.
-> Each pattern is a set of 60 numbers in the range 0.0 to 1.0. Each
-> number represents the energy within a particular frequency band,
-> integrated over a certain period of time. The integration aperture for
-> higher frequencies occur later in time, since these frequencies are
-> transmitted later during the chirp. The label associated with each
-> record contains the letter "R" if the object is a rock and "M" if it
+> off a metal cylinder and a roughly cylindrical rock. [Each pattern is
+> a set of 60 numbers in the range 0.0 to 1.0.]{.underline} Each number
+> represents the energy within a particular frequency band, integrated
+> over a certain period of time. The label associated with each record
+> contains the letter ***R*** if the object is a rock and ***M*** if it
 > is a mine (metal cylinder). The numbers in the labels are in
 > increasing order of aspect angle, but they do not encode the angle
 > directly.
@@ -98,6 +98,7 @@ library(caret)
 set.seed(1234) # for reproducibility
 
 data(Sonar, package = "mlbench")
+
 Sonar %>% glimpse
 ```
 
@@ -117,7 +118,8 @@ done by coloring dots in each scatterplot by their class value.
 ```{r}
 
 fig <- function(width, heigth){
-     options(repr.plot.width = width, repr.plot.height = heigth)
+     options(repr.plot.width = width, 
+             repr.plot.height = heigth)
 }
 
 fig(10,10)
@@ -176,7 +178,7 @@ caret::featurePlot(x=iris[,1:4],
             auto.key=list(columns=3))
 ```
 
-Hold out method: 7:3
+**Hold out method:** (7:3 rule)
 
 ```{r}
 # Without package
@@ -260,45 +262,6 @@ The standardized interface for learning is the `train()` function: You
 can implement the desired learning model algorithm by changing the
 method argument in the function
 
--   e.g.) Let's summarize various performance evaluation indicators such
-    as model='rf' / model='dt'
-
--   **Precision**: Proportion of true positive predictions among all
-    positive predictions. High precision means fewer false positives.
-
-    $\frac{TP}{TP + FP}$
-
--   **Accuracy**: Overall correctness of the model's predictions.
-    Measures the proportion of correct predictions.
-
-    $\frac{TP + TN}{TP + TN + FP + FN}$
-
--   **Recall**: Proportion of true positive predictions among all actual
-    positive instances. Also known as sensitivity or true positive rate.
-
-    $\frac{TP}{TP + FN}$
-
--   **Specificity**: Proportion of true negative predictions among all actual
-        negative instances. Also known as true negative rate.
-        
-    $\frac{TN}{TN + FP}$
-
--   **FP Rate**: Proportion of false positive predictions among all actual
-        negative instances. Also known as false positive rate.
-        
-    $\frac{FP}{FP + TN}$
-
--   **F1 Score**: Harmonic mean of precision and recall. Provides a balanced
-        measure between the two.
-    
-    $\frac{2 \cdot (Precision \cdot Recall)}{Precision + Recall}$
-
--   **Kappa**: Measures the agreement between the model's predictions and the
-        expected outcomes, taking into account the possibility of
-        agreement by chance.
-        
-    $\frac{Accuracy - RandomAccuracy}{1 - RandomAccuracy}$
-
 ```{r}
 rf_fit <- train(Class ~ ., 
                 data = training, 
@@ -308,16 +271,68 @@ rf_fit <- train(Class ~ .,
 rf_fit
 ```
 
-
 -   `mtry` candidates are automatically set to 2, 31, and 60
--   Of these, `mtry = 2` was finally selected based on Kappa statistics and accuracy.
--   If you want to see the selection process in detail, set `verbose = F` and run
-
+-   Of these, `mtry = 2` was finally selected based on Kappa statistics
+    and accuracy.
+-   If you want to see the selection process in detail, set
+    `verbose = F` and run
 
 ```{r}
 plot(rf_fit)
 
 ```
+
+Let's summarize various performance evaluation indicators
+
+-   **Accuracy**: Overall correctness of the model's predictions.
+    Measures the proportion of correct predictions.
+
+    $$ \frac{TP + TN}{TP + TN + FP + FN} $$
+
+<hr>
+
+![](img/bey_acc_2.png)
+
+<hr>
+
+-   **Precision**: Proportion of true positive predictions among all
+    positive predictions. High precision means fewer false positives.
+
+    $$ \frac{TP}{TP + FP} $$
+
+-   **Recall**: Proportion of true positive predictions among all actual
+    positive instances. Also known as sensitivity or true positive rate.
+
+    $$ \frac{TP}{TP + FN} $$
+
+<hr>
+
+![](img/bey_acc_1.png)
+
+<hr>
+
+-   **Sensitivity** is the same index with **Recall**
+
+-   **Specificity**: Proportion of true negative predictions among all
+    actual negative instances. Also known as true negative rate.
+
+    $$ \frac{TN}{TN + FP} $$
+
+-   **FP Rate**: Proportion of false positive predictions among all
+    actual negative instances. Also known as false positive rate.
+
+    $$ \frac{FP}{FP + TN} $$
+
+-   **F1 Score**: Harmonic mean of precision and recall. Provides a
+    balanced measure between the two.
+
+    $$ \frac{2 \cdot (Precision \cdot Recall)}{Precision + Recall} $$
+
+-   **Kappa**: Measures the agreement between the model's predictions
+    and the expected outcomes, taking into account the possibility of
+    agreement by chance.
+
+    $$ \frac{Accuracy - RandomAccuracy}{1 - RandomAccuracy} $$
 
 **Model Validation**
 
@@ -333,22 +348,41 @@ modelLookup("rpart")
 
 ```
 
+Let's train the same data fitting to four different models (DT, RF, KNN,
+NB)
+
 ```{r}
-dt_fit <- train(Class ~ ., data = training, method = "rpart", trControl = fitControl)
-rf_fit <- train(Class ~ ., data = training, method = "rf", trControl = fitControl)
-knn_fit <- train(Class ~ ., data = training, method = "knn", trControl = fitControl)
-nb_fit <- train(Class ~ ., data = training, method = "nb", trControl = fitControl)
+dt_fit <- train(Class ~ ., 
+                data = training, 
+                method = "rpart", 
+                trControl = fitControl)
+
+rf_fit <- train(Class ~ ., 
+                data = training, 
+                method = "rf", 
+                trControl = fitControl)
+
+knn_fit <- train(Class ~ ., 
+                 data = training, 
+                 method = "knn", 
+                 trControl = fitControl)
+
+nb_fit <- train(Class ~ ., 
+                data = training, 
+                method = "nb", 
+                trControl = fitControl)
 ```
 
 ```{r}
-resamp=resamples(list(DecisionTree=dt_fit, RandomForest=rf_fit, kNN=knn_fit, NaiveBayes=nb_fit))
+resamp=resamples(list(DecisionTree=dt_fit,
+                      RandomForest=rf_fit, 
+                      kNN=knn_fit, 
+                      NaiveBayes=nb_fit))
 
 ```
 
-```{r}
-resamp=resamples(list(DecisionTree=dt_fit, RandomForest=rf_fit, kNN=knn_fit, NaiveBayes=nb_fit))
-
-```
+`dotplot()` shows Accuracy and Kappa for all models included in
+`resamples()`
 
 ```{r}
 dotplot(resamp)
@@ -363,32 +397,37 @@ predict(rf_fit, newdata = testing)
 ```
 
 ```{r}
-table(predict(rf_fit, newdata = testing), testing$Class)
+table(predict(rf_fit, newdata = testing),
+      testing$Class)
 
 ```
 
-If you add `confusionMatrix()` of the caret package, you can output various statistics including confusion matrix and accuracy.
-
-
+If you add `confusionMatrix()` of the caret package, you can output
+various statistics including confusion matrix and accuracy.
 
 ```{r}
-predict(rf_fit, newdata = testing) %>% confusionMatrix(testing$Class)
+predict(rf_fit, newdata = testing) %>% 
+  confusionMatrix(testing$Class)
 
 ```
-
 
 ***Custom search grid***: Grid adjustment of tuning parameters
 
--   When selecting the optimal parameters, the search range and grid can be manually adjusted
+-   When selecting the optimal parameters, the search range and grid can
+    be manually adjusted
 
--   The candidates for mtry, which are automatically determined by the 3P formula: 2, 31, and 60
+-   The candidates for mtry, which are automatically determined by the
+    3P formula: 2, 31, and 60
 
--   If you want to compare with more candidates, you set the candidates yourself
+-   If you want to compare with more candidates, you set the candidates
+    yourself
 
--   The code below changes the mtry candidates to 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 and sets them up.
+-   The code below changes the mtry candidates to 1, 2, 3, 4, 5, 6, 7,
+    8, 9, and 10 and sets them up.
 
 ```{r}
 customGrid <- expand.grid(mtry = 1:10)
+
 rf_fit2 <- train(Class ~ ., 
                  data = training, 
                  method = "rf", 
@@ -399,17 +438,23 @@ rf_fit2 <- train(Class ~ .,
 rf_fit2
 ```
 
+Generic `plot()` function shows the Accuracy change depending on `mtry`
+grid
+
 ```{r}
 plot(rf_fit2)
 
 ```
 
-***Random Search Grid***: random selection of tuning parameter combinations
+***Random Search Grid***: random selection of tuning parameter
+combinations
 
--   As the number of tuning parameters increases, the number of search grids increases exponentially, and the search process may become inefficient due to the grid configuration with equal intervals
+-   As the number of tuning parameters increases, the number of search
+    grids increases exponentially, and the search process may become
+    inefficient due to the grid configuration with equal intervals
 
--   Let's train through RDA (Regularized Discriminant Analysis) with two tuning parameters
-
+-   Let's train through RDA (Regularized Discriminant Analysis) with two
+    tuning parameters
 
 ```{r}
 rda_fit <- train(Class ~ ., 
@@ -424,11 +469,13 @@ rda_fit
 
 -   You can see a total of 9 parameter combinations being compared
 
--   The user search grid introduced just above can also be searched for equally spaced grids using the `expand.grid()` function, but this time, let's configure a parameter combination that is not equally spaced using a random search grid.
+-   The user search grid introduced just above can also be searched for
+    equally spaced grids using the `expand.grid()` function, but this
+    time, let's configure a parameter combination that is not equally
+    spaced using a random search grid.
 
--   `search = "random"` in the `trainControl()` function, change the search type to random.
-
-
+-   `search = "random"` in the `trainControl()` function, change the
+    search type to random.
 
 ```{r}
 plot(rda_fit)
@@ -451,11 +498,12 @@ rda_fit2 <- train(Class ~ ., data = training,
 rda_fit2
 ```
 
+-   There are two tuning parameters, `gamma` and `lambda`, but the
+    moment you change the search type to random, you can see that the
+    candidate group is not set with the 3P formula.
 
--   There are two tuning parameters, `gamma` and `lambda`, but the moment you change the search type to random, you can see that the candidate group is not set with the 3P formula.
-
--   To manually increase the number of tuning parameter combinations, use the `tuneLength` argument of the `train()` function.
-
+-   To manually increase the number of tuning parameter combinations,
+    use the `tuneLength` argument of the `train()` function.
 
 ```{r}
 rda_fit2 <- train(Class ~ ., 
@@ -467,10 +515,12 @@ rda_fit2 <- train(Class ~ .,
 rda_fit2
 ```
 
+-   By randomly setting 50 parameters, we consider the optimal parameter
+    tuning method that is slightly more flexible.
 
--   By randomly setting 50 parameters, we consider the optimal parameter tuning method that is slightly more flexible.
-
--   In comparison, it can be seen that the value of the adopted parameter has more decimal points and has naturally become more precise.
+-   In comparison, it can be seen that the value of the adopted
+    parameter has more decimal points and has naturally become more
+    precise.
 
 ```{r}
 plot(rda_fit2)
