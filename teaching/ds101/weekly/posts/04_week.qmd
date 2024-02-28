@@ -19,6 +19,111 @@ slide-format: revealjs
 
 {{< video https://youtu.be/FaBQzFyX5Ms >}}
 
+```{r}
+# Data Frame #
+name = c("Cheolsu", "Chunhyang", "Gildong")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients = data.frame(name, age, gender, blood.type)
+patients
+
+# Can also be written in one line like this:
+patients1 = data.frame(name = c("Cheolsu", "Chunhyang", "Gildong"), 
+                       age = c(22, 20, 25), 
+                       gender = factor(c("M", "F", "M ")), 
+                       blood.type = factor(c("A", "O", "B")))
+
+patients1
+
+patients$name # Print name attribute value
+patients[1, ] # Print row 1 value
+patients[, 2] # Print 2nd column values
+patients[3, 1] # Prints 3 rows and 1 column values
+
+
+patients[patients$name=="Withdrawal", ] # Extract information about withdrawal among patients
+patients[patients$name=="Cheolsu", c("name", "age")] # Extract only Cheolsu's name and age information
+
+head(cars) # Check the cars data set. The basic function of the head function is to extract the first 6 data.
+
+attach(cars) # Use the attach function to use each property of cars as a variable
+speed # The variable name speed can be used directly.
+detach(cars) # Deactivates the use of each property of cars as a variable through the detach function
+# speed # Try to access the variable called speed, but there is no such variable.
+
+# Apply functions using data properties
+mean(cars$speed)
+max(cars$speed)
+
+# Apply a function using the with function
+with(cars, mean(speed))
+with(cars, max(speed))
+
+# Extract only data with speed greater than 20
+subset(cars, speed > 20)
+
+# Extract only dist data with speed over 20, select multiple columns, separate c() with ,
+subset(cars, speed > 20, select = c(dist))
+
+# Extract only data excluding dist from data with a speed exceeding 20
+subset(cars, speed > 20, select = -c(dist))
+head(airquality) # airquality data contains NA
+head(na.omit(airquality)) # Extract by excluding values containing NA
+
+# merge(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all, sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL, ...)
+
+name = c("Cheolsu", "Chunhyang", "Gildong")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients1 = data.frame(name, age, gender)
+patients1
+
+patients2 = data.frame(name, blood.type)
+patients2
+
+patients = merge(patients1, patients2, by = "name")
+patients
+
+# If there are no column variables with the same name, when merging them into by.x and by.y of the merge function
+# You must enter the attribute name of each column to be used.
+name1 = c("Cheolsu", "Chunhyang", "Gildong")
+name2 = c("Minsu", "Chunhyang", "Gildong")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients1 = data.frame(name1, age, gender)
+patients1
+
+patients2 = data.frame(name2, blood.type)
+patients2
+
+patients = merge(patients1, patients2, by.x = "name1", by.y = "name2")
+patients
+
+patients = merge(patients1, patients2, by.x = "name1", by.y = "name2", all = TRUE)
+patients
+x = array(1:12, c(3, 4))
+
+# Currently x is not a data frame
+is.data.frame(x) 
+as.data.frame(x)
+
+# Just calling the is.data.frame function does not turn x into a data frame
+is.data.frame(x)
+# Convert x to data frame format with the as.data.frame function
+x = as.data.frame(x)
+x
+# Verify that x has been converted to data frame format
+is.data.frame(x)
+# When converting to a data frame, automatically assigned column names are reassigned to the names function.
+names(x) = c("1st", "2nd", "3rd", "4th")
+x
+```
+
+<br>
+
 
 #### List
 
@@ -28,9 +133,56 @@ slide-format: revealjs
 
 <br> 
 
-------------------------------------------------------------------------
 
-### Discussion
+
+```{r}
+# List #
+patients = data.frame(name = c("Cheolsu", "Chunhyang", "Gildong"), 
+                      age = c(22, 20, 25), 
+                      gender = factor(c("M", "F", "M ")), 
+                      blood.type = factor(c("A", "O", "B")))
+
+no.patients = data.frame(day = c(1:6), no = c(50, 60, 55, 52, 65, 58))
+
+
+# Simple addition of data
+listPatients = list(patients, no.patients)
+listPatients
+
+
+# Add names to each data
+listPatients = list(patients=patients, no.patients = no.patients)
+listPatients
+
+
+# Enter element name
+listPatients$patients 
+
+
+# Enter index
+listPatients[[1]] 
+
+
+# Enter the element name in ""
+listPatients[["patients"]] 
+
+
+# Enter the element name in ""
+listPatients[["no.patients"]] 
+
+
+# Calculate the average of no.patients elements
+lapply(listPatients$no.patients, mean)
+
+# Calculate the average of the patients elements. Anything that is not in numeric form is not averaged.
+lapply(listPatients$patients, mean)
+
+sapply(listPatients$no.patients, mean)
+
+# If the simplify option of sapply() is set to F, the same result as lapply() is returned.
+sapply(listPatients$no.patients, mean, simplify = F)
+```
+
 
 
 

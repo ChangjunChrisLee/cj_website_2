@@ -21,21 +21,117 @@ slide-format: revealjs
 
 <br> 
 
+
+data in need: 
+[student1.txt](data/students1.txt)
+[student2.txt](data/students2.txt)
+[student3.txt](data/students3.txt)
+[student1.csv](data/students.csv)
+[student2.csv](data/students2.csv)
+
+
+```{r}
+# 01 Read and write files #
+
+# If [Enter] is not pressed on the last line of the file
+students = read.table("data/students1.txt", header = T, fileEncoding = "CP949", encoding = "UTF-8")
+
+# When [Enter] is pressed on the last line of the file
+students = read.table("data/students2.txt", header = T, fileEncoding = "CP949", encoding = "UTF-8")
+
+# Check the structure of the read file
+str(students)
+
+# Read the file as is
+students = read.table("data/students1.txt", header = T, as.is = T, fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# Disable recognition of sentences as factors when reading a file
+students = read.table("data/students1.txt", header = T, stringsAsFactors = F, fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# If the delimiter is a comma (,) and the first line is recognized as a header, the file is read as is.
+# NA causes math elements to be recognized as sentences
+students = read.table("data/students3.txt", sep = ",", header = T, as.is = T, fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# Even if you tell the "NA" sentence to be treated as a missing value NA, it will not be processed. This is because a correct sentence requires a space before NA.
+students = read.table("data/students3.txt", sep = ",", header = T, as.is = T, na.strings = "NA", fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# When entering "NA" correctly, the missing value is treated as NA and all math elements are recognized as numbers.
+students = read.table("data/students3.txt", sep = ",", header = T, as.is = T, na.strings = " NA", fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# If you remove the blank space from strip.white, the default value of na.string will be set to "NA", so all math elements will be recognized as numbers.
+students = read.table("data/students3.txt", sep = ",", header = T, as.is = T, strip.white = T, fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# Since the first row is the header, there is no need to specify the header option
+students = read.csv("data/students.csv", fileEncoding = "CP949", encoding = "UTF-8")
+students
+
+# Check the structure of the read file
+str(students)
+
+# Change the name attribute from factor to sentence
+students$name = as.character(students$name)
+str(students)
+
+# Set sentences not to be recognized as factors when reading a file
+students = read.csv("data/students.csv", stringsAsFactors = FALSE, fileEncoding = "CP949", encoding = "UTF-8")
+str(students)
+
+# Double quotes appear in sentences.
+# write.table(students, file = "output.txt")
+
+# No double quotes in the sentence.
+# write.table(students, file = "output.txt", quote = F)
+
+```
+
+
+
+
+
 #### Filter
 
 <br> 
 
 {{< video https://youtu.be/_kwWDH2lm_E >}}
 
-------------------------------------------------------------------------
+```{r}
+# 02 Conditional statements and loop statements for data purification #
 
-### Discussion
+test = c(15, 20, 30, NA, 45) # If it is a vector
+test[test<40] # extract elements with value less than 40
+
+test[test%%3!= 0] # Extract elements whose value is not divisible by 3
 
 
+test[is.na(test)] # Extract elements that are NA
 
-------------------------------------------------------------------------
 
-### Class
+test[!is.na(test)] # Extract non-NA elements
 
-------------------------------------------------------------------------
+test[test%%2==0 & !is.na(test)] # Extract elements that are multiples of 2 but are not NA
+
+characters = data.frame(name = c("Gil-dong", "Chunhyang", "Cheolsu"),
+                         age = c(30, 16, 21),
+                         gender = factor(c("M", "F","M")))
+# In case of data frame
+
+characters
+
+
+characters[characters$gender =="F",1] # Extract rows where gender is female
+library(dplyr)
+
+characters %>% filter(gender=="F") %>% select(name)
+
+characters[characters$age<30 & characters$gender =="M",]
+# Extract rows of men under 30 years old
+characters %>% filter(age<30 & gender=="M")
+```
+
 

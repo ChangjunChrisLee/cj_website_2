@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -155,8 +189,6 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
-  <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
   </ul>
 </nav>
     </div>
@@ -191,23 +223,212 @@ ul.task-list li input[type="checkbox"] {
 <p><br></p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/uOVksIiL5SQ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p><br></p>
+<p>data in need: <a href="data/students1.txt">student1.txt</a> <a href="data/students2.txt">student2.txt</a> <a href="data/students3.txt">student3.txt</a> <a href="data/students.csv">student1.csv</a> <a href="data/students2.csv">student2.csv</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 01 Read and write files #</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># If [Enter] is not pressed on the last line of the file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students1.txt"</span>, <span class="at">header =</span> T, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># When [Enter] is pressed on the last line of the file</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students2.txt"</span>, <span class="at">header =</span> T, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure of the read file</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 95 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file as is</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students1.txt"</span>, <span class="at">header =</span> T, <span class="at">as.is =</span> T, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 95 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Disable recognition of sentences as factors when reading a file</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students1.txt"</span>, <span class="at">header =</span> T, <span class="at">stringsAsFactors =</span> F, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 95 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If the delimiter is a comma (,) and the first line is recognized as a header, the file is read as is.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># NA causes math elements to be recognized as sentences</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students3.txt"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">header =</span> T, <span class="at">as.is =</span> T, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : chr  " 100" " 80" " 90" " NA" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Even if you tell the "NA" sentence to be treated as a missing value NA, it will not be processed. This is because a correct sentence requires a space before NA.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students3.txt"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">header =</span> T, <span class="at">as.is =</span> T, <span class="at">na.strings =</span> <span class="st">"NA"</span>, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : chr  " 100" " 80" " 90" " NA" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># When entering "NA" correctly, the missing value is treated as NA and all math elements are recognized as numbers.</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students3.txt"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">header =</span> T, <span class="at">as.is =</span> T, <span class="at">na.strings =</span> <span class="st">" NA"</span>, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 NA 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you remove the blank space from strip.white, the default value of na.string will be set to "NA", so all math elements will be recognized as numbers.</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"data/students3.txt"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">header =</span> T, <span class="at">as.is =</span> T, <span class="at">strip.white =</span> T, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 NA 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since the first row is the header, there is no need to specify the header option</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/students.csv"</span>, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>students</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    name korean english math
+1 강서준    100      90  100
+2 김도형     90     100   80
+3 박정원     90      95   90
+4 이상훈    100      85   95
+5 최건우     85     100  100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure of the read file</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 95 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the name attribute from factor to sentence</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>students<span class="sc">$</span>name <span class="ot">=</span> <span class="fu">as.character</span>(students<span class="sc">$</span>name)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 95 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set sentences not to be recognized as factors when reading a file</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>students <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data/students.csv"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(students)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   5 obs. of  4 variables:
+ $ name   : chr  "강서준" "김도형" "박정원" "이상훈" ...
+ $ korean : int  100 90 90 100 85
+ $ english: int  90 100 95 85 100
+ $ math   : int  100 80 90 95 100</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Double quotes appear in sentences.</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># write.table(students, file = "output.txt")</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># No double quotes in the sentence.</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.table(students, file = "output.txt", quote = F)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="filter" class="level4">
 <h4 class="anchored" data-anchor-id="filter">Filter</h4>
 <p><br></p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/_kwWDH2lm_E" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<hr>
-</section>
-</section>
-<section id="discussion" class="level3">
-<h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
-<hr>
-</section>
-<section id="class" class="level3">
-<h3 class="anchored" data-anchor-id="class">Class</h3>
-<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 02 Conditional statements and loop statements for data purification #</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="cn">NA</span>, <span class="dv">45</span>) <span class="co"># If it is a vector</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>test[test<span class="sc">&lt;</span><span class="dv">40</span>] <span class="co"># extract elements with value less than 40</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 20 30 NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>test[test<span class="sc">%%</span><span class="dv">3</span><span class="sc">!=</span> <span class="dv">0</span>] <span class="co"># Extract elements whose value is not divisible by 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20 NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>test[<span class="fu">is.na</span>(test)] <span class="co"># Extract elements that are NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>test[<span class="sc">!</span><span class="fu">is.na</span>(test)] <span class="co"># Extract non-NA elements</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 20 30 45</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>test[test<span class="sc">%%</span><span class="dv">2</span><span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(test)] <span class="co"># Extract elements that are multiples of 2 but are not NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20 30</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>characters <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Gil-dong"</span>, <span class="st">"Chunhyang"</span>, <span class="st">"Cheolsu"</span>),</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">16</span>, <span class="dv">21</span>),</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gender =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>,<span class="st">"M"</span>)))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># In case of data frame</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>characters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       name age gender
+1  Gil-dong  30      M
+2 Chunhyang  16      F
+3   Cheolsu  21      M</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>characters[characters<span class="sc">$</span>gender <span class="sc">==</span><span class="st">"F"</span>,<span class="dv">1</span>] <span class="co"># Extract rows where gender is female</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Chunhyang"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gender<span class="sc">==</span><span class="st">"F"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       name
+1 Chunhyang</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>characters[characters<span class="sc">$</span>age<span class="sc">&lt;</span><span class="dv">30</span> <span class="sc">&amp;</span> characters<span class="sc">$</span>gender <span class="sc">==</span><span class="st">"M"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name age gender
+3 Cheolsu  21      M</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract rows of men under 30 years old</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age<span class="sc">&lt;</span><span class="dv">30</span> <span class="sc">&amp;</span> gender<span class="sc">==</span><span class="st">"M"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name age gender
+1 Cheolsu  21      M</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

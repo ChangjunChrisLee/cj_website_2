@@ -21,9 +21,97 @@ slide-format: revealjs
 
 <br> 
 
-------------------------------------------------------------------------
+```{r}
+# Create N-dimensional array
 
-### Discussion
+# Assign values 1 to 5 to a 2×4 matrix
+x = array(1:5, c(2, 4)) 
+
+x
+
+# Print row 1 element value
+x[1, ] 
+
+# Print 2nd column element values
+x[, 2] 
+
+# Set row and column names
+dimnamex = list(c("1st", "2nd"), c("1st", "2nd", "3rd", "4th")) 
+
+x = array(1:5, c(2, 4), dimnames = dimnamex)
+x
+x["1st", ]
+x[, "4th"]
+
+
+# Create a two-dimensional array
+x = 1:12
+x
+matrix(x, nrow = 3)
+matrix(x, nrow = 3, byrow = T)
+
+
+# Create an array by combining vectors
+v1 = c(1, 2, 3, 4)
+v2 = c(5, 6, 7, 8)
+v3 = c(9, 10, 11, 12)
+
+# Create an array by binding by column
+cbind(v1, v2, v3) 
+# Create array by binding row by row
+rbind(v1, v2, v3) 
+
+# Various matrix operations using the operators in [Table 3-7]
+# Store two 2×2 matrices in x and y, respectively
+x = array(1:4, dim = c(2, 2))
+y = array(5:8, dim = c(2, 2))
+x
+y
+x+y
+x-y
+
+# multiplication for each column
+x * y 
+
+# mathematical matrix multiplication
+x %*% y 
+
+# transpose matrix of x
+t(x) 
+
+# inverse of x
+solve(x) 
+
+# determinant of x
+det(x) 
+x = array(1:12, c(3, 4))
+x
+
+# If the center value is 1, apply the function row by row
+apply(x, 1, mean) 
+
+# If the center value is 2, apply the function to each column
+apply(x, 2, mean) 
+x = array(1:12, c(3, 4))
+dim(x)
+x = array(1:12, c(3, 4))
+
+# Randomly mix and extract array elements
+sample(x) 
+
+# Select and extract 10 elements from the array
+sample(x, 10) 
+library(dplyr)
+# ?sample
+
+# The extraction probability for each element can be varied
+sample(x, 10, prob = c(1:12)/24) 
+
+# You can create a sample using just numbers
+sample(10) 
+```
+
+
 
 
 

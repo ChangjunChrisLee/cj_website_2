@@ -21,6 +21,131 @@ slide-format: revealjs
 
 <br> 
 
+```{r}
+x = 5
+if(x %% 2 ==0) {
+   print('x is an even number') # Performed when the conditional expression is true
+} else {
+   print('x is odd') # Performed when the conditional expression is false
+}
+
+x = 8
+if(x>0) {
+   print('x is a positive value.') # Print if x is greater than 0
+} else if(x<0) {
+   print('x is a negative value.') # Prints if the above condition is not satisfied and x is less than 0
+} else {
+   print('x is zero.') # Prints if all of the above conditions are not met
+}
+
+
+x = c(-5:5)
+options(digits = 3) # Set the number of significant digits to 3 when expressing numbers
+sqrt(x)
+
+
+sqrt(ifelse(x>=0, x, NA)) # Display negative numbers as NA to prevent NaN from occurring
+
+students = read.csv("data/students2.csv", fileEncoding = "CP949", encoding = "UTF-8")
+```
+
+```{r}
+students # Data contains values over 100 and negative values.
+
+students[, 2] = ifelse(students[, 2]>= 0 & students[, 2]<= 100,
+                        students[, 2], NA)
+students[, 3] = ifelse(students[, 3]>= 0 & students[, 3]<= 100,
+                        students[, 3], NA)
+students[, 4] = ifelse(students[, 4]>= 0 & students[, 4]<= 100,
+                        students[, 4], NA)
+
+
+students 
+# ifelse statement, values other than 0 to 100 among the values in columns 2 to 4 are treated as NA.
+
+
+
+
+# Increment numbers from 1 to 10 using the repeat statement
+i = 1 # starting value of i is 1
+repeat {
+   if(i>10) { # Break repetition if i exceeds 10
+     break
+   } else {
+     print(i)
+     i = i+1 # Increment i by 1.
+   }
+}
+
+
+
+# Increment numbers from 1 to 10 using while statement
+i = 1 # The starting value of i is 1.
+while(i < 10){ # repeat as long as i is less than 10
+   print(i)
+   i = i+1 # Increment i by 1.
+}
+
+
+# Create the second column of the multiplication table using the while statement
+i = 1
+while(i<10) {
+   print(paste(2, "X", i, "=", 2*i))
+   i = i+1
+}
+
+# Incrementing numbers from 1 to 10 using the for statement
+for(i in 1:10) {
+   print(i)
+}
+
+# Create the second column of the multiplication table using the for statement
+for(i in 1:9) {
+   print(paste(2, "X", i, "=", 2*i))
+}
+
+# Create multiplication table columns 2 to 9 using the for statement
+for(i in 2:9) {
+   for(j in 1:9) {
+     print(paste(i, "X", j, "=", i*j))
+   }
+}
+
+# Print only even numbers from 1 to 10
+for(i in 1:10) {
+   if(i%%2 == 0) {
+     print(i)
+   }
+}
+
+# Print decimal numbers from 1 to 10
+for(i in 1:10) {
+   check = 0
+   for(j in 1:i) {
+     if(i%%j ==0) {
+       check = check+1
+     }
+   }
+   if(check ==2) {
+     print(i)
+   }
+}
+
+
+# data contains values over 100 and negative values
+students
+
+
+for(i in 2:4) {
+   students[, i] = ifelse(students[, i]>= 0 & students[, i]<= 100,
+                          students[, i], NA)
+}
+
+
+students
+```
+
+
 #### Functions & Others
 
 <br> 
@@ -28,19 +153,140 @@ slide-format: revealjs
 {{< video https://youtu.be/bl6RD1HLpTc >}}
 
 
-------------------------------------------------------------------------
 
-### Discussion
+```{r}
+# 03 User-defined function: Bundle the desired function #
+x=5
+fa = 1 # Variable to store the factorial value
+while(x>1) { # loop while x is greater than 1
+  
+   fa = fa*x # Multiply the value of x by fa and store it back in fa
+   x = x-1 # Decrease x value by 1
+   x
+}
+fa
 
-Discussion #5
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfKih4BTRim28ac6EssMaVwIDsKc3k6I7-NPmxqRGRFUNeVEw/viewform?embedded=true" width="640" height="2100" frameborder="0" marginheight="0" marginwidth="0">
+fact = function(x) { # The name of the function is fact, the input is x
+   fa = 1 # Variable to store the factorial value
+   while(x>1) { # loop while x is greater than 1
+     fa = fa*x # Multiply the value of x by fa and store it back in fa
+     x = x-1 # Decrease x value by 1
+   }
+   return(fa) # returns the final calculated fa
+}
+fact(5) # Prints the result of calculating 5!
 
-Loading...
 
-</iframe>
+my.is.na<-function(x) { # Create a my.is.na function that combines the table(is.na()) functions into one
+   table(is.na(x))
+}
 
-------------------------------------------------------------------------
+my.is.na(airquality) # This result is the same as table(is.na(airquality)).
+
+
+table(is.na(airquality))
+
+
+# 04 Data Cleaning Example 1: Missing Value Handling #
+
+# Handling missing values using the is.na function
+str(airquality) # Examine the structure of airquality data.
+
+# NA in airquality data is indicated as TRUE, otherwise it is indicated as FALSE. There is a lot of data, so it is selected using the head function.
+head(airquality)
+head(is.na(airquality))
+table(is.na(airquality)) # There are a total of 44 NAs.
+sum(is.na(airquality)) # There are a total of 44 NAs.
+
+table(is.na(airquality$Temp)) # Confirms that there is no NA in Temp.
+
+table(is.na(airquality$Ozone)) # 37 NAs found in Ozone.
+
+mean(airquality$Temp) # Temp without NA is averaged.
+
+mean(airquality$Ozone) # Ozone with NA has an average of NA.
+
+air_narm = airquality[!is.na(airquality$Ozone), ] # Extract only values without NA from the Ozone attribute.
+air_narm
+mean(air_narm$Ozone) # The mean function operates normally in data with missing values removed.
+
+# Handling missing values using the na.omit function
+air_narm1 = na.omit(airquality)
+mean(air_narm1$Ozone)
+
+# Handling missing values using the function property na.rm
+mean(airquality$Ozone, na.rm = T)
+mean(airquality$Ozone, na.rm = F)
+
+
+table(is.na(airquality))
+
+table(is.na(airquality$Ozone))
+
+table(is.na(airquality$Solar.R))
+
+air_narm = airquality[!is.na(airquality$Ozone) & !is.na(airquality$Solar.R), ]
+mean(air_narm$Ozone)
+```
+
+
+
+```{r}
+# 05 Data Cleansing Example 2: Outlier Processing #
+
+# Patient data containing outliers
+patients = data.frame(name = c("Patient 1", "Patient 2", "Patient 3", "Patient 4", "Patient 5"), age = c(22, 20, 25, 30, 27) , gender=factor(c("M", "F", "M", "K", "F")), blood.type = factor(c("A", "O", "B", " AB", "C")))
+patients
+
+# Remove outliers from gender
+patients_outrm = patients[patients$gender=="M"|patients$gender=="F", ]
+patients_outrm
+
+
+# Remove outliers from gender and blood type
+patients_outrm1 = patients[(patients$gender == "M"|patients$gender == "F") &
+                              (patients$blood.type == "A" |
+                                 patients$blood.type == "B"|
+                                 patients$blood.type == "O"|
+                                 patients$blood.type == "AB"), ]
+patients_outrm1
+
+# Patient data containing outliers
+patients = data.frame(name = c("Patient 1", "Patient 2", "Patient 3", "Patient 4", "Patient 5"),
+                       age = c(22, 20, 25, 30, 27),
+                       gender = c(1, 2, 1, 3, 2),
+                       blood.type = c(1, 3, 2, 4, 5))
+patients
+
+# Change outliers in gender to missing values
+patients$gender = ifelse((patients$gender<1|patients$gender>2), NA, patients$gender)
+patients
+
+# Change outlier values in the penalty type to missing values
+patients$blood.type = ifelse((patients$blood.type<1|patients$blood.type>4), NA,
+                              patients$blood.type)
+patients
+
+# Remove all missing values
+patients[!is.na(patients$gender)&!is.na(patients$blood.type), ]
+
+boxplot(airquality[, c(1:4)]) # boxplot for Ozone, Solar.R, Wind, Temp
+boxplot(airquality[, 1])$stats # Calculate Ozone's boxplot statistics
+
+air = airquality # Copy airquality data to temporary storage variable
+table(is.na(air$Ozone)) # Check the current number of NAs in Ozone
+
+# Change outliers to NA
+air$Ozone = ifelse(air$Ozone<1|air$Ozone>122, NA, air$Ozone)
+table(is.na(air$Ozone)) # Check the number of NAs after processing outliers (increased by 2)
+
+# Remove NA
+air_narm = air[!is.na(air$Ozone), ]
+mean(air_narm$Ozone) # By removing two outliers, the value is reduced compared to the result using the is.na function.
+```
+
+
 
 ### Class
 

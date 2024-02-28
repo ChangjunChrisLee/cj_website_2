@@ -28,7 +28,6 @@ Download pdf for all the preclass content
 
 <br>
 
-
 #### Basic syntax
 
 <br>
@@ -208,7 +207,6 @@ xinf/yinf
 
         -   as.array(x)
 
-
 ```{r}
 
 x = 1 		# If you simply put 1 in x, x is a numeric type.
@@ -229,6 +227,7 @@ x = as.integer(1)
 is.integer(x)
 
 ```
+
 -   Arithmetic Operators
 
     |                |                             |
@@ -259,7 +258,6 @@ is.integer(x)
     | **isTRUE(x)** | test if X is TRUE        |
 
 -   More information for operators: <https://www.statmethods.net/management/operators.html>
-
 
 <br>
 
@@ -463,3 +461,346 @@ setequal(x, z)
 ------------------------------------------------------------------------
 
 # Class content
+
+## Preview
+
+<br>
+
+-   The best way to learn data science: practice with examples
+
+    -   Swim: Jump into the water and play around…
+
+    -   Carpentry: Cut woods, drill, and practice
+
+    -   Data science: with data, visualize, analyze..
+
+-   Data has a thousand faces
+
+    -   Numeric like distance or weight
+
+    -   Factors like blood type
+
+    -   Characters like address or name
+
+<br>
+
+## Check if you install R & R Studio
+
+<br>
+
+### Base R
+
+-   The Data given in base R
+
+    -   Can be checked by data () command
+
+    -   ex) ChickWeight data “Weight versus age of chicks on different diets”, women data “Average heights and weights for American women aged 30-39”
+
+        ![](images/clipboard-3624128704.png)
+
+        ![](images/clipboard-3102743119.png)
+
+```{r}
+women
+```
+
+-   Car datset
+
+```{r}
+str(cars)
+cars
+```
+
+*str* function: Function summarizing the contents of the data
+
+-   Various visualization functions
+
+    -   Most widely used function in base R: plot
+
+        ```{r}
+        plot(women)
+        ```
+
+-   Apply different visualization options
+
+    -   Color options (parameters) *col*,
+
+    -   *xlab* and *ylab* to name the axis,
+
+    -   *pch* to specify the symbol shape
+
+        ```{r}
+        plot(cars)
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue')
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue', xlab = "speed")
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue', xlab = "speed", ylab = 'distance')
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue', xlab = "speed", ylab = 'distance', pch = 18)
+        ```
+
+![](images/clipboard-2284134136.png)
+
+<br>
+
+### Good habits in learning data science
+
+<br>
+
+```{r}
+# ?plot
+# help(plot)
+```
+
+-   **Think** **incrementally** (Step by Step)
+
+    -   After creating the most basic features, check the behavior, add a new feature to it, and add another feature to verify it.
+
+    -   Once you've created everything and checked it, it's hard to find out where the cause is later
+
+    -   See Figure above: Check the most basic plot function, add the col option to check, add the xlab and ylab options, and add the pch option to check
+
+-   Specify working directory
+
+    -   The way to Save Data Files in a Specified Directory (Folder)
+
+    -   *getwd* function displays the current working directory (the red part is the computer name)
+
+        ```{r}
+        getwd()
+        ```
+
+    -   *setwd()* to set the new working directory
+
+-   Use of library (package)
+
+    -   Libraries are software that collects R functions developed for specific fields.
+
+        -   E.g.) ggplot2 is a collection of functions that visualize your data neatly and consistently
+
+        -   E.g.) gapminder is a collection of functions needed to utilize gapminder data, which gathers population, GDP per capita, and life expectancy in five years from 1952 to 2007.
+
+    -   R is so powerful and popular because of its huge library
+
+    -   If you access the CRAN site, you will see that it is still being added.
+
+        -   \[Packages\] menu: see all libraries provided by R \[Task Views\] menu: Introduce libraries field by field
+
+-   When using it, attach it using the library function
+
+    ![](images/clipboard-2358760137.png)
+
+-   Library installation saves library files to your hard disk
+
+-   Library Attachment loads it from Hard Disk to Main Memory
+
+    ![](images/clipboard-2057697907.png)
+
+### Data for example..
+
+-   Lovely *iris* data
+
+    -   In 1936, Edger Anderson collected irises in the Gaspe Peninsula in eastern Canada.
+
+    -   Collect 50 from each three species(setosa, versicolor, verginica) on the same day
+
+    -   The same person measures the width and length of the petals and sepals with the same ruler
+
+    -   Has been famous since Statistician Professor Ronald Fisher published a paper with this data and is still widely used.
+
+    ![](images/clipboard-2747347794.png)
+
+    ```{r}
+    str(iris)
+    ```
+
+    ```{r}
+    head(iris, 10)
+    ```
+
+    ```{r}
+    plot(iris)
+    ```
+
+-   See the correlation of two properties
+
+    -   col = iris\$Species is an option to draw colors differently by species
+
+        ```{r}
+        plot(iris$Petal.Width, 
+             iris$Petal.Length,
+             col = iris$Species)
+        ```
+
+### Data Science Process with example data
+
+```{mermaid}
+flowchart LR
+  A[Collecting Data] --> B(EDA)
+  B --> C{Modeling}
+```
+
+-   Tips data
+
+    -   Tips earning at tables in a restaurant
+
+    -   Can we get more tips using data science?
+
+-   **Step 1:** Data collecting
+
+    -   Collect values in seven variables
+
+        -   total_bill
+
+        -   tip
+
+        -   gender
+
+        -   smoker
+
+        -   day
+
+        -   time
+
+        -   size: number of people in a table
+
+    -   After weeks of hard work, collected 244 and saved it to the tips.csv file
+
+```{r}
+tips = read.csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv')
+str(tips)
+head(tips, 10)
+```
+
+Interpreting the first sample, it was shown that two people had dinner on Sunday, no smokers, and a \$1.01 tip at the table where a woman paid the total \$16.99.
+
+<br>
+
+-   **Step 2:** Exploratory Data Analysis (EDA)
+
+    -   summary function to check the summary statistics
+
+    -   How to explain the summary statistics below?
+
+```{r}
+summary(tips)              
+```
+
+This statistic summary doesn't reveal the effect of day or gender on the tip, so let's explore it further with visualization.
+
+-   Attach dplyr and ggplot2 libraries (for now just run it and study the meaning)
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+
+```
+
+-   What do you see in the figures below?
+
+    -   Distribution of fellow persons in a table
+
+```{r}
+
+tips %>% ggplot(aes(size)) + geom_histogram()                                            
+```
+
+Tip amount according to bill amount (total_bill)
+
+```{r}
+
+tips %>% ggplot(aes(total_bill, tip)) + geom_point()                                     
+```
+
+Added day information using color
+
+```{r}
+
+tips %>% ggplot(aes(total_bill, tip)) + 
+  geom_point(aes(col = day))                       
+```
+
+Women and men separated by different symbols
+
+```{r}
+
+tips %>% ggplot(aes(total_bill, tip)) + 
+  geom_point(aes(col = day, pch = sex), size = 3) 
+```
+
+-   **Step 3:** Modeling
+
+    -   Limitations of Exploratory Data Analysis: You can design a strategy to make more money, but you can't predict exactly how much more income will come from the new strategy.
+
+    -   Modeling allows predictions
+
+    -   Create future financial portfolios
+
+        -   E.g.) Know how much your income will increase as fellows in a table grow, and how much your income will change when paying people’s gender changes
+
+## QZ
+
+1.  What will the following code return?
+
+    > MyVector \<- c(12, 456, 34.5, 23, 55, "34hello")
+    >
+    > typeof(MyVector)
+
+    1.  integer
+    2.  double
+    3.  character
+    4.  FALSE
+
+2.  Which of these functions is NOT used to create vectors?
+
+    1.  c()
+    2.  typeof()
+    3.  seq()
+    4.  rep()
+
+3.  Create the vector below by using ‘seq’ function
+
+    > 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+
+4.  Create the vector below by using ‘rep’ function
+
+    > 3 3 3 3 3 3 3 3 3
+
+5.  Create the vector below by using ‘rep’ function
+
+    > 80 20 80 20 80 20 80 20
+
+6.  Are these vectors possible forms in R?
+
+    ![](images/clipboard-3624404480.png)
+
+```{r}
+mountain <- c("tree", "rock", "dirt", "dolphin", "waterfall")
+
+```
+
+7.  How would you access the word "dolphin" in this vector?
+
+    1.  c\[4\]
+    2.  mountain\[-2\]
+    3.  mountain\[4\]
+    4.  mountain(4)
+
+8.  How to extract 3rd and 5th values from the vector below?
+
+    ![](images/clipboard-98559633.png)
+
+9.  From x vector, How to extract vectors like below?
+
+    ![](images/clipboard-4144116174.png)

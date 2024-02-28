@@ -21,9 +21,157 @@ slide-format: revealjs
 
 <br> 
 
-------------------------------------------------------------------------
+```{r}
+# 02 Data processing using Base R #
 
-### Discussion
+library(gapminder)
+library(dplyr)
+glimpse(gapminder)
 
-### Class
+
+gapminder[, c("country", "lifeExp")]
+
+gapminder[, c("country", "lifeExp", "year")]
+
+gapminder[1:15, ]
+
+```
+
+```{r}
+
+library(dplyr)
+gapminder %>% filter(country=="Croatia") %>% select(year, gdpPercap) %>% plot
+gapminder[gapminder$country == "Croatia", ]
+gapminder[gapminder$country == "Korea, Rep.", ]
+
+```
+
+```{r}
+levels(gapminder$country)
+
+gapminder[gapminder$country == "Croatia", "pop"]
+
+
+gapminder[gapminder$country == "Croatia", c("lifeExp","pop")]
+
+gapminder[gapminder$country == "Croatia" & #Croatia extraction
+             gapminder$year > 1990, #1990 after
+           c("lifeExp","pop")] # those variables
+
+
+```
+
+```{r}
+apply(gapminder[gapminder$country == "Croatia",
+                 c("lifeExp","pop")],
+       2, mean)
+
+apply(gapminder[gapminder$country == "Korea, Rep.",
+                 c("lifeExp","pop")],
+       2, mean)
+
+
+```
+
+```{r}
+
+# 03 Data processing using the dplyr library #
+select(gapminder, country, year, lifeExp)
+
+filter(gapminder, country == "Croatia")
+
+summarize(gapminder, pop_avg = mean(pop))
+
+summarize(group_by(gapminder, continent), pop_avg = mean(pop))
+
+summarize(group_by(gapminder, continent, country), pop_avg = mean(pop))
+
+```
+
+```{r}
+gapminder %>%
+   group_by(continent, country) %>%
+   summarize(pop_avg = mean(pop))
+
+
+```
+
+```{r}
+temp1 = filter(gapminder, country == "Croatia")
+temp2 = select(temp1, country, year, lifeExp)
+temp3 = apply(temp2[ , c("lifeExp")], 2, mean)
+temp3
+
+```
+
+```{r}
+gapminder %>%
+   filter(country == "Croatia") %>%
+   select(country, year, lifeExp) %>%
+   summarize(lifeExp_avg = mean(lifeExp))
+
+
+```
+
+
+data in need: [avocado.csv](data/avocado.csv)
+
+
+```{r}
+# 04 The reality of data processing #
+library(ggplot2)
+avocado <- read.csv("data/avocado.csv", header=TRUE, sep = ",")
+
+str(avocado)
+
+(x_avg = avocado %>% group_by(region) %>% summarize(V_avg = mean(Total.Volume), P_avg = mean(AveragePrice)))
+
+(x_avg = avocado %>% group_by(region, year) %>% summarize(V_avg = mean(Total.Volume), P_avg = mean(AveragePrice)))
+
+x_avg = avocado %>% group_by(region, year, type) %>% summarize(V_avg = mean(Total.Volume), P_avg = mean(AveragePrice))
+
+
+avocado %>%
+   group_by(region, year, type) %>%
+   summarize(V_avg = mean(Total.Volume),
+             P_avg = mean(AveragePrice)) -> x_avg
+
+
+x_avg %>% filter(region != "TotalUS") %>% 
+  ggplot(aes(year, V_avg, col = type)) + geom_line() + facet_wrap(~region)
+
+
+```
+
+```{r}
+# install.packages("ggplot2")
+library(ggplot2)
+
+arrange(x_avg, desc(V_avg))
+
+x_avg1 = x_avg %>% filter(region != "TotalUS")
+
+```
+
+```{r}
+# After excluding TotalUS, you can process it using statistical functions directly.
+
+x_avg1[x_avg1$V_avg == max(x_avg1$V_avg),]
+```
+
+
+
+
+```{r}
+# install.packages("lubridate")
+library(lubridate)
+
+(x_avg = avocado %>% 
+    group_by(region, year, month(Date), type) %>% 
+    summarize(V_avg = mean(Total.Volume), 
+              P_avg = mean(AveragePrice)))
+
+```
+
+
 

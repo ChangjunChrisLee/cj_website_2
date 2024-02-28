@@ -21,6 +21,124 @@ Week: 8
 
 <br> 
 
-------------------------------------------------------------------------
+```{r}
+# Data Visualization
+
+# average
+apply(anscombe, 1, mean)
+
+apply(anscombe, 2, mean)
+
+# Dispersion
+apply(anscombe, 2, var)
+
+
+# Correlation (correlation coefficient)
+cor(anscombe$x1, anscombe$y1)
+
+cor(anscombe$x2, anscombe$y2)
+
+cor(anscombe$x3, anscombe$y3)
+
+cor(anscombe$x4, anscombe$y4)
+
+library(gapminder)
+library(dplyr)
+y <- gapminder %>% group_by(year, continent) %>% summarize(c_pop = sum(pop))
+head(y, 20)
+
+plot(y$year, y$c_pop)
+plot(y$year, y$c_pop, col = y$continent)
+plot(y$year, y$c_pop, col = y$continent, pch = c(1:5))
+plot(y$year, y$c_pop, col = y$continent, pch = c(1:length(levels(y$continent))))
+
+# Specify the number of legends as a number
+legend("topright", legend = levels((y$continent)), pch = c(1:5), col = c(1:5))
+
+# Specify the number of legends to match the number of data
+legend("bottomleft", legend = levels((y$continent)), pch = c(1:length(levels(y$continent))), col = c(1:length(levels(y$continent))) )
+
+
+# 02 Basic features of visualization #
+plot(gapminder$gdpPercap, gapminder$lifeExp, col = gapminder$continent)
+legend("bottomright", 
+       legend = levels((gapminder$continent)),
+        pch = c(1:length(levels(gapminder$continent))),
+        col = c(1:length(levels(y$continent))))
+
+plot(log10(gapminder$gdpPercap), gapminder$lifeExp, col = gapminder$continent)
+legend("bottomright", legend = levels((gapminder$continent)), pch = c(1:length(levels(gapminder$continent))), col = c(1:length(levels(y$continent))) )
+
+# install.packages("ggplot2")
+library(ggplot2)
+gapminder %>% ggplot(,aes())
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) +
+   geom_point() +
+   scale_x_log10()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent, size = pop)) +
+   geom_point() +
+   scale_x_log10()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent, size = pop)) +
+   geom_point(alpha = 0.5) +
+   scale_x_log10()
+
+
+table(gapminder$year)
+
+gapminder %>% filter(year==1977) %>%
+   ggplot(., aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) +
+   geom_point(alpha=0.5) +
+   scale_x_log10()
+
+
+gapminder %>% filter(year==2007) %>%
+   ggplot(., aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) +
+   geom_point(alpha=0.5) +
+   scale_x_log10()
+
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) +
+   geom_point(alpha=0.5) +
+   scale_x_log10() +
+   facet_wrap(~year)
+
+
+gapminder %>%
+   filter(year == 1952 & continent =="Asia") %>%
+   ggplot(aes(reorder(country, pop), pop)) +
+   geom_bar(stat = "identity") +
+   coord_flip()
+
+gapminder %>% filter(year==1952 & continent== "Asia") %>% ggplot(aes(reorder(country, pop), pop)) + geom_bar(stat = "identity") + scale_y_log10() + coord_flip ()
+
+gapminder %>%
+   filter(country == "Korea, Rep.") %>%
+   ggplot(aes(year, lifeExp, col = country)) +
+   geom_point() +
+   geom_line()
+
+gapminder %>%
+   filter(country == "Korea, Rep.") %>%
+   ggplot(aes(year, lifeExp, col = country)) +
+   # geom_point() +
+   geom_line()
+
+gapminder %>%
+   ggplot(aes(x = year, y = lifeExp, col = continent)) +
+   geom_point(alpha = 0.2) +
+   geom_smooth()
+
+x = filter(gapminder, year == 1952)
+hist(x$lifeExp, main = "Histogram of lifeExp in 1952")
+
+x %>% ggplot(aes(lifeExp)) + geom_histogram()
+
+x %>% ggplot(aes(continent, lifeExp)) + geom_boxplot()
+
+plot(log10(gapminder$gdpPercap), gapminder$lifeExp)
+```
+
 
 

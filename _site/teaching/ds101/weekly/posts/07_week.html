@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -155,8 +189,6 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
-  <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
   </ul>
 </nav>
     </div>
@@ -191,16 +223,560 @@ ul.task-list li input[type="checkbox"] {
 <p><br></p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/D_5lrv5LtKY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p><br></p>
-<hr>
-</section>
-</section>
-<section id="discussion" class="level3">
-<h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
-</section>
-<section id="class" class="level3">
-<h3 class="anchored" data-anchor-id="class">Class</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 02 Data processing using Base R #</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,704
+Columns: 6
+$ country   &lt;fct&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", …
+$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gapminder[, <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"lifeExp"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 2
+   country     lifeExp
+   &lt;fct&gt;         &lt;dbl&gt;
+ 1 Afghanistan    28.8
+ 2 Afghanistan    30.3
+ 3 Afghanistan    32.0
+ 4 Afghanistan    34.0
+ 5 Afghanistan    36.1
+ 6 Afghanistan    38.4
+ 7 Afghanistan    39.9
+ 8 Afghanistan    40.8
+ 9 Afghanistan    41.7
+10 Afghanistan    41.8
+# ℹ 1,694 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gapminder[, <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"lifeExp"</span>, <span class="st">"year"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 3
+   country     lifeExp  year
+   &lt;fct&gt;         &lt;dbl&gt; &lt;int&gt;
+ 1 Afghanistan    28.8  1952
+ 2 Afghanistan    30.3  1957
+ 3 Afghanistan    32.0  1962
+ 4 Afghanistan    34.0  1967
+ 5 Afghanistan    36.1  1972
+ 6 Afghanistan    38.4  1977
+ 7 Afghanistan    39.9  1982
+ 8 Afghanistan    40.8  1987
+ 9 Afghanistan    41.7  1992
+10 Afghanistan    41.8  1997
+# ℹ 1,694 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gapminder[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 6
+   country     continent  year lifeExp      pop gdpPercap
+   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1 Afghanistan Asia       1952    28.8  8425333      779.
+ 2 Afghanistan Asia       1957    30.3  9240934      821.
+ 3 Afghanistan Asia       1962    32.0 10267083      853.
+ 4 Afghanistan Asia       1967    34.0 11537966      836.
+ 5 Afghanistan Asia       1972    36.1 13079460      740.
+ 6 Afghanistan Asia       1977    38.4 14880372      786.
+ 7 Afghanistan Asia       1982    39.9 12881816      978.
+ 8 Afghanistan Asia       1987    40.8 13867957      852.
+ 9 Afghanistan Asia       1992    41.7 16317921      649.
+10 Afghanistan Asia       1997    41.8 22227415      635.
+11 Afghanistan Asia       2002    42.1 25268405      727.
+12 Afghanistan Asia       2007    43.8 31889923      975.
+13 Albania     Europe     1952    55.2  1282697     1601.
+14 Albania     Europe     1957    59.3  1476505     1942.
+15 Albania     Europe     1962    64.8  1728137     2313.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country<span class="sc">==</span><span class="st">"Croatia"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(year, gdpPercap) <span class="sc">%&gt;%</span> plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="07_week_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Croatia"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+   country continent  year lifeExp     pop gdpPercap
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+ 1 Croatia Europe     1952    61.2 3882229     3119.
+ 2 Croatia Europe     1957    64.8 3991242     4338.
+ 3 Croatia Europe     1962    67.1 4076557     5478.
+ 4 Croatia Europe     1967    68.5 4174366     6960.
+ 5 Croatia Europe     1972    69.6 4225310     9164.
+ 6 Croatia Europe     1977    70.6 4318673    11305.
+ 7 Croatia Europe     1982    70.5 4413368    13222.
+ 8 Croatia Europe     1987    71.5 4484310    13823.
+ 9 Croatia Europe     1992    72.5 4494013     8448.
+10 Croatia Europe     1997    73.7 4444595     9876.
+11 Croatia Europe     2002    74.9 4481020    11628.
+12 Croatia Europe     2007    75.7 4493312    14619.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+   country     continent  year lifeExp      pop gdpPercap
+   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1 Korea, Rep. Asia       1952    47.5 20947571     1031.
+ 2 Korea, Rep. Asia       1957    52.7 22611552     1488.
+ 3 Korea, Rep. Asia       1962    55.3 26420307     1536.
+ 4 Korea, Rep. Asia       1967    57.7 30131000     2029.
+ 5 Korea, Rep. Asia       1972    62.6 33505000     3031.
+ 6 Korea, Rep. Asia       1977    64.8 36436000     4657.
+ 7 Korea, Rep. Asia       1982    67.1 39326000     5623.
+ 8 Korea, Rep. Asia       1987    69.8 41622000     8533.
+ 9 Korea, Rep. Asia       1992    72.2 43805450    12104.
+10 Korea, Rep. Asia       1997    74.6 46173816    15994.
+11 Korea, Rep. Asia       2002    77.0 47969150    19234.
+12 Korea, Rep. Asia       2007    78.6 49044790    23348.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(gapminder<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Afghanistan"              "Albania"                 
+  [3] "Algeria"                  "Angola"                  
+  [5] "Argentina"                "Australia"               
+  [7] "Austria"                  "Bahrain"                 
+  [9] "Bangladesh"               "Belgium"                 
+ [11] "Benin"                    "Bolivia"                 
+ [13] "Bosnia and Herzegovina"   "Botswana"                
+ [15] "Brazil"                   "Bulgaria"                
+ [17] "Burkina Faso"             "Burundi"                 
+ [19] "Cambodia"                 "Cameroon"                
+ [21] "Canada"                   "Central African Republic"
+ [23] "Chad"                     "Chile"                   
+ [25] "China"                    "Colombia"                
+ [27] "Comoros"                  "Congo, Dem. Rep."        
+ [29] "Congo, Rep."              "Costa Rica"              
+ [31] "Cote d'Ivoire"            "Croatia"                 
+ [33] "Cuba"                     "Czech Republic"          
+ [35] "Denmark"                  "Djibouti"                
+ [37] "Dominican Republic"       "Ecuador"                 
+ [39] "Egypt"                    "El Salvador"             
+ [41] "Equatorial Guinea"        "Eritrea"                 
+ [43] "Ethiopia"                 "Finland"                 
+ [45] "France"                   "Gabon"                   
+ [47] "Gambia"                   "Germany"                 
+ [49] "Ghana"                    "Greece"                  
+ [51] "Guatemala"                "Guinea"                  
+ [53] "Guinea-Bissau"            "Haiti"                   
+ [55] "Honduras"                 "Hong Kong, China"        
+ [57] "Hungary"                  "Iceland"                 
+ [59] "India"                    "Indonesia"               
+ [61] "Iran"                     "Iraq"                    
+ [63] "Ireland"                  "Israel"                  
+ [65] "Italy"                    "Jamaica"                 
+ [67] "Japan"                    "Jordan"                  
+ [69] "Kenya"                    "Korea, Dem. Rep."        
+ [71] "Korea, Rep."              "Kuwait"                  
+ [73] "Lebanon"                  "Lesotho"                 
+ [75] "Liberia"                  "Libya"                   
+ [77] "Madagascar"               "Malawi"                  
+ [79] "Malaysia"                 "Mali"                    
+ [81] "Mauritania"               "Mauritius"               
+ [83] "Mexico"                   "Mongolia"                
+ [85] "Montenegro"               "Morocco"                 
+ [87] "Mozambique"               "Myanmar"                 
+ [89] "Namibia"                  "Nepal"                   
+ [91] "Netherlands"              "New Zealand"             
+ [93] "Nicaragua"                "Niger"                   
+ [95] "Nigeria"                  "Norway"                  
+ [97] "Oman"                     "Pakistan"                
+ [99] "Panama"                   "Paraguay"                
+[101] "Peru"                     "Philippines"             
+[103] "Poland"                   "Portugal"                
+[105] "Puerto Rico"              "Reunion"                 
+[107] "Romania"                  "Rwanda"                  
+[109] "Sao Tome and Principe"    "Saudi Arabia"            
+[111] "Senegal"                  "Serbia"                  
+[113] "Sierra Leone"             "Singapore"               
+[115] "Slovak Republic"          "Slovenia"                
+[117] "Somalia"                  "South Africa"            
+[119] "Spain"                    "Sri Lanka"               
+[121] "Sudan"                    "Swaziland"               
+[123] "Sweden"                   "Switzerland"             
+[125] "Syria"                    "Taiwan"                  
+[127] "Tanzania"                 "Thailand"                
+[129] "Togo"                     "Trinidad and Tobago"     
+[131] "Tunisia"                  "Turkey"                  
+[133] "Uganda"                   "United Kingdom"          
+[135] "United States"            "Uruguay"                 
+[137] "Venezuela"                "Vietnam"                 
+[139] "West Bank and Gaza"       "Yemen, Rep."             
+[141] "Zambia"                   "Zimbabwe"                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Croatia"</span>, <span class="st">"pop"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 1
+       pop
+     &lt;int&gt;
+ 1 3882229
+ 2 3991242
+ 3 4076557
+ 4 4174366
+ 5 4225310
+ 6 4318673
+ 7 4413368
+ 8 4484310
+ 9 4494013
+10 4444595
+11 4481020
+12 4493312</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Croatia"</span>, <span class="fu">c</span>(<span class="st">"lifeExp"</span>,<span class="st">"pop"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   lifeExp     pop
+     &lt;dbl&gt;   &lt;int&gt;
+ 1    61.2 3882229
+ 2    64.8 3991242
+ 3    67.1 4076557
+ 4    68.5 4174366
+ 5    69.6 4225310
+ 6    70.6 4318673
+ 7    70.5 4413368
+ 8    71.5 4484310
+ 9    72.5 4494013
+10    73.7 4444595
+11    74.9 4481020
+12    75.7 4493312</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Croatia"</span> <span class="sc">&amp;</span> <span class="co">#Croatia extraction</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>             gapminder<span class="sc">$</span>year <span class="sc">&gt;</span> <span class="dv">1990</span>, <span class="co">#1990 after</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="st">"lifeExp"</span>,<span class="st">"pop"</span>)] <span class="co"># those variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  lifeExp     pop
+    &lt;dbl&gt;   &lt;int&gt;
+1    72.5 4494013
+2    73.7 4444595
+3    74.9 4481020
+4    75.7 4493312</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Croatia"</span>,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"lifeExp"</span>,<span class="st">"pop"</span>)],</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">2</span>, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lifeExp          pop 
+7.005592e+01 4.289916e+06 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">c</span>(<span class="st">"lifeExp"</span>,<span class="st">"pop"</span>)],</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">2</span>, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     lifeExp          pop 
+      65.001 36499386.333 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 03 Data processing using the dplyr library #</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(gapminder, country, year, lifeExp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 3
+   country      year lifeExp
+   &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  1952    28.8
+ 2 Afghanistan  1957    30.3
+ 3 Afghanistan  1962    32.0
+ 4 Afghanistan  1967    34.0
+ 5 Afghanistan  1972    36.1
+ 6 Afghanistan  1977    38.4
+ 7 Afghanistan  1982    39.9
+ 8 Afghanistan  1987    40.8
+ 9 Afghanistan  1992    41.7
+10 Afghanistan  1997    41.8
+# ℹ 1,694 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(gapminder, country <span class="sc">==</span> <span class="st">"Croatia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+   country continent  year lifeExp     pop gdpPercap
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+ 1 Croatia Europe     1952    61.2 3882229     3119.
+ 2 Croatia Europe     1957    64.8 3991242     4338.
+ 3 Croatia Europe     1962    67.1 4076557     5478.
+ 4 Croatia Europe     1967    68.5 4174366     6960.
+ 5 Croatia Europe     1972    69.6 4225310     9164.
+ 6 Croatia Europe     1977    70.6 4318673    11305.
+ 7 Croatia Europe     1982    70.5 4413368    13222.
+ 8 Croatia Europe     1987    71.5 4484310    13823.
+ 9 Croatia Europe     1992    72.5 4494013     8448.
+10 Croatia Europe     1997    73.7 4444595     9876.
+11 Croatia Europe     2002    74.9 4481020    11628.
+12 Croatia Europe     2007    75.7 4493312    14619.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(gapminder, <span class="at">pop_avg =</span> <span class="fu">mean</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+    pop_avg
+      &lt;dbl&gt;
+1 29601212.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(gapminder, continent), <span class="at">pop_avg =</span> <span class="fu">mean</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  continent   pop_avg
+  &lt;fct&gt;         &lt;dbl&gt;
+1 Africa     9916003.
+2 Americas  24504795.
+3 Asia      77038722.
+4 Europe    17169765.
+5 Oceania    8874672.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(gapminder, continent, country), <span class="at">pop_avg =</span> <span class="fu">mean</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'continent'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 142 × 3
+# Groups:   continent [5]
+   continent country                    pop_avg
+   &lt;fct&gt;     &lt;fct&gt;                        &lt;dbl&gt;
+ 1 Africa    Algeria                  19875406.
+ 2 Africa    Angola                    7309390.
+ 3 Africa    Benin                     4017497.
+ 4 Africa    Botswana                   971186.
+ 5 Africa    Burkina Faso              7548677.
+ 6 Africa    Burundi                   4651608.
+ 7 Africa    Cameroon                  9816648.
+ 8 Africa    Central African Republic  2560963 
+ 9 Africa    Chad                      5329256.
+10 Africa    Comoros                    361684.
+# ℹ 132 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(continent, country) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">pop_avg =</span> <span class="fu">mean</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'continent'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 142 × 3
+# Groups:   continent [5]
+   continent country                    pop_avg
+   &lt;fct&gt;     &lt;fct&gt;                        &lt;dbl&gt;
+ 1 Africa    Algeria                  19875406.
+ 2 Africa    Angola                    7309390.
+ 3 Africa    Benin                     4017497.
+ 4 Africa    Botswana                   971186.
+ 5 Africa    Burkina Faso              7548677.
+ 6 Africa    Burundi                   4651608.
+ 7 Africa    Cameroon                  9816648.
+ 8 Africa    Central African Republic  2560963 
+ 9 Africa    Chad                      5329256.
+10 Africa    Comoros                    361684.
+# ℹ 132 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">=</span> <span class="fu">filter</span>(gapminder, country <span class="sc">==</span> <span class="st">"Croatia"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>temp2 <span class="ot">=</span> <span class="fu">select</span>(temp1, country, year, lifeExp)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>temp3 <span class="ot">=</span> <span class="fu">apply</span>(temp2[ , <span class="fu">c</span>(<span class="st">"lifeExp"</span>)], <span class="dv">2</span>, mean)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>temp3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> lifeExp 
+70.05592 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Croatia"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(country, year, lifeExp) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">lifeExp_avg =</span> <span class="fu">mean</span>(lifeExp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  lifeExp_avg
+        &lt;dbl&gt;
+1        70.1</code></pre>
+</div>
+</div>
+<p>data in need: <a href="data/avocado.csv">avocado.csv</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 04 The reality of data processing #</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>avocado <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/avocado.csv"</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(avocado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   18249 obs. of  14 variables:
+ $ X           : int  0 1 2 3 4 5 6 7 8 9 ...
+ $ Date        : chr  "2015-12-27" "2015-12-20" "2015-12-13" "2015-12-06" ...
+ $ AveragePrice: num  1.33 1.35 0.93 1.08 1.28 1.26 0.99 0.98 1.02 1.07 ...
+ $ Total.Volume: num  64237 54877 118220 78992 51040 ...
+ $ X4046       : num  1037 674 795 1132 941 ...
+ $ X4225       : num  54455 44639 109150 71976 43838 ...
+ $ X4770       : num  48.2 58.3 130.5 72.6 75.8 ...
+ $ Total.Bags  : num  8697 9506 8145 5811 6184 ...
+ $ Small.Bags  : num  8604 9408 8042 5677 5986 ...
+ $ Large.Bags  : num  93.2 97.5 103.1 133.8 197.7 ...
+ $ XLarge.Bags : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ type        : chr  "conventional" "conventional" "conventional" "conventional" ...
+ $ year        : int  2015 2015 2015 2015 2015 2015 2015 2015 2015 2015 ...
+ $ region      : chr  "Albany" "Albany" "Albany" "Albany" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x_avg =</span> avocado <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">V_avg =</span> <span class="fu">mean</span>(Total.Volume), <span class="at">P_avg =</span> <span class="fu">mean</span>(AveragePrice)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 54 × 3
+   region                 V_avg P_avg
+   &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt;
+ 1 Albany                47538.  1.56
+ 2 Atlanta              262145.  1.34
+ 3 BaltimoreWashington  398562.  1.53
+ 4 Boise                 42643.  1.35
+ 5 Boston               287793.  1.53
+ 6 BuffaloRochester      67936.  1.52
+ 7 California          3044324.  1.40
+ 8 Charlotte            105194.  1.61
+ 9 Chicago              395569.  1.56
+10 CincinnatiDayton     131722.  1.21
+# ℹ 44 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x_avg =</span> avocado <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(region, year) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">V_avg =</span> <span class="fu">mean</span>(Total.Volume), <span class="at">P_avg =</span> <span class="fu">mean</span>(AveragePrice)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'region'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 216 × 4
+# Groups:   region [54]
+   region               year   V_avg P_avg
+   &lt;chr&gt;               &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1 Albany               2015  38749.  1.54
+ 2 Albany               2016  50619.  1.53
+ 3 Albany               2017  49355.  1.64
+ 4 Albany               2018  64249.  1.44
+ 5 Atlanta              2015 223382.  1.38
+ 6 Atlanta              2016 272374.  1.21
+ 7 Atlanta              2017 271841.  1.43
+ 8 Atlanta              2018 342976.  1.29
+ 9 BaltimoreWashington  2015 390823.  1.37
+10 BaltimoreWashington  2016 393210.  1.59
+# ℹ 206 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>x_avg <span class="ot">=</span> avocado <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(region, year, type) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">V_avg =</span> <span class="fu">mean</span>(Total.Volume), <span class="at">P_avg =</span> <span class="fu">mean</span>(AveragePrice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'region', 'year'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>avocado <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(region, year, type) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">V_avg =</span> <span class="fu">mean</span>(Total.Volume),</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">P_avg =</span> <span class="fu">mean</span>(AveragePrice)) <span class="ot">-&gt;</span> x_avg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'region', 'year'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>x_avg <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">!=</span> <span class="st">"TotalUS"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, V_avg, <span class="at">col =</span> type)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="07_week_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ggplot2")</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(x_avg, <span class="fu">desc</span>(V_avg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 432 × 5
+# Groups:   region, year [216]
+   region        year type             V_avg P_avg
+   &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;
+ 1 TotalUS       2018 conventional 42125533. 1.06 
+ 2 TotalUS       2016 conventional 34043450. 1.05 
+ 3 TotalUS       2017 conventional 33995658. 1.22 
+ 4 TotalUS       2015 conventional 31224729. 1.01 
+ 5 SouthCentral  2018 conventional  7465557. 0.806
+ 6 West          2018 conventional  7451445. 0.981
+ 7 California    2018 conventional  6786962. 1.08 
+ 8 West          2016 conventional  6404892. 0.916
+ 9 West          2017 conventional  6279482. 1.10 
+10 California    2016 conventional  6105539. 1.05 
+# ℹ 422 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>x_avg1 <span class="ot">=</span> x_avg <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">!=</span> <span class="st">"TotalUS"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After excluding TotalUS, you can process it using statistical functions directly.</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>x_avg1[x_avg1<span class="sc">$</span>V_avg <span class="sc">==</span> <span class="fu">max</span>(x_avg1<span class="sc">$</span>V_avg),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+# Groups:   region, year [1]
+  region        year type            V_avg P_avg
+  &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt;
+1 SouthCentral  2018 conventional 7465557. 0.806</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("lubridate")</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x_avg =</span> avocado <span class="sc">%&gt;%</span> </span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(region, year, <span class="fu">month</span>(Date), type) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">V_avg =</span> <span class="fu">mean</span>(Total.Volume), </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">P_avg =</span> <span class="fu">mean</span>(AveragePrice)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'region', 'year', 'month(Date)'. You can
+override using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,212 × 6
+# Groups:   region, year, month(Date) [2,106]
+   region  year `month(Date)` type          V_avg P_avg
+   &lt;chr&gt;  &lt;int&gt;         &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
+ 1 Albany  2015             1 conventional 42932.  1.17
+ 2 Albany  2015             1 organic       1198.  1.84
+ 3 Albany  2015             2 conventional 52343.  1.03
+ 4 Albany  2015             2 organic       1334.  1.76
+ 5 Albany  2015             3 conventional 50659.  1.06
+ 6 Albany  2015             3 organic       1444.  1.83
+ 7 Albany  2015             4 conventional 48594.  1.17
+ 8 Albany  2015             4 organic       1402.  1.89
+ 9 Albany  2015             5 conventional 97216.  1.26
+10 Albany  2015             5 organic       1836.  1.94
+# ℹ 4,202 more rows</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

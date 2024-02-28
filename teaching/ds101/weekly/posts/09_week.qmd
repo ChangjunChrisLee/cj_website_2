@@ -22,3 +22,178 @@ slide-format: revealjs
 {{< video https://youtu.be/9optOjc5EGw >}}
 
 <br> 
+
+```{r}
+library(tidyverse)
+library(gapminder)
+
+
+# 03 Visualization Tool
+
+head(cars)
+
+# type="p" is the point plot, main="cars" is the title of the graph
+plot(cars, type = "p", main = "cars")
+
+plot(cars, type = "l", main = "cars") # type ="l" is a plot using lines
+plot(cars, type="b", main="cars") # type="b" is a plot using both points and lines
+plot(cars, type = "h", main = "cars") # type = "h" is a bar graph such as a histogram
+
+x = gapminder %>% filter(year == 1952 & continent == "Asia") %>% mutate(gdp = gdpPercap*pop) %>% select(country, gdp) %>% arrange(desc(gdp)) %>% head()
+pie(x$gdp, x$country)
+barplot(x$gdp, names.arg = x$country)
+
+
+x = gapminder %>% filter(year == 2007 & continent == "Asia") %>% mutate(gdp = gdpPercap*pop) %>% select(country, gdp) %>% arrange(desc(gdp)) %>% head()
+pie(x$gdp, x$country)
+barplot(x$gdp, names.arg = x$country)
+
+
+matplot(iris[, 1:4], type = "l")
+legend("topleft", names(iris)[1:4], lty = c(1, 2, 3, 4), col = c(1, 2, 3, 4))
+
+
+
+hist(cars$speed)
+
+```
+
+```{r}
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) + geom_point(alpha = 0.2)
+
+gapminder %>% filter(lifeExp>70) %>%
+   group_by(continent) %>%
+   summarize(n = n_distinct(country)) %>%
+   ggplot(aes(x = continent, y = n)) +
+   geom_bar(stat = "identity")
+
+
+gapminder %>% filter(year == 2007) %>%
+   ggplot(aes(lifeExp, col = continent)) +
+   geom_histogram()
+
+gapminder %>% filter(year == 2007) %>%
+   ggplot(aes(lifeExp, col = continent)) +
+   geom_histogram(position = "dodge")
+
+gapminder %>%
+   filter(year == 2007) %>%
+   ggplot(aes(continent, lifeExp, col = continent)) +
+   geom_boxplot()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) +
+   geom_point(alpha = 0.2)
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) +
+   geom_point(alpha = 0.2) + scale_x_log10() # Convert the horizontal axis to log scale.
+
+
+gapminder %>%
+   filter(continent == "Africa") %>%
+   ggplot(aes(country, lifeExp)) +
+   geom_bar(stat = "identity") # [Figure 6-35(a)]
+
+gapminder %>%
+   filter(continent == "Africa") %>%
+   ggplot(aes(country, lifeExp)) +
+   geom_bar(stat = "identity") +
+   coord_flip() # [Figure 6-35(b)] Switches the direction of the plot.
+
+```
+
+```{r}
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+
+display.brewer.all()
+
+
+# [Figure 6-37(a)]: Graph with basic palette applied
+gapminder %>% filter(lifeExp>70) %>%
+   group_by(continent) %>%
+   summarize(n = n_distinct(country)) %>%
+   ggplot(aes(x = continent, y = n)) +
+   geom_bar(stat = "identity", aes(fill = continent))
+
+# [Figure 6-37(b)]: Graph applying the Spectral palette
+gapminder %>%
+   filter(lifeExp>70) %>%
+   group_by(year, continent) %>%
+   summarize(n = n_distinct(country)) %>%
+   ggplot(aes(x = continent, y = n)) +
+   geom_bar(stat = "identity", aes(fill = continent)) + 
+  scale_fill_brewer(palette = "Spectral")
+
+help(geom_bar)
+# [Figure 6-37(c)] Graph applying the Blues palette
+gapminder %>%
+   filter(lifeExp>70) %>%
+   group_by(continent) %>%
+   summarize(n = n_distinct(country)) %>%
+   ggplot(aes(x = continent, y = n)) +
+   geom_bar(stat = "identity", aes(fill = continent)) + scale_fill_brewer(palette = "Blues")
+
+
+# [Figure 6-37(d)] Graph applying the Oranges palette
+gapminder %>%
+   filter(lifeExp>70) %>%
+   group_by(continent) %>%
+   summarize(n = n_distinct(country)) %>%
+   ggplot(aes(x = continent, y = n)) +
+   geom_bar(stat = "identity", aes(fill = continent)) + scale_fill_brewer(palette = "Oranges")
+```
+
+```{r}
+
+# reorder(continent, -n) means sort the continents in descending order based on n
+gapminder %>%
+   filter(lifeExp >70) %>%
+   group_by(continent) %>%
+   summarize(n = n_distinct(country)) %>%
+   ggplot(aes(x = reorder(continent, -n), y = n)) +
+   geom_bar(stat = "identity", aes(fill = continent)) +
+   scale_fill_brewer(palette = "Blues")
+
+
+# Training!!
+gapminder %>%
+   filter(continent == "Africa", year==2007) %>%
+   ggplot(aes(reorder(country, lifeExp), lifeExp, fill=lifeExp)) +
+   geom_bar(stat = "identity") +
+   coord_flip()
+#
+gapminder %>%
+   filter(continent == "Africa", year==2007) %>%
+   ggplot(aes(reorder(country, lifeExp), lifeExp, fill=lifeExp)) +
+   geom_bar(stat = "identity") +
+   coord_flip() +
+   scale_fill_distiller(palette = "Oranges", direction=1)
+```
+
+
+
+```{r}
+# 04 Data exploration using visualization #
+
+gapminder %>% ggplot(aes(gdpPercap, lifeExp, col = continent)) + geom_point(alpha = 0.2) + facet_wrap(~year) + scale_x_log10()
+
+gapminder %>% filter(year == 1952 & gdpPercap > 10000 & continent == "Asia")
+
+gapminder %>% filter(country == "Kuwait") %>% ggplot(aes(year, gdpPercap)) + geom_point() + geom_line() # [Figure 6-40(a)]
+gapminder %>% filter(country == "Kuwait") %>% ggplot(aes(year, pop)) + geom_point() + geom_line() # [Figure 6-40(b)]
+
+gapminder %>% filter(country == "Korea, Rep.") %>% ggplot(aes(year, gdpPercap)) + geom_point() + geom_line() # [Figure 6-41(a)]
+gapminder %>% filter(country == "Korea, Rep.") %>% ggplot(aes(year, pop)) + geom_point() + geom_line() # [Figure 6-41(b)]
+
+gapminder %>% filter(country == "Kuwait" | country == "Korea, Rep.") %>% mutate(gdp = gdpPercap*pop) %>% ggplot(aes(year, gdp, col = country)) + geom_point() + geom_line()
+
+# [Figure 6-43(a)] Comparison of changes in gdpPercap
+gapminder %>% filter(country == "Kuwait"|country == "Saudi Arabia"|country == "Iraq"|country == "Iran"|country == "Korea, Rep."|country == "China "|country == "Japan") %>% ggplot(aes(year, gdpPercap, col = country)) + geom_point() + geom_line()
+
+# [Figure 6-43(b)] Comparison of changes in pop
+gapminder %>% filter(country == "Kuwait"|country=="Saudi Arabia"|country == "Iraq"|country == "Iran"|country == "Korea, Rep."|country == "China "|country == "Japan") %>% ggplot(aes(year, pop, col=country)) + geom_point() + geom_line()
+
+# [Figure 6-43(c)] Comparison of changes in gdp
+gapminder %>% filter(country == "Kuwait"|country == "Saudi Arabia"|country == "Iraq"|country == "Iran"|country == "Korea, Rep."|country == "China "|country == "Japan") %>% mutate(gdp=gdpPercap*pop) %>% ggplot(aes(year, gdp, col = country)) + geom_point() + geom_line() + scale_y_log10()
+```
+
