@@ -18,26 +18,448 @@ Before attending class for Week 2, please complete the following tasks:
 
 <br>
 
-### Pre-class video
+# Pre-class video
 
-<br> 
+<br>
+
+Download pdf for all the preclass content
+
+[Preclass_pdf](content/DS101_preclass_material.pdf)
+
+<br>
+
 
 #### Basic syntax
 
-<br> 
+<br>
 
 {{< video https://youtu.be/I5_-QZeF9fg >}}
 
-<br> 
+<br>
+
+-   Grammar of data science.
+
+    -   **Variable**: data storage space
+
+    -   **Data types**: numeric, character, categorical, logical, special constants, etc.
+
+    -   **Operators**: arithmetic, comparison, logical operators
+
+    -   **Vector**: a collection of single values
+
+    -   **Array**: A set of data with columns and rows (or A set of vectors)
+
+    -   **Data frame**: A structure in which different data types are organized in a tabular form. Each property has the same size.
+
+    -   **List**: A tabular structure similar to “Data frame”. The size of each property can be different.
+
+-   Grammar study is essential to save data and process operations
+
+    -   a=1
+
+    -   b=2
+
+    -   c=a+b
+
+-   When there needs a lot of data, such as student grade processing
+
+    -   A single variable cannot represent all the data
+
+    -   By using vector, matrix, data frame, list, etc., it is possible to store a lot of data with one variable name.
+
+    -   There are many things around us are organized in a tabular form for easy data management. (e.g. attendance checking, grade, and member management, etc.)
+
+-   Storing values in variables
+
+    -   Value assignment using =, \<-, -\>
+
+        ```{r}
+        # Assign 1 to X
+        x = 1 
+
+        # Assign 2 to Y.
+        y = 2
+
+        z = x + y
+
+        z
+        ```
+
+        ```{r}
+        x + y -> z
+
+        z
+        ```
+
+-   Example of exchanging two values
+
+    -   Make temporary storage space and save one value in advance
+
+        ```{r}
+        x = 1
+        y = 2
+        temp = x
+        x = y
+        y = temp
+
+        x
+
+        y
+        ```
+
+-   Basic data types of R
+
+    -   Numeric: int / num / cplx
+
+    -   Character: chr
+
+    -   Categorical: factor
+
+    -   Logical: True(T), FALSE(F)
+
+    -   Special constant
+
+        -   NULL: undefined value
+
+        -   NA: missing value
+
+        -   Inf & -Inf: Positive & Negative infinity
+
+        -   NaN: Not a Number, values cannot be computed such as 0/0, Inf/Inf, etc
+
+-   Examples for basic data types in R
+
+Numeric
+
+```{r}
+# Data type #
+
+x = 5
+y = 2
+x/y
+
+```
+
+Complex
+
+```{r}
+xi = 1 + 2i
+yi = 1 - 2i
+xi+yi
+
+```
+
+Character (string)
+
+```{r}
+str = "Hello, World!"
+str
+
+```
+
+Categorical (factor)
+
+```{r}
+blood.type = factor(c('A', 'B', 'O', 'AB'))
+blood.type
+
+```
+
+Logical & Special constant
+
+```{r}
+T
+F
+xinf = Inf
+yinf = -Inf
+xinf/yinf
+
+```
+
+-   Data type verification and conversion functions
+
+    -   Functions to check data type
+
+        -   class(x)
+
+        -   typeof(x)
+
+        -   is.integer(x)
+
+        -   is.numeric(x)
+
+        -   is.complex(x)
+
+        -   is.character(x)
+
+        -   is.na(x)
+
+    -   Functions to transform data type
+
+        -   as.factor(x)
+
+        -   as.integer(x)
+
+        -   as.numeric(x)
+
+        -   as.character(x)
+
+        -   as.matrix(x)
+
+        -   as.array(x)
+
+
+```{r}
+
+x = 1 		# If you simply put 1 in x, x is a numeric type.
+x
+is.integer(x)
+
+
+```
+
+```{r}
+x = 1L 		# If 1L is entered in x, x is an integer.
+x
+
+is.integer(x)
+
+x = as.integer(1) 	 
+
+is.integer(x)
+
+```
+-   Arithmetic Operators
+
+    |                |                             |
+    |----------------|-----------------------------|
+    | **Operator**   | **Description**             |
+    | **+**          | addition                    |
+    | **-**          | subtraction                 |
+    | **\***         | multiplication              |
+    | **/**          | division                    |
+    | **\^ or \*\*** | exponentiation              |
+    | **x %% y**     | modulus (x mod y) 5%%2 is 1 |
+    | **x %/% y**    | integer division 5%/%2 is 2 |
+
+-   Logical Operators
+
+    |               |                          |
+    |---------------|--------------------------|
+    | **Operator**  | **Description**          |
+    | **\<**        | less than                |
+    | **\<=**       | less than or equal to    |
+    | **\>**        | greater than             |
+    | **\>=**       | greater than or equal to |
+    | **==**        | exactly equal to         |
+    | **!=**        | not equal to             |
+    | **!x**        | Not x                    |
+    | \*\*x         | y\*\*                    |
+    | **x & y**     | x AND y                  |
+    | **isTRUE(x)** | test if X is TRUE        |
+
+-   More information for operators: <https://www.statmethods.net/management/operators.html>
+
+
+<br>
 
 #### Vector
 
+<br>
+
 {{< video https://youtu.be/uQsGjVwUcz8 >}}
 
-<br> 
+<br>
 
----
+```{r}
+# Create a vector with 7 elements by increasing the numbers 1 to 7 by 1.
+1:7 		
+
+# Decrease by 1 from 7 to 1 to create a vector with 7 elements.
+7:1 	
+
+```
+
+```{r}
+vector(length = 5)
+# Create a vector consisting of 1 to 5 elements. Same as 1:5
+c(1:5)	 	
+
+# Create a vector of elements 1 to 6 by combining elements 1 to 3 and elements 4 to 6
+c(1, 2, 3, c(4:6)) 	
+
+```
+
+```{r}
+# Store a vector consisting of 1 to 3 elements in x
+x = c(1, 2, 3) 	
+x 		
+
+```
+
+```{r}
+# Create y as an empty vector
+y = c() 		
+
+# Created by adding the c(1:3) vector to the existing y vector
+y = c(y, c(1:3)) 	
+y 	
+
+```
+
+```{r}
+# Create a vector from 1 to 10 in increments of 2
+seq(from = 1, to = 10, by = 2) 	
+
+# Same code with above
+seq(1, 10, by = 2) 		
+```
+
+```{r}
+# Create a vector with 11 elements from 0 to 1 in increments of 0.1
+seq(0, 1, by = 0.1) 			
+
+# Create a vector with 11 elements from 0 to 1
+seq(0, 1, length.out = 11) 		
+
+```
+
+```{r}
+# Create a vector by repeating the (1, 2, 3) vector twice
+rep(c(1:3), times = 2)	
+
+# (1, 2, 3) Creates a vector by repeating the individual elements of the vector twice
+rep(c(1:3), each = 2) 		
+
+```
+
+```{r}
+x = c(2, 4, 6, 8, 10)
+
+# Find the length (size) of the x vector
+length(x) 	
+
+```
+
+```{r}
+# Find the value of element 1 of the x vector
+x[1] 		
+
+```
+
+```{r}
+
+# An error occurs if you enter elements 1, 2, and 3 of the x vector.
+
+# x[1, 2, 3] 		
+
+# When finding elements 1, 2, and 3 of the x vector, they must be grouped into a vector.
+
+x[c(1, 2, 3)] 
+
+```
+
+```{r}
+# Output the value excluding elements 1, 2, and 3 from the x vector
+
+x[-c(1, 2, 3)] 
+
+```
+
+```{r}
+# Print elements 1 to 3 in the x vector
+x[c(1:3)] 		
+```
+
+```{r}
+# Add 2 to each individual element of the x vector
+x = c(1, 2, 3, 4)
+y = c(5, 6, 7, 8)
+z = c(3, 4)
+w = c(5, 6, 7)
+x+2 		
+```
+
+```{r}
+# Since the size of the x vector and y vector are the same, each element is added
+x + y 	
+```
+
+```{r}
+# If the x vector is an integer multiple of the size of the z vector, add the smaller vector elements in a circular motion.
+x + z 		
+```
+
+```{r}
+# Operation error because the sizes of x and w are not integer multiples
+x + w 		
+```
+
+```{r}
+# Check if element value of x vector is greater than 5
+
+x > 5 		
+```
+
+```{r}
+# Check if all elements of the x vector are greater than 5
+all(x > 5) 		
+```
+
+```{r}
+# Check if any of the element values of the x vector are greater than 5
+any(x > 5) 	
+```
+
+```{r}
+x = 1:10
+# Extract the first 6 elements of data
+head(x) 		
+# Extract the last 6 elements of data
+tail(x) 		
+```
+
+```{r}
+# Extract the first 3 elements of data
+head(x, 3) 	
+# Extract the last 3 elements of data
+tail(x, 3) 
+```
+
+```{r}
+x = c(1, 2, 3)
+y = c(3, 4, 5)
+z = c(3, 1, 2)
+
+# Union set
+union(x, y) 
+```
+
+```{r}
+# Intersection set
+intersect(x, y) 
+```
+
+```{r}
+# Set difference (X - Y)
+setdiff(x, y) 	
+```
+
+```{r}
+# Set difference (Y - X)
+setdiff(y, x) 	
+```
+
+```{r}
+# Compare whether x and y have the same elements
+setequal(x, y) 	
+```
+
+```{r}
+# Compare whether x and z have the same elements
+setequal(x, z) 
+```
+
+------------------------------------------------------------------------
 
 # Class content
-
-
