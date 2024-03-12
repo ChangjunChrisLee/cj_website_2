@@ -190,6 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
   <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
+  <li><a href="#understanding-arrays-in-r-concepts-and-examples" id="toc-understanding-arrays-in-r-concepts-and-examples" class="nav-link" data-scroll-target="#understanding-arrays-in-r-concepts-and-examples"><strong>Understanding Arrays in R: Concepts and Examples</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -397,12 +398,12 @@ v3    9   10   11   12</code></pre>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly mix and extract array elements</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 10  4  1 11  9  7 12  8  6  3  2  5</code></pre>
+<pre><code> [1] 10 12  6  2  8 11  7  1  5  4  9  3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and extract 10 elements from the array</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 10  7  5  4  2  1  8 12  6  9</code></pre>
+<pre><code> [1] 11  3  2  1  9 10  7  6  5 12</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -424,12 +425,12 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The extraction probability for each element can be varied</span></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">10</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)<span class="sc">/</span><span class="dv">24</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 12  8 10  5  6  3 11  9  7  4</code></pre>
+<pre><code> [1] 11  1 12  8 10  9  3  6  7  4</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You can create a sample using just numbers</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  5  6  4  2 10  1  9  3  8  7</code></pre>
+<pre><code> [1]  6  2 10  7  1  5  4  8  9  3</code></pre>
 </div>
 </div>
 <hr>
@@ -445,10 +446,241 @@ Attaching package: 'dplyr'</code></pre>
 <li><p>*.R</p></li>
 <li><p>getwd()</p></li>
 </ul></li>
-<li><p>Create a variable</p></li>
+<li><p>Variable and Object</p>
+<ul>
+<li><p>An object in R is a data structure used for storing data: Everything in R is an object, including functions, numbers, character strings, vectors, and lists. Each object has attributes such as its type (e.g., integer, numeric, character), its length, and often its dimensions. Objects can be complex structures, like data frames that hold tabular data, or simpler structures like a single numeric value or vector.</p></li>
+<li><p>A variable in R is a name that you assign to an object so that you can refer to it later in your code. When you assign data to a variable, you are effectively labeling that data with a name that you can use to call up the object later on.</p></li>
+</ul></li>
 </ul>
+<p>Here’s a simple example in R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>my_vector is a variable. It’s a symbolic name that we’re using to refer to some data we’re interested in.</p></li>
+<li><p>c(1, 2, 3) creates a vector object containing the numbers 1, 2, and 3.</p></li>
+<li><p>This vector is the object, and it’s the actual data structure that R is storing in memory.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all objects stored</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>()</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector 1 to 10</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sampling 10 values from the vector 1:10</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  5  6  4  1  8  2  9 10  3  7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract 2nd to 5th elements of X</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 8 7 2</code></pre>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li>Vectorized codes</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>) <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 5 9</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>X <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  4  8 10</code></pre>
+</div>
+</div>
+<ul>
+<li>Recycling rule</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 4 4 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>X <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  4  8 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in 1:4 + 1:3: longer object length is not a multiple of shorter object
+length</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 4 6 5</code></pre>
+</div>
+</div>
+<section id="pop-up-qz" class="level4">
+<h4 class="anchored" data-anchor-id="pop-up-qz">Pop-up Qz</h4>
+<p>Choose two if its type cannot be ‘factor’ variable in R</p>
+<ol type="1">
+<li><p>GPA</p></li>
+<li><p>Blood type</p></li>
+<li><p>Grade (A,B,C,D,F)</p></li>
+<li><p>Height</p></li>
+<li><p>Gender</p></li>
+</ol>
+<p><br></p>
+<p>What is the result of the following R code?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="sc">-</span><span class="fl">1.6</span>, <span class="cn">TRUE</span>, <span class="st">"R"</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(my_vector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<ol type="A">
+<li><p>“numeric”</p></li>
+<li><p>“logical”</p></li>
+<li><p>“character”</p></li>
+<li><p>“complex”</p></li>
+</ol>
+<p><br></p>
+<p>Consider the following R code. Which of the following is the correct way to access the second element of the my_vector?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="st">"20"</span>, <span class="dv">30</span>)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">as.numeric</span>(my_vector))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 60</code></pre>
+</div>
+</div>
+<ol type="A">
+<li><p>60</p></li>
+<li><p>“60”</p></li>
+<li><p>40</p></li>
+<li><p>An error</p></li>
+</ol>
+<p><br></p>
+</section>
+</section>
+<section id="understanding-arrays-in-r-concepts-and-examples" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-arrays-in-r-concepts-and-examples"><strong>Understanding Arrays in R: Concepts and Examples</strong></h3>
+<p>Arrays are a fundamental data structure in R that extend vectors by allowing you to store multi-dimensional data. While a vector has one dimension, arrays in R can have two or more dimensions, making them incredibly versatile for complex data organization.</p>
+<section id="what-is-an-array-in-r" class="level4">
+<h4 class="anchored" data-anchor-id="what-is-an-array-in-r">What is an Array in R?</h4>
+<p>An array in R is a collection of elements of the same type arranged in a grid of a specified dimensionality. It is a multi-dimensional data structure that can hold values in more than two dimensions. Arrays are particularly useful in scenarios where operations on multi-dimensional data are required, such as matrix computations, tabulations, and various applications in data analysis and statistics.</p>
+</section>
+<section id="creating-an-array" class="level4">
+<h4 class="anchored" data-anchor-id="creating-an-array">Creating an Array</h4>
+<p>To create an array in R, you can use the <strong><code>array</code></strong> function. This function takes a vector of data and a vector of dimensions as arguments. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 2x3 array</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>my_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6</code></pre>
+</div>
+</div>
+<p>This code snippet creates a 2x3 array (2 rows and 3 columns) with the numbers 1 to 6.</p>
+</section>
+<section id="accessing-array-elements" class="level4">
+<h4 class="anchored" data-anchor-id="accessing-array-elements">Accessing Array Elements</h4>
+<p>Elements within an array can be accessed using indices for each dimension in square brackets <strong><code>[]</code></strong>. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the element in the 1st row and 2nd column</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>element <span class="ot">&lt;-</span> my_array[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(element)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+</section>
+<section id="modifying-arrays" class="level4">
+<h4 class="anchored" data-anchor-id="modifying-arrays">Modifying Arrays</h4>
+<p>Just like vectors, you can modify the elements of an array by accessing them using their indices and assigning new values. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modify the element in the 1st row and 2nd column to be 20</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>my_array[<span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3]
+[1,]    1   20    5
+[2,]    2    4    6</code></pre>
+</div>
+</div>
+</section>
+<section id="operations-on-arrays" class="level4">
+<h4 class="anchored" data-anchor-id="operations-on-arrays">Operations on Arrays</h4>
+<p>R allows you to perform operations on arrays. These operations can be element-wise or can involve the entire array. For example, you can add two arrays of the same dimensions, and R will perform element-wise addition.</p>
+</section>
+<section id="example-creating-and-manipulating-a-3d-array" class="level4">
+<h4 class="anchored" data-anchor-id="example-creating-and-manipulating-a-3d-array">Example: Creating and Manipulating a 3D Array</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 3x2x2 array</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>my_3d_array <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_3d_array)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , 1
+
+     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+[3,]    3    6
+
+, , 2
+
+     [,1] [,2]
+[1,]    7   10
+[2,]    8   11
+[3,]    9   12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Access an element (2nd row, 1st column, 2nd matrix)</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>element_3d <span class="ot">&lt;-</span> my_3d_array[<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(element_3d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="quiz-test-your-understanding-of-arrays-in-r" class="level4">
+<h4 class="anchored" data-anchor-id="quiz-test-your-understanding-of-arrays-in-r">Quiz: Test Your Understanding of Arrays in R</h4>
+<p><br></p>
+<p><strong>Question 1:</strong> What is the output when accessing the third element in the second row and first column of a 3x3x3 array filled with elements from 1 to 27?</p>
+<p>A) 3<br>
+B) 12<br>
+C) 21<br>
+D) 9</p>
+<p><br></p>
+<p><strong>Question 2:</strong> Which of the following statements creates a 2x2x3 array containing the numbers 1 through 12 in R?</p>
+<p>A) <strong><code>array(1:12, dim = c(2, 2, 3))</code></strong><br>
+B) <strong><code>matrix(1:12, nrow = 2, ncol = 2)</code></strong><br>
+C) <strong><code>c(1:12)</code></strong><br>
+D) <strong><code>array(1:12, dim = c(3, 2, 2))</code></strong></p>
+<p><br></p>
+<p><strong>Question 3:</strong> How do you modify the element at position [1, 1, 1] in a 3-dimensional array named ‘arr’ to have a value of 100?</p>
+<p>A) <strong><code>arr[1] &lt;- 100</code></strong><br>
+B) <strong><code>arr[1, 1, 1] &lt;- 100</code></strong><br>
+C) <strong><code>arr[c(1, 1, 1)] &lt;- 100</code></strong><br>
+D) Both B and C are correct.</p>
+<p><br></p>
+</section>
+<section id="answers" class="level4">
+<h4 class="anchored" data-anchor-id="answers">Answers:</h4>
+<p><strong>Answer 1:</strong> B) 12<br>
+<strong>Explanation:</strong> Arrays in R are filled column-wise, so the third element in the second row and first column of the second matrix would be 12.</p>
+<p><strong>Answer 2:</strong> A) <strong><code>array(1:12, dim = c(2, 2, 3))</code></strong><br>
+<strong>Explanation:</strong> The <strong><code>array</code></strong> function with dimension argument <strong><code>c(2, 2, 3)</code></strong> will create a 2x2x3 array, filling the elements from 1 to 12 across the dimensions.</p>
+<p><strong>Answer 3:</strong> B) <strong><code>arr[1, 1, 1] &lt;- 100</code></strong><br>
+<strong>Explanation:</strong> To modify a specific element in an array, you need to specify all its indices. The correct way is <strong><code>arr[1, 1, 1] &lt;- 100</code></strong>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
