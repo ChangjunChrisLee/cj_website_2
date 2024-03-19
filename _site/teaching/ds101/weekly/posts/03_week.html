@@ -191,6 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
   <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
   <li><a href="#understanding-arrays-in-r-concepts-and-examples" id="toc-understanding-arrays-in-r-concepts-and-examples" class="nav-link" data-scroll-target="#understanding-arrays-in-r-concepts-and-examples"><strong>Understanding Arrays in R: Concepts and Examples</strong></a></li>
+  <li><a href="#cov19-matrix-and-visualization" id="toc-cov19-matrix-and-visualization" class="nav-link" data-scroll-target="#cov19-matrix-and-visualization"><strong>COV19 matrix and visualization</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -398,12 +399,12 @@ v3    9   10   11   12</code></pre>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly mix and extract array elements</span></span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 10 12  6  2  8 11  7  1  5  4  9  3</code></pre>
+<pre><code> [1]  9  1  5  3  8 12  2  4  6  7 10 11</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and extract 10 elements from the array</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 11  3  2  1  9 10  7  6  5 12</code></pre>
+<pre><code> [1]  2  3  9  8  4  5  6  7 10 12</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -425,12 +426,12 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The extraction probability for each element can be varied</span></span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">10</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)<span class="sc">/</span><span class="dv">24</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 11  1 12  8 10  9  3  6  7  4</code></pre>
+<pre><code> [1] 11  9  6  7 10  8 12  3  5  1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You can create a sample using just numbers</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  6  2 10  7  1  5  4  8  9  3</code></pre>
+<pre><code> [1]  5  7  9  4 10  2  1  8  3  6</code></pre>
 </div>
 </div>
 <hr>
@@ -473,13 +474,13 @@ Attaching package: 'dplyr'</code></pre>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sampling 10 values from the vector 1:10</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  5  6  4  1  8  2  9 10  3  7</code></pre>
+<pre><code> [1]  5  2  1  6  4  3  9  7  8 10</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>)</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract 2nd to 5th elements of X</span></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3 8 7 2</code></pre>
+<pre><code>[1] 10  4  6  2</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -678,6 +679,806 @@ D) Both B and C are correct.</p>
 <strong>Explanation:</strong> The <strong><code>array</code></strong> function with dimension argument <strong><code>c(2, 2, 3)</code></strong> will create a 2x2x3 array, filling the elements from 1 to 12 across the dimensions.</p>
 <p><strong>Answer 3:</strong> B) <strong><code>arr[1, 1, 1] &lt;- 100</code></strong><br>
 <strong>Explanation:</strong> To modify a specific element in an array, you need to specify all its indices. The correct way is <strong><code>arr[1, 1, 1] &lt;- 100</code></strong>.</p>
+<hr>
+</section>
+</section>
+<section id="cov19-matrix-and-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="cov19-matrix-and-visualization"><strong>COV19 matrix and visualization</strong></h3>
+<section id="data-import" class="level4">
+<h4 class="anchored" data-anchor-id="data-import">Data import</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ readr     2.1.4
+✔ ggplot2   3.4.4     ✔ stringr   1.5.0
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rvest'
+
+The following object is masked from 'package:readr':
+
+    guess_encoding</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringdist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'stringdist'
+
+The following object is masked from 'package:tidyr':
+
+    extract</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape2'
+
+The following object is masked from 'package:tidyr':
+
+    smiths</code></pre>
+</div>
+</div>
+<p>Import Johns-Hopkins covid19 data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>clean_jhd_to_long <span class="ot">&lt;-</span> <span class="cf">function</span>(df) {</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  df_str <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(df))</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  var_str <span class="ot">&lt;-</span> <span class="fu">substr</span>(df_str, <span class="dv">1</span>, <span class="fu">str_length</span>(df_str) <span class="sc">-</span> <span class="dv">4</span>)</span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">"Cruise Ship"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Province/State</span><span class="st">`</span>, <span class="sc">-</span>Lat, <span class="sc">-</span>Long) <span class="sc">%&gt;%</span></span>
+<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="sc">-</span><span class="fu">group_cols</span>()), sum) <span class="sc">%&gt;%</span> </span>
+<span id="cb101-9"><a href="#cb101-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb101-10"><a href="#cb101-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb101-11"><a href="#cb101-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">country =</span> <span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb101-12"><a href="#cb101-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb101-13"><a href="#cb101-13" aria-hidden="true" tabindex="-1"></a>      <span class="sc">-</span>country, </span>
+<span id="cb101-14"><a href="#cb101-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_to =</span> <span class="st">"date_str"</span>, </span>
+<span id="cb101-15"><a href="#cb101-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_to =</span> var_str</span>
+<span id="cb101-16"><a href="#cb101-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb101-17"><a href="#cb101-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">mdy</span>(date_str)) <span class="sc">%&gt;%</span></span>
+<span id="cb101-18"><a href="#cb101-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country, date, <span class="sc">!!</span> <span class="fu">sym</span>(var_str)) </span>
+<span id="cb101-19"><a href="#cb101-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb101-20"><a href="#cb101-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-21"><a href="#cb101-21" aria-hidden="true" tabindex="-1"></a>confirmed_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 289 Columns: 1147
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr    (2): Province/State, Country/Region
+dbl (1145): Lat, Long, 1/22/20, 1/23/20, 1/24/20, 1/25/20, 1/26/20, 1/27/20,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>deaths_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 289 Columns: 1147
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr    (2): Province/State, Country/Region
+dbl (1145): Lat, Long, 1/22/20, 1/23/20, 1/24/20, 1/25/20, 1/26/20, 1/27/20,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>See the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(confirmed_raw, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 1,147
+   `Province/State`  `Country/Region`   Lat   Long `1/22/20` `1/23/20` `1/24/20`
+   &lt;chr&gt;             &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 &lt;NA&gt;              Afghanistan       33.9  67.7          0         0         0
+ 2 &lt;NA&gt;              Albania           41.2  20.2          0         0         0
+ 3 &lt;NA&gt;              Algeria           28.0   1.66         0         0         0
+ 4 &lt;NA&gt;              Andorra           42.5   1.52         0         0         0
+ 5 &lt;NA&gt;              Angola           -11.2  17.9          0         0         0
+ 6 &lt;NA&gt;              Antarctica       -71.9  23.3          0         0         0
+ 7 &lt;NA&gt;              Antigua and Bar…  17.1 -61.8          0         0         0
+ 8 &lt;NA&gt;              Argentina        -38.4 -63.6          0         0         0
+ 9 &lt;NA&gt;              Armenia           40.1  45.0          0         0         0
+10 Australian Capit… Australia        -35.5 149.           0         0         0
+# ℹ 1,140 more variables: `1/25/20` &lt;dbl&gt;, `1/26/20` &lt;dbl&gt;, `1/27/20` &lt;dbl&gt;,
+#   `1/28/20` &lt;dbl&gt;, `1/29/20` &lt;dbl&gt;, `1/30/20` &lt;dbl&gt;, `1/31/20` &lt;dbl&gt;,
+#   `2/1/20` &lt;dbl&gt;, `2/2/20` &lt;dbl&gt;, `2/3/20` &lt;dbl&gt;, `2/4/20` &lt;dbl&gt;,
+#   `2/5/20` &lt;dbl&gt;, `2/6/20` &lt;dbl&gt;, `2/7/20` &lt;dbl&gt;, `2/8/20` &lt;dbl&gt;,
+#   `2/9/20` &lt;dbl&gt;, `2/10/20` &lt;dbl&gt;, `2/11/20` &lt;dbl&gt;, `2/12/20` &lt;dbl&gt;,
+#   `2/13/20` &lt;dbl&gt;, `2/14/20` &lt;dbl&gt;, `2/15/20` &lt;dbl&gt;, `2/16/20` &lt;dbl&gt;,
+#   `2/17/20` &lt;dbl&gt;, `2/18/20` &lt;dbl&gt;, `2/19/20` &lt;dbl&gt;, `2/20/20` &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<p>Countries in data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(confirmed_raw<span class="sc">$</span><span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Afghanistan"                      "Albania"                         
+  [3] "Algeria"                          "Andorra"                         
+  [5] "Angola"                           "Antarctica"                      
+  [7] "Antigua and Barbuda"              "Argentina"                       
+  [9] "Armenia"                          "Australia"                       
+ [11] "Austria"                          "Azerbaijan"                      
+ [13] "Bahamas"                          "Bahrain"                         
+ [15] "Bangladesh"                       "Barbados"                        
+ [17] "Belarus"                          "Belgium"                         
+ [19] "Belize"                           "Benin"                           
+ [21] "Bhutan"                           "Bolivia"                         
+ [23] "Bosnia and Herzegovina"           "Botswana"                        
+ [25] "Brazil"                           "Brunei"                          
+ [27] "Bulgaria"                         "Burkina Faso"                    
+ [29] "Burma"                            "Burundi"                         
+ [31] "Cabo Verde"                       "Cambodia"                        
+ [33] "Cameroon"                         "Canada"                          
+ [35] "Central African Republic"         "Chad"                            
+ [37] "Chile"                            "China"                           
+ [39] "Colombia"                         "Comoros"                         
+ [41] "Congo (Brazzaville)"              "Congo (Kinshasa)"                
+ [43] "Costa Rica"                       "Cote d'Ivoire"                   
+ [45] "Croatia"                          "Cuba"                            
+ [47] "Cyprus"                           "Czechia"                         
+ [49] "Denmark"                          "Diamond Princess"                
+ [51] "Djibouti"                         "Dominica"                        
+ [53] "Dominican Republic"               "Ecuador"                         
+ [55] "Egypt"                            "El Salvador"                     
+ [57] "Equatorial Guinea"                "Eritrea"                         
+ [59] "Estonia"                          "Eswatini"                        
+ [61] "Ethiopia"                         "Fiji"                            
+ [63] "Finland"                          "France"                          
+ [65] "Gabon"                            "Gambia"                          
+ [67] "Georgia"                          "Germany"                         
+ [69] "Ghana"                            "Greece"                          
+ [71] "Grenada"                          "Guatemala"                       
+ [73] "Guinea"                           "Guinea-Bissau"                   
+ [75] "Guyana"                           "Haiti"                           
+ [77] "Holy See"                         "Honduras"                        
+ [79] "Hungary"                          "Iceland"                         
+ [81] "India"                            "Indonesia"                       
+ [83] "Iran"                             "Iraq"                            
+ [85] "Ireland"                          "Israel"                          
+ [87] "Italy"                            "Jamaica"                         
+ [89] "Japan"                            "Jordan"                          
+ [91] "Kazakhstan"                       "Kenya"                           
+ [93] "Kiribati"                         "Korea, North"                    
+ [95] "Korea, South"                     "Kosovo"                          
+ [97] "Kuwait"                           "Kyrgyzstan"                      
+ [99] "Laos"                             "Latvia"                          
+[101] "Lebanon"                          "Lesotho"                         
+[103] "Liberia"                          "Libya"                           
+[105] "Liechtenstein"                    "Lithuania"                       
+[107] "Luxembourg"                       "MS Zaandam"                      
+[109] "Madagascar"                       "Malawi"                          
+[111] "Malaysia"                         "Maldives"                        
+[113] "Mali"                             "Malta"                           
+[115] "Marshall Islands"                 "Mauritania"                      
+[117] "Mauritius"                        "Mexico"                          
+[119] "Micronesia"                       "Moldova"                         
+[121] "Monaco"                           "Mongolia"                        
+[123] "Montenegro"                       "Morocco"                         
+[125] "Mozambique"                       "Namibia"                         
+[127] "Nauru"                            "Nepal"                           
+[129] "Netherlands"                      "New Zealand"                     
+[131] "Nicaragua"                        "Niger"                           
+[133] "Nigeria"                          "North Macedonia"                 
+[135] "Norway"                           "Oman"                            
+[137] "Pakistan"                         "Palau"                           
+[139] "Panama"                           "Papua New Guinea"                
+[141] "Paraguay"                         "Peru"                            
+[143] "Philippines"                      "Poland"                          
+[145] "Portugal"                         "Qatar"                           
+[147] "Romania"                          "Russia"                          
+[149] "Rwanda"                           "Saint Kitts and Nevis"           
+[151] "Saint Lucia"                      "Saint Vincent and the Grenadines"
+[153] "Samoa"                            "San Marino"                      
+[155] "Sao Tome and Principe"            "Saudi Arabia"                    
+[157] "Senegal"                          "Serbia"                          
+[159] "Seychelles"                       "Sierra Leone"                    
+[161] "Singapore"                        "Slovakia"                        
+[163] "Slovenia"                         "Solomon Islands"                 
+[165] "Somalia"                          "South Africa"                    
+[167] "South Sudan"                      "Spain"                           
+[169] "Sri Lanka"                        "Sudan"                           
+[171] "Summer Olympics 2020"             "Suriname"                        
+[173] "Sweden"                           "Switzerland"                     
+[175] "Syria"                            "Taiwan*"                         
+[177] "Tajikistan"                       "Tanzania"                        
+[179] "Thailand"                         "Timor-Leste"                     
+[181] "Togo"                             "Tonga"                           
+[183] "Trinidad and Tobago"              "Tunisia"                         
+[185] "Turkey"                           "Tuvalu"                          
+[187] "US"                               "Uganda"                          
+[189] "Ukraine"                          "United Arab Emirates"            
+[191] "United Kingdom"                   "Uruguay"                         
+[193] "Uzbekistan"                       "Vanuatu"                         
+[195] "Venezuela"                        "Vietnam"                         
+[197] "West Bank and Gaza"               "Winter Olympics 2022"            
+[199] "Yemen"                            "Zambia"                          
+[201] "Zimbabwe"                        </code></pre>
+</div>
+</div>
+</section>
+<section id="create-conf.case-data.frame" class="level4">
+<h4 class="anchored" data-anchor-id="create-conf.case-data.frame"><strong>Create conf.case data.frame</strong></h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>confirmed_raw <span class="sc">%&gt;%</span> </span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"China"</span>, <span class="st">"Italy"</span>, <span class="st">"Japan"</span>, <span class="st">"United Kingdom"</span>, <span class="st">"US"</span>, <span class="st">"Korea, South"</span>,</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Spain"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">`</span><span class="at">Province/State</span><span class="st">`</span>, Lat, Long)) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span>) <span class="sc">%&gt;%</span> <span class="fu">summarise_all</span>(sum) <span class="ot">-&gt;</span> test</span>
+<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(test)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"country"</span></span>
+<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a><span class="fu">melt</span>(<span class="at">data =</span> test, <span class="at">id.vars =</span> <span class="st">"country"</span>, <span class="at">measure.vars =</span> <span class="fu">names</span>(test)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(variable, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"mon"</span>, <span class="st">"day"</span>, <span class="st">"year"</span>), <span class="at">sep=</span><span class="st">'/'</span>, <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mon, day) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as.Date</span>(<span class="fu">with</span>(.,<span class="fu">paste</span>(mon, day, year, <span class="at">sep=</span><span class="st">"/"</span>)), <span class="at">format =</span> <span class="st">"%m/%d/%y"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dcast</span>(country <span class="sc">~</span> date) <span class="ot">-&gt;</span> df.conf.case</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>df.conf.case</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         country 2020-02-01 2020-03-01 2020-04-01 2020-05-01 2020-06-01
+1          China      11891      79932      84002      86850      87520
+2          Italy          2       1694     110574     207428     233197
+3          Japan         20        259       2535      14558      16778
+4   Korea, South         12       3736       9887      10780      11541
+5          Spain          1         84     104118     215216     239638
+6 United Kingdom          2         94      43755     183500     258979
+7             US          8         32     227903    1115972    1809384
+  2020-07-01 2020-08-01 2020-09-01 2020-10-01 2020-11-01 2020-12-01 2021-01-01
+1      88344      91690      94363      95568      97250      99336     102649
+2     240760     247832     270189     317409     709335    1620901    2129376
+3      18732      37790      69018      84212     101936     150857     239005
+4      12904      14366      20449      23952      26732      35163      62593
+5     249659     288522     470973     778607    1185678    1656444    1928265
+6     285276     305558     339403     462780    1038056    1647165    2549671
+7    2698127    4605921    6088458    7292562    9254490   13866746   20397398
+  2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01
+1     107902     109034     110169     111325     112329     113614     115473
+2    2560957    2938371    3607083    4035617    4220304    4260788    4355348
+3     392533     433334     477691     598754     749126     801337     936852
+4      78844      90372     104194     123240     141476     158549     201002
+5    2822805    3204531    3291394    3524077    3682778    3821305    4447044
+6    3846807    4194287    4364544    4434156    4506331    4844879    5907641
+7   26482919   28814420   30656330   32516226   33407540   33797251   35152818
+  2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01
+1     117991     119790     121477     123725     128132     134564     456582
+2    4546487    4675758    4774783    5043620    6266939   11116422   12829972
+3    1514400    1706516    1722427    1726913    1733835    2825414    5078276
+4     255401     316020     367974     457612     639083     884310    3492686
+5    4861883    4961128    5011148    5174720    6294745   10039126   11036085
+6    6856890    7878555    9140352   10333452   13174530   17543963   19120746
+7   39585475   43694428   46163201   48743340   55099948   75570589   79228450
+  2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01
+1    1400358    2024284    2097282    2137169    2265424    2510703    2762150
+2   14719394   16504791   17440232   18610011   21059545   21888255   22500346
+3    6614278    7910179    8876113    9355427   12935010   19116684   21329519
+4   13639915   17295733   18129313   18379552   19932439   23417425   24819611
+5   11551574   11896152   12360256   12818184   13226579   13342530   13422984
+6   21379545   22214004   22492903   22941360   23515928   23738035   23893496
+7   80252748   81483804   84556267   87832253   91515236   94659072   96369625
+  2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01
+1    2959481    3764783    4612203    4903498    4903524
+2   23531023   24260660   25143705   25453789   25576852
+3   22389872   24933509   29321601   32610584   33241180
+4   25670407   27208800   29139535   30213928   30533573
+5   13511768   13595504   13684258   13731478   13763336
+6   24122922   24251636   24365688   24507372   24603450
+7   97540736   98903928  100769628  102479379  103533872</code></pre>
+</div>
+</div>
+</section>
+<section id="create-death.case-data.frame" class="level4">
+<h4 class="anchored" data-anchor-id="create-death.case-data.frame"><strong>Create death.case data.frame</strong></h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>deaths_raw <span class="sc">%&gt;%</span> </span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span> <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"China"</span>, <span class="st">"Italy"</span>, <span class="st">"Japan"</span>, <span class="st">"United Kingdom"</span>, <span class="st">"US"</span>, <span class="st">"Korea, South"</span>,</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Spain"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">`</span><span class="at">Province/State</span><span class="st">`</span>, Lat, Long)) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Country/Region</span><span class="st">`</span>) <span class="sc">%&gt;%</span> <span class="fu">summarise_all</span>(sum) <span class="ot">-&gt;</span> test</span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(test)[<span class="dv">1</span>]<span class="ot">&lt;-</span><span class="st">"country"</span></span>
+<span id="cb112-8"><a href="#cb112-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-9"><a href="#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="fu">melt</span>(<span class="at">data =</span> test, <span class="at">id.vars =</span> <span class="st">"country"</span>, <span class="at">measure.vars =</span> <span class="fu">names</span>(test)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-10"><a href="#cb112-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(variable, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"mon"</span>, <span class="st">"day"</span>, <span class="st">"year"</span>), <span class="at">sep=</span><span class="st">'/'</span>, <span class="at">extra =</span> <span class="st">"merge"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-11"><a href="#cb112-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb112-12"><a href="#cb112-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mon, day) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-13"><a href="#cb112-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as.Date</span>(<span class="fu">with</span>(.,<span class="fu">paste</span>(mon, day, year, <span class="at">sep=</span><span class="st">"/"</span>)), <span class="at">format =</span> <span class="st">"%m/%d/%y"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb112-14"><a href="#cb112-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dcast</span>(country <span class="sc">~</span> date) <span class="ot">-&gt;</span> df.death.case</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>df.death.case</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         country 2020-02-01 2020-03-01 2020-04-01 2020-05-01 2020-06-01
+1          China        259       2872       3332       4698       4708
+2          Italy          0         34      13155      28236      33475
+3          Japan          0          6         72        510        900
+4   Korea, South          0         17        165        250        272
+5          Spain          0          0       9387      24543      27127
+6 United Kingdom          1          3       6070      39849      52768
+7             US          0          1       6996      68518     108624
+  2020-07-01 2020-08-01 2020-09-01 2020-10-01 2020-11-01 2020-12-01 2021-01-01
+1       4713       4737       4797       4813       4814       4830       4884
+2      34788      35146      35491      35918      38826      56361      74621
+3        976       1013       1314       1583       1776       2193       3541
+4        282        301        326        416        468        526        942
+5      28364      28445      29152      31973      35878      45511      50837
+6      56338      57454      57995      58946      64667      78184      95917
+7     128134     155059     183855     206852     231054     273099     352844
+  2021-02-01 2021-03-01 2021-04-01 2021-05-01 2021-06-01 2021-07-01 2021-08-01
+1       4966       5011       5023       5031       5031       5033       5047
+2      88845      97945     109847     121033     126221     127587     128068
+3       5833       7948       9194      10326      13160      14808      15198
+4       1435       1606       1737       1833       1965       2024       2099
+5      59081      69609      75541      78216      79983      80883      81486
+6     132799     148935     153012     154085     154509     155010     156941
+7     448381     513045     549448     572904     590904     600972     609715
+  2021-09-01 2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01 2022-03-01
+1       5056       5069       5081       5089       5103       5119       5901
+2     129290     130973     132120     133931     137513     146925     155000
+3      16138      17685      18274      18361      18392      18885      23908
+4       2303       2504       2874       3705       5694       6787       8266
+5      84472      86463      87368      88080      89405      93633      99883
+6     160317     164780     169438     173903     178046     184840     188681
+7     639812     699021     746135     781422     825870     892252     952086
+  2022-04-01 2022-05-01 2022-06-01 2022-07-01 2022-08-01 2022-09-01 2022-10-01
+1      12869      14697      14899      14928      15052      15251      15719
+2     159537     163612     166756     168425     172207     175663     177130
+3      28202      29605      30659      31302      32707      40245      45023
+4      16929      22958      24212      24562      25084      26940      28489
+5     102541     104456     106493     108111     110719     112600     114179
+6     193232     198276     200347     201869     205574     207875     209346
+7     983972     996109    1007741    1017872    1030654    1046956    1059542
+  2022-11-01 2022-12-01 2023-01-01 2023-02-01 2023-03-01
+1      15965      16001      17167      97668     101051
+2     179101     181098     184642     186833     188094
+3      46817      49834      57521      68407      72494
+4      29239      30621      32272      33522      34003
+5     115078     115901     117095     118434     119380
+6     212435     214234     217175     220129     220721
+7    1070821    1081153    1092779    1109996    1120897</code></pre>
+</div>
+</div>
+</section>
+<section id="create-matrix-for-confirmed-and-death-cases" class="level4">
+<h4 class="anchored" data-anchor-id="create-matrix-for-confirmed-and-death-cases"><strong>Create Matrix for confirmed and death cases</strong></h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># country.name&lt;-c("China","Italy","Japan","Korea","Spain","UK","US")  </span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>country.name <span class="ot">&lt;-</span> <span class="fu">unlist</span>(df.conf.case[<span class="fu">c</span>(<span class="dv">1</span>)])</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="co">#str(df.conf.case)</span></span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a>m.conf.case <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df.conf.case[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(m.conf.case) <span class="ot">&lt;-</span> country.name</span>
+<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-8"><a href="#cb115-8" aria-hidden="true" tabindex="-1"></a>m.death.case <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(df.death.case[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb115-9"><a href="#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(m.death.case) <span class="ot">&lt;-</span> country.name</span>
+<span id="cb115-10"><a href="#cb115-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-11"><a href="#cb115-11" aria-hidden="true" tabindex="-1"></a>m.death.rate <span class="ot">&lt;-</span> <span class="fu">round</span>(m.death.case<span class="sc">/</span>m.conf.case, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Matrix for confirmed case: <code>m.conf.case</code></p></li>
+<li><p>Matrix for death case: <code>m.death.case</code></p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>m.conf.case</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               2020-02-01 2020-03-01 2020-04-01 2020-05-01 2020-06-01
+China               11891      79932      84002      86850      87520
+Italy                   2       1694     110574     207428     233197
+Japan                  20        259       2535      14558      16778
+Korea, South           12       3736       9887      10780      11541
+Spain                   1         84     104118     215216     239638
+United Kingdom          2         94      43755     183500     258979
+US                      8         32     227903    1115972    1809384
+               2020-07-01 2020-08-01 2020-09-01 2020-10-01 2020-11-01
+China               88344      91690      94363      95568      97250
+Italy              240760     247832     270189     317409     709335
+Japan               18732      37790      69018      84212     101936
+Korea, South        12904      14366      20449      23952      26732
+Spain              249659     288522     470973     778607    1185678
+United Kingdom     285276     305558     339403     462780    1038056
+US                2698127    4605921    6088458    7292562    9254490
+               2020-12-01 2021-01-01 2021-02-01 2021-03-01 2021-04-01
+China               99336     102649     107902     109034     110169
+Italy             1620901    2129376    2560957    2938371    3607083
+Japan              150857     239005     392533     433334     477691
+Korea, South        35163      62593      78844      90372     104194
+Spain             1656444    1928265    2822805    3204531    3291394
+United Kingdom    1647165    2549671    3846807    4194287    4364544
+US               13866746   20397398   26482919   28814420   30656330
+               2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01
+China              111325     112329     113614     115473     117991
+Italy             4035617    4220304    4260788    4355348    4546487
+Japan              598754     749126     801337     936852    1514400
+Korea, South       123240     141476     158549     201002     255401
+Spain             3524077    3682778    3821305    4447044    4861883
+United Kingdom    4434156    4506331    4844879    5907641    6856890
+US               32516226   33407540   33797251   35152818   39585475
+               2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01
+China              119790     121477     123725     128132     134564
+Italy             4675758    4774783    5043620    6266939   11116422
+Japan             1706516    1722427    1726913    1733835    2825414
+Korea, South       316020     367974     457612     639083     884310
+Spain             4961128    5011148    5174720    6294745   10039126
+United Kingdom    7878555    9140352   10333452   13174530   17543963
+US               43694428   46163201   48743340   55099948   75570589
+               2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01
+China              456582    1400358    2024284    2097282    2137169
+Italy            12829972   14719394   16504791   17440232   18610011
+Japan             5078276    6614278    7910179    8876113    9355427
+Korea, South      3492686   13639915   17295733   18129313   18379552
+Spain            11036085   11551574   11896152   12360256   12818184
+United Kingdom   19120746   21379545   22214004   22492903   22941360
+US               79228450   80252748   81483804   84556267   87832253
+               2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01
+China             2265424    2510703    2762150    2959481    3764783
+Italy            21059545   21888255   22500346   23531023   24260660
+Japan            12935010   19116684   21329519   22389872   24933509
+Korea, South     19932439   23417425   24819611   25670407   27208800
+Spain            13226579   13342530   13422984   13511768   13595504
+United Kingdom   23515928   23738035   23893496   24122922   24251636
+US               91515236   94659072   96369625   97540736   98903928
+               2023-01-01 2023-02-01 2023-03-01
+China             4612203    4903498    4903524
+Italy            25143705   25453789   25576852
+Japan            29321601   32610584   33241180
+Korea, South     29139535   30213928   30533573
+Spain            13684258   13731478   13763336
+United Kingdom   24365688   24507372   24603450
+US              100769628  102479379  103533872</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>m.death.case</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               2020-02-01 2020-03-01 2020-04-01 2020-05-01 2020-06-01
+China                 259       2872       3332       4698       4708
+Italy                   0         34      13155      28236      33475
+Japan                   0          6         72        510        900
+Korea, South            0         17        165        250        272
+Spain                   0          0       9387      24543      27127
+United Kingdom          1          3       6070      39849      52768
+US                      0          1       6996      68518     108624
+               2020-07-01 2020-08-01 2020-09-01 2020-10-01 2020-11-01
+China                4713       4737       4797       4813       4814
+Italy               34788      35146      35491      35918      38826
+Japan                 976       1013       1314       1583       1776
+Korea, South          282        301        326        416        468
+Spain               28364      28445      29152      31973      35878
+United Kingdom      56338      57454      57995      58946      64667
+US                 128134     155059     183855     206852     231054
+               2020-12-01 2021-01-01 2021-02-01 2021-03-01 2021-04-01
+China                4830       4884       4966       5011       5023
+Italy               56361      74621      88845      97945     109847
+Japan                2193       3541       5833       7948       9194
+Korea, South          526        942       1435       1606       1737
+Spain               45511      50837      59081      69609      75541
+United Kingdom      78184      95917     132799     148935     153012
+US                 273099     352844     448381     513045     549448
+               2021-05-01 2021-06-01 2021-07-01 2021-08-01 2021-09-01
+China                5031       5031       5033       5047       5056
+Italy              121033     126221     127587     128068     129290
+Japan               10326      13160      14808      15198      16138
+Korea, South         1833       1965       2024       2099       2303
+Spain               78216      79983      80883      81486      84472
+United Kingdom     154085     154509     155010     156941     160317
+US                 572904     590904     600972     609715     639812
+               2021-10-01 2021-11-01 2021-12-01 2022-01-01 2022-02-01
+China                5069       5081       5089       5103       5119
+Italy              130973     132120     133931     137513     146925
+Japan               17685      18274      18361      18392      18885
+Korea, South         2504       2874       3705       5694       6787
+Spain               86463      87368      88080      89405      93633
+United Kingdom     164780     169438     173903     178046     184840
+US                 699021     746135     781422     825870     892252
+               2022-03-01 2022-04-01 2022-05-01 2022-06-01 2022-07-01
+China                5901      12869      14697      14899      14928
+Italy              155000     159537     163612     166756     168425
+Japan               23908      28202      29605      30659      31302
+Korea, South         8266      16929      22958      24212      24562
+Spain               99883     102541     104456     106493     108111
+United Kingdom     188681     193232     198276     200347     201869
+US                 952086     983972     996109    1007741    1017872
+               2022-08-01 2022-09-01 2022-10-01 2022-11-01 2022-12-01
+China               15052      15251      15719      15965      16001
+Italy              172207     175663     177130     179101     181098
+Japan               32707      40245      45023      46817      49834
+Korea, South        25084      26940      28489      29239      30621
+Spain              110719     112600     114179     115078     115901
+United Kingdom     205574     207875     209346     212435     214234
+US                1030654    1046956    1059542    1070821    1081153
+               2023-01-01 2023-02-01 2023-03-01
+China               17167      97668     101051
+Italy              184642     186833     188094
+Japan               57521      68407      72494
+Korea, South        32272      33522      34003
+Spain              117095     118434     119380
+United Kingdom     217175     220129     220721
+US                1092779    1109996    1120897</code></pre>
+</div>
+</div>
+<p><img src="images/clipboard-161738027.png" class="img-fluid"></p>
+<p><strong>Access to the matrix</strong></p>
+<ul>
+<li><p>UK’s total confirmed cases on 2021-10-01</p></li>
+<li><p>South Korea’s total confirmed cases on 2021-10-01</p></li>
+<li><p>China’s total confirmed cases on 2021-10-01</p></li>
+<li><p>South Korea’s increasing confirmed cases on 2021-10-01 compared to the previous month</p></li>
+<li><p>Japan’s increasing confirmed cases on 2021-10-01 compared to the previous month</p></li>
+</ul>
+<p><br></p>
+</section>
+<section id="create-three-vectors-for-the-next-step" class="level4">
+<h4 class="anchored" data-anchor-id="create-three-vectors-for-the-next-step"><strong>Create three vectors for the next step:</strong></h4>
+<p><img src="images/clipboard-425971691.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="population-vector" class="level4">
+<h4 class="anchored" data-anchor-id="population-vector"><strong>Population vector</strong></h4>
+<p>Country names vector. Created to give a name to the population vector</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>country.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        country1         country2         country3         country4 
+         "China"          "Italy"          "Japan"   "Korea, South" 
+        country5         country6         country7 
+         "Spain" "United Kingdom"             "US" </code></pre>
+</div>
+</div>
+<p>Vector inputting the population numbers of the selected countries in order</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>pop<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1439323776</span>, <span class="dv">60461826</span>, <span class="dv">126476461</span>, <span class="dv">51269185</span>, <span class="dv">46754778</span>, <span class="dv">67886011</span>, <span class="dv">331002651</span>)</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1439323776   60461826  126476461   51269185   46754778   67886011  331002651</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>In the pop vector, specify which country’s population has each population using the names() function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>pop<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1439323776</span>, <span class="dv">60461826</span>, <span class="dv">126476461</span>, <span class="dv">51269185</span>, <span class="dv">46754778</span>, <span class="dv">67886011</span>, <span class="dv">331002651</span>)</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop)<span class="ot">&lt;-</span>country.name</span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         China          Italy          Japan   Korea, South          Spain 
+    1439323776       60461826      126476461       51269185       46754778 
+United Kingdom             US 
+      67886011      331002651 </code></pre>
+</div>
+</div>
+</section>
+<section id="gdp-vector" class="level4">
+<h4 class="anchored" data-anchor-id="gdp-vector"><strong>GDP vector</strong></h4>
+<p>Likewise, the names() function provides information about which country the GDP corresponds to.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># round(m.conf.case/pop*1000, 2)</span></span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>country.name<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"China"</span>,<span class="st">"Italy"</span>,<span class="st">"Japan"</span>,<span class="st">"Korea"</span>,<span class="st">"Spain"</span>,<span class="st">"UK"</span>,<span class="st">"US"</span>)  </span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>GDP<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">12237700479375</span>,</span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1943835376342</span>,</span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="dv">4872415104315</span>,</span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1530750923149</span>,</span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1314314164402</span>,</span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="dv">2637866340434</span>,</span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="dv">19485394000000</span>)</span>
+<span id="cb128-10"><a href="#cb128-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(GDP)<span class="ot">&lt;-</span>country.name</span>
+<span id="cb128-11"><a href="#cb128-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-12"><a href="#cb128-12" aria-hidden="true" tabindex="-1"></a>GDP</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       China        Italy        Japan        Korea        Spain           UK 
+1.223770e+13 1.943835e+12 4.872415e+12 1.530751e+12 1.314314e+12 2.637866e+12 
+          US 
+1.948539e+13 </code></pre>
+</div>
+</div>
+</section>
+<section id="pop-density" class="level4">
+<h4 class="anchored" data-anchor-id="pop-density"><strong>Pop density</strong></h4>
+<p>Let’s create a population density vector for the selected countries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>country.name<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"China"</span>,<span class="st">"Italy"</span>,<span class="st">"Japan"</span>,<span class="st">"Korea"</span>,<span class="st">"Spain"</span>,<span class="st">"UK"</span>,<span class="st">"US"</span>)  </span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>pop.density<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">148</span>, <span class="dv">205</span>, <span class="dv">347</span>, <span class="dv">530</span>, <span class="dv">94</span>, <span class="dv">275</span>, <span class="dv">36</span>)</span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop.density)<span class="ot">&lt;-</span>country.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Check the created vectors</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         China          Italy          Japan   Korea, South          Spain 
+    1439323776       60461826      126476461       51269185       46754778 
+United Kingdom             US 
+      67886011      331002651 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>GDP</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       China        Italy        Japan        Korea        Spain           UK 
+1.223770e+13 1.943835e+12 4.872415e+12 1.530751e+12 1.314314e+12 2.637866e+12 
+          US 
+1.948539e+13 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>pop.density</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>China Italy Japan Korea Spain    UK    US 
+  148   205   347   530    94   275    36 </code></pre>
+</div>
+</div>
+</section>
+<section id="lets-visualize-the-gdp-of-each-country." class="level4">
+<h4 class="anchored" data-anchor-id="lets-visualize-the-gdp-of-each-country.">Let’s visualize the GDP of each country.</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(GDP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sort by largest GDP</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">sort</span>(GDP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">sort</span>(GDP, <span class="at">decreasing =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let’s think..</p>
+<p><img src="images/clipboard-3885393702.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>How about <strong>Bar graph of GDP per capita?</strong></p>
+<p>We have</p>
+<ul>
+<li><p><code>GDP</code> vector</p></li>
+<li><p><code>Population</code> vector</p></li>
+</ul>
+<p>We know</p>
+<ul>
+<li><p><code>barplot()</code></p></li>
+<li><p>Vector calculation</p></li>
+<li><p><code>Sort()</code></p></li>
+<li><p><code>Decreasing=T</code> option</p></li>
+</ul>
+<p><img src="images/clipboard-2646717957.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="matplot" class="level4">
+<h4 class="anchored" data-anchor-id="matplot">matplot</h4>
+<p><img src="images/clipboard-2549384656.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(m.conf.case)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><img src="images/clipboard-2381725037.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m.conf.case))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p><img src="images/clipboard-1965669242.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m.conf.case))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m.conf.case), <span class="at">type=</span><span class="st">'b'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m.conf.case), <span class="at">type=</span><span class="st">'b'</span>, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m.conf.case), <span class="at">type=</span><span class="st">'b'</span>, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), </span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Confirmed cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m.conf.case), <span class="at">type=</span><span class="st">'b'</span>, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), </span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Confirmed cases"</span>)</span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">inset=</span><span class="fl">0.01</span>, <span class="at">legend=</span>country.name, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), <span class="at">horiz=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="try-the-same-graph-but-now-use-the-death-rate" class="level4">
+<h4 class="anchored" data-anchor-id="try-the-same-graph-but-now-use-the-death-rate">Try the same graph but now use the death rate</h4>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="countrys-wealth-and-covid19" class="level4">
+<h4 class="anchored" data-anchor-id="countrys-wealth-and-covid19">Country’s wealth and COVID19</h4>
+<p>I’m now curious about the relationship between countries’ GDP per capita and the death rate at some points</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(GDP.pc, m.death.rate[,<span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><img src="images/clipboard-273784466.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(GDP.pc, m.death.rate[,<span class="dv">10</span>],</span>
+<span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Death rate"</span>)</span>
+<span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(GDP.pc, m.death.rate[,<span class="dv">16</span>], <span class="fu">row.names</span>(m.death.rate),</span>
+<span id="cb148-4"><a href="#cb148-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3125938659.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><br></figcaption>
+</figure>
+</div>
+<p><img src="images/clipboard-338265475.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/clipboard-1647436525.png" class="img-fluid"><br>
+</p>
+<p><br></p>
+<p><strong>Increasing rate of confirmed cases</strong></p>
+<p>Visualize like an example below (in 5 mins)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let’s also visualize the first three periods and the last (recent) four periods</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m3[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), <span class="at">type=</span><span class="st">'b'</span>, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), </span>
+<span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Increasing rate of confirmed case"</span>)</span>
+<span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">inset=</span><span class="fl">0.01</span>, <span class="at">legend=</span>country.name, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), <span class="at">horiz=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="fu">t</span>(m3[,<span class="dv">34</span><span class="sc">:</span><span class="dv">37</span>]), <span class="at">type=</span><span class="st">'b'</span>, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), </span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Increasing rate of confirmed case"</span>)</span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">inset=</span><span class="fl">0.01</span>, <span class="at">legend=</span>country.name, <span class="at">pch=</span><span class="dv">15</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span>), <span class="at">horiz=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="03_week_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+<p>Can you also do the same visualization for the specific country like Korea, China, and Japan?</p>
 
 
 </section>

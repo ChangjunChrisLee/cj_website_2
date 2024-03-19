@@ -344,3 +344,389 @@ D) Both B and C are correct.
 
 **Answer 3:** B) **`arr[1, 1, 1] <- 100`**\
 **Explanation:** To modify a specific element in an array, you need to specify all its indices. The correct way is **`arr[1, 1, 1] <- 100`**.
+
+------------------------------------------------------------------------
+
+### **COV19 matrix and visualization**
+
+#### Data import
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(stringdist)
+library(reshape2)
+```
+
+Import Johns-Hopkins covid19 data
+
+```{r}
+clean_jhd_to_long <- function(df) {
+  df_str <- deparse(substitute(df))
+  var_str <- substr(df_str, 1, str_length(df_str) - 4)
+  
+  df %>% group_by(`Country/Region`) %>%
+    filter(`Country/Region` != "Cruise Ship") %>%
+    select(-`Province/State`, -Lat, -Long) %>%
+    mutate_at(vars(-group_cols()), sum) %>% 
+    distinct() %>%
+    ungroup() %>%
+    rename(country = `Country/Region`) %>%
+    pivot_longer(
+      -country, 
+      names_to = "date_str", 
+      values_to = var_str
+    ) %>%
+    mutate(date = mdy(date_str)) %>%
+    select(country, date, !! sym(var_str)) 
+}
+
+confirmed_raw <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+deaths_raw <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
+```
+
+See the data
+
+```{r}
+head(confirmed_raw, 10)
+```
+
+Countries in data
+
+```{r}
+unique(confirmed_raw$`Country/Region`)
+
+```
+
+#### **Create conf.case data.frame**
+
+```{r}
+confirmed_raw %>% 
+  filter(`Country/Region` %in% c("China", "Italy", "Japan", "United Kingdom", "US", "Korea, South",
+                                 "Spain")) %>%
+  select(-c(`Province/State`, Lat, Long)) %>% 
+  group_by(`Country/Region`) %>% summarise_all(sum) -> test
+
+names(test)[1]<-"country"
+
+melt(data = test, id.vars = "country", measure.vars = names(test)[-1]) %>% 
+  separate(variable, into = c("mon", "day", "year"), sep='/', extra = "merge") %>% 
+  filter(day %in% c(1)) %>%
+  arrange(mon, day) %>% 
+  mutate(date=as.Date(with(.,paste(mon, day, year, sep="/")), format = "%m/%d/%y")) %>% 
+  dcast(country ~ date) -> df.conf.case
+```
+
+```{r}
+df.conf.case
+
+```
+
+#### **Create death.case data.frame**
+
+```{r}
+deaths_raw %>% 
+  filter(`Country/Region` %in% c("China", "Italy", "Japan", "United Kingdom", "US", "Korea, South",
+                                 "Spain")) %>%
+  select(-c(`Province/State`, Lat, Long)) %>% 
+  group_by(`Country/Region`) %>% summarise_all(sum) -> test
+
+names(test)[1]<-"country"
+
+melt(data = test, id.vars = "country", measure.vars = names(test)[-1]) %>% 
+  separate(variable, into = c("mon", "day", "year"), sep='/', extra = "merge") %>% 
+  filter(day %in% c(1)) %>%
+  arrange(mon, day) %>% 
+  mutate(date=as.Date(with(.,paste(mon, day, year, sep="/")), format = "%m/%d/%y")) %>% 
+  dcast(country ~ date) -> df.death.case
+```
+
+```{r}
+df.death.case
+
+```
+
+#### **Create Matrix for confirmed and death cases**
+
+```{r}
+# country.name<-c("China","Italy","Japan","Korea","Spain","UK","US")  
+country.name <- unlist(df.conf.case[c(1)])
+
+#str(df.conf.case)
+m.conf.case <- as.matrix(df.conf.case[-1])
+row.names(m.conf.case) <- country.name
+
+m.death.case <- as.matrix(df.death.case[-1])
+row.names(m.death.case) <- country.name
+
+m.death.rate <- round(m.death.case/m.conf.case, 2)
+```
+
+-   Matrix for confirmed case: `m.conf.case`
+
+-   Matrix for death case: `m.death.case`
+
+```{r}
+m.conf.case
+```
+
+```{r}
+m.death.case
+
+```
+
+![](images/clipboard-161738027.png)
+
+**Access to the matrix**
+
+-   UK’s total confirmed cases on 2021-10-01
+
+-   South Korea’s total confirmed cases on 2021-10-01
+
+-   China’s total confirmed cases on 2021-10-01
+
+-   South Korea’s increasing confirmed cases on 2021-10-01 compared to the previous month
+
+-   Japan’s increasing confirmed cases on 2021-10-01 compared to the previous month
+
+<br>
+
+#### **Create three vectors for the next step:**
+
+![](images/clipboard-425971691.png)
+
+<br>
+
+#### **Population vector**
+
+Country names vector. Created to give a name to the population vector
+
+```{r}
+country.name
+```
+
+Vector inputting the population numbers of the selected countries in order
+
+```{r}
+pop<-c(1439323776, 60461826, 126476461, 51269185, 46754778, 67886011, 331002651)
+pop
+```
+
+```{r}
+names(pop)
+
+```
+
+In the pop vector, specify which country's population has each population using the names() function.
+
+```{r}
+pop<-c(1439323776, 60461826, 126476461, 51269185, 46754778, 67886011, 331002651)
+names(pop)<-country.name
+pop
+```
+
+#### **GDP vector**
+
+Likewise, the names() function provides information about which country the GDP corresponds to.
+
+```{r}
+# round(m.conf.case/pop*1000, 2)
+country.name<-c("China","Italy","Japan","Korea","Spain","UK","US")  
+GDP<-c(12237700479375,
+1943835376342,
+4872415104315,
+1530750923149,
+1314314164402,
+2637866340434,
+19485394000000)
+names(GDP)<-country.name
+
+GDP
+```
+
+#### **Pop density**
+
+Let’s create a population density vector for the selected countries.
+
+```{r}
+country.name<-c("China","Italy","Japan","Korea","Spain","UK","US")  
+pop.density<-c(148, 205, 347, 530, 94, 275, 36)
+names(pop.density)<-country.name
+```
+
+Check the created vectors
+
+```{r}
+pop
+GDP
+pop.density
+```
+
+#### Let’s visualize the GDP of each country.
+
+```{r}
+barplot(GDP)
+```
+
+Sort by largest GDP
+
+```{r}
+barplot(sort(GDP))
+
+```
+
+```{r}
+barplot(sort(GDP, decreasing = T))
+```
+
+Let's think..
+
+![](images/clipboard-3885393702.png)
+
+```{r, echo=FALSE}
+GDP.pc <- GDP / pop
+barplot(sort(GDP.pc, decreasing = T))
+```
+
+How about **Bar graph of GDP per capita?**
+
+We have
+
+-   `GDP` vector
+
+-   `Population` vector
+
+We know
+
+-   `barplot()`
+
+-   Vector calculation
+
+-   `Sort()`
+
+-   `Decreasing=T` option
+
+![](images/clipboard-2646717957.png)
+
+<br>
+
+#### matplot
+
+![](images/clipboard-2549384656.png)
+
+```{r}
+matplot(m.conf.case)
+```
+
+![](images/clipboard-2381725037.png)
+
+```{r}
+matplot(t(m.conf.case))
+```
+
+<br>
+
+![](images/clipboard-1965669242.png)
+
+```{r}
+matplot(t(m.conf.case))
+
+```
+
+```{r}
+matplot(t(m.conf.case), type='b')
+
+```
+
+```{r}
+matplot(t(m.conf.case), type='b', pch=15:20)
+
+```
+
+```{r}
+matplot(t(m.conf.case), type='b', pch=15:20, col=c(1:6, 8), 
+        ylab="Confirmed cases")
+
+```
+
+```{r}
+matplot(t(m.conf.case), type='b', pch=15:20, col=c(1:6, 8), 
+        ylab="Confirmed cases")
+legend("topleft", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
+
+```
+
+<br>
+
+#### Try the same graph but now use the death rate
+
+```{r, echo=FALSE}
+matplot(t(m.death.case/m.conf.case), type='b', pch=15:20, col=c(1:6, 8), 
+        ylab="Death rate")
+legend("topright", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
+
+```
+
+#### Country's wealth and COVID19
+
+I’m now curious about the relationship between countries’ GDP per capita and the death rate at some points
+
+```{r}
+plot(GDP.pc, m.death.rate[,10])
+
+```
+
+![](images/clipboard-273784466.png)
+
+```{r}
+plot(GDP.pc, m.death.rate[,10],
+     ylab = "Death rate")
+text(GDP.pc, m.death.rate[,16], row.names(m.death.rate),
+     cex = 1, pos = 4, col = "blue")
+```
+
+<Br>
+
+![<br>](images/clipboard-3125938659.png)
+
+![](images/clipboard-338265475.png)
+
+<br>
+
+![](images/clipboard-1647436525.png)\
+
+<br>
+
+**Increasing rate of confirmed cases**
+
+Visualize like an example below (in 5 mins)
+
+```{r, echo = FALSE}
+m1 <- m.conf.case[,-1]
+m2 <- m.conf.case[,-38]
+m3 <- m1 - m2
+# dim(m3)
+matplot(t(m3), type='b', pch=15:20, col=c(1:6, 8), 
+        ylab="Increasing rate of confirmed case")
+legend("topleft", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
+
+```
+
+Let’s also visualize the first three periods and the last (recent) four periods
+
+```{r}
+matplot(t(m3[,1:4]), type='b', pch=15:20, col=c(1:6, 8), 
+        ylab="Increasing rate of confirmed case")
+legend("topleft", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
+
+```
+
+```{r}
+matplot(t(m3[,34:37]), type='b', pch=15:20, col=c(1:6, 8), 
+        ylab="Increasing rate of confirmed case")
+legend("topright", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
+```
+
+<br>
+
+Can you also do the same visualization for the specific country like Korea, China, and Japan?
