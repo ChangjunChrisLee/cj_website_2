@@ -712,16 +712,27 @@ legend("topleft", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), hor
 
 ```
 
+Let's omit US for the clear vision
+
+```{r, echo = FALSE}
+
+matplot(t(m3[1:6,]), type='b', pch=15:19, col=c(1:6), 
+        ylab="Increasing rate of confirmed cases")
+legend("topleft", inset=0.01, legend=country.name[1:6], pch=15:19, col=c(1:6), horiz=F, box.col="white")
+```
+
 Let’s also visualize the first three periods and the last (recent) four periods
 
-```{r}
+```{r, echo = FALSE}
+
 matplot(t(m3[,1:4]), type='b', pch=15:20, col=c(1:6, 8), 
         ylab="Increasing rate of confirmed case")
 legend("topleft", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
 
 ```
 
-```{r}
+```{r, echo = FALSE}
+
 matplot(t(m3[,34:37]), type='b', pch=15:20, col=c(1:6, 8), 
         ylab="Increasing rate of confirmed case")
 legend("topright", inset=0.01, legend=country.name, pch=15:20, col=c(1:6, 8), horiz=F)
