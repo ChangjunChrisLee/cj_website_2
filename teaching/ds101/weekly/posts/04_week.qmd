@@ -11,11 +11,11 @@ slide-format: revealjs
 
 ### Pre-class video
 
-<br> 
+<br>
 
 #### Data.frame
 
-<br> 
+<br>
 
 {{< video https://youtu.be/FaBQzFyX5Ms >}}
 
@@ -124,16 +124,13 @@ x
 
 <br>
 
-
 #### List
 
-<br> 
+<br>
 
 {{< video https://youtu.be/UM_ECxAFhnc >}}
 
-<br> 
-
-
+<br>
 
 ```{r}
 # List #
@@ -183,11 +180,199 @@ sapply(listPatients$no.patients, mean)
 sapply(listPatients$no.patients, mean, simplify = F)
 ```
 
-
-
-
 ------------------------------------------------------------------------
 
 ### Class
 
 ------------------------------------------------------------------------
+
+#### Pop-up Qz
+
+```{r}
+# Let a vector
+V1 = c(1,2,3,4,5,NA,9,10)
+```
+
+How can we get a vector of integers less than 4 from V1?
+
+1\) `V1[V1 < 4 & !is.na(V1)]`
+
+2\) `V1[V1 < 4 | !is.na(V1)]`
+
+3\) `V1(V1 < 4 | !is.na(V1))`
+
+4\) `V1[V1 < 4] & V1[!is.na(V1)]`
+
+<br>
+
+```{r}
+# Let a data frame as below
+df <- data.frame(name = c("John", "Mary", "Mark"),
+                 age  = c(30,16,21),
+                 gender = c("M", "F", "M"))
+df
+```
+
+Make an R code to filter if gender is 'male' and age is 19 or above.
+
+<br>
+
+#### Practice: Data Frame & List 
+
+-   Korea Media Panel Data\
+    <https://stat.kisdi.re.kr/kor/contents/ContentsList.html>
+
+    -   Since 2010 KISDI has surveyed the same people annually about people’s media behavior (Smartphone brand, telecom company, spending related to media, SNS usage, and so on)
+
+<br>
+
+![](images/clipboard-594630325.png)
+
+<br>
+
+-   Korea Media Panel data is used in news articles based on media statistics, such as the article below.
+
+![](images/clipboard-612391199.png)
+
+<br>
+
+-   Consists of
+
+![](images/clipboard-459842076.png)
+
+<br>
+
+I made a toy data set with the KMP like below.
+
+-   Please download R data set here: [List_KMP.RData](data/List_KMP.RData)
+
+-   Place it in your working directory
+
+<br>
+
+![](images/clipboard-3627606723.png)
+
+<br>
+
+```{r}
+load("data/List_KMP.RData")
+
+str(List.KMP)
+
+```
+
+![](images/clipboard-2215544374.png)
+
+<br>
+
+**Personal Data 2017**
+
+```{r}
+List.KMP[[1]]
+```
+
+**Personal Data 2018**
+
+```{r}
+List.KMP[[2]]
+```
+
+**Personal Data 2019**
+
+```{r}
+List.KMP[[3]]
+```
+
+**Personal Media Diary 2019**
+
+```{r}
+List.KMP[[4]]
+```
+
+<br>
+
+Let's name the list elements
+
+```{r}
+# Check the existing names
+names(List.KMP)
+
+```
+
+```{r}
+# Give names to each element of the list
+names(List.KMP) <- c("p17", "p18", "p19", "d19")
+```
+
+<br>
+
+How can we extract the first element of the list?
+
+```{r}
+# one way
+List.KMP[[1]]
+```
+
+```{r}
+# the other way
+List.KMP[['p17']]
+```
+
+#### Lists of a list
+
+![](images/clipboard-973071666.png)
+
+<br>
+
+```{r}
+# Create an empty list 
+List.KMP[[5]] <- list(0)
+```
+
+```{r}
+# See the structure
+str(List.KMP)
+```
+
+```{r}
+# The first element of the fifth element
+List.KMP[[5]][[1]]<-c(1:10)
+
+# The second element of the fifth element
+List.KMP[[5]][[2]]<-matrix(c(1:12), nrow=4)
+
+```
+
+```{r}
+List.KMP[[5]]
+
+```
+
+![<br>](images/clipboard-3425687753.png)
+
+Extract the '`p17`' element
+
+```{r}
+p17_df <- List.KMP[["p17"]]
+p17_df
+```
+
+```{r}
+# Summary Statistics
+summary(p17_df)
+```
+
+<br>
+
+-   Among 10 people, How many people did use Samsung phone at 2017?
+
+-   How much did people spend for the mobile communication on average?
+
+<br>
+
+**Do the same thing to 2019 data set and answer the questions below.**
+
+1.  In 2019, how many people did use Samsung phone?
+
+2.  Draw boxplot of people’s spending on the mobile communication \
+    \*Hint: use `boxplot()`

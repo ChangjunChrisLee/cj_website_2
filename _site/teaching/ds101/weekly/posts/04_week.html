@@ -627,8 +627,447 @@ $no
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
 <hr>
+<section id="pop-up-qz" class="level4">
+<h4 class="anchored" data-anchor-id="pop-up-qz">Pop-up Qz</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let a vector</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>V1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="cn">NA</span>,<span class="dv">9</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How can we get a vector of integers less than 4 from V1?</p>
+<p>1) <code>V1[V1 &lt; 4 &amp; !is.na(V1)]</code></p>
+<p>2) <code>V1[V1 &lt; 4 | !is.na(V1)]</code></p>
+<p>3) <code>V1(V1 &lt; 4 | !is.na(V1))</code></p>
+<p>4) <code>V1[V1 &lt; 4] &amp; V1[!is.na(V1)]</code></p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let a data frame as below</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"John"</span>, <span class="st">"Mary"</span>, <span class="st">"Mark"</span>),</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">age  =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">16</span>,<span class="dv">21</span>),</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"M"</span>))</span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  name age gender
+1 John  30      M
+2 Mary  16      F
+3 Mark  21      M</code></pre>
+</div>
+</div>
+<p>Make an R code to filter if gender is ‘male’ and age is 19 or above.</p>
+<p><br></p>
+</section>
+<section id="practice-data-frame-list" class="level4">
+<h4 class="anchored" data-anchor-id="practice-data-frame-list">Practice: Data Frame &amp; List</h4>
+<ul>
+<li><p>Korea Media Panel Data<br>
+<a href="https://stat.kisdi.re.kr/kor/contents/ContentsList.html" class="uri">https://stat.kisdi.re.kr/kor/contents/ContentsList.html</a></p>
+<ul>
+<li>Since 2010 KISDI has surveyed the same people annually about people’s media behavior (Smartphone brand, telecom company, spending related to media, SNS usage, and so on)</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><img src="images/clipboard-594630325.png" class="img-fluid"></p>
+<p><br></p>
+<ul>
+<li>Korea Media Panel data is used in news articles based on media statistics, such as the article below.</li>
+</ul>
+<p><img src="images/clipboard-612391199.png" class="img-fluid"></p>
+<p><br></p>
+<ul>
+<li>Consists of</li>
+</ul>
+<p><img src="images/clipboard-459842076.png" class="img-fluid"></p>
+<p><br></p>
+<p>I made a toy data set with the KMP like below.</p>
+<ul>
+<li><p>Please download R data set here: <a href="data/List_KMP.RData">List_KMP.RData</a></p></li>
+<li><p>Place it in your working directory</p></li>
+</ul>
+<p><br></p>
+<p><img src="images/clipboard-3627606723.png" class="img-fluid"></p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/List_KMP.RData"</span>)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ :'data.frame':   10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 9 26 12 55 70 58 50 68 39 37
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 2 2 5 2 2 2 2 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 2 3 1 5 1 1 1 2 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 1 1 8 1 1 1 1 3
+  ..$ sp.mobile        : num [1:10] 0 42 19 38 18 65 32 58 63 54
+  ..$ sp.device        : num [1:10] 0 0 0 0 0 0 0 10 0 10
+  ..$ sp.online.content: num [1:10] 0 53 19 38 18 65 32 68 63 114
+  ..$ sp.offline.contet: num [1:10] 10 22 0 0 0 50 36 0 25 40
+  ..$ year             : num [1:10] 2017 2017 2017 2017 2017 ...
+ $ :'data.frame':   10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 10 27 13 56 71 59 51 69 40 38
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 3 3 2 5 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 2 5 3 1 2 1 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 3 1 8 3 1 3 1 3
+  ..$ sp.mobile        : num [1:10] 0 90 20 39 30 80 33 36 40 59
+  ..$ sp.device        : num [1:10] 0 60 35 0 0 15 0 10 10 12
+  ..$ sp.online.content: num [1:10] 0 359 55 39 30 95 33 46 50 71
+  ..$ sp.offline.contet: num [1:10] 8 120 0 0 0 12 20 0 0 100
+  ..$ year             : num [1:10] 2018 2018 2018 2018 2018 ...
+ $ :'data.frame':   10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 11 28 14 57 72 60 52 70 41 39
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 3 2 2 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 1 2 1 1 2 3 3
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 2 1 1 1 1 1 3 3 3
+  ..$ sp.mobile        : num [1:10] 0 60 21 30 32 78 35 54 73 45
+  ..$ sp.device        : num [1:10] 0 30 0 0 0 0 0 0 20 15
+  ..$ sp.online.content: num [1:10] 0 90 21 30 32 78 35 54 93 60
+  ..$ sp.offline.contet: num [1:10] 21 0 0 20 0 24 90 0 20 60
+  ..$ year             : num [1:10] 2019 2019 2019 2019 2019 ...
+ $ :'data.frame':   10 obs. of  4 variables:
+  ..$ pid           : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ Smarphone.time: num [1:10] 0 60 345 90 40 65 170 95 85 75
+  ..$ SNS.time      : num [1:10] 0 0 10 0 0 0 0 0 0 0
+  ..$ year          : num [1:10] 2019 2019 2019 2019 2019 ...</code></pre>
+</div>
+</div>
+<p><img src="images/clipboard-2215544374.png" class="img-fluid"></p>
+<p><br></p>
+<p><strong>Personal Data 2017</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<p><strong>Personal Data 2018</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004  10   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  27   Male         LTE-A         LG U+          Samsung        90
+3  17350004  13 Female         LTE-A         LG U+               LG        20
+4  17670001  56   Male           LTE            KT          Samsung        39
+5  23860001  71   Male No Smartphone No Smartphone    No Smartphone        30
+6  24450001  59   Male           LTE         LG U+               LG        80
+7  27570001  51   Male           LTE           SKT          Samsung        33
+8  53620001  69   Male           LTE            KT               LG        36
+9  59570001  40   Male         LTE-A           SKT          Samsung        40
+10 65840001  38 Female         LTE-A            KT               LG        59
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                 8 2018
+2         60               359               120 2018
+3         35                55                 0 2018
+4          0                39                 0 2018
+5          0                30                 0 2018
+6         15                95                12 2018
+7          0                33                20 2018
+8         10                46                 0 2018
+9         10                50                 0 2018
+10        12                71               100 2018</code></pre>
+</div>
+</div>
+<p><strong>Personal Data 2019</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004  11   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  28   Male           LTE         LG U+            Apple        60
+3  17350004  14 Female         LTE-A         LG U+          Samsung        21
+4  17670001  57   Male           LTE           SKT          Samsung        30
+5  23860001  72   Male           LTE            KT          Samsung        32
+6  24450001  60   Male           LTE           SKT          Samsung        78
+7  27570001  52   Male           LTE           SKT          Samsung        35
+8  53620001  70   Male           LTE            KT               LG        54
+9  59570001  41   Male         LTE-A         LG U+               LG        73
+10 65840001  39 Female         LTE-A         LG U+               LG        45
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                21 2019
+2         30                90                 0 2019
+3          0                21                 0 2019
+4          0                30                20 2019
+5          0                32                 0 2019
+6          0                78                24 2019
+7          0                35                90 2019
+8          0                54                 0 2019
+9         20                93                20 2019
+10        15                60                60 2019</code></pre>
+</div>
+</div>
+<p><strong>Personal Media Diary 2019</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid Smarphone.time SNS.time year
+1   9920004              0        0 2019
+2  12500003             60        0 2019
+3  17350004            345       10 2019
+4  17670001             90        0 2019
+5  23860001             40        0 2019
+6  24450001             65        0 2019
+7  27570001            170        0 2019
+8  53620001             95        0 2019
+9  59570001             85        0 2019
+10 65840001             75        0 2019</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Let’s name the list elements</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the existing names</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Give names to each element of the list</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p17"</span>, <span class="st">"p18"</span>, <span class="st">"p19"</span>, <span class="st">"d19"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>How can we extract the first element of the list?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one way</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the other way</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="st">'p17'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-of-a-list" class="level4">
+<h4 class="anchored" data-anchor-id="lists-of-a-list">Lists of a list</h4>
+<p><img src="images/clipboard-973071666.png" class="img-fluid"></p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list </span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See the structure</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 5
+ $ p17:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 9 26 12 55 70 58 50 68 39 37
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 2 2 5 2 2 2 2 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 2 3 1 5 1 1 1 2 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 1 1 8 1 1 1 1 3
+  ..$ sp.mobile        : num [1:10] 0 42 19 38 18 65 32 58 63 54
+  ..$ sp.device        : num [1:10] 0 0 0 0 0 0 0 10 0 10
+  ..$ sp.online.content: num [1:10] 0 53 19 38 18 65 32 68 63 114
+  ..$ sp.offline.contet: num [1:10] 10 22 0 0 0 50 36 0 25 40
+  ..$ year             : num [1:10] 2017 2017 2017 2017 2017 ...
+ $ p18:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 10 27 13 56 71 59 51 69 40 38
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 3 3 2 5 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 2 5 3 1 2 1 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 3 1 8 3 1 3 1 3
+  ..$ sp.mobile        : num [1:10] 0 90 20 39 30 80 33 36 40 59
+  ..$ sp.device        : num [1:10] 0 60 35 0 0 15 0 10 10 12
+  ..$ sp.online.content: num [1:10] 0 359 55 39 30 95 33 46 50 71
+  ..$ sp.offline.contet: num [1:10] 8 120 0 0 0 12 20 0 0 100
+  ..$ year             : num [1:10] 2018 2018 2018 2018 2018 ...
+ $ p19:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 11 28 14 57 72 60 52 70 41 39
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 3 2 2 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 1 2 1 1 2 3 3
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 2 1 1 1 1 1 3 3 3
+  ..$ sp.mobile        : num [1:10] 0 60 21 30 32 78 35 54 73 45
+  ..$ sp.device        : num [1:10] 0 30 0 0 0 0 0 0 20 15
+  ..$ sp.online.content: num [1:10] 0 90 21 30 32 78 35 54 93 60
+  ..$ sp.offline.contet: num [1:10] 21 0 0 20 0 24 90 0 20 60
+  ..$ year             : num [1:10] 2019 2019 2019 2019 2019 ...
+ $ d19:'data.frame':    10 obs. of  4 variables:
+  ..$ pid           : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ Smarphone.time: num [1:10] 0 60 345 90 40 65 170 95 85 75
+  ..$ SNS.time      : num [1:10] 0 0 10 0 0 0 0 0 0 0
+  ..$ year          : num [1:10] 2019 2019 2019 2019 2019 ...
+ $    :List of 1
+  ..$ : num 0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The first element of the fifth element</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]][[<span class="dv">1</span>]]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The second element of the fifth element</span></span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]][[<span class="dv">2</span>]]<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>), <span class="at">nrow=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+[[2]]
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12</code></pre>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3425687753.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><br></figcaption>
+</figure>
+</div>
+<p>Extract the ‘<code>p17</code>’ element</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>p17_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p17"</span>]]</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>p17_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary Statistics</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(p17_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      pid                age           gender          Mobile.lv
+ Min.   : 9920004   Min.   : 9.00   Male  :8   3G           :0  
+ 1st Qu.:17430003   1st Qu.:28.75   Female:2   LTE          :7  
+ Median :24155001   Median :44.50              LTE-A        :1  
+ Mean   :31235002   Mean   :42.40              5G           :0  
+ 3rd Qu.:47107501   3rd Qu.:57.25              No Smartphone:2  
+ Max.   :65840001   Max.   :70.00                               
+                                                                
+          Telecom       Smartphone.brand   sp.mobile       sp.device 
+ SKT          :4   Samsung      :7       Min.   : 0.00   Min.   : 0  
+ KT           :3   No Smartphone:2       1st Qu.:22.25   1st Qu.: 0  
+ LG U+        :1   LG           :1       Median :40.00   Median : 0  
+ MVNO         :0   Apple        :0       Mean   :38.90   Mean   : 2  
+ No Smartphone:2   Pantech      :0       3rd Qu.:57.00   3rd Qu.: 0  
+                   Xiaomi       :0       Max.   :65.00   Max.   :10  
+                   (Other)      :0                                   
+ sp.online.content sp.offline.contet      year     
+ Min.   :  0.00    Min.   : 0.00     Min.   :2017  
+ 1st Qu.: 22.25    1st Qu.: 0.00     1st Qu.:2017  
+ Median : 45.50    Median :16.00     Median :2017  
+ Mean   : 47.00    Mean   :18.30     Mean   :2017  
+ 3rd Qu.: 64.50    3rd Qu.:33.25     3rd Qu.:2017  
+ Max.   :114.00    Max.   :50.00     Max.   :2017  
+                                                   </code></pre>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li><p>Among 10 people, How many people did use Samsung phone at 2017?</p></li>
+<li><p>How much did people spend for the mobile communication on average?</p></li>
+</ul>
+<p><br></p>
+<p><strong>Do the same thing to 2019 data set and answer the questions below.</strong></p>
+<ol type="1">
+<li><p>In 2019, how many people did use Samsung phone?</p></li>
+<li><p>Draw boxplot of people’s spending on the mobile communication<br>
+*Hint: use <code>boxplot()</code></p></li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
