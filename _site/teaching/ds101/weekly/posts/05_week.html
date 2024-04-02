@@ -189,6 +189,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
+  <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
+  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format"><strong>Format</strong></a></li>
+  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details"><strong>Details</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -426,9 +429,394 @@ Attaching package: 'dplyr'</code></pre>
 1 Cheolsu  21      M</code></pre>
 </div>
 </div>
-
-
+<hr>
 </section>
+</section>
+<section id="class" class="level3">
+<h3 class="anchored" data-anchor-id="class">Class</h3>
+<hr>
+<p>Let’s use the List.KMP again</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/List_KMP.RData"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p17"</span>, <span class="st">"p18"</span>, <span class="st">"p19"</span>, <span class="st">"d19"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>See the structure</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ p17:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 9 26 12 55 70 58 50 68 39 37
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 2 2 5 2 2 2 2 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 2 3 1 5 1 1 1 2 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 1 1 8 1 1 1 1 3
+  ..$ sp.mobile        : num [1:10] 0 42 19 38 18 65 32 58 63 54
+  ..$ sp.device        : num [1:10] 0 0 0 0 0 0 0 10 0 10
+  ..$ sp.online.content: num [1:10] 0 53 19 38 18 65 32 68 63 114
+  ..$ sp.offline.contet: num [1:10] 10 22 0 0 0 50 36 0 25 40
+  ..$ year             : num [1:10] 2017 2017 2017 2017 2017 ...
+ $ p18:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 10 27 13 56 71 59 51 69 40 38
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 3 3 2 5 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 2 5 3 1 2 1 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 3 1 8 3 1 3 1 3
+  ..$ sp.mobile        : num [1:10] 0 90 20 39 30 80 33 36 40 59
+  ..$ sp.device        : num [1:10] 0 60 35 0 0 15 0 10 10 12
+  ..$ sp.online.content: num [1:10] 0 359 55 39 30 95 33 46 50 71
+  ..$ sp.offline.contet: num [1:10] 8 120 0 0 0 12 20 0 0 100
+  ..$ year             : num [1:10] 2018 2018 2018 2018 2018 ...
+ $ p19:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 11 28 14 57 72 60 52 70 41 39
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 3 2 2 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 1 2 1 1 2 3 3
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 2 1 1 1 1 1 3 3 3
+  ..$ sp.mobile        : num [1:10] 0 60 21 30 32 78 35 54 73 45
+  ..$ sp.device        : num [1:10] 0 30 0 0 0 0 0 0 20 15
+  ..$ sp.online.content: num [1:10] 0 90 21 30 32 78 35 54 93 60
+  ..$ sp.offline.contet: num [1:10] 21 0 0 20 0 24 90 0 20 60
+  ..$ year             : num [1:10] 2019 2019 2019 2019 2019 ...
+ $ d19:'data.frame':    10 obs. of  4 variables:
+  ..$ pid           : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ Smarphone.time: num [1:10] 0 60 345 90 40 65 170 95 85 75
+  ..$ SNS.time      : num [1:10] 0 0 10 0 0 0 0 0 0 0
+  ..$ year          : num [1:10] 2019 2019 2019 2019 2019 ...</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1434077769.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><br></figcaption>
+</figure>
+</div>
+<p><img src="images/clipboard-3010460468.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/clipboard-2826968595.png" class="img-fluid"></p>
+<p><br></p>
+<section id="did-kt-users-in-2017-change-their-telecom-companies-in-2018-and-2019" class="level4">
+<h4 class="anchored" data-anchor-id="did-kt-users-in-2017-change-their-telecom-companies-in-2018-and-2019">Did ‘KT’ users in 2017 change their telecom companies in 2018 and 2019?</h4>
+<ol type="1">
+<li>Extract data.frames from the List</li>
+<li>Find the pid(personal ID) whose telecom company was “KT”</li>
+<li>Try the code below and explain how it works</li>
+<li>Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”</li>
+</ol>
+<hr>
+<ol type="1">
+<li><p>Extract data.frames from the List</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>p17_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p17"</span>]]</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>p18_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p18"</span>]]</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>p19_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p19"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Find the pid(personal ID) whose telecom company was “KT”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>pid_kt_user <span class="ot">&lt;-</span> p17_df[p17_df<span class="sc">$</span>Telecom<span class="sc">==</span><span class="st">"KT"</span>, <span class="st">"pid"</span>]</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>pid_kt_user</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12500003 59570001 65840001</code></pre>
+</div>
+</div></li>
+<li><p>Try the code below and explain how it works</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>kt_user_18 <span class="ot">&lt;-</span> p18_df[p18_df<span class="sc">$</span>pid <span class="sc">%in%</span> pid_kt_user, <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"Telecom"</span>)]</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>kt_user_19 <span class="ot">&lt;-</span> p19_df[p19_df<span class="sc">$</span>pid <span class="sc">%in%</span> pid_kt_user, <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"Telecom"</span>)]</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>kt_user_18</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid Telecom
+2  12500003   LG U+
+9  59570001     SKT
+10 65840001      KT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>kt_user_19</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid Telecom
+2  12500003   LG U+
+9  59570001   LG U+
+10 65840001   LG U+</code></pre>
+</div>
+</div></li>
+<li><p>Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>DF3 <span class="ot">&lt;-</span> <span class="fu">merge</span>(kt_user_18, kt_user_19, <span class="at">by=</span><span class="st">"pid"</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DF3)[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"y2018"</span>, <span class="st">"y2019"</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>DF3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       pid y2018 y2019
+1 12500003 LG U+ LG U+
+2 59570001   SKT LG U+
+3 65840001    KT LG U+</code></pre>
+</div>
+</div></li>
+</ol>
+<p><br></p>
+<p>What kinds of studies we can do with the analysis above? Let’s think about it.</p>
+<p>Download and use this data for you study</p>
+<p><img src="images/clipboard-2027320930.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="did-samsung-users-in-2017-change-their-phone-brand-in-2018-and-2019" class="level4">
+<h4 class="anchored" data-anchor-id="did-samsung-users-in-2017-change-their-phone-brand-in-2018-and-2019">Did ‘Samsung’ users in 2017 change their phone brand in 2018 and 2019?</h4>
+<p>Let’s analyse this using the code we learnt</p>
+<p><br></p>
+</section>
+<section id="practice-qz-more" class="level4">
+<h4 class="anchored" data-anchor-id="practice-qz-more">Practice &amp; QZ (more)</h4>
+<p>Let’s use ‘airquality’ data stored in base R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>airquality</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Ozone Solar.R Wind Temp Month Day
+1      41     190  7.4   67     5   1
+2      36     118  8.0   72     5   2
+3      12     149 12.6   74     5   3
+4      18     313 11.5   62     5   4
+5      NA      NA 14.3   56     5   5
+6      28      NA 14.9   66     5   6
+7      23     299  8.6   65     5   7
+8      19      99 13.8   59     5   8
+9       8      19 20.1   61     5   9
+10     NA     194  8.6   69     5  10
+11      7      NA  6.9   74     5  11
+12     16     256  9.7   69     5  12
+13     11     290  9.2   66     5  13
+14     14     274 10.9   68     5  14
+15     18      65 13.2   58     5  15
+16     14     334 11.5   64     5  16
+17     34     307 12.0   66     5  17
+18      6      78 18.4   57     5  18
+19     30     322 11.5   68     5  19
+20     11      44  9.7   62     5  20
+21      1       8  9.7   59     5  21
+22     11     320 16.6   73     5  22
+23      4      25  9.7   61     5  23
+24     32      92 12.0   61     5  24
+25     NA      66 16.6   57     5  25
+26     NA     266 14.9   58     5  26
+27     NA      NA  8.0   57     5  27
+28     23      13 12.0   67     5  28
+29     45     252 14.9   81     5  29
+30    115     223  5.7   79     5  30
+31     37     279  7.4   76     5  31
+32     NA     286  8.6   78     6   1
+33     NA     287  9.7   74     6   2
+34     NA     242 16.1   67     6   3
+35     NA     186  9.2   84     6   4
+36     NA     220  8.6   85     6   5
+37     NA     264 14.3   79     6   6
+38     29     127  9.7   82     6   7
+39     NA     273  6.9   87     6   8
+40     71     291 13.8   90     6   9
+41     39     323 11.5   87     6  10
+42     NA     259 10.9   93     6  11
+43     NA     250  9.2   92     6  12
+44     23     148  8.0   82     6  13
+45     NA     332 13.8   80     6  14
+46     NA     322 11.5   79     6  15
+47     21     191 14.9   77     6  16
+48     37     284 20.7   72     6  17
+49     20      37  9.2   65     6  18
+50     12     120 11.5   73     6  19
+51     13     137 10.3   76     6  20
+52     NA     150  6.3   77     6  21
+53     NA      59  1.7   76     6  22
+54     NA      91  4.6   76     6  23
+55     NA     250  6.3   76     6  24
+56     NA     135  8.0   75     6  25
+57     NA     127  8.0   78     6  26
+58     NA      47 10.3   73     6  27
+59     NA      98 11.5   80     6  28
+60     NA      31 14.9   77     6  29
+61     NA     138  8.0   83     6  30
+62    135     269  4.1   84     7   1
+63     49     248  9.2   85     7   2
+64     32     236  9.2   81     7   3
+65     NA     101 10.9   84     7   4
+66     64     175  4.6   83     7   5
+67     40     314 10.9   83     7   6
+68     77     276  5.1   88     7   7
+69     97     267  6.3   92     7   8
+70     97     272  5.7   92     7   9
+71     85     175  7.4   89     7  10
+72     NA     139  8.6   82     7  11
+73     10     264 14.3   73     7  12
+74     27     175 14.9   81     7  13
+75     NA     291 14.9   91     7  14
+76      7      48 14.3   80     7  15
+77     48     260  6.9   81     7  16
+78     35     274 10.3   82     7  17
+79     61     285  6.3   84     7  18
+80     79     187  5.1   87     7  19
+81     63     220 11.5   85     7  20
+82     16       7  6.9   74     7  21
+83     NA     258  9.7   81     7  22
+84     NA     295 11.5   82     7  23
+85     80     294  8.6   86     7  24
+86    108     223  8.0   85     7  25
+87     20      81  8.6   82     7  26
+88     52      82 12.0   86     7  27
+89     82     213  7.4   88     7  28
+90     50     275  7.4   86     7  29
+91     64     253  7.4   83     7  30
+92     59     254  9.2   81     7  31
+93     39      83  6.9   81     8   1
+94      9      24 13.8   81     8   2
+95     16      77  7.4   82     8   3
+96     78      NA  6.9   86     8   4
+97     35      NA  7.4   85     8   5
+98     66      NA  4.6   87     8   6
+99    122     255  4.0   89     8   7
+100    89     229 10.3   90     8   8
+101   110     207  8.0   90     8   9
+102    NA     222  8.6   92     8  10
+103    NA     137 11.5   86     8  11
+104    44     192 11.5   86     8  12
+105    28     273 11.5   82     8  13
+106    65     157  9.7   80     8  14
+107    NA      64 11.5   79     8  15
+108    22      71 10.3   77     8  16
+109    59      51  6.3   79     8  17
+110    23     115  7.4   76     8  18
+111    31     244 10.9   78     8  19
+112    44     190 10.3   78     8  20
+113    21     259 15.5   77     8  21
+114     9      36 14.3   72     8  22
+115    NA     255 12.6   75     8  23
+116    45     212  9.7   79     8  24
+117   168     238  3.4   81     8  25
+118    73     215  8.0   86     8  26
+119    NA     153  5.7   88     8  27
+120    76     203  9.7   97     8  28
+121   118     225  2.3   94     8  29
+122    84     237  6.3   96     8  30
+123    85     188  6.3   94     8  31
+124    96     167  6.9   91     9   1
+125    78     197  5.1   92     9   2
+126    73     183  2.8   93     9   3
+127    91     189  4.6   93     9   4
+128    47      95  7.4   87     9   5
+129    32      92 15.5   84     9   6
+130    20     252 10.9   80     9   7
+131    23     220 10.3   78     9   8
+132    21     230 10.9   75     9   9
+133    24     259  9.7   73     9  10
+134    44     236 14.9   81     9  11
+135    21     259 15.5   76     9  12
+136    28     238  6.3   77     9  13
+137     9      24 10.9   71     9  14
+138    13     112 11.5   71     9  15
+139    46     237  6.9   78     9  16
+140    18     224 13.8   67     9  17
+141    13      27 10.3   76     9  18
+142    24     238 10.3   68     9  19
+143    16     201  8.0   82     9  20
+144    13     238 12.6   64     9  21
+145    23      14  9.2   71     9  22
+146    36     139 10.3   81     9  23
+147     7      49 10.3   69     9  24
+148    14      20 16.6   63     9  25
+149    30     193  6.9   70     9  26
+150    NA     145 13.2   77     9  27
+151    14     191 14.3   75     9  28
+152    18     131  8.0   76     9  29
+153    20     223 11.5   68     9  30</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="format" class="level2">
+<h2 class="anchored" data-anchor-id="format"><strong>Format</strong></h2>
+<p>A data frame with 153 observations on 6 variables.</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td><strong><code>[,1]</code></strong></td>
+<td><strong><code>Ozone</code></strong></td>
+<td>numeric</td>
+<td>Ozone (ppb)</td>
+</tr>
+<tr class="even">
+<td><strong><code>[,2]</code></strong></td>
+<td><strong><code>Solar.R</code></strong></td>
+<td>numeric</td>
+<td>Solar R (lang)</td>
+</tr>
+<tr class="odd">
+<td><strong><code>[,3]</code></strong></td>
+<td><strong><code>Wind</code></strong></td>
+<td>numeric</td>
+<td>Wind (mph)</td>
+</tr>
+<tr class="even">
+<td><strong><code>[,4]</code></strong></td>
+<td><strong><code>Temp</code></strong></td>
+<td>numeric</td>
+<td>Temperature (degrees F)</td>
+</tr>
+<tr class="odd">
+<td><strong><code>[,5]</code></strong></td>
+<td><strong><code>Month</code></strong></td>
+<td>numeric</td>
+<td>Month (1–12)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="details" class="level2">
+<h2 class="anchored" data-anchor-id="details"><strong>Details</strong></h2>
+<p>Daily readings of the following air quality values for May 1, 1973 (a Tuesday) to September 30, 1973.</p>
+<ul>
+<li><p><strong><code>Ozone</code></strong>: Mean ozone in parts per billion from 1300 to 1500 hours at Roosevelt Island</p></li>
+<li><p><strong><code>Solar.R</code></strong>: Solar radiation in Langleys in the frequency band 4000–7700 Angstroms from 0800 to 1200 hours at Central Park</p></li>
+<li><p><strong><code>Wind</code></strong>: Average wind speed in miles per hour at 0700 and 1000 hours at LaGuardia Airport</p></li>
+<li><p><strong><code>Temp</code></strong>: Maximum daily temperature in degrees Fahrenheit at La Guardia Airport.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(airquality, <span class="at">panel =</span> panel.smooth, <span class="at">main =</span> <span class="st">"airquality data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="05_week_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>What are the column names of the data frame?</p>
+<p>*Hint: <code>names()</code></p>
+<p><br></p></li>
+<li><p>What are the row names of the data frame?</p>
+<p>*Hint: <code>rownames()</code></p>
+<p><br></p></li>
+<li><p>Extract the first 10 rows in ‘airquality’</p>
+<p>*Hint: One way: by using <code>[]</code> / Alternative way: by using <code>head()</code></p>
+<p><br></p></li>
+<li><p>Check the number of rows (observations) in the dataset</p>
+<p>*Hint: <code>length()</code> or <code>nrow()</code></p>
+<p><br></p></li>
+<li><p>How many missing values are in the ‘Ozone’ column ?</p>
+<p>*Hint: <code>is.na()</code> and <code>sum()</code></p>
+<p><br></p></li>
+<li><p>What is the mean value of the ‘Ozone’ column? (Exclude missing values (coded as NA) from this calculation)</p>
+<p>*Hint: Use <code>mean()</code> with an option <code>na.rm = T</code></p>
+<p><br></p></li>
+<li><p>Extract the subset where Ozone values are above 31 and Temp values are above 90.</p>
+<p>*Hint: Use <code>subset()</code></p>
+<p><br></p></li>
+<li><p>Use the apply function to calculate the standard deviation of each column in the data frame</p>
+<p>*Hint: Use <code>apply()</code> with an option <code>na.rm = T</code> / Use <code>sd()</code> function</p>
+<p><br></p></li>
+<li><p>Calculate the mean value of ‘Ozone’ for each Month in the data frame and create a vector containing the monthly means (exclude all missing values)</p>
+<p>*Hint: Use <code>tapply()</code> with an option <code>na.rm = T</code></p>
+<p><br></p></li>
+<li><p>Draw a random sample of 5 rows from the data frame</p>
+<p>*Hint: Use <code>sample()</code>, <code>nrow()</code>, <code>airquality[]</code></p>
+<p><br></p></li>
+</ol>
+
+
 </section>
 
 </main> <!-- /main -->

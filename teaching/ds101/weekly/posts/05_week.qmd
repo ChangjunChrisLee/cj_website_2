@@ -11,24 +11,17 @@ slide-format: revealjs
 
 ### Pre-class video
 
-<br> 
+<br>
 
-#### Import 
+#### Import
 
-<br> 
+<br>
 
 {{< video https://youtu.be/uOVksIiL5SQ >}}
 
-<br> 
+<br>
 
-
-data in need: 
-[student1.txt](data/students1.txt)
-[student2.txt](data/students2.txt)
-[student3.txt](data/students3.txt)
-[student1.csv](data/students.csv)
-[student2.csv](data/students2.csv)
-
+data in need: [student1.txt](data/students1.txt) [student2.txt](data/students2.txt) [student3.txt](data/students3.txt) [student1.csv](data/students.csv) [student2.csv](data/students2.csv)
 
 ```{r}
 # 01 Read and write files #
@@ -90,13 +83,9 @@ str(students)
 
 ```
 
-
-
-
-
 #### Filter
 
-<br> 
+<br>
 
 {{< video https://youtu.be/_kwWDH2lm_E >}}
 
@@ -134,4 +123,186 @@ characters[characters$age<30 & characters$gender =="M",]
 characters %>% filter(age<30 & gender=="M")
 ```
 
+------------------------------------------------------------------------
 
+### Class 
+
+------------------------------------------------------------------------
+
+Let's use the List.KMP again
+
+```{r}
+load("data/List_KMP.RData")
+names(List.KMP) <- c("p17", "p18", "p19", "d19")
+```
+
+See the structure
+
+```{r}
+str(List.KMP)
+```
+
+<br>
+
+![<br>](images/clipboard-1434077769.png)
+
+![](images/clipboard-3010460468.png)
+
+<br>
+
+![](images/clipboard-2826968595.png)
+
+<br>
+
+#### Did ‘KT’ users in 2017 change their telecom companies in 2018 and 2019?
+
+1.  Extract data.frames from the List
+2.  Find the pid(personal ID) whose telecom company was “KT”
+3.  Try the code below and explain how it works
+4.  Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”
+
+------------------------------------------------------------------------
+
+1.  Extract data.frames from the List
+
+    ```{r}
+    p17_df <- List.KMP[["p17"]]
+    p18_df <- List.KMP[["p18"]]
+    p19_df <- List.KMP[["p19"]]
+    ```
+
+2.  Find the pid(personal ID) whose telecom company was “KT”
+
+    ```{r}
+    pid_kt_user <- p17_df[p17_df$Telecom=="KT", "pid"]
+    pid_kt_user
+    ```
+
+3.  Try the code below and explain how it works
+
+    ```{r}
+    kt_user_18 <- p18_df[p18_df$pid %in% pid_kt_user, c("pid", "Telecom")]
+    kt_user_19 <- p19_df[p19_df$pid %in% pid_kt_user, c("pid", "Telecom")]
+    kt_user_18
+    kt_user_19
+    ```
+
+4.  Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”
+
+    ```{r}
+    DF3 <- merge(kt_user_18, kt_user_19, by="pid")
+    names(DF3)[c(2,3)]<-c("y2018", "y2019")
+    DF3
+    ```
+
+<br>
+
+What kinds of studies we can do with the analysis above? Let's think about it.
+
+Download and use this data for you study
+
+![](images/clipboard-2027320930.png)
+
+<br>
+
+#### Did ‘Samsung’ users in 2017 change their phone brand in 2018 and 2019?
+
+Let's analyse this using the code we learnt
+
+<br>
+
+#### Practice & QZ (more)
+
+Let's use 'airquality' data stored in base R
+
+```{r}
+airquality
+```
+
+## **Format**
+
+A data frame with 153 observations on 6 variables.
+
+|            |               |         |                         |
+|------------|---------------|---------|-------------------------|
+| **`[,1]`** | **`Ozone`**   | numeric | Ozone (ppb)             |
+| **`[,2]`** | **`Solar.R`** | numeric | Solar R (lang)          |
+| **`[,3]`** | **`Wind`**    | numeric | Wind (mph)              |
+| **`[,4]`** | **`Temp`**    | numeric | Temperature (degrees F) |
+| **`[,5]`** | **`Month`**   | numeric | Month (1--12)           |
+
+## **Details**
+
+Daily readings of the following air quality values for May 1, 1973 (a Tuesday) to September 30, 1973.
+
+-   **`Ozone`**: Mean ozone in parts per billion from 1300 to 1500 hours at Roosevelt Island
+
+-   **`Solar.R`**: Solar radiation in Langleys in the frequency band 4000--7700 Angstroms from 0800 to 1200 hours at Central Park
+
+-   **`Wind`**: Average wind speed in miles per hour at 0700 and 1000 hours at LaGuardia Airport
+
+-   **`Temp`**: Maximum daily temperature in degrees Fahrenheit at La Guardia Airport.
+
+```{r}
+pairs(airquality, panel = panel.smooth, main = "airquality data")
+```
+
+1.  What are the column names of the data frame?
+
+    \*Hint: `names()`
+
+    <br>
+
+2.  What are the row names of the data frame?
+
+    \*Hint: `rownames()`
+
+    <br>
+
+3.  Extract the first 10 rows in 'airquality'
+
+    \*Hint: One way: by using `[]` / Alternative way: by using `head()`
+
+    <br>
+
+4.  Check the number of rows (observations) in the dataset
+
+    \*Hint: `length()` or `nrow()`
+
+    <br>
+
+5.  How many missing values are in the 'Ozone' column ?
+
+    \*Hint: `is.na()` and `sum()`
+
+    <br>
+
+6.  What is the mean value of the 'Ozone' column? (Exclude missing values (coded as NA) from this calculation)
+
+    \*Hint: Use `mean()` with an option `na.rm = T`
+
+    <br>
+
+7.  Extract the subset where Ozone values are above 31 and Temp values are above 90.
+
+    \*Hint: Use `subset()`
+
+    <br>
+
+8.  Use the apply function to calculate the standard deviation of each column in the data frame
+
+    \*Hint: Use `apply()` with an option `na.rm = T` / Use `sd()` function
+
+    <br>
+
+9.  Calculate the mean value of 'Ozone' for each Month in the data frame and create a vector containing the monthly means (exclude all missing values)
+
+    \*Hint: Use `tapply()` with an option `na.rm = T`
+
+    <br>
+
+10. Draw a random sample of 5 rows from the data frame
+
+    \*Hint: Use `sample()`, `nrow()`, `airquality[]`
+
+    <br>
