@@ -11,15 +11,15 @@ slide-format: revealjs
 
 ### Pre-class video
 
-<br> 
+<br>
 
-#### Loop 
+#### Loop
 
-<br> 
+<br>
 
 {{< video https://youtu.be/RzJk88OfKMc >}}
 
-<br> 
+<br>
 
 ```{r}
 x = 5
@@ -145,14 +145,11 @@ for(i in 2:4) {
 students
 ```
 
-
 #### Functions & Others
 
-<br> 
+<br>
 
 {{< video https://youtu.be/bl6RD1HLpTc >}}
-
-
 
 ```{r}
 # 03 User-defined function: Bundle the desired function #
@@ -230,8 +227,6 @@ air_narm = airquality[!is.na(airquality$Ozone) & !is.na(airquality$Solar.R), ]
 mean(air_narm$Ozone)
 ```
 
-
-
 ```{r}
 # 05 Data Cleansing Example 2: Outlier Processing #
 
@@ -286,7 +281,52 @@ air_narm = air[!is.na(air$Ozone), ]
 mean(air_narm$Ozone) # By removing two outliers, the value is reduced compared to the result using the is.na function.
 ```
 
-
+------------------------------------------------------------------------
 
 ### Class
 
+------------------------------------------------------------------------
+
+```{r}
+load("data/List_KMP.RData")
+names(List.KMP) <- c("p17", "p18", "p19", "d19")
+p17_df <- List.KMP[["p17"]]
+p18_df <- List.KMP[["p18"]]
+p19_df <- List.KMP[["p19"]]
+```
+
+![<br>](images/clipboard-3258618279.png)
+
+![](images/clipboard-2451608852.png)
+
+```{r}
+# create a function of calculating average and standard deviation of a vector
+
+cal_avg_sd<-function(x){
+
+  avg.x<-mean(x, na.rm=T)
+  sd.x <-sd(x, na.rm=T)
+  out.vector<-c(avg=avg.x, sd=sd.x)
+  return(round(out.vector,2))
+
+}
+
+```
+
+Let's apply this function to dataset 'p17'
+
+```{r}
+# Let's try this function
+cal_avg_sd(p17_df$sp.mobile)
+
+```
+
+<br>
+
+![<br>](images/clipboard-3372904388.png)
+
+![](images/clipboard-1467283746.png)
+
+<br>
+
+![](images/clipboard-1493476935.png)

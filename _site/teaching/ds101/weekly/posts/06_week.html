@@ -911,10 +911,57 @@ FALSE  TRUE
 <pre><code>[1] 40.2</code></pre>
 </div>
 </div>
+<hr>
 </section>
 </section>
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
+<hr>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/List_KMP.RData"</span>)</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p17"</span>, <span class="st">"p18"</span>, <span class="st">"p19"</span>, <span class="st">"d19"</span>)</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>p17_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p17"</span>]]</span>
+<span id="cb102-4"><a href="#cb102-4" aria-hidden="true" tabindex="-1"></a>p18_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p18"</span>]]</span>
+<span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>p19_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p19"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3258618279.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><br></figcaption>
+</figure>
+</div>
+<p><img src="images/clipboard-2451608852.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a function of calculating average and standard deviation of a vector</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>cal_avg_sd<span class="ot">&lt;-</span><span class="cf">function</span>(x){</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>  avg.x<span class="ot">&lt;-</span><span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)</span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>  sd.x <span class="ot">&lt;-</span><span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)</span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>  out.vector<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="at">avg=</span>avg.x, <span class="at">sd=</span>sd.x)</span>
+<span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">round</span>(out.vector,<span class="dv">2</span>))</span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s apply this function to dataset ‘p17’</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's try this function</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cal_avg_sd</span>(p17_df<span class="sc">$</span>sp.mobile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> avg   sd 
+38.9 21.8 </code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3372904388.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><br></figcaption>
+</figure>
+</div>
+<p><img src="images/clipboard-1467283746.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/clipboard-1493476935.png" class="img-fluid"></p>
 
 
 </section>
