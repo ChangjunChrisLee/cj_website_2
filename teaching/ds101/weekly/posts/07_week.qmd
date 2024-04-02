@@ -1,6 +1,6 @@
 ---
 title: "Data Exploration (2)"
-subtitle: "Data Wrangling"
+subtitle: "Data Wrangling with tidyverse"
 Week: 7
 slide-format: revealjs
 ---
@@ -173,3 +173,181 @@ library(lubridate)
 ### Class
 
 ------------------------------------------------------------------------
+
+#### Introduction to `Tidyverse`
+
+The tidyverse is a powerful collection  of  R  packages  that are actually  data tools for transforming and visualizing data. All packages of the tidyverse share an underlying philosophy and common APls.
+
+The core packages are: 
+
+-   ggplot2, which implements the grammar of graphics. You can use it to visualize your data.
+
+-   dplyr is a grammar of data You can use it to solve the most common data manipulation challenges.
+
+-   tidyr helps you to create tidy data or data where each variable is in a column, each observation is a row end each value is a column, each observation is a row end each value is a cell. 
+
+-   readr is a fast and friendly way to read rectangular
+
+-   purrr enhances R"s functional programming (FP)toolkit by providing a complete and consistent set of tools for working with functions and vectors. 
+
+-   tibble is a modern re-imaginging of the data
+
+-   stringr provides a cohesive set of functions designed to make working with strings as easy as possible
+
+-   forcats provide a suite of useful  tools that solve common problems with factors.  
+
+**You can install the complete tidyverse with:**
+
+\> install.packages("tidyverse")
+
+**Then, load the core tidyverse and make it available in your current R session by running:**
+
+\> library(tidyverse)
+
+Please see this cheat sheet:
+
+<https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
+
+![](images/clipboard-518374615.png)
+
+![<br>](images/clipboard-1070556385.png)
+
+#### Pipe
+
+![](images/clipboard-126955403.png)
+
+**Subset Observations**
+
+```{r}
+# filter
+iris %>% filter(Sepal.Length > 7)
+
+levels(iris$Species)
+iris %>% filter(Species == "setosa")
+
+iris %>% filter(Species == "setosa") %>% plot
+iris %>% filter(Species == "setosa") %>% summary
+
+# distinct: remove duplication (take only unique values)
+iris %>% distinct(Species)
+
+# random sampling
+iris %>% nrow
+iris %>% sample_frac(0.5, replace=T)
+iris %>% sample_frac(0.5, replace=T) %>% nrow
+
+iris %>% sample_n(10, replace=T) 
+iris %>% sample_n(10, replace=T) %>% nrow 
+
+# slice 
+iris %>% slice(10:15)
+
+# Top n in X
+iris %>% top_n(5, Sepal.Length)
+iris %>% top_n(5, Sepal.Width)
+```
+
+**Subset Variables**
+
+```{r}
+# pull & select
+iris %>% pull(Petal.Width)
+iris %>% select(Petal.Width)
+
+iris %>% pull(Petal.Width) %>% str
+iris %>% select(Petal.Width) %>% str
+
+iris %>% select(Petal.Length, Petal.Width) %>% head
+# useful helpers: starts_with(), contains()
+iris %>% select(starts_with("Peta")) %>% head
+iris %>% select(contains("tal")) %>% head
+
+```
+
+**Reshaping & Arrange data**
+
+```{r}
+# arrange
+
+mtcars %>% arrange(mpg) %>% head
+mtcars %>% add_rownames %>% head
+mtcars %>% add_rownames %>% arrange(mpg) %>% 
+head
+mtcars %>% add_rownames %>% arrange(desc(mpg)) %>% select(rowname)
+
+```
+
+**Summarise data**
+
+```{r}
+# Summarise
+
+iris %>% summarise(avg.PL=mean(Petal.Length))
+iris %>% summarise(sd.PL=sd(Petal.Length))
+
+iris %>% summarise(avg.PL=mean(Petal.Length),
+                   sd.PL=sd(Petal.Length),
+                   min.PL=min(Petal.Length))
+
+iris %>% count(Species)
+iris %>% sample_frac(0.3) %>% count(Species)
+
+iris %>% summarise_all(mean)
+iris %>% summarise_at("Petal.Length", sum)
+iris %>% summarise_at(c("Petal.Length", "Petal.Width"), mean)
+
+```
+
+**Group and Summarise data**
+
+```{r}
+# Group
+iris %>% group_by(Species)
+
+iris %>% group_by(Species) %>% 
+  summarise_all(mean)
+
+iris %>% group_by(Species) %>% 
+  select(starts_with("Sep")) %>% 
+  summarise_all(mean)
+
+mtcars %>% group_by(am) %>% 
+  summarise(hp.avg=mean(hp),
+            hp.sd=sd(hp))
+```
+
+**Make New Variables**
+
+```{r}
+# let's use mtcars dataset
+mtcars
+help(mtcars)
+
+# mutate
+# mpg to kml
+mtcars %>% mutate(kml=0.425144*mpg)
+mtcars %>% mutate(kml=round(0.425144*mpg, 1))
+mtcars %>% mutate(kml=round(0.425144*mpg, 1)) %>% 
+  select(mpg, kml) %>% 
+  top_n(5, mpg)
+
+# transmute
+mtcars %>% transmute(hp/wt)
+
+# rename
+mtcars %>% names
+mtcars %>% mutate(new=1) %>% head
+mtcars %>% mutate(new=1) %>% 
+rename(change.name=new) %>% head
+
+```
+
+**Combine Data Sets**
+
+<br>
+
+![](images/clipboard-3024371066.png)
+
+<br>
+
+![](images/clipboard-4205026733.png)
