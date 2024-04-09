@@ -190,7 +190,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
   <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
-  <li><a href="#introduction-to-tidyverse" id="toc-introduction-to-tidyverse" class="nav-link" data-scroll-target="#introduction-to-tidyverse">Introduction to <code>Tidyverse</code></a></li>
+  <li><a href="#loop-function-and-data-manipulation-in-r-a-dive-into-the-palmer-penguin-dataset" id="toc-loop-function-and-data-manipulation-in-r-a-dive-into-the-palmer-penguin-dataset" class="nav-link" data-scroll-target="#loop-function-and-data-manipulation-in-r-a-dive-into-the-palmer-penguin-dataset"><strong>Loop, Function, and Data Manipulation in R: A Dive into the Palmer Penguin Dataset</strong></a></li>
+  <li><a href="#exploration-with-tidyverse" id="toc-exploration-with-tidyverse" class="nav-link" data-scroll-target="#exploration-with-tidyverse">Exploration with tidyverse</a></li>
+  <li><a href="#using-purrr-for-advanced-data-manipulation" id="toc-using-purrr-for-advanced-data-manipulation" class="nav-link" data-scroll-target="#using-purrr-for-advanced-data-manipulation"><strong>Using <code>purrr</code> for Advanced Data Manipulation</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -963,11 +965,269 @@ FALSE  TRUE
 <p><img src="images/clipboard-1467283746.png" class="img-fluid"></p>
 <p><br></p>
 <p><img src="images/clipboard-1493476935.png" class="img-fluid"></p>
+<hr>
 </section>
-<section id="introduction-to-tidyverse" class="level3">
-<h3 class="anchored" data-anchor-id="introduction-to-tidyverse">Introduction to <code>Tidyverse</code></h3>
+<section id="loop-function-and-data-manipulation-in-r-a-dive-into-the-palmer-penguin-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="loop-function-and-data-manipulation-in-r-a-dive-into-the-palmer-penguin-dataset"><strong>Loop, Function, and Data Manipulation in R: A Dive into the Palmer Penguin Dataset</strong></h3>
+<p>In the world of data analysis with R, mastering the basics of loops, functions, and data manipulation is essential for any aspiring data scientist. While the <strong><code>tidyverse</code></strong> collection of packages offers powerful tools for these tasks, it’s crucial to first understand the foundational techniques that underpin effective data analysis. This week, we embark on a journey with the Palmer Penguin dataset, focusing on traditional R approaches, saving the <strong><code>tidyverse</code></strong> exploration for our next installment.</p>
+<section id="the-palmer-penguin-dataset-a-brief-history" class="level4">
+<h4 class="anchored" data-anchor-id="the-palmer-penguin-dataset-a-brief-history"><strong>The Palmer Penguin Dataset: A Brief History</strong></h4>
+<p>The Palmer Penguin dataset, introduced by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER, provides a compelling alternative to the classic Iris dataset for data exploration and visualization. Comprising data on 344 penguins across three species (Adélie, Gentoo, and Chinstrap) from the Palmer Archipelago in Antarctica, the dataset includes variables such as species, island, bill length and depth, flipper length, body mass, and sex.</p>
+<p><img src="images/clipboard-2073651378.png" class="img-fluid"></p>
+<p>This dataset not only offers rich insights into the biological diversity of Antarctic penguins but also serves as an excellent resource for teaching data science techniques due to its manageable size and complexity.</p>
+</section>
+<section id="data-manipulation-with-base-r" class="level4">
+<h4 class="anchored" data-anchor-id="data-manipulation-with-base-r"><strong>Data Manipulation with Base R</strong></h4>
+<p>Before diving into complex manipulations, let’s start by loading the Palmer Penguin dataset. Although it’s available through the <strong><code>palmerpenguins</code></strong> package, we’ll keep our focus on base R functions for this exploration.</p>
+</section>
+<section id="loading-the-dataset" class="level4">
+<h4 class="anchored" data-anchor-id="loading-the-dataset"><strong>Loading the Dataset</strong></h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming palmerpenguins is installed</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"penguins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With the data loaded, let’s proceed to some basic manipulations using base R functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           NA            NA                  NA          NA
+ 5 Adelie  Torgersen           36.7          19.3               193        3450
+ 6 Adelie  Torgersen           39.3          20.6               190        3650
+ 7 Adelie  Torgersen           38.9          17.8               181        3625
+ 8 Adelie  Torgersen           39.2          19.6               195        4675
+ 9 Adelie  Torgersen           34.1          18.1               193        3475
+10 Adelie  Torgersen           42            20.2               190        4250
+# ℹ 334 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<p><img src="images/clipboard-2493616168.png" class="img-fluid"></p>
+<p>See more information on this dataset: <a href="https://allisonhorst.github.io/palmerpenguins/" class="uri">https://allisonhorst.github.io/palmerpenguins/</a></p>
+<p><br></p>
+</section>
+<section id="subsetting-data" class="level4">
+<h4 class="anchored" data-anchor-id="subsetting-data"><strong>Subsetting Data</strong></h4>
+<p>Subsetting is crucial for isolating parts of the dataset for analysis. In base R, we can use the subset function or the <strong><code>[</code></strong> operator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to include only Adélie penguins</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>adelie_penguins <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively, using the bracket operator</span></span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>adelie_penguins <span class="ot">&lt;-</span> penguins[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Adelie"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="handling-missing-values" class="level4">
+<h4 class="anchored" data-anchor-id="handling-missing-values"><strong>Handling Missing Values</strong></h4>
+<p>Missing data can skew analysis, making its identification and treatment essential.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identifying missing values</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(penguins))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 19</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing rows with any missing value</span></span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-custom-functions" class="level4">
+<h4 class="anchored" data-anchor-id="creating-custom-functions"><strong>Creating Custom Functions</strong></h4>
+<p>Custom functions in R amplify the power of data manipulation by encapsulating repetitive tasks.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A function to summarize penguin measurements</span></span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>summarize_measurements <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>  summary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean_FlipperLength =</span> <span class="fu">mean</span>(data<span class="sc">$</span>flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD_FlipperLength =</span> <span class="fu">sd</span>(data<span class="sc">$</span>flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb113-6"><a href="#cb113-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mean_BillLength =</span> <span class="fu">mean</span>(data<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb113-7"><a href="#cb113-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">SD_BillLength =</span> <span class="fu">sd</span>(data<span class="sc">$</span>bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb113-8"><a href="#cb113-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb113-9"><a href="#cb113-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(summary)</span>
+<span id="cb113-10"><a href="#cb113-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb113-11"><a href="#cb113-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-12"><a href="#cb113-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Applying the function to Adélie penguins</span></span>
+<span id="cb113-13"><a href="#cb113-13" aria-hidden="true" tabindex="-1"></a>adelie_summary <span class="ot">&lt;-</span> <span class="fu">summarize_measurements</span>(adelie_penguins)</span>
+<span id="cb113-14"><a href="#cb113-14" aria-hidden="true" tabindex="-1"></a>adelie_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean_FlipperLength SD_FlipperLength Mean_BillLength SD_BillLength
+1                190             6.54            38.8          2.66</code></pre>
+</div>
+</div>
+</section>
+<section id="looping-through-data" class="level4">
+<h4 class="anchored" data-anchor-id="looping-through-data"><strong>Looping Through Data</strong></h4>
+<p>Loops are essential for iterative operations. In R, <strong><code>for</code></strong> loops allow us to apply operations across elements, rows, or columns in a dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating mean body mass for each species</span></span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> <span class="fu">unique</span>(penguins<span class="sc">$</span>species)</span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty vector</span></span>
+<span id="cb115-4"><a href="#cb115-4" aria-hidden="true" tabindex="-1"></a>mean_mass_by_species <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">0</span>)</span>
+<span id="cb115-5"><a href="#cb115-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-6"><a href="#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(species_list)) {</span>
+<span id="cb115-7"><a href="#cb115-7" aria-hidden="true" tabindex="-1"></a>  species_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_list[i])</span>
+<span id="cb115-8"><a href="#cb115-8" aria-hidden="true" tabindex="-1"></a>  mean_mass_by_species[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(species_data<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb115-9"><a href="#cb115-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb115-10"><a href="#cb115-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb115-11"><a href="#cb115-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mean_mass_by_species) <span class="ot">&lt;-</span> species_list</span>
+<span id="cb115-12"><a href="#cb115-12" aria-hidden="true" tabindex="-1"></a>mean_mass_by_species</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Adelie    Gentoo Chinstrap 
+     3701      5076      3733 </code></pre>
+</div>
+</div>
+<p>This code iterates through each species in the dataset, calculating and storing the mean body mass.</p>
+<p>Let’s use customized function instead.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>species_list <span class="ot">&lt;-</span> <span class="fu">unique</span>(penguins<span class="sc">$</span>species)</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list</span></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>summary_by_species <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">0</span>)</span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(species_list)) {</span>
+<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  species_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(penguins, species <span class="sc">==</span> species_list[i])</span>
+<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  summary_by_species[[i]] <span class="ot">&lt;-</span> <span class="fu">summarize_measurements</span>(species_data)</span>
+<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(summary_by_species) <span class="ot">&lt;-</span> species_list</span>
+<span id="cb117-11"><a href="#cb117-11" aria-hidden="true" tabindex="-1"></a>summary_by_species</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Adelie
+  Mean_FlipperLength SD_FlipperLength Mean_BillLength SD_BillLength
+1                190             6.54            38.8          2.66
+
+$Gentoo
+  Mean_FlipperLength SD_FlipperLength Mean_BillLength SD_BillLength
+1                217             6.48            47.5          3.08
+
+$Chinstrap
+  Mean_FlipperLength SD_FlipperLength Mean_BillLength SD_BillLength
+1                196             7.13            48.8          3.34</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="exploration-with-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="exploration-with-tidyverse">Exploration with tidyverse</h3>
+<p>Let’s enhance our exploration of the Palmer Penguin dataset by paralleling our original code snippets with their <strong><code>tidyverse</code></strong> counterparts. The <strong><code>tidyverse</code></strong> is a collection of R packages designed for data science that makes data manipulation, exploration, and visualization easier and more intuitive.</p>
+<section id="loading-the-dataset-with-tidyverse" class="level4">
+<h4 class="anchored" data-anchor-id="loading-the-dataset-with-tidyverse"><strong>Loading the Dataset with <code>tidyverse</code></strong></h4>
+<p>First, let’s ensure we have the <strong><code>tidyverse</code></strong> and <strong><code>palmerpenguins</code></strong> packages loaded. If you haven’t installed these packages, you can do so using <strong><code>install.packages("tidyverse")</code></strong> and <strong><code>install.packages("palmerpenguins")</code></strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="subsetting-data-with-dplyr" class="level4">
+<h4 class="anchored" data-anchor-id="subsetting-data-with-dplyr"><strong>Subsetting Data with <code>dplyr</code></strong></h4>
+<p>With <strong><code>dplyr</code></strong>, subsetting becomes more readable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsetting to include only Adélie penguins using dplyr</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>adelie_penguins <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="handling-missing-values-with-tidyverse" class="level4">
+<h4 class="anchored" data-anchor-id="handling-missing-values-with-tidyverse"><strong>Handling Missing Values with <code>tidyverse</code></strong></h4>
+<p>The <strong><code>tidyverse</code></strong> provides a straightforward approach to dealing with missing values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing rows with any missing value using dplyr</span></span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-custom-functions-and-applying-them-into-dataset" class="level4">
+<h4 class="anchored" data-anchor-id="creating-custom-functions-and-applying-them-into-dataset"><strong>Creating Custom Functions and Applying them into dataset</strong></h4>
+<p>While base R functions are powerful, integrating them with <strong><code>tidyverse</code></strong> functionalities can make your workflows even more efficient:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using dplyr and purrr to summarize measurements</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>summarize_measurements <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Mean_FlipperLength =</span> <span class="fu">mean</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">SD_FlipperLength =</span> <span class="fu">sd</span>(flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">Mean_BillLength =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">SD_BillLength =</span> <span class="fu">sd</span>(bill_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Applying the function to Adélie penguins</span></span>
+<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a>adelie_summary <span class="ot">&lt;-</span> adelie_penguins <span class="sc">%&gt;%</span></span>
+<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_measurements</span>()</span>
+<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a>adelie_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  Mean_FlipperLength SD_FlipperLength Mean_BillLength SD_BillLength
+               &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1               190.             6.54            38.8          2.66</code></pre>
+</div>
+</div>
+</section>
+<section id="looping-through-data-with-group_by-and-summarise" class="level4">
+<h4 class="anchored" data-anchor-id="looping-through-data-with-group_by-and-summarise"><strong>Looping Through Data with <code>group_by</code> and <code>summarise</code></strong></h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating mean body mass for each species with dplyr</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>mean_mass_by_species <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MeanBodyMass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>mean_mass_by_species</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  species   MeanBodyMass
+  &lt;fct&gt;            &lt;dbl&gt;
+1 Adelie           3701.
+2 Chinstrap        3733.
+3 Gentoo           5076.</code></pre>
+</div>
+</div>
+<p>By incorporating <strong><code>tidyverse</code></strong> techniques, we can make our code more concise and readable, especially for those new to programming or R. The <strong><code>tidyverse</code></strong> syntax is designed to be intuitive, allowing you to more easily understand and articulate what your code is doing, which is particularly beneficial when sharing your work with others or when collaborating on data science projects.</p>
+<p><br></p>
+</section>
+</section>
+<section id="using-purrr-for-advanced-data-manipulation" class="level3">
+<h3 class="anchored" data-anchor-id="using-purrr-for-advanced-data-manipulation"><strong>Using <code>purrr</code> for Advanced Data Manipulation</strong></h3>
+<p><strong><code>purrr</code></strong> enhances functional programming within the <strong><code>tidyverse</code></strong> ecosystem, providing tools for working effectively with lists and functional programming paradigms. Here’s how we could use <strong><code>purrr</code></strong> in conjunction with <strong><code>dplyr</code></strong> for a task similar to our mean body mass calculation:</p>
+<section id="calculating-mean-body-mass-by-species-with-purrr" class="level4">
+<h4 class="anchored" data-anchor-id="calculating-mean-body-mass-by-species-with-purrr">Calculating Mean Body Mass by Species with <strong><code>purrr</code></strong></h4>
+<p>We can use <strong><code>purrr</code></strong>’s <strong><code>map</code></strong> functions to apply operations across elements in a list, which is particularly useful for more complex or nested operations. While the direct calculation of mean body mass by species is more straightforward with <strong><code>dplyr</code></strong> alone, let’s consider a scenario where <strong><code>purrr</code></strong> demonstrates its utility:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting the data by species</span></span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>species_split <span class="ot">&lt;-</span> <span class="fu">split</span>(penguins, penguins<span class="sc">$</span>species)</span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating mean body mass for each species using purrr</span></span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a>mean_mass_by_species <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(species_split, </span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>                                <span class="sc">~</span><span class="fu">summarise</span>(.x, <span class="at">MeanBodyMass =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a>mean_mass_by_species</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 1
+  MeanBodyMass
+         &lt;dbl&gt;
+1        3701.
+2        3733.
+3        5076.</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

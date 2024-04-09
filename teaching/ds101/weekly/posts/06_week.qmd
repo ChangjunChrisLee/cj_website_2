@@ -330,3 +330,224 @@ cal_avg_sd(p17_df$sp.mobile)
 <br>
 
 ![](images/clipboard-1493476935.png)
+
+------------------------------------------------------------------------
+
+### **Loop, Function, and Data Manipulation in R: A Dive into the Palmer Penguin Dataset**
+
+In the world of data analysis with R, mastering the basics of loops, functions, and data manipulation is essential for any aspiring data scientist. While the **`tidyverse`** collection of packages offers powerful tools for these tasks, it's crucial to first understand the foundational techniques that underpin effective data analysis. This week, we embark on a journey with the Palmer Penguin dataset, focusing on traditional R approaches, saving the **`tidyverse`** exploration for our next installment.
+
+#### **The Palmer Penguin Dataset: A Brief History**
+
+The Palmer Penguin dataset, introduced by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, provides a compelling alternative to the classic Iris dataset for data exploration and visualization. Comprising data on 344 penguins across three species (Adélie, Gentoo, and Chinstrap) from the Palmer Archipelago in Antarctica, the dataset includes variables such as species, island, bill length and depth, flipper length, body mass, and sex.
+
+![](images/clipboard-2073651378.png)
+
+This dataset not only offers rich insights into the biological diversity of Antarctic penguins but also serves as an excellent resource for teaching data science techniques due to its manageable size and complexity.
+
+#### **Data Manipulation with Base R**
+
+Before diving into complex manipulations, let's start by loading the Palmer Penguin dataset. Although it's available through the **`palmerpenguins`** package, we'll keep our focus on base R functions for this exploration.
+
+#### **Loading the Dataset**
+
+```{r}
+# Assuming palmerpenguins is installed
+library(palmerpenguins)
+data("penguins")
+
+```
+
+With the data loaded, let's proceed to some basic manipulations using base R functions.
+
+```{r}
+palmerpenguins::penguins
+```
+
+![](images/clipboard-2493616168.png)
+
+See more information on this dataset: <https://allisonhorst.github.io/palmerpenguins/>
+
+<br>
+
+#### **Subsetting Data**
+
+Subsetting is crucial for isolating parts of the dataset for analysis. In base R, we can use the subset function or the **`[`** operator.
+
+```{r}
+# Subsetting to include only Adélie penguins
+adelie_penguins <- subset(penguins, species == "Adelie")
+
+# Alternatively, using the bracket operator
+adelie_penguins <- penguins[penguins$species == "Adelie", ]
+
+```
+
+#### **Handling Missing Values**
+
+Missing data can skew analysis, making its identification and treatment essential.
+
+```{r}
+# Identifying missing values
+sum(is.na(penguins))
+
+# Removing rows with any missing value
+penguins_clean <- na.omit(penguins)
+
+```
+
+#### **Creating Custom Functions**
+
+Custom functions in R amplify the power of data manipulation by encapsulating repetitive tasks.
+
+```{r}
+# A function to summarize penguin measurements
+summarize_measurements <- function(data) {
+  summary <- data.frame(
+    Mean_FlipperLength = mean(data$flipper_length_mm, na.rm = TRUE),
+    SD_FlipperLength = sd(data$flipper_length_mm, na.rm = TRUE),
+    Mean_BillLength = mean(data$bill_length_mm, na.rm = TRUE),
+    SD_BillLength = sd(data$bill_length_mm, na.rm = TRUE)
+  )
+  return(summary)
+}
+
+# Applying the function to Adélie penguins
+adelie_summary <- summarize_measurements(adelie_penguins)
+adelie_summary
+
+```
+
+#### **Looping Through Data**
+
+Loops are essential for iterative operations. In R, **`for`** loops allow us to apply operations across elements, rows, or columns in a dataset.
+
+```{r}
+# Calculating mean body mass for each species
+species_list <- unique(penguins$species)
+# Create an empty vector
+mean_mass_by_species <- numeric(0)
+
+for (i in seq_along(species_list)) {
+  species_data <- subset(penguins, species == species_list[i])
+  mean_mass_by_species[i] <- mean(species_data$body_mass_g, na.rm = TRUE)
+}
+
+names(mean_mass_by_species) <- species_list
+mean_mass_by_species
+
+```
+
+This code iterates through each species in the dataset, calculating and storing the mean body mass.
+
+Let's use customized function instead.
+
+```{r}
+species_list <- unique(penguins$species)
+# Create an empty list
+summary_by_species <- list(0)
+
+for (i in seq_along(species_list)) {
+  species_data <- subset(penguins, species == species_list[i])
+  summary_by_species[[i]] <- summarize_measurements(species_data)
+}
+
+names(summary_by_species) <- species_list
+summary_by_species
+```
+
+<br>
+
+### Exploration with tidyverse
+
+Let’s enhance our exploration of the Palmer Penguin dataset by paralleling our original code snippets with their **`tidyverse`** counterparts. The **`tidyverse`** is a collection of R packages designed for data science that makes data manipulation, exploration, and visualization easier and more intuitive.
+
+#### **Loading the Dataset with `tidyverse`**
+
+First, let’s ensure we have the **`tidyverse`** and **`palmerpenguins`** packages loaded. If you haven't installed these packages, you can do so using **`install.packages("tidyverse")`** and **`install.packages("palmerpenguins")`**.
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+
+```
+
+#### **Subsetting Data with `dplyr`**
+
+With **`dplyr`**, subsetting becomes more readable:
+
+```{r}
+# Subsetting to include only Adélie penguins using dplyr
+adelie_penguins <- penguins %>%
+  filter(species == "Adelie")
+
+```
+
+#### **Handling Missing Values with `tidyverse`**
+
+The **`tidyverse`** provides a straightforward approach to dealing with missing values:
+
+```{r}
+# Removing rows with any missing value using dplyr
+penguins_clean <- penguins %>%
+  drop_na()
+
+```
+
+#### **Creating Custom Functions and Applying them into dataset**
+
+While base R functions are powerful, integrating them with **`tidyverse`** functionalities can make your workflows even more efficient:
+
+```{r}
+# Using dplyr and purrr to summarize measurements
+summarize_measurements <- function(data) {
+  data %>%
+    summarise(Mean_FlipperLength = mean(flipper_length_mm, na.rm = TRUE),
+              SD_FlipperLength = sd(flipper_length_mm, na.rm = TRUE),
+              Mean_BillLength = mean(bill_length_mm, na.rm = TRUE),
+              SD_BillLength = sd(bill_length_mm, na.rm = TRUE))
+}
+
+# Applying the function to Adélie penguins
+adelie_summary <- adelie_penguins %>%
+  summarize_measurements()
+adelie_summary
+
+```
+
+#### **Looping Through Data with `group_by` and `summarise`**
+
+```{r}
+# Calculating mean body mass for each species with dplyr
+mean_mass_by_species <- penguins %>%
+  group_by(species) %>%
+  summarise(MeanBodyMass = mean(body_mass_g, na.rm = TRUE))
+
+mean_mass_by_species
+
+```
+
+By incorporating **`tidyverse`** techniques, we can make our code more concise and readable, especially for those new to programming or R. The **`tidyverse`** syntax is designed to be intuitive, allowing you to more easily understand and articulate what your code is doing, which is particularly beneficial when sharing your work with others or when collaborating on data science projects.
+
+<br>
+
+### **Using `purrr` for Advanced Data Manipulation**
+
+**`purrr`** enhances functional programming within the **`tidyverse`** ecosystem, providing tools for working effectively with lists and functional programming paradigms. Here's how we could use **`purrr`** in conjunction with **`dplyr`** for a task similar to our mean body mass calculation:
+
+#### Calculating Mean Body Mass by Species with **`purrr`**
+
+We can use **`purrr`**'s **`map`** functions to apply operations across elements in a list, which is particularly useful for more complex or nested operations. While the direct calculation of mean body mass by species is more straightforward with **`dplyr`** alone, let's consider a scenario where **`purrr`** demonstrates its utility:
+
+```{r}
+library(tidyverse)
+# Splitting the data by species
+species_split <- split(penguins, penguins$species)
+
+# Calculating mean body mass for each species using purrr
+mean_mass_by_species <- map_dfr(species_split, 
+                                ~summarise(.x, MeanBodyMass = mean(body_mass_g, na.rm = TRUE)))
+
+mean_mass_by_species
+
+```
