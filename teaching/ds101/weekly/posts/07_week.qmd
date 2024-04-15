@@ -180,21 +180,54 @@ The tidyverse is a powerful collection  of  R  packages  that are actually 
 
 The core packages are: 
 
--   ggplot2, which implements the grammar of graphics. You can use it to visualize your data.
+-   `ggplot2`, which implements the grammar of graphics. You can use it to visualize your data.
 
--   dplyr is a grammar of data You can use it to solve the most common data manipulation challenges.
+-   `dplyr` is a grammar of data You can use it to solve the most common data manipulation challenges.
 
--   tidyr helps you to create tidy data or data where each variable is in a column, each observation is a row end each value is a column, each observation is a row end each value is a cell. 
+-   `tidyr` helps you to create tidy data or data where each variable is in a column, each observation is a row end each value is a column, each observation is a row end each value is a cell. 
 
--   readr is a fast and friendly way to read rectangular
+-   `readr` is a fast and friendly way to read rectangular
 
--   purrr enhances R"s functional programming (FP)toolkit by providing a complete and consistent set of tools for working with functions and vectors. 
+-   `purrr` enhances R's functional programming (FP)toolkit by providing a complete and consistent set of tools for working with functions and vectors. 
 
--   tibble is a modern re-imaginging of the data
+-   `tibble` is a modern re-imaginging of the data
 
--   stringr provides a cohesive set of functions designed to make working with strings as easy as possible
+-   `stringr` provides a cohesive set of functions designed to make working with strings as easy as possible
 
--   forcats provide a suite of useful  tools that solve common problems with factors.  
+-   `forcats` provide a suite of useful  tools that solve common problems with factors.  
+
+<br>\
+The introduction of the **`tidyverse`** package in R has significantly influenced the way data science is performed using R, impacting coding practices, data analysis methodologies, and the overall approach to data manipulation and visualization.
+
+### **Before Tidyverse**
+
+Before the tidyverse, R programming was largely centered around base R functions and packages. This included using base R functions for data manipulation (like **`subset`**, **`merge`**, and **`apply`** functions) and visualization (such as plotting with **`plot`** and **`hist`**). The syntax and methods varied widely across different packages, which often led to inconsistent coding practices and a steeper learning curve for beginners. Each task could be approached in multiple ways without a clear 'best' method, leading to fragmented and less readable code.
+
+### **After Tidyverse**
+
+The tidyverse, developed by Hadley Wickham and others, brought a suite of packages designed to work harmoniously together using a consistent syntax and underlying philosophy. Key features and impacts include:
+
+1.  **Consistent Syntax**: The tidyverse introduced a consistent and readable syntax that leverages chaining operations using the **`%>%`** operator from the **`magrittr`** package. This has made code more readable and easier to write and understand, especially for newcomers.
+
+2.  **Data Manipulation**: With **`dplyr`**, data manipulation became more intuitive and less verbose. Functions like **`filter()`**, **`arrange()`**, **`select()`**, **`mutate()`**, and **`summarise()`** allow for straightforward data operations that are both faster and easier to code compared to base R functions.
+
+3.  **Data Importing and Tidying**: **`readr`** for reading data and **`tidyr`** for tidying data introduced more efficient data reading and transforming capabilities, making it simpler to convert data into a tidy format. Tidy data, where each column is a variable and each row is an observation, has become a standard for data analysis, facilitating easier manipulation and analysis.
+
+4.  **Visualization**: **`ggplot2`** transformed data visualization in R by allowing for the layering of plots intuitively and flexibly, using a system based on the grammar of graphics. This has enabled users to create complex, publication-quality graphs more easily than was possible with base R plotting functions.
+
+5.  **Community and Accessibility**: The tidyverse has fostered a strong community and has contributed significantly to teaching materials that are user-friendly and accessible to beginners. This has democratized data analysis in R, making it more accessible to non-programmers.
+
+6.  **Impact on Package Development**: The tidyverse’s philosophy and popularity have influenced the development of other packages, even those not part of the tidyverse, to adopt tidy principles and interoperate smoothly with tidyverse packages.
+
+> The tidyverse has not only changed the syntax and functionality of R coding but also its philosophy towards data analysis. It promotes a workflow that is coherent, transparent, and efficient, which has been widely adopted in academia, industry, and teaching. While some veteran R users prefer the flexibility and control of base R, the tidyverse's approachable syntax and powerful capabilities have made it a pivotal tool in modern R programming, particularly for data science.
+
+<br>
+
+Please check out the homepage of tidyverse: <https://www.tidyverse.org/>
+
+![](images/clipboard-2583622693.png)
+
+<br>
 
 **You can install the complete tidyverse with:**
 
@@ -267,8 +300,14 @@ iris %>% select(contains("tal")) %>% head
 **Reshaping & Arrange data**
 
 ```{r}
-# arrange
 
+# let's use mtcars dataset
+mtcars
+
+# About mtcars dataset
+# help(mtcars)
+
+# arrange
 mtcars %>% arrange(mpg) %>% head
 mtcars %>% add_rownames %>% head
 mtcars %>% add_rownames %>% arrange(mpg) %>% 
@@ -319,10 +358,6 @@ mtcars %>% group_by(am) %>%
 **Make New Variables**
 
 ```{r}
-# let's use mtcars dataset
-mtcars
-help(mtcars)
-
 # mutate
 # mpg to kml
 mtcars %>% mutate(kml=0.425144*mpg)
@@ -351,3 +386,104 @@ rename(change.name=new) %>% head
 <br>
 
 ![](images/clipboard-4205026733.png)
+
+<br>
+
+### Joins!
+
+Thanks to Garrick Aden-Buie ([garrickadenbuie.com](https://www.garrickadenbuie.com)), we can teach joins very easily with his fantastic diagrams.
+
+<br>
+
+Let's use some example datasets that come pre-loaded in R to demonstrate how joins work using **`dplyr`**. We will use the **`mtcars`** dataset, splitting it into two separate data frames to illustrate how the different types of joins operate.
+
+First, let's set up our example data frames from the **`mtcars`** dataset:
+
+```{r}
+# Create two data frames from mtcars
+df1 <- mtcars[1:10, c("mpg", "cyl", "disp")]  # first 10 rows, select specific columns
+df2 <- mtcars[5:15, c("disp", "hp", "drat")]  # rows 5 to 15, select specific columns
+
+# Make sure there's a common key for joining; here, we'll use 'disp'
+# Print out the data frames to see what they contain
+print(df1)
+print(df2)
+```
+
+#### Inner Join
+
+> All rows from `x` where there are matching values in `y`, and all columns from `x` and `y`.
+
+![](images/inner-join.gif)
+
+```{r}
+inner_join_result <- inner_join(df1, df2, by = "disp")
+print(inner_join_result)
+```
+
+#### Left Join
+
+> All rows from `x`, and all columns from `x` and `y`. Rows in `x` with no match in `y` will have `NA` values in the new columns.
+
+![](images/left-join.gif)
+
+```{r}
+left_join_result <- left_join(df1, df2, by = "disp")
+print(left_join_result)
+```
+
+#### Left Join (Extra Rows in y)
+
+> ... If there are multiple matches between `x` and `y`, all combinations of the matches are returned.
+
+![](images/left-join-extra.gif)
+
+#### Right Join
+
+> All rows from y, and all columns from `x` and `y`. Rows in `y` with no match in `x` will have `NA` values in the new columns.
+
+![](images/right-join.gif)
+
+```{r}
+right_join_result <- right_join(df1, df2, by = "disp")
+print(right_join_result)
+```
+
+#### Full Join
+
+> All rows and all columns from both `x` and `y`. Where there are not matching values, returns `NA` for the one missing.
+
+![](images/full-join.gif)
+
+```{r}
+full_join_result <- full_join(df1, df2, by = "disp")
+print(full_join_result)
+```
+
+**Filtering Joins**
+
+> Filtering joins match observations in the same way as mutating joins, but affect the observations, not the variables. ... Semi-joins are useful for matching filtered summary tables back to the original rows. ... Anti-joins are useful for diagnosing join mismatches.\
+> [R for Data Science: Filtering Joins](http://r4ds.had.co.nz/relational-data.html#filtering-joins)
+
+#### Semi Join
+
+> All rows from `x` where there are matching values in `y`, keeping just columns from `x`.
+
+![](images/semi-join.gif)
+
+```{r}
+semi_join_result <- semi_join(df1, df2, by = "disp")
+print(semi_join_result)
+```
+
+#### Anti Join
+
+> All rows from `x` where there are not matching values in `y`, keeping just column
+
+![](images/anti-join.gif)
+
+```{r}
+# Assuming df1 and df2 from the previous example
+anti_join_result <- anti_join(df1, df2, by = "disp")
+print(anti_join_result)
+```
