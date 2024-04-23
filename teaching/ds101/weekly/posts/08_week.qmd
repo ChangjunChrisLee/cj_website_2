@@ -227,6 +227,59 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
 
 This code not only adds the regression line but also improves the aesthetics with a minimal theme and labels that clarify what each axis represents.
 
+Practice once more with `palmer penguins` dataset.
+
+```{r}
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+Drop missing variables
+
+```{r}
+penguins %>% 
+  drop_na()
+```
+
+```{r}
+ggplot(penguins) +
+  aes(x = bill_length_mm,
+      y = bill_depth_mm,
+      colour = species) +
+  geom_point(shape = "circle", size = 1.5) +
+  scale_color_manual(
+    values = c(Adelie = "#F8766D",
+    Chinstrap = "#00C19F",
+    Gentoo = "#FF61C3")
+  ) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(legend.position = "bottom")
+```
+
+-   Layers in use above
+
+    -   Layer connecting the X-axis and Y-axis
+
+        -   `aes(x = bill_length_mm, y = bill_depth_mm, colour = species)`
+
+    -   A layer that sets the elements of the graph
+
+        -   `geom_point(shape = "circle", size = 1.5)`
+
+    -   A layer that sets the color of the graph
+
+        -   `scale_color_manual( values = c(Adelie = "#F8766D", Chinstrap = "#00C19F", Gentoo = "#FF61C3") )`
+
+    -   A layer that sets the theme of the graph
+
+        -   `ggthemes::theme_fivethirtyeight()`
+
+    -   Layer to set the position of the legend
+
+        -   `theme(legend.position = "bottom")`
+
+<br>
+
 ### **Advanced ggplot2 Features**
 
 #### **Faceting for Comparative Analysis**
@@ -241,6 +294,41 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
 ```
 
 This will create a separate plot for each number of cylinders, making it easy to see differences across categories.
+
+-   facet: a particular aspect of feature of something
+
+```{r}
+ggplot(penguins) +
+  aes(x = bill_length_mm,
+      y = bill_depth_mm,
+      colour = species) +
+  geom_point(shape = "circle", size = 1.5) +
+  scale_color_manual(
+    values = c(Adelie = "#F8766D",
+    Chinstrap = "#00C19F",
+    Gentoo = "#FF61C3")
+  ) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(legend.position = "bottom") +
+  facet_wrap(~island)
+```
+
+```{r}
+penguins %>% drop_na %>% 
+ggplot() +
+  aes(x = bill_length_mm,
+      y = bill_depth_mm,
+      colour = species) +
+  geom_point(shape = "circle", size = 1.5) +
+  scale_color_manual(
+    values = c(Adelie = "#F8766D",
+    Chinstrap = "#00C19F",
+    Gentoo = "#FF61C3")
+  ) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(legend.position = "bottom") +
+  facet_wrap(sex ~ island)
+```
 
 #### **Customization and Extensions**
 
