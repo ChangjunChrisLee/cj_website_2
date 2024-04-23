@@ -190,6 +190,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#pre-class-video" id="toc-pre-class-video" class="nav-link active" data-scroll-target="#pre-class-video">Pre-class video</a></li>
   <li><a href="#class" id="toc-class" class="nav-link" data-scroll-target="#class">Class</a></li>
+  <li><a href="#understanding-ggplot2s-grammar-of-graphics" id="toc-understanding-ggplot2s-grammar-of-graphics" class="nav-link" data-scroll-target="#understanding-ggplot2s-grammar-of-graphics"><strong>Understanding ggplot2’s Grammar of Graphics</strong></a></li>
+  <li><a href="#setting-up-your-environment" id="toc-setting-up-your-environment" class="nav-link" data-scroll-target="#setting-up-your-environment"><strong>Setting Up Your Environment</strong></a></li>
+  <li><a href="#practical-examples" id="toc-practical-examples" class="nav-link" data-scroll-target="#practical-examples"><strong>Practical Examples</strong></a></li>
+  <li><a href="#advanced-ggplot2-features" id="toc-advanced-ggplot2-features" class="nav-link" data-scroll-target="#advanced-ggplot2-features"><strong>Advanced ggplot2 Features</strong></a></li>
   </ul>
 </nav>
     </div>
@@ -458,9 +462,123 @@ Attaching package: 'dplyr'</code></pre>
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
 <p><br></p>
-<p><strong>ggplot2 Basics</strong></p>
+<p>Data visualization is an essential skill in data science, helping to turn complex results into comprehensible insights. In R, one of the most powerful tools for creating professional and visually appealing graphs is <code>ggplot2</code>. This package, built on the principles of the <strong>Grammar of Graphics</strong> by <em>Leland Wilkinson</em>, allows users to create graphs that are both informative and attractive. Let’s delve into the concepts and practical applications of <code>ggplot2</code> to enhance your data visualization skills.</p>
+<section id="grammar-of-graphics" class="level4">
+<h4 class="anchored" data-anchor-id="grammar-of-graphics"><strong>Grammar of Graphics</strong></h4>
+<p><img src="images/clipboard-769522405.png" class="img-fluid" width="254"></p>
+<p><code>ggplot2</code> is a system for declaratively creating graphics, based on&nbsp;<a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=as_li_ss_tl">The Grammar of Graphics</a>. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.</p>
+<p>See the official home of ggplot2: <a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a></p>
+<p><br></p>
+</section>
+</section>
+<section id="understanding-ggplot2s-grammar-of-graphics" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-ggplot2s-grammar-of-graphics"><strong>Understanding ggplot2’s Grammar of Graphics</strong></h3>
+<section id="components-of-the-grammar" class="level4">
+<h4 class="anchored" data-anchor-id="components-of-the-grammar"><strong>Components of the Grammar</strong></h4>
+<p>At its core, ggplot2 operates on a coherent set of principles known as the “Grammar of Graphics.” This framework allows you to specify graphs in terms of their underlying components:</p>
+<p><img src="https://ggplot2.tidyverse.org/articles/ggplot2_files/figure-html/overview_graphic-1.png" class="img-fluid"></p>
+<ul>
+<li><p><strong>Aesthetics (<code>aes</code>)</strong>: These define how data is mapped to visual properties like size, shape, and color.</p></li>
+<li><p><strong>Geoms (geometric objects)</strong>: These are the actual visual elements that represent data—points, lines, bars, etc.</p></li>
+<li><p><strong>Stats (statistical transformations)</strong>: Some plots require transformations, such as calculating means or fitting a regression line, which are handled by stats.</p></li>
+<li><p><strong>Scales</strong>: These control how data values are mapped to visual properties.</p></li>
+<li><p><strong>Coordinate systems</strong>: These define how plots are oriented, with Cartesian coordinates being the most common, but others like polar coordinates are available for specific needs.</p></li>
+<li><p><strong>Facets</strong>: Faceting allows you to generate multiple plots based on a grouping variable, creating a matrix of panels.</p></li>
+</ul>
+<p><br></p>
+<p>Let me explain with the official introduction of ggplot2: <a href="https://ggplot2.tidyverse.org/articles/ggplot2.html" class="uri">https://ggplot2.tidyverse.org/articles/ggplot2.html</a></p>
+<p><br></p>
+</section>
+</section>
+<section id="setting-up-your-environment" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-your-environment"><strong>Setting Up Your Environment</strong></h3>
+<p>Before diving into creating plots, you need to install and load ggplot2 in your R environment:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot2 is a package belongs to tidyverse</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.0
+✔ readr     2.1.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Test if it works.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(displ, hwy, <span class="at">colour =</span> class)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="08_week_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="practical-examples" class="level3">
+<h3 class="anchored" data-anchor-id="practical-examples"><strong>Practical Examples</strong></h3>
+<section id="basic-plots" class="level4">
+<h4 class="anchored" data-anchor-id="basic-plots"><strong>Basic Plots</strong></h4>
+<p>Let’s start with a basic scatter plot to examine the relationship between two variables in the <strong><code>mtcars</code></strong> dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="08_week_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This code plots the miles per gallon (<strong><code>mpg</code></strong>) against the weight (<strong><code>wt</code></strong>) of various cars. The <strong><code>aes</code></strong> function maps the aesthetics to the respective variables.</p>
+</section>
+<section id="enhancing-visualizations" class="level4">
+<h4 class="anchored" data-anchor-id="enhancing-visualizations"><strong>Enhancing Visualizations</strong></h4>
+<p>To enhance this plot, we might want to add a linear regression line to summarize the relationship between weight and fuel efficiency:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Fuel Efficiency vs. Weight"</span>, <span class="at">x =</span> <span class="st">"Weight (1000 lbs)"</span>, <span class="at">y =</span> <span class="st">"Miles per Gallon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="08_week_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This code not only adds the regression line but also improves the aesthetics with a minimal theme and labels that clarify what each axis represents.</p>
+</section>
+</section>
+<section id="advanced-ggplot2-features" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-ggplot2-features"><strong>Advanced ggplot2 Features</strong></h3>
+<section id="faceting-for-comparative-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="faceting-for-comparative-analysis"><strong>Faceting for Comparative Analysis</strong></h4>
+<p>To compare how the relationship between weight and fuel efficiency varies by the number of cylinders in the engine, we can use faceting:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>cyl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="08_week_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This will create a separate plot for each number of cylinders, making it easy to see differences across categories.</p>
+</section>
+<section id="customization-and-extensions" class="level4">
+<h4 class="anchored" data-anchor-id="customization-and-extensions"><strong>Customization and Extensions</strong></h4>
+<p>Check out extentions of ggplot2: <a href="https://exts.ggplot2.tidyverse.org/gallery/" class="uri">https://exts.ggplot2.tidyverse.org/gallery/</a></p>
+<p><code>ggplot2</code> is highly customizable, allowing extensive control over nearly every visual aspect of a plot. For users interested in making interactive plots, <code>ggplot2</code> can be integrated with the <strong><code>plotly</code></strong> library, transforming static charts into interactive visualizations.</p>
+<p>The power and flexibility of ggplot2 make it an indispensable tool for data visualization in R. Whether you are a beginner or an experienced user, there is always more to explore and learn with ggplot2. Practice regularly, and don’t hesitate to experiment with different components to discover the best ways to convey your insights visually.</p>
+<p><br></p>
+<p>To master ggplot2, see the videos below:</p>
+<p><strong>ggplot2 workshop part 1</strong> by Thomas Lin Pedersen</p>
+<p><a href="https://www.youtube.com/watch?v=h29g21z0a68" class="uri">https://www.youtube.com/watch?v=h29g21z0a68</a></p>
+<p><strong>ggplot2 workshop part 2</strong> by Thomas Lin Pedersen</p>
+<p><a href="https://www.youtube.com/watch?v=0m4yywqNPVY" class="uri">https://www.youtube.com/watch?v=0m4yywqNPVY</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

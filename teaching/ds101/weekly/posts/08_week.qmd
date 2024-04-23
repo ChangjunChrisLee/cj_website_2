@@ -143,4 +143,121 @@ plot(log10(gapminder$gdpPercap), gapminder$lifeExp)
 
 <br>
 
-**ggplot2 Basics**
+Data visualization is an essential skill in data science, helping to turn complex results into comprehensible insights. In R, one of the most powerful tools for creating professional and visually appealing graphs is `ggplot2`. This package, built on the principles of the **Grammar of Graphics** by *Leland Wilkinson*, allows users to create graphs that are both informative and attractive. Let’s delve into the concepts and practical applications of `ggplot2` to enhance your data visualization skills.
+
+#### **Grammar of Graphics**
+
+![](images/clipboard-769522405.png){width="254"}
+
+`ggplot2` is a system for declaratively creating graphics, based on [The Grammar of Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=as_li_ss_tl). You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+
+See the official home of ggplot2: <https://ggplot2.tidyverse.org/>
+
+<br>
+
+### **Understanding ggplot2's Grammar of Graphics**
+
+#### **Components of the Grammar**
+
+At its core, ggplot2 operates on a coherent set of principles known as the "Grammar of Graphics." This framework allows you to specify graphs in terms of their underlying components:
+
+![](https://ggplot2.tidyverse.org/articles/ggplot2_files/figure-html/overview_graphic-1.png)
+
+-   **Aesthetics (`aes`)**: These define how data is mapped to visual properties like size, shape, and color.
+
+-   **Geoms (geometric objects)**: These are the actual visual elements that represent data—points, lines, bars, etc.
+
+-   **Stats (statistical transformations)**: Some plots require transformations, such as calculating means or fitting a regression line, which are handled by stats.
+
+-   **Scales**: These control how data values are mapped to visual properties.
+
+-   **Coordinate systems**: These define how plots are oriented, with Cartesian coordinates being the most common, but others like polar coordinates are available for specific needs.
+
+-   **Facets**: Faceting allows you to generate multiple plots based on a grouping variable, creating a matrix of panels.
+
+<br>
+
+Let me explain with the official introduction of ggplot2: <https://ggplot2.tidyverse.org/articles/ggplot2.html>
+
+<br>
+
+### **Setting Up Your Environment**
+
+Before diving into creating plots, you need to install and load ggplot2 in your R environment:
+
+```{r}
+# ggplot2 is a package belongs to tidyverse
+library(tidyverse)
+```
+
+<br>
+
+Test if it works.
+
+```{r}
+ ggplot(mpg, aes(displ, hwy, colour = class)) + geom_point()
+```
+
+<br>
+
+### **Practical Examples**
+
+#### **Basic Plots**
+
+Let's start with a basic scatter plot to examine the relationship between two variables in the **`mtcars`** dataset:
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) + geom_point()
+```
+
+This code plots the miles per gallon (**`mpg`**) against the weight (**`wt`**) of various cars. The **`aes`** function maps the aesthetics to the respective variables.
+
+#### **Enhancing Visualizations**
+
+To enhance this plot, we might want to add a linear regression line to summarize the relationship between weight and fuel efficiency:
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(title = "Fuel Efficiency vs. Weight", x = "Weight (1000 lbs)", y = "Miles per Gallon")
+
+```
+
+This code not only adds the regression line but also improves the aesthetics with a minimal theme and labels that clarify what each axis represents.
+
+### **Advanced ggplot2 Features**
+
+#### **Faceting for Comparative Analysis**
+
+To compare how the relationship between weight and fuel efficiency varies by the number of cylinders in the engine, we can use faceting:
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  facet_wrap(~cyl)
+
+```
+
+This will create a separate plot for each number of cylinders, making it easy to see differences across categories.
+
+#### **Customization and Extensions**
+
+Check out extentions of ggplot2: <https://exts.ggplot2.tidyverse.org/gallery/>
+
+`ggplot2` is highly customizable, allowing extensive control over nearly every visual aspect of a plot. For users interested in making interactive plots, `ggplot2` can be integrated with the **`plotly`** library, transforming static charts into interactive visualizations.
+
+The power and flexibility of ggplot2 make it an indispensable tool for data visualization in R. Whether you are a beginner or an experienced user, there is always more to explore and learn with ggplot2. Practice regularly, and don't hesitate to experiment with different components to discover the best ways to convey your insights visually.
+
+<br>
+
+To master ggplot2, see the videos below:
+
+**ggplot2 workshop part 1** by Thomas Lin Pedersen
+
+<https://www.youtube.com/watch?v=h29g21z0a68>
+
+**ggplot2 workshop part 2** by Thomas Lin Pedersen
+
+<https://www.youtube.com/watch?v=0m4yywqNPVY>
