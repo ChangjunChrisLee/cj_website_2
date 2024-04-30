@@ -195,6 +195,429 @@ gapminder %>% filter(country == "Kuwait"|country == "Saudi Arabia"|country == "I
 
 ### Class
 
+<br>
+
+#### Review for ggplot2 library
+
+<br>
+
+
+```{r}
+library(tidyverse)
+
+mpg %>% select(hwy, cty, cyl)
+
+```
+
+
+
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = as.factor(cyl)))
+
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = as.factor(cyl))) +
+  geom_smooth(method ="lm")
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = as.factor(cyl))) +
+  geom_smooth(method ="glm")
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = cyl)) +
+  geom_smooth(method ="lm") +
+  # coord_cartesian() +
+  # scale_color_gradient() +
+  theme_bw()
+```
+
+```{r}
+
+# Returns the last plot
+last_plot()
+```
+
+```{r}
+
+# Saves last plot as 5’ x 5’ file named "plot.png" in
+# working directory. Matches file type to file extension.
+# ggsave("plot.png", width = 5, height = 5)
+```
+
+#### One variable
+
+
+```{r}
+
+# Continuous
+a <- ggplot(mpg, aes(hwy))
+a
+
+```
+
+
+```{r}
+
+a + geom_area(stat = "bin")
+a + geom_density(kernel = "gaussian")
+a + geom_dotplot()
+a + geom_freqpoly()
+a + geom_histogram(binwidth = 4)
+
+```
+
+
+```{r}
+mpg %>% ggplot()+
+  geom_area(aes(hwy), stat="bin")
+```
+
+
+```{r}
+
+# Discrete
+b <- ggplot(mpg, aes(fl))
+b + geom_bar()
+
+```
+
+
+```{r}
+
+# Two variables
+# Continuous X & Countinuous Y
+f <- ggplot(mpg, aes(cty, hwy))
+f + geom_blank()
+f + geom_jitter()
+f + geom_point()
+
+```
+
+
+```{r}
+# install.packages("quantreg")
+library(quantreg)
+f + geom_quantile() + geom_jitter()
+f + geom_rug(sides = "bl") + geom_jitter()
+f + geom_rug(sides = "bl") + geom_point()
+f + geom_smooth(model = lm) +  geom_point()
+f + geom_text(aes(label = cty)) + 
+  geom_jitter()
+
+f + geom_text(aes(label = fl))
+```
+
+
+```{r}
+mpg %>% 
+  ggplot(aes(cty, hwy, label = fl, 
+             alpha=0.1, col='red')) +
+  geom_text()+
+  geom_jitter()
+```
+
+
+```{r}
+# install.packages("ggimage")
+library(ggimage)
+
+img <- list.files(system.file("extdata", 
+                              package="ggimage"),
+                  pattern="png", full.names=TRUE)
+
+img[2]
+```
+
+
+```{r}
+f + geom_image(aes(image=img[2]))
+```
+
+
+```{r}
+
+# Discrete X & Countinuous Y
+g <- ggplot(mpg, aes(class, hwy))
+levels(as.factor(mpg$class))
+str(mpg$class)
+levels(as.factor(mpg$class))
+unique(mpg$class)
+```
+
+
+```{r}
+mpg %>% count(class)
+```
+
+
+```{r}
+mpg %>% select(manufacturer, class, hwy) %>% 
+  group_by(class) %>% 
+  arrange(desc(hwy)) %>% head(10) -> dkdk
+```
+
+
+```{r}
+mpg %>% count(class)
+```
+
+
+```{r}
+g
+g + geom_bar(stat = "identity")
+g + geom_boxplot()
+```
+
+
+```{r}
+
+g + geom_dotplot(binaxis = "y",
+                 stackdir = "center")
+g + geom_violin(scale = "area")
+```
+
+
+```{r}
+# Discrete X & Discrete Y
+diamonds
+h <- ggplot(diamonds, aes(cut, color))
+h + geom_jitter()
+```
+
+
+```{r}
+# Continuous Bivariate Distribution
+# install.packages("ggplot2movies")
+library(ggplot2movies)
+
+movies %>% glimpse
+```
+
+
+```{r}
+i <- ggplot(movies, aes(year, rating))
+i + geom_bin2d(binwidth = c(5, 0.5))
+i + geom_density2d()
+```
+
+
+```{r}
+# install.packages("hexbin")
+library(hexbin)
+i + geom_hex()
+```
+
+
+```{r}
+# Continuous Function
+j <- ggplot(economics, aes(date, unemploy))
+j + geom_area()
+j + geom_line()
+j + geom_step(direction = "hv")
+```
+
+
+```{r}
+# Visualizing error
+df <- data.frame(grp = c("A", "B"), fit = 4:5, se = 1:2)
+k <- ggplot(df, 
+            aes(grp, fit, 
+                ymin = fit-se, 
+                ymax = fit+se))
+
+k + geom_crossbar(fatten = 2)
+
+k + geom_errorbar(col="grey") +
+  geom_point(aes(col="red")) 
+
+k + geom_linerange()
+k + geom_pointrange()
+```
+
+
+```{r}
+# Three variables
+?seals
+seals$z <- with(seals, sqrt(delta_long^2 + delta_lat^2))
+m <- ggplot(seals, aes(long, lat))
+
+m + geom_tile(aes(fill = z))
+m + geom_contour(aes(z = z))
+m + geom_raster(aes(fill = z), hjust=0.5,
+                vjust=0.5, interpolate=FALSE)
+```
+
+
+```{r}
+
+# Scales
+n <- b + geom_bar(aes(fill = fl))
+n
+n + scale_fill_manual(
+  values = c("skyblue", "royalblue", "blue", "navy"),
+  limits = c("d", "e", "p", "r"), breaks =c("d", "e", "p", "r"),
+  name = "Fuel", labels = c("D", "E", "P", "R"))
+```
+
+
+```{r}
+# Color and fill scales
+n <- b + geom_bar(aes(fill = fl))
+o <- a + geom_dotplot(aes(fill = ..x..))
+```
+
+
+```{r}
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+
+n + scale_fill_brewer(palette = "Blues")
+```
+
+
+```{r}
+display.brewer.all()
+n + scale_fill_grey(
+  start = 0.2, end = 0.8,
+  na.value = "red")
+```
+
+
+```{r}
+o + scale_fill_gradient(
+  low = "red",
+  high = "yellow")
+
+o + scale_fill_gradientn(
+  colours = terrain.colors(5))
+
+
+# Also: rainbow(), heat.colors(),
+# topo.colors(), cm.colors(),
+# RColorBrewer::brewer.pal()
+```
+
+
+```{r}
+# Shape scales
+f
+p <- f + geom_point(aes(shape = fl))
+p
+```
+
+
+```{r}
+p + scale_shape(solid = FALSE)
+
+p + scale_shape_manual(values = c(3:7))
+```
+
+
+```{r}
+
+# Coordinate Systems
+r <- b+geom_bar()
+r + coord_cartesian(xlim = c(0, 5))
+r + coord_fixed(ratio = 1/2)
+r + coord_fixed(ratio = 1/10)
+r + coord_fixed(ratio = 1/100)
+r + coord_flip()
+r + coord_polar(theta = "x", direction=1 )
+```
+
+
+```{r}
+# Position Adjustments
+
+s <- ggplot(mpg, aes(fl, fill = drv))
+
+s + geom_bar(position = "dodge")
+# Arrange elements side by side
+s + geom_bar(position = "fill")
+# Stack elements on top of one another, normalize height
+s + geom_bar(position = "stack")
+# Stack elements on top of one another
+f + geom_point(position = "jitter")
+# Add random noise to X and Y position of each element to avoid overplotting
+```
+
+
+```{r}
+# Theme
+r + theme_bw()
+r + theme_classic()
+r + theme_grey()
+r + theme_minimal()
+```
+
+
+```{r}
+# Faceting
+
+t <- ggplot(mpg, aes(cty, hwy)) + geom_point()
+t + facet_grid(. ~ fl)
+t + facet_grid(fl ~ .)
+# facet into columns based on fl
+t + facet_grid(year ~ .)
+# facet into rows based on year
+t + facet_grid(year ~ fl)
+# facet into both rows and columns
+t + facet_wrap(~ fl)
+# wrap facets into a rectangular layout
+```
+
+
+```{r}
+# Labels
+t + ggtitle("New Plot Title ")
+# Add a main title above the plot
+t + xlab("New X label")
+# Change the label on the X axis
+t + ylab("New Y label")
+# Change the label on the Y axis
+t + labs(title =" New title", x = "New x", y = "New y")
+# All of the above
+```
+
+
+```{r}
+
+
+mpg %>% 
+  group_by(manufacturer) %>% 
+  summarise(avg_hwy=mean(hwy)) %>% 
+  arrange(desc(avg_hwy)) %>% 
+  ggplot(aes(x=reorder(manufacturer, avg_hwy),
+             y=avg_hwy,
+             fill=avg_hwy))+
+  scale_fill_gradient(
+    low = "red",
+    high = "green")+
+  coord_flip()+
+  geom_bar(stat='identity')+
+  xlab("")+
+  ggtitle("제조사별 평균 연비")
+
+
+```
+
+
+<br>
+
+
+
 ![![](images/clipboard-1479101379.png)](images/clipboard-3412891947.png)
 
 ![](images/clipboard-2307888705.png)
