@@ -14,21 +14,390 @@ editor:
 
 ### Pre-class video
 
-
-<br> 
+<br>
 
 #### Shiny Introduction
 
-<br> 
+<br>
 
 {{< video https://www.youtube.com/watch?v=9uFQECk30kA&t=4661s >}}
 
-<br> 
-
-
+<br>
 
 #### Book: Mastering Shiny
 
 <br>
 
 https://mastering-shiny.org/index.html
+
+------------------------------------------------------------------------
+
+## Class
+
+### Introduction to R Shiny 
+
+-   What is R Shiny?
+
+-   Use cases and applications.
+
+-   Basic structure of a Shiny app.
+
+-   Building Your First Shiny App
+
+### Setting up the environment.
+
+-   Creating the user interface (UI).
+
+-   Writing the server function.
+
+-   Running the app.
+
+### Adding Reactivity 
+
+-   Understanding reactivity in Shiny.
+
+-   Using reactive expressions.
+
+-   Creating reactive outputs.
+
+### Hands-On Practice
+
+-   Guided coding of a simple Shiny app.
+
+-   Adding features to the app.
+
+-   Q&A and troubleshooting.
+
+------------------------------------------------------------------------
+
+#### **1. Introduction to R Shiny** 
+
+-   **What is R Shiny?** R Shiny is an R package that makes it easy to
+    build interactive web applications (apps) straight from R.
+
+    -   A web application framework for R.
+
+    -   Allows building interactive web apps directly from R.
+
+-   Use cases and applications:
+
+    -   Data visualization dashboards.
+
+    -   Interactive data analysis tools.
+
+    -   Prototyping and demonstrating models.
+
+-   Basic structure of a Shiny app:
+
+    -   **`ui.R`**: Defines the user interface.
+
+    -   **`server.R`**: Contains the server logic.
+
+    -   **`app.R`**: Combines UI and server into a single file.
+
+#### **2. Building Your First Shiny App**
+
+-   **Setting up the environment:**
+
+    -   Install Shiny: **`install.packages("shiny")`**
+
+    -   Load Shiny: **`library(shiny)`**
+
+-   **Creating the user interface (UI):**
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Hello Shiny!"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins",
+                  "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+)
+
+```
+
+-   **Elements**
+    -   **`fluidPage()`**: Create a fluid page layout.
+    -   **`titlePanel()`**: Add a title to the app.
+    -   **`sidebarLayout()`**: Create a sidebar layout.
+    -   **`sidebarPanel()`**: Define the sidebar content.
+    -   **`sliderInput()`**: Create a slider input.
+    -   **`mainPanel()`**: Define the main content area.
+    -   **`plotOutput()`**: Create a plot output area.
+-   **Writing the server function:**
+
+```{r}
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    x <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  })
+}
+
+```
+
+-   Elements
+    -   **`server`:** Defines the server logic.
+    -   **`input`:** Contains input values from the UI.
+    -   **`output`:** Contains output objects to be sent to the UI.
+    -   **`renderPlot()`:** Renders a plot based on the inputs.
+-   **Running the app:**
+
+```{r}
+shinyApp(ui = ui, server = server)
+
+```
+
+-   **Elements**
+
+    -   **`shinyApp()`:** Combines the UI and server components to
+        create a Shiny app.
+
+    -   **`ui`:** The user interface component.
+
+    -   **`server`:** The server logic component.
+
+#### **3. Adding Reactivity** 
+
+-   **Understanding reactivity in Shiny:**
+
+    -   Reactive inputs and outputs.
+
+    -   Reactive expressions: **`reactive()`**
+
+-   **Using reactive expressions:**
+
+```{r}
+reactive_hist_data <- reactive({
+  x <- faithful$waiting
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  list(x = x, bins = bins)
+})
+
+```
+
+**Creating reactive outputs:**
+
+```{r}
+# output$distPlot <- renderPlot({
+#   hist_data <- reactive_hist_data()
+#   hist(hist_data$x, breaks = hist_data$bins, col = 'darkgray', border = 'white')
+# })
+
+```
+
+#### **4. Hands-On Practice** 
+
+-   **Step-by-step guided coding of a simple Shiny app:**
+
+    -   Start with a basic template:
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Basic Shiny App"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+)
+
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    x <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+-   **Adding features to the app:**
+
+    -   Adding another input and output.
+
+```{r}
+ui <- fluidPage(
+  titlePanel("Enhanced Shiny App"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30),
+      selectInput("color", "Choose color:", choices = c("darkgray", "blue", "green"))
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+)
+
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    x <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    hist(x, breaks = bins, col = input$color, border = 'white')
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+------------------------------------------------------------------------
+
+### Advanced one (for practice)
+
+```{r}
+library(shiny)
+library(ggplot2)
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Simple Data Analyzer"),
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Enter numeric data separated by commas (e.g., 1, 2, 3, 4, 5)"),
+      textInput("dataInput", "Enter data:", value = ""),
+      actionButton("submit", "Submit"),
+      hr(),
+      helpText("Output Plot and Statistics")
+    ),
+    mainPanel(
+      plotOutput("dataPlot"),
+      verbatimTextOutput("dataSummary")
+    )
+  )
+)
+
+# Define server logic
+server <- function(input, output) {
+  data <- reactive({
+    req(input$submit)  # Wait until the submit button is clicked
+    as.numeric(unlist(strsplit(input$dataInput, ",")))
+  })
+  
+  output$dataPlot <- renderPlot({
+    req(data())  # Ensure data is available
+    ggplot(data = data.frame(x = data()), aes(x = x)) +
+      geom_histogram(binwidth = 1, fill = "blue", color = "white") +
+      theme_minimal() +
+      labs(title = "Histogram of Data", x = "Data Values", y = "Count")
+  })
+  
+  output$dataSummary <- renderPrint({
+    req(data())  # Ensure data is available
+    summary <- summary(data())
+    c("Data Summary:", paste("Mean =", mean(data(), na.rm = TRUE)),
+      paste("Variance =", var(data(), na.rm = TRUE)),
+      paste("N =", length(data())))
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```
+
+-   **Explanation:**
+
+    -   **TextInput:** Users can enter their data as comma-separated
+        values.
+
+    -   **ActionButton:** A button that users click to submit their
+        data. The server logic processes the data only after the button
+        is clicked.
+
+    -   **Reactive expression:** **`data`** is a reactive expression
+        that only updates when the submit button is clicked and the
+        input data changes.
+
+    -   **PlotOutput and TextOutput:** These display the plot and data
+        summary, respectively.
+
+<br>
+
+------------------------------------------------------------------------
+
+### **Further Study**
+
+To deepen your understanding and improve your skills with R Shiny, here
+are some additional resources that will be helpful.
+
+#### **Gallery of Shiny Apps**
+
+**Explore Examples and Benchmark Your Code:**
+
+1.  **Shiny Gallery:** The official Shiny Gallery by RStudio showcases a
+    variety of Shiny apps, ranging from simple to complex. You can view
+    the source code for each app and use it as a benchmark for your own
+    projects.
+
+    -   [Shiny Gallery](https://shiny.posit.co/r/gallery/)
+
+2.  **Shiny Demos**
+
+    -   [Shiny Demo
+        Gallery](https://www.appsilon.com/shiny-demo-gallery)
+
+#### **Recommended Textbooks**
+
+**Books for In-Depth Learning:**
+
+1.  **Mastering Shiny by Hadley Wickham**
+
+    -   A comprehensive guide to building interactive web applications
+        with R Shiny. The book covers the basics as well as advanced
+        topics, including reactivity, UI layout, and deploying Shiny
+        apps.
+
+    -   [Mastering Shiny - O'Reilly](https://mastering-shiny.org/)
+
+2.  **R Shiny by Example by Jonathan Owen and Joe Cheng**
+
+    -   This book presents various Shiny applications and explains the
+        underlying code, making it easier to understand and implement
+        Shiny functionalities in your own projects.
+
+    -   [R Shiny by Example -
+        Manning](https://www.manning.com/liveproject/data-dashboards-with-r-and-shiny)
+
+#### **Other Educational Materials**
+
+**Online Courses, Tutorials, and Community Resources:**
+
+1.  **RStudio Shiny Tutorial:** A beginner-friendly tutorial from
+    RStudio that introduces the basics of Shiny, including building and
+    deploying Shiny apps.
+
+    -   [RStudio Shiny Tutorial](https://shiny.rstudio.com/tutorial/)
+
+2.  **Coursera - Developing Data Products by Johns Hopkins University:**
+    This online course covers the development of data products,
+    including Shiny apps. It's part of the Data Science Specialization.
+
+    -   [Coursera - Developing Data
+        Products](https://www.coursera.org/learn/data-products)
+
+3.  **DataCamp - Building Web Applications in R with Shiny:** An
+    interactive course that teaches you how to build Shiny apps from
+    scratch, with hands-on exercises and projects.
+
+    -   [DataCamp - Building Web Applications in R with
+        Shiny](https://www.datacamp.com/courses/case-studies-building-web-applications-with-shiny-in-r)
