@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#adding-reactivity" id="toc-adding-reactivity" class="nav-link" data-scroll-target="#adding-reactivity">Adding Reactivity</a></li>
   <li><a href="#hands-on-practice" id="toc-hands-on-practice" class="nav-link" data-scroll-target="#hands-on-practice">Hands-On Practice</a></li>
   <li><a href="#advanced-one-for-practice" id="toc-advanced-one-for-practice" class="nav-link" data-scroll-target="#advanced-one-for-practice">Advanced one (for practice)</a></li>
-  <li><a href="#further-study" id="toc-further-study" class="nav-link" data-scroll-target="#further-study"><strong>Further Study</strong></a></li>
+  <li><a href="#further-study-now-its-your-turn" id="toc-further-study-now-its-your-turn" class="nav-link" data-scroll-target="#further-study-now-its-your-turn"><strong>Further Study (Now, it’s your turn!)</strong></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -245,7 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="book-mastering-shiny" class="level4">
 <h4 class="anchored" data-anchor-id="book-mastering-shiny">Book: Mastering Shiny</h4>
 <p><br></p>
-<p>https://mastering-shiny.org/index.html</p>
+<p><a href="https://mastering-shiny.org/index.html" class="uri">https://mastering-shiny.org/index.html</a></p>
 <hr>
 </section>
 </section>
@@ -278,17 +278,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="hands-on-practice" class="level3">
 <h3 class="anchored" data-anchor-id="hands-on-practice">Hands-On Practice</h3>
-<ul>
-<li><p>Guided coding of a simple Shiny app.</p></li>
-<li><p>Adding features to the app.</p></li>
-<li><p>Q&amp;A and troubleshooting.</p></li>
-</ul>
 <hr>
 <section id="introduction-to-r-shiny-1" class="level4">
 <h4 class="anchored" data-anchor-id="introduction-to-r-shiny-1"><strong>1. Introduction to R Shiny</strong></h4>
 <ul>
-<li><p><strong>What is R Shiny?</strong> R Shiny is an R package that makes it easy to build interactive web applications (apps) straight from R.</p>
+<li><p><strong>What is R Shiny?</strong></p>
 <ul>
+<li><p><strong>R Shiny</strong> is an R package that makes it <u>easy to build interactive web applications (apps) straight from R</u>.</p></li>
 <li><p>A web application framework for R.</p></li>
 <li><p>Allows building interactive web apps directly from R.</p></li>
 </ul></li>
@@ -298,13 +294,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Interactive data analysis tools.</p></li>
 <li><p>Prototyping and demonstrating models.</p></li>
 </ul></li>
+<li><p>See an example!</p>
+<ul>
+<li><a href="https://shiny.posit.co/r/gallery/start-simple/kmeans-example/" class="uri">https://shiny.posit.co/r/gallery/start-simple/kmeans-example/</a></li>
+</ul></li>
 <li><p>Basic structure of a Shiny app:</p>
 <ul>
 <li><p><strong><code>ui.R</code></strong>: Defines the user interface.</p></li>
 <li><p><strong><code>server.R</code></strong>: Contains the server logic.</p></li>
-<li><p><strong><code>app.R</code></strong>: Combines UI and server into a single file.</p></li>
+<li><p><strong><code>app.R</code></strong>: Combines UI and server into a single file.</p>
+<p><img src="images/clipboard-2774914057.png" class="img-fluid"></p></li>
 </ul></li>
 </ul>
+<p><br></p>
 </section>
 <section id="building-your-first-shiny-app" class="level4">
 <h4 class="anchored" data-anchor-id="building-your-first-shiny-app"><strong>2. Building Your First Shiny App</strong></h4>
@@ -314,6 +316,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Install Shiny: <strong><code>install.packages("shiny")</code></strong></p></li>
 <li><p>Load Shiny: <strong><code>library(shiny)</code></strong></p></li>
 </ul></li>
+<li><p>Data in use</p>
+<ul>
+<li><p><strong>The <code>faithful</code> Dataset</strong></p>
+<p><img src="images/clipboard-1110601778.png" class="img-fluid"></p></li>
+<li><p><strong>Description:</strong> The <strong><code>faithful</code></strong> dataset is a built-in dataset in R that contains observations from the Old Faithful geyser in Yellowstone National Park, USA. It is commonly used for teaching and demonstrating data analysis techniques because it has a straightforward structure and interesting patterns.</p></li>
+<li><p><strong>Dataset Structure:</strong></p>
+<ul>
+<li><p>The dataset consists of 272 observations on 2 variables.</p></li>
+<li><p>The variables are:</p>
+<ol type="1">
+<li><p><strong>eruptions:</strong> The duration of the geyser eruptions in minutes.</p></li>
+<li><p><strong>waiting:</strong> The waiting time in minutes between eruptions.</p></li>
+</ol></li>
+</ul></li>
+<li><p>We will display the histogram of Old Faithful’s waiting time varying the number of bins</p></li>
+</ul>
+<p><br></p></li>
 <li><p><strong>Creating the user interface (UI):</strong></p></li>
 </ul>
 <div class="cell">
@@ -338,13 +357,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Elements</strong>
 <ul>
-<li><strong><code>fluidPage()</code></strong>: Create a fluid page layout.</li>
-<li><strong><code>titlePanel()</code></strong>: Add a title to the app.</li>
-<li><strong><code>sidebarLayout()</code></strong>: Create a sidebar layout.</li>
-<li><strong><code>sidebarPanel()</code></strong>: Define the sidebar content.</li>
-<li><strong><code>sliderInput()</code></strong>: Create a slider input.</li>
-<li><strong><code>mainPanel()</code></strong>: Define the main content area.</li>
-<li><strong><code>plotOutput()</code></strong>: Create a plot output area.</li>
+<li><strong><code>fluidPage()</code></strong>: <u>Creates a fluid page layout</u> that adjusts its elements based on the size of the browser window. This makes the app responsive and ensures it looks good on different screen sizes.</li>
+<li><strong><code>titlePanel()</code></strong>: <u>Adds a title to the app</u>, typically displayed at the top of the page. It gives users an idea of what the app is about.</li>
+<li><strong><code>sidebarLayout()</code></strong>: <u>Creates a layout with a sidebar</u> and a main panel. The sidebar is usually used for inputs, and the main panel is used for outputs like plots or tables.</li>
+<li><strong><code>sidebarPanel()</code></strong>: <u>Defines the content of the sidebar</u>. This is where you place input controls like sliders, dropdowns, and buttons.</li>
+<li><strong><code>sliderInput()</code></strong>: <u>Creates a slider input control</u> that allows users to select a numeric value by dragging a handle along a track.</li>
+<li><strong><code>mainPanel()</code></strong>: <u>Defines the main content area</u> where outputs are displayed. This is where you place elements like plots, tables, and text outputs.</li>
+<li><strong><code>plotOutput()</code></strong>: <u>Creates an area for rendering a plot output</u>. The actual plot is generated by the server function and displayed in this area.</li>
 </ul></li>
 <li><strong>Writing the server function:</strong></li>
 </ul>
@@ -365,13 +384,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong><code>output</code>:</strong> Contains output objects to be sent to the UI.</li>
 <li><strong><code>renderPlot()</code>:</strong> Renders a plot based on the inputs.</li>
 </ul></li>
+</ul>
+<p><br></p>
+<ul>
 <li><strong>Running the app:</strong></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p><strong>Elements</strong></p>
@@ -393,19 +412,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Using reactive expressions:</strong></p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>reactive_hist_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> faithful<span class="sc">$</span>waiting</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  bins <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length.out =</span> input<span class="sc">$</span>bins <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">bins =</span> bins)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    reactive_hist_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> faithful<span class="sc">$</span>waiting</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    bins <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length.out =</span> input<span class="sc">$</span>bins <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">bins =</span> bins)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>distPlot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    hist_data <span class="ot">&lt;-</span> <span class="fu">reactive_hist_data</span>()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(hist_data<span class="sc">$</span>x, <span class="at">breaks =</span> hist_data<span class="sc">$</span>bins, <span class="at">col =</span> <span class="st">'darkgray'</span>, <span class="at">border =</span> <span class="st">'white'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Creating reactive outputs:</strong></p>
+<p><br></p>
+<p>In this simple example, the result of the histogram plot might look the same whether you use a <strong><code>reactive</code></strong> expression or not. <u>The benefit of using a <strong><code>reactive</code></strong> expression becomes more apparent in more complex applications where you want to reuse the reactive computation in multiple places</u> or when you have more complex dependencies.</p>
+<p>Let’s clarify the purpose of using a <strong><code>reactive</code></strong> expression and demonstrate a more nuanced example where its use is beneficial.</p>
+<p><br></p>
+</section>
+<section id="why-use-reactive" class="level4">
+<h4 class="anchored" data-anchor-id="why-use-reactive"><strong>Why Use <code>reactive</code>?</strong></h4>
+<ol type="1">
+<li><p><strong>Reusability:</strong></p>
+<ul>
+<li>If you need the computed data in multiple places within your server logic, using a <strong><code>reactive</code></strong> expression prevents the need to duplicate code.</li>
+</ul></li>
+<li><p><strong>Efficiency:</strong></p>
+<ul>
+<li>Reactive expressions cache their results. If the inputs haven’t changed, Shiny can use the cached result instead of re-evaluating the expression.</li>
+</ul></li>
+<li><p><strong>Complex Dependencies:</strong></p>
+<ul>
+<li>In more complex apps with multiple reactive inputs and outputs, managing dependencies and ensuring that everything updates correctly can be challenging. Reactive expressions help by encapsulating these dependencies clearly.</li>
+</ul></li>
+</ol>
+<p><br></p>
+</section>
+<section id="more-advanced-example" class="level4">
+<h4 class="anchored" data-anchor-id="more-advanced-example"><strong>More Advanced Example</strong></h4>
+<p>Let’s consider a more advanced example where we compute multiple reactive outputs based on the same reactive data.</p>
+</section>
+<section id="example-interactive-histogram-with-summary-statistics" class="level4">
+<h4 class="anchored" data-anchor-id="example-interactive-histogram-with-summary-statistics"><strong>Example: Interactive Histogram with Summary Statistics</strong></h4>
+<p>In this example, we will:</p>
+<ol type="1">
+<li><p>Create a histogram based on user input.</p></li>
+<li><p>Display summary statistics (mean, median, and standard deviation) that update based on the user’s bin selection.</p></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># output$distPlot &lt;- renderPlot({</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   hist_data &lt;- reactive_hist_data()</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   hist(hist_data$x, breaks = hist_data$bins, col = 'darkgray', border = 'white')</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># })</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define UI</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Interactive Histogram with Summary Statistics"</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"bins"</span>, <span class="st">"Number of bins:"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">50</span>, <span class="at">value =</span> <span class="dv">30</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"distPlot"</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">"summaryStats"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Define server logic</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reactive expression to compute histogram data</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  reactive_hist_data <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> faithful<span class="sc">$</span>waiting</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    bins <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length.out =</span> input<span class="sc">$</span>bins <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">bins =</span> bins)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Render histogram plot</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>distPlot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    hist_data <span class="ot">&lt;-</span> <span class="fu">reactive_hist_data</span>()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(hist_data<span class="sc">$</span>x, <span class="at">breaks =</span> hist_data<span class="sc">$</span>bins, <span class="at">col =</span> <span class="st">'darkgray'</span>, <span class="at">border =</span> <span class="st">'white'</span>,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">"Histogram of Waiting Times"</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Waiting Time (minutes)"</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Render summary statistics</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>summaryStats <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    hist_data <span class="ot">&lt;-</span> <span class="fu">reactive_hist_data</span>()</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> hist_data<span class="sc">$</span>x</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    mean_val <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    median_val <span class="ot">&lt;-</span> <span class="fu">median</span>(x)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    sd_val <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"Mean: "</span>, <span class="fu">round</span>(mean_val, <span class="dv">2</span>), </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Median: "</span>, <span class="fu">round</span>(median_val, <span class="dv">2</span>), </span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>          <span class="st">"SD: "</span>, <span class="fu">round</span>(sd_val, <span class="dv">2</span>))</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
 </section>
 <section id="hands-on-practice-1" class="level4">
 <h4 class="anchored" data-anchor-id="hands-on-practice-1"><strong>4. Hands-On Practice</strong></h4>
@@ -438,10 +546,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
-</div>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p><strong>Adding features to the app:</strong></p>
@@ -471,11 +576,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<ul>
+<li><p>We use <code>selectInput()</code>here.</p></li>
+<li><p>There are many buttons and widgets you can use in Shiny</p>
+<ul>
+<li>See here: <a href="https://shiny.posit.co/r/gallery/widgets/widget-gallery/" class="uri">https://shiny.posit.co/r/gallery/widgets/widget-gallery/</a></li>
+</ul></li>
+</ul>
+<p><br></p>
 <hr>
 </section>
 </section>
@@ -528,10 +639,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application </span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
-</div>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p><strong>Explanation:</strong></p>
@@ -541,12 +650,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Reactive expression:</strong> <strong><code>data</code></strong> is a reactive expression that only updates when the submit button is clicked and the input data changes.</p></li>
 <li><p><strong>PlotOutput and TextOutput:</strong> These display the plot and data summary, respectively.</p></li>
 </ul></li>
+<li><p><strong>Why Use <code>req()</code>?</strong></p>
+<ul>
+<li>Using <strong><code>req()</code></strong> is important for preventing errors and ensuring that your Shiny app behaves correctly. For example, you might want to ensure that some input data is available before generating a plot or a table. If the required data is not available, <strong><code>req()</code></strong> will prevent the subsequent code from running, which could otherwise lead to errors or unintended behavior.</li>
+</ul></li>
+<li><p>Use ChatGPT or other genAI to modify this shiny app:</p>
+<ul>
+<li><p>Add things like below:</p>
+<ul>
+<li><p>A widget to choose the color of the bars in the histogram.</p></li>
+<li><p>A boxplot of the selected dataset’s variable.</p></li>
+</ul></li>
+</ul></li>
 </ul>
 <p><br></p>
 <hr>
 </section>
-<section id="further-study" class="level3">
-<h3 class="anchored" data-anchor-id="further-study"><strong>Further Study</strong></h3>
+<section id="further-study-now-its-your-turn" class="level3">
+<h3 class="anchored" data-anchor-id="further-study-now-its-your-turn"><strong>Further Study (Now, it’s your turn!)</strong></h3>
 <p>To deepen your understanding and improve your skills with R Shiny, here are some additional resources that will be helpful.</p>
 <section id="gallery-of-shiny-apps" class="level4">
 <h4 class="anchored" data-anchor-id="gallery-of-shiny-apps"><strong>Gallery of Shiny Apps</strong></h4>
