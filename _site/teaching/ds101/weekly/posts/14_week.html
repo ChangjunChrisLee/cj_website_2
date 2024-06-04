@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -204,7 +238,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="class" class="level3">
 <h3 class="anchored" data-anchor-id="class">Class</h3>
 <p><br></p>
-<p>We use this material for the class https://r4ds.hadley.nz/quarto</p>
+<p>We use this material for the class</p>
+<p><a href="https://r4ds.hadley.nz/quarto" class="uri">https://r4ds.hadley.nz/quarto</a></p>
 <p><br></p>
 <p><strong>Quarto?</strong></p>
 <p>Quarto provides a unified authoring framework for data science, combining your code, its results, and your prose. Quarto documents are fully reproducible and support dozens of output formats, like PDFs, Word files, presentations, and more.</p>
@@ -220,14 +255,156 @@ ul.task-list li input[type="checkbox"] {
 <p>Diagram of Quarto workflow from qmd, to knitr, to md, to pandoc, to output in PDF, MS Word, or HTML formats.</p>
 <p><img src="images/clipboard-2868046292.png" class="img-fluid"></p>
 <p><br></p>
-<p>Today, we will create</p>
+<section id="source-editor" class="level4">
+<h4 class="anchored" data-anchor-id="source-editor">Source Editor</h4>
+</section>
+<section id="code-chunks" class="level4">
+<h4 class="anchored" data-anchor-id="code-chunks">Code Chunks</h4>
+<p><img src="images/clipboard-936079030.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="figures-and-tables" class="level4">
+<h4 class="anchored" data-anchor-id="figures-and-tables">Figures and Tables</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ], )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">mpg</th>
+<th style="text-align: right;">cyl</th>
+<th style="text-align: right;">disp</th>
+<th style="text-align: right;">hp</th>
+<th style="text-align: right;">drat</th>
+<th style="text-align: right;">wt</th>
+<th style="text-align: right;">qsec</th>
+<th style="text-align: right;">vs</th>
+<th style="text-align: right;">am</th>
+<th style="text-align: right;">gear</th>
+<th style="text-align: right;">carb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mazda RX4</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.620</td>
+<td style="text-align: right;">16.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mazda RX4 Wag</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.875</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Datsun 710</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">3.85</td>
+<td style="text-align: right;">2.320</td>
+<td style="text-align: right;">18.61</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hornet 4 Drive</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.08</td>
+<td style="text-align: right;">3.215</td>
+<td style="text-align: right;">19.44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hornet Sportabout</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">3.440</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="caching" class="level4">
+<h4 class="anchored" data-anchor-id="caching">Caching</h4>
+</section>
+<section id="yaml-aint-markup-language" class="level4">
+<h4 class="anchored" data-anchor-id="yaml-aint-markup-language">YAML Ain’t Markup Language</h4>
+<p><br></p>
+<p>You can create … using quarto.</p>
 <ul>
 <li><p>a website</p></li>
 <li><p>a presentation</p></li>
 <li><p>a pdf document</p></li>
 </ul>
+<p><br></p>
+<p>For a website:</p>
+<ul>
+<li><a href="https://quarto.org/docs/websites/" class="uri">https://quarto.org/docs/websites/</a></li>
+</ul>
+<p>For a presentation:</p>
+<ul>
+<li><a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a></li>
+</ul>
+<p>Let’s explore more galleries using quarto</p>
+<ul>
+<li><p><a href="https://quarto.org/docs/gallery/" class="uri">https://quarto.org/docs/gallery/</a></p></li>
+<li><p><a href="https://github.com/quarto-dev/quarto-web/tree/main/docs/presentations" class="uri">https://github.com/quarto-dev/quarto-web/tree/main/docs/presentations</a></p></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
