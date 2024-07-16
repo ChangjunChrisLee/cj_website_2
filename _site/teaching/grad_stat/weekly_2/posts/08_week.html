@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>CJL &amp; Lab - 문화콘텐츠와 자연어 처리</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">CJL &amp; Lab</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/cul_tech_101/index.html">
+ <span class="dropdown-text">CNT101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/cul_tech/index.html">
+ <span class="dropdown-text">CNT102</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ds101/index.html">
+ <span class="dropdown-text">DS101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ml101/index.html">
+ <span class="dropdown-text">ML101</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
+        <li>
+    <a class="dropdown-item" href="../../../../research/index.html">
+ <span class="dropdown-text">Publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../research/working.html">
+ <span class="dropdown-text">Work in progress</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../proj/index.html"> 
+<span class="menu-text">Proj</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://ctcl.netlify.app"> 
+<span class="menu-text">LAB</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#best-discussion" id="toc-best-discussion" class="nav-link active" data-scroll-target="#best-discussion">Best Discussion</a></li>
+  <li><a href="#best-questions" id="toc-best-questions" class="nav-link" data-scroll-target="#best-questions">Best Questions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">문화콘텐츠와 자연어 처리</h1>
+<p class="subtitle lead">구영은</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="https://changjunlee.com/teaching/cul_tech_101/weekly_2/">Weekly content</a></p>
+<p><br></p>
+<p>수업에 참석하기 전, 아래 활동을 완료하시기 바랍니다:</p>
+<ol type="1">
+<li><p>pre-class video 시청</p></li>
+<li><p>Discussion 제출 (pre-class 내용과 Question)</p>
+<ul>
+<li>Submission due: 수업전 일요일 자정까지</li>
+</ul></li>
+</ol>
+<p><br></p>
+<section id="week-8-문화콘텐츠와-자연어-처리" class="level4">
+<h4 class="anchored" data-anchor-id="week-8-문화콘텐츠와-자연어-처리"><strong>Week 8: 문화콘텐츠와 자연어 처리</strong></h4>
+<ul>
+<li><p>Date: 20240423</p></li>
+<li><p><a href="content/cnt_w8_gye.pdf">수업자료</a></p></li>
+<li><p>Pre-class video</p>
+<ul>
+<li>Text 데이터를 활용한 개인화 음악 추천서비스 웹 데모 구축 (혁신성장청년인재양성사업 프로젝트 발표)</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/GLCvewkD8uk" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li>[TED] Why can’t AI ‘think’ like us?</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/wvupyiFq1Js" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li>[TED] The language of computational linguistics.</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/NkOO6n0pZIU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li>[엔씨소프트] 장애인의 목소리가 되어주는 AI 기술</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/ae-yuvyhwtc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<ul>
+<li>[노마드코더] 민트 초코 논란! 자연어 처리(NLP)로 종결해드림.</li>
+</ul>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/QTgRNer2epE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div></li>
+</ul>
+<p><br></p>
+<ul>
+<li>Discussion</li>
+</ul>
+<p><br></p>
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf3C0wOA_iO7biU5IN2K2jTAGuXBvqUnMboit4bmUjoo-4Q9g/viewform?embedded=true" width="640" height="964" frameborder="0" marginheight="0" marginwidth="0">
+<p>로드 중…</p>
+</iframe>
+<hr>
+</section>
+<section id="best-discussion" class="level3">
+<h3 class="anchored" data-anchor-id="best-discussion">Best Discussion</h3>
+<blockquote class="blockquote">
+<p>넷플릭스에서 collaborative filtering을 통해 영화 추천을 한다는 것을 알고 있었습니다. 이 기술을 음악 스트리밍 플랫폼에서 진행한다면 좀 더 다양한 장르를 접할 수 있다고 생각했습니다. 개인적으로 저는 영화보다 노래를 다양하게 즐기기 어렵다고 생각합니다. 그 이유는 영화는 상영관에서 상영하는 영화를 보고 고를 수 있고 또 스토리가 있기 때문에 대부분 SF가 아닌 이상 이해하는 데에만 집중할 수 있기 때문입니다. 그러나 음악은 락, 인디밴드, 발라드 등 정말 많은 장르가 있고 이는 취향이 확고하게 드러난다고 생각합니다. 그래서 collaborative filtering이 적용된다면 개인 취향이 아닌 것 같아 도전하지 못했던 노래들도 쉽게 접할 수 있지 않을까 생각했습니다.</p>
+<p>제가 FLO 앱을 사용하는데, 그 앱은 ‘3월 4일에 들은 노래와 비슷한 플레이리스트’ 이렇게 추천을 해주곤 합니다. 저는 이 기능이 정말 좋았던 게, 이런 노래 장르를 좀 더 들어보고 싶다고 생각한 찰나에 비슷한 느낌의 노래를 찾지 않아도 접할 수 있었기 때문입니다. 개인화된 맞춤 서비스가 더 강해질 수록 확증편향이 강해진다고 생각했는데 그 안에서 다른 길로 뚫릴 수도 있겠다고 생각했습니다.</p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p>1번 - 제한된 데이터로 유저의 의도를 파악했다고 했는데 이 과정에서 정보의 왜곡이 일어날 수 있지 않을까 라는 생각이 들었습니다. 자료가 적다보니 조금의 분석 방향이 달라질 경우, 전체 분석의 의도, 흐름이 달라질 수 있을 것 같은데, 이런 경우 어떤 식으로 보안이 가능할까요? 인기상품, 컨텐츠 필터링, 유저를 통한 필터링 총 세가지를 영상에서 이야기 해줬는데 이러한 알고리즘이 꽤 도움이 될 것이라는 생각이 들었습니다. 다만 이미 에플뮤직, 멜론, 유튜브 뮤직 사이트에서 비슷한 알고리즘을 사용하고 있다고 체감했고, 따라서 현행 알고리즘과 차이점을 느끼지 못했던 것 같습니다.</p>
+<p>4번 - AI 음성을 탑재한 기술을 통해 단일한 톤이 아닌, 사람의 말투, 억양 등을 담고 있는 목소리 기술이 상당히 도움이 많이 될 것이라는 것을 깨달았습니다. 평소 사람과 사람 사이의 말에서 중요한 요소 중 하나가 목소리의 억양, 말투, 톤이라고 생각했는데 이런 것을 장애인의 목소리가 되어주는 그러한 목소리에서 고려하지 못했다는 점에 스스로의 생각이 짧았던 것 같습니다. AI의 기술의 발달도 모든 사람들이 향유할 수 있는, 그런 베리어 프리적인 기술이 되었으면 좋겠다는 생각이 들었습니다. 기술의 발달이 어떤 사람은 포함되고 포함되지 않는, 불공평한 분야갸 되지 않았으면 좋겠다는 생각을 하게 되었습니다.</p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p>(두 번째 영상) Generalization is not the reality. 영상 속 작가의 이 한 마디는 아무리 AI가 발전하더라도 철학 인문 계열의 전문가는 사라지지 않을 수 있겠다는 희망을 주었습니다. AI는 세상에 공개되어있는 대부분의 사람들이 바라보는 세상을 학습합니다. 하지만 과연 다수가 바라보는 시각이 항상 옳을까요? 우리는 데이터와 알고리즘을 창조하는 동시에 영향을 받기도 합니다. 바쁘게 변해가는 사회 속에서 우리가 구축한 인공지능에게 압도당하거나 휩쓸리지 않기 위해서는, 서로 올바른 영향을 주고 받기 위해서는 인문 계열의 전문가가 끊임없이 세상의 정의에 대해 철학적으로 탐구해야 겠다고 생각했습니다.</p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p>2번영상과 3번 영상에서 일관되게 AI는 인간과 사고하는 방식이 다르다고 말하고 있다. 이부분이 인상적이고 너무 공감됐다. 물론 기술이 발전하면서 AI가 학습한 데이터의 양은 기하급수적으로 늘고 있지만 여전히 부족한 것이 사실이며, 과연 인간의 사고방식을 온전히 구현할 수 있을지에 대한 현실적 의문이 든다.</p>
+<p>이와 관련해 개인적으로 최근에 겪었던 재미있는 이야기를 해보자면, 수업을 같이 듣는 친구들끼리 개설된 단톡방이있는데, 평소에 서로의 이름에 ~튜브(에: 홍길동 - 길동튜브/홍튜브)를 붙여 부른다. 카카오톡에서도 그렇게 부르면서 이야기를 떨고 있는데 어느 한 친구가 카카오톡 AI 대화요약 기능을 사용한 결과가 재미있다며 캡쳐해서 보내줬다. 그 결과는 “튜브에 관련된 무의미한 대화”였다.</p>
+<p>데이터가 많이 학습된건 사실이지만, 특정 집단에서 맥락에 맞춰 쓰이는 단어들을 AI는가이해하지 못하고 있는 것이다. 인간의 언어는 결국 약속에 의한 것인데 AI는 그 약속을 지키는 것처럼 모방하는 것일 뿐이지, 약속을 이해하지는 못한다고 생각한다.</p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p>AI를 어디까지나 인간을 보조하기 위한 수단, 있으면 좋고 없으면 마는, 그런 존재라고 생각해왔다. 하지만 장애인을 위핸 “나의 ACC”앱을 보면서 누군가에게는 AI가 반드시 필요할 수도, 새로운 기회를 주는 것일 수도 있다는 생각이 들었다.</p>
+<p>또한 기술을 가진 이들과 그렇지 못한 이들의 격차가 마치 자연의 순리처럼 당연하게 여겨지는 사회에서 이런 사례들은 그래도 우리 사회가 아직은 어둡지만은 않다는 생각이 들게한다. “배워서 남주랴?” 이제는 다 옛 말이다. 이제는 배워서 남을 주는 것이 남을 위한 길이기도 하고 새로운 영역을 개척하는 나의 길이기도 한 것 같다.</p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p>[엔씨소프트] 장애인의 목소리가 되어주는 AI 기술</p>
+<p>영상을 통해 AAC라는 의사소통 툴을 처음 알게되었습니다. 2015년에 서비스가 제작되었지만, 이제 알았다는 점이 아주 조금은 부끄럽기도 합니다. 의사소통은 사람과 사람간의 소통인데 의사소통에 어려움을 겪는 분들께 이러한 서비스는 정말 많은 도움이 될 것 같다는 생각이 듭니다. 또한 리뉴얼된 버전이 소통을 하며 감정을 전달하는 데에 있어 훨씬 더 잘 될 것 같고 어려움을 겪는 이들의 삶의 질을 향상시켜준다는 생각이 듭니다. 본 영상을 시청한 모두가, 그리고 ’나의 AAC’라는 어플을 알고 있는 사람들이 어플을 설치한다면, 앞으로 세상을 살면서 마주할 의사소통에 어려움을 겪는 이들과 조금 더 원활한 소통을 할 수 있을 것이라 예상한다.</p>
+</blockquote>
+<p><br></p>
+</section>
+<section id="best-questions" class="level3">
+<h3 class="anchored" data-anchor-id="best-questions">Best Questions</h3>
+<ol type="1">
+<li><p>다섯 개의 영상을 보면 아직은 “일반화”된 기준에 맞춰진 AI가 구축되고 있는 것 같습니다. 다만, 인간의 감정은 지극히 개인적이며 일반화하기에는 복잡하다고 생각합니다. 네번째 영상에서처럼 AI에 의존하여 대화를 하는 사람들의 경우, 자신이 전달하려는 감정과는 다르게 일반화된 기준에 따라 정제된 잘못된 감정이 전달될 수도 있다고 생각했습니다. 교수님께서는 훗날에는 이런 개인적인 해석과 기준에 의거한 AI도 만들어질 수 있다고 생각하시나요? 왜 일반화된 기준의 AI만 구축이 되고 있는지, 아니면 개인적인 감정까지 AI로 만들려는 노력이 일어나고 있는지 알고싶습니다!</p>
+<p>이는 자연어 처리와는 별개의 질문입니다만… 영상 속에서 자연어 분석의 데이터를 얻는 과정에 API라는 단어가 자주 나와 검색을 해보았으나, 인터페이스와의 차이점을 이해하기 어려웠습니다.. 둘의 차이점이 무엇인가요?</p></li>
+<li><p>제가 느끼기에는 자연어 처리는 분류, 탐색, 추천 등 분석적인 툴처럼 느껴지고, 문화 콘텐츠는 분석도 물론 필요하지만 그 이외에 크리에이티브함이 필수불가결하다는 생각이 들었습니다.</p>
+<p>다시 말해, 문화 콘텐츠를 기획할 때 분석 과정에서는 자연어 처리가 쓰일 수 있지만 소비자 마음에 소구되기 위해서는 사람만이 느끼고 생각할 수 있는 창의성이 빠질 수는 없다는 생각이 들었는데요.</p>
+<p>혹시 나중에는 자연어 처리가 창의성의 영역도 뛰어넘는 시대가 올지, 이에 대해서 어떻게 생각하시는지 궁금합니다.</p></li>
+<li><p>자연어처리는 머신러닝 기법을 활용하여 텍스트의 의미를 파악하는 것으로 알고있습니다. 그렇다면, 표준어가 아닌, 한국에서 사용하는 사투리나 방언을 이해하고 처리하는 데에 문제나 어려움은 없나요?</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
