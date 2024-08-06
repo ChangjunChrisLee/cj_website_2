@@ -1,0 +1,394 @@
+---
+title: "QZ #2"
+subtitle: "31 May (Wed) 13:00-15:00"
+Week: 14
+---
+
+## Score distribution
+
+```{r}
+#| echo: false
+#| output: false
+
+library(tidyverse)
+
+
+my_data <- tibble(
+  Class = c(rep("THU", 21), rep("TUE", 26)),
+  Score = c(44, 26, 24, 41, 43, 30, 44, 21, 17, 39, 33, 31, 22, 28, 42, 33, 47, 20, 26, 15,
+    45, 43, 46, 44, 35, 43, 19, 42, 43, 43, 44, 27, 39, 44, 49, 33, 20, 24, 17, 32,
+    42, 15, 23, 40, 32, 45, 21)
+)
+```
+
+```{r}
+summary(my_data)
+```
+
+-   Max score: 49 / 50
+
+-   Min score: 15 / 50
+
+-   AVG score: 33.53 / 50
+
+**Histogram**
+
+```{r}
+ggplot(my_data, aes(x = Score)) + 
+  geom_histogram(binwidth = 3, color = "white", fill = "#56B4E9", alpha = 0.8) +
+  # Add vertical line for mean
+  geom_vline(aes(xintercept = mean(Score)), 
+             color = "red", linetype = "dashed", linewidth = 1) +
+  geom_text(aes(x = 33.53, y = 6.5, label = "AVG: 33.53 / 50")) +
+  # Add x and y axis labels
+  labs(x = "Score", y = "Frequency", 
+       title = "Score distribution") +
+  # Set a simple theme
+  theme_minimal()
+```
+
+**Box-plot by classes**
+
+```{r}
+#| warning: false
+
+
+# Calculate average scores for each class
+class_averages <- my_data %>%
+  group_by(Class) %>%
+  summarize(avg_score = mean(Score))
+
+ggplot(my_data, aes(x = Class, y = Score, fill = Class)) +
+  geom_boxplot(alpha = 0.8, color = "black", size = 1) +
+  # Add individual data points with jitter
+  geom_jitter(alpha = 0.2) +
+  # Add text labels for average values
+  geom_text(data = class_averages, 
+            aes(x = Class, y = 15, 
+                label = paste0("Group AVG: ", round(avg_score, 1))), 
+            color = "black", 
+            size = 4, 
+            fontface = "bold") +
+  # Remove legend
+  guides(fill = FALSE) +
+  # Choose color palette
+  scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
+  # Add x and y axis labels
+  labs(x = "Class", y = "Score") +
+  # Set a simple theme
+  theme_minimal()
+
+
+```
+
+## Date and Location
+
+-   Date: 31 May (Wed) 13:00 - 15:00
+
+-   Location: Room 312 (School of Communication, the same building)
+
+## Notice
+
+-   Quiz will be administered through Google Forms.
+-   Please bring your laptop for the quiz.
+-   You are allowed to access any information through the Internet
+-   However, communication with others is strictly prohibited.
+-   Do not use any messaging apps (e.g., KakaoTalk, TikTok, Line, WeChat, etc.) during the quiz.
+-   Upon completion of the quiz, you are required **to submit your code**.
+
+------------------------------------------------------------------------
+
+## **QZ**
+
+### PART I. Linear Regression
+
+We will be utilizing the `USArrests` data, which was previously discussed in class, for our regression analysis. Omitting the data description as it has already been covered in class.
+
+Let's import `USArrests` data (Use the code below)
+
+```{r}
+data("USArrests")
+summary(USArrests)
+```
+
+-   How many observations in the dataset?
+
+    -   50
+
+-   How many variables in the dataset?
+
+    -   4
+
+Crimes like Assault, Murder, and Rape are more likely to happen in cities. Linear regression analysis was performed to find out which variable among Assault, Murder, and Rape was the most Urban-population dependent variable. (See the code below)
+
+```{r}
+m1 <- lm(Assault ~ UrbanPop, data=USArrests)
+m2 <- lm(Murder ~ UrbanPop, data=USArrests)
+m3 <- lm(Rape ~ UrbanPop, data=USArrests)
+
+summary(m1)
+summary(m2)
+summary(m3)
+```
+
+-   Which dependent variable has the most significant relationship with the urban population?
+
+    -   Rape
+
+-   Choose a model in which only the intercept is a statistically significant coefficient.
+
+    -   m2
+
+-   According to the result from summary, choose the model that fits the most.
+
+    -   m3
+
+This time, I thought that Murder was influenced by Assault, Rape, and UrbanPop, so I performed the following regression analysis. (Multiple regression, see the code below).
+
+```{r}
+m4 <- lm(Murder ~ Assault+Rape+UrbanPop, data=USArrests)
+summary(m4)
+```
+
+-   Which variable has a statistically significant effect on Y (dependent variable) among X (independent variables)?
+
+    -   Assault
+
+-   Use m4 (above model) to predict the Murder of a new state. New state is Assault=100, Rape=20, UrbanPop=60. Choose the correct predicted Murder of the new state.
+
+    ```{r}
+    new_state <- data.frame(Assault=100, Rape=20, UrbanPop=60)
+
+    predict(m4, newdata = new_state)
+
+    ```
+
+    -   5.20
+
+### PART II. Non-linear Regression
+
+The code below creates a factor-type variable 'Murder_high' that is 1 when Murder is greater than 10 (Zero if not), and stores it in USArrests_new.
+
+```{r}
+USArrests %>% 
+  mutate(Murder_high=as.factor(ifelse(Murder > 10, 1, 0))) -> USArrests_new
+
+summary(USArrests_new)
+```
+
+-   How many observations have Murder_high equal to 1?
+
+    -   15
+
+Following code is about fitting the new data to Logit model by using 'glm' function. See the result and answer the questions below.
+
+```{r}
+m5 <- glm(Murder_high~Assault+Rape+UrbanPop, 
+          data=USArrests_new, 
+          family='binomial')
+summary(m5)
+```
+
+-   Choose the significant X variables related to Murder_high.
+
+    -   Assault
+
+Define 3 new states as shown in the code below, and when the m5 model predicts the probability that Murder_high is 1 (use the type='response' option),
+
+```{r}
+new_state_1 <- data.frame(Assault=100, Rape=70, UrbanPop=60)
+new_state_2 <- data.frame(Assault=200, Rape=20, UrbanPop=30)
+new_state_3 <- data.frame(Assault=250, Rape=0, UrbanPop=10)
+
+```
+
+-   Choose all states with a predicted probability of being Murder_high is 1 equals 0.5 or greater. (Murder_high가 1일 확률이 0.5보다 큰 것을 고르시오).
+
+    ```{r}
+    predict(m5, newdata = new_state_1, type = "response")
+    predict(m5, newdata = new_state_2, type = "response")
+    predict(m5, newdata = new_state_3, type = "response")
+    ```
+
+    -   new_state_2
+
+    -   new_state_3
+
+-   Assault's coefficient in the 'm5' model is the log odds ratio. Choose Assault's Odds ratio.
+
+    ```{r}
+    exp(m5$coefficients)
+    ```
+
+    -   1.038
+
+### PART III. Clustering
+
+Let's use `iris` dataset. First thing we need to do for Clustering is the code below.
+
+```{r}
+df <- scale(iris[-5])
+summary(df)
+```
+
+-   Choose the best explanation the reason why we use 'scale' before clustering.
+
+    -   to minimize the bias caused by different units
+
+This is the second step for the k-means clustering.
+
+```{r}
+library(factoextra)
+fviz_nbclust(df, kmeans, method = "wss")
+```
+
+-   See the result, and choose the incorrect explanation of this step.
+
+    -   In this step, we can get a recommendation about the number of clusters 'k'
+
+    -   **k is bigger the better (Incorrect)**
+
+    -   The appropriate k is 3, but 2 or 4 is also Ok.
+
+    -   Total Within Sum of Square is the smallest at k = 10
+
+The code below is k-means clustering with k=3. Then, I created 'iris_cluster' by merging the original iris dataset and the clustering result. See the result of the table(iris_cluster\$Species, iris_cluster\$cluster), and answer the questions.
+
+```{r}
+# Compute k-means with k = 3
+set.seed(123)
+km.res <- kmeans(df, 3, nstart = 25)
+
+iris_cluster <- data.frame(iris, cluster = km.res$cluster)
+
+table(iris_cluster$Species, iris_cluster$cluster)
+```
+
+-   As a result of clustering, which species are best seperated?
+
+    -   Setosa
+
+### PART IV. Apriori
+
+The code below is about Apriori algorithm for items {A, B, C, D, E, \...} to find association patterns.  
+
+```{r}
+# Apriori
+
+itemList<-c("A, B, C", 
+            "A, C",
+            "B, D",
+            "D, E, A",
+            "B, F",
+            "E, F", 
+            "A, F",
+            "C, E, F",
+            "A, B, E", 
+            "B, E, F, A, C",
+            "E, F, G, H, D",
+            "A, B, C")
+write.csv(itemList,"ItemList.csv", quote = FALSE, row.names = TRUE)
+
+library(arules)
+library(arulesViz)
+
+txn = read.transactions(file="ItemList.csv", 
+                        rm.duplicates= TRUE, 
+                        format="basket",sep=",",cols=1);
+
+basket_rules <- apriori(txn, 
+                        parameter = list(minlen=2, 
+                                         sup = 0.2, 
+                                         conf = 0.1, 
+                                         target="rules"))
+
+summary(basket_rules)
+inspect(basket_rules)
+```
+
+-   How many rules in basket_rules?
+
+    -   13
+
+-   Choose the incorrect explanations for the result above
+
+    -   The highest lift rule is {A,B} =\> {C}
+
+    -   The highest confidence rule is {B,C} =\> {A}
+
+    -   The minimum value of the support is 0.2308 (round to 5 decimal places)
+
+    -   Item A and E are highly associated each other
+
+    -   **lift is the only index we consider to find a good pattern (Incorrect)**
+
+-   To increase the sales of item 'F', which items should be attached and sold?
+
+    -   E
+
+### PART V. Model Comparison and Validation
+
+```{r}
+library(caret)
+
+USArrests_new %>%
+  select(-Murder) -> US
+
+indexTrain <- createDataPartition(US$Murder_high, p = .9, list = F)
+training <- US[ indexTrain, ]
+testing  <- US[-indexTrain, ]
+
+fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 5)
+
+dt_fit <- train(Murder_high ~ ., data = training, method = "rpart", trControl = fitControl)
+rf_fit <- train(Murder_high ~ ., data = training, method = "rf", trControl = fitControl)
+knn_fit <- train(Murder_high ~ ., data = training, method = "knn", trControl = fitControl)
+nb_fit <- train(Murder_high ~ ., data = training, method = "nb", trControl = fitControl)
+
+resamp=resamples(list(DecisionTree=dt_fit,
+                      RandomForest=rf_fit,
+                      kNN=knn_fit,
+                      NaiveBayes=nb_fit))
+summary(resamp)
+dotplot(resamp)
+
+```
+
+-   Choose the incorrect explanation about the code above.
+
+    -   The createDataPartition function is used to divide the dataset into training and testing dataset.
+
+    -   **The ratio of training and test data is 7:3. (9:1)**
+
+    -   The Murder_high ratio in the train and test sets remains almost the same.
+
+-   Choose all incorrect explanations of the code above.
+
+    -   To calculate the accuracy and kappa, the repeated cross validation method is used
+
+    -   **"repeatedcv" divides the training dataset into 5 sections, and validates the model 10 times**
+
+    -   The validation is repeated 5 times overall.
+
+    -   **Use test dataset for validation.**
+
+    -   Four models are compared in terms of accuracy and kappa index
+
+-   Choose the best model according to the graph above
+
+    -   Decision Tree in the QZ (the result is different with the one above)
+
+-   The simplest model, decision tree, performed much better than the most complex model, such as random forest. Which of the following is appropriate for that reason?
+
+    -   **The number of observations is too small to fit to the complicated model like random forest.**
+
+    -   This is because the proportion of Y (the dependent variable) = 1 was too small.
+
+    -   It's just a coincidence.
+
+The following code is to predict with dt_fit, the best model, using testing dataset. Fill (1) and (2).
+
+```{r}
+predict(dt_fit, testing) %>% 
+  confusionMatrix(testing$Murder_high)
+```

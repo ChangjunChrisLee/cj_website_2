@@ -1,0 +1,378 @@
+---
+title: "QZ #1"
+subtitle: "19 April (Wed) 13:00-15:00"
+Week: 8
+---
+
+## Score distribution
+
+```{r}
+#| echo: false
+#| output: false
+
+library(tidyverse)
+
+
+my_data <- tibble(
+  Class = c(rep("THU", 21), rep("TUE", 26)),
+  Score = c(22, 27, 33, 42, 14, 39, 26, 43, 17, 39, 37, 14, 23, 24, 28, 8, 33, 26, 33, 29, 34,
+            40, 42, 42, 45, 37, 23, 41, 38, 35, 20, 21, 34, 41, 15, 10, 25, 14, 28, 26, 15, 45, 
+            34, 13, 40, 42, 11)
+)
+```
+
+```{r}
+summary(my_data)
+```
+-   Max score: 45 / 47
+
+-   Min score: 8 / 47
+
+-   AVG score: 29.11 / 47
+
+
+**Histogram**
+
+```{r}
+ggplot(my_data, aes(x = Score)) + 
+  geom_histogram(binwidth = 3, color = "white", fill = "#56B4E9", alpha = 0.8) +
+  # Add vertical line for mean
+  geom_vline(aes(xintercept = mean(Score)), 
+             color = "red", linetype = "dashed", linewidth = 1) +
+  geom_text(aes(x = 29.11, y = 6.5, label = "AVG: 29.11 / 47")) +
+  # Add x and y axis labels
+  labs(x = "Score", y = "Frequency", 
+       title = "Score distribution") +
+  # Set a simple theme
+  theme_minimal()
+```
+
+**Box-plot by classes**
+
+```{r}
+#| warning: false
+
+
+# Calculate average scores for each class
+class_averages <- my_data %>%
+  group_by(Class) %>%
+  summarize(avg_score = mean(Score))
+
+ggplot(my_data, aes(x = Class, y = Score, fill = Class)) +
+  geom_boxplot(alpha = 0.8, color = "black", size = 1) +
+  # Add individual data points with jitter
+  geom_jitter(alpha = 0.2) +
+  # Add text labels for average values
+  geom_text(data = class_averages, 
+            aes(x = Class, y = 15, 
+                label = paste0("Group AVG: ", round(avg_score, 1))), 
+            color = "black", 
+            size = 4, 
+            fontface = "bold") +
+  # Remove legend
+  guides(fill = FALSE) +
+  # Choose color palette
+  scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
+  # Add x and y axis labels
+  labs(x = "Class", y = "Score") +
+  # Set a simple theme
+  theme_minimal()
+
+
+```
+
+## Date and Location
+
+-   Date: 19 April (Wed) 13:00 - 15:00
+
+-   Location: Room 312 (School of Communication, the same building)
+
+## Notice
+
+-   Quiz will be administered through Google Forms.
+-   Please bring your laptop for the quiz.
+-   You are allowed to access any information through the Internet
+-   However, communication with others is strictly prohibited.
+-   Do not use any messaging apps (e.g., KakaoTalk, TikTok, Line, WeChat, etc.) during the quiz.
+-   Upon completion of the quiz, you are required **to submit your code**.
+
+## Data
+
+> We are going to use a dataset named 'penguins' from the 'palmerpenguins' package. The dataset contains different body measurements for three species of penguins from three islands in the Palmer Archipelago, Antarctica. The penguins dataset is useful for learning R, because it contains multiple kinds of data (both categorical and numeric variables).
+
+-   Please see the link below if you want to know more about this data. <https://allisonhorst.github.io/palmerpenguins/articles/intro.html>
+
+
+---------------------------------------------------
+
+## **QZ**
+
+
+### Part I. Data Import & Exploration
+
+Let's import "Palmerspenguins" data (Use the code below)
+
+```{r}
+# Install palmerpenguins pacakge (if required)
+if(!require(palmerpenguins)){
+  install.packages("palmerpenguins")
+}
+
+# import libraries
+library(palmerpenguins)
+library(tidyverse)
+
+data(penguins)
+```
+
+Let's have a glimpse of the data
+```{r}
+glimpse(penguins)
+```
+
+The **`penguins`** dataset consists of 344 observations and the following 8 variables:
+
+1.  **`species`**: A factor with three levels - Adelie, Chinstrap, and Gentoo. These are the three penguin species under study.
+
+2.  **`island`**: A factor with three levels - Biscoe, Dream, and Torgersen. These are the islands in the Palmer Archipelago where the penguins were observed.
+
+3.  **`bill_length_mm`**: A numeric variable representing the length of the penguin's culmen (bill) in millimeters.
+
+4.  **`bill_depth_mm`**: A numeric variable representing the depth of the penguin's culmen (bill) in millimeters.
+
+5.  **`flipper_length_mm`**: A numeric variable representing the length of the penguin's flipper in millimeters.
+
+6.  **`body_mass_g`**: A numeric variable representing the penguin's body mass in grams.
+
+7.  **`sex`**: A factor with two levels - male and female.
+
+8.  **`year`**: An integer variable representing the year of observation (2007, 2008, or 2009).
+
+
+> There are three species in palmerspenguins: Chinstrap / Gentoo / Adelie
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
+
+
+The data table looks like ..
+```{r}
+knitr::kable(penguins %>% head(10))
+```
+
+
+```{r}
+# Glimpse of the penguins dataset.
+glimpse(penguins)
+# 344 observations
+# 8 vars
+
+############################3
+# EDA
+############################3
+summary(penguins)
+
+table(penguins$year)
+table(penguins$sex)
+table(penguins$species)
+table(penguins$island)
+table(penguins$species, penguins$island)
+# All penguins in Torgersen island is 'Adelie'
+table(penguins$sex, penguins$island)
+
+plot(penguins$bill_length_mm, 
+     penguins$bill_depth_mm)
+
+```
+
+
+
+### Part II. Data wrangling
+
+```{r}
+#####
+# missing values
+library(VIM)
+aggr(penguins)
+
+# Variable with the most missing values: sex
+sum(is.na(penguins$bill_length_mm))
+sum(is.na(penguins$bill_depth_mm))
+sum(is.na(penguins$flipper_length_mm))
+sum(is.na(penguins$body_mass_g))
+
+# Filter out when missings in 'bill_length_mm'
+penguins %>% 
+  filter(!is.na(bill_length_mm)) -> penguins_new
+
+# Check the missing values again
+aggr(penguins_new)
+
+# Missing value handling with mice library and check again
+library(mice)
+
+penguins_new<-mice(penguins_new, method='rf', seed=1234)
+penguins_imputed<-complete(penguins_new, 1)
+
+aggr(penguins_imputed)
+
+table(penguins$sex)
+
+table(penguins_imputed$sex)
+
+
+plot(penguins_imputed$bill_length_mm, 
+     penguins_imputed$bill_depth_mm)
+
+penguins_imputed %>% names
+penguins_imputed %>% 
+  ggplot() +
+  geom_point(aes(x=bill_length_mm, y=bill_depth_mm, color=species))
+
+
+penguins_imputed %>% 
+  group_by(sex) %>% 
+  summarise(bill_len=mean(bill_length_mm),
+            bill_dep=mean(bill_depth_mm),
+            mass=mean(body_mass_g),
+            flipper_len=mean(flipper_length_mm)
+            )
+
+penguins_imputed %>% 
+  group_by(island) %>% 
+  summarise(bill_len=mean(bill_length_mm),
+            bill_dep=mean(bill_depth_mm),
+            mass=mean(body_mass_g),
+            flipper_len=mean(flipper_length_mm)
+  )
+  
+penguins_imputed %>% 
+  group_by(species) %>% 
+  summarise(bill_len=mean(bill_length_mm),
+            bill_dep=mean(bill_depth_mm),
+            mass=mean(body_mass_g),
+            flipper_len=mean(flipper_length_mm)
+  )
+
+
+```
+
+
+
+
+### Part III. Train the model (Modeling)
+
+```{r}
+
+############################
+# Modeling
+
+glimpse(penguins_imputed)
+table(penguins$species)
+
+
+# 1. Decision Tree
+penguins_imputed %>% select(-c("island", "sex", "year")) -> train
+
+library(rpart)
+dt_model<-rpart(species~., data = train, method = "class")
+
+summary(dt_model)
+
+
+library(rpart.plot)
+rpart.plot(dt_model, type=4, extra=100, box.palette ="-YlGnBl", branch.lty = 2)
+
+
+
+
+predict(dt_model, penguins_imputed[104,])
+
+
+# 2. Random Forest
+
+library(randomForest)
+rf_model <- randomForest(species~.,
+                         data = train, 
+                         mtry = 3,
+                         ntree = 200)
+rf_model
+
+varImpPlot(rf_model)
+
+# 3. Naive Bayes
+
+library(naivebayes)
+nb_model <- naive_bayes(species ~ ., data=train)
+summary(nb_model)
+
+table(train$species)
+
+
+# 4. kNN
+
+# Normalization
+
+nor <- function(x) { (x - min(x)) / (max(x) - min(x)) }
+
+train %>% mutate(bill_length_mm=nor(bill_length_mm),
+                 bill_depth_mm=nor(bill_depth_mm),
+                 flipper_length_mm=nor(flipper_length_mm),
+                 body_mass_g=nor(body_mass_g)) %>% 
+  select(-species)-> train_nor
+
+head(train_nor)
+
+
+
+
+
+library(class)
+
+kn_model <- knn(train_nor, 
+                train_nor[101:120,], 
+                cl=train$species, k=13)
+tab <- table(kn_model,train[101:120,"species"])
+tab
+```
+
+
+### Part IV. Model score & Prediction
+
+```{r}
+######################
+# Score & Prediction 
+
+# create a train dataset
+test <- train[seq(1,300,3),]
+
+# Prediction by using trained models
+pred_dt <- predict(dt_model, test, type='class')
+pred_rf <- predict(rf_model, test, type='class')
+pred_nb <- predict(nb_model, test, type='class')
+pred_kn <- knn(train_nor, train_nor[seq(1,300,3),], cl=train$species, k=13)
+
+
+data.frame(truth=train[seq(1,300,3),"species"],
+           dt=pred_dt, 
+           rf=pred_rf, 
+           nb=pred_nb, 
+           kn=pred_kn) %>% 
+  mutate(dt=ifelse(dt==truth, 1, 0),
+         rf=ifelse(rf==truth, 1, 0),
+         nb=ifelse(nb==truth, 1, 0),
+         kn=ifelse(kn==truth, 1, 0)) -> score
+
+apply(score[-1], 2, sum)
+
+score %>% 
+  mutate(ts=dt+rf+nb+kn) %>% 
+  mutate(low=ifelse(ts==1, 1, 0)) %>% 
+  filter(low==1)
+
+penguins_imputed[295,]
+
+```
+
+### Part V. Code submission (Upload your R file)
+
+
