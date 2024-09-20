@@ -10,3 +10,1082 @@ slide-format: revealjs
 
 <br>
 
+
+## R & R Studio
+
+<br>
+
+### Base R
+
+-   The Data given in base R
+
+    -   Can be checked by `data()` command
+
+    -   ex) `ChickWeight` data “Weight versus age of chicks on different diets”, women data “Average heights and weights for American women aged 30-39”
+
+
+```{r}
+women
+```
+
+-   `Car` datset
+
+```{r}
+str(cars)
+cars
+```
+
+*`str`* function: Function summarizing the contents of the data
+
+-   Various visualization functions
+
+    -   Most widely used function in base R: plot
+
+        ```{r}
+        plot(women)
+        ```
+
+-   Apply different visualization options
+
+    -   Color options (parameters) *`col`*,
+
+    -   *`xlab`* and *`ylab`* to name the axis,
+
+    -   *`pch`* to specify the symbol shape
+
+        ```{r}
+        plot(cars)
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue')
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue', xlab = "speed")
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue', xlab = "speed", ylab = 'distance')
+        ```
+
+        ```{r}
+        plot(cars, col = 'blue', xlab = "speed", ylab = 'distance', pch = 18)
+        ```
+
+
+<br>
+
+### Good habits in learning data science
+
+<br>
+
+```{r}
+# ?plot
+# help(plot)
+```
+
+-   **Think** **incrementally** (Step by Step)
+
+    -   After creating the most basic features, check the behavior, add a new feature to it, and add another feature to verify it.
+
+    -   Once you've created everything and checked it, it's hard to find out where the cause is later
+
+    -   See Figure above: Check the most basic plot function, add the `col` option to check, add the `xlab` and `ylab` options, and add the `pch` option to check
+
+-   Specify working directory
+
+    -   The way to Save Data Files in a Specified Directory (Folder)
+
+    -   *`getwd()`* function displays the current working directory (the red part is the computer name)
+
+        ```{r}
+        getwd()
+        ```
+
+    -   *setwd()* to set the new working directory
+
+-   Use of library (package)
+
+    -   Libraries are software that collects R functions developed for specific fields.
+
+        -   E.g.) `ggplot2` is a collection of functions that visualize your data neatly and consistently
+
+        -   E.g.) `gapminder` is a collection of functions needed to utilize gapminder data, which gathers population, GDP per capita, and life expectancy in five years from 1952 to 2007.
+
+    -   R is so powerful and popular because of its huge library
+
+    -   If you access the CRAN site, you will see that it is still being added.
+
+        -   \[Packages\] menu: see all libraries provided by R \[Task Views\] menu: Introduce libraries field by field
+
+-   When using it, attach it using the library function
+
+    ![](images/clipboard-2358760137.png)
+
+-   Library installation saves library files to your hard disk
+
+-   Library Attachment loads it from Hard Disk to Main Memory
+
+    ![](images/clipboard-2057697907.png)
+
+### Data for example..
+
+-   Lovely *`iris`* data
+
+    -   In 1936, Edger Anderson collected irises in the Gaspe Peninsula in eastern Canada.
+
+    -   Collect 50 from each three species(setosa, versicolor, verginica) on the same day
+
+    -   The same person measures the width and length of the petals and sepals with the same ruler
+
+    -   Has been famous since Statistician Professor Ronald Fisher published a paper with this data and is still widely used.
+
+    ![](images/clipboard-2747347794.png)
+
+    ```{r}
+    str(iris)
+    ```
+
+    ```{r}
+    head(iris, 10)
+    ```
+
+    ```{r}
+    plot(iris)
+    ```
+
+-   See the correlation of two properties
+
+    -   `col = iris$Species` is an option to draw colors differently by species
+
+        ```{r}
+        plot(iris$Petal.Width, 
+             iris$Petal.Length,
+             col = iris$Species)
+        ```
+
+### Data Science Process with example data
+
+```{mermaid}
+flowchart LR
+  A[Collecting Data] --> B(EDA)
+  B --> C{Modeling}
+```
+
+-   `Tips` data
+
+    -   Tips earning at tables in a restaurant
+
+    -   Can we get more tips using data science?
+
+-   **Step 1:** Data collecting
+
+    -   Collect values in seven variables
+
+        -   total_bill
+
+        -   tip
+
+        -   gender
+
+        -   smoker
+
+        -   day
+
+        -   time
+
+        -   size: number of people in a table
+
+    -   After weeks of hard work, collected 244 and saved it to the tips.csv file
+
+```{r}
+tips = read.csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv')
+str(tips)
+head(tips, 10)
+```
+
+Interpreting the first sample, it was shown that two people had dinner on Sunday, no smokers, and a \$1.01 tip at the table where a woman paid the total \$16.99.
+
+<br>
+
+-   **Step 2:** Exploratory Data Analysis (EDA)
+
+    -   summary function to check the summary statistics
+
+    -   How to explain the summary statistics below?
+
+```{r}
+summary(tips)              
+```
+
+This statistic summary doesn't reveal the effect of day or gender on the tip, so let's explore it further with visualization.
+
+-   Attach dplyr and `ggplot2` libraries (for now just run it and study the meaning)
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+
+```
+
+-   What do you see in the figures below?
+
+    -   Distribution of fellow persons in a table
+
+```{r}
+
+tips %>% ggplot(aes(size)) + geom_histogram()                                            
+```
+
+Tip amount according to bill amount (total_bill)
+
+```{r}
+
+tips %>% ggplot(aes(total_bill, tip)) + geom_point()                                     
+```
+
+Added day information using color
+
+```{r}
+
+tips %>% ggplot(aes(total_bill, tip)) + 
+  geom_point(aes(col = day))                       
+```
+
+Women and men separated by different symbols
+
+```{r}
+
+tips %>% ggplot(aes(total_bill, tip)) + 
+  geom_point(aes(col = day, pch = sex), size = 3) 
+```
+
+-   **Step 3:** Modeling
+
+    -   Limitations of Exploratory Data Analysis: You can design a strategy to make more money, but you can't predict exactly how much more income will come from the new strategy.
+
+    -   Modeling allows predictions
+
+    -   Create future financial portfolios
+
+        -   E.g.) Know how much your income will increase as fellows in a table grow, and how much your income will change when paying people’s gender changes
+
+<br>
+
+## Setup your project!
+
+-   Create a new project
+
+    -   *\*.Rproj*
+
+    -   \*.R
+
+    -   getwd()
+
+-   Variable and Object
+
+    -   An object in R is a data structure used for storing data: Everything in R is an object, including functions, numbers, character strings, vectors, and lists. Each object has attributes such as its type (e.g., integer, numeric, character), its length, and often its dimensions. Objects can be complex structures, like data frames that hold tabular data, or simpler structures like a single numeric value or vector.
+
+    -   A variable in R is a name that you assign to an object so that you can refer to it later in your code. When you assign data to a variable, you are effectively labeling that data with a name that you can use to call up the object later on.
+
+Here's a simple example in R:
+
+```{r}
+my_vector <- c(1, 2, 3)
+```
+
+-   my_vector is a variable. It's a symbolic name that we're using to refer to some data we're interested in.
+
+-   c(1, 2, 3) creates a vector object containing the numbers 1, 2, and 3.
+
+-   This vector is the object, and it's the actual data structure that R is storing in memory.
+
+
+```{r}
+# remove all objects stored
+rm()
+
+# Create a vector 1 to 10
+1:10
+
+# Sampling 10 values from the vector 1:10
+sample(1:10, 10)
+
+
+X <- sample(1:10, 10)
+# Extract 2nd to 5th elements of X
+X[2:5]
+
+```
+
+<br>
+
+## Basic Syntax
+
+-   Grammar of data science.
+
+    -   **Variable**: data storage space
+
+    -   **Data types**: numeric, character, categorical, logical, special constants, etc.
+
+    -   **Operators**: arithmetic, comparison, logical operators
+
+    -   **Vector**: a collection of single values
+
+    -   **Array**: A set of data with columns and rows (or A set of vectors)
+
+    -   **Data frame**: A structure in which different data types are organized in a tabular form. Each property has the same size.
+
+    -   **List**: A tabular structure similar to “Data frame”. The size of each property can be different.
+
+-   Grammar study is essential to save data and process operations
+
+    -   a=1
+
+    -   b=2
+
+    -   c=a+b
+
+-   When there needs a lot of data, such as student grade processing
+
+    -   A single variable cannot represent all the data
+
+    -   By using vector, matrix, data frame, list, etc., it is possible to store a lot of data with one variable name.
+
+    -   There are many things around us are organized in a tabular form for easy data management. (e.g. attendance checking, grade, and member management, etc.)
+
+-   Storing values in variables
+
+    -   Value assignment using =, \<-, -\>
+
+        ```{r}
+        # Assign 1 to X
+        x = 1 
+
+        # Assign 2 to Y.
+        y = 2
+
+        z = x + y
+
+        z
+        ```
+
+        ```{r}
+        x + y -> z
+
+        z
+        ```
+
+-   Example of exchanging two values
+
+    -   Make temporary storage space and save one value in advance
+
+        ```{r}
+        x = 1
+        y = 2
+        temp = x
+        x = y
+        y = temp
+
+        x
+
+        y
+        ```
+
+-   Basic data types of R
+
+    -   Numeric: int / num / cplx
+
+    -   Character: chr
+
+    -   Categorical: factor
+
+    -   Logical: True(T), FALSE(F)
+
+    -   Special constant
+
+        -   NULL: undefined value
+
+        -   NA: missing value
+
+        -   Inf & -Inf: Positive & Negative infinity
+
+        -   NaN: Not a Number, values cannot be computed such as 0/0, Inf/Inf, etc
+
+-   Examples for basic data types in R
+
+Numeric
+
+```{r}
+# Data type #
+
+x = 5
+y = 2
+x/y
+
+```
+
+Complex
+
+```{r}
+xi = 1 + 2i
+yi = 1 - 2i
+xi+yi
+
+```
+
+Character (string)
+
+```{r}
+str = "Hello, World!"
+str
+
+```
+
+Categorical (factor)
+
+```{r}
+blood.type = factor(c('A', 'B', 'O', 'AB'))
+blood.type
+
+```
+
+Logical & Special constant
+
+```{r}
+T
+F
+xinf = Inf
+yinf = -Inf
+xinf/yinf
+
+```
+
+-   Data type verification and conversion functions
+
+    -   Functions to check data type
+
+        -   class(x)
+
+        -   typeof(x)
+
+        -   is.integer(x)
+
+        -   is.numeric(x)
+
+        -   is.complex(x)
+
+        -   is.character(x)
+
+        -   is.na(x)
+
+    -   Functions to transform data type
+
+        -   as.factor(x)
+
+        -   as.integer(x)
+
+        -   as.numeric(x)
+
+        -   as.character(x)
+
+        -   as.matrix(x)
+
+        -   as.array(x)
+
+```{r}
+
+x = 1 		# If you simply put 1 in x, x is a numeric type.
+x
+is.integer(x)
+
+
+```
+
+```{r}
+x = 1L 		# If 1L is entered in x, x is an integer.
+x
+
+is.integer(x)
+
+x = as.integer(1) 	 
+
+is.integer(x)
+
+```
+
+-   Arithmetic Operators
+
+    |                |                             |
+    |----------------|-----------------------------|
+    | **Operator**   | **Description**             |
+    | **+**          | addition                    |
+    | **-**          | subtraction                 |
+    | **\***         | multiplication              |
+    | **/**          | division                    |
+    | **\^ or \*\*** | exponentiation              |
+    | **x %% y**     | modulus (x mod y) 5%%2 is 1 |
+    | **x %/% y**    | integer division 5%/%2 is 2 |
+
+-   Logical Operators
+
+    |               |                          |
+    |---------------|--------------------------|
+    | **Operator**  | **Description**          |
+    | **\<**        | less than                |
+    | **\<=**       | less than or equal to    |
+    | **\>**        | greater than             |
+    | **\>=**       | greater than or equal to |
+    | **==**        | exactly equal to         |
+    | **!=**        | not equal to             |
+    | **!x**        | Not x                    |
+    | \*\*x         | y\*\*                    |
+    | **x & y**     | x AND y                  |
+    | **isTRUE(x)** | test if X is TRUE        |
+
+-   More information for operators: <https://www.statmethods.net/management/operators.html>
+
+<br>
+
+## Vector
+
+<br>
+
+```{r}
+# Create a vector with 7 elements by increasing the numbers 1 to 7 by 1.
+1:7 		
+
+# Decrease by 1 from 7 to 1 to create a vector with 7 elements.
+7:1 	
+
+```
+
+```{r}
+vector(length = 5)
+# Create a vector consisting of 1 to 5 elements. Same as 1:5
+c(1:5)	 	
+
+# Create a vector of elements 1 to 6 by combining elements 1 to 3 and elements 4 to 6
+c(1, 2, 3, c(4:6)) 	
+
+```
+
+```{r}
+# Store a vector consisting of 1 to 3 elements in x
+x = c(1, 2, 3) 	
+x 		
+
+```
+
+```{r}
+# Create y as an empty vector
+y = c() 		
+
+# Created by adding the c(1:3) vector to the existing y vector
+y = c(y, c(1:3)) 	
+y 	
+
+```
+
+```{r}
+# Create a vector from 1 to 10 in increments of 2
+seq(from = 1, to = 10, by = 2) 	
+
+# Same code with above
+seq(1, 10, by = 2) 		
+```
+
+```{r}
+# Create a vector with 11 elements from 0 to 1 in increments of 0.1
+seq(0, 1, by = 0.1) 			
+
+# Create a vector with 11 elements from 0 to 1
+seq(0, 1, length.out = 11) 		
+
+```
+
+```{r}
+# Create a vector by repeating the (1, 2, 3) vector twice
+rep(c(1:3), times = 2)	
+
+# (1, 2, 3) Creates a vector by repeating the individual elements of the vector twice
+rep(c(1:3), each = 2) 		
+
+```
+
+```{r}
+x = c(2, 4, 6, 8, 10)
+
+# Find the length (size) of the x vector
+length(x) 	
+
+```
+
+```{r}
+# Find the value of element 1 of the x vector
+x[1] 		
+
+```
+
+```{r}
+
+# An error occurs if you enter elements 1, 2, and 3 of the x vector.
+
+# x[1, 2, 3] 		
+
+# When finding elements 1, 2, and 3 of the x vector, they must be grouped into a vector.
+
+x[c(1, 2, 3)] 
+
+```
+
+```{r}
+# Output the value excluding elements 1, 2, and 3 from the x vector
+
+x[-c(1, 2, 3)] 
+
+```
+
+```{r}
+# Print elements 1 to 3 in the x vector
+x[c(1:3)] 		
+```
+
+```{r}
+# Add 2 to each individual element of the x vector
+x = c(1, 2, 3, 4)
+y = c(5, 6, 7, 8)
+z = c(3, 4)
+w = c(5, 6, 7)
+x+2 		
+```
+
+```{r}
+# Since the size of the x vector and y vector are the same, each element is added
+x + y 	
+```
+
+```{r}
+# If the x vector is an integer multiple of the size of the z vector, add the smaller vector elements in a circular motion.
+x + z 		
+```
+
+```{r}
+# Operation error because the sizes of x and w are not integer multiples
+x + w 		
+```
+
+```{r}
+# Check if element value of x vector is greater than 5
+
+x > 5 		
+```
+
+```{r}
+# Check if all elements of the x vector are greater than 5
+all(x > 5) 		
+```
+
+```{r}
+# Check if any of the element values of the x vector are greater than 5
+any(x > 5) 	
+```
+
+```{r}
+x = 1:10
+# Extract the first 6 elements of data
+head(x) 		
+# Extract the last 6 elements of data
+tail(x) 		
+```
+
+```{r}
+# Extract the first 3 elements of data
+head(x, 3) 	
+# Extract the last 3 elements of data
+tail(x, 3) 
+```
+
+```{r}
+x = c(1, 2, 3)
+y = c(3, 4, 5)
+z = c(3, 1, 2)
+
+# Union set
+union(x, y) 
+```
+
+```{r}
+# Intersection set
+intersect(x, y) 
+```
+
+```{r}
+# Set difference (X - Y)
+setdiff(x, y) 	
+```
+
+```{r}
+# Set difference (Y - X)
+setdiff(y, x) 	
+```
+
+```{r}
+# Compare whether x and y have the same elements
+setequal(x, y) 	
+```
+
+```{r}
+# Compare whether x and z have the same elements
+setequal(x, z) 
+```
+
+
+-   Vectorized codes
+
+```{r}
+c(1, 2, 4) + c(2, 3, 5)
+
+```
+
+<br>
+
+```{r}
+X <- c(1,2,4,5)
+
+X * 2
+
+```
+
+-   Recycling rule
+
+```{r}
+1:4 + c(1, 2)
+
+X<-c(1,2,4,5)
+X * 2
+
+1:4 + 1:3
+
+```
+
+
+
+<br>
+
+## Array
+
+### **Understanding Arrays in R: Concepts and Examples**
+
+Arrays are a fundamental data structure in R that extend vectors by allowing you to store multi-dimensional data. While a vector has one dimension, arrays in R can have two or more dimensions, making them incredibly versatile for complex data organization.
+
+#### What is an Array in R?
+
+An array in R is a collection of elements of the same type arranged in a grid of a specified dimensionality. It is a multi-dimensional data structure that can hold values in more than two dimensions. Arrays are particularly useful in scenarios where operations on multi-dimensional data are required, such as matrix computations, tabulations, and various applications in data analysis and statistics.
+
+#### Creating an Array
+
+To create an array in R, you can use the **`array`** function. This function takes a vector of data and a vector of dimensions as arguments. For example:
+
+```{r}
+# Create a 2x3 array
+my_array <- array(1:6, dim = c(2, 3))
+print(my_array)
+
+```
+
+This code snippet creates a 2x3 array (2 rows and 3 columns) with the numbers 1 to 6.
+
+#### Accessing Array Elements
+
+Elements within an array can be accessed using indices for each dimension in square brackets **`[]`**. For example:
+
+```{r}
+# Access the element in the 1st row and 2nd column
+element <- my_array[1, 2]
+print(element)
+
+```
+
+#### Modifying Arrays
+
+Just like vectors, you can modify the elements of an array by accessing them using their indices and assigning new values. For example:
+
+```{r}
+# Modify the element in the 1st row and 2nd column to be 20
+my_array[1, 2] <- 20
+print(my_array)
+
+```
+
+#### Operations on Arrays
+
+R allows you to perform operations on arrays. These operations can be element-wise or can involve the entire array. For example, you can add two arrays of the same dimensions, and R will perform element-wise addition.
+
+#### Example: Creating and Manipulating a 3D Array
+
+```{r}
+# Create a 3x2x2 array
+my_3d_array <- array(1:12, dim = c(3, 2, 2))
+print(my_3d_array)
+
+# Access an element (2nd row, 1st column, 2nd matrix)
+element_3d <- my_3d_array[2, 1, 2]
+print(element_3d)
+
+```
+
+
+<br>
+
+```{r}
+# Create N-dimensional array
+
+# Assign values 1 to 5 to a 2×4 matrix
+x = array(1:5, c(2, 4)) 
+
+x
+
+# Print row 1 element value
+x[1, ] 
+
+# Print 2nd column element values
+x[, 2] 
+
+# Set row and column names
+dimnamex = list(c("1st", "2nd"), c("1st", "2nd", "3rd", "4th")) 
+
+x = array(1:5, c(2, 4), dimnames = dimnamex)
+x
+x["1st", ]
+x[, "4th"]
+
+
+# Create a two-dimensional array
+x = 1:12
+x
+matrix(x, nrow = 3)
+matrix(x, nrow = 3, byrow = T)
+
+
+# Create an array by combining vectors
+v1 = c(1, 2, 3, 4)
+v2 = c(5, 6, 7, 8)
+v3 = c(9, 10, 11, 12)
+
+# Create an array by binding by column
+cbind(v1, v2, v3) 
+# Create array by binding row by row
+rbind(v1, v2, v3) 
+
+# Various matrix operations using the operators in [Table 3-7]
+# Store two 2×2 matrices in x and y, respectively
+x = array(1:4, dim = c(2, 2))
+y = array(5:8, dim = c(2, 2))
+x
+y
+x+y
+x-y
+
+# multiplication for each column
+x * y 
+
+# mathematical matrix multiplication
+x %*% y 
+
+# transpose matrix of x
+t(x) 
+
+# inverse of x
+solve(x) 
+
+# determinant of x
+det(x) 
+x = array(1:12, c(3, 4))
+x
+
+# If the center value is 1, apply the function row by row
+apply(x, 1, mean) 
+
+# If the center value is 2, apply the function to each column
+apply(x, 2, mean) 
+x = array(1:12, c(3, 4))
+dim(x)
+x = array(1:12, c(3, 4))
+
+# Randomly mix and extract array elements
+sample(x) 
+
+# Select and extract 10 elements from the array
+sample(x, 10) 
+library(dplyr)
+# ?sample
+
+# The extraction probability for each element can be varied
+sample(x, 10, prob = c(1:12)/24) 
+
+# You can create a sample using just numbers
+sample(10) 
+```
+
+## Data.frame
+
+```{r}
+# Data Frame #
+name = c("Cheolsu", "Chunhyang", "Gildong")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients = data.frame(name, age, gender, blood.type)
+patients
+
+# Can also be written in one line like this:
+patients1 = data.frame(name = c("Cheolsu", "Chunhyang", "Gildong"), 
+                       age = c(22, 20, 25), 
+                       gender = factor(c("M", "F", "M ")), 
+                       blood.type = factor(c("A", "O", "B")))
+
+patients1
+
+patients$name # Print name attribute value
+patients[1, ] # Print row 1 value
+patients[, 2] # Print 2nd column values
+patients[3, 1] # Prints 3 rows and 1 column values
+
+
+patients[patients$name=="Withdrawal", ] # Extract information about withdrawal among patients
+patients[patients$name=="Cheolsu", c("name", "age")] # Extract only Cheolsu's name and age information
+
+head(cars) # Check the cars data set. The basic function of the head function is to extract the first 6 data.
+
+attach(cars) # Use the attach function to use each property of cars as a variable
+speed # The variable name speed can be used directly.
+detach(cars) # Deactivates the use of each property of cars as a variable through the detach function
+# speed # Try to access the variable called speed, but there is no such variable.
+
+# Apply functions using data properties
+mean(cars$speed)
+max(cars$speed)
+
+# Apply a function using the with function
+with(cars, mean(speed))
+with(cars, max(speed))
+
+# Extract only data with speed greater than 20
+subset(cars, speed > 20)
+
+# Extract only dist data with speed over 20, select multiple columns, separate c() with ,
+subset(cars, speed > 20, select = c(dist))
+
+# Extract only data excluding dist from data with a speed exceeding 20
+subset(cars, speed > 20, select = -c(dist))
+head(airquality) # airquality data contains NA
+head(na.omit(airquality)) # Extract by excluding values containing NA
+
+# merge(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all, sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL, ...)
+
+name = c("Cheolsu", "Chunhyang", "Gildong")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients1 = data.frame(name, age, gender)
+patients1
+
+patients2 = data.frame(name, blood.type)
+patients2
+
+patients = merge(patients1, patients2, by = "name")
+patients
+
+# If there are no column variables with the same name, when merging them into by.x and by.y of the merge function
+# You must enter the attribute name of each column to be used.
+name1 = c("Cheolsu", "Chunhyang", "Gildong")
+name2 = c("Minsu", "Chunhyang", "Gildong")
+age = c(22, 20, 25)
+gender = factor(c("M", "F", "M"))
+blood.type = factor(c("A", "O", "B"))
+patients1 = data.frame(name1, age, gender)
+patients1
+
+patients2 = data.frame(name2, blood.type)
+patients2
+
+patients = merge(patients1, patients2, by.x = "name1", by.y = "name2")
+patients
+
+patients = merge(patients1, patients2, by.x = "name1", by.y = "name2", all = TRUE)
+patients
+x = array(1:12, c(3, 4))
+
+# Currently x is not a data frame
+is.data.frame(x) 
+as.data.frame(x)
+
+# Just calling the is.data.frame function does not turn x into a data frame
+is.data.frame(x)
+# Convert x to data frame format with the as.data.frame function
+x = as.data.frame(x)
+x
+# Verify that x has been converted to data frame format
+is.data.frame(x)
+# When converting to a data frame, automatically assigned column names are reassigned to the names function.
+names(x) = c("1st", "2nd", "3rd", "4th")
+x
+```
+
+
+## List
+
+
+
+```{r}
+# List #
+patients = data.frame(name = c("Cheolsu", "Chunhyang", "Gildong"), 
+                      age = c(22, 20, 25), 
+                      gender = factor(c("M", "F", "M ")), 
+                      blood.type = factor(c("A", "O", "B")))
+
+no.patients = data.frame(day = c(1:6), no = c(50, 60, 55, 52, 65, 58))
+
+
+# Simple addition of data
+listPatients = list(patients, no.patients)
+listPatients
+
+
+# Add names to each data
+listPatients = list(patients=patients, no.patients = no.patients)
+listPatients
+
+
+# Enter element name
+listPatients$patients 
+
+
+# Enter index
+listPatients[[1]] 
+
+
+# Enter the element name in ""
+listPatients[["patients"]] 
+
+
+# Enter the element name in ""
+listPatients[["no.patients"]] 
+
+
+# Calculate the average of no.patients elements
+lapply(listPatients$no.patients, mean)
+
+# Calculate the average of the patients elements. Anything that is not in numeric form is not averaged.
+lapply(listPatients$patients, mean)
+
+sapply(listPatients$no.patients, mean)
+
+# If the simplify option of sapply() is set to F, the same result as lapply() is returned.
+sapply(listPatients$no.patients, mean, simplify = F)
+```
+
+
