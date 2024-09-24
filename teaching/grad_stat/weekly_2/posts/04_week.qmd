@@ -10,7 +10,6 @@ slide-format: revealjs
 
 <br>
 
-
 ## R & R Studio
 
 <br>
@@ -22,7 +21,6 @@ slide-format: revealjs
     -   Can be checked by `data()` command
 
     -   ex) `ChickWeight` data “Weight versus age of chicks on different diets”, women data “Average heights and weights for American women aged 30-39”
-
 
 ```{r}
 women
@@ -73,7 +71,6 @@ cars
         plot(cars, col = 'blue', xlab = "speed", ylab = 'distance', pch = 18)
         ```
 
-
 <br>
 
 ### Good habits in learning data science
@@ -89,7 +86,7 @@ cars
 
     -   After creating the most basic features, check the behavior, add a new feature to it, and add another feature to verify it.
 
-    -   Once you've created everything and checked it, it's hard to find out where the cause is later
+    -   Once you've created everything and checked it, it's hard to find out where the cause is
 
     -   See Figure above: Check the most basic plot function, add the `col` option to check, add the `xlab` and `ylab` options, and add the `pch` option to check
 
@@ -121,13 +118,9 @@ cars
 
 -   When using it, attach it using the library function
 
-    ![](images/clipboard-2358760137.png)
-
 -   Library installation saves library files to your hard disk
 
 -   Library Attachment loads it from Hard Disk to Main Memory
-
-    ![](images/clipboard-2057697907.png)
 
 ### Data for example..
 
@@ -141,7 +134,7 @@ cars
 
     -   Has been famous since Statistician Professor Ronald Fisher published a paper with this data and is still widely used.
 
-    ![](images/clipboard-2747347794.png)
+    ![](images/clipboard-248449149.png)
 
     ```{r}
     str(iris)
@@ -284,9 +277,9 @@ tips %>% ggplot(aes(total_bill, tip)) +
 
     -   getwd()
 
--   Variable and Object
+-   **Variable** and **Object**
 
-    -   An object in R is a data structure used for storing data: Everything in R is an object, including functions, numbers, character strings, vectors, and lists. Each object has attributes such as its type (e.g., integer, numeric, character), its length, and often its dimensions. Objects can be complex structures, like data frames that hold tabular data, or simpler structures like a single numeric value or vector.
+    -   An `object` in R is a data structure used for storing data: [Everything in R is an object]{.underline}, including functions, numbers, character strings, vectors, and lists. Each object has attributes such as its type (e.g., integer, numeric, character), its length, and often its dimensions. Objects can be complex structures, like data frames that hold tabular data, or simpler structures like a single numeric value or vector.
 
     -   A variable in R is a name that you assign to an object so that you can refer to it later in your code. When you assign data to a variable, you are effectively labeling that data with a name that you can use to call up the object later on.
 
@@ -296,12 +289,11 @@ Here's a simple example in R:
 my_vector <- c(1, 2, 3)
 ```
 
--   my_vector is a variable. It's a symbolic name that we're using to refer to some data we're interested in.
+-   `my_vector` is a variable. It's a symbolic name that we're using to refer to some data we're interested in.
 
--   c(1, 2, 3) creates a vector object containing the numbers 1, 2, and 3.
+-   `c(1, 2, 3)` creates a vector object containing the numbers 1, 2, and 3.
 
 -   This vector is the object, and it's the actual data structure that R is storing in memory.
-
 
 ```{r}
 # remove all objects stored
@@ -336,17 +328,17 @@ X[2:5]
 
     -   **Array**: A set of data with columns and rows (or A set of vectors)
 
-    -   **Data frame**: A structure in which different data types are organized in a tabular form. Each property has the same size.
+    -   **Data frame**: A structure in which different data types are organized in a tabular form. Each properㄹty has the same size.
 
     -   **List**: A tabular structure similar to “Data frame”. The size of each property can be different.
 
 -   Grammar study is essential to save data and process operations
 
-    -   a=1
+    -   `a = 1`
 
-    -   b=2
+    -   `b = 2`
 
-    -   c=a+b
+    -   `c = a+b`
 
 -   When there needs a lot of data, such as student grade processing
 
@@ -396,13 +388,13 @@ X[2:5]
 
 -   Basic data types of R
 
-    -   Numeric: int / num / cplx
+    -   **Numeric**: int / num / cplx
 
-    -   Character: chr
+    -   **Character**: chr
 
-    -   Categorical: factor
+    -   **Categorical**: factor
 
-    -   Logical: True(T), FALSE(F)
+    -   **Logical**: True(T), FALSE(F)
 
     -   Special constant
 
@@ -551,7 +543,73 @@ is.integer(x)
 
 ## Vector
 
+> In R, a vector is one of the most basic data structures used to store a sequence of elements of the same type. Vectors can hold numeric, character, or logical data. They are a fundamental part of R programming, especially for statistical operations.
+
 <br>
+
+### Creating a Vector
+
+You can create a vector in R using the `c()` function, which combines individual values into a single vector
+
+```{r}
+# Numeric vector
+numeric_vector <- c(1, 2, 3, 4, 5)
+
+# Character vector
+char_vector <- c("apple", "banana", "cherry")
+
+# Logical vector
+logical_vector <- c(TRUE, FALSE, TRUE)
+
+```
+
+### Accessing Elements of a Vector
+
+You can access elements in a vector using square brackets `[ ]`:
+
+```{r}
+# Access the second element of the numeric vector
+numeric_vector[2]  # Output: 2
+
+# Access multiple elements
+numeric_vector[c(1, 3)]  # Output: 1 3
+
+```
+
+### Vectorized Operations
+
+R supports vectorized operations, meaning you can perform operations on entire vectors without needing to loop through individual elements:
+
+```{r}
+# Adding a constant to each element of a numeric vector
+numeric_vector + 1  # Output: 2 3 4 5 6
+
+# Element-wise addition of two vectors
+other_vector <- c(5, 4, 3, 2, 1)
+numeric_vector + other_vector  # Output: 6 6 6 6 6
+
+```
+
+### Common Functions with Vectors
+
+Here are some basic functions you can use with vectors:
+
+-   `length()`: Returns the number of elements in a vector.
+
+-   `sum()`: Sums all elements (for numeric vectors).
+
+-   `mean()`: Calculates the average (for numeric vectors).
+
+Example:
+
+```{r}
+length(numeric_vector)  # Output: 5
+sum(numeric_vector)     # Output: 15
+mean(numeric_vector)    # Output: 3
+
+```
+
+### More Practices..
 
 ```{r}
 # Create a vector with 7 elements by increasing the numbers 1 to 7 by 1.
@@ -708,6 +766,10 @@ head(x, 3)
 tail(x, 3) 
 ```
 
+<br>
+
+### Sets
+
 ```{r}
 x = c(1, 2, 3)
 y = c(3, 4, 5)
@@ -742,7 +804,6 @@ setequal(x, y)
 setequal(x, z) 
 ```
 
-
 -   Vectorized codes
 
 ```{r}
@@ -770,8 +831,6 @@ X * 2
 1:4 + 1:3
 
 ```
-
-
 
 <br>
 
@@ -836,7 +895,6 @@ element_3d <- my_3d_array[2, 1, 2]
 print(element_3d)
 
 ```
-
 
 <br>
 
@@ -930,7 +988,89 @@ sample(x, 10, prob = c(1:12)/24)
 sample(10) 
 ```
 
+<br>
+
 ## Data.frame
+
+> In R, a `data.frame` is a two-dimensional table-like data structure that holds data in rows and columns. It's one of the most commonly used data structures, especially when dealing with tabular data, similar to spreadsheets or SQL tables.
+
+### Characteristics of `data.frame`
+
+-   Each column can hold different types of data (numeric, character, logical, etc.).
+
+-   Each row represents a single observation, and each column represents a variable.
+
+-   Columns can have different data types, but all values within a column must be of the same type.
+
+### Creating a `data.frame`
+
+You can create a `data.frame` using the `data.frame()` function by combining vectors of equal length.
+
+```{r}
+# Create a data frame with numeric, character, and logical columns
+my_data <- data.frame(
+  ID = c(1, 2, 3),
+  Name = c("John", "Sarah", "Mike"),
+  Age = c(25, 30, 22),
+  IsStudent = c(TRUE, FALSE, TRUE)
+)
+
+# View the data frame
+my_data
+
+```
+
+### Accessing Elements in a `data.frame`
+
+You can access elements by referring to rows and columns:
+
+-   **By column name**: You can use the `$` operator or square brackets `[ , ]` to extract a column.
+
+```{r}
+# Extract the 'Name' column using $
+my_data$Name  # Output: "John" "Sarah" "Mike"
+
+# Extract the 'Age' column using square brackets
+my_data[, "Age"]  # Output: 25 30 22
+
+```
+
+**By row number**:
+You can also use row indices to access specific rows or a combination of rows and columns.
+
+```{r}
+# Extract the first row
+my_data[1, ]  # Output: 1 "John" 25 TRUE
+
+# Extract the value in the second row, third column
+my_data[2, 3]  # Output: 30
+
+```
+
+### Adding New Columns or Rows
+
+You can add new columns or rows to an existing `data.frame`:
+
+-   **Adding a new column**:
+
+```{r}
+my_data$Grade <- c("A", "B", "A")
+my_data
+
+```
+
+-   **Adding a new row**:
+
+```{r}
+new_row <- data.frame(ID = 4, Name = "Emma", Age = 28, IsStudent = FALSE, Grade = "B")
+my_data <- rbind(my_data, new_row)
+my_data
+
+```
+
+<br>
+
+### More Practices
 
 ```{r}
 # Data Frame #
@@ -1035,10 +1175,64 @@ names(x) = c("1st", "2nd", "3rd", "4th")
 x
 ```
 
-
 ## List
 
+> In R, a **list** is a data structure that can store multiple types of elements, including vectors, other lists, data frames, functions, and more. Unlike vectors or data frames, lists can contain elements of different types and lengths.
 
+### Characteristics of a List
+
+-   A list can hold different data types (numeric, character, logical, etc.) within the same structure.
+
+-   Each element in a list can be of different lengths and types, including even other lists or data frames.
+
+### Creating a List
+
+You can create a list in R using the `list()` function:
+
+```{r}
+# Creating a list with different data types
+my_list <- list(
+  Name = "John",
+  Age = 25,
+  Scores = c(90, 85, 88),
+  Passed = TRUE
+)
+
+# View the list
+my_list
+
+```
+
+### Accessing Elements of a List
+
+You can access elements in a list using the `$` operator, double square brackets `[[ ]]`, or single square brackets `[ ]`:
+
+-   **By name** (using `$` or `[[ ]]`):
+
+```{r}
+# Access the 'Name' element using $
+my_list$Name  # Output: "John"
+
+# Access the 'Scores' element using [[ ]]
+my_list[["Scores"]]  # Output: 90 85 88
+
+```
+
+-   **By position** (using `[[ ]]`):
+
+```{r}
+# Access the second element (Age) by position
+my_list[[2]]  # Output: 25
+
+```
+
+-   **Using single square brackets `[ ]`**: This returns a sublist, rather than the element itself.
+
+```{r}
+# Access the 'Name' element as a sublist
+my_list["Name"]  # Output: a sublist containing "Name"
+
+```
 
 ```{r}
 # List #
@@ -1087,5 +1281,3 @@ sapply(listPatients$no.patients, mean)
 # If the simplify option of sapply() is set to F, the same result as lapply() is returned.
 sapply(listPatients$no.patients, mean, simplify = F)
 ```
-
-
