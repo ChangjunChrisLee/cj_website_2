@@ -1035,8 +1035,7 @@ my_data[, "Age"]  # Output: 25 30 22
 
 ```
 
-**By row number**:
-You can also use row indices to access specific rows or a combination of rows and columns.
+**By row number**: You can also use row indices to access specific rows or a combination of rows and columns.
 
 ```{r}
 # Extract the first row
@@ -1233,6 +1232,101 @@ my_list[[2]]  # Output: 25
 my_list["Name"]  # Output: a sublist containing "Name"
 
 ```
+
+### Modifying a List
+
+-   **Adding new elements**: You can add new elements to an existing list by simply assigning a new name.
+
+```{r}
+# Adding a new element 'Grade'
+my_list$Grade <- "A"
+my_list
+
+```
+
+-   **Modifying existing elements**: You can modify elements by assigning a new value to them.
+
+```{r}
+# Modify the 'Age' element
+my_list$Age <- 26
+my_list$Age  # Output: 26
+
+```
+
+-   **Removing elements**: To remove an element from a list, you can set it to `NULL`.
+
+```{r}
+# Remove the 'Grade' element
+my_list$Grade <- NULL
+my_list
+
+```
+
+### Nested Lists
+
+Lists can also contain other lists, making them very flexible for storing hierarchical or structured data.
+
+```{r}
+# Creating a nested list
+nested_list <- list(
+  Name = "Sarah",
+  Details = list(Age = 28, Occupation = "Data Scientist"),
+  Skills = c("R", "Python", "SQL")
+)
+
+# Accessing elements within a nested list
+nested_list$Details$Age  # Output: 28
+nested_list[["Details"]][["Occupation"]]  # Output: "Data Scientist"
+
+```
+
+### Combining Lists
+
+You can combine multiple lists using the `c()` function:
+
+```{r}
+# Combine two lists
+list1 <- list(A = 1, B = 2)
+list2 <- list(C = 3, D = 4)
+combined_list <- c(list1, list2)
+combined_list
+
+```
+
+### Common Functions for Lists
+
+-   `length()`: Returns the number of elements in a list.
+
+```{r}
+length(my_list)  # Output: 4 (after removing Grade)
+
+```
+
+-   `str()`: Displays the structure of the list.
+
+```{=html}
+<!-- -->
+```
+-   `lapply()`: Applies a function to each element of a list and returns a list.
+
+```{r}
+# Apply the 'mean' function to each element (for lists with numeric values)
+num_list <- list(a = c(1, 2, 3), b = c(4, 5, 6))
+lapply(num_list, mean)
+
+```
+
+-   `unlist()`: Converts a list into a vector (flattening it).
+
+```{r}
+# Convert a list to a vector
+unlist(my_list)
+
+```
+
+<br>
+
+### More Practices
 
 ```{r}
 # List #
