@@ -9,3 +9,703 @@ slide-format: revealjs
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 <br>
+
+## Practice: Data Frame & List
+
+-   Korea Media Panel Data\
+    <https://stat.kisdi.re.kr/kor/contents/ContentsList.html>
+
+    -   Since 2010 KISDI has surveyed the same people annually about people’s media behavior (Smartphone brand, telecom company, spending related to media, SNS usage, and so on)
+
+<br>
+
+![](images/clipboard-594630325.png)
+
+<br>
+
+-   Korea Media Panel data is used in news articles based on media statistics, such as the article below.
+
+![](images/clipboard-612391199.png)
+
+<br>
+
+-   Consists of
+
+![](images/clipboard-459842076.png)
+
+<br>
+
+I made a toy data set with the KMP like below.
+
+-   Please download R data set here: [List_KMP.RData](data/List_KMP.RData)
+
+-   Place it in your working directory
+
+<br>
+
+![](images/clipboard-3627606723.png)
+
+<br>
+
+```{r}
+load("data/List_KMP.RData")
+
+str(List.KMP)
+
+```
+
+![](images/clipboard-2215544374.png)
+
+<br>
+
+**Personal Data 2017**
+
+```{r}
+List.KMP[[1]]
+```
+
+**Personal Data 2018**
+
+```{r}
+List.KMP[[2]]
+```
+
+**Personal Data 2019**
+
+```{r}
+List.KMP[[3]]
+```
+
+**Personal Media Diary 2019**
+
+```{r}
+List.KMP[[4]]
+```
+
+<br>
+
+Let's name the list elements
+
+```{r}
+# Check the existing names
+names(List.KMP)
+
+```
+
+```{r}
+# Give names to each element of the list
+names(List.KMP) <- c("p17", "p18", "p19", "d19")
+```
+
+<br>
+
+How can we extract the first element of the list?
+
+```{r}
+# one way
+List.KMP[[1]]
+```
+
+```{r}
+# the other way
+List.KMP[['p17']]
+```
+
+### Lists of a list
+
+![](images/clipboard-973071666.png)
+
+<br>
+
+```{r}
+# Create an empty list 
+List.KMP[[5]] <- list(0)
+```
+
+```{r}
+# See the structure
+str(List.KMP)
+```
+
+```{r}
+# The first element of the fifth element
+List.KMP[[5]][[1]]<-c(1:10)
+
+# The second element of the fifth element
+List.KMP[[5]][[2]]<-matrix(c(1:12), nrow=4)
+
+```
+
+```{r}
+List.KMP[[5]]
+
+```
+
+![<br>](images/clipboard-3425687753.png)
+
+Extract the '`p17`' element
+
+```{r}
+p17_df <- List.KMP[["p17"]]
+p17_df
+```
+
+```{r}
+# Summary Statistics
+summary(p17_df)
+```
+
+<br>
+
+-   Among 10 people, How many people did use Samsung phone at 2017?
+
+-   How much did people spend for the mobile communication on average?
+
+<br>
+
+**Do the same thing to 2019 data set and answer the questions below.**
+
+1.  In 2019, how many people did use Samsung phone?
+
+2.  Draw boxplot of people’s spending on the mobile communication\
+    \*Hint: use `boxplot()`
+
+<br>
+
+### Filter
+
+```{r}
+# 02 Conditional statements and loop statements for data purification #
+
+test = c(15, 20, 30, NA, 45) # If it is a vector
+test[test<40] # extract elements with value less than 40
+
+test[test%%3!= 0] # Extract elements whose value is not divisible by 3
+
+
+test[is.na(test)] # Extract elements that are NA
+
+
+test[!is.na(test)] # Extract non-NA elements
+
+test[test%%2==0 & !is.na(test)] # Extract elements that are multiples of 2 but are not NA
+
+characters = data.frame(name = c("Gil-dong", "Chunhyang", "Cheolsu"),
+                         age = c(30, 16, 21),
+                         gender = factor(c("M", "F","M")))
+# In case of data frame
+
+characters
+
+
+characters[characters$gender =="F",1] # Extract rows where gender is female
+library(dplyr)
+
+characters %>% filter(gender=="F") %>% select(name)
+
+characters[characters$age<30 & characters$gender =="M",]
+# Extract rows of men under 30 years old
+characters %>% filter(age<30 & gender=="M")
+```
+
+------------------------------------------------------------------------
+
+<br>
+
+Let's use the List.KMP again
+
+```{r}
+load("data/List_KMP.RData")
+names(List.KMP) <- c("p17", "p18", "p19", "d19")
+```
+
+See the structure
+
+```{r}
+str(List.KMP)
+```
+
+<br>
+
+![<br>](images/clipboard-1434077769.png)
+
+![](images/clipboard-3010460468.png)
+
+<br>
+
+![](images/clipboard-2826968595.png)
+
+<br>
+
+#### Did ‘KT’ users in 2017 change their telecom companies in 2018 and 2019?
+
+1.  Extract data.frames from the List
+2.  Find the pid(personal ID) whose telecom company was “KT”
+3.  Try the code below and explain how it works
+4.  Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”
+
+------------------------------------------------------------------------
+
+1.  Extract data.frames from the List
+
+    ```{r}
+    p17_df <- List.KMP[["p17"]]
+    p18_df <- List.KMP[["p18"]]
+    p19_df <- List.KMP[["p19"]]
+    ```
+
+2.  Find the pid(personal ID) whose telecom company was “KT”
+
+    ```{r}
+    pid_kt_user <- p17_df[p17_df$Telecom=="KT", "pid"]
+    pid_kt_user
+    ```
+
+3.  Try the code below and explain how it works
+
+    ```{r}
+    kt_user_18 <- p18_df[p18_df$pid %in% pid_kt_user, c("pid", "Telecom")]
+    kt_user_19 <- p19_df[p19_df$pid %in% pid_kt_user, c("pid", "Telecom")]
+    kt_user_18
+    kt_user_19
+    ```
+
+4.  Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”
+
+    ```{r}
+    DF3 <- merge(kt_user_18, kt_user_19, by="pid")
+    names(DF3)[c(2,3)]<-c("y2018", "y2019")
+    DF3
+    ```
+
+<br>
+
+What kinds of studies we can do with the analysis above? Let's think about it.
+
+Download and use this data for you study
+
+![](images/clipboard-2027320930.png)
+
+You can also download the original questionnaires, codebooks, and user guides documents
+
+![](images/clipboard-4093852754.png)
+
+<br>
+
+#### Did ‘Samsung’ users in 2017 change their phone brand in 2018 and 2019?
+
+Let's analyse this using the code we learnt
+
+<br>
+
+## Practice & QZ (more)
+
+Let's use 'airquality' data stored in base R
+
+```{r}
+airquality
+```
+
+### **Format**
+
+A data frame with 153 observations on 6 variables.
+
+|            |               |         |                         |
+|------------|---------------|---------|-------------------------|
+| **`[,1]`** | **`Ozone`**   | numeric | Ozone (ppb)             |
+| **`[,2]`** | **`Solar.R`** | numeric | Solar R (lang)          |
+| **`[,3]`** | **`Wind`**    | numeric | Wind (mph)              |
+| **`[,4]`** | **`Temp`**    | numeric | Temperature (degrees F) |
+| **`[,5]`** | **`Month`**   | numeric | Month (1--12)           |
+
+### **Details**
+
+Daily readings of the following air quality values for May 1, 1973 (a Tuesday) to September 30, 1973.
+
+-   **`Ozone`**: Mean ozone in parts per billion from 1300 to 1500 hours at Roosevelt Island
+
+-   **`Solar.R`**: Solar radiation in Langleys in the frequency band 4000--7700 Angstroms from 0800 to 1200 hours at Central Park
+
+-   **`Wind`**: Average wind speed in miles per hour at 0700 and 1000 hours at LaGuardia Airport
+
+-   **`Temp`**: Maximum daily temperature in degrees Fahrenheit at La Guardia Airport.
+
+```{r}
+pairs(airquality, panel = panel.smooth, main = "airquality data")
+```
+
+1.  What are the column names of the data frame?
+
+    \*Hint: `names()`
+
+    <br>
+
+2.  What are the row names of the data frame?
+
+    \*Hint: `rownames()`
+
+    <br>
+
+3.  Extract the first 10 rows in 'airquality'
+
+    \*Hint: One way: by using `[]` / Alternative way: by using `head()`
+
+    <br>
+
+4.  Check the number of rows (observations) in the dataset
+
+    \*Hint: `length()` or `nrow()`
+
+    <br>
+
+5.  How many missing values are in the 'Ozone' column ?
+
+    \*Hint: `is.na()` and `sum()`
+
+    <br>
+
+6.  What is the mean value of the 'Ozone' column? (Exclude missing values (coded as NA) from this calculation)
+
+    \*Hint: Use `mean()` with an option `na.rm = T`
+
+    <br>
+
+7.  Extract the subset where Ozone values are above 31 and Temp values are above 90.
+
+    \*Hint: Use `subset()`
+
+    <br>
+
+8.  Use the apply function to calculate the standard deviation of each column in the data frame
+
+    \*Hint: Use `apply()` with an option `na.rm = T` / Use `sd()` function
+
+    <br>
+
+9.  Calculate the mean value of 'Ozone' for each Month in the data frame and create a vector containing the monthly means (exclude all missing values)
+
+    \*Hint: Use `tapply()` with an option `na.rm = T`
+
+    <br>
+
+10. Draw a random sample of 5 rows from the data frame
+
+    \*Hint: Use `sample()`, `nrow()`, `airquality[]`
+
+    <br>
+
+------------------------------------------------------------------------
+
+## Introduction to `Tidyverse`
+
+The tidyverse is a powerful collection  of  R  packages  that are actually  data tools for transforming and visualizing data. All packages of the tidyverse share an underlying philosophy and common APls.
+
+The core packages are: 
+
+-   `ggplot2`, which implements the grammar of graphics. You can use it to visualize your data.
+
+-   `dplyr` is a grammar of data You can use it to solve the most common data manipulation challenges.
+
+-   `tidyr` helps you to create tidy data or data where each variable is in a column, each observation is a row end each value is a column, each observation is a row end each value is a cell. 
+
+-   `readr` is a fast and friendly way to read rectangular
+
+-   `purrr` enhances R's functional programming (FP)toolkit by providing a complete and consistent set of tools for working with functions and vectors. 
+
+-   `tibble` is a modern re-imaginging of the data
+
+-   `stringr` provides a cohesive set of functions designed to make working with strings as easy as possible
+
+-   `forcats` provide a suite of useful  tools that solve common problems with factors.  
+
+<br>
+
+\
+The introduction of the **`tidyverse`** package in R has significantly influenced the way data science is performed using R, impacting coding practices, data analysis methodologies, and the overall approach to data manipulation and visualization.
+
+### **Before Tidyverse**
+
+Before the tidyverse, R programming was largely centered around base R functions and packages. This included using base R functions for data manipulation (like **`subset`**, **`merge`**, and **`apply`** functions) and visualization (such as plotting with **`plot`** and **`hist`**). The syntax and methods varied widely across different packages, which often led to inconsistent coding practices and a steeper learning curve for beginners. Each task could be approached in multiple ways without a clear 'best' method, leading to fragmented and less readable code.
+
+### **After Tidyverse**
+
+The tidyverse, developed by Hadley Wickham and others, brought a suite of packages designed to work harmoniously together using a consistent syntax and underlying philosophy. Key features and impacts include:
+
+1.  **Consistent Syntax**: The tidyverse introduced a consistent and readable syntax that leverages chaining operations using the **`%>%`** operator from the **`magrittr`** package. This has made code more readable and easier to write and understand, especially for newcomers.
+
+2.  **Data Manipulation**: With **`dplyr`**, data manipulation became more intuitive and less verbose. Functions like **`filter()`**, **`arrange()`**, **`select()`**, **`mutate()`**, and **`summarise()`** allow for straightforward data operations that are both faster and easier to code compared to base R functions.
+
+3.  **Data Importing and Tidying**: **`readr`** for reading data and **`tidyr`** for tidying data introduced more efficient data reading and transforming capabilities, making it simpler to convert data into a tidy format. Tidy data, where each column is a variable and each row is an observation, has become a standard for data analysis, facilitating easier manipulation and analysis.
+
+4.  **Visualization**: **`ggplot2`** transformed data visualization in R by allowing for the layering of plots intuitively and flexibly, using a system based on the grammar of graphics. This has enabled users to create complex, publication-quality graphs more easily than was possible with base R plotting functions.
+
+5.  **Community and Accessibility**: The tidyverse has fostered a strong community and has contributed significantly to teaching materials that are user-friendly and accessible to beginners. This has democratized data analysis in R, making it more accessible to non-programmers.
+
+6.  **Impact on Package Development**: The tidyverse’s philosophy and popularity have influenced the development of other packages, even those not part of the tidyverse, to adopt tidy principles and interoperate smoothly with tidyverse packages.
+
+> The tidyverse has not only changed the syntax and functionality of R coding but also its philosophy towards data analysis. It promotes a workflow that is coherent, transparent, and efficient, which has been widely adopted in academia, industry, and teaching. While some veteran R users prefer the flexibility and control of base R, the tidyverse's approachable syntax and powerful capabilities have made it a pivotal tool in modern R programming, particularly for data science.
+
+<br>
+
+Please check out the homepage of tidyverse: <https://www.tidyverse.org/>
+
+![](images/clipboard-2583622693.png)
+
+<br>
+
+**You can install the complete tidyverse with:**
+
+\> install.packages("tidyverse")
+
+**Then, load the core tidyverse and make it available in your current R session by running:**
+
+\> library(tidyverse)
+
+Please see this cheat sheet:
+
+<https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
+
+![](images/clipboard-518374615.png)
+
+![<br>](images/clipboard-1070556385.png)
+
+### Pipe
+
+![](images/clipboard-126955403.png)
+
+### **Subset Observations**
+
+```{r}
+# filter
+iris %>% filter(Sepal.Length > 7)
+
+levels(iris$Species)
+iris %>% filter(Species == "setosa")
+
+iris %>% filter(Species == "setosa") %>% plot
+iris %>% filter(Species == "setosa") %>% summary
+
+# distinct: remove duplication (take only unique values)
+iris %>% distinct(Species)
+
+# random sampling
+iris %>% nrow
+iris %>% sample_frac(0.5, replace=T)
+iris %>% sample_frac(0.5, replace=T) %>% nrow
+
+iris %>% sample_n(10, replace=T) 
+iris %>% sample_n(10, replace=T) %>% nrow 
+
+# slice 
+iris %>% slice(10:15)
+
+# Top n in X
+iris %>% top_n(5, Sepal.Length)
+iris %>% top_n(5, Sepal.Width)
+```
+
+### **Subset Variables**
+
+```{r}
+# pull & select
+iris %>% pull(Petal.Width)
+iris %>% select(Petal.Width)
+
+iris %>% pull(Petal.Width) %>% str
+iris %>% select(Petal.Width) %>% str
+
+iris %>% select(Petal.Length, Petal.Width) %>% head
+# useful helpers: starts_with(), contains()
+iris %>% select(starts_with("Peta")) %>% head
+iris %>% select(contains("tal")) %>% head
+
+```
+
+### **Reshaping & Arrange data**
+
+```{r}
+
+# let's use mtcars dataset
+mtcars
+
+# About mtcars dataset
+# help(mtcars)
+
+# arrange
+mtcars %>% arrange(mpg) %>% head
+mtcars %>% add_rownames %>% head
+mtcars %>% add_rownames %>% arrange(mpg) %>% 
+head
+mtcars %>% add_rownames %>% arrange(desc(mpg)) %>% select(rowname)
+
+```
+
+### **Summarise data**
+
+```{r}
+# Summarise
+
+iris %>% summarise(avg.PL=mean(Petal.Length))
+iris %>% summarise(sd.PL=sd(Petal.Length))
+
+iris %>% summarise(avg.PL=mean(Petal.Length),
+                   sd.PL=sd(Petal.Length),
+                   min.PL=min(Petal.Length))
+
+iris %>% count(Species)
+iris %>% sample_frac(0.3) %>% count(Species)
+
+iris %>% summarise_all(mean)
+iris %>% summarise_at("Petal.Length", sum)
+iris %>% summarise_at(c("Petal.Length", "Petal.Width"), mean)
+
+```
+
+### **Group and Summarise data**
+
+```{r}
+# Group
+iris %>% group_by(Species)
+
+iris %>% group_by(Species) %>% 
+  summarise_all(mean)
+
+iris %>% group_by(Species) %>% 
+  select(starts_with("Sep")) %>% 
+  summarise_all(mean)
+
+mtcars %>% group_by(am) %>% 
+  summarise(hp.avg=mean(hp),
+            hp.sd=sd(hp))
+```
+
+### **Make New Variables**
+
+```{r}
+# mutate
+# mpg to kml
+mtcars %>% mutate(kml=0.425144*mpg)
+mtcars %>% mutate(kml=round(0.425144*mpg, 1))
+mtcars %>% mutate(kml=round(0.425144*mpg, 1)) %>% 
+  select(mpg, kml) %>% 
+  top_n(5, mpg)
+
+# transmute
+mtcars %>% transmute(hp/wt)
+
+# rename
+mtcars %>% names
+mtcars %>% mutate(new=1) %>% head
+mtcars %>% mutate(new=1) %>% 
+rename(change.name=new) %>% head
+
+```
+
+<br>
+
+![](images/clipboard-3024371066.png)
+
+<br>
+
+![](images/clipboard-4205026733.png)
+
+<br>
+
+### Joins! (Combine Datasets)
+
+Thanks to Garrick Aden-Buie ([garrickadenbuie.com](https://www.garrickadenbuie.com)), we can teach joins very easily with his fantastic diagrams.
+
+<br>
+
+Let's use some example datasets that come pre-loaded in R to demonstrate how joins work using **`dplyr`**. We will use the **`mtcars`** dataset, splitting it into two separate data frames to illustrate how the different types of joins operate.
+
+First, let's set up our example data frames from the **`mtcars`** dataset:
+
+```{r}
+# Create two data frames from mtcars
+df1 <- mtcars[1:10, c("mpg", "cyl", "disp")]  # first 10 rows, select specific columns
+df2 <- mtcars[5:15, c("disp", "hp", "drat")]  # rows 5 to 15, select specific columns
+
+# Make sure there's a common key for joining; here, we'll use 'disp'
+# Print out the data frames to see what they contain
+print(df1)
+print(df2)
+```
+
+#### Inner Join
+
+> All rows from `x` where there are matching values in `y`, and all columns from `x` and `y`.
+
+![](images/inner-join.gif)
+
+```{r}
+inner_join_result <- inner_join(df1, df2, by = "disp")
+print(inner_join_result)
+```
+
+#### Left Join
+
+> All rows from `x`, and all columns from `x` and `y`. Rows in `x` with no match in `y` will have `NA` values in the new columns.
+
+![](images/left-join.gif)
+
+```{r}
+left_join_result <- left_join(df1, df2, by = "disp")
+print(left_join_result)
+```
+
+#### Left Join (Extra Rows in y)
+
+> ... If there are multiple matches between `x` and `y`, all combinations of the matches are returned.
+
+![](images/left-join-extra.gif)
+
+#### Right Join
+
+> All rows from y, and all columns from `x` and `y`. Rows in `y` with no match in `x` will have `NA` values in the new columns.
+
+![](images/right-join.gif)
+
+```{r}
+right_join_result <- right_join(df1, df2, by = "disp")
+print(right_join_result)
+```
+
+#### Full Join
+
+> All rows and all columns from both `x` and `y`. Where there are not matching values, returns `NA` for the one missing.
+
+![](images/full-join.gif)
+
+```{r}
+full_join_result <- full_join(df1, df2, by = "disp")
+print(full_join_result)
+```
+
+**Filtering Joins**
+
+> Filtering joins match observations in the same way as mutating joins, but affect the observations, not the variables. ... Semi-joins are useful for matching filtered summary tables back to the original rows. ... Anti-joins are useful for diagnosing join mismatches.\
+> [R for Data Science: Filtering Joins](http://r4ds.had.co.nz/relational-data.html#filtering-joins)
+
+#### Semi Join
+
+> All rows from `x` where there are matching values in `y`, keeping just columns from `x`.
+
+![](images/semi-join.gif)
+
+```{r}
+semi_join_result <- semi_join(df1, df2, by = "disp")
+print(semi_join_result)
+```
+
+#### Anti Join
+
+> All rows from `x` where there are not matching values in `y`, keeping just column
+
+![](images/anti-join.gif)
+
+```{r}
+# Assuming df1 and df2 from the previous example
+anti_join_result <- anti_join(df1, df2, by = "disp")
+print(anti_join_result)
+```

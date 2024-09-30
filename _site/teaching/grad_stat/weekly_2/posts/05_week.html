@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -108,27 +142,12 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../../../../teaching/grad_stat/index.html">
  <span class="dropdown-text">STAT101</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../teaching/grad_immersive/index.html">
- <span class="dropdown-text">IMCT</span></a>
-  </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Research</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
-        <li>
-    <a class="dropdown-item" href="../../../../research/index.html">
- <span class="dropdown-text">Publications</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../research/index.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../../../research/working.html">
- <span class="dropdown-text">Work in progress</span></a>
-  </li>  
-    </ul>
-  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../../../proj/index.html"> 
 <span class="menu-text">Proj</span></a>
@@ -153,7 +172,35 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#practice-data-frame-list" id="toc-practice-data-frame-list" class="nav-link active" data-scroll-target="#practice-data-frame-list">Practice: Data Frame &amp; List</a>
+  <ul class="collapse">
+  <li><a href="#lists-of-a-list" id="toc-lists-of-a-list" class="nav-link" data-scroll-target="#lists-of-a-list">Lists of a list</a></li>
+  <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter">Filter</a></li>
+  </ul></li>
+  <li><a href="#practice-qz-more" id="toc-practice-qz-more" class="nav-link" data-scroll-target="#practice-qz-more">Practice &amp; QZ (more)</a>
+  <ul class="collapse">
+  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format"><strong>Format</strong></a></li>
+  <li><a href="#details" id="toc-details" class="nav-link" data-scroll-target="#details"><strong>Details</strong></a></li>
+  </ul></li>
+  <li><a href="#introduction-to-tidyverse" id="toc-introduction-to-tidyverse" class="nav-link" data-scroll-target="#introduction-to-tidyverse">Introduction to <code>Tidyverse</code></a>
+  <ul class="collapse">
+  <li><a href="#before-tidyverse" id="toc-before-tidyverse" class="nav-link" data-scroll-target="#before-tidyverse"><strong>Before Tidyverse</strong></a></li>
+  <li><a href="#after-tidyverse" id="toc-after-tidyverse" class="nav-link" data-scroll-target="#after-tidyverse"><strong>After Tidyverse</strong></a></li>
+  <li><a href="#pipe" id="toc-pipe" class="nav-link" data-scroll-target="#pipe">Pipe</a></li>
+  <li><a href="#subset-observations" id="toc-subset-observations" class="nav-link" data-scroll-target="#subset-observations"><strong>Subset Observations</strong></a></li>
+  <li><a href="#subset-variables" id="toc-subset-variables" class="nav-link" data-scroll-target="#subset-variables"><strong>Subset Variables</strong></a></li>
+  <li><a href="#reshaping-arrange-data" id="toc-reshaping-arrange-data" class="nav-link" data-scroll-target="#reshaping-arrange-data"><strong>Reshaping &amp; Arrange data</strong></a></li>
+  <li><a href="#summarise-data" id="toc-summarise-data" class="nav-link" data-scroll-target="#summarise-data"><strong>Summarise data</strong></a></li>
+  <li><a href="#group-and-summarise-data" id="toc-group-and-summarise-data" class="nav-link" data-scroll-target="#group-and-summarise-data"><strong>Group and Summarise data</strong></a></li>
+  <li><a href="#make-new-variables" id="toc-make-new-variables" class="nav-link" data-scroll-target="#make-new-variables"><strong>Make New Variables</strong></a></li>
+  <li><a href="#joins-combine-datasets" id="toc-joins-combine-datasets" class="nav-link" data-scroll-target="#joins-combine-datasets">Joins! (Combine Datasets)</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -179,8 +226,2061 @@ ul.task-list li input[type="checkbox"] {
 
 <p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
 <p><br></p>
+<section id="practice-data-frame-list" class="level2">
+<h2 class="anchored" data-anchor-id="practice-data-frame-list">Practice: Data Frame &amp; List</h2>
+<ul>
+<li><p>Korea Media Panel Data<br>
+<a href="https://stat.kisdi.re.kr/kor/contents/ContentsList.html" class="uri">https://stat.kisdi.re.kr/kor/contents/ContentsList.html</a></p>
+<ul>
+<li>Since 2010 KISDI has surveyed the same people annually about people’s media behavior (Smartphone brand, telecom company, spending related to media, SNS usage, and so on)</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><img src="images/clipboard-594630325.png" class="img-fluid"></p>
+<p><br></p>
+<ul>
+<li>Korea Media Panel data is used in news articles based on media statistics, such as the article below.</li>
+</ul>
+<p><img src="images/clipboard-612391199.png" class="img-fluid"></p>
+<p><br></p>
+<ul>
+<li>Consists of</li>
+</ul>
+<p><img src="images/clipboard-459842076.png" class="img-fluid"></p>
+<p><br></p>
+<p>I made a toy data set with the KMP like below.</p>
+<ul>
+<li><p>Please download R data set here: <a href="data/List_KMP.RData">List_KMP.RData</a></p></li>
+<li><p>Place it in your working directory</p></li>
+</ul>
+<p><br></p>
+<p><img src="images/clipboard-3627606723.png" class="img-fluid"></p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/List_KMP.RData"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ :'data.frame':   10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 9 26 12 55 70 58 50 68 39 37
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 2 2 5 2 2 2 2 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 2 3 1 5 1 1 1 2 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 1 1 8 1 1 1 1 3
+  ..$ sp.mobile        : num [1:10] 0 42 19 38 18 65 32 58 63 54
+  ..$ sp.device        : num [1:10] 0 0 0 0 0 0 0 10 0 10
+  ..$ sp.online.content: num [1:10] 0 53 19 38 18 65 32 68 63 114
+  ..$ sp.offline.contet: num [1:10] 10 22 0 0 0 50 36 0 25 40
+  ..$ year             : num [1:10] 2017 2017 2017 2017 2017 ...
+ $ :'data.frame':   10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 10 27 13 56 71 59 51 69 40 38
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 3 3 2 5 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 2 5 3 1 2 1 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 3 1 8 3 1 3 1 3
+  ..$ sp.mobile        : num [1:10] 0 90 20 39 30 80 33 36 40 59
+  ..$ sp.device        : num [1:10] 0 60 35 0 0 15 0 10 10 12
+  ..$ sp.online.content: num [1:10] 0 359 55 39 30 95 33 46 50 71
+  ..$ sp.offline.contet: num [1:10] 8 120 0 0 0 12 20 0 0 100
+  ..$ year             : num [1:10] 2018 2018 2018 2018 2018 ...
+ $ :'data.frame':   10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 11 28 14 57 72 60 52 70 41 39
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 3 2 2 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 1 2 1 1 2 3 3
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 2 1 1 1 1 1 3 3 3
+  ..$ sp.mobile        : num [1:10] 0 60 21 30 32 78 35 54 73 45
+  ..$ sp.device        : num [1:10] 0 30 0 0 0 0 0 0 20 15
+  ..$ sp.online.content: num [1:10] 0 90 21 30 32 78 35 54 93 60
+  ..$ sp.offline.contet: num [1:10] 21 0 0 20 0 24 90 0 20 60
+  ..$ year             : num [1:10] 2019 2019 2019 2019 2019 ...
+ $ :'data.frame':   10 obs. of  4 variables:
+  ..$ pid           : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ Smarphone.time: num [1:10] 0 60 345 90 40 65 170 95 85 75
+  ..$ SNS.time      : num [1:10] 0 0 10 0 0 0 0 0 0 0
+  ..$ year          : num [1:10] 2019 2019 2019 2019 2019 ...</code></pre>
+</div>
+</div>
+<p><img src="images/clipboard-2215544374.png" class="img-fluid"></p>
+<p><br></p>
+<p><strong>Personal Data 2017</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<p><strong>Personal Data 2018</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004  10   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  27   Male         LTE-A         LG U+          Samsung        90
+3  17350004  13 Female         LTE-A         LG U+               LG        20
+4  17670001  56   Male           LTE            KT          Samsung        39
+5  23860001  71   Male No Smartphone No Smartphone    No Smartphone        30
+6  24450001  59   Male           LTE         LG U+               LG        80
+7  27570001  51   Male           LTE           SKT          Samsung        33
+8  53620001  69   Male           LTE            KT               LG        36
+9  59570001  40   Male         LTE-A           SKT          Samsung        40
+10 65840001  38 Female         LTE-A            KT               LG        59
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                 8 2018
+2         60               359               120 2018
+3         35                55                 0 2018
+4          0                39                 0 2018
+5          0                30                 0 2018
+6         15                95                12 2018
+7          0                33                20 2018
+8         10                46                 0 2018
+9         10                50                 0 2018
+10        12                71               100 2018</code></pre>
+</div>
+</div>
+<p><strong>Personal Data 2019</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004  11   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  28   Male           LTE         LG U+            Apple        60
+3  17350004  14 Female         LTE-A         LG U+          Samsung        21
+4  17670001  57   Male           LTE           SKT          Samsung        30
+5  23860001  72   Male           LTE            KT          Samsung        32
+6  24450001  60   Male           LTE           SKT          Samsung        78
+7  27570001  52   Male           LTE           SKT          Samsung        35
+8  53620001  70   Male           LTE            KT               LG        54
+9  59570001  41   Male         LTE-A         LG U+               LG        73
+10 65840001  39 Female         LTE-A         LG U+               LG        45
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                21 2019
+2         30                90                 0 2019
+3          0                21                 0 2019
+4          0                30                20 2019
+5          0                32                 0 2019
+6          0                78                24 2019
+7          0                35                90 2019
+8          0                54                 0 2019
+9         20                93                20 2019
+10        15                60                60 2019</code></pre>
+</div>
+</div>
+<p><strong>Personal Media Diary 2019</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid Smarphone.time SNS.time year
+1   9920004              0        0 2019
+2  12500003             60        0 2019
+3  17350004            345       10 2019
+4  17670001             90        0 2019
+5  23860001             40        0 2019
+6  24450001             65        0 2019
+7  27570001            170        0 2019
+8  53620001             95        0 2019
+9  59570001             85        0 2019
+10 65840001             75        0 2019</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Let’s name the list elements</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the existing names</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Give names to each element of the list</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p17"</span>, <span class="st">"p18"</span>, <span class="st">"p19"</span>, <span class="st">"d19"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>How can we extract the first element of the list?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one way</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the other way</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="st">'p17'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<section id="lists-of-a-list" class="level3">
+<h3 class="anchored" data-anchor-id="lists-of-a-list">Lists of a list</h3>
+<p><img src="images/clipboard-973071666.png" class="img-fluid"></p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See the structure</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 5
+ $ p17:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 9 26 12 55 70 58 50 68 39 37
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 2 2 5 2 2 2 2 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 2 3 1 5 1 1 1 2 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 1 1 8 1 1 1 1 3
+  ..$ sp.mobile        : num [1:10] 0 42 19 38 18 65 32 58 63 54
+  ..$ sp.device        : num [1:10] 0 0 0 0 0 0 0 10 0 10
+  ..$ sp.online.content: num [1:10] 0 53 19 38 18 65 32 68 63 114
+  ..$ sp.offline.contet: num [1:10] 10 22 0 0 0 50 36 0 25 40
+  ..$ year             : num [1:10] 2017 2017 2017 2017 2017 ...
+ $ p18:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 10 27 13 56 71 59 51 69 40 38
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 3 3 2 5 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 2 5 3 1 2 1 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 3 1 8 3 1 3 1 3
+  ..$ sp.mobile        : num [1:10] 0 90 20 39 30 80 33 36 40 59
+  ..$ sp.device        : num [1:10] 0 60 35 0 0 15 0 10 10 12
+  ..$ sp.online.content: num [1:10] 0 359 55 39 30 95 33 46 50 71
+  ..$ sp.offline.contet: num [1:10] 8 120 0 0 0 12 20 0 0 100
+  ..$ year             : num [1:10] 2018 2018 2018 2018 2018 ...
+ $ p19:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 11 28 14 57 72 60 52 70 41 39
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 3 2 2 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 1 2 1 1 2 3 3
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 2 1 1 1 1 1 3 3 3
+  ..$ sp.mobile        : num [1:10] 0 60 21 30 32 78 35 54 73 45
+  ..$ sp.device        : num [1:10] 0 30 0 0 0 0 0 0 20 15
+  ..$ sp.online.content: num [1:10] 0 90 21 30 32 78 35 54 93 60
+  ..$ sp.offline.contet: num [1:10] 21 0 0 20 0 24 90 0 20 60
+  ..$ year             : num [1:10] 2019 2019 2019 2019 2019 ...
+ $ d19:'data.frame':    10 obs. of  4 variables:
+  ..$ pid           : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ Smarphone.time: num [1:10] 0 60 345 90 40 65 170 95 85 75
+  ..$ SNS.time      : num [1:10] 0 0 10 0 0 0 0 0 0 0
+  ..$ year          : num [1:10] 2019 2019 2019 2019 2019 ...
+ $    :List of 1
+  ..$ : num 0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The first element of the fifth element</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]][[<span class="dv">1</span>]]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># The second element of the fifth element</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]][[<span class="dv">2</span>]]<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>), <span class="at">nrow=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>List.KMP[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+[[2]]
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12</code></pre>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-3425687753.png" class="img-fluid figure-img"></p>
+<figcaption><br></figcaption>
+</figure>
+</div>
+<p>Extract the ‘<code>p17</code>’ element</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p17_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p17"</span>]]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>p17_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid age gender     Mobile.lv       Telecom Smartphone.brand sp.mobile
+1   9920004   9   Male No Smartphone No Smartphone    No Smartphone         0
+2  12500003  26   Male           LTE            KT          Samsung        42
+3  17350004  12 Female           LTE         LG U+          Samsung        19
+4  17670001  55   Male           LTE           SKT          Samsung        38
+5  23860001  70   Male No Smartphone No Smartphone    No Smartphone        18
+6  24450001  58   Male           LTE           SKT          Samsung        65
+7  27570001  50   Male           LTE           SKT          Samsung        32
+8  53620001  68   Male           LTE           SKT          Samsung        58
+9  59570001  39   Male           LTE            KT          Samsung        63
+10 65840001  37 Female         LTE-A            KT               LG        54
+   sp.device sp.online.content sp.offline.contet year
+1          0                 0                10 2017
+2          0                53                22 2017
+3          0                19                 0 2017
+4          0                38                 0 2017
+5          0                18                 0 2017
+6          0                65                50 2017
+7          0                32                36 2017
+8         10                68                 0 2017
+9          0                63                25 2017
+10        10               114                40 2017</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary Statistics</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(p17_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      pid                age           gender          Mobile.lv
+ Min.   : 9920004   Min.   : 9.00   Male  :8   3G           :0  
+ 1st Qu.:17430003   1st Qu.:28.75   Female:2   LTE          :7  
+ Median :24155001   Median :44.50              LTE-A        :1  
+ Mean   :31235002   Mean   :42.40              5G           :0  
+ 3rd Qu.:47107501   3rd Qu.:57.25              No Smartphone:2  
+ Max.   :65840001   Max.   :70.00                               
+                                                                
+          Telecom       Smartphone.brand   sp.mobile       sp.device 
+ SKT          :4   Samsung      :7       Min.   : 0.00   Min.   : 0  
+ KT           :3   No Smartphone:2       1st Qu.:22.25   1st Qu.: 0  
+ LG U+        :1   LG           :1       Median :40.00   Median : 0  
+ MVNO         :0   Apple        :0       Mean   :38.90   Mean   : 2  
+ No Smartphone:2   Pantech      :0       3rd Qu.:57.00   3rd Qu.: 0  
+                   Xiaomi       :0       Max.   :65.00   Max.   :10  
+                   (Other)      :0                                   
+ sp.online.content sp.offline.contet      year     
+ Min.   :  0.00    Min.   : 0.00     Min.   :2017  
+ 1st Qu.: 22.25    1st Qu.: 0.00     1st Qu.:2017  
+ Median : 45.50    Median :16.00     Median :2017  
+ Mean   : 47.00    Mean   :18.30     Mean   :2017  
+ 3rd Qu.: 64.50    3rd Qu.:33.25     3rd Qu.:2017  
+ Max.   :114.00    Max.   :50.00     Max.   :2017  
+                                                   </code></pre>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li><p>Among 10 people, How many people did use Samsung phone at 2017?</p></li>
+<li><p>How much did people spend for the mobile communication on average?</p></li>
+</ul>
+<p><br></p>
+<p><strong>Do the same thing to 2019 data set and answer the questions below.</strong></p>
+<ol type="1">
+<li><p>In 2019, how many people did use Samsung phone?</p></li>
+<li><p>Draw boxplot of people’s spending on the mobile communication<br>
+*Hint: use <code>boxplot()</code></p></li>
+</ol>
+<p><br></p>
+</section>
+<section id="filter" class="level3">
+<h3 class="anchored" data-anchor-id="filter">Filter</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 02 Conditional statements and loop statements for data purification #</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="cn">NA</span>, <span class="dv">45</span>) <span class="co"># If it is a vector</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>test[test<span class="sc">&lt;</span><span class="dv">40</span>] <span class="co"># extract elements with value less than 40</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 20 30 NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>test[test<span class="sc">%%</span><span class="dv">3</span><span class="sc">!=</span> <span class="dv">0</span>] <span class="co"># Extract elements whose value is not divisible by 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20 NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>test[<span class="fu">is.na</span>(test)] <span class="co"># Extract elements that are NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>test[<span class="sc">!</span><span class="fu">is.na</span>(test)] <span class="co"># Extract non-NA elements</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15 20 30 45</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>test[test<span class="sc">%%</span><span class="dv">2</span><span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(test)] <span class="co"># Extract elements that are multiples of 2 but are not NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20 30</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>characters <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Gil-dong"</span>, <span class="st">"Chunhyang"</span>, <span class="st">"Cheolsu"</span>),</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">16</span>, <span class="dv">21</span>),</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gender =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>,<span class="st">"M"</span>)))</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># In case of data frame</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>characters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       name age gender
+1  Gil-dong  30      M
+2 Chunhyang  16      F
+3   Cheolsu  21      M</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>characters[characters<span class="sc">$</span>gender <span class="sc">==</span><span class="st">"F"</span>,<span class="dv">1</span>] <span class="co"># Extract rows where gender is female</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Chunhyang"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gender<span class="sc">==</span><span class="st">"F"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       name
+1 Chunhyang</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>characters[characters<span class="sc">$</span>age<span class="sc">&lt;</span><span class="dv">30</span> <span class="sc">&amp;</span> characters<span class="sc">$</span>gender <span class="sc">==</span><span class="st">"M"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name age gender
+3 Cheolsu  21      M</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract rows of men under 30 years old</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>characters <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age<span class="sc">&lt;</span><span class="dv">30</span> <span class="sc">&amp;</span> gender<span class="sc">==</span><span class="st">"M"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     name age gender
+1 Cheolsu  21      M</code></pre>
+</div>
+</div>
+<hr>
+<p><br></p>
+<p>Let’s use the List.KMP again</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"data/List_KMP.RData"</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(List.KMP) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"p17"</span>, <span class="st">"p18"</span>, <span class="st">"p19"</span>, <span class="st">"d19"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>See the structure</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(List.KMP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 4
+ $ p17:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 9 26 12 55 70 58 50 68 39 37
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 2 2 5 2 2 2 2 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 2 3 1 5 1 1 1 2 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 1 1 8 1 1 1 1 3
+  ..$ sp.mobile        : num [1:10] 0 42 19 38 18 65 32 58 63 54
+  ..$ sp.device        : num [1:10] 0 0 0 0 0 0 0 10 0 10
+  ..$ sp.online.content: num [1:10] 0 53 19 38 18 65 32 68 63 114
+  ..$ sp.offline.contet: num [1:10] 10 22 0 0 0 50 36 0 25 40
+  ..$ year             : num [1:10] 2017 2017 2017 2017 2017 ...
+ $ p18:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 10 27 13 56 71 59 51 69 40 38
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 3 3 2 5 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 2 5 3 1 2 1 2
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 1 3 1 8 3 1 3 1 3
+  ..$ sp.mobile        : num [1:10] 0 90 20 39 30 80 33 36 40 59
+  ..$ sp.device        : num [1:10] 0 60 35 0 0 15 0 10 10 12
+  ..$ sp.online.content: num [1:10] 0 359 55 39 30 95 33 46 50 71
+  ..$ sp.offline.contet: num [1:10] 8 120 0 0 0 12 20 0 0 100
+  ..$ year             : num [1:10] 2018 2018 2018 2018 2018 ...
+ $ p19:'data.frame':    10 obs. of  11 variables:
+  ..$ pid              : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ age              : num [1:10] 11 28 14 57 72 60 52 70 41 39
+  ..$ gender           : Factor w/ 2 levels "Male","Female": 1 1 2 1 1 1 1 1 1 2
+  ..$ Mobile.lv        : Factor w/ 5 levels "3G","LTE","LTE-A",..: 5 2 3 2 2 2 2 2 3 3
+  ..$ Telecom          : Factor w/ 5 levels "SKT","KT","LG U+",..: 5 3 3 1 2 1 1 2 3 3
+  ..$ Smartphone.brand : Factor w/ 8 levels "Samsung","Apple",..: 8 2 1 1 1 1 1 3 3 3
+  ..$ sp.mobile        : num [1:10] 0 60 21 30 32 78 35 54 73 45
+  ..$ sp.device        : num [1:10] 0 30 0 0 0 0 0 0 20 15
+  ..$ sp.online.content: num [1:10] 0 90 21 30 32 78 35 54 93 60
+  ..$ sp.offline.contet: num [1:10] 21 0 0 20 0 24 90 0 20 60
+  ..$ year             : num [1:10] 2019 2019 2019 2019 2019 ...
+ $ d19:'data.frame':    10 obs. of  4 variables:
+  ..$ pid           : num [1:10] 9920004 12500003 17350004 17670001 23860001 ...
+  ..$ Smarphone.time: num [1:10] 0 60 345 90 40 65 170 95 85 75
+  ..$ SNS.time      : num [1:10] 0 0 10 0 0 0 0 0 0 0
+  ..$ year          : num [1:10] 2019 2019 2019 2019 2019 ...</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1434077769.png" class="img-fluid figure-img"></p>
+<figcaption><br></figcaption>
+</figure>
+</div>
+<p><img src="images/clipboard-3010460468.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/clipboard-2826968595.png" class="img-fluid"></p>
+<p><br></p>
+<section id="did-kt-users-in-2017-change-their-telecom-companies-in-2018-and-2019" class="level4">
+<h4 class="anchored" data-anchor-id="did-kt-users-in-2017-change-their-telecom-companies-in-2018-and-2019">Did ‘KT’ users in 2017 change their telecom companies in 2018 and 2019?</h4>
+<ol type="1">
+<li>Extract data.frames from the List</li>
+<li>Find the pid(personal ID) whose telecom company was “KT”</li>
+<li>Try the code below and explain how it works</li>
+<li>Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”</li>
+</ol>
+<hr>
+<ol type="1">
+<li><p>Extract data.frames from the List</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>p17_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p17"</span>]]</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>p18_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p18"</span>]]</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>p19_df <span class="ot">&lt;-</span> List.KMP[[<span class="st">"p19"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Find the pid(personal ID) whose telecom company was “KT”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>pid_kt_user <span class="ot">&lt;-</span> p17_df[p17_df<span class="sc">$</span>Telecom<span class="sc">==</span><span class="st">"KT"</span>, <span class="st">"pid"</span>]</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pid_kt_user</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12500003 59570001 65840001</code></pre>
+</div>
+</div></li>
+<li><p>Try the code below and explain how it works</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>kt_user_18 <span class="ot">&lt;-</span> p18_df[p18_df<span class="sc">$</span>pid <span class="sc">%in%</span> pid_kt_user, <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"Telecom"</span>)]</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>kt_user_19 <span class="ot">&lt;-</span> p19_df[p19_df<span class="sc">$</span>pid <span class="sc">%in%</span> pid_kt_user, <span class="fu">c</span>(<span class="st">"pid"</span>, <span class="st">"Telecom"</span>)]</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>kt_user_18</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid Telecom
+2  12500003   LG U+
+9  59570001     SKT
+10 65840001      KT</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>kt_user_19</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        pid Telecom
+2  12500003   LG U+
+9  59570001   LG U+
+10 65840001   LG U+</code></pre>
+</div>
+</div></li>
+<li><p>Merge the two data.frames above by the key variable “pid”, and change the second and the third column names to “y2018” and “y2019”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>DF3 <span class="ot">&lt;-</span> <span class="fu">merge</span>(kt_user_18, kt_user_19, <span class="at">by=</span><span class="st">"pid"</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DF3)[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"y2018"</span>, <span class="st">"y2019"</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>DF3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       pid y2018 y2019
+1 12500003 LG U+ LG U+
+2 59570001   SKT LG U+
+3 65840001    KT LG U+</code></pre>
+</div>
+</div></li>
+</ol>
+<p><br></p>
+<p>What kinds of studies we can do with the analysis above? Let’s think about it.</p>
+<p>Download and use this data for you study</p>
+<p><img src="images/clipboard-2027320930.png" class="img-fluid"></p>
+<p>You can also download the original questionnaires, codebooks, and user guides documents</p>
+<p><img src="images/clipboard-4093852754.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="did-samsung-users-in-2017-change-their-phone-brand-in-2018-and-2019" class="level4">
+<h4 class="anchored" data-anchor-id="did-samsung-users-in-2017-change-their-phone-brand-in-2018-and-2019">Did ‘Samsung’ users in 2017 change their phone brand in 2018 and 2019?</h4>
+<p>Let’s analyse this using the code we learnt</p>
+<p><br></p>
+</section>
+</section>
+</section>
+<section id="practice-qz-more" class="level2">
+<h2 class="anchored" data-anchor-id="practice-qz-more">Practice &amp; QZ (more)</h2>
+<p>Let’s use ‘airquality’ data stored in base R</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>airquality</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Ozone Solar.R Wind Temp Month Day
+1      41     190  7.4   67     5   1
+2      36     118  8.0   72     5   2
+3      12     149 12.6   74     5   3
+4      18     313 11.5   62     5   4
+5      NA      NA 14.3   56     5   5
+6      28      NA 14.9   66     5   6
+7      23     299  8.6   65     5   7
+8      19      99 13.8   59     5   8
+9       8      19 20.1   61     5   9
+10     NA     194  8.6   69     5  10
+11      7      NA  6.9   74     5  11
+12     16     256  9.7   69     5  12
+13     11     290  9.2   66     5  13
+14     14     274 10.9   68     5  14
+15     18      65 13.2   58     5  15
+16     14     334 11.5   64     5  16
+17     34     307 12.0   66     5  17
+18      6      78 18.4   57     5  18
+19     30     322 11.5   68     5  19
+20     11      44  9.7   62     5  20
+21      1       8  9.7   59     5  21
+22     11     320 16.6   73     5  22
+23      4      25  9.7   61     5  23
+24     32      92 12.0   61     5  24
+25     NA      66 16.6   57     5  25
+26     NA     266 14.9   58     5  26
+27     NA      NA  8.0   57     5  27
+28     23      13 12.0   67     5  28
+29     45     252 14.9   81     5  29
+30    115     223  5.7   79     5  30
+31     37     279  7.4   76     5  31
+32     NA     286  8.6   78     6   1
+33     NA     287  9.7   74     6   2
+34     NA     242 16.1   67     6   3
+35     NA     186  9.2   84     6   4
+36     NA     220  8.6   85     6   5
+37     NA     264 14.3   79     6   6
+38     29     127  9.7   82     6   7
+39     NA     273  6.9   87     6   8
+40     71     291 13.8   90     6   9
+41     39     323 11.5   87     6  10
+42     NA     259 10.9   93     6  11
+43     NA     250  9.2   92     6  12
+44     23     148  8.0   82     6  13
+45     NA     332 13.8   80     6  14
+46     NA     322 11.5   79     6  15
+47     21     191 14.9   77     6  16
+48     37     284 20.7   72     6  17
+49     20      37  9.2   65     6  18
+50     12     120 11.5   73     6  19
+51     13     137 10.3   76     6  20
+52     NA     150  6.3   77     6  21
+53     NA      59  1.7   76     6  22
+54     NA      91  4.6   76     6  23
+55     NA     250  6.3   76     6  24
+56     NA     135  8.0   75     6  25
+57     NA     127  8.0   78     6  26
+58     NA      47 10.3   73     6  27
+59     NA      98 11.5   80     6  28
+60     NA      31 14.9   77     6  29
+61     NA     138  8.0   83     6  30
+62    135     269  4.1   84     7   1
+63     49     248  9.2   85     7   2
+64     32     236  9.2   81     7   3
+65     NA     101 10.9   84     7   4
+66     64     175  4.6   83     7   5
+67     40     314 10.9   83     7   6
+68     77     276  5.1   88     7   7
+69     97     267  6.3   92     7   8
+70     97     272  5.7   92     7   9
+71     85     175  7.4   89     7  10
+72     NA     139  8.6   82     7  11
+73     10     264 14.3   73     7  12
+74     27     175 14.9   81     7  13
+75     NA     291 14.9   91     7  14
+76      7      48 14.3   80     7  15
+77     48     260  6.9   81     7  16
+78     35     274 10.3   82     7  17
+79     61     285  6.3   84     7  18
+80     79     187  5.1   87     7  19
+81     63     220 11.5   85     7  20
+82     16       7  6.9   74     7  21
+83     NA     258  9.7   81     7  22
+84     NA     295 11.5   82     7  23
+85     80     294  8.6   86     7  24
+86    108     223  8.0   85     7  25
+87     20      81  8.6   82     7  26
+88     52      82 12.0   86     7  27
+89     82     213  7.4   88     7  28
+90     50     275  7.4   86     7  29
+91     64     253  7.4   83     7  30
+92     59     254  9.2   81     7  31
+93     39      83  6.9   81     8   1
+94      9      24 13.8   81     8   2
+95     16      77  7.4   82     8   3
+96     78      NA  6.9   86     8   4
+97     35      NA  7.4   85     8   5
+98     66      NA  4.6   87     8   6
+99    122     255  4.0   89     8   7
+100    89     229 10.3   90     8   8
+101   110     207  8.0   90     8   9
+102    NA     222  8.6   92     8  10
+103    NA     137 11.5   86     8  11
+104    44     192 11.5   86     8  12
+105    28     273 11.5   82     8  13
+106    65     157  9.7   80     8  14
+107    NA      64 11.5   79     8  15
+108    22      71 10.3   77     8  16
+109    59      51  6.3   79     8  17
+110    23     115  7.4   76     8  18
+111    31     244 10.9   78     8  19
+112    44     190 10.3   78     8  20
+113    21     259 15.5   77     8  21
+114     9      36 14.3   72     8  22
+115    NA     255 12.6   75     8  23
+116    45     212  9.7   79     8  24
+117   168     238  3.4   81     8  25
+118    73     215  8.0   86     8  26
+119    NA     153  5.7   88     8  27
+120    76     203  9.7   97     8  28
+121   118     225  2.3   94     8  29
+122    84     237  6.3   96     8  30
+123    85     188  6.3   94     8  31
+124    96     167  6.9   91     9   1
+125    78     197  5.1   92     9   2
+126    73     183  2.8   93     9   3
+127    91     189  4.6   93     9   4
+128    47      95  7.4   87     9   5
+129    32      92 15.5   84     9   6
+130    20     252 10.9   80     9   7
+131    23     220 10.3   78     9   8
+132    21     230 10.9   75     9   9
+133    24     259  9.7   73     9  10
+134    44     236 14.9   81     9  11
+135    21     259 15.5   76     9  12
+136    28     238  6.3   77     9  13
+137     9      24 10.9   71     9  14
+138    13     112 11.5   71     9  15
+139    46     237  6.9   78     9  16
+140    18     224 13.8   67     9  17
+141    13      27 10.3   76     9  18
+142    24     238 10.3   68     9  19
+143    16     201  8.0   82     9  20
+144    13     238 12.6   64     9  21
+145    23      14  9.2   71     9  22
+146    36     139 10.3   81     9  23
+147     7      49 10.3   69     9  24
+148    14      20 16.6   63     9  25
+149    30     193  6.9   70     9  26
+150    NA     145 13.2   77     9  27
+151    14     191 14.3   75     9  28
+152    18     131  8.0   76     9  29
+153    20     223 11.5   68     9  30</code></pre>
+</div>
+</div>
+<section id="format" class="level3">
+<h3 class="anchored" data-anchor-id="format"><strong>Format</strong></h3>
+<p>A data frame with 153 observations on 6 variables.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong><code>[,1]</code></strong></td>
+<td><strong><code>Ozone</code></strong></td>
+<td>numeric</td>
+<td>Ozone (ppb)</td>
+</tr>
+<tr class="even">
+<td><strong><code>[,2]</code></strong></td>
+<td><strong><code>Solar.R</code></strong></td>
+<td>numeric</td>
+<td>Solar R (lang)</td>
+</tr>
+<tr class="odd">
+<td><strong><code>[,3]</code></strong></td>
+<td><strong><code>Wind</code></strong></td>
+<td>numeric</td>
+<td>Wind (mph)</td>
+</tr>
+<tr class="even">
+<td><strong><code>[,4]</code></strong></td>
+<td><strong><code>Temp</code></strong></td>
+<td>numeric</td>
+<td>Temperature (degrees F)</td>
+</tr>
+<tr class="odd">
+<td><strong><code>[,5]</code></strong></td>
+<td><strong><code>Month</code></strong></td>
+<td>numeric</td>
+<td>Month (1–12)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="details" class="level3">
+<h3 class="anchored" data-anchor-id="details"><strong>Details</strong></h3>
+<p>Daily readings of the following air quality values for May 1, 1973 (a Tuesday) to September 30, 1973.</p>
+<ul>
+<li><p><strong><code>Ozone</code></strong>: Mean ozone in parts per billion from 1300 to 1500 hours at Roosevelt Island</p></li>
+<li><p><strong><code>Solar.R</code></strong>: Solar radiation in Langleys in the frequency band 4000–7700 Angstroms from 0800 to 1200 hours at Central Park</p></li>
+<li><p><strong><code>Wind</code></strong>: Average wind speed in miles per hour at 0700 and 1000 hours at LaGuardia Airport</p></li>
+<li><p><strong><code>Temp</code></strong>: Maximum daily temperature in degrees Fahrenheit at La Guardia Airport.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(airquality, <span class="at">panel =</span> panel.smooth, <span class="at">main =</span> <span class="st">"airquality data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_week_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li><p>What are the column names of the data frame?</p>
+<p>*Hint: <code>names()</code></p>
+<p><br></p></li>
+<li><p>What are the row names of the data frame?</p>
+<p>*Hint: <code>rownames()</code></p>
+<p><br></p></li>
+<li><p>Extract the first 10 rows in ‘airquality’</p>
+<p>*Hint: One way: by using <code>[]</code> / Alternative way: by using <code>head()</code></p>
+<p><br></p></li>
+<li><p>Check the number of rows (observations) in the dataset</p>
+<p>*Hint: <code>length()</code> or <code>nrow()</code></p>
+<p><br></p></li>
+<li><p>How many missing values are in the ‘Ozone’ column ?</p>
+<p>*Hint: <code>is.na()</code> and <code>sum()</code></p>
+<p><br></p></li>
+<li><p>What is the mean value of the ‘Ozone’ column? (Exclude missing values (coded as NA) from this calculation)</p>
+<p>*Hint: Use <code>mean()</code> with an option <code>na.rm = T</code></p>
+<p><br></p></li>
+<li><p>Extract the subset where Ozone values are above 31 and Temp values are above 90.</p>
+<p>*Hint: Use <code>subset()</code></p>
+<p><br></p></li>
+<li><p>Use the apply function to calculate the standard deviation of each column in the data frame</p>
+<p>*Hint: Use <code>apply()</code> with an option <code>na.rm = T</code> / Use <code>sd()</code> function</p>
+<p><br></p></li>
+<li><p>Calculate the mean value of ‘Ozone’ for each Month in the data frame and create a vector containing the monthly means (exclude all missing values)</p>
+<p>*Hint: Use <code>tapply()</code> with an option <code>na.rm = T</code></p>
+<p><br></p></li>
+<li><p>Draw a random sample of 5 rows from the data frame</p>
+<p>*Hint: Use <code>sample()</code>, <code>nrow()</code>, <code>airquality[]</code></p>
+<p><br></p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="introduction-to-tidyverse" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-tidyverse">Introduction to <code>Tidyverse</code></h2>
+<p>The tidyverse is a powerful collection&nbsp; of&nbsp; R&nbsp; packages&nbsp; that are actually&nbsp; data tools for transforming and visualizing data. All packages of the tidyverse share an underlying philosophy and common APls.</p>
+<p>The core packages are:&nbsp;</p>
+<ul>
+<li><p><code>ggplot2</code>, which implements the grammar of graphics. You can use it to visualize your data.</p></li>
+<li><p><code>dplyr</code> is a grammar of data You can use it to solve the most common data manipulation challenges.</p></li>
+<li><p><code>tidyr</code> helps you to create tidy data or data where each variable is in a column, each observation is a row end each value is a column, each observation is a row end each value is a cell.&nbsp;</p></li>
+<li><p><code>readr</code> is a fast and friendly way to read rectangular</p></li>
+<li><p><code>purrr</code> enhances R’s functional programming (FP)toolkit by providing a complete and consistent set of tools for working with functions and vectors.&nbsp;</p></li>
+<li><p><code>tibble</code> is a modern re-imaginging of the data</p></li>
+<li><p><code>stringr</code> provides a cohesive set of functions designed to make working with strings as easy as possible</p></li>
+<li><p><code>forcats</code> provide a suite of useful&nbsp; tools that solve common problems with factors.&nbsp;&nbsp;</p></li>
+</ul>
+<p><br></p>
+<p><br>
+The introduction of the <strong><code>tidyverse</code></strong> package in R has significantly influenced the way data science is performed using R, impacting coding practices, data analysis methodologies, and the overall approach to data manipulation and visualization.</p>
+<section id="before-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="before-tidyverse"><strong>Before Tidyverse</strong></h3>
+<p>Before the tidyverse, R programming was largely centered around base R functions and packages. This included using base R functions for data manipulation (like <strong><code>subset</code></strong>, <strong><code>merge</code></strong>, and <strong><code>apply</code></strong> functions) and visualization (such as plotting with <strong><code>plot</code></strong> and <strong><code>hist</code></strong>). The syntax and methods varied widely across different packages, which often led to inconsistent coding practices and a steeper learning curve for beginners. Each task could be approached in multiple ways without a clear ‘best’ method, leading to fragmented and less readable code.</p>
+</section>
+<section id="after-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="after-tidyverse"><strong>After Tidyverse</strong></h3>
+<p>The tidyverse, developed by Hadley Wickham and others, brought a suite of packages designed to work harmoniously together using a consistent syntax and underlying philosophy. Key features and impacts include:</p>
+<ol type="1">
+<li><p><strong>Consistent Syntax</strong>: The tidyverse introduced a consistent and readable syntax that leverages chaining operations using the <strong><code>%&gt;%</code></strong> operator from the <strong><code>magrittr</code></strong> package. This has made code more readable and easier to write and understand, especially for newcomers.</p></li>
+<li><p><strong>Data Manipulation</strong>: With <strong><code>dplyr</code></strong>, data manipulation became more intuitive and less verbose. Functions like <strong><code>filter()</code></strong>, <strong><code>arrange()</code></strong>, <strong><code>select()</code></strong>, <strong><code>mutate()</code></strong>, and <strong><code>summarise()</code></strong> allow for straightforward data operations that are both faster and easier to code compared to base R functions.</p></li>
+<li><p><strong>Data Importing and Tidying</strong>: <strong><code>readr</code></strong> for reading data and <strong><code>tidyr</code></strong> for tidying data introduced more efficient data reading and transforming capabilities, making it simpler to convert data into a tidy format. Tidy data, where each column is a variable and each row is an observation, has become a standard for data analysis, facilitating easier manipulation and analysis.</p></li>
+<li><p><strong>Visualization</strong>: <strong><code>ggplot2</code></strong> transformed data visualization in R by allowing for the layering of plots intuitively and flexibly, using a system based on the grammar of graphics. This has enabled users to create complex, publication-quality graphs more easily than was possible with base R plotting functions.</p></li>
+<li><p><strong>Community and Accessibility</strong>: The tidyverse has fostered a strong community and has contributed significantly to teaching materials that are user-friendly and accessible to beginners. This has democratized data analysis in R, making it more accessible to non-programmers.</p></li>
+<li><p><strong>Impact on Package Development</strong>: The tidyverse’s philosophy and popularity have influenced the development of other packages, even those not part of the tidyverse, to adopt tidy principles and interoperate smoothly with tidyverse packages.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>The tidyverse has not only changed the syntax and functionality of R coding but also its philosophy towards data analysis. It promotes a workflow that is coherent, transparent, and efficient, which has been widely adopted in academia, industry, and teaching. While some veteran R users prefer the flexibility and control of base R, the tidyverse’s approachable syntax and powerful capabilities have made it a pivotal tool in modern R programming, particularly for data science.</p>
+</blockquote>
+<p><br></p>
+<p>Please check out the homepage of tidyverse: <a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a></p>
+<p><img src="images/clipboard-2583622693.png" class="img-fluid"></p>
+<p><br></p>
+<p><strong>You can install the complete tidyverse with:</strong></p>
+<p>&gt; install.packages(“tidyverse”)</p>
+<p><strong>Then, load the core tidyverse and make it available in your current R session by running:</strong></p>
+<p>&gt; library(tidyverse)</p>
+<p>Please see this cheat sheet:</p>
+<p><a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf</a></p>
+<p><img src="images/clipboard-518374615.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-1070556385.png" class="img-fluid figure-img"></p>
+<figcaption><br></figcaption>
+</figure>
+</div>
+</section>
+<section id="pipe" class="level3">
+<h3 class="anchored" data-anchor-id="pipe">Pipe</h3>
+<p><img src="images/clipboard-126955403.png" class="img-fluid"></p>
+</section>
+<section id="subset-observations" class="level3">
+<h3 class="anchored" data-anchor-id="subset-observations"><strong>Subset Observations</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sepal.Length <span class="sc">&gt;</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+1           7.1         3.0          5.9         2.1 virginica
+2           7.6         3.0          6.6         2.1 virginica
+3           7.3         2.9          6.3         1.8 virginica
+4           7.2         3.6          6.1         2.5 virginica
+5           7.7         3.8          6.7         2.2 virginica
+6           7.7         2.6          6.9         2.3 virginica
+7           7.7         2.8          6.7         2.0 virginica
+8           7.2         3.2          6.0         1.8 virginica
+9           7.2         3.0          5.8         1.6 virginica
+10          7.4         2.8          6.1         1.9 virginica
+11          7.9         3.8          6.4         2.0 virginica
+12          7.7         3.0          6.1         2.3 virginica</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "setosa"     "versicolor" "virginica" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1           5.1         3.5          1.4         0.2  setosa
+2           4.9         3.0          1.4         0.2  setosa
+3           4.7         3.2          1.3         0.2  setosa
+4           4.6         3.1          1.5         0.2  setosa
+5           5.0         3.6          1.4         0.2  setosa
+6           5.4         3.9          1.7         0.4  setosa
+7           4.6         3.4          1.4         0.3  setosa
+8           5.0         3.4          1.5         0.2  setosa
+9           4.4         2.9          1.4         0.2  setosa
+10          4.9         3.1          1.5         0.1  setosa
+11          5.4         3.7          1.5         0.2  setosa
+12          4.8         3.4          1.6         0.2  setosa
+13          4.8         3.0          1.4         0.1  setosa
+14          4.3         3.0          1.1         0.1  setosa
+15          5.8         4.0          1.2         0.2  setosa
+16          5.7         4.4          1.5         0.4  setosa
+17          5.4         3.9          1.3         0.4  setosa
+18          5.1         3.5          1.4         0.3  setosa
+19          5.7         3.8          1.7         0.3  setosa
+20          5.1         3.8          1.5         0.3  setosa
+21          5.4         3.4          1.7         0.2  setosa
+22          5.1         3.7          1.5         0.4  setosa
+23          4.6         3.6          1.0         0.2  setosa
+24          5.1         3.3          1.7         0.5  setosa
+25          4.8         3.4          1.9         0.2  setosa
+26          5.0         3.0          1.6         0.2  setosa
+27          5.0         3.4          1.6         0.4  setosa
+28          5.2         3.5          1.5         0.2  setosa
+29          5.2         3.4          1.4         0.2  setosa
+30          4.7         3.2          1.6         0.2  setosa
+31          4.8         3.1          1.6         0.2  setosa
+32          5.4         3.4          1.5         0.4  setosa
+33          5.2         4.1          1.5         0.1  setosa
+34          5.5         4.2          1.4         0.2  setosa
+35          4.9         3.1          1.5         0.2  setosa
+36          5.0         3.2          1.2         0.2  setosa
+37          5.5         3.5          1.3         0.2  setosa
+38          4.9         3.6          1.4         0.1  setosa
+39          4.4         3.0          1.3         0.2  setosa
+40          5.1         3.4          1.5         0.2  setosa
+41          5.0         3.5          1.3         0.3  setosa
+42          4.5         2.3          1.3         0.3  setosa
+43          4.4         3.2          1.3         0.2  setosa
+44          5.0         3.5          1.6         0.6  setosa
+45          5.1         3.8          1.9         0.4  setosa
+46          4.8         3.0          1.4         0.3  setosa
+47          5.1         3.8          1.6         0.2  setosa
+48          4.6         3.2          1.4         0.2  setosa
+49          5.3         3.7          1.5         0.2  setosa
+50          5.0         3.3          1.4         0.2  setosa</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">%&gt;%</span> plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_week_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"setosa"</span>) <span class="sc">%&gt;%</span> summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.300   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:4.800   1st Qu.:3.200   1st Qu.:1.400   1st Qu.:0.200  
+ Median :5.000   Median :3.400   Median :1.500   Median :0.200  
+ Mean   :5.006   Mean   :3.428   Mean   :1.462   Mean   :0.246  
+ 3rd Qu.:5.200   3rd Qu.:3.675   3rd Qu.:1.575   3rd Qu.:0.300  
+ Max.   :5.800   Max.   :4.400   Max.   :1.900   Max.   :0.600  
+       Species  
+ setosa    :50  
+ versicolor: 0  
+ virginica : 0  
+                
+                
+                </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># distinct: remove duplication (take only unique values)</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Species
+1     setosa
+2 versicolor
+3  virginica</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># random sampling</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> nrow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 150</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">sample_frac</span>(<span class="fl">0.5</span>, <span class="at">replace=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1           6.0         2.9          4.5         1.5 versicolor
+2           4.9         3.6          1.4         0.1     setosa
+3           6.7         3.3          5.7         2.1  virginica
+4           5.5         4.2          1.4         0.2     setosa
+5           5.1         2.5          3.0         1.1 versicolor
+6           5.0         2.3          3.3         1.0 versicolor
+7           5.4         3.0          4.5         1.5 versicolor
+8           5.8         4.0          1.2         0.2     setosa
+9           5.1         3.5          1.4         0.2     setosa
+10          5.6         3.0          4.5         1.5 versicolor
+11          5.8         2.7          3.9         1.2 versicolor
+12          6.3         2.8          5.1         1.5  virginica
+13          6.3         2.8          5.1         1.5  virginica
+14          6.2         2.9          4.3         1.3 versicolor
+15          6.0         2.2          4.0         1.0 versicolor
+16          4.9         3.6          1.4         0.1     setosa
+17          6.3         3.3          4.7         1.6 versicolor
+18          4.8         3.4          1.6         0.2     setosa
+19          4.7         3.2          1.3         0.2     setosa
+20          5.6         2.8          4.9         2.0  virginica
+21          4.8         3.4          1.6         0.2     setosa
+22          4.4         3.0          1.3         0.2     setosa
+23          5.8         2.7          5.1         1.9  virginica
+24          5.1         3.8          1.9         0.4     setosa
+25          6.5         2.8          4.6         1.5 versicolor
+26          6.5         3.2          5.1         2.0  virginica
+27          5.8         2.7          5.1         1.9  virginica
+28          6.1         3.0          4.9         1.8  virginica
+29          6.7         3.1          4.4         1.4 versicolor
+30          7.2         3.0          5.8         1.6  virginica
+31          5.6         2.7          4.2         1.3 versicolor
+32          6.7         3.3          5.7         2.5  virginica
+33          6.5         2.8          4.6         1.5 versicolor
+34          6.5         3.2          5.1         2.0  virginica
+35          5.0         3.0          1.6         0.2     setosa
+36          5.5         2.4          3.7         1.0 versicolor
+37          4.9         2.4          3.3         1.0 versicolor
+38          4.9         3.6          1.4         0.1     setosa
+39          5.2         4.1          1.5         0.1     setosa
+40          6.5         3.0          5.2         2.0  virginica
+41          6.3         2.5          4.9         1.5 versicolor
+42          5.8         2.8          5.1         2.4  virginica
+43          5.8         2.6          4.0         1.2 versicolor
+44          5.5         2.5          4.0         1.3 versicolor
+45          6.9         3.1          5.1         2.3  virginica
+46          6.0         2.9          4.5         1.5 versicolor
+47          5.1         3.3          1.7         0.5     setosa
+48          6.3         3.4          5.6         2.4  virginica
+49          5.0         3.6          1.4         0.2     setosa
+50          6.5         3.0          5.5         1.8  virginica
+51          6.5         2.8          4.6         1.5 versicolor
+52          5.3         3.7          1.5         0.2     setosa
+53          4.9         2.5          4.5         1.7  virginica
+54          6.1         3.0          4.6         1.4 versicolor
+55          7.2         3.6          6.1         2.5  virginica
+56          4.7         3.2          1.6         0.2     setosa
+57          6.0         2.2          4.0         1.0 versicolor
+58          6.4         2.7          5.3         1.9  virginica
+59          6.7         3.1          4.4         1.4 versicolor
+60          6.7         3.1          4.7         1.5 versicolor
+61          5.1         3.5          1.4         0.2     setosa
+62          5.0         3.0          1.6         0.2     setosa
+63          5.4         3.9          1.7         0.4     setosa
+64          5.7         2.6          3.5         1.0 versicolor
+65          5.8         2.8          5.1         2.4  virginica
+66          5.6         2.9          3.6         1.3 versicolor
+67          6.4         2.8          5.6         2.1  virginica
+68          6.5         3.0          5.2         2.0  virginica
+69          6.8         2.8          4.8         1.4 versicolor
+70          4.4         3.0          1.3         0.2     setosa
+71          5.7         2.5          5.0         2.0  virginica
+72          5.0         2.0          3.5         1.0 versicolor
+73          5.7         3.8          1.7         0.3     setosa
+74          5.1         3.8          1.6         0.2     setosa
+75          6.3         2.7          4.9         1.8  virginica</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">sample_frac</span>(<span class="fl">0.5</span>, <span class="at">replace=</span>T) <span class="sc">%&gt;%</span> nrow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 75</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">10</span>, <span class="at">replace=</span>T) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1           4.8         3.1          1.6         0.2     setosa
+2           5.9         3.0          5.1         1.8  virginica
+3           6.3         3.3          4.7         1.6 versicolor
+4           5.0         3.0          1.6         0.2     setosa
+5           4.4         3.2          1.3         0.2     setosa
+6           6.0         2.9          4.5         1.5 versicolor
+7           5.5         2.4          3.7         1.0 versicolor
+8           6.5         3.0          5.5         1.8  virginica
+9           5.7         2.5          5.0         2.0  virginica
+10          7.3         2.9          6.3         1.8  virginica</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">10</span>, <span class="at">replace=</span>T) <span class="sc">%&gt;%</span> nrow </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># slice </span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">10</span><span class="sc">:</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          4.9         3.1          1.5         0.1  setosa
+2          5.4         3.7          1.5         0.2  setosa
+3          4.8         3.4          1.6         0.2  setosa
+4          4.8         3.0          1.4         0.1  setosa
+5          4.3         3.0          1.1         0.1  setosa
+6          5.8         4.0          1.2         0.2  setosa</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top n in X</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">top_n</span>(<span class="dv">5</span>, Sepal.Length)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+1          7.7         3.8          6.7         2.2 virginica
+2          7.7         2.6          6.9         2.3 virginica
+3          7.7         2.8          6.7         2.0 virginica
+4          7.9         3.8          6.4         2.0 virginica
+5          7.7         3.0          6.1         2.3 virginica</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">top_n</span>(<span class="dv">5</span>, Sepal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.4         3.9          1.7         0.4  setosa
+2          5.8         4.0          1.2         0.2  setosa
+3          5.7         4.4          1.5         0.4  setosa
+4          5.4         3.9          1.3         0.4  setosa
+5          5.2         4.1          1.5         0.1  setosa
+6          5.5         4.2          1.4         0.2  setosa</code></pre>
+</div>
+</div>
+</section>
+<section id="subset-variables" class="level3">
+<h3 class="anchored" data-anchor-id="subset-variables"><strong>Subset Variables</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull &amp; select</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Petal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 0.2 0.2 0.1 0.1 0.2 0.4 0.4 0.3
+ [19] 0.3 0.3 0.2 0.4 0.2 0.5 0.2 0.2 0.4 0.2 0.2 0.2 0.2 0.4 0.1 0.2 0.2 0.2
+ [37] 0.2 0.1 0.2 0.2 0.3 0.3 0.2 0.6 0.4 0.3 0.2 0.2 0.2 0.2 1.4 1.5 1.5 1.3
+ [55] 1.5 1.3 1.6 1.0 1.3 1.4 1.0 1.5 1.0 1.4 1.3 1.4 1.5 1.0 1.5 1.1 1.8 1.3
+ [73] 1.5 1.2 1.3 1.4 1.4 1.7 1.5 1.0 1.1 1.0 1.2 1.6 1.5 1.6 1.5 1.3 1.3 1.3
+ [91] 1.2 1.4 1.2 1.0 1.3 1.2 1.3 1.3 1.1 1.3 2.5 1.9 2.1 1.8 2.2 2.1 1.7 1.8
+[109] 1.8 2.5 2.0 1.9 2.1 2.0 2.4 2.3 1.8 2.2 2.3 1.5 2.3 2.0 2.0 1.8 2.1 1.8
+[127] 1.8 1.8 2.1 1.6 1.9 2.0 2.2 1.5 1.4 2.3 2.4 1.8 1.8 2.1 2.4 2.3 1.9 2.3
+[145] 2.5 2.3 1.9 2.0 2.3 1.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(Petal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Petal.Width
+1           0.2
+2           0.2
+3           0.2
+4           0.2
+5           0.2
+6           0.4
+7           0.3
+8           0.2
+9           0.2
+10          0.1
+11          0.2
+12          0.2
+13          0.1
+14          0.1
+15          0.2
+16          0.4
+17          0.4
+18          0.3
+19          0.3
+20          0.3
+21          0.2
+22          0.4
+23          0.2
+24          0.5
+25          0.2
+26          0.2
+27          0.4
+28          0.2
+29          0.2
+30          0.2
+31          0.2
+32          0.4
+33          0.1
+34          0.2
+35          0.2
+36          0.2
+37          0.2
+38          0.1
+39          0.2
+40          0.2
+41          0.3
+42          0.3
+43          0.2
+44          0.6
+45          0.4
+46          0.3
+47          0.2
+48          0.2
+49          0.2
+50          0.2
+51          1.4
+52          1.5
+53          1.5
+54          1.3
+55          1.5
+56          1.3
+57          1.6
+58          1.0
+59          1.3
+60          1.4
+61          1.0
+62          1.5
+63          1.0
+64          1.4
+65          1.3
+66          1.4
+67          1.5
+68          1.0
+69          1.5
+70          1.1
+71          1.8
+72          1.3
+73          1.5
+74          1.2
+75          1.3
+76          1.4
+77          1.4
+78          1.7
+79          1.5
+80          1.0
+81          1.1
+82          1.0
+83          1.2
+84          1.6
+85          1.5
+86          1.6
+87          1.5
+88          1.3
+89          1.3
+90          1.3
+91          1.2
+92          1.4
+93          1.2
+94          1.0
+95          1.3
+96          1.2
+97          1.3
+98          1.3
+99          1.1
+100         1.3
+101         2.5
+102         1.9
+103         2.1
+104         1.8
+105         2.2
+106         2.1
+107         1.7
+108         1.8
+109         1.8
+110         2.5
+111         2.0
+112         1.9
+113         2.1
+114         2.0
+115         2.4
+116         2.3
+117         1.8
+118         2.2
+119         2.3
+120         1.5
+121         2.3
+122         2.0
+123         2.0
+124         1.8
+125         2.1
+126         1.8
+127         1.8
+128         1.8
+129         2.1
+130         1.6
+131         1.9
+132         2.0
+133         2.2
+134         1.5
+135         1.4
+136         2.3
+137         2.4
+138         1.8
+139         1.8
+140         2.1
+141         2.4
+142         2.3
+143         1.9
+144         2.3
+145         2.5
+146         2.3
+147         1.9
+148         2.0
+149         2.3
+150         1.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Petal.Width) <span class="sc">%&gt;%</span> str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:150] 0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(Petal.Width) <span class="sc">%&gt;%</span> str</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   150 obs. of  1 variable:
+ $ Petal.Width: num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(Petal.Length, Petal.Width) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Petal.Length Petal.Width
+1          1.4         0.2
+2          1.4         0.2
+3          1.3         0.2
+4          1.5         0.2
+5          1.4         0.2
+6          1.7         0.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># useful helpers: starts_with(), contains()</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"Peta"</span>)) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Petal.Length Petal.Width
+1          1.4         0.2
+2          1.4         0.2
+3          1.3         0.2
+4          1.5         0.2
+5          1.4         0.2
+6          1.7         0.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"tal"</span>)) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Petal.Length Petal.Width
+1          1.4         0.2
+2          1.4         0.2
+3          1.3         0.2
+4          1.5         0.2
+5          1.4         0.2
+6          1.7         0.4</code></pre>
+</div>
+</div>
+</section>
+<section id="reshaping-arrange-data" class="level3">
+<h3 class="anchored" data-anchor-id="reshaping-arrange-data"><strong>Reshaping &amp; Arrange data</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># let's use mtcars dataset</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>mtcars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># About mtcars dataset</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="co"># help(mtcars)</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="co"># arrange</span></span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(mpg) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Cadillac Fleetwood  10.4   8  472 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8  460 215 3.00 5.424 17.82  0  0    3    4
+Camaro Z28          13.3   8  350 245 3.73 3.840 15.41  0  0    3    4
+Duster 360          14.3   8  360 245 3.21 3.570 15.84  0  0    3    4
+Chrysler Imperial   14.7   8  440 230 3.23 5.345 17.42  0  0    3    4
+Maserati Bora       15.0   8  301 335 3.54 3.570 14.60  0  1    5    8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> add_rownames <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `add_rownames()` was deprecated in dplyr 1.0.0.
+ℹ Please use `tibble::rownames_to_column()` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  rowname        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Mazda RX4     21       6   160   110  3.9   2.62  16.5     0     1     4     4
+2 Mazda RX4 W…  21       6   160   110  3.9   2.88  17.0     0     1     4     4
+3 Datsun 710    22.8     4   108    93  3.85  2.32  18.6     1     1     4     1
+4 Hornet 4 Dr…  21.4     6   258   110  3.08  3.22  19.4     1     0     3     1
+5 Hornet Spor…  18.7     8   360   175  3.15  3.44  17.0     0     0     3     2
+6 Valiant       18.1     6   225   105  2.76  3.46  20.2     1     0     3     1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> add_rownames <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(mpg) <span class="sc">%&gt;%</span> </span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `add_rownames()` was deprecated in dplyr 1.0.0.
+ℹ Please use `tibble::rownames_to_column()` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  rowname        mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Cadillac Fl…  10.4     8   472   205  2.93  5.25  18.0     0     0     3     4
+2 Lincoln Con…  10.4     8   460   215  3     5.42  17.8     0     0     3     4
+3 Camaro Z28    13.3     8   350   245  3.73  3.84  15.4     0     0     3     4
+4 Duster 360    14.3     8   360   245  3.21  3.57  15.8     0     0     3     4
+5 Chrysler Im…  14.7     8   440   230  3.23  5.34  17.4     0     0     3     4
+6 Maserati Bo…  15       8   301   335  3.54  3.57  14.6     0     1     5     8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> add_rownames <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(mpg)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(rowname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `add_rownames()` was deprecated in dplyr 1.0.0.
+ℹ Please use `tibble::rownames_to_column()` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 1
+   rowname       
+   &lt;chr&gt;         
+ 1 Toyota Corolla
+ 2 Fiat 128      
+ 3 Honda Civic   
+ 4 Lotus Europa  
+ 5 Fiat X1-9     
+ 6 Porsche 914-2 
+ 7 Merc 240D     
+ 8 Datsun 710    
+ 9 Merc 230      
+10 Toyota Corona 
+# ℹ 22 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="summarise-data" class="level3">
+<h3 class="anchored" data-anchor-id="summarise-data"><strong>Summarise data</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise</span></span>
+<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">avg.PL=</span><span class="fu">mean</span>(Petal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  avg.PL
+1  3.758</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">sd.PL=</span><span class="fu">sd</span>(Petal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     sd.PL
+1 1.765298</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">avg.PL=</span><span class="fu">mean</span>(Petal.Length),</span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sd.PL=</span><span class="fu">sd</span>(Petal.Length),</span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">min.PL=</span><span class="fu">min</span>(Petal.Length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  avg.PL    sd.PL min.PL
+1  3.758 1.765298      1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">count</span>(Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Species  n
+1     setosa 50
+2 versicolor 50
+3  virginica 50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">sample_frac</span>(<span class="fl">0.3</span>) <span class="sc">%&gt;%</span> <span class="fu">count</span>(Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Species  n
+1     setosa 16
+2 versicolor 15
+3  virginica 14</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">summarise_all</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `summarise()`.
+ℹ In argument: `Species = (function (x, ...) ...`.
+Caused by warning in `mean.default()`:
+! argument is not numeric or logical: returning NA</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1     5.843333    3.057333        3.758    1.199333      NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">summarise_at</span>(<span class="st">"Petal.Length"</span>, sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Petal.Length
+1        563.7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">summarise_at</span>(<span class="fu">c</span>(<span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span>), mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Petal.Length Petal.Width
+1        3.758    1.199333</code></pre>
+</div>
+</div>
+</section>
+<section id="group-and-summarise-data" class="level3">
+<h3 class="anchored" data-anchor-id="group-and-summarise-data"><strong>Group and Summarise data</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group</span></span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 150 × 5
+# Groups:   Species [3]
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+ 1          5.1         3.5          1.4         0.2 setosa 
+ 2          4.9         3            1.4         0.2 setosa 
+ 3          4.7         3.2          1.3         0.2 setosa 
+ 4          4.6         3.1          1.5         0.2 setosa 
+ 5          5           3.6          1.4         0.2 setosa 
+ 6          5.4         3.9          1.7         0.4 setosa 
+ 7          4.6         3.4          1.4         0.3 setosa 
+ 8          5           3.4          1.5         0.2 setosa 
+ 9          4.4         2.9          1.4         0.2 setosa 
+10          4.9         3.1          1.5         0.1 setosa 
+# ℹ 140 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+  &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+1 setosa             5.01        3.43         1.46       0.246
+2 versicolor         5.94        2.77         4.26       1.33 
+3 virginica          6.59        2.97         5.55       2.03 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"Sep"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `Species`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Species    Sepal.Length Sepal.Width
+  &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;
+1 setosa             5.01        3.43
+2 versicolor         5.94        2.77
+3 virginica          6.59        2.97</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(am) <span class="sc">%&gt;%</span> </span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">hp.avg=</span><span class="fu">mean</span>(hp),</span>
+<span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">hp.sd=</span><span class="fu">sd</span>(hp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+     am hp.avg hp.sd
+  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1     0   160.  53.9
+2     1   127.  84.1</code></pre>
+</div>
+</div>
+</section>
+<section id="make-new-variables" class="level3">
+<h3 class="anchored" data-anchor-id="make-new-variables"><strong>Make New Variables</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mutate</span></span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mpg to kml</span></span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">kml=</span><span class="fl">0.425144</span><span class="sc">*</span>mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+                          kml
+Mazda RX4            8.928024
+Mazda RX4 Wag        8.928024
+Datsun 710           9.693283
+Hornet 4 Drive       9.098082
+Hornet Sportabout    7.950193
+Valiant              7.695106
+Duster 360           6.079559
+Merc 240D           10.373514
+Merc 230             9.693283
+Merc 280             8.162765
+Merc 280C            7.567563
+Merc 450SE           6.972362
+Merc 450SL           7.354991
+Merc 450SLC          6.462189
+Cadillac Fleetwood   4.421498
+Lincoln Continental  4.421498
+Chrysler Imperial    6.249617
+Fiat 128            13.774666
+Honda Civic         12.924378
+Toyota Corolla      14.412382
+Toyota Corona        9.140596
+Dodge Challenger     6.589732
+AMC Javelin          6.462189
+Camaro Z28           5.654415
+Pontiac Firebird     8.162765
+Fiat X1-9           11.606431
+Porsche 914-2       11.053744
+Lotus Europa        12.924378
+Ford Pantera L       6.717275
+Ferrari Dino         8.375337
+Maserati Bora        6.377160
+Volvo 142E           9.098082</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">kml=</span><span class="fu">round</span>(<span class="fl">0.425144</span><span class="sc">*</span>mpg, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb  kml
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4  8.9
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4  8.9
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1  9.7
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1  9.1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2  8.0
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1  7.7
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4  6.1
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2 10.4
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2  9.7
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4  8.2
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4  7.6
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3  7.0
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3  7.4
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3  6.5
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4  4.4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4  4.4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4  6.2
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1 13.8
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2 12.9
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1 14.4
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1  9.1
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2  6.6
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2  6.5
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4  5.7
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2  8.2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1 11.6
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2 11.1
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2 12.9
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4  6.7
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6  8.4
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8  6.4
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2  9.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">kml=</span><span class="fu">round</span>(<span class="fl">0.425144</span><span class="sc">*</span>mpg, <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mpg, kml) <span class="sc">%&gt;%</span> </span>
+<span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>, mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                mpg  kml
+Fiat 128       32.4 13.8
+Honda Civic    30.4 12.9
+Toyota Corolla 33.9 14.4
+Fiat X1-9      27.3 11.6
+Lotus Europa   30.4 12.9</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transmute</span></span>
+<span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">transmute</span>(hp<span class="sc">/</span>wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       hp/wt
+Mazda RX4           41.98473
+Mazda RX4 Wag       38.26087
+Datsun 710          40.08621
+Hornet 4 Drive      34.21462
+Hornet Sportabout   50.87209
+Valiant             30.34682
+Duster 360          68.62745
+Merc 240D           19.43574
+Merc 230            30.15873
+Merc 280            35.75581
+Merc 280C           35.75581
+Merc 450SE          44.22604
+Merc 450SL          48.25737
+Merc 450SLC         47.61905
+Cadillac Fleetwood  39.04762
+Lincoln Continental 39.63864
+Chrysler Imperial   43.03087
+Fiat 128            30.00000
+Honda Civic         32.19814
+Toyota Corolla      35.42234
+Toyota Corona       39.35091
+Dodge Challenger    42.61364
+AMC Javelin         43.66812
+Camaro Z28          63.80208
+Pontiac Firebird    45.51365
+Fiat X1-9           34.10853
+Porsche 914-2       42.52336
+Lotus Europa        74.68605
+Ford Pantera L      83.28076
+Ferrari Dino        63.17690
+Maserati Bora       93.83754
+Volvo 142E          39.20863</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename</span></span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"
+[11] "carb"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">new=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb new
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4   1
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4   1
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1   1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1   1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2   1
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1   1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">new=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(<span class="at">change.name=</span>new) <span class="sc">%&gt;%</span> head</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+                  change.name
+Mazda RX4                   1
+Mazda RX4 Wag               1
+Datsun 710                  1
+Hornet 4 Drive              1
+Hornet Sportabout           1
+Valiant                     1</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><img src="images/clipboard-3024371066.png" class="img-fluid"></p>
+<p><br></p>
+<p><img src="images/clipboard-4205026733.png" class="img-fluid"></p>
+<p><br></p>
+</section>
+<section id="joins-combine-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="joins-combine-datasets">Joins! (Combine Datasets)</h3>
+<p>Thanks to Garrick Aden-Buie (<a href="https://www.garrickadenbuie.com">garrickadenbuie.com</a>), we can teach joins very easily with his fantastic diagrams.</p>
+<p><br></p>
+<p>Let’s use some example datasets that come pre-loaded in R to demonstrate how joins work using <strong><code>dplyr</code></strong>. We will use the <strong><code>mtcars</code></strong> dataset, splitting it into two separate data frames to illustrate how the different types of joins operate.</p>
+<p>First, let’s set up our example data frames from the <strong><code>mtcars</code></strong> dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create two data frames from mtcars</span></span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"cyl"</span>, <span class="st">"disp"</span>)]  <span class="co"># first 10 rows, select specific columns</span></span>
+<span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> mtcars[<span class="dv">5</span><span class="sc">:</span><span class="dv">15</span>, <span class="fu">c</span>(<span class="st">"disp"</span>, <span class="st">"hp"</span>, <span class="st">"drat"</span>)]  <span class="co"># rows 5 to 15, select specific columns</span></span>
+<span id="cb161-4"><a href="#cb161-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-5"><a href="#cb161-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure there's a common key for joining; here, we'll use 'disp'</span></span>
+<span id="cb161-6"><a href="#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the data frames to see what they contain</span></span>
+<span id="cb161-7"><a href="#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp
+Mazda RX4         21.0   6 160.0
+Mazda RX4 Wag     21.0   6 160.0
+Datsun 710        22.8   4 108.0
+Hornet 4 Drive    21.4   6 258.0
+Hornet Sportabout 18.7   8 360.0
+Valiant           18.1   6 225.0
+Duster 360        14.3   8 360.0
+Merc 240D         24.4   4 146.7
+Merc 230          22.8   4 140.8
+Merc 280          19.2   6 167.6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    disp  hp drat
+Hornet Sportabout  360.0 175 3.15
+Valiant            225.0 105 2.76
+Duster 360         360.0 245 3.21
+Merc 240D          146.7  62 3.69
+Merc 230           140.8  95 3.92
+Merc 280           167.6 123 3.92
+Merc 280C          167.6 123 3.92
+Merc 450SE         275.8 180 3.07
+Merc 450SL         275.8 180 3.07
+Merc 450SLC        275.8 180 3.07
+Cadillac Fleetwood 472.0 205 2.93</code></pre>
+</div>
+</div>
+<section id="inner-join" class="level4">
+<h4 class="anchored" data-anchor-id="inner-join">Inner Join</h4>
+<blockquote class="blockquote">
+<p>All rows from <code>x</code> where there are matching values in <code>y</code>, and all columns from <code>x</code> and <code>y</code>.</p>
+</blockquote>
+<p><img src="images/inner-join.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a>inner_join_result <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"disp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in inner_join(df1, df2, by = "disp"): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 5 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(inner_join_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mpg cyl  disp  hp drat
+1 18.7   8 360.0 175 3.15
+2 18.7   8 360.0 245 3.21
+3 18.1   6 225.0 105 2.76
+4 14.3   8 360.0 175 3.15
+5 14.3   8 360.0 245 3.21
+6 24.4   4 146.7  62 3.69
+7 22.8   4 140.8  95 3.92
+8 19.2   6 167.6 123 3.92
+9 19.2   6 167.6 123 3.92</code></pre>
+</div>
+</div>
+</section>
+<section id="left-join" class="level4">
+<h4 class="anchored" data-anchor-id="left-join">Left Join</h4>
+<blockquote class="blockquote">
+<p>All rows from <code>x</code>, and all columns from <code>x</code> and <code>y</code>. Rows in <code>x</code> with no match in <code>y</code> will have <code>NA</code> values in the new columns.</p>
+</blockquote>
+<p><img src="images/left-join.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a>left_join_result <span class="ot">&lt;-</span> <span class="fu">left_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"disp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in left_join(df1, df2, by = "disp"): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 5 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(left_join_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mpg cyl  disp  hp drat
+1  21.0   6 160.0  NA   NA
+2  21.0   6 160.0  NA   NA
+3  22.8   4 108.0  NA   NA
+4  21.4   6 258.0  NA   NA
+5  18.7   8 360.0 175 3.15
+6  18.7   8 360.0 245 3.21
+7  18.1   6 225.0 105 2.76
+8  14.3   8 360.0 175 3.15
+9  14.3   8 360.0 245 3.21
+10 24.4   4 146.7  62 3.69
+11 22.8   4 140.8  95 3.92
+12 19.2   6 167.6 123 3.92
+13 19.2   6 167.6 123 3.92</code></pre>
+</div>
+</div>
+</section>
+<section id="left-join-extra-rows-in-y" class="level4">
+<h4 class="anchored" data-anchor-id="left-join-extra-rows-in-y">Left Join (Extra Rows in y)</h4>
+<blockquote class="blockquote">
+<p>… If there are multiple matches between <code>x</code> and <code>y</code>, all combinations of the matches are returned.</p>
+</blockquote>
+<p><img src="images/left-join-extra.gif" class="img-fluid"></p>
+</section>
+<section id="right-join" class="level4">
+<h4 class="anchored" data-anchor-id="right-join">Right Join</h4>
+<blockquote class="blockquote">
+<p>All rows from y, and all columns from <code>x</code> and <code>y</code>. Rows in <code>y</code> with no match in <code>x</code> will have <code>NA</code> values in the new columns.</p>
+</blockquote>
+<p><img src="images/right-join.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a>right_join_result <span class="ot">&lt;-</span> <span class="fu">right_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"disp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in right_join(df1, df2, by = "disp"): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 5 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(right_join_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mpg cyl  disp  hp drat
+1  18.7   8 360.0 175 3.15
+2  18.7   8 360.0 245 3.21
+3  18.1   6 225.0 105 2.76
+4  14.3   8 360.0 175 3.15
+5  14.3   8 360.0 245 3.21
+6  24.4   4 146.7  62 3.69
+7  22.8   4 140.8  95 3.92
+8  19.2   6 167.6 123 3.92
+9  19.2   6 167.6 123 3.92
+10   NA  NA 275.8 180 3.07
+11   NA  NA 275.8 180 3.07
+12   NA  NA 275.8 180 3.07
+13   NA  NA 472.0 205 2.93</code></pre>
+</div>
+</div>
+</section>
+<section id="full-join" class="level4">
+<h4 class="anchored" data-anchor-id="full-join">Full Join</h4>
+<blockquote class="blockquote">
+<p>All rows and all columns from both <code>x</code> and <code>y</code>. Where there are not matching values, returns <code>NA</code> for the one missing.</p>
+</blockquote>
+<p><img src="images/full-join.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a>full_join_result <span class="ot">&lt;-</span> <span class="fu">full_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"disp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in full_join(df1, df2, by = "disp"): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 5 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(full_join_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mpg cyl  disp  hp drat
+1  21.0   6 160.0  NA   NA
+2  21.0   6 160.0  NA   NA
+3  22.8   4 108.0  NA   NA
+4  21.4   6 258.0  NA   NA
+5  18.7   8 360.0 175 3.15
+6  18.7   8 360.0 245 3.21
+7  18.1   6 225.0 105 2.76
+8  14.3   8 360.0 175 3.15
+9  14.3   8 360.0 245 3.21
+10 24.4   4 146.7  62 3.69
+11 22.8   4 140.8  95 3.92
+12 19.2   6 167.6 123 3.92
+13 19.2   6 167.6 123 3.92
+14   NA  NA 275.8 180 3.07
+15   NA  NA 275.8 180 3.07
+16   NA  NA 275.8 180 3.07
+17   NA  NA 472.0 205 2.93</code></pre>
+</div>
+</div>
+<p><strong>Filtering Joins</strong></p>
+<blockquote class="blockquote">
+<p>Filtering joins match observations in the same way as mutating joins, but affect the observations, not the variables. … Semi-joins are useful for matching filtered summary tables back to the original rows. … Anti-joins are useful for diagnosing join mismatches.<br>
+<a href="http://r4ds.had.co.nz/relational-data.html#filtering-joins">R for Data Science: Filtering Joins</a></p>
+</blockquote>
+</section>
+<section id="semi-join" class="level4">
+<h4 class="anchored" data-anchor-id="semi-join">Semi Join</h4>
+<blockquote class="blockquote">
+<p>All rows from <code>x</code> where there are matching values in <code>y</code>, keeping just columns from <code>x</code>.</p>
+</blockquote>
+<p><img src="images/semi-join.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>semi_join_result <span class="ot">&lt;-</span> <span class="fu">semi_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"disp"</span>)</span>
+<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(semi_join_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mpg cyl  disp
+Hornet Sportabout 18.7   8 360.0
+Valiant           18.1   6 225.0
+Duster 360        14.3   8 360.0
+Merc 240D         24.4   4 146.7
+Merc 230          22.8   4 140.8
+Merc 280          19.2   6 167.6</code></pre>
+</div>
+</div>
+</section>
+<section id="anti-join" class="level4">
+<h4 class="anchored" data-anchor-id="anti-join">Anti Join</h4>
+<blockquote class="blockquote">
+<p>All rows from <code>x</code> where there are not matching values in <code>y</code>, keeping just column</p>
+</blockquote>
+<p><img src="images/anti-join.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming df1 and df2 from the previous example</span></span>
+<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>anti_join_result <span class="ot">&lt;-</span> <span class="fu">anti_join</span>(df1, df2, <span class="at">by =</span> <span class="st">"disp"</span>)</span>
+<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(anti_join_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                mpg cyl disp
+Mazda RX4      21.0   6  160
+Mazda RX4 Wag  21.0   6  160
+Datsun 710     22.8   4  108
+Hornet 4 Drive 21.4   6  258</code></pre>
+</div>
+</div>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
