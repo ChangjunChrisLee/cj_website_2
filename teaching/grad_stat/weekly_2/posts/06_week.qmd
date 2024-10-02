@@ -1,5 +1,5 @@
 ---
-title: "기술 통계"
+title: "데이터 시각화와 기술 통계"
 subtitle: "" 
 Week: 6
 format: html
@@ -9,3 +9,834 @@ slide-format: revealjs
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 <br>
+
+### Exploration with tidyverse
+
+Let’s enhance our exploration of the Palmer Penguin dataset by paralleling our original code snippets with their **`tidyverse`** counterparts. The **`tidyverse`** is a collection of R packages designed for data science that makes data manipulation, exploration, and visualization easier and more intuitive.
+
+#### **Loading the Dataset with `tidyverse`**
+
+First, let’s ensure we have the **`tidyverse`** and **`palmerpenguins`** packages loaded. If you haven't installed these packages, you can do so using **`install.packages("tidyverse")`** and **`install.packages("palmerpenguins")`**.
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+
+```
+
+#### **Subsetting Data with `dplyr`**
+
+With **`dplyr`**, subsetting becomes more readable:
+
+```{r}
+# Subsetting to include only Adélie penguins using dplyr
+adelie_penguins <- penguins %>%
+  filter(species == "Adelie")
+
+```
+
+#### **Handling Missing Values with `tidyverse`**
+
+The **`tidyverse`** provides a straightforward approach to dealing with missing values:
+
+```{r}
+# Removing rows with any missing value using dplyr
+penguins_clean <- penguins %>%
+  drop_na()
+
+```
+
+#### **Creating Custom Functions and Applying them into dataset**
+
+While base R functions are powerful, integrating them with **`tidyverse`** functionalities can make your workflows even more efficient:
+
+```{r}
+# Using dplyr and purrr to summarize measurements
+summarize_measurements <- function(data) {
+  data %>%
+    summarise(Mean_FlipperLength = mean(flipper_length_mm, na.rm = TRUE),
+              SD_FlipperLength = sd(flipper_length_mm, na.rm = TRUE),
+              Mean_BillLength = mean(bill_length_mm, na.rm = TRUE),
+              SD_BillLength = sd(bill_length_mm, na.rm = TRUE))
+}
+
+# Applying the function to Adélie penguins
+adelie_summary <- adelie_penguins %>%
+  summarize_measurements()
+adelie_summary
+
+```
+
+#### **Looping Through Data with `group_by` and `summarise`**
+
+```{r}
+# Calculating mean body mass for each species with dplyr
+mean_mass_by_species <- penguins %>%
+  group_by(species) %>%
+  summarise(MeanBodyMass = mean(body_mass_g, na.rm = TRUE))
+
+mean_mass_by_species
+
+```
+
+By incorporating **`tidyverse`** techniques, we can make our code more concise and readable, especially for those new to programming or R. The **`tidyverse`** syntax is designed to be intuitive, allowing you to more easily understand and articulate what your code is doing, which is particularly beneficial when sharing your work with others or when collaborating on data science projects.
+
+<br>
+
+### **Using `purrr` for Advanced Data Manipulation**
+
+**`purrr`** enhances functional programming within the **`tidyverse`** ecosystem, providing tools for working effectively with lists and functional programming paradigms. Here's how we could use **`purrr`** in conjunction with **`dplyr`** for a task similar to our mean body mass calculation:
+
+#### Calculating Mean Body Mass by Species with **`purrr`**
+
+We can use **`purrr`**'s **`map`** functions to apply operations across elements in a list, which is particularly useful for more complex or nested operations. While the direct calculation of mean body mass by species is more straightforward with **`dplyr`** alone, let's consider a scenario where **`purrr`** demonstrates its utility:
+
+```{r}
+library(tidyverse)
+# Splitting the data by species
+species_split <- split(penguins, penguins$species)
+
+# Calculating mean body mass for each species using purrr
+mean_mass_by_species <- map_dfr(species_split, 
+                                ~summarise(.x, MeanBodyMass = mean(body_mass_g, na.rm = TRUE)))
+
+mean_mass_by_species
+
+```
+
+```{r}
+# Data Visualization
+
+# average
+apply(anscombe, 1, mean)
+
+apply(anscombe, 2, mean)
+
+# Dispersion
+apply(anscombe, 2, var)
+
+
+# Correlation (correlation coefficient)
+cor(anscombe$x1, anscombe$y1)
+
+cor(anscombe$x2, anscombe$y2)
+
+cor(anscombe$x3, anscombe$y3)
+
+cor(anscombe$x4, anscombe$y4)
+
+library(gapminder)
+library(dplyr)
+y <- gapminder %>% group_by(year, continent) %>% summarize(c_pop = sum(pop))
+head(y, 20)
+
+plot(y$year, y$c_pop)
+plot(y$year, y$c_pop, col = y$continent)
+plot(y$year, y$c_pop, col = y$continent, pch = c(1:5))
+plot(y$year, y$c_pop, col = y$continent, pch = c(1:length(levels(y$continent))))
+
+# Specify the number of legends as a number
+legend("topright", legend = levels((y$continent)), pch = c(1:5), col = c(1:5))
+
+# Specify the number of legends to match the number of data
+legend("bottomleft", legend = levels((y$continent)), pch = c(1:length(levels(y$continent))), col = c(1:length(levels(y$continent))) )
+
+
+# 02 Basic features of visualization #
+plot(gapminder$gdpPercap, gapminder$lifeExp, col = gapminder$continent)
+legend("bottomright", 
+       legend = levels((gapminder$continent)),
+        pch = c(1:length(levels(gapminder$continent))),
+        col = c(1:length(levels(y$continent))))
+
+plot(log10(gapminder$gdpPercap), gapminder$lifeExp, col = gapminder$continent)
+legend("bottomright", legend = levels((gapminder$continent)), pch = c(1:length(levels(gapminder$continent))), col = c(1:length(levels(y$continent))) )
+
+# install.packages("ggplot2")
+library(ggplot2)
+gapminder %>% ggplot(,aes())
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent)) +
+   geom_point() +
+   scale_x_log10()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent, size = pop)) +
+   geom_point() +
+   scale_x_log10()
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp, col = continent, size = pop)) +
+   geom_point(alpha = 0.5) +
+   scale_x_log10()
+
+
+table(gapminder$year)
+
+gapminder %>% filter(year==1977) %>%
+   ggplot(., aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) +
+   geom_point(alpha=0.5) +
+   scale_x_log10()
+
+
+gapminder %>% filter(year==2007) %>%
+   ggplot(., aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) +
+   geom_point(alpha=0.5) +
+   scale_x_log10()
+
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)) +
+   geom_point(alpha=0.5) +
+   scale_x_log10() +
+   facet_wrap(~year)
+
+
+gapminder %>%
+   filter(year == 1952 & continent =="Asia") %>%
+   ggplot(aes(reorder(country, pop), pop)) +
+   geom_bar(stat = "identity") +
+   coord_flip()
+
+gapminder %>% filter(year==1952 & continent== "Asia") %>% ggplot(aes(reorder(country, pop), pop)) + geom_bar(stat = "identity") + scale_y_log10() + coord_flip ()
+
+gapminder %>%
+   filter(country == "Korea, Rep.") %>%
+   ggplot(aes(year, lifeExp, col = country)) +
+   geom_point() +
+   geom_line()
+
+gapminder %>%
+   filter(country == "Korea, Rep.") %>%
+   ggplot(aes(year, lifeExp, col = country)) +
+   # geom_point() +
+   geom_line()
+
+gapminder %>%
+   ggplot(aes(x = year, y = lifeExp, col = continent)) +
+   geom_point(alpha = 0.2) +
+   geom_smooth()
+
+x = filter(gapminder, year == 1952)
+hist(x$lifeExp, main = "Histogram of lifeExp in 1952")
+
+x %>% ggplot(aes(lifeExp)) + geom_histogram()
+
+x %>% ggplot(aes(continent, lifeExp)) + geom_boxplot()
+
+plot(log10(gapminder$gdpPercap), gapminder$lifeExp)
+```
+
+### Class
+
+<br>
+
+Data visualization is an essential skill in data science, helping to turn complex results into comprehensible insights. In R, one of the most powerful tools for creating professional and visually appealing graphs is `ggplot2`. This package, built on the principles of the **Grammar of Graphics** by *Leland Wilkinson*, allows users to create graphs that are both informative and attractive. Let’s delve into the concepts and practical applications of `ggplot2` to enhance your data visualization skills.
+
+<br>
+
+{{< video https://youtu.be/7LXXm52Frbc >}}
+
+<br>
+
+#### **Grammar of Graphics**
+
+![](images/clipboard-769522405.png){width="254"}
+
+`ggplot2` is a system for declaratively creating graphics, based on [The Grammar of Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=as_li_ss_tl). You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+
+See the official home of ggplot2: <https://ggplot2.tidyverse.org/>
+
+<br>
+
+### **Understanding ggplot2's Grammar of Graphics**
+
+#### **Components of the Grammar**
+
+At its core, ggplot2 operates on a coherent set of principles known as the "Grammar of Graphics." This framework allows you to specify graphs in terms of their underlying components:
+
+![](https://ggplot2.tidyverse.org/articles/ggplot2_files/figure-html/overview_graphic-1.png)
+
+-   **Aesthetics (`aes`)**: These define how data is mapped to visual properties like size, shape, and color.
+
+-   **Geoms (geometric objects)**: These are the actual visual elements that represent data—points, lines, bars, etc.
+
+-   **Stats (statistical transformations)**: Some plots require transformations, such as calculating means or fitting a regression line, which are handled by stats.
+
+-   **Scales**: These control how data values are mapped to visual properties.
+
+-   **Coordinate systems**: These define how plots are oriented, with Cartesian coordinates being the most common, but others like polar coordinates are available for specific needs.
+
+-   **Facets**: Faceting allows you to generate multiple plots based on a grouping variable, creating a matrix of panels.
+
+<br>
+
+Let me explain with the official introduction of ggplot2: <https://ggplot2.tidyverse.org/articles/ggplot2.html>
+
+<br>
+
+### **Setting Up Your Environment**
+
+Before diving into creating plots, you need to install and load ggplot2 in your R environment:
+
+```{r}
+# ggplot2 is a package belongs to tidyverse
+library(tidyverse)
+```
+
+<br>
+
+Test if it works.
+
+```{r}
+ ggplot(mpg, aes(displ, hwy, colour = class)) + geom_point()
+```
+
+<br>
+
+### **Practical Examples**
+
+#### **Basic Plots**
+
+Let's start with a basic scatter plot to examine the relationship between two variables in the **`mtcars`** dataset:
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) + geom_point()
+```
+
+This code plots the miles per gallon (**`mpg`**) against the weight (**`wt`**) of various cars. The **`aes`** function maps the aesthetics to the respective variables.
+
+#### **Enhancing Visualizations**
+
+To enhance this plot, we might want to add a linear regression line to summarize the relationship between weight and fuel efficiency:
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(title = "Fuel Efficiency vs. Weight", x = "Weight (1000 lbs)", y = "Miles per Gallon")
+
+```
+
+This code not only adds the regression line but also improves the aesthetics with a minimal theme and labels that clarify what each axis represents.
+
+Practice once more with `palmer penguins` dataset.
+
+```{r}
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+Drop missing variables
+
+```{r}
+penguins %>% 
+  drop_na()
+```
+
+```{r}
+ggplot(penguins) +
+  aes(x = bill_length_mm,
+      y = bill_depth_mm,
+      colour = species) +
+  geom_point(shape = "circle", size = 1.5) +
+  scale_color_manual(
+    values = c(Adelie = "#F8766D",
+    Chinstrap = "#00C19F",
+    Gentoo = "#FF61C3")
+  ) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(legend.position = "bottom")
+```
+
+-   Layers in use above
+
+    -   Layer connecting the X-axis and Y-axis
+
+        -   `aes(x = bill_length_mm, y = bill_depth_mm, colour = species)`
+
+    -   A layer that sets the elements of the graph
+
+        -   `geom_point(shape = "circle", size = 1.5)`
+
+    -   A layer that sets the color of the graph
+
+        -   `scale_color_manual( values = c(Adelie = "#F8766D", Chinstrap = "#00C19F", Gentoo = "#FF61C3") )`
+
+    -   A layer that sets the theme of the graph
+
+        -   `ggthemes::theme_fivethirtyeight()`
+
+    -   Layer to set the position of the legend
+
+        -   `theme(legend.position = "bottom")`
+
+<br>
+
+### **Advanced ggplot2 Features**
+
+#### **Faceting for Comparative Analysis**
+
+To compare how the relationship between weight and fuel efficiency varies by the number of cylinders in the engine, we can use faceting:
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  facet_wrap(~cyl)
+
+```
+
+This will create a separate plot for each number of cylinders, making it easy to see differences across categories.
+
+-   facet: a particular aspect of feature of something
+
+```{r}
+ggplot(penguins) +
+  aes(x = bill_length_mm,
+      y = bill_depth_mm,
+      colour = species) +
+  geom_point(shape = "circle", size = 1.5) +
+  scale_color_manual(
+    values = c(Adelie = "#F8766D",
+    Chinstrap = "#00C19F",
+    Gentoo = "#FF61C3")
+  ) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(legend.position = "bottom") +
+  facet_wrap(~island)
+```
+
+```{r}
+penguins %>% drop_na %>% 
+ggplot() +
+  aes(x = bill_length_mm,
+      y = bill_depth_mm,
+      colour = species) +
+  geom_point(shape = "circle", size = 1.5) +
+  scale_color_manual(
+    values = c(Adelie = "#F8766D",
+    Chinstrap = "#00C19F",
+    Gentoo = "#FF61C3")
+  ) +
+  ggthemes::theme_fivethirtyeight() +
+  theme(legend.position = "bottom") +
+  facet_wrap(sex ~ island)
+```
+
+#### **Customization and Extensions**
+
+Check out extentions of ggplot2: <https://exts.ggplot2.tidyverse.org/gallery/>
+
+`ggplot2` is highly customizable, allowing extensive control over nearly every visual aspect of a plot. For users interested in making interactive plots, `ggplot2` can be integrated with the **`plotly`** library, transforming static charts into interactive visualizations.
+
+The power and flexibility of ggplot2 make it an indispensable tool for data visualization in R. Whether you are a beginner or an experienced user, there is always more to explore and learn with ggplot2. Practice regularly, and don't hesitate to experiment with different components to discover the best ways to convey your insights visually.
+
+<br>
+
+To master ggplot2, see the videos below:
+
+**ggplot2 workshop part 1** by Thomas Lin Pedersen
+
+<https://www.youtube.com/watch?v=h29g21z0a68>
+
+**ggplot2 workshop part 2** by Thomas Lin Pedersen
+
+<https://www.youtube.com/watch?v=0m4yywqNPVY>
+
+#### Review for ggplot2 library
+
+<br>
+
+```{r}
+library(tidyverse)
+
+mpg %>% select(hwy, cty, cyl)
+
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = as.factor(cyl)))
+
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = as.factor(cyl))) +
+  geom_smooth(method ="lm")
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = as.factor(cyl))) +
+  geom_smooth(method ="glm")
+```
+
+```{r}
+
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point(aes(color = cyl)) +
+  geom_smooth(method ="lm") +
+  # coord_cartesian() +
+  # scale_color_gradient() +
+  theme_bw()
+```
+
+```{r}
+
+# Returns the last plot
+last_plot()
+```
+
+```{r}
+
+# Saves last plot as 5’ x 5’ file named "plot.png" in
+# working directory. Matches file type to file extension.
+# ggsave("plot.png", width = 5, height = 5)
+```
+
+#### One variable
+
+```{r}
+
+# Continuous
+a <- ggplot(mpg, aes(hwy))
+a
+
+```
+
+```{r}
+
+a + geom_area(stat = "bin")
+a + geom_density(kernel = "gaussian")
+a + geom_dotplot()
+a + geom_freqpoly()
+a + geom_histogram(binwidth = 4)
+
+```
+
+```{r}
+mpg %>% ggplot()+
+  geom_area(aes(hwy), stat="bin")
+```
+
+```{r}
+
+# Discrete
+b <- ggplot(mpg, aes(fl))
+b + geom_bar()
+
+```
+
+```{r}
+
+# Two variables
+# Continuous X & Countinuous Y
+f <- ggplot(mpg, aes(cty, hwy))
+f + geom_blank()
+f + geom_jitter()
+f + geom_point()
+
+```
+
+```{r}
+# install.packages("quantreg")
+library(quantreg)
+f + geom_quantile() + geom_jitter()
+f + geom_rug(sides = "bl") + geom_jitter()
+f + geom_rug(sides = "bl") + geom_point()
+f + geom_smooth(model = lm) +  geom_point()
+f + geom_text(aes(label = cty)) + 
+  geom_jitter()
+
+f + geom_text(aes(label = fl))
+```
+
+```{r}
+mpg %>% 
+  ggplot(aes(cty, hwy, label = fl, 
+             alpha=0.1, col='red')) +
+  geom_text()+
+  geom_jitter()
+```
+
+```{r}
+# install.packages("ggimage")
+library(ggimage)
+
+img <- list.files(system.file("extdata", 
+                              package="ggimage"),
+                  pattern="png", full.names=TRUE)
+
+img[2]
+```
+
+```{r}
+f + geom_image(aes(image=img[2]))
+```
+
+```{r}
+
+# Discrete X & Countinuous Y
+g <- ggplot(mpg, aes(class, hwy))
+levels(as.factor(mpg$class))
+str(mpg$class)
+levels(as.factor(mpg$class))
+unique(mpg$class)
+```
+
+```{r}
+mpg %>% count(class)
+```
+
+```{r}
+mpg %>% select(manufacturer, class, hwy) %>% 
+  group_by(class) %>% 
+  arrange(desc(hwy)) %>% head(10) -> dkdk
+```
+
+```{r}
+mpg %>% count(class)
+```
+
+```{r}
+g
+g + geom_bar(stat = "identity")
+g + geom_boxplot()
+```
+
+```{r}
+
+g + geom_dotplot(binaxis = "y",
+                 stackdir = "center")
+g + geom_violin(scale = "area")
+```
+
+```{r}
+# Discrete X & Discrete Y
+diamonds
+h <- ggplot(diamonds, aes(cut, color))
+h + geom_jitter()
+```
+
+```{r}
+# Continuous Bivariate Distribution
+# install.packages("ggplot2movies")
+library(ggplot2movies)
+
+movies %>% glimpse
+```
+
+```{r}
+i <- ggplot(movies, aes(year, rating))
+i + geom_bin2d(binwidth = c(5, 0.5))
+i + geom_density2d()
+```
+
+```{r}
+# install.packages("hexbin")
+library(hexbin)
+i + geom_hex()
+```
+
+```{r}
+# Continuous Function
+j <- ggplot(economics, aes(date, unemploy))
+j + geom_area()
+j + geom_line()
+j + geom_step(direction = "hv")
+```
+
+```{r}
+# Visualizing error
+df <- data.frame(grp = c("A", "B"), fit = 4:5, se = 1:2)
+k <- ggplot(df, 
+            aes(grp, fit, 
+                ymin = fit-se, 
+                ymax = fit+se))
+
+k + geom_crossbar(fatten = 2)
+
+k + geom_errorbar(col="grey") +
+  geom_point(aes(col="red")) 
+
+k + geom_linerange()
+k + geom_pointrange()
+```
+
+```{r}
+# Three variables
+?seals
+seals$z <- with(seals, sqrt(delta_long^2 + delta_lat^2))
+m <- ggplot(seals, aes(long, lat))
+
+m + geom_tile(aes(fill = z))
+m + geom_contour(aes(z = z))
+m + geom_raster(aes(fill = z), hjust=0.5,
+                vjust=0.5, interpolate=FALSE)
+```
+
+```{r}
+
+# Scales
+n <- b + geom_bar(aes(fill = fl))
+n
+n + scale_fill_manual(
+  values = c("skyblue", "royalblue", "blue", "navy"),
+  limits = c("d", "e", "p", "r"), breaks =c("d", "e", "p", "r"),
+  name = "Fuel", labels = c("D", "E", "P", "R"))
+```
+
+```{r}
+# Color and fill scales
+n <- b + geom_bar(aes(fill = fl))
+o <- a + geom_dotplot(aes(fill = ..x..))
+```
+
+```{r}
+# install.packages("RColorBrewer")
+library(RColorBrewer)
+
+n + scale_fill_brewer(palette = "Blues")
+```
+
+```{r}
+display.brewer.all()
+n + scale_fill_grey(
+  start = 0.2, end = 0.8,
+  na.value = "red")
+```
+
+```{r}
+o + scale_fill_gradient(
+  low = "red",
+  high = "yellow")
+
+o + scale_fill_gradientn(
+  colours = terrain.colors(5))
+
+
+# Also: rainbow(), heat.colors(),
+# topo.colors(), cm.colors(),
+# RColorBrewer::brewer.pal()
+```
+
+```{r}
+# Shape scales
+f
+p <- f + geom_point(aes(shape = fl))
+p
+```
+
+```{r}
+p + scale_shape(solid = FALSE)
+
+p + scale_shape_manual(values = c(3:7))
+```
+
+```{r}
+
+# Coordinate Systems
+r <- b+geom_bar()
+r + coord_cartesian(xlim = c(0, 5))
+r + coord_fixed(ratio = 1/2)
+r + coord_fixed(ratio = 1/10)
+r + coord_fixed(ratio = 1/100)
+r + coord_flip()
+r + coord_polar(theta = "x", direction=1 )
+```
+
+```{r}
+# Position Adjustments
+
+s <- ggplot(mpg, aes(fl, fill = drv))
+
+s + geom_bar(position = "dodge")
+# Arrange elements side by side
+s + geom_bar(position = "fill")
+# Stack elements on top of one another, normalize height
+s + geom_bar(position = "stack")
+# Stack elements on top of one another
+f + geom_point(position = "jitter")
+# Add random noise to X and Y position of each element to avoid overplotting
+```
+
+```{r}
+# Theme
+r + theme_bw()
+r + theme_classic()
+r + theme_grey()
+r + theme_minimal()
+```
+
+```{r}
+# Faceting
+
+t <- ggplot(mpg, aes(cty, hwy)) + geom_point()
+t + facet_grid(. ~ fl)
+t + facet_grid(fl ~ .)
+# facet into columns based on fl
+t + facet_grid(year ~ .)
+# facet into rows based on year
+t + facet_grid(year ~ fl)
+# facet into both rows and columns
+t + facet_wrap(~ fl)
+# wrap facets into a rectangular layout
+```
+
+```{r}
+# Labels
+t + ggtitle("New Plot Title ")
+# Add a main title above the plot
+t + xlab("New X label")
+# Change the label on the X axis
+t + ylab("New Y label")
+# Change the label on the Y axis
+t + labs(title =" New title", x = "New x", y = "New y")
+# All of the above
+```
+
+```{r}
+
+
+mpg %>% 
+  group_by(manufacturer) %>% 
+  summarise(avg_hwy=mean(hwy)) %>% 
+  arrange(desc(avg_hwy)) %>% 
+  ggplot(aes(x=reorder(manufacturer, avg_hwy),
+             y=avg_hwy,
+             fill=avg_hwy))+
+  scale_fill_gradient(
+    low = "red",
+    high = "green")+
+  coord_flip()+
+  geom_bar(stat='identity')+
+  xlab("")+
+  ggtitle("제조사별 평균 연비")
+
+
+```
+
+<br>
+
+![![](images/clipboard-1479101379.png)](images/clipboard-3412891947.png)
+
+![](images/clipboard-2307888705.png)
+
+![](images/clipboard-2534032249.png)
+
+![![](images/clipboard-3612321412.png)](images/clipboard-3249263830.png)
+
+![![](images/clipboard-1646636809.png)](images/clipboard-731233151.png)
+
+![![](images/clipboard-496416667.png)![](images/clipboard-1697567482.png)](images/clipboard-3425478297.png)
+
+![![](images/clipboard-2333920269.png)](images/clipboard-284144821.png)
+
+![![](images/clipboard-4069835101.png)](images/clipboard-2982844209.png)
+
+![![](images/clipboard-414551926.png)](images/clipboard-1489968228.png)
+
+![![](images/clipboard-768624633.png)](images/clipboard-2563614192.png)
+
+![](images/clipboard-1639365330.png)
