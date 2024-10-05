@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CJL &amp; Lab - 확률, 분포, 확률분포</title>
+<title>CJL &amp; Lab - 확률, 확률변수, 분포, 확률분포</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -138,14 +201,72 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#basic-probability-concepts" id="toc-basic-probability-concepts" class="nav-link active" data-scroll-target="#basic-probability-concepts">1. Basic Probability Concepts</a>
+  <ul class="collapse">
+  <li><a href="#definition-of-probability" id="toc-definition-of-probability" class="nav-link" data-scroll-target="#definition-of-probability">Definition of Probability</a></li>
+  <li><a href="#basic-properties-of-probability" id="toc-basic-properties-of-probability" class="nav-link" data-scroll-target="#basic-properties-of-probability">Basic properties of probability</a></li>
+  <li><a href="#example-rolling-a-die" id="toc-example-rolling-a-die" class="nav-link" data-scroll-target="#example-rolling-a-die">Example: Rolling a Die</a></li>
+  <li><a href="#r-code-example" id="toc-r-code-example" class="nav-link" data-scroll-target="#r-code-example">R Code Example</a></li>
+  </ul></li>
+  <li><a href="#probability-rules" id="toc-probability-rules" class="nav-link" data-scroll-target="#probability-rules">2. Probability Rules</a>
+  <ul class="collapse">
+  <li><a href="#rule-1-complement-rule" id="toc-rule-1-complement-rule" class="nav-link" data-scroll-target="#rule-1-complement-rule">Rule 1: Complement Rule</a></li>
+  <li><a href="#rule-2-addition-rule" id="toc-rule-2-addition-rule" class="nav-link" data-scroll-target="#rule-2-addition-rule">Rule 2: Addition Rule</a></li>
+  <li><a href="#rule-3-multiplication-rule" id="toc-rule-3-multiplication-rule" class="nav-link" data-scroll-target="#rule-3-multiplication-rule">Rule 3: Multiplication Rule</a></li>
+  </ul></li>
+  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability">3. Conditional Probability</a>
+  <ul class="collapse">
+  <li><a href="#example-conditional-probability-in-card-drawing" id="toc-example-conditional-probability-in-card-drawing" class="nav-link" data-scroll-target="#example-conditional-probability-in-card-drawing">Example: Conditional Probability in Card Drawing</a></li>
+  </ul></li>
+  <li><a href="#discrete-probability-distributions" id="toc-discrete-probability-distributions" class="nav-link" data-scroll-target="#discrete-probability-distributions">4. Discrete Probability Distributions</a></li>
+  <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution">Binomial Distribution</a>
+  <ul class="collapse">
+  <li><a href="#example-binomial-distribution-in-r" id="toc-example-binomial-distribution-in-r" class="nav-link" data-scroll-target="#example-binomial-distribution-in-r">Example: Binomial Distribution in R</a></li>
+  </ul></li>
+  <li><a href="#continuous-probability-distributions" id="toc-continuous-probability-distributions" class="nav-link" data-scroll-target="#continuous-probability-distributions">5. Continuous Probability Distributions</a></li>
+  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution">Normal Distribution</a>
+  <ul class="collapse">
+  <li><a href="#example-normal-distribution-in-r" id="toc-example-normal-distribution-in-r" class="nav-link" data-scroll-target="#example-normal-distribution-in-r">Example: Normal Distribution in R</a></li>
+  </ul></li>
+  <li><a href="#simulations-and-visualizations-in-r" id="toc-simulations-and-visualizations-in-r" class="nav-link" data-scroll-target="#simulations-and-visualizations-in-r">6. Simulations and Visualizations in R</a></li>
+  <li><a href="#law-of-large-numbers" id="toc-law-of-large-numbers" class="nav-link" data-scroll-target="#law-of-large-numbers">Law of Large Numbers</a>
+  <ul class="collapse">
+  <li><a href="#example-law-of-large-numbers" id="toc-example-law-of-large-numbers" class="nav-link" data-scroll-target="#example-law-of-large-numbers">Example: Law of Large Numbers</a></li>
+  </ul></li>
+  <li><a href="#random-variable" id="toc-random-variable" class="nav-link" data-scroll-target="#random-variable">Random Variable</a>
+  <ul class="collapse">
+  <li><a href="#definition-of-a-random-variable" id="toc-definition-of-a-random-variable" class="nav-link" data-scroll-target="#definition-of-a-random-variable">1. Definition of a Random Variable</a></li>
+  <li><a href="#discrete-random-variable" id="toc-discrete-random-variable" class="nav-link" data-scroll-target="#discrete-random-variable">2. Discrete Random Variable</a></li>
+  <li><a href="#continuous-random-variable" id="toc-continuous-random-variable" class="nav-link" data-scroll-target="#continuous-random-variable">3. Continuous Random Variable</a></li>
+  <li><a href="#expected-value" id="toc-expected-value" class="nav-link" data-scroll-target="#expected-value">4. Expected Value</a></li>
+  <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance">5. Variance</a></li>
+  </ul></li>
+  <li><a href="#more-distributions-probability-density-functions" id="toc-more-distributions-probability-density-functions" class="nav-link" data-scroll-target="#more-distributions-probability-density-functions">More Distributions &amp; Probability Density Functions</a>
+  <ul class="collapse">
+  <li><a href="#binomial-distribution-이항분포" id="toc-binomial-distribution-이항분포" class="nav-link" data-scroll-target="#binomial-distribution-이항분포">1. Binomial Distribution (이항분포)</a></li>
+  <li><a href="#uniform-distribution-균등분포" id="toc-uniform-distribution-균등분포" class="nav-link" data-scroll-target="#uniform-distribution-균등분포">2. Uniform Distribution (균등분포)</a></li>
+  <li><a href="#poisson-distribution-포아송분포" id="toc-poisson-distribution-포아송분포" class="nav-link" data-scroll-target="#poisson-distribution-포아송분포">3. Poisson Distribution (포아송분포)</a></li>
+  <li><a href="#normal-distribution-정규분포" id="toc-normal-distribution-정규분포" class="nav-link" data-scroll-target="#normal-distribution-정규분포">4. Normal Distribution (정규분포)</a></li>
+  <li><a href="#exponential-distribution-지수분포" id="toc-exponential-distribution-지수분포" class="nav-link" data-scroll-target="#exponential-distribution-지수분포">5. Exponential Distribution (지수분포)</a></li>
+  <li><a href="#gamma-distribution-감마분포" id="toc-gamma-distribution-감마분포" class="nav-link" data-scroll-target="#gamma-distribution-감마분포">6. Gamma Distribution (감마분포)</a></li>
+  <li><a href="#beta-distribution-베타분포" id="toc-beta-distribution-베타분포" class="nav-link" data-scroll-target="#beta-distribution-베타분포">7. Beta Distribution (베타분포)</a></li>
+  <li><a href="#t-distribution-t-분포" id="toc-t-distribution-t-분포" class="nav-link" data-scroll-target="#t-distribution-t-분포">8. t-Distribution (t-분포)</a></li>
+  <li><a href="#f-distribution-f-분포" id="toc-f-distribution-f-분포" class="nav-link" data-scroll-target="#f-distribution-f-분포">10. F-Distribution (F-분포)</a></li>
+  <li><a href="#shiny-app-for-simulating-distributions" id="toc-shiny-app-for-simulating-distributions" class="nav-link" data-scroll-target="#shiny-app-for-simulating-distributions">Shiny app for simulating distributions</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">확률, 분포, 확률분포</h1>
+<h1 class="title">확률, 확률변수, 분포, 확률분포</h1>
 </div>
 
 
@@ -164,8 +285,1275 @@ ul.task-list li input[type="checkbox"] {
 
 <p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
 <p><br></p>
+<blockquote class="blockquote">
+<p><strong>Probability</strong> is the branch of mathematics that deals with uncertainty. It quantifies the likelihood of an event occurring, and it is the foundation of many fields, including statistics, machine learning, finance, and more. Understanding probability allows us to make informed decisions in the presence of uncertainty. In this chapter, we will cover the basic concepts of probability, including the key rules and types of probability distributions. We will also learn how to simulate probabilistic events and visualize them in R.</p>
+</blockquote>
+<hr>
+<section id="basic-probability-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="basic-probability-concepts">1. Basic Probability Concepts</h2>
+<section id="definition-of-probability" class="level3">
+<h3 class="anchored" data-anchor-id="definition-of-probability">Definition of Probability</h3>
+<ul>
+<li><p>Event(사건) and Sample Space(표본 공간)</p>
+<ul>
+<li><p><strong>Event</strong>: 특정 실험에서 발생할 수 있는 결과(예를 들어, 동전을 던졌을 때 <strong>앞면이 나오는 사건</strong>)</p></li>
+<li><p><strong>Sample Space</strong> (S): 실험에서 가능한 모든 결과들의 집합(예를 들어, 동전을 던졌을 때 표본 공간은 S={앞면,뒷면})</p></li>
+</ul></li>
+<li><p>Probability(확률)</p>
+<ul>
+<li><p>어떤 사건 A 가 일어날 확률 P(A)는 그 사건이 일어나는 경우의 수를 표본 공간의 가능한 경우의 수로 나눈 값</p>
+<ul>
+<li><p>P(A): Probability of event A occurring</p></li>
+<li><p>|A|: Number of cases belonging to case A</p></li>
+<li><p>|S|: Total number of cases in sample space S</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><span class="math display">\[
+P(A)=\frac{|A|}{|S|}
+\]</span></p>
+<p><br></p>
+</section>
+<section id="basic-properties-of-probability" class="level3">
+<h3 class="anchored" data-anchor-id="basic-properties-of-probability">Basic properties of probability</h3>
+<ul>
+<li><p>A value between 0 and 1: For any event A, the probability of that event occurring is greater than or equal to 0 and less than or equal to 1.</p>
+<p><span class="math display">\[
+0 \leq P(A) \leq 1
+\]</span></p></li>
+<li><p>The probability of the entire sample space is 1: the sum of the probabilities of all events in the sample space is 1.</p>
+<p><span class="math display">\[
+P(S) = 1
+\]</span></p></li>
+</ul>
+</section>
+<section id="example-rolling-a-die" class="level3">
+<h3 class="anchored" data-anchor-id="example-rolling-a-die">Example: Rolling a Die</h3>
+<p>When rolling a fair six-sided die, the probability of getting a 4 is:</p>
+<p><span class="math display">\[
+P(D=4) = \frac{1}{6}
+\]</span></p>
+</section>
+<section id="r-code-example" class="level3">
+<h3 class="anchored" data-anchor-id="r-code-example">R Code Example</h3>
+<p>We can simulate rolling a die and estimate the probability of getting a 4 using R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate rolling a fair six-sided die 10,000 times</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>rolls <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate the probability of rolling a 4</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>prob_4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(rolls <span class="sc">==</span> <span class="dv">4</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Estimated Probability of Rolling a 4:"</span>, prob_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estimated Probability of Rolling a 4: 0.159</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="probability-rules" class="level2">
+<h2 class="anchored" data-anchor-id="probability-rules">2. Probability Rules</h2>
+<section id="rule-1-complement-rule" class="level3">
+<h3 class="anchored" data-anchor-id="rule-1-complement-rule">Rule 1: Complement Rule</h3>
+<p>The <strong>complement</strong> of an event A, denoted as A<sup>c</sup>, is the event that A does not occur. The probability of the complement is:</p>
+<p><span class="math display">\[
+P(A^c) = 1 - P(A)
+\]</span></p>
+</section>
+<section id="rule-2-addition-rule" class="level3">
+<h3 class="anchored" data-anchor-id="rule-2-addition-rule">Rule 2: Addition Rule</h3>
+<p>For two events ( A ) and ( B ), the addition rule is:</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]</span></p>
+<p>If ( A ) and ( B ) are mutually exclusive, the formula simplifies to:</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A) + P(B)
+\]</span></p>
+</section>
+<section id="rule-3-multiplication-rule" class="level3">
+<h3 class="anchored" data-anchor-id="rule-3-multiplication-rule">Rule 3: Multiplication Rule</h3>
+<p>For two independent events ( A ) and ( B ), the multiplication rule is:</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) \times P(B)
+\]</span></p>
+<p>For dependent events:</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) \times P(B \mid A)
+\]</span></p>
+<p><br></p>
+</section>
+</section>
+<section id="conditional-probability" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-probability">3. Conditional Probability</h2>
+<p><strong>Conditional probability</strong> is the probability of an event occurring given that another event has already occurred. It is denoted by <span class="math inline">\(P(A \mid B)\)</span>, which reads “the probability of A given B”.</p>
+<p><span class="math display">\[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+\]</span></p>
+<section id="example-conditional-probability-in-card-drawing" class="level3">
+<h3 class="anchored" data-anchor-id="example-conditional-probability-in-card-drawing">Example: Conditional Probability in Card Drawing</h3>
+<p>Consider a deck of 52 cards. Let A be the event that the card is a <strong>king</strong>, and B be the event that the card is <strong>red</strong>. The probability of drawing a red king given that a red card was drawn is:</p>
+<p><span class="math display">\[
+P(King \mid Red) = \frac{P(King \cap Red)}{P(Red)}=\frac{\frac{2}{52}}{\frac{26}{52}}=\frac{1}{13}
+\]</span></p>
+<p><br></p>
+</section>
+</section>
+<section id="discrete-probability-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="discrete-probability-distributions">4. Discrete Probability Distributions</h2>
+<p>A <strong>discrete probability distribution</strong> deals with outcomes that can be counted (finite or countably infinite). Common discrete distributions include:</p>
+<ul>
+<li><p><strong>Bernoulli Distribution</strong>: Describes a single trial with two outcomes (success or failure).</p></li>
+<li><p><strong>Binomial Distribution</strong>: Describes the number of successes in a fixed number of independent Bernoulli trials.</p></li>
+<li><p><strong>Poisson Distribution</strong>: Describes the number of events occurring within a fixed interval.</p></li>
+</ul>
+</section>
+<section id="binomial-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="binomial-distribution">Binomial Distribution</h2>
+<p>The probability of observing ( k ) successes in ( n ) trials with success probability ( p ) is given by the <strong>binomial distribution</strong>:</p>
+<p><span class="math display">\[
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+\]</span></p>
+<section id="example-binomial-distribution-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-binomial-distribution-in-r">Example: Binomial Distribution in R</h3>
+<p>The <strong>binomial distribution</strong> is used to model the probability of observing ‘k’ successes in ‘n’ trials where the probability of success in each trial is ‘p’.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability of getting exactly 3 heads in 5 coin flips with p = 0.5</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="at">x =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3125</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 1000 trials of 5 coin flips each</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>binom_trials <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(binom_trials, <span class="at">breaks =</span> <span class="dv">5</span>, <span class="at">main =</span> <span class="st">"Histogram of Binomial Distribution"</span>, <span class="at">xlab =</span> <span class="st">"Number of Heads"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="continuous-probability-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-probability-distributions">5. Continuous Probability Distributions</h2>
+<p>A <strong>continuous probability distribution</strong> deals with outcomes that can take any value within a given range (infinite). Common continuous distributions include:</p>
+<ul>
+<li><p><strong>Normal Distribution</strong>: The bell-shaped distribution that describes many natural phenomena.</p></li>
+<li><p><strong>Exponential Distribution</strong>: Describes the time between events in a Poisson process.</p></li>
+<li><p><strong>Uniform Distribution</strong>: Every outcome in a given range is equally likely.</p></li>
+</ul>
+</section>
+<section id="normal-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="normal-distribution">Normal Distribution</h2>
+<p>The <strong>probability density function</strong> (PDF) of a normal distribution with mean ( <span class="math inline">\(\mu\)</span> ) and standard deviation ( <span class="math inline">\(\sigma\)</span> ) is given by:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+\]</span></p>
+<section id="example-normal-distribution-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="example-normal-distribution-in-r">Example: Normal Distribution in R</h3>
+<p>The <strong>normal distribution</strong> is widely used in probability and statistics. It is symmetric and centered around the mean, with spread determined by the standard deviation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a normal distribution with mean = 0 and sd = 1</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Normal Distribution"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="simulations-and-visualizations-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="simulations-and-visualizations-in-r">6. Simulations and Visualizations in R</h2>
+<p>Simulations help us understand and visualize probability concepts. Let’s simulate the <strong>Law of Large Numbers</strong>, which states that as the number of trials increases, the empirical probability approaches the theoretical probability.</p>
+</section>
+<section id="law-of-large-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h2>
+<p>The <strong>Law of Large Numbers</strong> states that as the number of trials ( n ) increases, the empirical probability ( ) approaches the true probability ( P ).</p>
+<p><span class="math display">\[
+\lim_{n \to \infty} \hat{P} = P
+\]</span></p>
+<section id="example-law-of-large-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="example-law-of-large-numbers">Example: Law of Large Numbers</h3>
+<p>We will simulate flipping a fair coin 10,000 times and track how the empirical probability of heads converges to 0.5.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>empirical_prob <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(flips) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the convergence of empirical probability to 0.5</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(empirical_prob, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Law of Large Numbers"</span>, <span class="at">xlab =</span> <span class="st">"Number of Flips"</span>, <span class="at">ylab =</span> <span class="st">"Empirical Probability"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="random-variable" class="level2">
+<h2 class="anchored" data-anchor-id="random-variable">Random Variable</h2>
+<blockquote class="blockquote">
+<p>A <strong>random variable</strong> is a key concept in probability theory. It is a function that maps the outcomes of a random experiment to numerical values, allowing for mathematical treatment of random phenomena. Random variables can be classified into two types: <strong>Discrete Random Variables</strong> and <strong>Continuous Random Variables</strong>.</p>
+</blockquote>
+<section id="definition-of-a-random-variable" class="level3">
+<h3 class="anchored" data-anchor-id="definition-of-a-random-variable">1. Definition of a Random Variable</h3>
+<p>A random variable is a function that assigns a numerical value to each outcome of a particular experiment. In other words, it translates events into numbers so that we can analyze probabilistic problems mathematically.</p>
+<ul>
+<li><strong>Random Variable ( X )</strong>: A variable that represents the outcome of an event in numerical form.</li>
+<li><strong>Sample Space ( S )</strong>: The set of all possible outcomes of a random experiment.</li>
+</ul>
+<p>The random variable ( X ) maps the events in the sample space to numbers. For example, when rolling a die, the sample space is ( S = { 1, 2, 3, 4, 5, 6 } ), and the random variable ( X ) represents the numbers on the die.</p>
+</section>
+<section id="discrete-random-variable" class="level3">
+<h3 class="anchored" data-anchor-id="discrete-random-variable">2. Discrete Random Variable</h3>
+<p>A <strong>discrete random variable</strong> takes on a countable number of distinct values. It can have either a finite or infinite number of possible values and is often used to represent counts or outcomes.</p>
+<p><strong>Example</strong>: Consider the experiment of tossing a coin twice. We can define the number of heads as the random variable ( X ).</p>
+<ul>
+<li>Sample Space ( S = {{HH}, {HT}, {TH}, {TT}} )</li>
+<li>The random variable ( X ) represents the number of heads.</li>
+</ul>
+<p>In this case, ( X ) can take the values 0, 1, or 2.</p>
+<section id="probability-distribution-of-a-discrete-random-variable" class="level4">
+<h4 class="anchored" data-anchor-id="probability-distribution-of-a-discrete-random-variable">Probability Distribution of a Discrete Random Variable</h4>
+<p>A discrete random variable has a probability distribution that assigns probabilities to each of its possible values. The probability distribution of a discrete random variable ( X ) is given by:</p>
+<p><span class="math display">\[
+P(X = x_i) = p_i
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(X\)</span>: Discrete random variable</p></li>
+<li><p><span class="math inline">\(x_i\)</span>: A specific value that <span class="math inline">\(X\)</span> can take</p></li>
+<li><p><span class="math inline">\(P(X = x_i) = p_i\)</span>: The probability that <span class="math inline">\(X\)</span> takes the value <span class="math inline">\(x_i\)</span>.</p></li>
+</ul>
+</section>
+<section id="example-of-binomial-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="example-of-binomial-distribution">Example of Binomial Distribution</h4>
+<p>A common example of a discrete random variable is the <strong>Binomial Distribution</strong>. The binomial distribution represents the probability of having a certain number of successes in a series of independent trials where each trial has two possible outcomes (e.g., success/failure).</p>
+<p>The probability mass function (PMF) of a binomial random variable is given by:</p>
+<p><span class="math display">\[
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(n\)</span>: Number of trials</p></li>
+<li><p><span class="math inline">\(k\)</span>: Number of successes</p></li>
+<li><p><span class="math inline">\(p\)</span>: Probability of success</p></li>
+<li><p><span class="math inline">\((1 - p)\)</span>: Probability of failure</p></li>
+</ul>
+</section>
+<section id="example-tossing-a-coin-3-times" class="level4">
+<h4 class="anchored" data-anchor-id="example-tossing-a-coin-3-times">Example: Tossing a Coin 3 Times</h4>
+<p>Let’s consider tossing a fair coin 3 times. The number of heads, ( X ), is a binomial random variable. ( X ) can take the values 0, 1, 2, or 3, and we can calculate the probability for each outcome.</p>
+<ul>
+<li><p><span class="math inline">\(P(X = 0) = \binom{3}{0} \cdot 0.5^0 \cdot 0.5^3 = 0.125\)</span></p></li>
+<li><p><span class="math inline">\(P(X = 1) = \binom{3}{1} \cdot 0.5^1 \cdot 0.5^2 = 0.375\)</span></p></li>
+<li><p><span class="math inline">\(P(X = 2) = \binom{3}{2} \cdot 0.5^2 \cdot 0.5^1 = 0.375\)</span></p></li>
+<li><p><span class="math inline">\(P(X = 3) = \binom{3}{3} \cdot 0.5^3 \cdot 0.5^0 = 0.125\)</span></p></li>
+</ul>
+<p>The probability distribution of the binomial random variable ( X ) is:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>X (Number of Heads)</th>
+<th>P(X = x) (Probability)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.125</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.375</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.375</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>0.125</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="continuous-random-variable" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-random-variable">3. Continuous Random Variable</h3>
+<p>A <strong>continuous random variable</strong> can take any value within a given range or interval. Continuous random variables are used to model outcomes that can take an infinite number of real values.</p>
+<p><strong>Example</strong>: Consider the height of people as a random variable. Since height can take an infinite number of real values, it is a continuous random variable. Continuous random variables are generally associated with probability over intervals rather than specific points.</p>
+<section id="probability-density-function-pdf-of-a-continuous-random-variable" class="level4">
+<h4 class="anchored" data-anchor-id="probability-density-function-pdf-of-a-continuous-random-variable">Probability Density Function (PDF) of a Continuous Random Variable</h4>
+<p>Continuous random variables are described by a <strong>Probability Density Function (PDF)</strong>. The probability that a continuous random variable ( X ) lies within an interval ([a, b]) is found by integrating the PDF over that interval:</p>
+<p><span class="math display">\[
+P(a \leq X \leq b) = \int_a^b f(x) \, dx
+\]</span></p>
+<ul>
+<li><span class="math inline">\(f(x)\)</span>: The probability density function</li>
+</ul>
+<p>Since the probability of a continuous random variable taking any exact value is 0, we calculate probabilities over intervals.</p>
+</section>
+<section id="example-normal-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="example-normal-distribution">Example: Normal Distribution</h4>
+<p>The <strong>Normal Distribution</strong> is a common continuous distribution. It is defined by its mean ( <span class="math inline">\(\mu\)</span> ) and standard deviation ( <span class="math inline">\(\sigma\)</span> ), and its probability density function is:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{(x - \mu)^2}{2 \sigma^2}\right)
+\]</span></p>
+<p>In a normal distribution, probabilities for specific intervals are computed by integrating the PDF over those intervals.</p>
+<p><strong>Example</strong>: Let’s assume that the height of people follows a normal distribution with a mean of 170 cm and a standard deviation of 10 cm. We can calculate the probability that a person’s height is between 160 cm and 180 cm by integrating the normal distribution’s PDF over that range.</p>
+</section>
+</section>
+<section id="expected-value" class="level3">
+<h3 class="anchored" data-anchor-id="expected-value">4. Expected Value</h3>
+<p>The <strong>expected value</strong> of a random variable is the weighted average of all possible values it can take, with the probabilities as weights. The expected value ( E(X) ) of a random variable ( X ) is defined as:</p>
+<p>For a discrete random variable:</p>
+<p><span class="math display">\[
+E(X) = \sum_i x_i P(X = x_i)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(x_i\)</span> are the possible values of <span class="math inline">\(X\)</span> and <span class="math inline">\(P(X = x_i)\)</span> is the probability of each value.</li>
+</ul>
+<p>For a continuous random variable:</p>
+<p><span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f(x) \, dx
+\]</span></p>
+<p>Where <span class="math inline">\(f(x)\)</span> is the probability density function.</p>
+<section id="example-expected-value-of-a-die-roll" class="level4">
+<h4 class="anchored" data-anchor-id="example-expected-value-of-a-die-roll">Example: Expected Value of a Die Roll</h4>
+<p>When rolling a fair die, the possible outcomes are 1 through 6. Since each outcome is equally likely, the expected value of the die roll is:</p>
+<p><span class="math display">\[
+E(X) = \frac{1}{6} \times (1 + 2 + 3 + 4 + 5 + 6) = \frac{21}{6} = 3.5
+\]</span></p>
+</section>
+</section>
+<section id="variance" class="level3">
+<h3 class="anchored" data-anchor-id="variance">5. Variance</h3>
+<p><strong>Variance</strong> measures how much the values of a random variable differ from the expected value. The variance of a random variable <span class="math inline">\(X\)</span> is denoted as <span class="math inline">\(\text{Var}(X)\)</span> and is defined as:</p>
+<p><span class="math display">\[
+\text{Var}(X) = E\left[(X - E(X))^2\right]
+\]</span></p>
+<p>The square root of the variance is called the <strong>standard deviation</strong>, and it brings the unit of measurement back to the same scale as the original data.</p>
+<hr>
+<blockquote class="blockquote">
+<p>Random variables are fundamental tools in probability theory for quantifying and analyzing random events. They can be discrete or continuous, depending on the nature of the outcomes. The expected value and variance of a random variable provide key insights into the behavior of the distribution. Random variables, together with their probability distributions, are used to model real-world phenomena mathematically.</p>
+</blockquote>
+<p><br></p>
+</section>
+</section>
+<section id="more-distributions-probability-density-functions" class="level2">
+<h2 class="anchored" data-anchor-id="more-distributions-probability-density-functions">More Distributions &amp; Probability Density Functions</h2>
+<section id="binomial-distribution-이항분포" class="level3">
+<h3 class="anchored" data-anchor-id="binomial-distribution-이항분포">1. Binomial Distribution (이항분포)</h3>
+<blockquote class="blockquote">
+<p>The binomial distribution is a distribution that calculates the probability of the number of successes <span class="math inline">\(k\)</span> when an experiment with a constant probability of success <span class="math inline">\(p\)</span> is repeated <span class="math inline">\(n\)</span> times. 일정한 성공 확률 <span class="math inline">\(p\)</span>를 가진 실험을 <span class="math inline">\(n\)</span>번 반복했을 때, 성공 횟수 <span class="math inline">\(k\)</span>의 확률을 구하는 분포.</p>
+</blockquote>
+<p><span class="math display">\[
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(n\)</span>: Number of trials</p></li>
+<li><p><span class="math inline">\(k\)</span>: Number of successes</p></li>
+<li><p><span class="math inline">\(p\)</span>: Probability of success</p></li>
+<li><p><span class="math inline">\(1 - p\)</span>: Probability of failure</p></li>
+</ul>
+<p>The binomial distribution is used in events such as coin flipping and gambling, and is used when each trial is independent and the probability of success is constant. For example, the probability of getting heads when flipping a coin 10 times.</p>
+<p><strong>Example:</strong> In coin flipping, the probability of success is p = 0.5, and it describes the distribution of the number of successes (the number of heads) when flipping 10 times.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이항분포 예시: 동전 던지기</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># 재현성을 위해 시드 설정</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>n_trials <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>p_success <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 시뮬레이션: n_trials 번의 동전 던지기</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>simulated_successes <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n_simulations, <span class="at">size =</span> n_trials, <span class="at">prob =</span> p_success)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 시각화</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>df_binomial <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Successes =</span> simulated_successes)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram of the simulation results and overlay the binomial probability mass function (PMF)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_binomial, <span class="fu">aes</span>(<span class="at">x =</span> Successes)) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">boundary =</span> <span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Binomial Distribution: Coin Flip Simulation"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Number of Heads in 10 Flips"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>이항분포 시뮬레이션</strong></p>
+<ul>
+<li>동전의 앞면이 나올 확률을 0.5로 설정한 후, 여러 번 던졌을 때의 결과를 시뮬레이션</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 동전 던지기 시뮬레이션</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>coin_flip_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, p) {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 동전 던지기 결과를 시각화하는 함수</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plot_coin_flip <span class="ot">&lt;-</span> <span class="cf">function</span>(n, p) {</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  flips <span class="ot">&lt;-</span> <span class="fu">coin_flip_simulation</span>(n, p)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Result =</span> flips)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(Result))) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Coin Flip Simulation (n ="</span>, n, <span class="st">", p ="</span>, p, <span class="st">")"</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Result (0 = Tails, 1 = Heads)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 동전 던지기 결과 100번 시각화</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># n과 p를 바꿔가며 시뮬레이션 해보기.</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_coin_flip</span>(<span class="dv">1000</span>, <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="uniform-distribution-균등분포" class="level3">
+<h3 class="anchored" data-anchor-id="uniform-distribution-균등분포">2. Uniform Distribution (균등분포)</h3>
+<blockquote class="blockquote">
+<p>A uniform distribution is a distribution in which all events occur with the same probability. It is divided into discrete and continuous uniform distributions, and in the case of a discrete uniform distribution, it is defined by the following probability mass function.</p>
+<p>균등분포는 모든 사건이 동일한 확률로 발생하는 분포. 이산형과 연속형 균등분포로 나뉘며, 이산형 균등분포의 경우는 다음과 같은 확률 질량 함수로 정의됨.</p>
+</blockquote>
+<p><span class="math display">\[
+P(X = x) = \frac{1}{n}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(n\)</span>: Number of possible outcomes</li>
+</ul>
+<p>It is used in experiments such as dice rolling, and is applied when the probability of each dice side appearing is the same.</p>
+<p><strong>Example</strong>: A dice has numbers from 1 to 6, and each number has an equal chance of <span class="math inline">\(\frac{1}{6}\)</span>.</p>
+<p><strong>균등분포 시뮬레이션</strong></p>
+<p>주사위의 각 면이 나올 확률이 동일한 경우의 시뮬레이션 구현</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 주사위 던지기 시뮬레이션</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dice_roll_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 주사위 던지기 결과를 시각화하는 함수</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plot_dice_roll <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  rolls <span class="ot">&lt;-</span> <span class="fu">dice_roll_simulation</span>(n)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Result =</span> rolls)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(Result))) <span class="sc">+</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Dice Roll Simulation (n ="</span>, n, <span class="st">")"</span>),</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Dice Face"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 주사위 던지기 결과 100번 시각화</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># n 을 늘려보면서 시도.</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_dice_roll</span>(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="poisson-distribution-포아송분포" class="level3">
+<h3 class="anchored" data-anchor-id="poisson-distribution-포아송분포">3. Poisson Distribution (포아송분포)</h3>
+<blockquote class="blockquote">
+<p>The Poisson distribution is used to model the number of times a specific event occurs within a unit of time or space. The probability mass function of the Poisson distribution is as follows.</p>
+</blockquote>
+<p><span class="math display">\[
+P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\lambda\)</span>: Event rate per unit time (average number of occurrences)</p></li>
+<li><p><span class="math inline">\(k\)</span>: Number of events occuring</p></li>
+</ul>
+<p>The Poisson distribution is used when events occur independently in time or space and have a constant occurrence rate. It is mainly applied to the number of calls to a telephone switching system, the number of emergency patients in a hospital, and the number of visitors to a website.</p>
+<p><strong>Example</strong>: In a system where an average of 4 customers arrive per hour, you can calculate the probability that 3 customers will arrive per hour.</p>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Poisson Distribution Simulation and Visualization</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># Rate of events (mean number of events)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>poisson_data <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">1000</span>, <span class="at">lambda =</span> lambda)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for Poisson distribution</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>df_poisson <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> poisson_data)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Poisson distribution</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_poisson, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Poisson Distribution (lambda = 5)"</span>, <span class="at">x =</span> <span class="st">"Number of Events"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>1시간 동안 평균 4명의 고객이 도착하는 시스템에서, 1시간 동안 3명의 고객이 도착할 확률을 계산</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 포아송분포 예시: 고객 도착</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">4</span>  <span class="co"># 평균 고객 도착 수 (1시간당)</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span>  <span class="co"># 관심 있는 고객 도착 수</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 확률 계산</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>prob_k_customers <span class="ot">&lt;-</span> <span class="fu">dpois</span>(k, lambda)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 출력</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>prob_k_customers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1953668</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="normal-distribution-정규분포" class="level3">
+<h3 class="anchored" data-anchor-id="normal-distribution-정규분포">4. Normal Distribution (정규분포)</h3>
+<blockquote class="blockquote">
+<p>The normal distribution is the most widely used continuous probability distribution, and is defined by mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>. Its <strong>probability density</strong> function is as follows:</p>
+</blockquote>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( -\frac{(x - \mu)^2}{2 \sigma^2} \right)
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mu\)</span>: mean</p></li>
+<li><p><span class="math inline">\(\sigma\)</span>: standard deviation</p></li>
+</ul>
+<p>Normal distribution appears in many natural phenomena and is symmetrical around the median. If the data is clustered around the mean, the normal distribution can be used to model the data.</p>
+<p><strong>Example</strong>: People’s heights and test scores are generally normally distributed. For example, we can assume that people’s heights are normally distributed with a mean of 170 cm and a standard deviation of 10 cm.</p>
+<p><strong>정규분포 시뮬레이션</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포 시뮬레이션</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>normal_distribution_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, mean, sd) {</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mean, <span class="at">sd =</span> sd)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포 시각화 함수</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plot_normal_distribution <span class="ot">&lt;-</span> <span class="cf">function</span>(n, mean, sd) {</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">normal_distribution_simulation</span>(n, mean, sd)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Normal Distribution (n ="</span>, n, <span class="st">", mean ="</span>, mean, <span class="st">", sd ="</span>, sd, <span class="st">")"</span>),</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포 시각화</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co"># n, mean, sd 를 변경하면서 시뮬레이션.</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_normal_distribution</span>(<span class="dv">1000</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="exponential-distribution-지수분포" class="level3">
+<h3 class="anchored" data-anchor-id="exponential-distribution-지수분포">5. Exponential Distribution (지수분포)</h3>
+<blockquote class="blockquote">
+<p>The exponential distribution is used to model the time intervals over which events occur (사건이 발생하는 시간 간격 모델링), and its probability density function is:</p>
+</blockquote>
+<p><span class="math display">\[
+f(x; \lambda) = \lambda e^{-\lambda x}, \quad x \geq 0
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\lambda\)</span>: Incident rate (사건 발생률)</li>
+</ul>
+<p>The exponential distribution is used to model the time intervals between occurrences of certain events (e.g., system failures, customer arrivals). This distribution is used when events occur independently and the average time interval is constant.</p>
+<ul>
+<li>특정 사건(예: 시스템 고장, 고객 도착)이 발생하기까지의 시간 간격을 모델링하는 데 사용됨. 이 분포는 사건이 독립적으로 발생하고, 평균 시간 간격이 일정할 때 사용됨.</li>
+</ul>
+<p><strong>Example</strong>: If the mean time between failures for a system is 2 hours, we can assume that the time until the next failure follows an exponential distribution.</p>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Exponential Distribution Simulation and Visualization</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>rate_exp <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># Rate parameter (1/mean)</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">1000</span>, <span class="at">rate =</span> rate_exp)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for Exponential distribution</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df_exp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> exp_data)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Exponential distribution</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_exp, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">"darkgreen"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Exponential Distribution (rate = 1)"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>한 시스템의 평균 고장 간격이 2시간일 때, 다음 고장이 발생할 때까지의 시간이 지수분포를 따른다고 가정하면 아래와 같은 분포.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 지수분포 예시: 시스템 고장 간격</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">321</span>)  <span class="co"># 재현성을 위해 시드 설정</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>  <span class="co"># 평균 고장 간격이 2시간이므로 rate는 1/2</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 시뮬레이션: 고장 간격 시간</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>failure_times <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n_simulations, <span class="at">rate =</span> lambda)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 시각화</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>df_exponential <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">FailureTime =</span> failure_times)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_exponential, <span class="fu">aes</span>(<span class="at">x =</span> FailureTime)) <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Exponential Distribution: System Failure Times"</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time until Next Failure (hours)"</span>,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="gamma-distribution-감마분포" class="level3">
+<h3 class="anchored" data-anchor-id="gamma-distribution-감마분포">6. Gamma Distribution (감마분포)</h3>
+<blockquote class="blockquote">
+<p>The gamma distribution models waiting times (the time interval between occurrences of multiple exponentially distributed events), (대기 시간, 즉 여러 개의 지수분포 사건이 발생하는 시간 간격을 모델링) and has a probability density function of:</p>
+</blockquote>
+<p><span class="math display">\[
+f(x; \alpha, \beta) = \frac{\beta^\alpha x^{\alpha - 1} e^{-\beta x}}{\Gamma(\alpha)}, \quad x \geq 0
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\alpha\)</span>: shape parameter (형상모수)<br>
+</li>
+<li><span class="math inline">\(\beta\)</span>: scale parameter (척도모수)<br>
+</li>
+<li><span class="math inline">\(\Gamma(\alpha)\)</span>: Gamma function (감마 함수)</li>
+</ul>
+<p>The gamma distribution is a generalization of the exponential distribution, modeling the waiting time until <span class="math inline">\(\alpha\)</span> independent events occur. It is applied to time to failure in physical systems, and price movements in financial data.</p>
+<ul>
+<li>감마분포는 지수분포의 일반화된 형태로, <span class="math inline">\(\alpha\)</span>번의 독립적인 사건이 발생할 때까지의 대기 시간을 모델링. 물리적 시스템에서 고장까지의 시간, 금융 데이터에서 주식의 가격 변동 등에 적용됨.</li>
+</ul>
+<p><strong>Example</strong>: The gamma distribution can be used to model the time until five major components in a system independently fail.</p>
+<ul>
+<li><strong>예시</strong>: 한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용할 수 있음.</li>
+</ul>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gamma Distribution Simulation and Visualization</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>shape_gamma <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>rate_gamma <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>gamma_data <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(<span class="dv">1000</span>, <span class="at">shape =</span> shape_gamma, <span class="at">rate =</span> rate_gamma)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for Gamma distribution</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>df_gamma <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> gamma_data)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Gamma distribution</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_gamma, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gamma Distribution (shape = 2, rate = 1)"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 감마분포 예시: 시스템 부품 고장 시간</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">654</span>)  <span class="co"># 재현성을 위해 시드 설정</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># 형상 모수</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># 척도 모수 (rate)</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 시뮬레이션: 부품 고장까지의 시간</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>failure_times <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(n_simulations, <span class="at">shape =</span> alpha, <span class="at">rate =</span> beta)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 시각화</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>df_gamma <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">FailureTime =</span> failure_times)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_gamma, <span class="fu">aes</span>(<span class="at">x =</span> FailureTime)) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gamma Distribution: System Component Failure Times"</span>,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time until 5 Failures"</span>,</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>예를 들어, 어떤 시스템의 주요 부품 5개가 독립적으로 고장날 때까지의 시간을 모델링한다고 가정합니다. 각 부품이 고장날 때까지의 평균 시간이 2시간이라면, 감마분포를 통해 5개의 부품이 고장날 때까지 걸리는 시간을 모델링할 수 있습니다.</p>
+<ul>
+<li><p>α: 5개의 주요 부품이 모두 고장날 때까지의 이벤트 수.</p></li>
+<li><p>β: 각 부품이 고장날 때까지 걸리는 시간의 역수.</p></li>
+<li><p>예를 들어, 평균 2시간이므로 β=1/2.</p></li>
+</ul>
+<p><strong>감마분포를 사용한 부품 고장 시간 시뮬레이션</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 감마분포 예시: 시스템 부품 고장 시간</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># 재현성을 위해 시드 설정</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 감마분포 파라미터 설정</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># 형상 모수: 5개의 부품이 고장날 때까지의 이벤트 수</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>  <span class="co"># 척도 모수: 평균 고장 시간의 역수 (평균 2시간)</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 감마분포에서 10,000번의 시뮬레이션 수행 (각각의 시뮬레이션은 5개 부품의 고장 시간)</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>failure_times <span class="ot">&lt;-</span> <span class="fu">rgamma</span>(n_simulations, <span class="at">shape =</span> alpha, <span class="at">rate =</span> beta)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 시각화</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>df_gamma <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">FailureTime =</span> failure_times)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_gamma, <span class="fu">aes</span>(<span class="at">x =</span> FailureTime)) <span class="sc">+</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gamma Distribution: System Component Failure Times"</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Time until 5 Components Fail (hours)"</span>,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 고장 시간의 중앙값과 95% 신뢰구간 계산</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>median_failure_time <span class="ot">&lt;-</span> <span class="fu">median</span>(failure_times)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>credible_interval_failure <span class="ot">&lt;-</span> <span class="fu">quantile</span>(failure_times, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 출력</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"부품 5개 고장 시간의 중앙값:"</span>, median_failure_time, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>부품 5개 고장 시간의 중앙값: 9.276901 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"부품 5개 고장 시간 95% 신뢰구간:"</span>, credible_interval_failure, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>부품 5개 고장 시간 95% 신뢰구간: 3.266251 20.13797 </code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="beta-distribution-베타분포" class="level3">
+<h3 class="anchored" data-anchor-id="beta-distribution-베타분포">7. Beta Distribution (베타분포)</h3>
+<blockquote class="blockquote">
+<p>The beta distribution is a continuous probability distribution between 0 and 1, defined by two parameters, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. The probability density function of the beta distribution is as follows. 베타분포는 0과 1 사이의 연속 확률 분포로, 두 모수 <span class="math inline">\(\alpha\)</span>와 <span class="math inline">\(\beta\)</span>에 의해 정의됨. 베타분포의 확률 밀도 함수는 다음과 같습니다.</p>
+</blockquote>
+<p><span class="math display">\[
+f(x; \alpha, \beta) = \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha, \beta)}
+\]</span></p>
+<p><br>
+<span class="math inline">\(B(\alpha, \beta)\)</span> is Beta function.</p>
+<ul>
+<li><span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>: shape parameters (형상 모수)</li>
+</ul>
+<p>The beta distribution is mainly used when there is prior knowledge about the probability of success. It is often used to model the uncertainty of probability in A/B testing.</p>
+<p><strong>Example</strong>: When estimating the probability of success for two options in an A/B test, the beta distribution can be used to model uncertainty.</p>
+<p><br></p>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta Distribution Simulation and Visualization</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>shape1 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>shape2 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>beta_data <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1000</span>, <span class="at">shape1 =</span> shape1, <span class="at">shape2 =</span> shape2)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for Beta distribution</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>df_beta <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> beta_data)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Beta distribution</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_beta, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">fill =</span> <span class="st">"purple"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Beta Distribution (shape1 = 2, shape2 = 5)"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>A/B 테스트에서 두 가지 옵션에 대해 성공 확률을 추정할 때 베타분포를 사용하여 불확실성을 모델링</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 베타분포 예시: A/B 테스트 성공 확률</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>alpha_prior <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>beta_prior <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 베타분포 샘플링</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>beta_samples <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(n_simulations, <span class="at">shape1 =</span> alpha_prior, <span class="at">shape2 =</span> beta_prior)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 시각화</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>df_beta <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Probability =</span> beta_samples)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_beta, <span class="fu">aes</span>(<span class="at">x =</span> Probability)) <span class="sc">+</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Beta Distribution: A/B Test Success Probability"</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Probability of Success"</span>,</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="t-distribution-t-분포" class="level3">
+<h3 class="anchored" data-anchor-id="t-distribution-t-분포">8. t-Distribution (t-분포)</h3>
+<blockquote class="blockquote">
+<p>The t-distribution, also known as Student’s t-distribution, is a continuous probability distribution that arises when estimating the mean of a normally distributed population with an unknown standard deviation, particularly when the sample size is small. It is similar to the normal distribution but has heavier tails, which means it is more prone to producing values far from its mean. The t-distribution’s probability density function is given as follows. t-분포는 모집단의 표준편차가 알려지지 않았을 때, 특히 표본 크기가 작을 때 사용되는 연속 확률 분포. 정규 분포와 유사하지만, 꼬리가 두꺼워 극단적인 값이 더 자주 나타날 수 있음.</p>
+</blockquote>
+<p><span class="math display">\[
+f(x; \nu) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\frac{\nu}{2}\right)}\left(1 + \frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}
+\]</span></p>
+<p><br>
+<span class="math inline">\(\nu\)</span> is the degrees of freedom (자유도).</p>
+<ul>
+<li><span class="math inline">\(\nu\)</span>: degrees of freedom (자유도)</li>
+</ul>
+<p>As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. The t-distribution is commonly used in hypothesis testing, particularly in t-tests where the sample size is small, and the population standard deviation is unknown.</p>
+<p><strong>Example</strong>: The t-distribution is used in the one-sample t-test, two-sample t-test, and paired t-test to determine whether there is a significant difference between sample means and population means or between two sample means.</p>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># t-Distribution Simulation and Visualization</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="dv">10</span>  <span class="co"># degrees of freedom</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>t_data <span class="ot">&lt;-</span> <span class="fu">rt</span>(<span class="dv">1000</span>, <span class="at">df =</span> df)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for t-distribution</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>df_t <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> t_data)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot t-distribution</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_t, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">binwidth =</span> <span class="fl">0.3</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dt, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> df), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"t-Distribution (degrees of freedom = 10)"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br> ### 9. Chi-Squared Distribution (카이제곱 분포)</p>
+<blockquote class="blockquote">
+<p>The chi-squared distribution is a continuous probability distribution that arises in statistics, particularly in hypothesis testing and confidence interval estimation for variance. It is the distribution of the sum of the squares of independent standard normal random variables. The probability density function of the chi-squared distribution is given by the following formula. 카이제곱 분포는 통계에서 주로 가설 검정과 분산에 대한 신뢰 구간 추정에 사용되는 연속 확률 분포입니다. 카이제곱 분포는 독립적인 표준 정규 확률 변수들의 제곱합의 분포로 정의됩니다. 카이제곱 분포의 확률 밀도 함수는 다음과 같습니다.</p>
+</blockquote>
+<p><span class="math display">\[
+f(x; k) = \frac{x^{k/2 - 1} e^{-x/2}}{2^{k/2} \Gamma(k/2)}
+\]</span></p>
+<p><br>
+<span class="math inline">\(k\)</span> is the degrees of freedom (자유도).</p>
+<ul>
+<li><span class="math inline">\(k\)</span>: degrees of freedom (자유도)</li>
+</ul>
+<p>The chi-squared distribution is mainly used in chi-squared tests, such as the chi-squared goodness-of-fit test and chi-squared test of independence, where it helps assess the significance of observed frequencies.</p>
+<p><strong>Example</strong>: The chi-squared distribution is used in hypothesis testing to evaluate how well an observed distribution fits the expected distribution.</p>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chi-Squared Distribution Simulation and Visualization</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># degrees of freedom</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>chi_squared_data <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(<span class="dv">1000</span>, <span class="at">df =</span> df)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for chi-squared distribution</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>df_chi_squared <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> chi_squared_data)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot chi-squared distribution</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_chi_squared, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dchisq, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df =</span> df), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chi-Squared Distribution (degrees of freedom = 5)"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="f-distribution-f-분포" class="level3">
+<h3 class="anchored" data-anchor-id="f-distribution-f-분포">10. F-Distribution (F-분포)</h3>
+<blockquote class="blockquote">
+<p>The F-distribution is a continuous probability distribution that arises in the testing of whether two variances are equal. It is the ratio of two independent chi-squared distributions, each divided by their respective degrees of freedom. The F-distribution is often used in analysis of variance (ANOVA) and regression analysis. The probability density function of the F-distribution is given by the following formula. F-분포는 두 분산이 동일한지를 검정할 때 나타나는 연속 확률 분포입니다. 이는 각각 자유도로 나눈 두 독립적인 카이제곱 분포의 비율로 정의됩니다. F-분포는 주로 분산 분석(ANOVA)와 회귀 분석에서 사용됩니다. F-분포의 확률 밀도 함수는 다음과 같습니다.</p>
+</blockquote>
+<p><span class="math display">\[
+f(x; d_1, d_2) = \frac{\sqrt{\left(\frac{d_1 x}{d_1 x + d_2}\right)^{d_1} \left(\frac{d_2}{d_1 x + d_2}\right)^{d_2}}}{x \, B\left(\frac{d_1}{2}, \frac{d_2}{2}\right)}
+\]</span></p>
+<p><br>
+<span class="math inline">\(d_1\)</span> and <span class="math inline">\(d_2\)</span> are the degrees of freedom (자유도).</p>
+<ul>
+<li><span class="math inline">\(d_1\)</span>: degrees of freedom for the numerator (분자 자유도)</li>
+<li><span class="math inline">\(d_2\)</span>: degrees of freedom for the denominator (분모 자유도)</li>
+</ul>
+<p>The F-distribution is commonly used in ANOVA to compare the variances of multiple groups and in regression analysis to test the overall significance of the model.</p>
+<p><strong>Example</strong>: The F-distribution is used in ANOVA to test the null hypothesis that the means of several populations are equal.</p>
+<p><strong>Simulation</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># F-Distribution Simulation and Visualization</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># Degrees of freedom for the numerator</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="dv">10</span>  <span class="co"># Degrees of freedom for the denominator</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>f_data <span class="ot">&lt;-</span> <span class="fu">rf</span>(<span class="dv">1000</span>, <span class="at">df1 =</span> d1, <span class="at">df2 =</span> d2)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for F-distribution</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>df_f <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> f_data)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot F-distribution</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_f, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">binwidth =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">"darkgreen"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> df, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df1 =</span> d1, <span class="at">df2 =</span> d2), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"F-Distribution (d1 = 5, d2 = 10)"</span>, <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Computation failed in `stat_function()`.
+Caused by error in `fun()`:
+! could not find function "fun"</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08_week_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="shiny-app-for-simulating-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="shiny-app-for-simulating-distributions">Shiny app for simulating distributions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 필요한 패키지 불러오기</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution Simulation Functions</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>binomial_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, size, prob) {</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbinom</span>(n, <span class="at">size =</span> size, <span class="at">prob =</span> prob)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>uniform_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, min, max) {</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">runif</span>(n, <span class="at">min =</span> min, <span class="at">max =</span> max)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>poisson_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, lambda) {</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpois</span>(n, <span class="at">lambda =</span> lambda)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>normal_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, mean, sd) {</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mean, <span class="at">sd =</span> sd)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>exponential_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, rate) {</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rexp</span>(n, <span class="at">rate =</span> rate)</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>gamma_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, shape, rate) {</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rgamma</span>(n, <span class="at">shape =</span> shape, <span class="at">rate =</span> rate)</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>beta_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, shape1, shape2) {</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbeta</span>(n, <span class="at">shape1 =</span> shape1, <span class="at">shape2 =</span> shape2)</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>t_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, df) {</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rt</span>(n, <span class="at">df =</span> df)</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>chi_squared_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, df) {</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rchisq</span>(n, <span class="at">df =</span> df)</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>f_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n, df1, df2) {</span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rf</span>(n, <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2)</span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Function for Distributions</span></span>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>plot_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(dist_type, n, ...) {</span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a>  args <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Binomial Distribution"</span>) {</span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">binomial_simulation</span>(n, args<span class="sc">$</span>size, args<span class="sc">$</span>prob)</span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(Value))) <span class="sc">+</span></span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Binomial Distribution (n ="</span>, n, <span class="st">", size ="</span>, args<span class="sc">$</span>size, <span class="st">", prob ="</span>, args<span class="sc">$</span>prob, <span class="st">")"</span>),</span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Number of Successes"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Uniform Distribution"</span>) {</span>
+<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">uniform_simulation</span>(n, args<span class="sc">$</span>min, args<span class="sc">$</span>max)</span>
+<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Uniform Distribution (n ="</span>, n, <span class="st">", min ="</span>, args<span class="sc">$</span>min, <span class="st">", max ="</span>, args<span class="sc">$</span>max, <span class="st">")"</span>),</span>
+<span id="cb32-66"><a href="#cb32-66" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb32-67"><a href="#cb32-67" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-68"><a href="#cb32-68" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Poisson Distribution"</span>) {</span>
+<span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">poisson_simulation</span>(n, args<span class="sc">$</span>lambda)</span>
+<span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Poisson Distribution (n ="</span>, n, <span class="st">", lambda ="</span>, args<span class="sc">$</span>lambda, <span class="st">")"</span>),</span>
+<span id="cb32-76"><a href="#cb32-76" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Number of Events"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb32-77"><a href="#cb32-77" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-78"><a href="#cb32-78" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-79"><a href="#cb32-79" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Normal Distribution"</span>) {</span>
+<span id="cb32-80"><a href="#cb32-80" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">normal_simulation</span>(n, args<span class="sc">$</span>mean, args<span class="sc">$</span>sd)</span>
+<span id="cb32-81"><a href="#cb32-81" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-82"><a href="#cb32-82" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-83"><a href="#cb32-83" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-84"><a href="#cb32-84" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-85"><a href="#cb32-85" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-86"><a href="#cb32-86" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Normal Distribution (n ="</span>, n, <span class="st">", mean ="</span>, args<span class="sc">$</span>mean, <span class="st">", sd ="</span>, args<span class="sc">$</span>sd, <span class="st">")"</span>),</span>
+<span id="cb32-87"><a href="#cb32-87" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-88"><a href="#cb32-88" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-89"><a href="#cb32-89" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-90"><a href="#cb32-90" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Exponential Distribution"</span>) {</span>
+<span id="cb32-91"><a href="#cb32-91" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">exponential_simulation</span>(n, args<span class="sc">$</span>rate)</span>
+<span id="cb32-92"><a href="#cb32-92" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-93"><a href="#cb32-93" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-94"><a href="#cb32-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-95"><a href="#cb32-95" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-96"><a href="#cb32-96" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-97"><a href="#cb32-97" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Exponential Distribution (n ="</span>, n, <span class="st">", rate ="</span>, args<span class="sc">$</span>rate, <span class="st">")"</span>),</span>
+<span id="cb32-98"><a href="#cb32-98" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-99"><a href="#cb32-99" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-100"><a href="#cb32-100" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-101"><a href="#cb32-101" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Gamma Distribution"</span>) {</span>
+<span id="cb32-102"><a href="#cb32-102" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">gamma_simulation</span>(n, args<span class="sc">$</span>shape, args<span class="sc">$</span>rate)</span>
+<span id="cb32-103"><a href="#cb32-103" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-104"><a href="#cb32-104" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-105"><a href="#cb32-105" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-106"><a href="#cb32-106" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-107"><a href="#cb32-107" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-108"><a href="#cb32-108" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Gamma Distribution (n ="</span>, n, <span class="st">", shape ="</span>, args<span class="sc">$</span>shape, <span class="st">", rate ="</span>, args<span class="sc">$</span>rate, <span class="st">")"</span>),</span>
+<span id="cb32-109"><a href="#cb32-109" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-110"><a href="#cb32-110" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-111"><a href="#cb32-111" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-112"><a href="#cb32-112" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Beta Distribution"</span>) {</span>
+<span id="cb32-113"><a href="#cb32-113" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">beta_simulation</span>(n, args<span class="sc">$</span>shape1, args<span class="sc">$</span>shape2)</span>
+<span id="cb32-114"><a href="#cb32-114" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-115"><a href="#cb32-115" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-116"><a href="#cb32-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-117"><a href="#cb32-117" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-118"><a href="#cb32-118" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-119"><a href="#cb32-119" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Beta Distribution (n ="</span>, n, <span class="st">", shape1 ="</span>, args<span class="sc">$</span>shape1, <span class="st">", shape2 ="</span>, args<span class="sc">$</span>shape2, <span class="st">")"</span>),</span>
+<span id="cb32-120"><a href="#cb32-120" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-121"><a href="#cb32-121" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-122"><a href="#cb32-122" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-123"><a href="#cb32-123" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"t-Distribution"</span>) {</span>
+<span id="cb32-124"><a href="#cb32-124" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">t_simulation</span>(n, args<span class="sc">$</span>df)</span>
+<span id="cb32-125"><a href="#cb32-125" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-126"><a href="#cb32-126" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-127"><a href="#cb32-127" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-128"><a href="#cb32-128" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-129"><a href="#cb32-129" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-130"><a href="#cb32-130" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"t-Distribution (n ="</span>, n, <span class="st">", df ="</span>, args<span class="sc">$</span>df, <span class="st">")"</span>),</span>
+<span id="cb32-131"><a href="#cb32-131" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-132"><a href="#cb32-132" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-133"><a href="#cb32-133" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-134"><a href="#cb32-134" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"Chi-Squared Distribution"</span>) {</span>
+<span id="cb32-135"><a href="#cb32-135" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">chi_squared_simulation</span>(n, args<span class="sc">$</span>df)</span>
+<span id="cb32-136"><a href="#cb32-136" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-137"><a href="#cb32-137" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-138"><a href="#cb32-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-139"><a href="#cb32-139" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-140"><a href="#cb32-140" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-141"><a href="#cb32-141" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Chi-Squared Distribution (n ="</span>, n, <span class="st">", df ="</span>, args<span class="sc">$</span>df, <span class="st">")"</span>),</span>
+<span id="cb32-142"><a href="#cb32-142" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-143"><a href="#cb32-143" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-144"><a href="#cb32-144" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-145"><a href="#cb32-145" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (dist_type <span class="sc">==</span> <span class="st">"F-Distribution"</span>) {</span>
+<span id="cb32-146"><a href="#cb32-146" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">f_simulation</span>(n, args<span class="sc">$</span>df1, args<span class="sc">$</span>df2)</span>
+<span id="cb32-147"><a href="#cb32-147" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Value =</span> data)</span>
+<span id="cb32-148"><a href="#cb32-148" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-149"><a href="#cb32-149" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb32-150"><a href="#cb32-150" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb32-151"><a href="#cb32-151" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-152"><a href="#cb32-152" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"F-Distribution (n ="</span>, n, <span class="st">", df1 ="</span>, args<span class="sc">$</span>df1, <span class="st">", df2 ="</span>, args<span class="sc">$</span>df2, <span class="st">")"</span>),</span>
+<span id="cb32-153"><a href="#cb32-153" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-154"><a href="#cb32-154" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>()</span>
+<span id="cb32-155"><a href="#cb32-155" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-156"><a href="#cb32-156" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-157"><a href="#cb32-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-158"><a href="#cb32-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Shiny 앱</span></span>
+<span id="cb32-159"><a href="#cb32-159" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb32-160"><a href="#cb32-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">"Probability Distribution Simulation"</span>),</span>
+<span id="cb32-161"><a href="#cb32-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb32-162"><a href="#cb32-162" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb32-163"><a href="#cb32-163" aria-hidden="true" tabindex="-1"></a>      <span class="fu">selectInput</span>(<span class="st">"dist"</span>, <span class="st">"Select Distribution:"</span>, </span>
+<span id="cb32-164"><a href="#cb32-164" aria-hidden="true" tabindex="-1"></a>                  <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">"Binomial Distribution"</span>, <span class="st">"Uniform Distribution"</span>, </span>
+<span id="cb32-165"><a href="#cb32-165" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Normal Distribution"</span>, <span class="st">"Poisson Distribution"</span>, </span>
+<span id="cb32-166"><a href="#cb32-166" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Beta Distribution"</span>, <span class="st">"Exponential Distribution"</span>, </span>
+<span id="cb32-167"><a href="#cb32-167" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Gamma Distribution"</span>, <span class="st">"t-Distribution"</span>, </span>
+<span id="cb32-168"><a href="#cb32-168" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Chi-Squared Distribution"</span>, <span class="st">"F-Distribution"</span>)),</span>
+<span id="cb32-169"><a href="#cb32-169" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"n"</span>, <span class="st">"Number of Trials:"</span>, <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">1000</span>, <span class="at">value =</span> <span class="dv">100</span>),</span>
+<span id="cb32-170"><a href="#cb32-170" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb32-171"><a href="#cb32-171" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Conditional UI based on selected distribution</span></span>
+<span id="cb32-172"><a href="#cb32-172" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-173"><a href="#cb32-173" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Binomial Distribution'"</span>,</span>
+<span id="cb32-174"><a href="#cb32-174" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"size"</span>, <span class="st">"Number of Trials:"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">100</span>, <span class="at">value =</span> <span class="dv">10</span>),</span>
+<span id="cb32-175"><a href="#cb32-175" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"prob"</span>, <span class="st">"Probability of Success:"</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>, <span class="at">value =</span> <span class="fl">0.5</span>, <span class="at">step =</span> <span class="fl">0.01</span>)</span>
+<span id="cb32-176"><a href="#cb32-176" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-177"><a href="#cb32-177" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-178"><a href="#cb32-178" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Uniform Distribution'"</span>,</span>
+<span id="cb32-179"><a href="#cb32-179" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"min"</span>, <span class="st">"Minimum Value:"</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb32-180"><a href="#cb32-180" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"max"</span>, <span class="st">"Maximum Value:"</span>, <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">20</span>, <span class="at">value =</span> <span class="dv">10</span>)</span>
+<span id="cb32-181"><a href="#cb32-181" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-182"><a href="#cb32-182" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-183"><a href="#cb32-183" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Normal Distribution'"</span>,</span>
+<span id="cb32-184"><a href="#cb32-184" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"mean"</span>, <span class="st">"Mean:"</span>, <span class="at">min =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">0</span>),</span>
+<span id="cb32-185"><a href="#cb32-185" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"sd"</span>, <span class="st">"Standard Deviation:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">5</span>, <span class="at">value =</span> <span class="dv">1</span>)</span>
+<span id="cb32-186"><a href="#cb32-186" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-187"><a href="#cb32-187" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-188"><a href="#cb32-188" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Poisson Distribution'"</span>,</span>
+<span id="cb32-189"><a href="#cb32-189" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"lambda"</span>, <span class="st">"Lambda:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">1</span>)</span>
+<span id="cb32-190"><a href="#cb32-190" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-191"><a href="#cb32-191" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-192"><a href="#cb32-192" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Beta Distribution'"</span>,</span>
+<span id="cb32-193"><a href="#cb32-193" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"shape1"</span>, <span class="st">"Shape 1:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">2</span>),</span>
+<span id="cb32-194"><a href="#cb32-194" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"shape2"</span>, <span class="st">"Shape 2:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">5</span>)</span>
+<span id="cb32-195"><a href="#cb32-195" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-196"><a href="#cb32-196" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-197"><a href="#cb32-197" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Exponential Distribution'"</span>,</span>
+<span id="cb32-198"><a href="#cb32-198" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"rate"</span>, <span class="st">"Rate:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">5</span>, <span class="at">value =</span> <span class="dv">1</span>)</span>
+<span id="cb32-199"><a href="#cb32-199" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-200"><a href="#cb32-200" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-201"><a href="#cb32-201" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Gamma Distribution'"</span>,</span>
+<span id="cb32-202"><a href="#cb32-202" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"shape"</span>, <span class="st">"Shape:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">2</span>),</span>
+<span id="cb32-203"><a href="#cb32-203" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"rate"</span>, <span class="st">"Rate:"</span>, <span class="at">min =</span> <span class="fl">0.1</span>, <span class="at">max =</span> <span class="dv">5</span>, <span class="at">value =</span> <span class="dv">1</span>)</span>
+<span id="cb32-204"><a href="#cb32-204" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-205"><a href="#cb32-205" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-206"><a href="#cb32-206" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 't-Distribution'"</span>,</span>
+<span id="cb32-207"><a href="#cb32-207" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"df"</span>, <span class="st">"Degrees of Freedom:"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">30</span>, <span class="at">value =</span> <span class="dv">10</span>)</span>
+<span id="cb32-208"><a href="#cb32-208" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-209"><a href="#cb32-209" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-210"><a href="#cb32-210" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'Chi-Squared Distribution'"</span>,</span>
+<span id="cb32-211"><a href="#cb32-211" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"df"</span>, <span class="st">"Degrees of Freedom:"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">30</span>, <span class="at">value =</span> <span class="dv">10</span>)</span>
+<span id="cb32-212"><a href="#cb32-212" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb32-213"><a href="#cb32-213" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conditionalPanel</span>(</span>
+<span id="cb32-214"><a href="#cb32-214" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> <span class="st">"input.dist == 'F-Distribution'"</span>,</span>
+<span id="cb32-215"><a href="#cb32-215" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"df1"</span>, <span class="st">"Degrees of Freedom (Numerator):"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">30</span>, <span class="at">value =</span> <span class="dv">5</span>),</span>
+<span id="cb32-216"><a href="#cb32-216" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sliderInput</span>(<span class="st">"df2"</span>, <span class="st">"Degrees of Freedom (Denominator):"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">30</span>, <span class="at">value =</span> <span class="dv">10</span>)</span>
+<span id="cb32-217"><a href="#cb32-217" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb32-218"><a href="#cb32-218" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb32-219"><a href="#cb32-219" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb32-220"><a href="#cb32-220" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"distPlot"</span>)</span>
+<span id="cb32-221"><a href="#cb32-221" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-222"><a href="#cb32-222" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-223"><a href="#cb32-223" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-224"><a href="#cb32-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-225"><a href="#cb32-225" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb32-226"><a href="#cb32-226" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>distPlot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb32-227"><a href="#cb32-227" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Binomial Distribution"</span>) {</span>
+<span id="cb32-228"><a href="#cb32-228" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">size =</span> input<span class="sc">$</span>size, <span class="at">prob =</span> input<span class="sc">$</span>prob)</span>
+<span id="cb32-229"><a href="#cb32-229" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Uniform Distribution"</span>) {</span>
+<span id="cb32-230"><a href="#cb32-230" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">min =</span> input<span class="sc">$</span>min, <span class="at">max =</span> input<span class="sc">$</span>max)</span>
+<span id="cb32-231"><a href="#cb32-231" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Normal Distribution"</span>) {</span>
+<span id="cb32-232"><a href="#cb32-232" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">mean =</span> input<span class="sc">$</span>mean, <span class="at">sd =</span> input<span class="sc">$</span>sd)</span>
+<span id="cb32-233"><a href="#cb32-233" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Poisson Distribution"</span>) {</span>
+<span id="cb32-234"><a href="#cb32-234" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">lambda =</span> input<span class="sc">$</span>lambda)</span>
+<span id="cb32-235"><a href="#cb32-235" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Beta Distribution"</span>) {</span>
+<span id="cb32-236"><a href="#cb32-236" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">shape1 =</span> input<span class="sc">$</span>shape1, <span class="at">shape2 =</span> input<span class="sc">$</span>shape2)</span>
+<span id="cb32-237"><a href="#cb32-237" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Exponential Distribution"</span>) {</span>
+<span id="cb32-238"><a href="#cb32-238" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">rate =</span> input<span class="sc">$</span>rate)</span>
+<span id="cb32-239"><a href="#cb32-239" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Gamma Distribution"</span>) {</span>
+<span id="cb32-240"><a href="#cb32-240" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">shape =</span> input<span class="sc">$</span>shape, <span class="at">rate =</span> input<span class="sc">$</span>rate)</span>
+<span id="cb32-241"><a href="#cb32-241" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"t-Distribution"</span>) {</span>
+<span id="cb32-242"><a href="#cb32-242" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">df =</span> input<span class="sc">$</span>df)</span>
+<span id="cb32-243"><a href="#cb32-243" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"Chi-Squared Distribution"</span>) {</span>
+<span id="cb32-244"><a href="#cb32-244" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">df =</span> input<span class="sc">$</span>df)</span>
+<span id="cb32-245"><a href="#cb32-245" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dist <span class="sc">==</span> <span class="st">"F-Distribution"</span>) {</span>
+<span id="cb32-246"><a href="#cb32-246" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plot_simulation</span>(input<span class="sc">$</span>dist, input<span class="sc">$</span>n, <span class="at">df1 =</span> input<span class="sc">$</span>df1, <span class="at">df2 =</span> input<span class="sc">$</span>df2)</span>
+<span id="cb32-247"><a href="#cb32-247" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-248"><a href="#cb32-248" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb32-249"><a href="#cb32-249" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-250"><a href="#cb32-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-251"><a href="#cb32-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Shiny 앱 실행</span></span>
+<span id="cb32-252"><a href="#cb32-252" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

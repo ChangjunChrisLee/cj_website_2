@@ -1,5 +1,5 @@
 ---
-title: "확률, 분포, 확률분포"
+title: "확률, 확률변수, 분포, 확률분포"
 subtitle: "" 
 Week: 8
 format: html
@@ -9,3 +9,1213 @@ slide-format: revealjs
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 <br>
+
+> **Probability** is the branch of mathematics that deals with uncertainty. It quantifies the likelihood of an event occurring, and it is the foundation of many fields, including statistics, machine learning, finance, and more. Understanding probability allows us to make informed decisions in the presence of uncertainty. In this chapter, we will cover the basic concepts of probability, including the key rules and types of probability distributions. We will also learn how to simulate probabilistic events and visualize them in R.
+
+------------------------------------------------------------------------
+
+## 1. Basic Probability Concepts
+
+### Definition of Probability
+
+-   Event(사건) and Sample Space(표본 공간)
+
+    -   **Event**: 특정 실험에서 발생할 수 있는 결과(예를 들어, 동전을 던졌을 때 **앞면이 나오는 사건**)
+
+    -   **Sample Space** (S): 실험에서 가능한 모든 결과들의 집합(예를 들어, 동전을 던졌을 때 표본 공간은 S={앞면,뒷면})
+
+-   Probability(확률)
+
+    -   어떤 사건 A 가 일어날 확률 P(A)는 그 사건이 일어나는 경우의 수를 표본 공간의 가능한 경우의 수로 나눈 값
+
+        -   P(A): Probability of event A occurring
+
+        -   \|A\|: Number of cases belonging to case A
+
+        -   \|S\|: Total number of cases in sample space S
+
+$$ 
+P(A)=\frac{|A|}{|S|}
+$$
+
+<br>
+
+### Basic properties of probability
+
+-   A value between 0 and 1: For any event A, the probability of that event occurring is greater than or equal to 0 and less than or equal to 1.
+
+    $$
+    0 \leq P(A) \leq 1
+    $$
+
+-   The probability of the entire sample space is 1: the sum of the probabilities of all events in the sample space is 1.
+
+    $$
+    P(S) = 1
+    $$
+
+### Example: Rolling a Die
+
+When rolling a fair six-sided die, the probability of getting a 4 is:
+
+$$
+P(D=4) = \frac{1}{6}
+$$
+
+### R Code Example
+
+We can simulate rolling a die and estimate the probability of getting a 4 using R:
+
+```{r}
+# Simulate rolling a fair six-sided die 10,000 times
+set.seed(123)
+rolls <- sample(1:6, size = 10000, replace = TRUE)
+
+# Estimate the probability of rolling a 4
+prob_4 <- mean(rolls == 4)
+cat("Estimated Probability of Rolling a 4:", prob_4)
+
+```
+
+<br>
+
+## 2. Probability Rules
+
+### Rule 1: Complement Rule
+
+The **complement** of an event A, denoted as A^c^, is the event that A does not occur. The probability of the complement is:
+
+$$
+P(A^c) = 1 - P(A)
+$$
+
+### Rule 2: Addition Rule
+
+For two events ( A ) and ( B ), the addition rule is:
+
+$$
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+$$
+
+If ( A ) and ( B ) are mutually exclusive, the formula simplifies to:
+
+$$
+P(A \cup B) = P(A) + P(B)
+$$
+
+### Rule 3: Multiplication Rule
+
+For two independent events ( A ) and ( B ), the multiplication rule is:
+
+$$
+P(A \cap B) = P(A) \times P(B)
+$$
+
+For dependent events:
+
+$$
+P(A \cap B) = P(A) \times P(B \mid A)
+$$
+
+<br>
+
+## 3. Conditional Probability
+
+**Conditional probability** is the probability of an event occurring given that another event has already occurred. It is denoted by $P(A \mid B)$, which reads "the probability of A given B".
+
+$$
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+$$
+
+### Example: Conditional Probability in Card Drawing
+
+Consider a deck of 52 cards. Let A be the event that the card is a **king**, and B be the event that the card is **red**. The probability of drawing a red king given that a red card was drawn is:
+
+$$
+P(King \mid Red) = \frac{P(King \cap Red)}{P(Red)}=\frac{\frac{2}{52}}{\frac{26}{52}}=\frac{1}{13}
+$$
+
+<br>
+
+## 4. Discrete Probability Distributions
+
+A **discrete probability distribution** deals with outcomes that can be counted (finite or countably infinite). Common discrete distributions include:
+
+-   **Bernoulli Distribution**: Describes a single trial with two outcomes (success or failure).
+
+-   **Binomial Distribution**: Describes the number of successes in a fixed number of independent Bernoulli trials.
+
+-   **Poisson Distribution**: Describes the number of events occurring within a fixed interval.
+
+## Binomial Distribution
+
+The probability of observing ( k ) successes in ( n ) trials with success probability ( p ) is given by the **binomial distribution**:
+
+$$
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+$$
+
+### Example: Binomial Distribution in R
+
+The **binomial distribution** is used to model the probability of observing 'k' successes in 'n' trials where the probability of success in each trial is 'p'.
+
+```{r}
+# Probability of getting exactly 3 heads in 5 coin flips with p = 0.5
+dbinom(x = 3, size = 5, prob = 0.5)
+
+# Simulate 1000 trials of 5 coin flips each
+set.seed(123)
+binom_trials <- rbinom(1000, size = 5, prob = 0.5)
+hist(binom_trials, breaks = 5, main = "Histogram of Binomial Distribution", xlab = "Number of Heads")
+
+```
+
+<Br>
+
+## 5. Continuous Probability Distributions
+
+A **continuous probability distribution** deals with outcomes that can take any value within a given range (infinite). Common continuous distributions include:
+
+-   **Normal Distribution**: The bell-shaped distribution that describes many natural phenomena.
+
+-   **Exponential Distribution**: Describes the time between events in a Poisson process.
+
+-   **Uniform Distribution**: Every outcome in a given range is equally likely.
+
+## Normal Distribution
+
+The **probability density function** (PDF) of a normal distribution with mean ( $\mu$ ) and standard deviation ( $\sigma$ ) is given by:
+
+$$
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+$$
+
+### Example: Normal Distribution in R
+
+The **normal distribution** is widely used in probability and statistics. It is symmetric and centered around the mean, with spread determined by the standard deviation.
+
+```{r}
+# Plot a normal distribution with mean = 0 and sd = 1
+x <- seq(-4, 4, length.out = 1000)
+y <- dnorm(x, mean = 0, sd = 1)
+plot(x, y, type = "l", main = "Normal Distribution", xlab = "x", ylab = "Density")
+
+```
+
+<br>
+
+## 6. Simulations and Visualizations in R
+
+Simulations help us understand and visualize probability concepts. Let's simulate the **Law of Large Numbers**, which states that as the number of trials increases, the empirical probability approaches the theoretical probability.
+
+## Law of Large Numbers
+
+The **Law of Large Numbers** states that as the number of trials ( n ) increases, the empirical probability ( \hat{P} ) approaches the true probability ( P ).
+
+$$
+\lim_{n \to \infty} \hat{P} = P
+$$
+
+### Example: Law of Large Numbers
+
+We will simulate flipping a fair coin 10,000 times and track how the empirical probability of heads converges to 0.5.
+
+```{r}
+set.seed(123)
+flips <- rbinom(10000, size = 1, prob = 0.5)
+empirical_prob <- cumsum(flips) / (1:10000)
+
+# Plot the convergence of empirical probability to 0.5
+plot(empirical_prob, type = "l", col = "blue", ylim = c(0, 1),
+     main = "Law of Large Numbers", xlab = "Number of Flips", ylab = "Empirical Probability")
+abline(h = 0.5, col = "red", lty = 2)
+
+```
+
+<br>
+
+## Random Variable
+
+> A **random variable** is a key concept in probability theory. It is a function that maps the outcomes of a random experiment to numerical values, allowing for mathematical treatment of random phenomena. Random variables can be classified into two types: **Discrete Random Variables** and **Continuous Random Variables**.
+
+### 1. Definition of a Random Variable
+
+A random variable is a function that assigns a numerical value to each outcome of a particular experiment. In other words, it translates events into numbers so that we can analyze probabilistic problems mathematically.
+
+-   **Random Variable ( X )**: A variable that represents the outcome of an event in numerical form.
+-   **Sample Space ( S )**: The set of all possible outcomes of a random experiment.
+
+The random variable ( X ) maps the events in the sample space to numbers. For example, when rolling a die, the sample space is ( S = { 1, 2, 3, 4, 5, 6 } ), and the random variable ( X ) represents the numbers on the die.
+
+### 2. Discrete Random Variable
+
+A **discrete random variable** takes on a countable number of distinct values. It can have either a finite or infinite number of possible values and is often used to represent counts or outcomes.
+
+**Example**: Consider the experiment of tossing a coin twice. We can define the number of heads as the random variable ( X ).
+
+-   Sample Space ( S = {{HH}, {HT}, {TH}, {TT}} )
+-   The random variable ( X ) represents the number of heads.
+
+In this case, ( X ) can take the values 0, 1, or 2.
+
+#### Probability Distribution of a Discrete Random Variable
+
+A discrete random variable has a probability distribution that assigns probabilities to each of its possible values. The probability distribution of a discrete random variable ( X ) is given by:
+
+$$
+P(X = x_i) = p_i
+$$
+
+-   $X$: Discrete random variable
+
+-   $x_i$: A specific value that $X$ can take
+
+-   $P(X = x_i) = p_i$: The probability that $X$ takes the value $x_i$.
+
+#### Example of Binomial Distribution
+
+A common example of a discrete random variable is the **Binomial Distribution**. The binomial distribution represents the probability of having a certain number of successes in a series of independent trials where each trial has two possible outcomes (e.g., success/failure).
+
+The probability mass function (PMF) of a binomial random variable is given by:
+
+$$
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+$$
+
+-   $n$: Number of trials
+
+-   $k$: Number of successes
+
+-   $p$: Probability of success
+
+-   $(1 - p)$: Probability of failure
+
+#### Example: Tossing a Coin 3 Times
+
+Let’s consider tossing a fair coin 3 times. The number of heads, ( X ), is a binomial random variable. ( X ) can take the values 0, 1, 2, or 3, and we can calculate the probability for each outcome.
+
+-   $P(X = 0) = \binom{3}{0} \cdot 0.5^0 \cdot 0.5^3 = 0.125$
+
+-   $P(X = 1) = \binom{3}{1} \cdot 0.5^1 \cdot 0.5^2 = 0.375$
+
+-   $P(X = 2) = \binom{3}{2} \cdot 0.5^2 \cdot 0.5^1 = 0.375$
+
+-   $P(X = 3) = \binom{3}{3} \cdot 0.5^3 \cdot 0.5^0 = 0.125$
+
+The probability distribution of the binomial random variable ( X ) is:
+
+| X (Number of Heads) | P(X = x) (Probability) |
+|---------------------|------------------------|
+| 0                   | 0.125                  |
+| 1                   | 0.375                  |
+| 2                   | 0.375                  |
+| 3                   | 0.125                  |
+
+### 3. Continuous Random Variable
+
+A **continuous random variable** can take any value within a given range or interval. Continuous random variables are used to model outcomes that can take an infinite number of real values.
+
+**Example**: Consider the height of people as a random variable. Since height can take an infinite number of real values, it is a continuous random variable. Continuous random variables are generally associated with probability over intervals rather than specific points.
+
+#### Probability Density Function (PDF) of a Continuous Random Variable
+
+Continuous random variables are described by a **Probability Density Function (PDF)**. The probability that a continuous random variable ( X ) lies within an interval (\[a, b\]) is found by integrating the PDF over that interval:
+
+$$
+P(a \leq X \leq b) = \int_a^b f(x) \, dx
+$$
+
+-   $f(x)$: The probability density function
+
+Since the probability of a continuous random variable taking any exact value is 0, we calculate probabilities over intervals.
+
+#### Example: Normal Distribution
+
+The **Normal Distribution** is a common continuous distribution. It is defined by its mean ( $\mu$ ) and standard deviation ( $\sigma$ ), and its probability density function is:
+
+$$
+f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{(x - \mu)^2}{2 \sigma^2}\right)
+$$
+
+In a normal distribution, probabilities for specific intervals are computed by integrating the PDF over those intervals.
+
+**Example**: Let’s assume that the height of people follows a normal distribution with a mean of 170 cm and a standard deviation of 10 cm. We can calculate the probability that a person’s height is between 160 cm and 180 cm by integrating the normal distribution's PDF over that range.
+
+### 4. Expected Value
+
+The **expected value** of a random variable is the weighted average of all possible values it can take, with the probabilities as weights. The expected value ( E(X) ) of a random variable ( X ) is defined as:
+
+For a discrete random variable:
+
+$$
+E(X) = \sum_i x_i P(X = x_i)
+$$
+
+-   $x_i$ are the possible values of $X$ and $P(X = x_i)$ is the probability of each value.
+
+For a continuous random variable:
+
+$$
+E(X) = \int_{-\infty}^{\infty} x f(x) \, dx
+$$
+
+Where $f(x)$ is the probability density function.
+
+#### Example: Expected Value of a Die Roll
+
+When rolling a fair die, the possible outcomes are 1 through 6. Since each outcome is equally likely, the expected value of the die roll is:
+
+$$
+E(X) = \frac{1}{6} \times (1 + 2 + 3 + 4 + 5 + 6) = \frac{21}{6} = 3.5
+$$
+
+### 5. Variance
+
+**Variance** measures how much the values of a random variable differ from the expected value. The variance of a random variable $X$ is denoted as $\text{Var}(X)$ and is defined as:
+
+$$
+\text{Var}(X) = E\left[(X - E(X))^2\right]
+$$
+
+The square root of the variance is called the **standard deviation**, and it brings the unit of measurement back to the same scale as the original data.
+
+------------------------------------------------------------------------
+
+> Random variables are fundamental tools in probability theory for quantifying and analyzing random events. They can be discrete or continuous, depending on the nature of the outcomes. The expected value and variance of a random variable provide key insights into the behavior of the distribution. Random variables, together with their probability distributions, are used to model real-world phenomena mathematically.
+
+<br>
+
+## More Distributions & Probability Density Functions
+
+### 1. Binomial Distribution (이항분포)
+
+> The binomial distribution is a distribution that calculates the probability of the number of successes $k$ when an experiment with a constant probability of success $p$ is repeated $n$ times. 일정한 성공 확률 $p$를 가진 실험을 $n$번 반복했을 때, 성공 횟수 $k$의 확률을 구하는 분포.
+
+$$
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
+$$
+
+-   $n$: Number of trials
+
+-   $k$: Number of successes
+
+-   $p$: Probability of success
+
+-   $1 - p$: Probability of failure
+
+The binomial distribution is used in events such as coin flipping and gambling, and is used when each trial is independent and the probability of success is constant. For example, the probability of getting heads when flipping a coin 10 times.
+
+**Example:** In coin flipping, the probability of success is p = 0.5, and it describes the distribution of the number of successes (the number of heads) when flipping 10 times.
+
+```{r}
+# 이항분포 예시: 동전 던지기
+set.seed(123)  # 재현성을 위해 시드 설정
+
+n_trials <- 10
+p_success <- 0.5
+n_simulations <- 1000
+
+# 시뮬레이션: n_trials 번의 동전 던지기
+simulated_successes <- rbinom(n_simulations, size = n_trials, prob = p_success)
+
+# 결과 시각화
+library(ggplot2)
+
+df_binomial <- data.frame(Successes = simulated_successes)
+
+# Plot histogram of the simulation results and overlay the binomial probability mass function (PMF)
+ggplot(df_binomial, aes(x = Successes)) +
+  geom_histogram(aes(y = ..density..), fill = "steelblue", alpha = 0.7, binwidth = 1, boundary = -0.5) +
+  labs(title = "Binomial Distribution: Coin Flip Simulation",
+       x = "Number of Heads in 10 Flips",
+       y = "Density") +
+  theme_minimal()
+```
+
+**이항분포 시뮬레이션**
+
+-   동전의 앞면이 나올 확률을 0.5로 설정한 후, 여러 번 던졌을 때의 결과를 시뮬레이션
+
+```{r}
+# 동전 던지기 시뮬레이션
+coin_flip_simulation <- function(n, p) {
+  rbinom(n, size = 1, prob = p)
+}
+
+# 동전 던지기 결과를 시각화하는 함수
+plot_coin_flip <- function(n, p) {
+  flips <- coin_flip_simulation(n, p)
+  df <- data.frame(Result = flips)
+  
+  ggplot(df, aes(x = factor(Result))) +
+    geom_bar(fill = "steelblue") +
+    labs(title = paste("Coin Flip Simulation (n =", n, ", p =", p, ")"),
+         x = "Result (0 = Tails, 1 = Heads)", y = "Count") +
+    theme_minimal()
+}
+
+# 동전 던지기 결과 100번 시각화
+# n과 p를 바꿔가며 시뮬레이션 해보기.
+plot_coin_flip(1000, 0.5)
+
+```
+
+<br>
+
+### 2. Uniform Distribution (균등분포)
+
+> A uniform distribution is a distribution in which all events occur with the same probability. It is divided into discrete and continuous uniform distributions, and in the case of a discrete uniform distribution, it is defined by the following probability mass function.
+>
+> 균등분포는 모든 사건이 동일한 확률로 발생하는 분포. 이산형과 연속형 균등분포로 나뉘며, 이산형 균등분포의 경우는 다음과 같은 확률 질량 함수로 정의됨.
+
+$$
+P(X = x) = \frac{1}{n}
+$$
+
+-   $n$: Number of possible outcomes
+
+It is used in experiments such as dice rolling, and is applied when the probability of each dice side appearing is the same.
+
+**Example**: A dice has numbers from 1 to 6, and each number has an equal chance of $\frac{1}{6}$.
+
+**균등분포 시뮬레이션**
+
+주사위의 각 면이 나올 확률이 동일한 경우의 시뮬레이션 구현
+
+```{r}
+# 주사위 던지기 시뮬레이션
+dice_roll_simulation <- function(n) {
+  sample(1:6, size = n, replace = TRUE)
+}
+
+# 주사위 던지기 결과를 시각화하는 함수
+plot_dice_roll <- function(n) {
+  rolls <- dice_roll_simulation(n)
+  df <- data.frame(Result = rolls)
+  
+  ggplot(df, aes(x = factor(Result))) +
+    geom_bar(fill = "steelblue") +
+    labs(title = paste("Dice Roll Simulation (n =", n, ")"),
+         x = "Dice Face", y = "Count") +
+    theme_minimal()
+}
+
+# 주사위 던지기 결과 100번 시각화
+# n 을 늘려보면서 시도.
+plot_dice_roll(100)
+
+```
+
+<br>
+
+### 3. Poisson Distribution (포아송분포)
+
+> The Poisson distribution is used to model the number of times a specific event occurs within a unit of time or space. The probability mass function of the Poisson distribution is as follows.
+
+$$
+P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}
+$$
+
+-   $\lambda$: Event rate per unit time (average number of occurrences)
+
+-   $k$: Number of events occuring
+
+The Poisson distribution is used when events occur independently in time or space and have a constant occurrence rate. It is mainly applied to the number of calls to a telephone switching system, the number of emergency patients in a hospital, and the number of visitors to a website.
+
+**Example**: In a system where an average of 4 customers arrive per hour, you can calculate the probability that 3 customers will arrive per hour.
+
+**Simulation**
+
+```{r}
+
+# 1. Poisson Distribution Simulation and Visualization
+lambda <- 5  # Rate of events (mean number of events)
+poisson_data <- rpois(1000, lambda = lambda)
+
+# Create a data frame for Poisson distribution
+df_poisson <- data.frame(Value = poisson_data)
+
+# Plot Poisson distribution
+ggplot(df_poisson, aes(x = Value)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", alpha = 0.7) +
+  labs(title = "Poisson Distribution (lambda = 5)", x = "Number of Events", y = "Frequency") +
+  theme_minimal()
+
+```
+
+<br>
+
+1시간 동안 평균 4명의 고객이 도착하는 시스템에서, 1시간 동안 3명의 고객이 도착할 확률을 계산
+
+```{r}
+# 포아송분포 예시: 고객 도착
+lambda <- 4  # 평균 고객 도착 수 (1시간당)
+k <- 3  # 관심 있는 고객 도착 수
+
+# 확률 계산
+prob_k_customers <- dpois(k, lambda)
+
+# 출력
+prob_k_customers
+
+```
+
+<Br>
+
+### 4. Normal Distribution (정규분포)
+
+> The normal distribution is the most widely used continuous probability distribution, and is defined by mean $\mu$ and standard deviation $\sigma$. Its **probability density** function is as follows:
+
+$$
+f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( -\frac{(x - \mu)^2}{2 \sigma^2} \right)
+$$
+
+-   $\mu$: mean
+
+-   $\sigma$: standard deviation
+
+Normal distribution appears in many natural phenomena and is symmetrical around the median. If the data is clustered around the mean, the normal distribution can be used to model the data.
+
+**Example**: People's heights and test scores are generally normally distributed. For example, we can assume that people's heights are normally distributed with a mean of 170 cm and a standard deviation of 10 cm.
+
+**정규분포 시뮬레이션**
+
+```{r}
+# 정규분포 시뮬레이션
+normal_distribution_simulation <- function(n, mean, sd) {
+  rnorm(n, mean = mean, sd = sd)
+}
+
+# 정규분포 시각화 함수
+plot_normal_distribution <- function(n, mean, sd) {
+  data <- normal_distribution_simulation(n, mean, sd)
+  df <- data.frame(Value = data)
+  
+  ggplot(df, aes(x = Value)) +
+    geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+    geom_density(color = "red", size = 1) +
+    labs(title = paste("Normal Distribution (n =", n, ", mean =", mean, ", sd =", sd, ")"),
+         x = "Value", y = "Density") +
+    theme_minimal()
+}
+
+# 정규분포 시각화
+# n, mean, sd 를 변경하면서 시뮬레이션.
+plot_normal_distribution(1000, 0, 1)
+
+```
+
+<br>
+
+### 5. Exponential Distribution (지수분포)
+
+> The exponential distribution is used to model the time intervals over which events occur (사건이 발생하는 시간 간격 모델링), and its probability density function is:
+
+$$
+f(x; \lambda) = \lambda e^{-\lambda x}, \quad x \geq 0
+$$
+
+-   $\lambda$: Incident rate (사건 발생률)
+
+The exponential distribution is used to model the time intervals between occurrences of certain events (e.g., system failures, customer arrivals). This distribution is used when events occur independently and the average time interval is constant.
+
+-   특정 사건(예: 시스템 고장, 고객 도착)이 발생하기까지의 시간 간격을 모델링하는 데 사용됨. 이 분포는 사건이 독립적으로 발생하고, 평균 시간 간격이 일정할 때 사용됨.
+
+**Example**: If the mean time between failures for a system is 2 hours, we can assume that the time until the next failure follows an exponential distribution.
+
+**Simulation**
+
+```{r}
+# 3. Exponential Distribution Simulation and Visualization
+rate_exp <- 1  # Rate parameter (1/mean)
+exp_data <- rexp(1000, rate = rate_exp)
+
+# Create a data frame for Exponential distribution
+df_exp <- data.frame(Value = exp_data)
+
+# Plot Exponential distribution
+ggplot(df_exp, aes(x = Value)) +
+  geom_histogram(binwidth = 0.2, fill = "darkgreen", alpha = 0.7) +
+  labs(title = "Exponential Distribution (rate = 1)", x = "Value", y = "Frequency") +
+  theme_minimal()
+
+```
+
+> 한 시스템의 평균 고장 간격이 2시간일 때, 다음 고장이 발생할 때까지의 시간이 지수분포를 따른다고 가정하면 아래와 같은 분포.
+
+```{r}
+# 지수분포 예시: 시스템 고장 간격
+set.seed(321)  # 재현성을 위해 시드 설정
+
+lambda <- 1 / 2  # 평균 고장 간격이 2시간이므로 rate는 1/2
+n_simulations <- 10000
+
+# 시뮬레이션: 고장 간격 시간
+failure_times <- rexp(n_simulations, rate = lambda)
+
+# 결과 시각화
+df_exponential <- data.frame(FailureTime = failure_times)
+
+ggplot(df_exponential, aes(x = FailureTime)) +
+  geom_histogram(aes(y = ..density..), bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  labs(title = "Exponential Distribution: System Failure Times",
+       x = "Time until Next Failure (hours)",
+       y = "Density") +
+  theme_minimal()
+
+```
+
+<br>
+
+### 6. Gamma Distribution (감마분포)
+
+> The gamma distribution models waiting times (the time interval between occurrences of multiple exponentially distributed events), (대기 시간, 즉 여러 개의 지수분포 사건이 발생하는 시간 간격을 모델링) and has a probability density function of:
+
+$$
+f(x; \alpha, \beta) = \frac{\beta^\alpha x^{\alpha - 1} e^{-\beta x}}{\Gamma(\alpha)}, \quad x \geq 0
+$$
+
+-   $\alpha$: shape parameter (형상모수)\
+-   $\beta$: scale parameter (척도모수)\
+-   $\Gamma(\alpha)$: Gamma function (감마 함수)
+
+The gamma distribution is a generalization of the exponential distribution, modeling the waiting time until $\alpha$ independent events occur. It is applied to time to failure in physical systems, and price movements in financial data.
+
+-   감마분포는 지수분포의 일반화된 형태로, $\alpha$번의 독립적인 사건이 발생할 때까지의 대기 시간을 모델링. 물리적 시스템에서 고장까지의 시간, 금융 데이터에서 주식의 가격 변동 등에 적용됨.
+
+**Example**: The gamma distribution can be used to model the time until five major components in a system independently fail.
+
+-   **예시**: 한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용할 수 있음.
+
+**Simulation**
+
+```{r}
+# Gamma Distribution Simulation and Visualization
+shape_gamma <- 2
+rate_gamma <- 1
+gamma_data <- rgamma(1000, shape = shape_gamma, rate = rate_gamma)
+
+# Create a data frame for Gamma distribution
+df_gamma <- data.frame(Value = gamma_data)
+
+# Plot Gamma distribution
+ggplot(df_gamma, aes(x = Value)) +
+  geom_histogram(binwidth = 0.5, fill = "orange", alpha = 0.7) +
+  labs(title = "Gamma Distribution (shape = 2, rate = 1)", x = "Value", y = "Frequency") +
+  theme_minimal()
+```
+
+<br>
+
+한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용
+
+```{r}
+# 감마분포 예시: 시스템 부품 고장 시간
+set.seed(654)  # 재현성을 위해 시드 설정
+
+alpha <- 5  # 형상 모수
+beta <- 1  # 척도 모수 (rate)
+
+n_simulations <- 10000
+
+# 시뮬레이션: 부품 고장까지의 시간
+failure_times <- rgamma(n_simulations, shape = alpha, rate = beta)
+
+# 결과 시각화
+df_gamma <- data.frame(FailureTime = failure_times)
+
+ggplot(df_gamma, aes(x = FailureTime)) +
+  geom_histogram(aes(y = ..density..), bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  labs(title = "Gamma Distribution: System Component Failure Times",
+       x = "Time until 5 Failures",
+       y = "Density") +
+  theme_minimal()
+
+```
+
+<br>
+
+예를 들어, 어떤 시스템의 주요 부품 5개가 독립적으로 고장날 때까지의 시간을 모델링한다고 가정합니다. 각 부품이 고장날 때까지의 평균 시간이 2시간이라면, 감마분포를 통해 5개의 부품이 고장날 때까지 걸리는 시간을 모델링할 수 있습니다.
+
+-   α: 5개의 주요 부품이 모두 고장날 때까지의 이벤트 수.
+
+-   β: 각 부품이 고장날 때까지 걸리는 시간의 역수.
+
+-   예를 들어, 평균 2시간이므로 β=1/2.
+
+**감마분포를 사용한 부품 고장 시간 시뮬레이션**
+
+```{r}
+# 감마분포 예시: 시스템 부품 고장 시간
+set.seed(123)  # 재현성을 위해 시드 설정
+
+# 감마분포 파라미터 설정
+alpha <- 5  # 형상 모수: 5개의 부품이 고장날 때까지의 이벤트 수
+beta <- 1/2  # 척도 모수: 평균 고장 시간의 역수 (평균 2시간)
+
+# 감마분포에서 10,000번의 시뮬레이션 수행 (각각의 시뮬레이션은 5개 부품의 고장 시간)
+n_simulations <- 10000
+failure_times <- rgamma(n_simulations, shape = alpha, rate = beta)
+
+# 결과 시각화
+library(ggplot2)
+df_gamma <- data.frame(FailureTime = failure_times)
+
+ggplot(df_gamma, aes(x = FailureTime)) +
+  geom_histogram(aes(y = ..density..), bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  labs(title = "Gamma Distribution: System Component Failure Times",
+       x = "Time until 5 Components Fail (hours)",
+       y = "Density") +
+  theme_minimal()
+
+# 고장 시간의 중앙값과 95% 신뢰구간 계산
+median_failure_time <- median(failure_times)
+credible_interval_failure <- quantile(failure_times, c(0.025, 0.975))
+
+# 결과 출력
+cat("부품 5개 고장 시간의 중앙값:", median_failure_time, "\n")
+cat("부품 5개 고장 시간 95% 신뢰구간:", credible_interval_failure, "\n")
+
+```
+
+<br>
+
+### 7. Beta Distribution (베타분포)
+
+> The beta distribution is a continuous probability distribution between 0 and 1, defined by two parameters, $\alpha$ and $\beta$. The probability density function of the beta distribution is as follows. 베타분포는 0과 1 사이의 연속 확률 분포로, 두 모수 $\alpha$와 $\beta$에 의해 정의됨. 베타분포의 확률 밀도 함수는 다음과 같습니다.
+
+$$
+f(x; \alpha, \beta) = \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha, \beta)}
+$$
+
+\
+$B(\alpha, \beta)$ is Beta function.
+
+-   $\alpha$, $\beta$: shape parameters (형상 모수)
+
+The beta distribution is mainly used when there is prior knowledge about the probability of success. It is often used to model the uncertainty of probability in A/B testing.
+
+**Example**: When estimating the probability of success for two options in an A/B test, the beta distribution can be used to model uncertainty.
+
+<br>
+
+**Simulation**
+
+```{r}
+# Beta Distribution Simulation and Visualization
+shape1 <- 2
+shape2 <- 5
+beta_data <- rbeta(1000, shape1 = shape1, shape2 = shape2)
+
+# Create a data frame for Beta distribution
+df_beta <- data.frame(Value = beta_data)
+
+# Plot Beta distribution
+ggplot(df_beta, aes(x = Value)) +
+  geom_histogram(binwidth = 0.05, fill = "purple", alpha = 0.7) +
+  labs(title = "Beta Distribution (shape1 = 2, shape2 = 5)", x = "Value", y = "Frequency") +
+  theme_minimal()
+```
+
+<br>
+
+A/B 테스트에서 두 가지 옵션에 대해 성공 확률을 추정할 때 베타분포를 사용하여 불확실성을 모델링
+
+```{r}
+# 베타분포 예시: A/B 테스트 성공 확률
+library(ggplot2)
+
+alpha_prior <- 2
+beta_prior <- 5
+
+# 베타분포 샘플링
+n_simulations <- 10000
+beta_samples <- rbeta(n_simulations, shape1 = alpha_prior, shape2 = beta_prior)
+
+# 결과 시각화
+df_beta <- data.frame(Probability = beta_samples)
+
+ggplot(df_beta, aes(x = Probability)) +
+  geom_histogram(aes(y = ..density..), bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  labs(title = "Beta Distribution: A/B Test Success Probability",
+       x = "Probability of Success",
+       y = "Density") +
+  theme_minimal()
+
+```
+
+<br>
+
+### 8. t-Distribution (t-분포)
+
+> The t-distribution, also known as Student's t-distribution, is a continuous probability distribution that arises when estimating the mean of a normally distributed population with an unknown standard deviation, particularly when the sample size is small. It is similar to the normal distribution but has heavier tails, which means it is more prone to producing values far from its mean. The t-distribution's probability density function is given as follows. t-분포는 모집단의 표준편차가 알려지지 않았을 때, 특히 표본 크기가 작을 때 사용되는 연속 확률 분포. 정규 분포와 유사하지만, 꼬리가 두꺼워 극단적인 값이 더 자주 나타날 수 있음.
+
+$$
+f(x; \nu) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\frac{\nu}{2}\right)}\left(1 + \frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}
+$$
+
+\
+$\nu$ is the degrees of freedom (자유도).
+
+-   $\nu$: degrees of freedom (자유도)
+
+As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. The t-distribution is commonly used in hypothesis testing, particularly in t-tests where the sample size is small, and the population standard deviation is unknown.
+
+**Example**: The t-distribution is used in the one-sample t-test, two-sample t-test, and paired t-test to determine whether there is a significant difference between sample means and population means or between two sample means.
+
+**Simulation**
+
+```{r}
+# t-Distribution Simulation and Visualization
+df <- 10  # degrees of freedom
+t_data <- rt(1000, df = df)
+
+# Create a data frame for t-distribution
+df_t <- data.frame(Value = t_data)
+
+# Plot t-distribution
+ggplot(df_t, aes(x = Value)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.3, fill = "steelblue", alpha = 0.7) +
+  stat_function(fun = dt, args = list(df = df), color = "red", size = 1) +
+  labs(title = "t-Distribution (degrees of freedom = 10)", x = "Value", y = "Density") +
+  theme_minimal()
+```
+
+<br> \### 9. Chi-Squared Distribution (카이제곱 분포)
+
+> The chi-squared distribution is a continuous probability distribution that arises in statistics, particularly in hypothesis testing and confidence interval estimation for variance. It is the distribution of the sum of the squares of independent standard normal random variables. The probability density function of the chi-squared distribution is given by the following formula. 카이제곱 분포는 통계에서 주로 가설 검정과 분산에 대한 신뢰 구간 추정에 사용되는 연속 확률 분포입니다. 카이제곱 분포는 독립적인 표준 정규 확률 변수들의 제곱합의 분포로 정의됩니다. 카이제곱 분포의 확률 밀도 함수는 다음과 같습니다.
+
+$$
+f(x; k) = \frac{x^{k/2 - 1} e^{-x/2}}{2^{k/2} \Gamma(k/2)}
+$$
+
+\
+$k$ is the degrees of freedom (자유도).
+
+-   $k$: degrees of freedom (자유도)
+
+The chi-squared distribution is mainly used in chi-squared tests, such as the chi-squared goodness-of-fit test and chi-squared test of independence, where it helps assess the significance of observed frequencies.
+
+**Example**: The chi-squared distribution is used in hypothesis testing to evaluate how well an observed distribution fits the expected distribution.
+
+**Simulation**
+
+```{r}
+# Chi-Squared Distribution Simulation and Visualization
+df <- 5  # degrees of freedom
+chi_squared_data <- rchisq(1000, df = df)
+
+# Create a data frame for chi-squared distribution
+df_chi_squared <- data.frame(Value = chi_squared_data)
+
+# Plot chi-squared distribution
+ggplot(df_chi_squared, aes(x = Value)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.5, fill = "orange", alpha = 0.7) +
+  stat_function(fun = dchisq, args = list(df = df), color = "red", size = 1) +
+  labs(title = "Chi-Squared Distribution (degrees of freedom = 5)", x = "Value", y = "Density") +
+  theme_minimal()
+```
+
+<br>
+
+### 10. F-Distribution (F-분포)
+
+> The F-distribution is a continuous probability distribution that arises in the testing of whether two variances are equal. It is the ratio of two independent chi-squared distributions, each divided by their respective degrees of freedom. The F-distribution is often used in analysis of variance (ANOVA) and regression analysis. The probability density function of the F-distribution is given by the following formula. F-분포는 두 분산이 동일한지를 검정할 때 나타나는 연속 확률 분포입니다. 이는 각각 자유도로 나눈 두 독립적인 카이제곱 분포의 비율로 정의됩니다. F-분포는 주로 분산 분석(ANOVA)와 회귀 분석에서 사용됩니다. F-분포의 확률 밀도 함수는 다음과 같습니다.
+
+$$
+f(x; d_1, d_2) = \frac{\sqrt{\left(\frac{d_1 x}{d_1 x + d_2}\right)^{d_1} \left(\frac{d_2}{d_1 x + d_2}\right)^{d_2}}}{x \, B\left(\frac{d_1}{2}, \frac{d_2}{2}\right)}
+$$
+
+\
+$d_1$ and $d_2$ are the degrees of freedom (자유도).
+
+-   $d_1$: degrees of freedom for the numerator (분자 자유도)
+-   $d_2$: degrees of freedom for the denominator (분모 자유도)
+
+The F-distribution is commonly used in ANOVA to compare the variances of multiple groups and in regression analysis to test the overall significance of the model.
+
+**Example**: The F-distribution is used in ANOVA to test the null hypothesis that the means of several populations are equal.
+
+**Simulation**
+
+```{r}
+# F-Distribution Simulation and Visualization
+d1 <- 5  # Degrees of freedom for the numerator
+d2 <- 10  # Degrees of freedom for the denominator
+f_data <- rf(1000, df1 = d1, df2 = d2)
+
+# Create a data frame for F-distribution
+df_f <- data.frame(Value = f_data)
+
+# Plot F-distribution
+ggplot(df_f, aes(x = Value)) +
+  geom_histogram(aes(y = ..density..), binwidth = 0.2, fill = "darkgreen", alpha = 0.7) +
+  stat_function(fun = df, args = list(df1 = d1, df2 = d2), color = "red", size = 1) +
+  labs(title = "F-Distribution (d1 = 5, d2 = 10)", x = "Value", y = "Density") +
+  theme_minimal()
+```
+
+<br>
+
+### Shiny app for simulating distributions
+
+```{r}
+# 필요한 패키지 불러오기
+library(shiny)
+library(ggplot2)
+
+# Distribution Simulation Functions
+binomial_simulation <- function(n, size, prob) {
+  rbinom(n, size = size, prob = prob)
+}
+
+uniform_simulation <- function(n, min, max) {
+  runif(n, min = min, max = max)
+}
+
+poisson_simulation <- function(n, lambda) {
+  rpois(n, lambda = lambda)
+}
+
+normal_simulation <- function(n, mean, sd) {
+  rnorm(n, mean = mean, sd = sd)
+}
+
+exponential_simulation <- function(n, rate) {
+  rexp(n, rate = rate)
+}
+
+gamma_simulation <- function(n, shape, rate) {
+  rgamma(n, shape = shape, rate = rate)
+}
+
+beta_simulation <- function(n, shape1, shape2) {
+  rbeta(n, shape1 = shape1, shape2 = shape2)
+}
+
+t_simulation <- function(n, df) {
+  rt(n, df = df)
+}
+
+chi_squared_simulation <- function(n, df) {
+  rchisq(n, df = df)
+}
+
+f_simulation <- function(n, df1, df2) {
+  rf(n, df1 = df1, df2 = df2)
+}
+
+# Plot Function for Distributions
+plot_simulation <- function(dist_type, n, ...) {
+  args <- list(...)
+  if (dist_type == "Binomial Distribution") {
+    data <- binomial_simulation(n, args$size, args$prob)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = factor(Value))) +
+      geom_bar(fill = "steelblue") +
+      labs(title = paste("Binomial Distribution (n =", n, ", size =", args$size, ", prob =", args$prob, ")"),
+           x = "Number of Successes", y = "Count") +
+      theme_minimal()
+    
+  } else if (dist_type == "Uniform Distribution") {
+    data <- uniform_simulation(n, args$min, args$max)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
+      labs(title = paste("Uniform Distribution (n =", n, ", min =", args$min, ", max =", args$max, ")"),
+           x = "Value", y = "Count") +
+      theme_minimal()
+    
+  } else if (dist_type == "Poisson Distribution") {
+    data <- poisson_simulation(n, args$lambda)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
+      labs(title = paste("Poisson Distribution (n =", n, ", lambda =", args$lambda, ")"),
+           x = "Number of Events", y = "Count") +
+      theme_minimal()
+    
+  } else if (dist_type == "Normal Distribution") {
+    data <- normal_simulation(n, args$mean, args$sd)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("Normal Distribution (n =", n, ", mean =", args$mean, ", sd =", args$sd, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+    
+  } else if (dist_type == "Exponential Distribution") {
+    data <- exponential_simulation(n, args$rate)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("Exponential Distribution (n =", n, ", rate =", args$rate, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+    
+  } else if (dist_type == "Gamma Distribution") {
+    data <- gamma_simulation(n, args$shape, args$rate)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("Gamma Distribution (n =", n, ", shape =", args$shape, ", rate =", args$rate, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+    
+  } else if (dist_type == "Beta Distribution") {
+    data <- beta_simulation(n, args$shape1, args$shape2)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("Beta Distribution (n =", n, ", shape1 =", args$shape1, ", shape2 =", args$shape2, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+    
+  } else if (dist_type == "t-Distribution") {
+    data <- t_simulation(n, args$df)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("t-Distribution (n =", n, ", df =", args$df, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+    
+  } else if (dist_type == "Chi-Squared Distribution") {
+    data <- chi_squared_simulation(n, args$df)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("Chi-Squared Distribution (n =", n, ", df =", args$df, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+    
+  } else if (dist_type == "F-Distribution") {
+    data <- f_simulation(n, args$df1, args$df2)
+    df <- data.frame(Value = data)
+    
+    ggplot(df, aes(x = Value)) +
+      geom_histogram(aes(y = ..density..), bins = 30, fill = "steelblue", alpha = 0.7) +
+      geom_density(color = "red", size = 1) +
+      labs(title = paste("F-Distribution (n =", n, ", df1 =", args$df1, ", df2 =", args$df2, ")"),
+           x = "Value", y = "Density") +
+      theme_minimal()
+  }
+}
+
+# Shiny 앱
+ui <- fluidPage(
+  titlePanel("Probability Distribution Simulation"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dist", "Select Distribution:", 
+                  choices = c("Binomial Distribution", "Uniform Distribution", 
+                              "Normal Distribution", "Poisson Distribution", 
+                              "Beta Distribution", "Exponential Distribution", 
+                              "Gamma Distribution", "t-Distribution", 
+                              "Chi-Squared Distribution", "F-Distribution")),
+      sliderInput("n", "Number of Trials:", min = 10, max = 1000, value = 100),
+      
+      # Conditional UI based on selected distribution
+      conditionalPanel(
+        condition = "input.dist == 'Binomial Distribution'",
+        sliderInput("size", "Number of Trials:", min = 1, max = 100, value = 10),
+        sliderInput("prob", "Probability of Success:", min = 0, max = 1, value = 0.5, step = 0.01)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Uniform Distribution'",
+        sliderInput("min", "Minimum Value:", min = 0, max = 10, value = 0),
+        sliderInput("max", "Maximum Value:", min = 10, max = 20, value = 10)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Normal Distribution'",
+        sliderInput("mean", "Mean:", min = -10, max = 10, value = 0),
+        sliderInput("sd", "Standard Deviation:", min = 0.1, max = 5, value = 1)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Poisson Distribution'",
+        sliderInput("lambda", "Lambda:", min = 0.1, max = 10, value = 1)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Beta Distribution'",
+        sliderInput("shape1", "Shape 1:", min = 0.1, max = 10, value = 2),
+        sliderInput("shape2", "Shape 2:", min = 0.1, max = 10, value = 5)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Exponential Distribution'",
+        sliderInput("rate", "Rate:", min = 0.1, max = 5, value = 1)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Gamma Distribution'",
+        sliderInput("shape", "Shape:", min = 0.1, max = 10, value = 2),
+        sliderInput("rate", "Rate:", min = 0.1, max = 5, value = 1)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 't-Distribution'",
+        sliderInput("df", "Degrees of Freedom:", min = 1, max = 30, value = 10)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'Chi-Squared Distribution'",
+        sliderInput("df", "Degrees of Freedom:", min = 1, max = 30, value = 10)
+      ),
+      conditionalPanel(
+        condition = "input.dist == 'F-Distribution'",
+        sliderInput("df1", "Degrees of Freedom (Numerator):", min = 1, max = 30, value = 5),
+        sliderInput("df2", "Degrees of Freedom (Denominator):", min = 1, max = 30, value = 10)
+      )
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+)
+
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    if (input$dist == "Binomial Distribution") {
+      plot_simulation(input$dist, input$n, size = input$size, prob = input$prob)
+    } else if (input$dist == "Uniform Distribution") {
+      plot_simulation(input$dist, input$n, min = input$min, max = input$max)
+    } else if (input$dist == "Normal Distribution") {
+      plot_simulation(input$dist, input$n, mean = input$mean, sd = input$sd)
+    } else if (input$dist == "Poisson Distribution") {
+      plot_simulation(input$dist, input$n, lambda = input$lambda)
+    } else if (input$dist == "Beta Distribution") {
+      plot_simulation(input$dist, input$n, shape1 = input$shape1, shape2 = input$shape2)
+    } else if (input$dist == "Exponential Distribution") {
+      plot_simulation(input$dist, input$n, rate = input$rate)
+    } else if (input$dist == "Gamma Distribution") {
+      plot_simulation(input$dist, input$n, shape = input$shape, rate = input$rate)
+    } else if (input$dist == "t-Distribution") {
+      plot_simulation(input$dist, input$n, df = input$df)
+    } else if (input$dist == "Chi-Squared Distribution") {
+      plot_simulation(input$dist, input$n, df = input$df)
+    } else if (input$dist == "F-Distribution") {
+      plot_simulation(input$dist, input$n, df1 = input$df1, df2 = input$df2)
+    }
+  })
+}
+
+# Shiny 앱 실행
+# shinyApp(ui = ui, server = server)
+
+
+```
