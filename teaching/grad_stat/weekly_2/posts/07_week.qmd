@@ -8,6 +8,270 @@ slide-format: revealjs
 
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
+# Dscriptive Statistics
+
+<br>
+
+This chapter introduces **descriptive statistics**, which summarize and describe the main features of a dataset. Descriptive statistics are the foundation of exploratory data analysis (EDA) and are used to understand the basic structure and characteristics of data before moving on to more complex analysis.
+
+We'll explore **measures of central tendency** (mean, median, mode), **measures of variability** (variance, standard deviation, range, IQR), and **distribution** (skewness, kurtosis). In this chapter, we will also introduce some key R functions and simulate data to illustrate these concepts.
+
+### Table of Contents
+
+1.  **Introduction to Descriptive Statistics**
+
+2.  **Generating Data for Simulation**
+
+3.  **Measures of Central Tendency**
+
+4.  **Measures of Variability**
+
+5.  **Visualizing Data Distribution**
+
+6.  **Skewness and Kurtosis**
+
+7.  **Summary Statistics Using R Functions**
+
+8.  **Exercises**
+
+### 1. Introduction to Descriptive Statistics
+
+Descriptive statistics help summarize data by providing key insights into the data's central tendency, spread, and overall shape of the distribution.
+
+-   **Central Tendency**: Mean, median, and mode.
+
+-   **Variability**: Variance, standard deviation, range, and interquartile range (IQR).
+
+-   **Distribution**: Shape of the distribution including skewness and kurtosis.
+
+### 2. Generating Data for Simulation
+
+We'll start by generating some **synthetic data** to demonstrate descriptive statistics using the `rnorm()` function to generate data from a **normal distribution** and `runif()` for a **uniform distribution**.
+
+```{r}
+# Simulate normally distributed data (mean = 50, sd = 10)
+set.seed(123)
+data_normal <- rnorm(1000, mean = 50, sd = 10)
+
+# Simulate uniformly distributed data (min = 10, max = 90)
+data_uniform <- runif(1000, min = 10, max = 90)
+
+# Summary of the datasets
+summary(data_normal)
+summary(data_uniform)
+
+```
+
+```{r}
+# Histogram of normally distributed data
+library(tidyverse)
+ggplot(data.frame(x = data_normal), aes(x)) +
+  geom_histogram(bins = 30, fill = "grey", alpha = 0.9) +
+  labs(title = "Histogram of Normally Distributed Data", x = "Value", y = "Frequency") +
+  theme_minimal()
+
+
+```
+
+```{r}
+# Histogram of uniformly distributed data
+ggplot(data.frame(x = data_uniform), aes(x)) +
+  geom_histogram(bins = 30, fill = "grey", alpha = 0.9) +
+  labs(title = "Histogram of Uniformly Distributed Data", x = "Value", y = "Frequency") +
+  theme_minimal()
+```
+
+### 3. Measures of Central Tendency
+
+The **central tendency** refers to the "center" of a dataset. The most common measures of central tendency are the **mean**, **median**, and **mode**.
+
+-   **Mean**: The arithmetic average of the data.
+
+-   **Median**: The middle value when the data is ordered.
+
+-   **Mode**: The value that occurs most frequently.
+
+```{r}
+# Mean, median, and mode for normally distributed data
+mean_normal <- mean(data_normal)
+median_normal <- median(data_normal)
+mode_normal <- as.numeric(names(sort(table(data_normal), decreasing = TRUE)[1]))
+
+# Mean, median, and mode for uniformly distributed data
+mean_uniform <- mean(data_uniform)
+median_uniform <- median(data_uniform)
+mode_uniform <- as.numeric(names(sort(table(data_uniform), decreasing = TRUE)[1]))
+
+# Display results
+cat("Normal Distribution - Mean:", mean_normal, "Median:", median_normal, "Mode:", mode_normal, "\n")
+cat("Uniform Distribution - Mean:", mean_uniform, "Median:", median_uniform, "Mode:", mode_uniform, "\n")
+
+```
+
+### 4. Measures of Variability
+
+Variability tells us how spread out the data points are. Common measures of variability include **range**, **variance**, **standard deviation**, and **interquartile range (IQR)**.
+
+-   **Range**: The difference between the maximum and minimum values.
+
+-   **Variance**: The average squared deviation from the mean.
+
+-   **Standard Deviation**: The square root of variance, representing the spread of data.
+
+-   **Interquartile Range (IQR)**: The range between the 25th percentile (Q1) and the 75th percentile (Q3).
+
+```{r}
+# Variability measures for normally distributed data
+range_normal <- range(data_normal)
+var_normal <- var(data_normal)
+sd_normal <- sd(data_normal)
+iqr_normal <- IQR(data_normal)
+
+# Variability measures for uniformly distributed data
+range_uniform <- range(data_uniform)
+var_uniform <- var(data_uniform)
+sd_uniform <- sd(data_uniform)
+iqr_uniform <- IQR(data_uniform)
+
+# Display results
+cat("Normal Distribution - Range:", range_normal, "Variance:", var_normal, "SD:", sd_normal, "IQR:", iqr_normal, "\n")
+cat("Uniform Distribution - Range:", range_uniform, "Variance:", var_uniform, "SD:", sd_uniform, "IQR:", iqr_uniform, "\n")
+
+```
+
+### 5. Visualizing Data Distribution
+
+To understand the distribution of data, it is helpful to visualize it. We can use **histograms** and **boxplots** to explore the distribution of our datasets.
+
+![](images/clipboard-940336939.png)
+
+<br>
+
+```{r}
+# Install ggplot2 if not already installed
+if (!require(ggplot2)) install.packages("ggplot2")
+
+library(ggplot2)
+
+# Histogram of normally distributed data
+ggplot(data.frame(x = data_normal), aes(x)) +
+  geom_histogram(bins = 30, fill = "blue", alpha = 0.7) +
+  labs(title = "Histogram of Normally Distributed Data", x = "Value", y = "Frequency") +
+  theme_minimal()
+
+# Boxplot of uniformly distributed data
+ggplot(data.frame(x = data_uniform), aes(y = x)) +
+  geom_boxplot(fill = "green", alpha = 0.7) +
+  labs(title = "Boxplot of Uniformly Distributed Data", y = "Value") +
+  theme_minimal()
+
+```
+
+### 6. Skewness and Kurtosis
+
+**Skewness** measures the asymmetry of the distribution, while **kurtosis** measures the "tailedness" of the distribution.
+
+![](images/clipboard-4257836537.png)
+
+-   **Skewness**: If skewness is near 0, the distribution is symmetrical. Positive skewness indicates a right-skewed distribution, while negative skewness indicates a left-skewed distribution.
+
+-   **Kurtosis**: High kurtosis indicates heavy tails, while low kurtosis indicates light tails.
+
+We can use the **`moments`** package to calculate skewness and kurtosis.
+
+```{r}
+# Install moments package if not already installed
+if (!require(moments)) install.packages("moments")
+
+library(moments)
+
+# Skewness and Kurtosis for Normal Data
+skewness_normal <- skewness(data_normal)
+kurtosis_normal <- kurtosis(data_normal)
+
+# Skewness and Kurtosis for Uniform Data
+skewness_uniform <- skewness(data_uniform)
+kurtosis_uniform <- kurtosis(data_uniform)
+
+# Display Results
+cat("Normal Distribution - Skewness:", skewness_normal, "Kurtosis:", kurtosis_normal, "\n")
+cat("Uniform Distribution - Skewness:", skewness_uniform, "Kurtosis:", kurtosis_uniform, "\n")
+
+```
+
+### 7. Summary Statistics Using R Functions
+
+R provides a convenient function, `summary()`, to calculate descriptive statistics such as the mean, median, minimum, maximum, and quartiles in one command.
+
+```{r}
+# Summary statistics for normally distributed data
+summary(data_normal)
+
+# Summary statistics for uniformly distributed data
+summary(data_uniform)
+
+```
+
+### 8. Exercises
+
+1.  Generate a dataset of 1000 observations from an **exponential distribution** with a rate parameter of 0.1. Calculate the mean, median, mode, variance, standard deviation, range, and IQR of the data.
+
+2.  Visualize the distribution of the exponential dataset using both a **histogram** and a **boxplot**.
+
+3.  Calculate the skewness and kurtosis of the exponential dataset.
+
+4.  Use the `summary()` function to summarize the key descriptive statistics of the exponential dataset.
+
+### Solutions for Exercises:
+
+1.  Exponential Distribution Simulation:
+
+```{r}
+data_exp <- rexp(1000, rate = 0.1)
+mean(data_exp)
+median(data_exp)
+# Mode not well-defined for continuous data, so skipped here
+var(data_exp)
+sd(data_exp)
+range(data_exp)
+IQR(data_exp)
+
+```
+
+2.  Visualization:
+
+```{r}
+ggplot(data.frame(x = data_exp), aes(x)) +
+  geom_histogram(bins = 30, fill = "purple", alpha = 0.7) +
+  labs(title = "Histogram of Exponentially Distributed Data", x = "Value", y = "Frequency") +
+  theme_minimal()
+
+ggplot(data.frame(x = data_exp), aes(y = x)) +
+  geom_boxplot(fill = "orange", alpha = 0.7) +
+  labs(title = "Boxplot of Exponentially Distributed Data", y = "Value") +
+  theme_minimal()
+
+```
+
+3.  Skewness and Kurtosis:
+
+```{r}
+skewness(data_exp)
+kurtosis(data_exp)
+
+```
+
+4.  Summary:
+
+```{r}
+summary(data_exp)
+
+```
+
+<br>
+
+# Practice with a Titanic dataset
+
 <br>
 
 ## 1. Introduction
@@ -90,7 +354,7 @@ The reason why `rbind()` was not used even when combining the two data into full
 ### 2.3 variable meaning explanation
 
 |  variable name  | Interpretation (meaning)                                                                                     | Type       |
-|:---------------:|:-------------------------------------------------------------------------------------------------------------|:-----------|
+|:--------------:|:--------------------------------------|:---------------|
 | **PassengerID** | Unique ID number that identifies the passenger                                                               | Int        |
 |  **Survived**   | Indicates whether or not the passenger survived. Survival is 1 and death is 0.                               | Factor     |
 |   **Pclass**    | The class of the cabin, with 3 categories from 1st class (1) to 3rd class (3).                               | Ord.Factor |
@@ -897,7 +1161,7 @@ Now that all the derived variables created so far have been found to be useful, 
 The table below is a brief description of the actual selected variables.
 
 |  variable name  | Type   | Description                                                                                               |
-|:---------------:|:-------|:----------------------------------------------------------------------------------------------------------|
+|:--------------:|:---------------|:----------------------------------------|
 |  **Survived**   | factor | Target feature, survival == 1, death == 0                                                                 |
 |     **Sex**     | factor | gender, `male` or `female`                                                                                |
 |   **Pclass**    | factor | Cabin Class, First Class (1), Second Class (2), Third Class (3)                                           |
@@ -970,12 +1234,11 @@ varImpPlot(titanic.rf)
 
 <br>
 
-```{r eval=FALSE}
-# Prediction 
-pred.rf <- predict(object = titanic.rf, newdata = test, type = "class")
+\`\`\`{r eval=FALSE} \# Prediction pred.rf \<- predict(object = titanic.rf, newdata = test, type = "class")
 
-# Data frame generation 
-submit <- data.frame(PassengerID = ID, Survived = pred.rf)
+# Data frame generation
+
+submit \<- data.frame(PassengerID = ID, Survived = pred.rf)
 
 # Write the submit data frame to file : csv is created in the folder designated by setwd().
 
