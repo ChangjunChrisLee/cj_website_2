@@ -6,8 +6,607 @@ format: html
 slide-format: revealjs
 ---
 
-[Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
+[*Weekly content*](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 <br>
 
+![](images/clipboard-571953391.png)
 
+-   [*Paper*](https://www.pnas.org/doi/10.1073/pnas.2319112121?gad_source=1&gclid=CjwKCAjw9p24BhB_EiwA8ID5Boe0ZVgwd4np8lt0YNumarKotDFhqJlOMas3VGBnO8MHQZrB_QRjZhoCaccQAvD_BwE)
+
+-   [*Data & R Code*](https://osf.io/8wnmr/files/osfstorage?view_only=30f6db3f57954e9eaa016457a29264b6)
+
+<br>
+
+## Paper summary
+
+#### 1. **연구 배경 및 목적**
+
+-   **사람들의 기본 욕구**: 사람들은 자신이 이해받고, 확인받고, 가치있다고 느끼기를 원함.
+
+-   **연구 질문**: AI가 이러한 감정을 제공할 수 있는가? 그리고 사람들이 그것이 AI로부터 온 것이라고 알 때 반응은 어떻게 달라지는가?
+
+#### 2. **연구 방법**
+
+-   **실험 설계**: 2 x 2 실험 설계.
+
+    -   메시지 제공 출처: AI 대 인간
+
+    -   라벨: AI 대 인간
+
+-   참가자들은 복잡한 상황을 설명하고, AI 또는 인간 응답을 받음.
+
+#### 3. **주요 결과**
+
+-   **AI 응답의 강점**:
+
+    -   AI가 감정을 정확하게 인식하고 더 높은 수준의 감정적 지원을 제공.
+
+    -   AI 응답은 인간 응답보다 사람들을 더 많이 "들어줬다"고 느끼게 함.
+
+-   **AI 라벨의 약점**:
+
+    -   사람들이 응답이 AI에서 온 것임을 알게 되면, 해당 응답에 대해 부정적 반응을 보임.
+
+    -   AI 라벨은 응답의 가치를 낮추는 효과가 있음.
+
+#### 4. **추가 연구 발견**
+
+-   **AI와 인간 응답의 차이**:
+
+    -   AI는 감정적 지원을 더 잘 제공, 실질적 조언 제공은 부족.
+
+    -   인간은 개인 경험을 더 자주 공유했으나, 감정적 지지를 제공하는데 AI에 비해 덜 효과적.
+
+#### 5. **응용 및 시사점**
+
+-   **AI와 인간 협력**:
+
+    -   AI는 감정 인식과 감정적 지원 제공에 유리함.
+
+    -   사람들은 AI가 아닌 인간과의 상호작용을 더 가치 있게 여길 수 있음.
+
+    -   AI는 감정적 지원을 필요로 하는 상황에서 인간의 도움을 보완할 수 있음.
+
+    -   AI 사용 시, AI 응답임을 투명하게 공개하는 것이 중요할 수 있음.
+
+#### 6. **미래 연구 방향**
+
+-   AI와 인간 협력에서 AI의 투명성과 신뢰 구축에 대한 연구가 필요함.
+
+-   AI 응답이 인간 간 관계 개선에 어떤 역할을 할 수 있는지 추가 연구가 필요.
+
+#### 7. **결론**
+
+-   **AI의 가능성**: AI는 감정적 지원에서 중요한 역할을 할 수 있으며, 특히 사람들 간의 이해를 증진시킬 수 있는 잠재력을 가지고 있음.
+
+-   **한계점**: AI 라벨이 부정적 영향을 미칠 수 있다는 점에서 인간 상호작용을 대체하기 어려움.
+
+------------------------------------------------------------------------
+
+# *Hands-on Practice*
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+library(gridExtra)
+library(plotrix)
+library(ggplot2)
+library(lsr)
+
+###############################################
+
+all = read.csv('data/Being Heard by AI OSF.csv')
+
+etaSquared(aov(feelheard~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(accuracy~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(understoodme~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(connection~responseR*labelR,all), type = 2, anova = T)
+
+
+```
+
+```{r}
+
+all %>% group_by(labelR) %>% 
+  summarise(feelheard = mean(feelheard,na.rm=T),
+            accuracy = mean(accuracy,na.rm=T),
+            understoodme = mean(understoodme,na.rm=T),
+            connection = mean(connection,na.rm=T))
+
+
+```
+
+```{r}
+
+
+all %>% group_by(responseR) %>% 
+  summarise(feelheard = mean(feelheard,na.rm=T),
+            accuracy = mean(accuracy,na.rm=T),
+            understoodme = mean(understoodme,na.rm=T),
+            connection = mean(connection,na.rm=T))
+
+
+```
+
+```{r}
+
+
+all$labelRR = ifelse(all$labelR=='ai label',"AI label","human label")
+all$responseRR = ifelse(all$responseR=='ai response',"AI response","human response")
+
+dodge = position_dodge(width=0.9)
+
+apatheme=theme_bw()+theme(panel.grid.major=element_blank(),
+                          panel.grid.minor=element_blank(),
+                          panel.border=element_blank(),
+                          axis.line=element_line(),
+                          text=element_text(family='Helvetica',size=15),
+                          axis.text.x = element_text(color="black"))
+
+```
+
+```{r}
+
+diff.heard.label =independentSamplesTTest(feelheard~labelR,all)
+delta.heard.label=diff.heard.label$mean[1]-diff.heard.label$mean[2]
+conf.heard.label=diff.heard.label$conf.int
+
+```
+
+```{r}
+diff.accuracy.label =independentSamplesTTest(accuracy~labelR,all)
+delta.accuracy.label=diff.accuracy.label $mean[1]-diff.accuracy.label $mean[2]
+conf.accuracy.label=diff.accuracy.label$conf.int
+
+```
+
+```{r}
+diff.understoodme.label =independentSamplesTTest(understoodme~labelR,all)
+delta.understoodme.label=diff.understoodme.label$mean[1]-diff.understoodme.label$mean[2]
+conf.understoodme.label=diff.understoodme.label$conf.int
+
+```
+
+```{r}
+diff.connection.label =independentSamplesTTest(connection~labelR,all)
+delta.connection.label=diff.connection.label$mean[1]-diff.connection.label$mean[2]
+conf.connection.label=diff.connection.label$conf.int
+
+```
+
+```{r}
+diff.heard.response =independentSamplesTTest(feelheard~responseR,all)
+delta.heard.response=diff.heard.response$mean[1]-diff.heard.response$mean[2]
+conf.heard.response=diff.heard.response$conf.int
+
+```
+
+```{r}
+diff.accuracy.response =independentSamplesTTest(accuracy~responseR,all)
+delta.accuracy.response=diff.accuracy.response $mean[1]-diff.accuracy.response $mean[2]
+conf.accuracy.response=diff.accuracy.response$conf.int
+
+```
+
+```{r}
+diff.understoodme.response =independentSamplesTTest(understoodme~responseR,all)
+delta.understoodme.response=diff.understoodme.response$mean[1]-diff.understoodme.response$mean[2]
+conf.understoodme.response=diff.understoodme.response$conf.int
+
+```
+
+```{r}
+diff.connection.response =independentSamplesTTest(connection~responseR,all)
+delta.connection.response=diff.connection.response$mean[1]-diff.connection.response$mean[2]
+conf.connection.response=diff.connection.response$conf.int
+
+```
+
+```{r}
+deltaplot = data.frame(effect=c('Label','Label','Label','Label','Response','Response','Response','Response'),
+                       dv = c('Feeling\nheard',"Response\naccuracy","Responder\nunderstood me",
+                              "Connection\nto responder",'Feeling\nheard',"Response\naccuracy","Responder\nunderstood me",
+                              "Connection\nto responder"),
+                       delta =c(delta.heard.label,delta.accuracy.label,delta.understoodme.label,delta.connection.label,
+                                delta.heard.response,delta.accuracy.response,delta.understoodme.response,delta.connection.response),
+                       lower = c(conf.heard.label[1],conf.accuracy.label[1],conf.understoodme.label[1],conf.connection.label[1],
+                                 conf.heard.response[1],conf.accuracy.response[1],conf.understoodme.response[1],conf.connection.response[1]),
+                       high=c(conf.heard.label[2],conf.accuracy.label[2],conf.understoodme.label[2],conf.connection.label[2],
+                              conf.heard.response[2],conf.accuracy.response[2],conf.understoodme.response[2],conf.connection.response[2]))
+
+```
+
+```{r}
+deltaplot$dv= factor(deltaplot$dv, levels = c("Feeling\nheard", "Response\naccuracy", "Responder\nunderstood me","Connection\nto responder"))
+
+apatheme=theme_bw()+theme(panel.grid.major=element_blank(),
+                          panel.grid.minor=element_blank(),
+                          panel.border=element_blank(),
+                          axis.line=element_line(),
+                          text=element_text(family='Helvetica',size=12),
+                          axis.text.x = element_text(color="black"))
+
+```
+
+```{r}
+figure1=deltaplot  %>%
+  ggplot(aes(x = dv, y = delta, fill = effect))+
+  geom_bar(stat='identity', position=dodge)+
+  geom_errorbar(aes(ymin= lower, ymax = high), 
+                position = dodge,width = 0.1)+
+  ylab('Delta (AI - Human)')+xlab('')+
+  apatheme+
+  scale_fill_manual(values = c("darkred", "lightgreen"),name="Manipulations")
+
+figure1
+
+```
+
+```{r}
+
+########multi group contrast###############
+
+temp1= subset(all,responseR=='ai response'&labelR=='ai label')
+temp2 =  subset(all,responseR=='human response'&labelR=='human label')
+temp3 =  subset(all,responseR=='human response'&labelR=='ai label')
+temp4 =  subset(all,responseR=='ai response'&labelR=='human label')
+
+temp1$cond = 'ai response ai label'
+temp2$cond = 'human response human label'
+temp3$cond = 'human response ai label'
+temp4$cond = 'ai response human label'
+
+all.long = rbind(temp1,temp2,temp3,temp4)
+all.long$cond= factor(all.long$cond, levels = c("ai response human label", "ai response ai label", "human response human label","human response ai label"))
+
+```
+
+```{r}
+
+library(rempsyc)
+table.stats1 <- nice_contrasts(
+  response = "feelheard",
+  group = "cond",
+  data = all.long
+)
+
+(my_table1 <- nice_table(table.stats1))
+
+```
+
+```{r}
+
+
+table.stats2 <- nice_contrasts(
+  response = "accuracy",
+  group = "cond",
+  data = all.long
+)
+
+(my_table2 <- nice_table(table.stats2))
+
+```
+
+```{r}
+
+table.stats3 <- nice_contrasts(
+  response = "understoodme",
+  group = "cond",
+  data = all.long
+)
+
+
+(my_table3 <- nice_table(table.stats3))
+
+
+```
+
+```{r}
+
+
+table.stats4 <- nice_contrasts(
+  response = "connection",
+  group = "cond",
+  data = all.long
+)
+
+(my_table4 <- nice_table(table.stats4))
+
+
+```
+
+```{r}
+
+# print(my_table1,my_table2,my_table3,my_table4, preview ="docx")
+# flextable::save_as_docx(my_table1,my_table2,my_table3,my_table4, path = "contrasts.docx")
+```
+
+```{r}
+
+## four condition plots
+
+all.long=all.long%>%
+  mutate(cond = recode(cond, 
+                       "ai response human label" = "AI Response\nHuman Label",
+                       "ai response ai label" = "AI Response\nAI Label",
+                       "human response human label" = "Human Response\nHuman Label",
+                       "human response ai label" = "Human Response\nAI Label"))
+
+```
+
+```{r}
+apatheme=theme_bw()+
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.border=element_blank(),
+        axis.line=element_line(),
+        text=element_text(family='Helvetica',size=10,colour='black'),
+        axis.text.x = element_text(color="black"))
+
+```
+
+```{r}
+
+heard = all.long %>%
+  group_by(cond)%>%
+  summarize(ratings = mean(feelheard), se.ratings = std.error(feelheard))%>%
+  ggplot(aes(x = cond, y = ratings,fill=cond))+
+  geom_bar(stat='identity', position=dodge,color="black",linewidth=1)+
+  geom_errorbar(aes(ymin= ratings - se.ratings, ymax = ratings + se.ratings), 
+                position = dodge,width = 0.1)+coord_cartesian(ylim = c(1,7))+
+  scale_y_continuous(breaks=seq(1,7,1))+
+  ylab('Feeling Heard')+xlab('')+  
+  scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
+  apatheme
+
+```
+
+```{r}
+accuracy = all.long %>%
+  group_by(cond)%>%
+  summarize(ratings = mean(accuracy), se.ratings = std.error(accuracy))%>%
+  ggplot(aes(x = cond, y = ratings,fill=cond))+
+  geom_bar(stat='identity', position=dodge,color="black",linewidth=1)+
+  geom_errorbar(aes(ymin= ratings - se.ratings, ymax = ratings + se.ratings), 
+                position = dodge,width = 0.1)+coord_cartesian(ylim = c(1,7))+
+  scale_y_continuous(breaks=seq(1,7,1))+
+  ylab('Response Accuracy')+xlab('')+  
+  scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
+  apatheme
+
+```
+
+```{r}
+understood = all.long %>%
+  group_by(cond)%>%
+  summarize(ratings = mean(understoodme), se.ratings = std.error(understoodme))%>%
+  ggplot(aes(x = cond, y = ratings,fill=cond))+
+  geom_bar(stat='identity', position=dodge,color="black",linewidth=1)+
+  geom_errorbar(aes(ymin= ratings - se.ratings, ymax = ratings + se.ratings), 
+                position = dodge,width = 0.1)+coord_cartesian(ylim = c(1,7))+
+  scale_y_continuous(breaks=seq(1,7,1))+
+  ylab('Responder Understood Me')+xlab('')+  
+  scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
+  apatheme
+
+```
+
+```{r}
+connection = all.long %>%
+  group_by(cond)%>%
+  summarize(ratings = mean(connection), se.ratings = std.error(connection))%>%
+  ggplot(aes(x = cond, y = ratings,fill=cond))+
+  geom_bar(stat='identity', position=dodge,color="black",linewidth=1)+
+  geom_errorbar(aes(ymin= ratings - se.ratings, ymax = ratings + se.ratings), 
+                position = dodge,width = 0.1)+coord_cartesian(ylim = c(1,7))+
+  scale_y_continuous(breaks=seq(1,7,1))+
+  ylab('Connnection to Responder')+xlab('')+  
+  scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
+  apatheme
+
+```
+
+```{r}
+figure2=ggarrange(heard, accuracy,understood,connection, ncol=2, nrow=2, common.legend = TRUE, legend="none")
+figure2
+
+```
+
+```{r}
+
+###################Moderators####################
+anova(lm(feelheard~labelR*atti_bing,all))
+anova(lm(accuracy~labelR*atti_bing,all))
+anova(lm(understoodme~labelR*atti_bing,all))
+anova(lm(connection~labelR*atti_bing,all))
+
+```
+
+```{r}
+anova(lm(feelheard~labelR*experience,all))
+anova(lm(accuracy~labelR*experience,all))
+anova(lm(understoodme~labelR*experience,all))
+anova(lm(connection~labelR*experience,all))
+
+```
+
+```{r}
+anova(lm(feelheard~labelR*agency,all))
+anova(lm(accuracy~labelR*agency,all))
+anova(lm(understoodme~labelR*agency,all))
+anova(lm(connection~labelR*agency,all))
+
+```
+
+```{r}
+library(interactions)
+library(jtools)
+library(ggplot2)
+m1=lm(feelheard~labelRR*atti_bing,all)
+f1=interact_plot(m1, pred = atti_bing, modx = labelRR,interval=T,y.label = "Feel Heard",x.label = 'Attitude towards Bing Chat',legend.main = c("Label")) + theme_apa()
+
+```
+
+```{r}
+m2=lm(accuracy~labelRR*atti_bing,all)
+f2=interact_plot(m2, pred = atti_bing, modx = labelRR,interval=T,y.label = "Response Accuracy",x.label = 'Attitude towards Bing Chat',legend.main='Label') + theme_apa()
+
+```
+
+```{r}
+m3=lm(understoodme~labelRR*atti_bing,all)
+f3=interact_plot(m3, pred = atti_bing, modx = labelRR,interval=T,y.label = "Responder Understood Me",x.label = 'Attitude towards Bing Chat',legend.main='Label') + theme_apa()
+
+```
+
+```{r}
+m4=lm(connection~labelRR*atti_bing,all)
+f4=interact_plot(m4, pred = atti_bing, modx = labelRR,interval=T,y.label = "Connection to Responder",x.label = 'Attitude towards Bing Chat',legend.main='Label') + theme_apa()
+
+```
+
+```{r}
+m5=lm(connection~labelRR*agency,all)
+f5=interact_plot(m5, pred = agency, modx = labelRR,interval=T,y.label = "Connection to Responder",x.label = 'Mind Perception of Bing Chat \n- Agency',legend.main='Label') + theme_apa()
+
+```
+
+```{r}
+m6=lm(connection~labelRR*experience,all)
+f6=interact_plot(m6, pred = experience, modx = labelRR,interval=T,y.label = "Connection to Responder",x.label = 'Mind Perception of Bing Chat \n- Experience',legend.main='Label') + theme_apa()
+
+```
+
+```{r}
+
+library(grid)
+library(gridExtra)
+
+figure3=ggarrange(f1, f2,f3,f4,f5,f6,nrow=2,ncol=3,common.legend = TRUE,legend='bottom')
+figure3
+######################empathic accuracy########################
+
+```
+
+```{r}
+all$happiness_ai.d = abs(all$happiness_ai-all$happiness_d)
+all$sadness_ai.d = abs(all$sadness_ai-all$sadness_d)
+all$fear_ai.d = abs(all$fear_ai-all$fear_d)
+all$anger_ai.d = abs(all$anger_ai-all$anger_d)
+all$surprise_ai.d = abs(all$surprise_ai-all$surprise_d)
+all$disgust_ai.d = abs(all$disgust_ai-all$disgust_d)
+
+```
+
+```{r}
+
+all$happiness_r.d = abs(all$happiness_r-all$happiness_d)
+all$sadness_r.d = abs(all$sadness_r-all$sadness_d)
+all$fear_r.d = abs(all$fear_r-all$fear_d)
+all$anger_r.d = abs(all$anger_r-all$anger_d)
+all$surprise_r.d = abs(all$surprise_r-all$surprise_d)
+all$disgust_r.d = abs(all$disgust_r-all$disgust_d)
+
+```
+
+```{r}
+pairedSamplesTTest( formula= ~happiness_ai.d + happiness_r.d, data=all )
+pairedSamplesTTest( formula= ~sadness_ai.d + sadness_r.d, data=all )
+pairedSamplesTTest( formula= ~fear_ai.d + fear_r.d, data=all )
+pairedSamplesTTest( formula= ~disgust_ai.d + disgust_r.d, data=all )
+pairedSamplesTTest( formula= ~surprise_ai.d + surprise_r.d, data=all )
+pairedSamplesTTest( formula= ~anger_ai.d + anger_r.d, data=all )
+
+```
+
+```{r}
+######################follow up study####################################
+library(dplyr)
+library(lsr)
+fu = read.csv('data/Followup Study OSF.csv')
+fu$id = fu$OriginalDiscloserID
+all = left_join(all,fu,by='id')
+
+```
+
+```{r}
+independentSamplesTTest(m_emotional ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_practical ~aiorhuman.response,fu,var.equal = T)
+
+```
+
+```{r}
+independentSamplesTTest(m_specifics_1 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_2 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_3 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_4 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_5 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_6 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_7 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_8 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_9 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_10 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_11 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_12 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_13 ~aiorhuman.response,fu,var.equal = T)
+independentSamplesTTest(m_specifics_14 ~aiorhuman.response,fu,var.equal = T)
+
+```
+
+```{r}
+independentSamplesTTest(m_motivation ~aiorhuman.response,fu,var.equal = T)
+fu$heard = with(fu,apply(data.frame(m_understood,m_validated,m_affirmed,m_seen,m_accepted,m_caredfor),1,mean,na.rm=T))
+independentSamplesTTest(heard ~aiorhuman.response,fu,var.equal = T)
+
+```
+
+```{r}
+######correlation table###########
+library(apaTables)
+apa.cor.table(all[,c(107,141:156)], filename = "table.all.doc", table.number = 1)
+
+```
+
+```{r}
+apa.cor.table(all[all$labelR=='ai label',c(107,141:156)], filename = "table.ai label.doc", table.number = 2)
+apa.cor.table(all[all$labelR=='human label',c(107,141:156)], filename = "table.human label.doc", table.number = 3)
+
+```
+
+```{r}
+#no sig moderation by label condition
+anova(lm(feelheard~m_emotional*labelR,all))
+anova(lm(feelheard~m_practical*labelR,all))
+anova(lm(feelheard~m_specifics_1*labelR,all))
+anova(lm(feelheard~m_specifics_2*labelR,all))
+anova(lm(feelheard~m_specifics_3*labelR,all))
+anova(lm(feelheard~m_specifics_4*labelR,all))
+anova(lm(feelheard~m_specifics_5*labelR,all))
+anova(lm(feelheard~m_specifics_6*labelR,all))
+anova(lm(feelheard~m_specifics_7*labelR,all))
+anova(lm(feelheard~m_specifics_8*labelR,all))
+anova(lm(feelheard~m_specifics_9*labelR,all))
+anova(lm(feelheard~m_specifics_10*labelR,all))
+anova(lm(feelheard~m_specifics_11*labelR,all))
+anova(lm(feelheard~m_specifics_12*labelR,all))
+anova(lm(feelheard~m_specifics_13*labelR,all))
+anova(lm(feelheard~m_specifics_14*labelR,all))
+
+```
+
+```{r}
+
+############### EMOTIONS#####################
+etaSquared(aov(hope~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(distress~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(uncomfortable~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(creeped~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(ambivalent~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(happy~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(shame~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(excitement~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(fear~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(surprised~responseR*labelR,all), type = 2, anova = T)
+etaSquared(aov(statelonely~responseR*labelR,all), type = 2, anova = T)
+```

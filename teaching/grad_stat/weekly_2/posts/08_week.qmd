@@ -234,7 +234,7 @@ abline(h = 0.5, col = "red", lty = 2)
 
 <br>
 
-## Random Variable
+## 7. Random Variable
 
 > A **random variable** is a key concept in probability theory. It is a function that maps the outcomes of a random experiment to numerical values, allowing for mathematical treatment of random phenomena. Random variables can be classified into two types: **Discrete Random Variables** and **Continuous Random Variables**.
 
@@ -385,7 +385,7 @@ The square root of the variance is called the **standard deviation**, and it bri
 
 <br>
 
-## More Distributions & Probability Density Functions
+## 8. More Distributions & Probability Density Functions
 
 ### 1. Binomial Distribution (이항분포)
 
@@ -885,16 +885,174 @@ ggplot(df_t, aes(x = Value)) +
   theme_minimal()
 ```
 
-<br> \### 9. Chi-Squared Distribution (카이제곱 분포)
+<br>
+
+```{r}
+# t-분포와 정규분포 비교
+library(ggplot2)
+
+# 자유도 설정
+df <- c(1, 5, 30)  # 자유도 1, 5, 30에 대한 t-분포
+
+# 데이터프레임 생성
+x <- seq(-4, 4, length.out = 100)
+df_list <- lapply(df, function(d) dt(x, df = d))
+names(df_list) <- paste("df =", df)
+df_data <- data.frame(x = rep(x, times = 3), density = unlist(df_list), group = factor(rep(df, each = 100)))
+
+# 그래프 그리기
+ggplot(df_data, aes(x, density, color = group)) +
+  geom_line(size = 1) +
+  labs(title = "t-분포와 정규분포 비교", x = "값", y = "밀도") +
+  geom_line(aes(x, dnorm(x)), color = "black", linetype = "dashed") +  # 정규분포 추가
+  theme_minimal()
+
+```
+
+-   **자유도**가 커질수록, t-분포는 점점 **정규분포**에 가까워지며, 그 차이는 주로 **꼬리 부분**에서 드러납니다.
+
+<br>
+
+**Shiny t-검정 예시**
+
+```{r}
+# Install necessary packages
+library(shiny)
+library(ggplot2)
+
+# UI
+ui <- fluidPage(
+  titlePanel("t-검정 시뮬레이션"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("n", "표본 크기 (n)", min = 5, max = 100, value = 20),
+      numericInput("mean", "표본 평균", value = 75),
+      numericInput("sd", "표본 표준편차", value = 10),
+      numericInput("mu0", "모평균 가설값 (mu0)", value = 70),
+      actionButton("run", "t-검정 수행")
+    ),
+    mainPanel(
+      plotOutput("distPlot"),
+      verbatimTextOutput("testResult")
+    )
+  )
+)
+
+# Server
+server <- function(input, output) {
+  observeEvent(input$run, {
+    output$distPlot <- renderPlot({
+      # Generate random sample data
+      set.seed(123)
+      sample_data <- rnorm(input$n, input$mean, input$sd)
+      
+      # Create a ggplot object with the histogram of sample data
+      ggplot(data = data.frame(x = sample_data), aes(x)) +
+        geom_histogram(aes(y = ..density..), bins = 15, fill = "lightblue", color = "black") +
+        stat_function(fun = dnorm, args = list(mean = input$mean, sd = input$sd), color = "red", size = 1.2) +
+        geom_vline(xintercept = input$mu0, linetype = "dashed", color = "blue", size = 1.2) +
+        labs(title = "표본 데이터 분포와 t-분포", x = "표본 값", y = "밀도") +
+        theme_minimal() +
+        annotate("text", x = input$mu0, y = 0.05, label = paste("가설 모평균 =", input$mu0), color = "blue", angle = 90, vjust = -0.5)
+    })
+    
+    output$testResult <- renderPrint({
+      # Perform t-test
+      t_result <- t.test(rnorm(input$n, input$mean, input$sd), mu = input$mu0)
+      t_result
+    })
+  })
+}
+
+# Run the Shiny app
+# shinyApp(ui = ui, server = server)
+
+```
+
+<br>
+
+![](images/clipboard-3148924925.png)
+
+> 이 검정은 단일 표본 t-검정 (One Sample t-test)으로, 주어진 데이터가 **모평균** μ=70 과 다른지를 검정
+
+-   **t-값**: 3.2765
+
+    -   표본 평균이 **70**에서 얼마나 벗어났는지, 표준 오차를 기준으로 몇 배 떨어져 있는지를 나타냄
+
+-   **자유도 (df)**: 24
+
+    -   표본 크기 n = 25 에서 **1**을 뺀 값
+
+-   **p-값**: 0.00319
+
+    -   귀무가설(모평균이 70이다)이 참일 때, 주어진 표본에서 관측된 t-값(또는 그보다 극단적인 값)이 나올 확률.
+
+    -   **p-값이 0.05보다 작으므로**, **귀무가설을 기각**. 즉, 이 데이터는 모평균이 70이라는 가설에 대해 유의미하게 다르다는 것을 의미.
+
+-   **대립 가설**: 모평균은 70과 같지 않다 (two-tailed test)
+
+    -   **alternative hypothesis**는 "모평균이 70이 아니다"라는 가설. 이는 양측 검정 (two-tailed test).
+
+-   **신뢰구간 (95 percent confidence interval)**: (72.22845, 79.81430)
+
+    -   이 검정에서 계산된 **95% 신뢰구간**은 **72.23**에서 **79.81** 사이입니다. 이는 모평균이 이 구간 내에 있을 것으로 **95% 신뢰**한다는 의미. 중요한 점은 **70**이 이 구간에 포함되지 않으므로, 모평균이 **70과 다르다**는 결론을 내릴 수 있음.
+
+-   **표본 평균**: 76.02137
+
+#### Two-tail 검정이란?
+
+> **Two-tailed 검정**(양측 검정)은 통계적 가설 검정에서 **대립가설**이 모수가 가설 값과 **다르다**는 것을 검증하는 방식. 즉, 모수가 **가설 값보다 크거나 작다**는 두 가지 가능성을 모두 고려하는 검정.
+
+**Two-tailed 검정의 특징**
+
+-   **대립가설 (**H1): "모수가 가설 값과 다르다"를 의미하며, 이는 **두 가지 방향**(작거나 크거나)을 모두 고려.
+
+```{=html}
+<!-- -->
+```
+-   **귀무가설 (H0)**: "모수가 가설 값과 같다"는 가설로, 일반적으로 검정하고자 하는 기본 가설.
+
+**Two-tailed 검정의 예**
+
+예를 들어, 한 제품의 평균 무게가 **500g**인지를 검정한다고 가정할 때, two-tailed 검정에서는 **제품의 평균 무게가 500g보다 클 수도 있고, 작을 수도 있다는 두 가지 가능성**을 모두 고려합니다.
+
+-   **귀무가설 (H0)**: 제품의 평균 무게는 500g이다. 즉, μ=500.
+
+-   **대립가설 (H1)**: 제품의 평균 무게는 500g과 다르다. 즉, μ≠500.
+
+**Two-tailed 검정의 핵심**
+
+1.  **검정 방향**: **두 방향** 모두에서 귀무가설이 기각될 수 있다. 즉, 모수가 가설 값보다 **작거나 크면** 귀무가설이 기각.
+
+2.  **임계값**: 임계값(critical value)은 **양쪽 꼬리 부분**에서 계산. 예를 들어, 유의수준 α=0.05에서 two-tailed 검정을 수행할 때, 각 꼬리에 **2.5%씩**(전체 5%)의 유의수준이 할당됨.
+
+3.  **p-값**: 검정에서 관찰된 t-값 또는 z-값의 **절대값**을 기준으로 p-값을 계산하며, 양쪽 꼬리의 확률을 더한 값이 **p-값**이 됨.
+
+**그래프적 해석**
+
+-   **Two-tailed 검정**에서는 **양쪽 꼬리**에 임계값을 할당.
+
+-   예를 들어, 유의수준 α=0.05인 two-tailed 검정에서는 각 꼬리에 0.025씩 배분하여, t-값이 **임계값**을 넘어서는 경우 귀무가설을 기각.
+
+**Two-tailed 검정 vs One-tailed 검정**
+
+-   **Two-tailed 검정**: 모수가 가설 값과 다를 가능성을 양쪽(크거나 작거나)에서 모두 검정
+
+-   **One-tailed 검정**: 모수가 가설 값보다 크거나 작은 **한 방향**만을 검정.
+
+    -   **우측 검정**: $\mu > \mu_0$
+
+    -   **좌측 검정**: $\mu < \mu_0$
+
+<br>
+
+### 9. Chi-Squared Distribution (카이제곱 분포)
 
 > The chi-squared distribution is a continuous probability distribution that arises in statistics, particularly in hypothesis testing and confidence interval estimation for variance. It is the distribution of the sum of the squares of independent standard normal random variables. The probability density function of the chi-squared distribution is given by the following formula. 카이제곱 분포는 통계에서 주로 가설 검정과 분산에 대한 신뢰 구간 추정에 사용되는 연속 확률 분포입니다. 카이제곱 분포는 독립적인 표준 정규 확률 변수들의 제곱합의 분포로 정의됩니다. 카이제곱 분포의 확률 밀도 함수는 다음과 같습니다.
 
 $$
 f(x; k) = \frac{x^{k/2 - 1} e^{-x/2}}{2^{k/2} \Gamma(k/2)}
 $$
-
-\
-$k$ is the degrees of freedom (자유도).
 
 -   $k$: degrees of freedom (자유도)
 
@@ -1217,5 +1375,142 @@ server <- function(input, output) {
 # Shiny 앱 실행
 # shinyApp(ui = ui, server = server)
 
+
+```
+
+<br>
+
+## 9. Central Limit Theorem (CLT)
+
+### Concept Overview
+
+The **Central Limit Theorem** (CLT) is a fundamental theorem in statistics that explains the behavior of the sampling distribution of the sample mean. The theorem states that, regardless of the population distribution, the distribution of the sample mean will tend to follow a normal distribution as the sample size becomes large, provided that the samples are independent and identically distributed (i.i.d.).
+
+### Formal Definition
+
+Let $X_1, X_2, \dots, X_n$ be a sequence of i.i.d. random variables, each with mean $\mu$ and variance $\sigma^2$. The sample mean is defined as:
+
+$$
+\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i
+$$
+
+The Central Limit Theorem states that as the sample size $n$ grows large, the distribution of the standardized sample mean approaches a standard normal distribution:
+
+$$
+Z = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1) \quad \text{as} \quad n \to \infty
+$$
+
+This means that for large $n$, the distribution of the sample mean $\bar{X}_n$ is approximately normal with mean $\mu$ and variance $\frac{\sigma^2}{n}$, even if the original data are not normally distributed.
+
+### Why is CLT Important?
+
+-   **Approximation**: The CLT allows us to approximate the distribution of the sample mean using a normal distribution, which simplifies statistical inference.
+
+-   **Application**: It underpins many methods in hypothesis testing, confidence intervals, and regression analysis.
+
+-   **Real-world Use**: The CLT holds for large sample sizes, making it practical for various data distributions encountered in real-world applications.
+
+### R Code to Practice CLT
+
+We can simulate the Central Limit Theorem by drawing samples from a non-normal distribution, such as the uniform distribution, and computing the sample mean repeatedly.
+
+```{r}
+# Set the sample size and number of simulations
+n <- 30  # Sample size
+sims <- 100  # Number of simulations
+
+# Generate sample means from a uniform distribution
+sample_means <- replicate(sims, mean(runif(n, min = 0, max = 1)))
+
+# Plot the histogram of sample means
+hist(sample_means, breaks = 50, probability = TRUE, 
+     main = "Distribution of Sample Means (CLT Example)",
+     xlab = "Sample Mean", col = "lightblue")
+
+# Overlay the normal distribution for comparison
+curve(dnorm(x, mean = mean(sample_means), sd = sd(sample_means)), 
+      col = "darkred", lwd = 2, add = TRUE)
+
+# Add legend
+legend("topright", legend = c("Sample Means", "Normal Curve"),
+       col = c("lightblue", "darkred"), lwd = 2)
+
+```
+
+### Explanation of R Code
+
+-   **Sample Size** (`n`): We choose a sample size of 30, which is generally considered large enough for the CLT to hold.
+
+-   **Simulations** (`sims`): We generate 10,000 samples of size `n` from a uniform distribution to mimic repeated sampling.
+
+-   **Histogram**: We plot a histogram of the sample means, which should look approximately normal.
+
+-   **Normal Curve Overlay**: We overlay a normal distribution curve to compare the result with a theoretical normal distribution.
+
+This simulation illustrates how the distribution of sample means converges to a normal distribution, even though the original data come from a uniform distribution.
+
+-   Shiny app to explain CLT
+
+```{r}
+# Install necessary packages if you don't have them
+# install.packages("shiny")
+
+library(shiny)
+
+# Define UI for the app
+ui <- fluidPage(
+    # Application title
+    titlePanel("Central Limit Theorem Demonstration"),
+    
+    # Sidebar layout with input and output
+    sidebarLayout(
+        # Sidebar panel with a slider input for sample size
+        sidebarPanel(
+            sliderInput("sampleSize",
+                        "Sample Size (n):",
+                        min = 10,
+                        max = 1000,
+                        value = 30),
+            sliderInput("sims",
+                        "Number of Simulations:",
+                        min = 10,
+                        max = 10000,
+                        value = 5000)
+        ),
+        
+        # Main panel to display plot
+        mainPanel(
+            plotOutput("distPlot")
+        )
+    )
+)
+
+# Define server logic for the app
+server <- function(input, output) {
+    output$distPlot <- renderPlot({
+        # Set the sample size and number of simulations
+        n <- input$sampleSize
+        sims <- input$sims
+        
+        # Generate sample means from a uniform distribution
+        sample_means <- replicate(sims, mean(runif(n, min = 0, max = 1)))
+        
+        # Plot the histogram of sample means
+        hist(sample_means, breaks = 50, probability = TRUE, 
+             main = paste("Distribution of Sample Means (n =", n, ")"),
+             xlab = "Sample Mean", col = "lightblue")
+        
+        # Overlay the normal distribution for comparison
+        curve(dnorm(x, mean = mean(sample_means), sd = sd(sample_means)), 
+              col = "darkred", lwd = 2, add = TRUE)
+        
+        # Add legend
+        legend("topright", legend = c("Sample Means", "Normal Curve"),
+               col = c("lightblue", "darkred"), lwd = 2)
+    })
+}
+
+# Run the application 
+# shinyApp(ui = ui, server = server)
 
 ```

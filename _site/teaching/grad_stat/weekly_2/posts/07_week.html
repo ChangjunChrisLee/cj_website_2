@@ -236,8 +236,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#predict-test-data-and-create-submit-data" id="toc-predict-test-data-and-create-submit-data" class="nav-link" data-scroll-target="#predict-test-data-and-create-submit-data">6.3 Predict test data and create submit data</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#data-frame-generation" id="toc-data-frame-generation" class="nav-link" data-scroll-target="#data-frame-generation">Data frame generation</a></li>
-  <li><a href="#write-the-submit-data-frame-to-file-csv-is-created-in-the-folder-designated-by-setwd." id="toc-write-the-submit-data-frame-to-file-csv-is-created-in-the-folder-designated-by-setwd." class="nav-link" data-scroll-target="#write-the-submit-data-frame-to-file-csv-is-created-in-the-folder-designated-by-setwd.">Write the submit data frame to file : csv is created in the folder designated by setwd().</a></li>
   </ul>
 </nav>
     </div>
@@ -621,8 +619,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><br></p>
 <section id="packages" class="level3">
 <h3 class="anchored" data-anchor-id="packages">2.1 Packages</h3>
-<p>see “<a href="https://cjleelab.netlify.app/blogs/posts/2_about_a_package.html">What is a package in R</a>”</p>
-<p><br></p>
 <p>This is the process of loading (loading) the <code>Packages</code> I used for analysis, in addition to the representative <code>Packages</code> of <code>R</code>, such as <a href="https://www.tidyverse.org/">tidyverse</a> (including <code>ggplot2</code> and <code>dplyr</code>).</p>
 <p><br></p>
 <div class="cell">
@@ -716,9 +712,9 @@ $ Embarked    &lt;chr&gt; "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S",
 <h3 class="anchored" data-anchor-id="variable-meaning-explanation">2.3 variable meaning explanation</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 22%">
-<col style="width: 54%">
-<col style="width: 22%">
+<col style="width: 20%">
+<col style="width: 58%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1755,9 +1751,9 @@ $ Embarked    &lt;chr&gt; "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S",
 <p>The table below is a brief description of the actual selected variables.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 56%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 61%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1877,19 +1873,15 @@ ticket.size 39.544367 37.80849             59.59915        22.570142</code></pre
 <section id="predict-test-data-and-create-submit-data" class="level3">
 <h3 class="anchored" data-anchor-id="predict-test-data-and-create-submit-data">6.3 Predict test data and create submit data</h3>
 <p><br></p>
-<p>```{r eval=FALSE} # Prediction pred.rf &lt;- predict(object = titanic.rf, newdata = test, type = “class”)</p>
-</section>
-</section>
-</section>
-<section id="data-frame-generation" class="level1">
-<h1>Data frame generation</h1>
-<p>submit &lt;- data.frame(PassengerID = ID, Survived = pred.rf)</p>
-</section>
-<section id="write-the-submit-data-frame-to-file-csv-is-created-in-the-folder-designated-by-setwd." class="level1">
-<h1>Write the submit data frame to file : csv is created in the folder designated by setwd().</h1>
-<p>write.csv(submit, file = ‘./titanic_submit.csv’, row.names = F)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># Prediction </span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>pred.rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> titanic.rf, <span class="at">newdata =</span> test, <span class="at">type =</span> <span class="st">"class"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

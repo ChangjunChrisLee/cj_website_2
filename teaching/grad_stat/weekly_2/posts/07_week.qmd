@@ -292,10 +292,6 @@ It contains the analysis process of 'Titanic', one of the representative 'Compet
 
 ### 2.1 Packages
 
-see "[What is a package in R](https://cjleelab.netlify.app/blogs/posts/2_about_a_package.html)"
-
-<br>
-
 This is the process of loading (loading) the `Packages` I used for analysis, in addition to the representative `Packages` of `R`, such as [tidyverse](https://www.tidyverse.org/) (including `ggplot2` and `dplyr`).
 
 <br>
@@ -354,7 +350,7 @@ The reason why `rbind()` was not used even when combining the two data into full
 ### 2.3 variable meaning explanation
 
 |  variable name  | Interpretation (meaning)                                                                                     | Type       |
-|:--------------:|:--------------------------------------|:---------------|
+|:-------------:|:------------------------------------------|:--------------|
 | **PassengerID** | Unique ID number that identifies the passenger                                                               | Int        |
 |  **Survived**   | Indicates whether or not the passenger survived. Survival is 1 and death is 0.                               | Factor     |
 |   **Pclass**    | The class of the cabin, with 3 categories from 1st class (1) to 3rd class (3).                               | Ord.Factor |
@@ -1161,7 +1157,7 @@ Now that all the derived variables created so far have been found to be useful, 
 The table below is a brief description of the actual selected variables.
 
 |  variable name  | Type   | Description                                                                                               |
-|:--------------:|:---------------|:----------------------------------------|
+|:------------:|:-------------|:-------------------------------------------|
 |  **Survived**   | factor | Target feature, survival == 1, death == 0                                                                 |
 |     **Sex**     | factor | gender, `male` or `female`                                                                                |
 |   **Pclass**    | factor | Cabin Class, First Class (1), Second Class (2), Third Class (3)                                           |
@@ -1234,12 +1230,8 @@ varImpPlot(titanic.rf)
 
 <br>
 
-\`\`\`{r eval=FALSE} \# Prediction pred.rf \<- predict(object = titanic.rf, newdata = test, type = "class")
+```{r}
+ # Prediction 
 
-# Data frame generation
-
-submit \<- data.frame(PassengerID = ID, Survived = pred.rf)
-
-# Write the submit data frame to file : csv is created in the folder designated by setwd().
-
-write.csv(submit, file = './titanic_submit.csv', row.names = F)
+pred.rf <- predict(object = titanic.rf, newdata = test, type = "class")
+```

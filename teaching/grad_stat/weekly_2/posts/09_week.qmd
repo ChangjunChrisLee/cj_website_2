@@ -9,3 +9,690 @@ slide-format: revealjs
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 <br>
+
+## Statistical Inference
+
+### 1. Introduction to Statistical Inference
+
+**Statistical Inference** is the process of drawing conclusions about population parameters based on a sample from the population. There are two main branches of statistical inference:
+
+-   **Estimation**: Involves estimating population parameters (e.g., the mean or variance) using sample data.
+
+-   **Hypothesis Testing**: Involves testing assumptions (hypotheses) about population parameters.
+
+The objective is to make reliable conclusions about a population, recognizing that sample data inherently contains some uncertainty.
+
+<Br>
+
+### 2. Point Estimation
+
+A **point estimate** provides a single value as an estimate of a population parameter. The most common point estimators are:
+
+-   Sample Mean ($\hat{\mu}$): An estimate of the population mean ($\mu$).
+
+-   Sample Variance ($\hat{\sigma}$): An estimate of the population variance ($\sigma^2$).
+
+#### Equations:
+
+-   The **sample mean** $\hat{\mu}$ is given by:
+
+$$
+\mu = \frac{1}{n} \sum_{i=1}^n X_i
+$$
+
+-   The **sample variance** $\hat{\sigma}$ is given by:
+
+$$
+\hat{\sigma}^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \hat{\mu})^2
+$$
+
+#### Properties of Good Estimators:
+
+-   **Unbiasedness**: The expected value of the estimator is equal to the parameter it estimates.
+
+-   **Consistency**: As the sample size increases, the estimator converges to the true parameter.
+
+-   **Efficiency**: Among unbiased estimators, an efficient estimator has the smallest variance.
+
+#### R Code for Point Estimation:
+
+```{r}
+# Generate random sample data
+set.seed(123)
+data <- rnorm(100, mean = 50, sd = 10)
+
+# Calculate point estimates
+sample_mean <- mean(data)
+sample_variance <- var(data)
+
+cat("Sample Mean:", sample_mean, "\n")
+cat("Sample Variance:", sample_variance, "\n")
+
+```
+
+<br>
+
+### 3. Interval Estimation (Confidence Intervals)
+
+A **confidence interval** provides a range of values that is likely to contain the population parameter with a specified level of confidence (e.g., 95%).
+
+For the sample mean, a **95% confidence interval** can be calculated as:
+
+$$
+CI = \hat{\mu} \pm z_{\alpha/2} \cdot \frac{\hat{\sigma}}{\sqrt{n}}
+$$
+
+Where:
+
+-   $\hat{\mu}$ is the sample mean,
+
+-   $z_{\alpha/2}$ is the critical value from the standard normal distribution (1.96 for 95% confidence),
+
+-   $\hat{\sigma}$ is the sample standard deviation,
+
+-   $n$ is the sample size.
+
+#### R Code for Confidence Interval:
+
+```{r}
+# Function to calculate a 95% confidence interval
+confidence_interval <- function(data) {
+  n <- length(data)
+  mean <- mean(data)
+  sd <- sd(data)
+  error <- qnorm(0.975) * sd / sqrt(n)
+  lower_bound <- mean - error
+  upper_bound <- mean + error
+  return(c(lower_bound, upper_bound))
+}
+
+# Generate sample data
+set.seed(123)
+data <- rnorm(100, mean = 50, sd = 10)
+
+# Calculate the 95% confidence interval
+ci <- confidence_interval(data)
+cat("95% Confidence Interval:", ci, "\n")
+
+```
+
+<br>
+
+### 4. Hypothesis Testing
+
+**Hypothesis Testing** involves testing an assumption (hypothesis) about a population parameter. The two types of hypotheses are:
+
+-   **Null Hypothesis (H₀)**: The statement being tested, usually a statement of no effect or no difference.
+
+-   **Alternative Hypothesis (H₁)**: The statement you want to test, indicating an effect or difference.
+
+#### Steps in Hypothesis Testing:
+
+1.  State the null and alternative hypotheses.
+
+2.  Choose a significance level ($\alpha$, usually 0.05).
+
+3.  Compute a test statistic.
+
+4.  Determine the critical value or p-value.
+
+5.  Make a decision: reject or fail to reject the null hypothesis.
+
+#### Test Statistic for a Mean:
+
+For large samples (n \> 30), we use the z-statistic:
+
+$$
+Z = \frac{\hat{\mu} - \mu_0}{\hat{\sigma} / \sqrt{n}}
+$$
+
+Where:
+
+-   $\hat{\mu}$ is the sample mean,
+
+-   $\mu_0$ is the population mean under the null hypothesis,
+
+-   $\hat{\sigma}$ is the sample standard deviation.
+
+#### R Code for Hypothesis Testing (One-Sample t-test):
+
+<br>
+
+### 5. Types of Errors
+
+In hypothesis testing, we can make two types of errors:
+
+-   **Type I Error**: Rejecting the null hypothesis when it is true (false positive).
+
+-   **Type II Error**: Failing to reject the null hypothesis when it is false (false negative).
+
+The **power** of a test is the probability of correctly rejecting a false null hypothesis (1 - probability of Type II error).
+
+#### R Code for Power Calculation:
+
+```{r}
+# Calculate the power of a t-test
+library(pwr)
+
+# Parameters for power calculation: effect size, significance level, sample size
+effect_size <- (55 - 50) / 10  # (difference in means / standard deviation)
+power_result <- pwr.t.test(d = effect_size, n = 100, sig.level = 0.05, type = "two.sample")
+
+# Output the power of the test
+print(power_result)
+
+```
+
+## Frequentist vs. Bayesian
+
+### 1. Introduction
+
+In statistics, two major schools of thought exist: **Frequentist** and **Bayesian**. Each has its own interpretation of probability, methods of inference, and philosophy. Let’s explore the key differences, along with some intuitive examples and R code for both approaches.
+
+### 2. Historical Background
+
+#### Frequentist Approach
+
+-   **Origins**: The frequentist approach is rooted in the early 20th century, developed by statisticians such as **Ronald A. Fisher**, **Jerzy Neyman**, and **Egon Pearson**.
+
+-   **Philosophy**: Frequentists define probability as the long-run frequency of events. They believe that population parameters are fixed but unknown, and they use data from random samples to infer these fixed parameters.
+
+    Example: If you flip a coin many times, the frequentist interpretation is that the probability of heads is the long-term proportion of heads after infinite flips.
+
+#### Bayesian Approach
+
+-   **Origins**: Bayesian statistics is named after **Rev. Thomas Bayes**, an 18th-century mathematician. However, it wasn’t until the 20th century that statisticians like **Harold Jeffreys** and **Leonard J. Savage** developed Bayesian ideas more thoroughly.
+
+-   **Philosophy**: In Bayesian statistics, probability represents a degree of belief or certainty about an event. Bayesian inference updates this belief as new data becomes available, using **Bayes’ Theorem**.
+
+    Example: If you believe that the coin is biased based on previous information (e.g., 60% heads in past experiments), you incorporate that into your analysis and update your belief as new flips are observed.
+
+### 3. Philosophical Differences
+
+#### Frequentist Philosophy
+
+-   **Objective**: Population parameters (like the mean or variance) are fixed but unknown, and we use sampling to make inferences about these parameters.
+
+-   **Probability**: The probability of an event is the long-run frequency with which the event occurs over repeated experiments.
+
+-   **Hypothesis Testing**: Frequentists use **p-values** to test hypotheses and make decisions without explicitly incorporating prior knowledge.
+
+    For example, in hypothesis testing, you might ask: "Given this data, how likely is it to observe this result if the null hypothesis were true?"
+
+#### Bayesian Philosophy
+
+-   **Subjective**: Bayesian statistics treats parameters as random variables with their own distributions, reflecting uncertainty or prior beliefs.
+
+-   **Probability**: Probability represents a degree of belief in an event, which is updated as new data is observed.
+
+-   **Bayes’ Theorem**: The cornerstone of Bayesian inference, Bayes’ Theorem allows us to update prior beliefs about a parameter in light of new evidence.
+
+    For example, you might ask: "Given this data, how should I update my belief about the true parameter?"
+
+### 4. Bayes' Theorem
+
+The key formula that defines Bayesian inference is **Bayes' Theorem**: $$
+P(\theta | X) = \frac{P(X | \theta) P(\theta)}{P(X)}
+$$ Where:
+
+-   $P(\theta | X)$ is the **posterior** probability of the parameter $\theta$ given data $X$,
+
+-   $P(X | \theta)$ is the **likelihood**, the probability of observing the data given $\theta$,
+
+-   $P(\theta)$ is the **prior** probability, representing our belief about $\theta$ before seeing the data,
+
+-   $P(X)$ is the **marginal likelihood**, a normalizing constant that ensures the posterior is a valid probability distribution.
+
+### Example:
+
+If you’re trying to estimate the probability of getting heads from a potentially biased coin, the Bayesian approach would combine your prior belief (say, you think the coin might be biased towards heads) with the actual results from a series of flips to calculate an updated belief (the posterior).
+
+### 5. Intuitive Examples
+
+#### Example 1: Coin Toss (Frequentist vs. Bayesian)
+
+**Frequentist Approach:**
+
+The frequentist approach to estimating the probability of heads (p) in a coin toss would involve collecting data (number of heads and tails) and estimating p using the **sample proportion**:
+
+$$
+\hat{p} = \frac{\text{number of heads}}{\text{total flips}}
+$$ Frequentists would not incorporate any prior beliefs and rely solely on the data at hand.
+
+**Bayesian Approach:**
+
+Bayesians would start with a **prior distribution** for ppp, reflecting their belief about the probability of heads before observing any data. After flipping the coin several times, they would update this belief using Bayes' Theorem to obtain the **posterior distribution** for ppp.
+
+#### R Code for Coin Toss (Frequentist vs. Bayesian)
+
+```{r}
+# Frequentist Approach - Coin Toss
+set.seed(123)
+n <- 100  # Number of flips
+p_true <- 0.6  # True probability of heads
+flips <- rbinom(n, size = 1, prob = p_true)
+freq_estimate <- mean(flips)
+
+cat("Frequentist Estimate of p:", freq_estimate, "\n")
+
+
+```
+
+```{r}
+
+# Bayesian Approach - Coin Toss with Beta Prior
+library(ggplot2)
+
+# Prior: Beta(2, 2) - Reflects prior belief that p is likely around 0.5
+prior_alpha <- 2
+prior_beta <- 2
+
+# Posterior: Beta(alpha + heads, beta + tails)
+heads <- sum(flips)
+tails <- n - heads
+posterior_alpha <- prior_alpha + heads
+posterior_beta <- prior_beta + tails
+
+# Visualize the Prior and Posterior Distributions
+p_vals <- seq(0, 1, length.out = 100)
+prior_dist <- dbeta(p_vals, prior_alpha, prior_beta)
+posterior_dist <- dbeta(p_vals, posterior_alpha, posterior_beta)
+
+df <- data.frame(p_vals, prior_dist, posterior_dist)
+ggplot(df, aes(x = p_vals)) +
+  geom_line(aes(y = prior_dist, color = "Prior")) +
+  geom_line(aes(y = posterior_dist, color = "Posterior")) +
+  labs(title = "Prior and Posterior Distributions",
+       x = "Probability of Heads (p)", y = "Density") +
+  scale_color_manual(values = c("Prior" = "blue", "Posterior" = "red")) +
+  theme_minimal()
+```
+
+### 6. Example 2: Hypothesis Testing (Frequentist vs. Bayesian)
+
+#### Frequentist Hypothesis Testing
+
+In frequentist hypothesis testing, we define a **null hypothesis** H0 (e.g., the population mean is zero) and use a test statistic to determine whether we reject H0 based on a significance level (e.g., $\alpha = 0.05$).
+
+#### Bayesian Hypothesis Testing
+
+In Bayesian hypothesis testing, we compute the **posterior probability** of the hypotheses and compare them directly. Instead of a p-value, we might calculate the **Bayes Factor**, which quantifies the evidence in favor of one hypothesis over another.
+
+#### R Code for Hypothesis Testing (Frequentist vs. Bayesian)
+
+```{r}
+# Frequentist T-test
+set.seed(123)
+data <- rnorm(100, mean = 5, sd = 2)
+t_test_result <- t.test(data, mu = 0)
+print(t_test_result)
+
+
+
+```
+
+```{r}
+# Bayesian T-test using BayesFactor package
+# install.packages("BayesFactor")
+library(BayesFactor)
+
+# Bayesian test
+bf <- ttestBF(x = data, mu = 0)
+print(bf)
+```
+
+### 7. Key Takeaways
+
+-   **Frequentist** statistics is based on the idea of long-run frequencies, and parameters are treated as fixed. Estimations and hypothesis testing are based purely on observed data without incorporating prior beliefs.
+
+-   **Bayesian** statistics incorporates prior knowledge and updates this belief using data. Parameters are treated as random variables with their own probability distributions.
+
+-   **Frequentist tools** include p-values and confidence intervals, while **Bayesian tools** involve posterior distributions and Bayes Factors.
+
+<br>
+
+## ANOVA (Analysis of Variance)
+
+> **여러 집단 간의 평균 차이**를 분석하기 위한 통계적 기법. **두 개 이상의 집단**이 있을 때, 이 집단들의 **평균이 동일한지**를 검정하는 데 사용됨. ANOVA는 일반적으로 **F-검정**을 통해 수행되며, 집단 간의 분산과 집단 내의 분산을 비교하여 집단 평균의 차이가 통계적으로 유의미한지를 결정.
+
+### ANOVA의 기본 개념
+
+1.  **귀무가설 (H0)**: 모든 집단의 **평균이 동일**.
+
+$$
+H_0: \mu_1 = \mu_2 = \cdots = \mu_k
+$$
+
+
+2.  **대립가설 (H1)**: **적어도 하나의 집단**의 평균이 다르다.
+
+<bR>
+
+### ANOVA의 원리
+
+ANOVA는 **총 변동**을 두 부분으로 나누어 분석.
+
+1.  **집단 간 변동 (Between-group variation)**: 각 집단의 평균이 전체 평균에서 얼마나 벗어나는지를 나타냄. 집단 간 변동이 크다면, 각 집단의 평균이 서로 다를 가능성이 높음.
+
+2.  **집단 내 변동 (Within-group variation)**: 같은 집단 내에서 개별 데이터가 집단 평균에서 얼마나 벗어나는지를 나타냄. 이는 데이터의 **무작위 오차**로 설명할 수 있음.
+
+### ANOVA의 F-통계량
+
+ANOVA에서는 **F-통계량**을 계산하여 집단 간 평균 차이가 우연히 발생했는지를 검정. F-통계량은 **집단 간 변동**과 **집단 내 변동**의 비율로 계산.
+
+$$
+F = \frac{\text{집단 간 변동}}{\text{집단 내 변동}}
+$$
+
+-   **집단 간 변동 (Mean Square Between, MSB)**: 각 집단 평균이 전체 평균에서 벗어나는 정도.
+
+$$
+\text{MSB} = \frac{\sum_{i=1}^{k} n_i (\bar{X}_i - \bar{X})^2}{k - 1}
+$$
+
+여기서:
+
+-   $n_i$: 각 집단의 샘플 크기
+
+-   $\bar{X}_i$: 각 집단의 평균
+
+-   $\bar{X}$: 전체 평균
+
+-   **집단 내 변동 (Mean Square Within, MSW)**: 각 집단 내에서 개별 데이터가 집단 평균에서 벗어나는 정도.
+
+$$
+\text{MSW} = \frac{\sum_{i=1}^{k} \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2}{N - k}
+$$
+
+여기서:
+
+-   $X_{ij}$: i번째 집단의 j번째 관측값
+
+-   $N$: 전체 샘플 크기
+
+F-값이 **1보다 크면**, 집단 간 변동이 집단 내 변동보다 크다는 의미이며, 이는 집단 평균에 차이가 있을 가능성을 시사함.
+
+<br>
+
+
+### ANOVA의 해석
+
+-   **p-값**: F-값에 대응하는 **p-값**이 유의수준(예: 0.05)보다 작으면, **귀무가설을 기각**하고 **집단 간에 평균 차이가 있다**고 결론지을 수 있음.
+
+-   **귀무가설 기각**: 적어도 하나의 집단 평균이 다른 집단과 다르다는 것을 의미.
+
+### 예시: ANOVA 분석
+
+-   세 개의 서로 다른 교육 방법이 학생들의 수학 성적에 미치는 영향을 분석하고자 한다고 가정. 
+
+-   각 교육 방법에 대해 10명의 학생 성적 데이터를 수집했고, 세 그룹 간의 평균 성적 차이를 분석하고자 함.
+
+<bR>
+
+#### R 코드 예시:
+
+```{r}
+# 세 개의 교육 방법에 대한 학생 성적 데이터
+group_A <- c(85, 90, 88, 92, 85, 87, 89, 91, 84, 88)
+group_B <- c(78, 82, 80, 75, 79, 81, 77, 83, 76, 80)
+group_C <- c(88, 90, 92, 94, 91, 89, 87, 93, 90, 88)
+
+# 데이터를 합쳐서 그룹 지정
+data <- data.frame(
+  score = c(group_A, group_B, group_C),
+  group = factor(rep(c("A", "B", "C"), each = 10))
+)
+
+# ANOVA 분석 수행
+anova_result <- aov(score ~ group, data = data)
+
+# 결과 출력
+summary(anova_result)
+
+```
+
+-   **F-값**: 14.96
+
+-   **p-값**: 0.00018
+
+> 이 결과에서 p-값이 0.05보다 작으므로, 우리는 귀무가설을 기각. 즉, 세 그룹 중 적어도 하나의 그룹의 평균이 다른 그룹과 **유의미하게 다르다**고 결론 내릴 수 있음.
+
+
+<bR>
+
+
+### ANOVA의 확장
+
+1.  **일원 분산 분석 (One-way ANOVA)**: 위에서 설명한 것처럼 **하나의 요인**(그룹)에 대한 평균 차이를 분석.
+
+2.  **이원 분산 분석 (Two-way ANOVA)**: 두 가지 요인(예: 성별과 교육 방법)이 종속 변수에 미치는 영향을 분석.
+
+3.  **반복 측정 ANOVA**: 동일한 개체에 대해 여러 번 반복 측정한 데이터를 분석.
+
+
+<br>
+
+
+### ANOVA의 주요 응용 분야
+
+-   **실험 설계 분석**: 여러 실험 조건에서 평균 차이를 분석
+
+-   **임상 연구**: 여러 치료 방법 간의 효과를 비교
+
+-   **교육 연구**: 여러 교육 방식이 학업 성취도에 미치는 영향을 분석
+
+<br>
+
+### ANOVA의 한계
+
+-   **분산이 동일하다는 가정**: 모든 집단의 분산이 동일해야 한다는 가정이 있음. 만약 이 가정이 만족되지 않으면 **Welch's ANOVA**와 같은 다른 방법을 사용할 수 있음.
+
+-   **정규성 가정**: 데이터가 정규분포를 따른다는 가정이 있지만, 데이터가 크면 이 가정이 완화될 수 있음.
+
+
+<br>
+
+### 그래프를 통한 이해
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+
+
+# 세 개의 교육 방법에 대한 학생 성적 데이터
+group_A <- c(85, 90, 88, 92, 85, 87, 89, 91, 84, 88)
+group_B <- c(78, 82, 80, 75, 79, 81, 77, 83, 76, 80)
+group_C <- c(88, 90, 92, 94, 91, 89, 87, 93, 90, 88)
+
+# 데이터를 합쳐서 그룹 지정
+data <- data.frame(
+  score = c(group_A, group_B, group_C),
+  group = factor(rep(c("A", "B", "C"), each = 10))
+)
+
+# ANOVA 분석 수행
+anova_result <- aov(score ~ group, data = data)
+
+# 박스플롯과 ANOVA 결과 시각화
+ggboxplot(data, x = "group", y = "score", color = "group", add = "jitter") +
+  stat_compare_means(method = "anova", label = "p.format") +  # ANOVA 결과 추가
+  labs(title = "ANOVA 결과와 그룹별 성적 분포", x = "그룹", y = "성적") +
+  theme_minimal()
+
+
+```
+
+**Tukey HSD 사후 검정**:
+
+-   ANOVA 결과가 유의미하면, **Tukey HSD**를 사용하여 어떤 그룹 간 차이가 유의미한지 확인할 수 있음.
+
+-   \*\*`TukeyHSD()`\*\*는 ANOVA 결과에서 **그룹 간의 평균 차이**가 유의미한지 여부를 분석.
+
+```{r}
+
+# 패키지 로드
+library(multcompView)
+library(ggplot2)
+
+# Tukey HSD 사후 검정 수행
+tukey_result <- TukeyHSD(anova_result)
+
+# Tukey HSD 결과 확인
+tukey_result
+
+# 집단 간 유의미한 차이를 표현하기 위한 그룹화
+tukey_cld <- multcompLetters4(anova_result, tukey_result)
+
+# 평균 계산 및 Tukey HSD 결과 결합
+mean_data <- data %>%
+  group_by(group) %>%
+  summarise(mean = mean(score)) %>%
+  arrange(desc(mean))
+
+# Tukey HSD 결과를 시각적으로 표현하기 위한 레이블 추가
+mean_data$tukey_label <- tukey_cld$group$Letters
+
+# 박스플롯에 Tukey HSD 결과 레이블 추가
+ggplot(data, aes(x = group, y = score, fill = group)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_text(data = mean_data, aes(x = group, y = mean + 1, label = tukey_label), 
+            color = "red", size = 5) +
+  labs(title = "Tukey HSD 결과와 그룹 간 평균 차이", x = "그룹", y = "성적") +
+  theme_minimal()
+
+
+
+
+```
+
+-   **`multcompLetters4()`**: **`multcompView`** 패키지를 사용해 각 그룹 간 차이를 레이블로 표시. 이 레이블은 평균값 위에 표시되며, **A, B, C** 등으로 그룹 차이를 나타냄.
+
+<bR>
+
+### ANOVA에서 t-분포 시각화 및 t-값, p-값 계산
+
+```{r}
+# 필요한 패키지 설치 및 로드
+library(shiny)
+library(ggplot2)
+library(gridExtra)
+
+# Shiny UI
+ui <- fluidPage(
+  titlePanel("ANOVA 및 t-검정 시각화"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("mean_A", "A 그룹 평균", min = 50, max = 100, value = 70),
+      sliderInput("sd_A", "A 그룹 표준편차", min = 1, max = 30, value = 10),
+      sliderInput("mean_B", "B 그룹 평균", min = 50, max = 100, value = 75),
+      sliderInput("sd_B", "B 그룹 표준편차", min = 1, max = 30, value = 10),
+      actionButton("run", "분석 수행")
+    ),
+    mainPanel(
+      plotOutput("distPlot"),
+      uiOutput("calculationDisplay"), # 수식과 계산 과정 출력
+      verbatimTextOutput("finalResult") # 최종 결과 출력
+    )
+  )
+)
+
+# Shiny Server
+server <- function(input, output) {
+  observeEvent(input$run, {
+    # 데이터 생성
+    A_data <- rnorm(30, input$mean_A, input$sd_A)  # A 그룹 데이터
+    B_data <- rnorm(30, input$mean_B, input$sd_B)  # B 그룹 데이터
+    
+    # 데이터를 하나의 데이터 프레임으로 결합
+    data <- data.frame(
+      score = c(A_data, B_data),
+      group = factor(rep(c("A", "B"), each = 30))
+    )
+    
+    # t-test 수행 (두 그룹 간 비교)
+    t_test_result <- t.test(A_data, B_data)
+    
+    # t-검정에서 필요한 값 계산
+    t_value <- t_test_result$statistic
+    df <- t_test_result$parameter
+    p_value <- t_test_result$p.value
+    
+    # t-분포 그리기 위한 x 값 범위 설정
+    x_vals <- seq(-4, 4, length.out = 1000)
+    
+    # t-분포의 밀도 함수 값 계산
+    t_dist <- dt(x_vals, df = df)
+    
+    # t-분포 그래프 그리기
+    
+    if(t_value >= 0){
+      
+t_dist_plot <- ggplot(data.frame(x = x_vals, y = t_dist), aes(x = x, y = y)) +
+      geom_line(color = "blue", size = 1) +  # t-분포 곡선
+      geom_area(data = subset(data.frame(x = x_vals, y = t_dist), x >= t_value), aes(x = x, y = y), fill = "red", alpha = 0.5) +  # t-값 오른쪽 영역
+      geom_area(data = subset(data.frame(x = x_vals, y = t_dist), x <= -t_value), aes(x = x, y = y), fill = "red", alpha = 0.5) +  # t-값 왼쪽 영역
+      geom_vline(xintercept = c(-t_value, t_value), linetype = "dashed", color = "black") +  # t-값 위치 표시 (양쪽)
+      labs(title = "t-분포와 t-검정 결과", x = "t-값", y = "밀도") +
+      annotate("text", x = t_value + 0.2, y = 0.1, label = paste("t =", round(t_value, 2)), color = "black") +  # t-값 레이블
+      annotate("text", x = -t_value - 0.2, y = 0.1, label = paste("t =", round(-t_value, 2)), color = "black") +  # t-값 레이블
+      theme_minimal()
+      
+    } else {
+      
+t_dist_plot <- ggplot(data.frame(x = x_vals, y = t_dist), aes(x = x, y = y)) +
+      geom_line(color = "blue", size = 1) +  # t-분포 곡선
+      geom_area(data = subset(data.frame(x = x_vals, y = t_dist), x >= -t_value), aes(x = x, y = y), fill = "red", alpha = 0.5) +  # t-값 오른쪽 영역
+      geom_area(data = subset(data.frame(x = x_vals, y = t_dist), x <= t_value), aes(x = x, y = y), fill = "red", alpha = 0.5) +  # t-값 왼쪽 영역
+      geom_vline(xintercept = c(-t_value, t_value), linetype = "dashed", color = "black") +  # t-값 위치 표시 (양쪽)
+      labs(title = "t-분포와 t-검정 결과", x = "t-값", y = "밀도") +
+      annotate("text", x = t_value + 0.2, y = 0.1, label = paste("t =", round(t_value, 2)), color = "black") +  # t-값 레이블
+      annotate("text", x = -t_value - 0.2, y = 0.1, label = paste("t =", round(-t_value, 2)), color = "black") +  # t-값 레이블
+      theme_minimal()
+      
+      
+    }
+    
+
+    
+    # 수식과 계산 과정 출력
+    output$calculationDisplay <- renderUI({
+      withMathJax(HTML(paste(
+        "<h3>t-검정 계산 과정</h3>",
+        "<p>t-값 계산:</p>",
+        "\\[ t = \\frac{\\bar{X}_A - \\bar{X}_B}{\\sqrt{\\frac{s_A^2}{n_A} + \\frac{s_B^2}{n_B}}} \\]",
+        "<p>t-값: \\( t = ", round(t_value, 3), " \\)</p>",
+        "<p>자유도(df): \\( df = ", round(df, 0), " \\)</p>",
+        "<p>p-값 계산: \\( p = 2 \\times P(T > |t|) \\)</p>",
+        "<p>p-값: \\( p = ", round(p_value, 5), " \\)</p>"
+      )))
+    })
+    
+    # 최종 결과 출력 (귀무가설 기각 여부)
+    output$finalResult <- renderText({
+      if (p_value < 0.05) {
+        paste("t-값이", round(t_value, 3), "이고 p-값이", round(p_value, 5),
+              "이므로 귀무가설을 기각할 수 있습니다. 즉, A 그룹과 B 그룹 간의 평균 차이가 통계적으로 유의미합니다.")
+      } else {
+        paste("t-값이", round(t_value, 3), "이고 p-값이", round(p_value, 5),
+              "이므로 귀무가설을 기각할 수 없습니다. \n 즉, A 그룹과 B 그룹 간의 평균 차이가 통계적으로 유의미하지 않습니다.")
+      }
+    })
+    
+    # t-분포와 데이터 분포 시각화
+    output$distPlot <- renderPlot({
+      # 박스플롯과 t-분포 그래프 함께 그리기
+      box_plot <- ggplot(data, aes(x = group, y = score, fill = group)) +
+        geom_boxplot(alpha = 0.5) +
+        labs(title = "A 그룹과 B 그룹의 성적 분포", x = "그룹", y = "성적") +
+        theme_minimal()
+      
+      grid.arrange(box_plot, t_dist_plot, ncol = 1)
+    })
+  })
+}
+
+# Shiny 앱 실행
+shinyApp(ui = ui, server = server)
+
+
+```
