@@ -317,42 +317,70 @@ In practice, we aim to achieve a high F1 score while balancing precision and rec
 #### **QZs**
 
 1.  Which of the following is a distance metric commonly used in the k-nearest neighbor algorithm?
-    a)  Correlation distance
+    a)  Euclidean distance
     b)  Chebyshev distance
     c)  Hamming distance
     d)  All of the above
+    
+
+<br>
+
+
 2.  How do you choose the value of k in the k-nearest neighbor algorithm?
     a)  Choose a small value of k to avoid overfitting
     b)  Choose a large value of k to avoid overfitting
     c)  Use cross-validation to evaluate the performance of the algorithm on different values of k and choose the value that gives the best performance
     d)  None of the above
+    
+<br>
+
+
 3.  What is the difference between weighted and unweighted k-nearest neighbor algorithm?
     a)  Weighted k-nearest neighbor algorithm gives more weight to the nearest neighbors that are farther away
     b)  Unweighted k-nearest neighbor algorithm gives more weight to the nearest neighbors that are closer
     c)  Weighted k-nearest neighbor algorithm assigns different weights to the nearest neighbors based on their distance from the new data point
     d)  Unweighted k-nearest neighbor algorithm assigns different weights to the nearest neighbors based on their distance from the new data point
+    
+    
+<br>
+
+
 4.  What is F1 score?
     a)  A measure of a machine learning algorithm's accuracy that combines precision and recall
     b)  The average of precision and recall
     c)  The harmonic mean of precision and recall
     d)  None of the above
+    
+<br>
+
+
 5.  What is the formula for calculating Euclidean distance between two points in Euclidean space?
     a)  d(x, y) = sqrt(sum((xi - yi)\^2))
     b)  d(x, y) = sum(\|xi - yi\|)
     c)  d(x, y) = (sum(\|xi - yi\|\^p))\^(1/p)
     d)  None of the above
+    
+<br>
+
+
 6.  What is the purpose of scaling and centering the features in the k-nearest neighbor algorithm?
     a)  To make the features easier to interpret
     b)  To make the features more accurate
     c)  To make the features more comparable
     d)  None of the above
+    
+<br>
+
+
 7.  How can you handle ties in the k-nearest neighbor algorithm?
     a)  Assign the new data point to the class that has the nearest neighbor among the tied classes
     b)  Assign the new data point to the class that has the farthest neighbor among the tied classes
     c)  Assign the new data point to the class that has the most neighbors among the tied classes
     d)  None of the above
 
-Ans) dcccaca
+<br>
+
+**Ans**) dcccaca
 
 ------------------------------------------------------------------------
 
@@ -372,7 +400,7 @@ By understanding the k-nearest neighbor algorithm and its theory, as well as its
 
 ### **Model Comparison with tidymodels in R**
 
-Let's learn how to compare four different machine learning models using the [`tidymodels`](https://www.tidymodels.org/) package in R. We will be using the classic `Iris` dataset to showcase this comparison. The models we will compare are Decision Trees, Random Forests, Naive Bayes, and k-Nearest Neighbors (kNN).
+Let's learn how to compare four different machine learning models using the [`tidymodels`](https://www.tidymodels.org/) package in R. We will be using the classic `iris` dataset to showcase this comparison. The models we will compare are Decision Trees, Random Forests, Naive Bayes, and k-Nearest Neighbors (kNN).
 
 <br> First, let's load the necessary libraries and the Iris dataset.
 
@@ -437,7 +465,6 @@ Next, we will **create a workflow** for each model. In this example, we don't re
 workflow_dt <- workflow() %>%
   add_model(decision_tree) %>%
   add_formula(Species ~ .)
-
 
 # Random Forest Workflow
 workflow_rf <- workflow() %>%
