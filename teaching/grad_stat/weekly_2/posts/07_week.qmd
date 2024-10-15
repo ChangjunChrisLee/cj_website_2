@@ -8,13 +8,15 @@ slide-format: revealjs
 
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
-# Dscriptive Statistics
+# Descriptive Statistics
 
 <br>
 
 This chapter introduces **descriptive statistics**, which summarize and describe the main features of a dataset. Descriptive statistics are the foundation of exploratory data analysis (EDA) and are used to understand the basic structure and characteristics of data before moving on to more complex analysis.
 
 We'll explore **measures of central tendency** (mean, median, mode), **measures of variability** (variance, standard deviation, range, IQR), and **distribution** (skewness, kurtosis). In this chapter, we will also introduce some key R functions and simulate data to illustrate these concepts.
+
+<br>
 
 ### Table of Contents
 
@@ -34,6 +36,8 @@ We'll explore **measures of central tendency** (mean, median, mode), **measures 
 
 8.  **Exercises**
 
+<br>
+
 ### 1. Introduction to Descriptive Statistics
 
 Descriptive statistics help summarize data by providing key insights into the data's central tendency, spread, and overall shape of the distribution.
@@ -44,12 +48,15 @@ Descriptive statistics help summarize data by providing key insights into the da
 
 -   **Distribution**: Shape of the distribution including skewness and kurtosis.
 
+<br>
+
 ### 2. Generating Data for Simulation
 
 We'll start by generating some **synthetic data** to demonstrate descriptive statistics using the `rnorm()` function to generate data from a **normal distribution** and `runif()` for a **uniform distribution**.
 
 ```{r}
 # Simulate normally distributed data (mean = 50, sd = 10)
+# About many types of distributions (normal, uniform, etc), we'll learn later
 set.seed(123)
 data_normal <- rnorm(1000, mean = 50, sd = 10)
 
@@ -61,6 +68,8 @@ summary(data_normal)
 summary(data_uniform)
 
 ```
+
+<br>
 
 ```{r}
 # Histogram of normally distributed data
@@ -81,15 +90,39 @@ ggplot(data.frame(x = data_uniform), aes(x)) +
   theme_minimal()
 ```
 
+<br>
+
 ### 3. Measures of Central Tendency
 
 The **central tendency** refers to the "center" of a dataset. The most common measures of central tendency are the **mean**, **median**, and **mode**.
 
+![](https://cdn1.byjus.com/wp-content/uploads/2022/09/Measures-Of-Central-Tendency-Mean-Median-and-Mode.png)
+
 -   **Mean**: The arithmetic average of the data.
+
+$$
+\frac{\sum^{n}_{i=1}x_i}{n}
+$$
 
 -   **Median**: The middle value when the data is ordered.
 
+    -   Arrange the data in increasing order.
+
+    <!-- -->
+
+    -   If the number of observations $n$ is odd, the median is the value at position $\frac{n + 1}{2}$​.
+
+    -   If $n$ is even, the median is the average of the values at positions $\frac{n}{2}$ and $\frac{n}{2} + 1$.
+
 -   **Mode**: The value that occurs most frequently.
+
+-   **Moving Average:** The moving average smooths out short-term fluctuations to highlight longer-term trends in a time series dataset. It is commonly used in time series analysis and forecasting.
+
+    -   **Simple Moving Average (SMA):** An unweighted average of the previous N data points (default).
+
+    -   **Weighted Moving Average (WMA):** Weights the data points, giving more importance [to recent data]{.underline}.
+
+    -   **Exponential Moving Average (EMA):** Similar to WMA but the [weighting factor decreases exponentially for older data points]{.underline}.
 
 ```{r}
 # Mean, median, and mode for normally distributed data
@@ -107,6 +140,8 @@ cat("Normal Distribution - Mean:", mean_normal, "Median:", median_normal, "Mode:
 cat("Uniform Distribution - Mean:", mean_uniform, "Median:", median_uniform, "Mode:", mode_uniform, "\n")
 
 ```
+
+<br>
 
 ### 4. Measures of Variability
 
@@ -139,6 +174,8 @@ cat("Uniform Distribution - Range:", range_uniform, "Variance:", var_uniform, "S
 
 ```
 
+<br>
+
 ### 5. Visualizing Data Distribution
 
 To understand the distribution of data, it is helpful to visualize it. We can use **histograms** and **boxplots** to explore the distribution of our datasets.
@@ -167,15 +204,47 @@ ggplot(data.frame(x = data_uniform), aes(y = x)) +
 
 ```
 
+<br>
+
 ### 6. Skewness and Kurtosis
 
-**Skewness** measures the asymmetry of the distribution, while **kurtosis** measures the "tailedness" of the distribution.
+**Skewness** measures the *asymmetry* of the distribution, while **kurtosis** measures the *tailedness* of the distribution.
 
 ![](images/clipboard-4257836537.png)
 
 -   **Skewness**: If skewness is near 0, the distribution is symmetrical. Positive skewness indicates a right-skewed distribution, while negative skewness indicates a left-skewed distribution.
 
+$$
+\text{Skewness} = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^3
+$$
+
+```         
+-   n is the number of data points.
+
+-   $x_i$ is each individual data point.
+
+-   $\bar{x}$ is the sample mean of the data.
+
+-   s is the sample standard deviation.
+```
+
 -   **Kurtosis**: High kurtosis indicates heavy tails, while low kurtosis indicates light tails.
+
+$$
+\text{Kurtosis} = \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^4 - \frac{3(n-1)^2}{(n-2)(n-3)}
+$$
+
+```         
+-   n is the number of data points.
+
+-   $x_i$ is each individual data point.
+
+-   $\bar{x}$ is the sample mean of the data.
+
+-   s is the sample standard deviation.
+```
+
+Where:
 
 We can use the **`moments`** package to calculate skewness and kurtosis.
 
@@ -199,6 +268,80 @@ cat("Uniform Distribution - Skewness:", skewness_uniform, "Kurtosis:", kurtosis_
 
 ```
 
+<br>
+
+```{r}
+
+# Plotting Histograms for Visual Representation
+par(mfrow = c(1, 2))  # Plot side by side
+
+# Histogram for Normal Distribution
+hist(data_normal, breaks = 30, col = "lightblue", main = "Normal Distribution",
+     xlab = "Value", ylab = "Frequency", freq = TRUE)
+mtext(paste("Skewness:", round(skewness_normal, 2), "Kurtosis:", round(kurtosis_normal, 2)), side = 3)
+
+# Histogram for Uniform Distribution
+hist(data_uniform, breaks = 30, col = "lightgreen", main = "Uniform Distribution",
+     xlab = "Value", ylab = "Frequency", freq = TRUE)
+mtext(paste("Skewness:", round(skewness_uniform, 2), "Kurtosis:", round(kurtosis_uniform, 2)), side = 3)
+
+par(mfrow = c(1, 1))  # Reset plot layout
+```
+
+<bR>
+
+```{r}
+library(moments)
+
+# Generate Normal data
+set.seed(123)
+data_normal <- rnorm(1000, mean = 0, sd = 1)
+
+# Skewed Data (Cube Transformation)
+data_skewed <- data_normal^3
+
+# Data with High Kurtosis (Heavy Tails) - t-distribution
+data_high_kurtosis <- rt(1000, df = 3)  # df = 3 gives heavier tails than normal
+
+# Skewness and Kurtosis Calculations
+skewness_normal <- skewness(data_normal)
+kurtosis_normal <- kurtosis(data_normal)
+
+skewness_skewed <- skewness(data_skewed)
+kurtosis_skewed <- kurtosis(data_skewed)
+
+skewness_high_kurtosis <- skewness(data_high_kurtosis)
+kurtosis_high_kurtosis <- kurtosis(data_high_kurtosis)
+
+# Display Results
+cat("Normal Distribution - Skewness:", skewness_normal, "Kurtosis:", kurtosis_normal, "\n")
+cat("Skewed Distribution - Skewness:", skewness_skewed, "Kurtosis:", kurtosis_skewed, "\n")
+cat("High Kurtosis Distribution - Skewness:", skewness_high_kurtosis, "Kurtosis:", kurtosis_high_kurtosis, "\n")
+
+# Plotting Histograms for Visual Representation
+par(mfrow = c(2, 2))  # Plot side by side
+
+# Histogram for Normal Distribution
+hist(data_normal, breaks = 30, col = "lightblue", main = "Normal Distribution",
+     xlab = "Value", ylab = "Frequency", freq = TRUE)
+mtext(paste("Skewness:", round(skewness_normal, 2), "Kurtosis:", round(kurtosis_normal, 2)), side = 3)
+
+# Histogram for Skewed Distribution (Cubed)
+hist(data_skewed, breaks = 30, col = "lightcoral", main = "Skewed Distribution",
+     xlab = "Value", ylab = "Frequency", freq = TRUE)
+mtext(paste("Skewness:", round(skewness_skewed, 2), "Kurtosis:", round(kurtosis_skewed, 2)), side = 3)
+
+# Histogram for High Kurtosis Distribution (t-distribution)
+hist(data_high_kurtosis, breaks = 30, col = "lightgreen", main = "High Kurtosis Distribution",
+     xlab = "Value", ylab = "Frequency", freq = TRUE)
+mtext(paste("Skewness:", round(skewness_high_kurtosis, 2), "Kurtosis:", round(kurtosis_high_kurtosis, 2)), side = 3)
+
+par(mfrow = c(1, 1))  # Reset plot layout
+
+```
+
+<br>
+
 ### 7. Summary Statistics Using R Functions
 
 R provides a convenient function, `summary()`, to calculate descriptive statistics such as the mean, median, minimum, maximum, and quartiles in one command.
@@ -212,9 +355,11 @@ summary(data_uniform)
 
 ```
 
+<br>
+
 ### 8. Exercises
 
-1.  Generate a dataset of 1000 observations from an **exponential distribution** with a rate parameter of 0.1. Calculate the mean, median, mode, variance, standard deviation, range, and IQR of the data.
+1.  Generate a dataset of 1000 observations from an **exponential distribution** (no worries, this is the next week content) with a rate parameter of 0.1. Calculate the mean, median, mode, variance, standard deviation, range, and IQR of the data.
 
 2.  Visualize the distribution of the exponential dataset using both a **histogram** and a **boxplot**.
 
@@ -228,6 +373,7 @@ summary(data_uniform)
 
 ```{r}
 data_exp <- rexp(1000, rate = 0.1)
+
 mean(data_exp)
 median(data_exp)
 # Mode not well-defined for continuous data, so skipped here
@@ -270,6 +416,10 @@ summary(data_exp)
 
 <br>
 
+------------------------------------------------------------------------
+
+<br>
+
 # Practice with a Titanic dataset
 
 <br>
@@ -278,11 +428,7 @@ summary(data_exp)
 
 <br>
 
-It contains the analysis process of 'Titanic', one of the representative 'Competition' of '[Kaggle](https://www.kaggle.com/)'.
-
-<br>
-
-------------------------------------------------------------------------
+It contains the analysis process of 'Titanic', one of the representative 'Competition' of '[Kaggle](https://www.kaggle.com/)'. The Titanic dataset is one of the most famous datasets used in data science and machine learning, often introduced in beginner-level courses due to its simplicity and well-documented historical context. It contains information about the passengers aboard the RMS Titanic, a British passenger liner that tragically sank after colliding with an iceberg on its maiden voyage from Southampton to New York City in April 1912. Of the 2,224 passengers and crew on board, more than 1,500 lost their lives, making it one of the deadliest peacetime maritime disasters in history. The dataset allows for analysis of the survival rate based on factors such as class, gender, and family size, reflecting real-world patterns of survival in this tragic event.
 
 <br>
 
@@ -299,7 +445,7 @@ This is the process of loading (loading) the `Packages` I used for analysis, in 
 ```{r message=FALSE, warning=FALSE}
 # Data input, assesment 
 library(titanic)
-library(readr)           # Data input with readr::read_csv()
+# library(readr)           # Data input with readr::read_csv()
 library(descr)           # descr::CrossTable() - Frequency by category, check with ratio figures
 
 # Visualization
@@ -311,10 +457,10 @@ library(scales)          # plot setting - x, y axis
 library(tidyverse)     # dplyr, ggplot2, purrr, etc..      # Feature Engineering & Data Pre-processing
 library(ggpubr)
 
-library(randomForest)
+# library(randomForest)
 # Model validation 
-library(caret)           # caret::confusionMatrix()
-library(ROCR)            # Plotting ROC Curve
+# library(caret)           # caret::confusionMatrix()
+# library(ROCR)            # Plotting ROC Curve
 
 ```
 
@@ -349,20 +495,35 @@ The reason why `rbind()` was not used even when combining the two data into full
 
 ### 2.3 variable meaning explanation
 
-|  variable name  | Interpretation (meaning)                                                                                     | Type       |
-|:-------------:|:------------------------------------------|:--------------|
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| variable name   | Interpretation (meaning)                                                                                     | Type       |
++:===============:+:=============================================================================================================+:===========+
 | **PassengerID** | Unique ID number that identifies the passenger                                                               | Int        |
-|  **Survived**   | Indicates whether or not the passenger survived. Survival is 1 and death is 0.                               | Factor     |
-|   **Pclass**    | The class of the cabin, with 3 categories from 1st class (1) to 3rd class (3).                               | Ord.Factor |
-|    **Name**     | Passenger's name                                                                                             | Factor     |
-|     **Sex**     | Passenger's gender                                                                                           | Factor     |
-|     **Age**     | Age of passenger                                                                                             | Numeric    |
-|    **SibSp**    | Variable describing the number of siblings or spouses accompanying each passenger. It can range from 0 to 8. | Integer    |
-|    **Parch**    | Variable describing the number of parents or children accompanying each passenger, from 0 to 9.              | Integer    |
-|   **Ticket**    | String variable for the ticket the passenger boarded                                                         | Factor     |
-|    **Fare**     | Variable for how much the passenger has paid for the trip so far                                             | Numeric    |
-|    **Cabin**    | Variable that distinguishes each passenger's cabin, with too many categories and missing values.             | Factor     |
-|  **Embarked**   | Indicates the boarding port and departure port, and consists of three categories: C, Q, and S.               | Factor     |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Survived**    | Indicates whether or not the passenger survived. Survival is 1 and death is 0.                               | Factor     |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Pclass**      | The class of the cabin, with 3 categories from 1st class (1) to 3rd class (3).                               | Ord.Factor |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Name**        | Passenger's name                                                                                             | Factor     |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Sex**         | Passenger's gender                                                                                           | Factor     |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Age**         | Age of passenger                                                                                             | Numeric    |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **SibSp**       | Variable describing the number of siblings or spouses accompanying each passenger. It can range from 0 to 8. | Integer    |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Parch**       | Variable describing the number of parents or children accompanying each passenger, from 0 to 9.              | Integer    |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Ticket**      | String variable for the ticket the passenger boarded                                                         | Factor     |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Fare**        | Variable for how much the passenger has paid for the trip so far                                             | Numeric    |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Cabin**       | Variable that distinguishes each passenger's cabin, with too many categories and missing values.             | Factor     |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
+| **Embarked**    | Indicates the boarding port and departure port, and consists of three categories: C, Q, and S.               | Factor     |
+|                 |                                                                                                              |            |
+|                 | (C = Cherbourg, Q = Queenstown, S = Southampton).                                                            |            |
++-----------------+--------------------------------------------------------------------------------------------------------------+------------+
 
 <br>
 
@@ -602,8 +763,6 @@ Through this, only 4 variables out of a total of 12 variables have missing value
 
 ------------------------------------------------------------------------
 
-<br>
-
 Now, it is the process of analyzing and exploring `feature` through visualization.
 
 ### 3.3 Age
@@ -747,6 +906,8 @@ mosaicplot(Survived ~ Sex,
 <br>
 
 If you interpret the graph, you can see that the survival rate is higher for female passengers, while there are far more males than females.
+
+<br>
 
 <br>
 
@@ -911,11 +1072,12 @@ Let's see who the passengers are.
 <br>
 
 ```{r}
-full %>% 
 # Filter only 11 passengers with matching tickets
+# We don't need to check for all variables, so we only want to look at the variables below.
+
+full %>% 
   filter(Ticket == "CA. 2343") %>% 
-  # We don't need to check for all variables, so we only want to look at the variables below.
-  select(Pclass, Name, Age, FamilySized)
+  dplyr::select(Pclass, Name, Age, FamilySized)
 ```
 
 <br>
@@ -1017,7 +1179,7 @@ Also, please note that the `plot` used above may be duplicated as it is.
 
 <br>
 
-### 5.0 Data set split
+### Data set split
 
 First, use the code below to split preprocessed `full` data into `train` and `test`.
 
@@ -1031,7 +1193,91 @@ test <- full[892:1309, ]
 
 <br>
 
-### 5.1 Pclass
+### Total Survival Rate
+
+```{r}
+survival <- train %>% 
+  count(Survived)
+
+survival
+```
+
+```{r}
+prop.table(table(train$Survived))
+```
+
+```{r}
+survival_ratio <- train %>%    
+  count(Survived) %>%    
+  mutate(Percentage = n / sum(n)) %>%   
+  mutate(Percentage = round(Percentage, 2)*100)  
+
+survival_ratio
+```
+
+```{r}
+train %>%
+  ggplot() +
+  geom_bar(aes(x = Survived, fill = Survived)) +
+  geom_text(data = survival, 
+            aes(x = Survived, y = n, label = n), 
+            position = position_dodge(width=0.9), 
+            vjust=-0.25,
+            fontface = "bold") +
+  geom_label(data = survival_ratio, 
+             aes(x = Survived, y = Percentage, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 5)) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Total Survival Rate") +
+  scale_x_discrete(name= "Survival Rate", labels = c("Did Not Survive", "Survived")) +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))
+```
+
+<br>
+
+### 5.1. Gender
+
+```{r}
+
+gender <- train %>%
+  count(Sex) 
+
+gender
+
+
+gender_ratio <- train %>%
+  group_by(Sex, Survived) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+gender_ratio
+```
+
+Visualization
+
+```{r}
+train %>%
+  ggplot() +
+  geom_bar(aes(x = Sex, fill = Survived)) +
+  geom_text(data = gender, 
+            aes(x = Sex, y = n, label = n), 
+            position = position_dodge(width=0.9), 
+            vjust=-0.25, 
+            fontface = "bold") +
+  geom_label(data = gender_ratio, 
+             aes(x = Sex, y = Count, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 0.5)) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Survival Rate") +
+  scale_x_discrete(name= "Gender") +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))  
+```
+
+### 5.2 Pclass
 
 <br>
 
@@ -1050,18 +1296,76 @@ train %>%
 
 <br>
 
-### 5.2 Sex
-
-<br>
-
-**Same as `Chapter 3.6 Sex`.**
-
-<br>
+### Gender & Class
 
 ```{r}
-mosaicplot(Survived ~ Sex,
-           data = train, col = TRUE,
-           main = "Survival rate by passengers gender")
+pclass_gender <- train %>%
+  group_by(Pclass) %>%
+  summarise(Count = n())
+
+pclass_gender
+```
+
+```{r}
+pclass_gender_ratio <- train %>%
+  group_by(Pclass, Sex) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+pclass_gender_ratio
+```
+
+```{r}
+train %>%
+  ggplot() +
+  geom_bar(aes(x = Pclass, fill = Sex)) +
+  geom_text(data = pclass_gender, 
+            aes(x = Pclass, y = Count, label = Count), 
+            position = position_dodge(width=0.9), 
+            vjust=-0.25, 
+            fontface = "bold") +
+  geom_label(data = pclass_gender_ratio, 
+             aes(x = Pclass, y = Count, label = paste0(Percentage, "%"), group = Sex), 
+             position = position_stack(vjust = 0.5)) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Proportion by Ticket Class") +
+  scale_x_discrete(name= "Pclass") +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_brewer(name = "Gender", labels = c("Female", "Male"), palette = "Paired")
+```
+
+### Survival Rate considering Gender & Class
+
+```{r}
+pclass_gender_survived_ratio <- train %>%
+  group_by(Pclass, Sex, Survived) %>%
+  summarise(Count = n()) %>%
+  mutate(Percentage = round(Count/sum(Count)*100))
+
+pclass_gender_survived_ratio
+```
+
+```{r}
+# Using facet_wrap(~ Pclass)
+train %>%
+  ggplot() +
+  geom_bar(aes(x = Sex, fill = Survived)) +
+  facet_wrap(~ Pclass) +
+  geom_text(data = pclass_gender_ratio, 
+            aes(x = Sex, y = Count, label = Count), 
+            position = position_dodge(width=0.9), 
+            vjust= -1.5, 
+            fontface = "bold") +
+  geom_label(data = pclass_gender_survived_ratio, 
+             aes(x = Sex, y = Count, label = paste0(Percentage, "%"), group = Survived), 
+             position = position_stack(vjust = 0.5)) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Gender Survival Rate by Pclass") +
+  scale_x_discrete(name= "Gender by Pclass ") +
+  scale_y_continuous(name = "Passenger Count", limits = c(0,360)) +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))  
 ```
 
 <br>
@@ -1114,6 +1418,31 @@ train %>%
        title = "Bar plot", subtitle = "Survival rate by Age group")
 ```
 
+Age distribution & Survival rate
+
+```{r}
+train %>%
+  ggplot() +
+  geom_histogram(aes(x = Age), binwidth = 5, color = "#355a63", fill = "#96e4f7") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Age Distribution") +
+  scale_x_continuous(name= "Passenger Age", breaks = 5*c(0:18)) +
+  scale_y_continuous(name = "Passenger Count")
+```
+
+```{r}
+train %>%
+  ggplot() +
+  geom_histogram(aes(x = Age, fill = Survived), binwidth = 5, color = "#355a63") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Survival Rate by Age") +
+  scale_x_continuous(name= "Passenger Age", breaks = 5*c(0:18)) +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))  
+```
+
 <br>
 
 ### 5.6 title
@@ -1148,6 +1477,38 @@ train %>%
 
 <br>
 
+### Survival Rate based on Gender and Class Segmented by Age
+
+```{r}
+train %>%
+  ggplot() +
+  geom_histogram(aes(x = Age, fill = Survived), binwidth = 5, color = "#355a63") +
+  facet_grid(Sex ~ Pclass) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, size=18, color = "#054354")) +
+  ggtitle("Titanic Survival Rate by Age, Gender and Class") +
+  scale_x_continuous(name= "Passenger Age", breaks = 10*c(0:8)) +
+  scale_y_continuous(name = "Passenger Count") +
+  scale_fill_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))  
+```
+
+### Survival Rate based on Gender Class Age & Family Size!!
+
+```{r}
+train %>%
+  ggplot() +
+  geom_point(aes(x = Age, y = FamilySize, color = Survived), alpha = 0.7) +
+  facet_grid(Sex ~ Pclass) +
+  theme_bw() +
+  theme(plot.title = element_text(size=18, color = "#054354")) +
+  ggtitle("Survival Rate by Gender, Class, Age, and Family Size") +
+  scale_x_continuous(name= "Passenger Age", breaks = 10*c(0:8)) +
+  scale_y_continuous(name = "Family Size") +
+  scale_color_discrete(name = "Outcome", labels = c("Did Not Survive", "Survived"))  
+```
+
+<br>
+
 ### 5.8 Description of actual used features
 
 <br>
@@ -1156,25 +1517,34 @@ Now that all the derived variables created so far have been found to be useful, 
 
 The table below is a brief description of the actual selected variables.
 
-|  variable name  | Type   | Description                                                                                               |
-|:------------:|:-------------|:-------------------------------------------|
-|  **Survived**   | factor | Target feature, survival == 1, death == 0                                                                 |
-|     **Sex**     | factor | gender, `male` or `female`                                                                                |
-|   **Pclass**    | factor | Cabin Class, First Class (1), Second Class (2), Third Class (3)                                           |
-|  **Embarked**   | factor | Port of embarkation, Southampton (S), Cherbourg (C), Queenstown (Q)                                       |
-| **FamilySized** | factor | Family size, a derived variable created using `SibSp` and `Parch`, with 3 categories                      |
-|  **Age.Group**  | factor | Age group, a derived variable created using `Age`, with 4 categories                                      |
-|    **title**    | factor | A part of the name, a derived variable made using `Name`, and 5 categories                                |
-| **ticket.size** | factor | The length of the unique part of the ticket, a derived variable created using `ticket`, with 3 categories |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| variable name   | Type    | Description                                                                                               |
++:===============:+:========+:==========================================================================================================+
+| **Survived**    | factor  | Target feature, survival == 1, death == 0                                                                 |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **Sex**         | factor  | gender, `male` or `female`                                                                                |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **Pclass**      | factor  | Cabin Class, First Class (1), Second Class (2), Third Class (3)                                           |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **Embarked**    | factor  | Port of embarkation, Southampton (S), Cherbourg (C), Queenstown (Q)                                       |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **FamilySized** | factor  | Family size, a derived variable created using `SibSp` and `Parch`, with 3 categories                      |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **Age.Group**   | factor  | Age group, a derived variable created using `Age`, with 4 categories                                      |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **title**       | factor  | A part of the name, a derived variable made using `Name`, and 5 categories                                |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+| **ticket.size** | factor  | The length of the unique part of the ticket, a derived variable created using `ticket`, with 3 categories |
++-----------------+---------+-----------------------------------------------------------------------------------------------------------+
 
 <br>
 
 ```{r}
 # Excluding ID number, select and save 7 input variables and 1 target variable to actually use
-
+# library(dplyr)
 train <- train %>% 
-  select("Pclass", "Sex", "Embarked", "FamilySized",
-         "Age.Group", "title", "ticket.size", "Survived")
+  dplyr::select(Pclass, Sex, Embarked, FamilySized,
+         Age.Group, title, ticket.size, Survived)
 
 # For Submit, extract the Id column vector and store it in ID
 
@@ -1182,9 +1552,13 @@ ID <- test$PassengerId
 
 # Select and save the remaining 6 variables except for Id and Survived
 
-test <- test %>% 
-  select("Pclass", "Sex", "Embarked", "FamilySized",
-         "Age.Group", "title", "ticket.size")
+# test <- test %>% 
+#   dplyr::select("Pclass", "Sex", "Embarked", "FamilySized",
+#          "Age.Group", "title", "ticket.size", "Survived")
+
+test <- train %>% 
+  sample_frac(.3)
+
 ```
 
 <br>
@@ -1203,35 +1577,240 @@ Originally, it is correct to create `train`, `validation`, `test` data sets firs
 
 <br>
 
-### 6.1 Random Forest model generation
+### 6.1 Model Training and Comparison of Classification Algorithms
 
-<br>
+In this section, we will train and compare six different classification models: **Logistic Regression**, **Random Forest**, **Support Vector Machines (SVM)**, **k-Nearest Neighbors (k-NN)**, **Gradient Boosting**, and **Naive Bayes**. We will assess their performance using accuracy and other evaluation metrics.
 
 ```{r}
-# Set the seed number for reproducibility.
+
+# Load necessary libraries
+if (!require(caret)) install.packages("caret")
+if (!require(e1071)) install.packages("e1071")  # Required for SVM
+if (!require(gbm)) install.packages("gbm")      # Required for Gradient Boosting
+if (!require(nnet)) install.packages("nnet")    # Required for Neural Networks
+if (!require(xgboost)) install.packages("xgboost") # Required for XGBoost
+
+library(caret)
+library(e1071)  # For SVM
+library(gbm)    # For Gradient Boosting
+library(nnet)   # For Neural Networks
+library(xgboost)  # For XGBoost
+
+# Set seed for reproducibility
 set.seed(1901)
 
-titanic.rf <- randomForest(Survived ~ ., data = train, importance = T, ntree = 2000)
+# Adjusted trainControl with no resampling (faster)
+train_control <- trainControl(method = "none")  # No cross-validation for faster training
+
+# Define specific hyperparameters for models that require them (only one combination)
+tune_grids <- list(
+  rf = data.frame(.mtry = 2),  # Random Forest
+  svmLinear = data.frame(.C = 1),  # SVM
+  knn = data.frame(.k = 5),  # k-NN
+  gbm = data.frame(.n.trees = 100, .interaction.depth = 3, .shrinkage = 0.1, .n.minobsinnode = 10),  # GBM
+  rpart = data.frame(.cp = 0.01),  # Decision Tree
+  xgbTree = expand.grid(
+    nrounds = 50,  # Number of boosting rounds
+    max_depth = 3,  # Maximum depth of a tree
+    eta = 0.1,  # Learning rate
+    gamma = 0,  # Minimum loss reduction
+    colsample_bytree = 0.8,  # Subsample ratio of columns when constructing each tree
+    min_child_weight = 1,  # Minimum sum of instance weight needed in a child
+    subsample = 0.8  # Subsample ratio of the training instance
+  ),
+  nnet = data.frame(.size = 5, .decay = 0.1)  # Neural Networks
+)
+
+# List of models and corresponding tuning grids
+model_list <- c("glm", "rf", "svmLinear", "knn", "gbm", "rpart", "xgbTree", "nnet")
+tune_list <- list(NULL, tune_grids$rf, tune_grids$svmLinear, tune_grids$knn, tune_grids$gbm, tune_grids$rpart, 
+                  tune_grids$xgbTree, tune_grids$nnet)
+
+# Create a list to store the results
+model_results <- list()
+
+# Train models using caret with adjusted trainControl
+for (i in seq_along(model_list)) {
+  if (!is.null(tune_list[[i]])) {
+    model_results[[model_list[i]]] <- train(Survived ~ ., data = train, 
+                                            method = model_list[i], 
+                                            trControl = train_control, 
+                                            tuneGrid = tune_list[[i]])  # Use tuneGrid for models that need it
+  } else {
+    model_results[[model_list[i]]] <- train(Survived ~ ., data = train, 
+                                            method = model_list[i], 
+                                            trControl = train_control)  # No tuneGrid needed for others
+  }
+}
+
+# Predict on the test set for each model
+predictions <- lapply(model_results, predict, newdata = test)
+
+# Convert predictions to factor if needed
+predictions <- lapply(predictions, function(pred) as.factor(pred))
+
+# Assign predictions to individual variables for easy access if needed
+pred.logit <- predictions[["glm"]]
+pred.rf <- predictions[["rf"]]
+pred.svm <- predictions[["svmLinear"]]
+pred.knn <- predictions[["knn"]]
+pred.gbm <- predictions[["gbm"]]
+pred.rpart <- predictions[["rpart"]]
+pred.xgbTree <- predictions[["xgbTree"]]
+pred.nnet <- predictions[["nnet"]]
+
+# Optionally, print the models to see their configurations
+print(model_results)
+
+
+```
+
+### 6.2 Evaluation of Model Performance
+
+Now, we will compare the performance of each model using accuracy and other classification metrics such as precision, recall, and F1-score. We'll use a confusion matrix for each model.
+
+```{r}
+library(caret)
+library(tibble)
+confusionMatrix(pred.logit, test$Survived)
+# Create confusion matrices for each model
+confusionMatrix(pred.logit, test$Survived)
+confusionMatrix(pred.rf, test$Survived)
+confusionMatrix(pred.svm, test$Survived)
+confusionMatrix(pred.knn, test$Survived)
+confusionMatrix(pred.gbm, test$Survived)
+confusionMatrix(pred.rpart, test$Survived)
+confusionMatrix(pred.xgbTree, test$Survived)
+confusionMatrix(pred.nnet, test$Survived)
+
+# Calculate Accuracy for each model
+accuracy.logit <- sum(pred.logit == test$Survived) / length(test$Survived)
+accuracy.rf <- sum(pred.rf == test$Survived) / length(test$Survived)
+accuracy.svm <- sum(pred.svm == test$Survived) / length(test$Survived)
+accuracy.knn <- sum(pred.knn == test$Survived) / length(test$Survived)
+accuracy.gbm <- sum(pred.gbm == test$Survived) / length(test$Survived)
+accuracy.rpart <- sum(pred.rpart == test$Survived) / length(test$Survived)
+accuracy.xgbTree <- sum(pred.xgbTree == test$Survived) / length(test$Survived)
+accuracy.nnet <- sum(pred.nnet == test$Survived) / length(test$Survived)
+
+# Compare accuracy for all models
+accuracy.results <- tibble(
+  Model = c("Logistic Regression", "Random Forest", "SVM", "k-NN", "GBM", 
+            "Decision Tree", "XGBoost", "Neural Networks"),
+  Accuracy = c(accuracy.logit, accuracy.rf, accuracy.svm, accuracy.knn, accuracy.gbm, 
+               accuracy.rpart, accuracy.xgbTree, accuracy.nnet)
+)
+
+accuracy.results %>% 
+  arrange(-Accuracy)
+
 ```
 
 <br>
 
-### 6.2 Feature importance check
+### Beyond Accuracy
+
+In a binary classification problem, a confusion matrix consists of four categories:
+
+|                      | Positive (Actual)   | Negative (Actual)   |
+|----------------------|---------------------|---------------------|
+| Positive (Predicted) | True Positive (TP)  | False Positive (FP) |
+| Negative (Predicted) | False Negative (FN) | True Negative (TN)  |
+
+-   `True Positive (TP)`: Number of (actual) positive cases that are correctly (True) classified
+
+-   `False Positive (FP)`: Number of (actual) negative cases that are incorrectly classified as (predicted) positive
+
+-   `True Negative (TN)`: Number of (actual) negative cases that are correctly classified
+
+-   `False Negative (FN)`: Number of (actual) positive cases that are incorrectly classified as (predicted) negative
+
+**Precision & Recall**
+
+-   The `precision` of the model tells us how many of the positive cases that the model predicted were actually positive,
+
+    -   The accuracy of the positive predictions made by the model
+
+        $$
+        \frac{TP}{TP+FP}
+        $$
+
+-   while the `recall` tells us how many of the actual positive cases were correctly predicted by the model.
+
+    -   The ability of the model to correctly identify all positive instances
+
+        $$
+        \frac{TP}{TP+FN}
+        $$
+
+-   In general, **precision is more important when we want to avoid false positives**. For example, in a spam classification task, we would want to have high precision to ensure that legitimate emails are not classified as spam. False positives can be costly and can lead to important messages being missed.
+
+-   On the other hand, **recall is more important when we want to avoid false negatives**. For example, in a medical diagnosis task, we would want to have high recall to ensure that all instances of a disease are correctly identified, even if it means that some healthy individuals are identified as having the disease. False negatives can be costly and can lead to delayed treatment and potentially life-threatening consequences.
+
+**What is F1 score?**
+
+`F1 score` is a measure of a machine learning algorithm's accuracy that combines precision and recall. It is the **harmonic mean of precision and recall**, and ranges from 0 to 1, with higher values indicating better performance.
+
+F1 score is calculated using the following formula:
+
+$$
+F1 = 2 \times \frac{Precision \times Recall}{Precesion + Recall}
+$$
+
+`F1 score = 2 * (precision * recall) / (precision + recall)`
+
+where **`precision`** is the number of true positives divided by the total number of positive predictions, and **`recall`** is the number of true positives divided by the total number of actual positives.
+
+**Why use F1 score?**
+
+F1 score is useful when the dataset is imbalanced, meaning that the number of positive and negative examples is not equal. In such cases, accuracy alone is not a good measure of the algorithm's performance, as a high accuracy can be achieved by simply predicting the majority class all the time.
+
+Instead, we need a metric that takes into account both precision and recall, as precision measures the algorithm's ability to make correct positive predictions, and recall measures the algorithm's ability to find all positive examples in the dataset.
+
+**How to interpret F1 score?**
+
+F1 score ranges from 0 to 1, with higher values indicating better performance. An F1 score of 1 means perfect precision and recall, while an F1 score of 0 means that either the precision or recall is 0.
+
+In practice, we aim to achieve a high F1 score while balancing precision and recall based on the problem and its requirements. For example, in medical diagnosis, we may want to prioritize recall over precision to avoid missing any positive cases, while in fraud detection, we may want to prioritize precision over recall to avoid false positives.
 
 <br>
 
 ```{r}
-importance(titanic.rf)
+# Function to compute precision, recall, F1, and accuracy
+get_metrics <- function(pred, actual) {
+  cm <- confusionMatrix(factor(pred), factor(actual))
+  precision <- cm$byClass["Pos Pred Value"]  # Precision
+  recall <- cm$byClass["Sensitivity"]        # Recall
+  f1 <- 2 * ((precision * recall) / (precision + recall))  # F1-score
+  accuracy <- cm$overall["Accuracy"]          # Accuracy
+  return(c(accuracy, precision, recall, f1))
+}
 
-varImpPlot(titanic.rf)
-```
+# Calculate metrics for each model
+metrics.logit <- get_metrics(pred.logit, test$Survived)
+metrics.rf <- get_metrics(pred.rf, test$Survived)
+metrics.svm <- get_metrics(pred.svm, test$Survived)
+metrics.knn <- get_metrics(pred.knn, test$Survived)
+metrics.gbm <- get_metrics(pred.gbm, test$Survived)
+metrics.rpart <- get_metrics(pred.rpart, test$Survived)
+metrics.xgbTree <- get_metrics(pred.xgbTree, test$Survived)
+metrics.nnet <- get_metrics(pred.nnet, test$Survived)
 
-### 6.3 Predict test data and create submit data
+# Combine metrics into a data frame
+metrics.results <- data.frame(
+  Model = c("Logistic Regression", "Random Forest", "SVM", "k-NN", "GBM", 
+            "Decision Tree", "XGBoost", "Neural Networks"),
+  Accuracy = c(metrics.logit[1], metrics.rf[1], metrics.svm[1], metrics.knn[1], metrics.gbm[1],
+               metrics.rpart[1], metrics.xgbTree[1], metrics.nnet[1]),
+  Precision = c(metrics.logit[2], metrics.rf[2], metrics.svm[2], metrics.knn[2], metrics.gbm[2],
+                metrics.rpart[2], metrics.xgbTree[2], metrics.nnet[2]),
+  Recall = c(metrics.logit[3], metrics.rf[3], metrics.svm[3], metrics.knn[3], metrics.gbm[3],
+             metrics.rpart[3], metrics.xgbTree[3], metrics.nnet[3]),
+  F1_Score = c(metrics.logit[4], metrics.rf[4], metrics.svm[4], metrics.knn[4], metrics.gbm[4],
+               metrics.rpart[4], metrics.xgbTree[4], metrics.nnet[4])
+)
 
-<br>
+# Print the results
+print(metrics.results)
 
-```{r}
- # Prediction 
-
-pred.rf <- predict(object = titanic.rf, newdata = test, type = "class")
 ```
