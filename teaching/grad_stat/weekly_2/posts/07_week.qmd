@@ -107,11 +107,7 @@ $$
 -   **Median**: The middle value when the data is ordered.
 
     -   Arrange the data in increasing order.
-
-    <!-- -->
-
-    -   If the number of observations $n$ is odd, the median is the value at position $\frac{n + 1}{2}$​.
-
+    -   If the number of observations $n$ is odd, the median is the value at position $\frac{n + 1}{2}$.
     -   If $n$ is even, the median is the average of the values at positions $\frac{n}{2}$ and $\frac{n}{2} + 1$.
 
 -   **Mode**: The value that occurs most frequently.
@@ -151,7 +147,15 @@ Variability tells us how spread out the data points are. Common measures of vari
 
 -   **Variance**: The average squared deviation from the mean.
 
+$$
+\text{Variance} = \sigma^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \mu)^2
+$$
+
 -   **Standard Deviation**: The square root of variance, representing the spread of data.
+
+$$
+\text{Standard Deviation} = \sigma = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - \mu)^2}
+$$
 
 -   **Interquartile Range (IQR)**: The range between the 25th percentile (Q1) and the 75th percentile (Q3).
 
@@ -212,13 +216,12 @@ ggplot(data.frame(x = data_uniform), aes(y = x)) +
 
 ![](images/clipboard-4257836537.png)
 
--   **Skewness**: If skewness is near 0, the distribution is symmetrical. Positive skewness indicates a right-skewed distribution, while negative skewness indicates a left-skewed distribution.
+**Skewness**: If skewness is near 0, the distribution is symmetrical. Positive skewness indicates a right-skewed distribution, while negative skewness indicates a left-skewed distribution.
 
 $$
 \text{Skewness} = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^3
 $$
 
-```         
 -   n is the number of data points.
 
 -   $x_i$ is each individual data point.
@@ -226,15 +229,13 @@ $$
 -   $\bar{x}$ is the sample mean of the data.
 
 -   s is the sample standard deviation.
-```
 
--   **Kurtosis**: High kurtosis indicates heavy tails, while low kurtosis indicates light tails.
+**Kurtosis**: High kurtosis indicates heavy tails, while low kurtosis indicates light tails.
 
 $$
 \text{Kurtosis} = \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^4 - \frac{3(n-1)^2}{(n-2)(n-3)}
 $$
 
-```         
 -   n is the number of data points.
 
 -   $x_i$ is each individual data point.
@@ -242,7 +243,6 @@ $$
 -   $\bar{x}$ is the sample mean of the data.
 
 -   s is the sample standard deviation.
-```
 
 Where:
 
@@ -1517,25 +1517,16 @@ Now that all the derived variables created so far have been found to be useful, 
 
 The table below is a brief description of the actual selected variables.
 
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| variable name   | Type    | Description                                                                                               |
-+:===============:+:========+:==========================================================================================================+
-| **Survived**    | factor  | Target feature, survival == 1, death == 0                                                                 |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **Sex**         | factor  | gender, `male` or `female`                                                                                |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **Pclass**      | factor  | Cabin Class, First Class (1), Second Class (2), Third Class (3)                                           |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **Embarked**    | factor  | Port of embarkation, Southampton (S), Cherbourg (C), Queenstown (Q)                                       |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **FamilySized** | factor  | Family size, a derived variable created using `SibSp` and `Parch`, with 3 categories                      |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **Age.Group**   | factor  | Age group, a derived variable created using `Age`, with 4 categories                                      |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **title**       | factor  | A part of the name, a derived variable made using `Name`, and 5 categories                                |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
-| **ticket.size** | factor  | The length of the unique part of the ticket, a derived variable created using `ticket`, with 3 categories |
-+-----------------+---------+-----------------------------------------------------------------------------------------------------------+
+|  variable name  | Type   | Description                                                                                               |
+|:---------------:|:-------|:----------------------------------------------------------------------------------------------------------|
+|  **Survived**   | factor | Target feature, survival == 1, death == 0                                                                 |
+|     **Sex**     | factor | gender, `male` or `female`                                                                                |
+|   **Pclass**    | factor | Cabin Class, First Class (1), Second Class (2), Third Class (3)                                           |
+|  **Embarked**   | factor | Port of embarkation, Southampton (S), Cherbourg (C), Queenstown (Q)                                       |
+| **FamilySized** | factor | Family size, a derived variable created using `SibSp` and `Parch`, with 3 categories                      |
+|  **Age.Group**  | factor | Age group, a derived variable created using `Age`, with 4 categories                                      |
+|    **title**    | factor | A part of the name, a derived variable made using `Name`, and 5 categories                                |
+| **ticket.size** | factor | The length of the unique part of the ticket, a derived variable created using `ticket`, with 3 categories |
 
 <br>
 
