@@ -1,5 +1,5 @@
 ---
-title: "추론 통계"
+title: "추론 통계, ANOVA, 실험 디자인"
 subtitle: "" 
 Week: 9
 format: html
@@ -363,7 +363,6 @@ $$
 H_0: \mu_1 = \mu_2 = \cdots = \mu_k
 $$
 
-
 2.  **대립가설 (H1)**: **적어도 하나의 집단**의 평균이 다르다.
 
 <bR>
@@ -414,7 +413,6 @@ F-값이 **1보다 크면**, 집단 간 변동이 집단 내 변동보다 크다
 
 <br>
 
-
 ### ANOVA의 해석
 
 -   **p-값**: F-값에 대응하는 **p-값**이 유의수준(예: 0.05)보다 작으면, **귀무가설을 기각**하고 **집단 간에 평균 차이가 있다**고 결론지을 수 있음.
@@ -423,7 +421,7 @@ F-값이 **1보다 크면**, 집단 간 변동이 집단 내 변동보다 크다
 
 ### 예시: ANOVA 분석
 
--   세 개의 서로 다른 교육 방법이 학생들의 수학 성적에 미치는 영향을 분석하고자 한다고 가정. 
+-   세 개의 서로 다른 교육 방법이 학생들의 수학 성적에 미치는 영향을 분석하고자 한다고 가정.
 
 -   각 교육 방법에 대해 10명의 학생 성적 데이터를 수집했고, 세 그룹 간의 평균 성적 차이를 분석하고자 함.
 
@@ -457,9 +455,7 @@ summary(anova_result)
 
 > 이 결과에서 p-값이 0.05보다 작으므로, 우리는 귀무가설을 기각. 즉, 세 그룹 중 적어도 하나의 그룹의 평균이 다른 그룹과 **유의미하게 다르다**고 결론 내릴 수 있음.
 
-
 <bR>
-
 
 ### ANOVA의 확장
 
@@ -469,9 +465,7 @@ summary(anova_result)
 
 3.  **반복 측정 ANOVA**: 동일한 개체에 대해 여러 번 반복 측정한 데이터를 분석.
 
-
 <br>
-
 
 ### ANOVA의 주요 응용 분야
 
@@ -488,7 +482,6 @@ summary(anova_result)
 -   **분산이 동일하다는 가정**: 모든 집단의 분산이 동일해야 한다는 가정이 있음. 만약 이 가정이 만족되지 않으면 **Welch's ANOVA**와 같은 다른 방법을 사용할 수 있음.
 
 -   **정규성 가정**: 데이터가 정규분포를 따른다는 가정이 있지만, 데이터가 크면 이 가정이 완화될 수 있음.
-
 
 <br>
 
@@ -696,3 +689,155 @@ shinyApp(ui = ui, server = server)
 
 
 ```
+
+<br>
+
+## Experimental Design
+
+Experimental design is the process of planning an experiment to ensure that the results can effectively address the research questions posed. A well-designed experiment allows researchers to isolate the effects of independent variables and control for confounding factors, leading to more valid conclusions.
+
+#### **Key Components of Experimental Design**:
+
+-   **Independent Variable (IV)**: The variable that is manipulated to observe its effect on the dependent variable. In a 2x2 design, there are two independent variables, each with two levels.
+
+-   **Dependent Variable (DV)**: The outcome or response that is measured to determine the effect of the independent variables.
+
+-   **Control Variables**: Factors that are kept constant to avoid influencing the results.
+
+-   **Random Assignment**: The process of assigning participants to experimental conditions in a random manner to ensure that any differences between groups are due to the manipulation of the independent variable rather than pre-existing differences.
+
+### 2x2 Factorial Design
+
+A **2x2 factorial design** is one of the simplest forms of experimental design where two independent variables, each with two levels, are manipulated simultaneously. This design allows researchers to examine:
+
+-   The **main effects** of each independent variable on the dependent variable.
+
+-   The **interaction effect** between the two independent variables, which explores whether the effect of one independent variable on the dependent variable depends on the level of the other independent variable.
+
+#### **2x2 Design Structure:**
+
+-   **Factor 1**: The first independent variable (e.g., treatment type), which has two levels (e.g., placebo and drug).
+
+-   **Factor 2**: The second independent variable (e.g., time of administration), which also has two levels (e.g., morning and evening).
+
+This creates four possible experimental conditions:
+
+1.  Treatment A in the morning.
+
+2.  Treatment A in the evening.
+
+3.  Treatment B in the morning.
+
+4.  Treatment B in the evening.
+
+##### **Example**:
+
+Imagine a study examining the effects of **caffeine** (factor 1: with or without caffeine) and **time of day** (factor 2: morning or evening) on **reaction time** (the dependent variable). This 2x2 design will allow the researcher to investigate:
+
+-   The **main effect** of caffeine (Does caffeine improve reaction time?).
+
+-   The **main effect** of time of day (Is reaction time better in the morning than in the evening?).
+
+-   The **interaction effect** (Is the effect of caffeine different in the morning compared to the evening?).
+
+### Main Effects and Interaction Effects
+
+#### **Main Effects:**
+
+The **main effect** of an independent variable is the effect that it has on the dependent variable, averaging across the levels of the other independent variable.
+
+-   **Main effect of IV1 (Caffeine)**: This effect examines whether, overall, participants who received caffeine had faster reaction times than those who did not, regardless of the time of day.
+
+-   **Main effect of IV2 (Time of Day)**: This effect looks at whether participants had faster reaction times in the morning than in the evening, regardless of whether they received caffeine.
+
+#### **Interaction Effects**:
+
+An **interaction effect** occurs when the effect of one independent variable on the dependent variable changes depending on the level of the other independent variable. In a 2x2 factorial design, the interaction effect tests whether the impact of one factor depends on the presence or absence of the other factor.
+
+-   **Example**: The interaction between caffeine and time of day might show that caffeine only improves reaction time in the evening, not in the morning. This would suggest that the effect of caffeine depends on the time of day.
+
+#### **Graphical Representation**:
+
+A useful way to interpret interaction effects is through graphical representation. In a **line plot**, the presence of an interaction is typically indicated when the lines representing different levels of one factor are not parallel. If the lines are parallel, there is no interaction.
+
+### Between-Subjects vs. Within-Subjects Designs
+
+#### **Between-Subjects Design**:
+
+In a **between-subjects design**, different participants are assigned to different experimental conditions. This means that each participant experiences only one condition of the experiment.
+
+-   **Advantages**:
+
+    -   No carryover effects, as participants are only exposed to one condition.
+
+    -   Less participant fatigue since they experience fewer conditions.
+
+-   **Disadvantages**:
+
+    -   More participants are required to maintain statistical power.
+
+    -   Greater potential for individual differences to influence the results.
+
+#### **Within-Subjects Design**:
+
+In a **within-subjects design**, the same participants experience all the experimental conditions. This means that participants act as their own control, which reduces the influence of individual differences.
+
+-   **Advantages**:
+
+    -   Requires fewer participants, as each participant experiences all conditions.
+
+    -   Greater statistical power due to reduced variability between conditions.
+
+-   **Disadvantages**:
+
+    -   Potential for **carryover effects**, where the experience of one condition influences responses in subsequent conditions.
+
+    -   Participant fatigue can occur if the experiment is too long or demanding.
+
+### Mixed Factorial Design
+
+A **mixed factorial design** combines elements of both between-subjects and within-subjects designs. In this design, one factor is manipulated **between participants** and another is manipulated **within participants**.
+
+-   **Example**: In a study on memory, one group of participants might be exposed to a list of words presented either **audibly** or **visually** (between-subjects factor), while all participants are tested both **immediately** after presentation and **one week later** (within-subjects factor).
+
+### Data Analysis for 2x2 Factorial Designs
+
+The statistical analysis for a 2x2 factorial design typically involves using **ANOVA (Analysis of Variance)** to test for main effects and interaction effects.
+
+#### **ANOVA for Main and Interaction Effects**:
+
+1.  **Main Effect of IV1 (Caffeine)**: Does the average reaction time differ between the caffeine and no-caffeine groups?
+
+2.  **Main Effect of IV2 (Time of Day)**: Does the average reaction time differ between the morning and evening conditions?
+
+3.  **Interaction Effect (Caffeine × Time of Day)**: Does the effect of caffeine on reaction time depend on the time of day?
+
+If the interaction effect is significant, researchers will often conduct **simple effects tests** to examine the effect of one independent variable at each level of the other independent variable.
+
+### Practical Example of a 2x2 Factorial Design in R
+
+Here’s a simple example of how to analyze a 2x2 factorial design using R, with simulated data for the caffeine and time-of-day example.
+
+```{r}
+# Simulate the data
+set.seed(123)
+n <- 100  # Number of participants
+caffeine <- rep(c("Caffeine", "No Caffeine"), each = n/2)
+time_of_day <- rep(c("Morning", "Evening"), times = n/2)
+reaction_time <- c(rnorm(n/2, mean = 200, sd = 20), rnorm(n/2, mean = 220, sd = 20))  # Reaction time
+
+data <- data.frame(Caffeine = factor(caffeine), TimeOfDay = factor(time_of_day), ReactionTime = reaction_time)
+
+# Perform ANOVA
+anova_model <- aov(ReactionTime ~ Caffeine * TimeOfDay, data = data)
+summary(anova_model)
+
+```
+
+##### **Interpreting the Results**:
+
+-   The output will show whether the main effects of **caffeine** and **time of day** are significant, as well as whether there is a significant **interaction effect** between the two factors.
+
+-   A significant interaction suggests that the effect of caffeine on reaction time depends on whether it is morning or evening.
+
+> Experimental design, particularly the 2x2 factorial design, provides a robust framework for testing the effects of multiple independent variables on a dependent variable. By understanding the main effects and interaction effects, as well as the differences between **within-subjects** and **between-subjects** designs, researchers can choose the most appropriate design for their research questions. Through careful planning and appropriate analysis, experimental designs can lead to valid and meaningful conclusions about the relationships between variables.

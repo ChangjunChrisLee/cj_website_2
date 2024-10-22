@@ -223,6 +223,7 @@ window.Quarto = {
   <li><a href="#example-conditional-probability-in-card-drawing" id="toc-example-conditional-probability-in-card-drawing" class="nav-link" data-scroll-target="#example-conditional-probability-in-card-drawing">Example: Conditional Probability in Card Drawing</a></li>
   </ul></li>
   <li><a href="#discrete-probability-distributions" id="toc-discrete-probability-distributions" class="nav-link" data-scroll-target="#discrete-probability-distributions">4. Discrete Probability Distributions</a></li>
+  <li><a href="#bernoulli-distribution" id="toc-bernoulli-distribution" class="nav-link" data-scroll-target="#bernoulli-distribution">Bernoulli Distribution</a></li>
   <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution">Binomial Distribution</a>
   <ul class="collapse">
   <li><a href="#example-binomial-distribution-in-r" id="toc-example-binomial-distribution-in-r" class="nav-link" data-scroll-target="#example-binomial-distribution-in-r">Example: Binomial Distribution in R</a></li>
@@ -267,6 +268,7 @@ window.Quarto = {
   <li><a href="#r-code-to-practice-clt" id="toc-r-code-to-practice-clt" class="nav-link" data-scroll-target="#r-code-to-practice-clt">R Code to Practice CLT</a></li>
   <li><a href="#explanation-of-r-code" id="toc-explanation-of-r-code" class="nav-link" data-scroll-target="#explanation-of-r-code">Explanation of R Code</a></li>
   </ul></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">10. Correlation</a></li>
   </ul>
 </nav>
     </div>
@@ -417,6 +419,15 @@ P(King \mid Red) = \frac{P(King \cap Red)}{P(Red)}=\frac{\frac{2}{52}}{\frac{26}
 <li><p><strong>Binomial Distribution</strong>: Describes the number of successes in a fixed number of independent Bernoulli trials.</p></li>
 <li><p><strong>Poisson Distribution</strong>: Describes the number of events occurring within a fixed interval.</p></li>
 </ul>
+<p><br></p>
+</section>
+<section id="bernoulli-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="bernoulli-distribution">Bernoulli Distribution</h2>
+<p>The Bernoulli distribution is a distribution where one trial has one of two outcomes (success or failure).</p>
+<p><span class="math display">\[
+P(X = k) =  p^k (1 - p)^{n - k}
+\]</span></p>
+<p><br></p>
 </section>
 <section id="binomial-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="binomial-distribution">Binomial Distribution</h2>
@@ -445,6 +456,26 @@ P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
 </div>
 </div>
 </div>
+<p><strong><code>dbinom()</code></strong>:</p>
+<ul>
+<li><p>이항 분포에서 특정 값의 <strong>확률 질량 함수</strong>(Probability Mass Function, PMF)를 계산</p></li>
+<li><p><strong>형식</strong>: <code>dbinom(x, size, prob)</code></p>
+<ul>
+<li><p><code>x</code>: 성공 횟수 (정수)</p></li>
+<li><p><code>size</code>: 시도 횟수 (정수)</p></li>
+<li><p><code>prob</code>: 성공 확률 (0과 1 사이)</p></li>
+</ul></li>
+<li><p><strong><code>rbinom()</code></strong>:</p>
+<ul>
+<li><p>이항 분포를 따르는 <strong>랜덤 표본</strong>을 생성</p></li>
+<li><p><strong>형식</strong>: <code>rbinom(n, size, prob)</code></p>
+<ul>
+<li><p><code>n</code>: 생성할 표본의 개수</p></li>
+<li><p><code>size</code>: 시도 횟수 (정수)</p></li>
+<li><p><code>prob</code>: 성공 확률 (0과 1 사이)</p></li>
+</ul></li>
+</ul></li>
+</ul>
 <p><br></p>
 </section>
 </section>
@@ -470,7 +501,9 @@ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a normal distribution with mean = 0 and sd = 1</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"Normal Distribution"</span>, <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type =</span> <span class="st">"l"</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Normal Distribution"</span>, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -488,22 +521,29 @@ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
 </section>
 <section id="law-of-large-numbers" class="level2">
 <h2 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h2>
-<p>The <strong>Law of Large Numbers</strong> states that as the number of trials ( n ) increases, the empirical probability ( ) approaches the true probability ( P ).</p>
+<p>The <strong>Law of Large Numbers</strong> states that as the number of trials ( n ) increases, the empirical probability approaches the true probability ( P ).</p>
 <p><span class="math display">\[
 \lim_{n \to \infty} \hat{P} = P
 \]</span></p>
 <section id="example-law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="example-law-of-large-numbers">Example: Law of Large Numbers</h3>
 <p>We will simulate flipping a fair coin 10,000 times and track how the empirical probability of heads converges to 0.5.</p>
+<blockquote class="blockquote">
+<p>대수의 법칙은 반복된 실험의 횟수가 증가할수록, 실험의 <strong>경험적 확률</strong>(실제로 관측된 확률)이 <strong>이론적 확률</strong>에 점점 가까워진다는 것을 설명하는 중요한 개념</p>
+</blockquote>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>flips <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>empirical_prob <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(flips) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the convergence of empirical probability to 0.5</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(empirical_prob, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Law of Large Numbers"</span>, <span class="at">xlab =</span> <span class="st">"Number of Flips"</span>, <span class="at">ylab =</span> <span class="st">"Empirical Probability"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(empirical_prob, <span class="at">type =</span> <span class="st">"l"</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Law of Large Numbers"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Number of Flips"</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Empirical Probability"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">0.5</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -512,6 +552,13 @@ f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
 </div>
 </div>
 </div>
+<ul>
+<li><p><code>rbinom(10000, size = 1, prob = 0.5)</code>: 성공 확률이 0.5인 베르누이 시행을 10,000번 시뮬레이션. 각 시행은 동전을 한 번 던졌을 때 앞면(성공, 1) 또는 뒷면(실패, 0)이 나오는 결과.</p></li>
+<li><p><code>cumsum(flips) / (1:10000)</code>: 누적된 성공 횟수를 시행 횟수로 나누어 각 시점에서의 <strong>경험적 확률</strong>을 계산.</p>
+<ul>
+<li><code>cumsum(flips)</code>는 매 시점까지의 성공 횟수의 누적 합을 계산하며, 이를 각 시행의 횟수로 나누면 그 시점까지의 성공 확률을 얻을 수 있음.</li>
+</ul></li>
+</ul>
 <p><br></p>
 </section>
 </section>
@@ -1849,9 +1896,13 @@ Z = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1) \quad \text
 <span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application </span></span>
 <span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a><span class="co"># shinyApp(ui = ui, server = server)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-
+<p><br></p>
 </section>
+</section>
+<section id="correlation" class="level2">
+<h2 class="anchored" data-anchor-id="correlation">10. Correlation</h2>
+
+
 </section>
 
 </main> <!-- /main -->

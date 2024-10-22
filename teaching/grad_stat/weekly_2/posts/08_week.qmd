@@ -147,6 +147,18 @@ A **discrete probability distribution** deals with outcomes that can be counted 
 
 -   **Poisson Distribution**: Describes the number of events occurring within a fixed interval.
 
+<br>
+
+## Bernoulli Distribution
+
+The Bernoulli distribution is a distribution where one trial has one of two outcomes (success or failure).
+
+$$
+P(X = k) =  p^k (1 - p)^{n - k}
+$$
+
+<br>
+
 ## Binomial Distribution
 
 The probability of observing ( k ) successes in ( n ) trials with success probability ( p ) is given by the **binomial distribution**:
@@ -169,6 +181,30 @@ binom_trials <- rbinom(1000, size = 5, prob = 0.5)
 hist(binom_trials, breaks = 5, main = "Histogram of Binomial Distribution", xlab = "Number of Heads")
 
 ```
+
+**`dbinom()`**:
+
+-   이항 분포에서 특정 값의 **확률 질량 함수**(Probability Mass Function, PMF)를 계산
+
+-   **형식**: `dbinom(x, size, prob)`
+
+    -   `x`: 성공 횟수 (정수)
+
+    -   `size`: 시도 횟수 (정수)
+
+    -   `prob`: 성공 확률 (0과 1 사이)
+
+-   **`rbinom()`**:
+
+    -   이항 분포를 따르는 **랜덤 표본**을 생성
+
+    -   **형식**: `rbinom(n, size, prob)`
+
+        -   `n`: 생성할 표본의 개수
+
+        -   `size`: 시도 횟수 (정수)
+
+        -   `prob`: 성공 확률 (0과 1 사이)
 
 <Br>
 
@@ -198,7 +234,9 @@ The **normal distribution** is widely used in probability and statistics. It is 
 # Plot a normal distribution with mean = 0 and sd = 1
 x <- seq(-4, 4, length.out = 1000)
 y <- dnorm(x, mean = 0, sd = 1)
-plot(x, y, type = "l", main = "Normal Distribution", xlab = "x", ylab = "Density")
+plot(x, y, type = "l", 
+     main = "Normal Distribution", 
+     xlab = "x", ylab = "Density")
 
 ```
 
@@ -210,7 +248,7 @@ Simulations help us understand and visualize probability concepts. Let's simulat
 
 ## Law of Large Numbers
 
-The **Law of Large Numbers** states that as the number of trials ( n ) increases, the empirical probability ( \hat{P} ) approaches the true probability ( P ).
+The **Law of Large Numbers** states that as the number of trials ( n ) increases, the empirical probability approaches the true probability ( P ).
 
 $$
 \lim_{n \to \infty} \hat{P} = P
@@ -220,17 +258,29 @@ $$
 
 We will simulate flipping a fair coin 10,000 times and track how the empirical probability of heads converges to 0.5.
 
+> 대수의 법칙은 반복된 실험의 횟수가 증가할수록, 실험의 **경험적 확률**(실제로 관측된 확률)이 **이론적 확률**에 점점 가까워진다는 것을 설명하는 중요한 개념
+
 ```{r}
 set.seed(123)
 flips <- rbinom(10000, size = 1, prob = 0.5)
 empirical_prob <- cumsum(flips) / (1:10000)
 
 # Plot the convergence of empirical probability to 0.5
-plot(empirical_prob, type = "l", col = "blue", ylim = c(0, 1),
-     main = "Law of Large Numbers", xlab = "Number of Flips", ylab = "Empirical Probability")
+plot(empirical_prob, type = "l", 
+     col = "blue", 
+     ylim = c(0, 1),
+     main = "Law of Large Numbers",
+     xlab = "Number of Flips", 
+     ylab = "Empirical Probability")
 abline(h = 0.5, col = "red", lty = 2)
 
 ```
+
+-   `rbinom(10000, size = 1, prob = 0.5)`: 성공 확률이 0.5인 베르누이 시행을 10,000번 시뮬레이션. 각 시행은 동전을 한 번 던졌을 때 앞면(성공, 1) 또는 뒷면(실패, 0)이 나오는 결과.
+
+-   `cumsum(flips) / (1:10000)`: 누적된 성공 횟수를 시행 횟수로 나누어 각 시점에서의 **경험적 확률**을 계산.
+
+    -   `cumsum(flips)`는 매 시점까지의 성공 횟수의 누적 합을 계산하며, 이를 각 시행의 횟수로 나누면 그 시점까지의 성공 확률을 얻을 수 있음.
 
 <br>
 
@@ -1007,9 +1057,8 @@ server <- function(input, output) {
 
 -   **대립가설 (**H1): "모수가 가설 값과 다르다"를 의미하며, 이는 **두 가지 방향**(작거나 크거나)을 모두 고려.
 
-```{=html}
 <!-- -->
-```
+
 -   **귀무가설 (H0)**: "모수가 가설 값과 같다"는 가설로, 일반적으로 검정하고자 하는 기본 가설.
 
 **Two-tailed 검정의 예**
@@ -1514,3 +1563,7 @@ server <- function(input, output) {
 # shinyApp(ui = ui, server = server)
 
 ```
+
+<br>
+
+## 10. Correlation

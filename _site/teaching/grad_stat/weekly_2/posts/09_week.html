@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CJL &amp; Lab - 추론 통계</title>
+<title>CJL &amp; Lab - 추론 통계, ANOVA, 실험 디자인</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -237,6 +237,15 @@ window.Quarto = {
   <li><a href="#그래프를-통한-이해" id="toc-그래프를-통한-이해" class="nav-link" data-scroll-target="#그래프를-통한-이해">그래프를 통한 이해</a></li>
   <li><a href="#anova에서-t-분포-시각화-및-t-값-p-값-계산" id="toc-anova에서-t-분포-시각화-및-t-값-p-값-계산" class="nav-link" data-scroll-target="#anova에서-t-분포-시각화-및-t-값-p-값-계산">ANOVA에서 t-분포 시각화 및 t-값, p-값 계산</a></li>
   </ul></li>
+  <li><a href="#experimental-design" id="toc-experimental-design" class="nav-link" data-scroll-target="#experimental-design">Experimental Design</a>
+  <ul class="collapse">
+  <li><a href="#x2-factorial-design" id="toc-x2-factorial-design" class="nav-link" data-scroll-target="#x2-factorial-design">2x2 Factorial Design</a></li>
+  <li><a href="#main-effects-and-interaction-effects" id="toc-main-effects-and-interaction-effects" class="nav-link" data-scroll-target="#main-effects-and-interaction-effects">Main Effects and Interaction Effects</a></li>
+  <li><a href="#between-subjects-vs.-within-subjects-designs" id="toc-between-subjects-vs.-within-subjects-designs" class="nav-link" data-scroll-target="#between-subjects-vs.-within-subjects-designs">Between-Subjects vs.&nbsp;Within-Subjects Designs</a></li>
+  <li><a href="#mixed-factorial-design" id="toc-mixed-factorial-design" class="nav-link" data-scroll-target="#mixed-factorial-design">Mixed Factorial Design</a></li>
+  <li><a href="#data-analysis-for-2x2-factorial-designs" id="toc-data-analysis-for-2x2-factorial-designs" class="nav-link" data-scroll-target="#data-analysis-for-2x2-factorial-designs">Data Analysis for 2x2 Factorial Designs</a></li>
+  <li><a href="#practical-example-of-a-2x2-factorial-design-in-r" id="toc-practical-example-of-a-2x2-factorial-design-in-r" class="nav-link" data-scroll-target="#practical-example-of-a-2x2-factorial-design-in-r">Practical Example of a 2x2 Factorial Design in R</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -245,7 +254,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">추론 통계</h1>
+<h1 class="title">추론 통계, ANOVA, 실험 디자인</h1>
 </div>
 
 
@@ -1019,8 +1028,167 @@ Attaching package: 'gridExtra'</code></pre>
 <p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
 </div>
 </div>
+<p><br></p>
+</section>
+</section>
+<section id="experimental-design" class="level2">
+<h2 class="anchored" data-anchor-id="experimental-design">Experimental Design</h2>
+<p>Experimental design is the process of planning an experiment to ensure that the results can effectively address the research questions posed. A well-designed experiment allows researchers to isolate the effects of independent variables and control for confounding factors, leading to more valid conclusions.</p>
+<section id="key-components-of-experimental-design" class="level4">
+<h4 class="anchored" data-anchor-id="key-components-of-experimental-design"><strong>Key Components of Experimental Design</strong>:</h4>
+<ul>
+<li><p><strong>Independent Variable (IV)</strong>: The variable that is manipulated to observe its effect on the dependent variable. In a 2x2 design, there are two independent variables, each with two levels.</p></li>
+<li><p><strong>Dependent Variable (DV)</strong>: The outcome or response that is measured to determine the effect of the independent variables.</p></li>
+<li><p><strong>Control Variables</strong>: Factors that are kept constant to avoid influencing the results.</p></li>
+<li><p><strong>Random Assignment</strong>: The process of assigning participants to experimental conditions in a random manner to ensure that any differences between groups are due to the manipulation of the independent variable rather than pre-existing differences.</p></li>
+</ul>
+</section>
+<section id="x2-factorial-design" class="level3">
+<h3 class="anchored" data-anchor-id="x2-factorial-design">2x2 Factorial Design</h3>
+<p>A <strong>2x2 factorial design</strong> is one of the simplest forms of experimental design where two independent variables, each with two levels, are manipulated simultaneously. This design allows researchers to examine:</p>
+<ul>
+<li><p>The <strong>main effects</strong> of each independent variable on the dependent variable.</p></li>
+<li><p>The <strong>interaction effect</strong> between the two independent variables, which explores whether the effect of one independent variable on the dependent variable depends on the level of the other independent variable.</p></li>
+</ul>
+<section id="x2-design-structure" class="level4">
+<h4 class="anchored" data-anchor-id="x2-design-structure"><strong>2x2 Design Structure:</strong></h4>
+<ul>
+<li><p><strong>Factor 1</strong>: The first independent variable (e.g., treatment type), which has two levels (e.g., placebo and drug).</p></li>
+<li><p><strong>Factor 2</strong>: The second independent variable (e.g., time of administration), which also has two levels (e.g., morning and evening).</p></li>
+</ul>
+<p>This creates four possible experimental conditions:</p>
+<ol type="1">
+<li><p>Treatment A in the morning.</p></li>
+<li><p>Treatment A in the evening.</p></li>
+<li><p>Treatment B in the morning.</p></li>
+<li><p>Treatment B in the evening.</p></li>
+</ol>
+<section id="example-1" class="level5">
+<h5 class="anchored" data-anchor-id="example-1"><strong>Example</strong>:</h5>
+<p>Imagine a study examining the effects of <strong>caffeine</strong> (factor 1: with or without caffeine) and <strong>time of day</strong> (factor 2: morning or evening) on <strong>reaction time</strong> (the dependent variable). This 2x2 design will allow the researcher to investigate:</p>
+<ul>
+<li><p>The <strong>main effect</strong> of caffeine (Does caffeine improve reaction time?).</p></li>
+<li><p>The <strong>main effect</strong> of time of day (Is reaction time better in the morning than in the evening?).</p></li>
+<li><p>The <strong>interaction effect</strong> (Is the effect of caffeine different in the morning compared to the evening?).</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="main-effects-and-interaction-effects" class="level3">
+<h3 class="anchored" data-anchor-id="main-effects-and-interaction-effects">Main Effects and Interaction Effects</h3>
+<section id="main-effects" class="level4">
+<h4 class="anchored" data-anchor-id="main-effects"><strong>Main Effects:</strong></h4>
+<p>The <strong>main effect</strong> of an independent variable is the effect that it has on the dependent variable, averaging across the levels of the other independent variable.</p>
+<ul>
+<li><p><strong>Main effect of IV1 (Caffeine)</strong>: This effect examines whether, overall, participants who received caffeine had faster reaction times than those who did not, regardless of the time of day.</p></li>
+<li><p><strong>Main effect of IV2 (Time of Day)</strong>: This effect looks at whether participants had faster reaction times in the morning than in the evening, regardless of whether they received caffeine.</p></li>
+</ul>
+</section>
+<section id="interaction-effects" class="level4">
+<h4 class="anchored" data-anchor-id="interaction-effects"><strong>Interaction Effects</strong>:</h4>
+<p>An <strong>interaction effect</strong> occurs when the effect of one independent variable on the dependent variable changes depending on the level of the other independent variable. In a 2x2 factorial design, the interaction effect tests whether the impact of one factor depends on the presence or absence of the other factor.</p>
+<ul>
+<li><strong>Example</strong>: The interaction between caffeine and time of day might show that caffeine only improves reaction time in the evening, not in the morning. This would suggest that the effect of caffeine depends on the time of day.</li>
+</ul>
+</section>
+<section id="graphical-representation" class="level4">
+<h4 class="anchored" data-anchor-id="graphical-representation"><strong>Graphical Representation</strong>:</h4>
+<p>A useful way to interpret interaction effects is through graphical representation. In a <strong>line plot</strong>, the presence of an interaction is typically indicated when the lines representing different levels of one factor are not parallel. If the lines are parallel, there is no interaction.</p>
+</section>
+</section>
+<section id="between-subjects-vs.-within-subjects-designs" class="level3">
+<h3 class="anchored" data-anchor-id="between-subjects-vs.-within-subjects-designs">Between-Subjects vs.&nbsp;Within-Subjects Designs</h3>
+<section id="between-subjects-design" class="level4">
+<h4 class="anchored" data-anchor-id="between-subjects-design"><strong>Between-Subjects Design</strong>:</h4>
+<p>In a <strong>between-subjects design</strong>, different participants are assigned to different experimental conditions. This means that each participant experiences only one condition of the experiment.</p>
+<ul>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><p>No carryover effects, as participants are only exposed to one condition.</p></li>
+<li><p>Less participant fatigue since they experience fewer conditions.</p></li>
+</ul></li>
+<li><p><strong>Disadvantages</strong>:</p>
+<ul>
+<li><p>More participants are required to maintain statistical power.</p></li>
+<li><p>Greater potential for individual differences to influence the results.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="within-subjects-design" class="level4">
+<h4 class="anchored" data-anchor-id="within-subjects-design"><strong>Within-Subjects Design</strong>:</h4>
+<p>In a <strong>within-subjects design</strong>, the same participants experience all the experimental conditions. This means that participants act as their own control, which reduces the influence of individual differences.</p>
+<ul>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><p>Requires fewer participants, as each participant experiences all conditions.</p></li>
+<li><p>Greater statistical power due to reduced variability between conditions.</p></li>
+</ul></li>
+<li><p><strong>Disadvantages</strong>:</p>
+<ul>
+<li><p>Potential for <strong>carryover effects</strong>, where the experience of one condition influences responses in subsequent conditions.</p></li>
+<li><p>Participant fatigue can occur if the experiment is too long or demanding.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="mixed-factorial-design" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-factorial-design">Mixed Factorial Design</h3>
+<p>A <strong>mixed factorial design</strong> combines elements of both between-subjects and within-subjects designs. In this design, one factor is manipulated <strong>between participants</strong> and another is manipulated <strong>within participants</strong>.</p>
+<ul>
+<li><strong>Example</strong>: In a study on memory, one group of participants might be exposed to a list of words presented either <strong>audibly</strong> or <strong>visually</strong> (between-subjects factor), while all participants are tested both <strong>immediately</strong> after presentation and <strong>one week later</strong> (within-subjects factor).</li>
+</ul>
+</section>
+<section id="data-analysis-for-2x2-factorial-designs" class="level3">
+<h3 class="anchored" data-anchor-id="data-analysis-for-2x2-factorial-designs">Data Analysis for 2x2 Factorial Designs</h3>
+<p>The statistical analysis for a 2x2 factorial design typically involves using <strong>ANOVA (Analysis of Variance)</strong> to test for main effects and interaction effects.</p>
+<section id="anova-for-main-and-interaction-effects" class="level4">
+<h4 class="anchored" data-anchor-id="anova-for-main-and-interaction-effects"><strong>ANOVA for Main and Interaction Effects</strong>:</h4>
+<ol type="1">
+<li><p><strong>Main Effect of IV1 (Caffeine)</strong>: Does the average reaction time differ between the caffeine and no-caffeine groups?</p></li>
+<li><p><strong>Main Effect of IV2 (Time of Day)</strong>: Does the average reaction time differ between the morning and evening conditions?</p></li>
+<li><p><strong>Interaction Effect (Caffeine × Time of Day)</strong>: Does the effect of caffeine on reaction time depend on the time of day?</p></li>
+</ol>
+<p>If the interaction effect is significant, researchers will often conduct <strong>simple effects tests</strong> to examine the effect of one independent variable at each level of the other independent variable.</p>
+</section>
+</section>
+<section id="practical-example-of-a-2x2-factorial-design-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="practical-example-of-a-2x2-factorial-design-in-r">Practical Example of a 2x2 Factorial Design in R</h3>
+<p>Here’s a simple example of how to analyze a 2x2 factorial design using R, with simulated data for the caffeine and time-of-day example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate the data</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Number of participants</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>caffeine <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Caffeine"</span>, <span class="st">"No Caffeine"</span>), <span class="at">each =</span> n<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>time_of_day <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Morning"</span>, <span class="st">"Evening"</span>), <span class="at">times =</span> n<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>reaction_time <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(n<span class="sc">/</span><span class="dv">2</span>, <span class="at">mean =</span> <span class="dv">200</span>, <span class="at">sd =</span> <span class="dv">20</span>), <span class="fu">rnorm</span>(n<span class="sc">/</span><span class="dv">2</span>, <span class="at">mean =</span> <span class="dv">220</span>, <span class="at">sd =</span> <span class="dv">20</span>))  <span class="co"># Reaction time</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Caffeine =</span> <span class="fu">factor</span>(caffeine), <span class="at">TimeOfDay =</span> <span class="fu">factor</span>(time_of_day), <span class="at">ReactionTime =</span> reaction_time)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform ANOVA</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>anova_model <span class="ot">&lt;-</span> <span class="fu">aov</span>(ReactionTime <span class="sc">~</span> Caffeine <span class="sc">*</span> TimeOfDay, <span class="at">data =</span> data)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anova_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+Caffeine            1  12366   12366  36.177 3.26e-08 ***
+TimeOfDay           1     16      16   0.047    0.828    
+Caffeine:TimeOfDay  1     41      41   0.121    0.729    
+Residuals          96  32813     342                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<section id="interpreting-the-results" class="level5">
+<h5 class="anchored" data-anchor-id="interpreting-the-results"><strong>Interpreting the Results</strong>:</h5>
+<ul>
+<li><p>The output will show whether the main effects of <strong>caffeine</strong> and <strong>time of day</strong> are significant, as well as whether there is a significant <strong>interaction effect</strong> between the two factors.</p></li>
+<li><p>A significant interaction suggests that the effect of caffeine on reaction time depends on whether it is morning or evening.</p></li>
+</ul>
+<blockquote class="blockquote">
+<p>Experimental design, particularly the 2x2 factorial design, provides a robust framework for testing the effects of multiple independent variables on a dependent variable. By understanding the main effects and interaction effects, as well as the differences between <strong>within-subjects</strong> and <strong>between-subjects</strong> designs, researchers can choose the most appropriate design for their research questions. Through careful planning and appropriate analysis, experimental designs can lead to valid and meaningful conclusions about the relationships between variables.</p>
+</blockquote>
 
 
+</section>
 </section>
 </section>
 
