@@ -54,6 +54,8 @@ $$
     P(S) = 1
     $$
 
+<br>
+
 ### Example: Rolling a Die
 
 When rolling a fair six-sided die, the probability of getting a 4 is:
@@ -61,6 +63,8 @@ When rolling a fair six-sided die, the probability of getting a 4 is:
 $$
 P(D=4) = \frac{1}{6}
 $$
+
+<br>
 
 ### R Code Example
 
@@ -89,6 +93,8 @@ $$
 P(A^c) = 1 - P(A)
 $$
 
+<br>
+
 ### Rule 2: Addition Rule
 
 For two events ( A ) and ( B ), the addition rule is:
@@ -102,6 +108,8 @@ If ( A ) and ( B ) are mutually exclusive, the formula simplifies to:
 $$
 P(A \cup B) = P(A) + P(B)
 $$
+
+<br>
 
 ### Rule 3: Multiplication Rule
 
@@ -127,6 +135,8 @@ $$
 P(A \mid B) = \frac{P(A \cap B)}{P(B)}
 $$
 
+<br>
+
 ### Example: Conditional Probability in Card Drawing
 
 Consider a deck of 52 cards. Let A be the event that the card is a **king**, and B be the event that the card is **red**. The probability of drawing a red king given that a red card was drawn is:
@@ -149,7 +159,7 @@ A **discrete probability distribution** deals with outcomes that can be counted 
 
 <br>
 
-## Bernoulli Distribution
+### Bernoulli Distribution
 
 The Bernoulli distribution is a distribution where one trial has one of two outcomes (success or failure).
 
@@ -159,13 +169,15 @@ $$
 
 <br>
 
-## Binomial Distribution
+### Binomial Distribution
 
 The probability of observing ( k ) successes in ( n ) trials with success probability ( p ) is given by the **binomial distribution**:
 
 $$
 P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
 $$
+
+<br>
 
 ### Example: Binomial Distribution in R
 
@@ -218,13 +230,17 @@ A **continuous probability distribution** deals with outcomes that can take any 
 
 -   **Uniform Distribution**: Every outcome in a given range is equally likely.
 
-## Normal Distribution
+<br>
+
+### Normal Distribution
 
 The **probability density function** (PDF) of a normal distribution with mean ( $\mu$ ) and standard deviation ( $\sigma$ ) is given by:
 
 $$
 f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
 $$
+
+<br>
 
 ### Example: Normal Distribution in R
 
@@ -242,11 +258,7 @@ plot(x, y, type = "l",
 
 <br>
 
-## 6. Simulations and Visualizations in R
-
-Simulations help us understand and visualize probability concepts. Let's simulate the **Law of Large Numbers**, which states that as the number of trials increases, the empirical probability approaches the theoretical probability.
-
-## Law of Large Numbers
+## 6. Law of Large Numbers
 
 The **Law of Large Numbers** states that as the number of trials ( n ) increases, the empirical probability approaches the true probability ( P ).
 
@@ -254,7 +266,7 @@ $$
 \lim_{n \to \infty} \hat{P} = P
 $$
 
-### Example: Law of Large Numbers
+<br>
 
 We will simulate flipping a fair coin 10,000 times and track how the empirical probability of heads converges to 0.5.
 
@@ -288,6 +300,8 @@ abline(h = 0.5, col = "red", lty = 2)
 
 > A **random variable** is a key concept in probability theory. It is a function that maps the outcomes of a random experiment to numerical values, allowing for mathematical treatment of random phenomena. Random variables can be classified into two types: **Discrete Random Variables** and **Continuous Random Variables**.
 
+<br>
+
 ### 1. Definition of a Random Variable
 
 A random variable is a function that assigns a numerical value to each outcome of a particular experiment. In other words, it translates events into numbers so that we can analyze probabilistic problems mathematically.
@@ -296,6 +310,8 @@ A random variable is a function that assigns a numerical value to each outcome o
 -   **Sample Space ( S )**: The set of all possible outcomes of a random experiment.
 
 The random variable ( X ) maps the events in the sample space to numbers. For example, when rolling a die, the sample space is ( S = { 1, 2, 3, 4, 5, 6 } ), and the random variable ( X ) represents the numbers on the die.
+
+<br>
 
 ### 2. Discrete Random Variable
 
@@ -322,6 +338,8 @@ $$
 
 -   $P(X = x_i) = p_i$: The probability that $X$ takes the value $x_i$.
 
+<br>
+
 #### Example of Binomial Distribution
 
 A common example of a discrete random variable is the **Binomial Distribution**. The binomial distribution represents the probability of having a certain number of successes in a series of independent trials where each trial has two possible outcomes (e.g., success/failure).
@@ -339,6 +357,8 @@ $$
 -   $p$: Probability of success
 
 -   $(1 - p)$: Probability of failure
+
+<br>
 
 #### Example: Tossing a Coin 3 Times
 
@@ -361,11 +381,15 @@ The probability distribution of the binomial random variable ( X ) is:
 | 2                   | 0.375                  |
 | 3                   | 0.125                  |
 
+<br>
+
 ### 3. Continuous Random Variable
 
 A **continuous random variable** can take any value within a given range or interval. Continuous random variables are used to model outcomes that can take an infinite number of real values.
 
 **Example**: Consider the height of people as a random variable. Since height can take an infinite number of real values, it is a continuous random variable. Continuous random variables are generally associated with probability over intervals rather than specific points.
+
+<br>
 
 #### Probability Density Function (PDF) of a Continuous Random Variable
 
@@ -379,6 +403,8 @@ $$
 
 Since the probability of a continuous random variable taking any exact value is 0, we calculate probabilities over intervals.
 
+<br>
+
 #### Example: Normal Distribution
 
 The **Normal Distribution** is a common continuous distribution. It is defined by its mean ( $\mu$ ) and standard deviation ( $\sigma$ ), and its probability density function is:
@@ -390,6 +416,8 @@ $$
 In a normal distribution, probabilities for specific intervals are computed by integrating the PDF over those intervals.
 
 **Example**: Let’s assume that the height of people follows a normal distribution with a mean of 170 cm and a standard deviation of 10 cm. We can calculate the probability that a person’s height is between 160 cm and 180 cm by integrating the normal distribution's PDF over that range.
+
+<br>
 
 ### 4. Expected Value
 
@@ -411,6 +439,8 @@ $$
 
 Where $f(x)$ is the probability density function.
 
+<br>
+
 #### Example: Expected Value of a Die Roll
 
 When rolling a fair die, the possible outcomes are 1 through 6. Since each outcome is equally likely, the expected value of the die roll is:
@@ -418,6 +448,8 @@ When rolling a fair die, the possible outcomes are 1 through 6. Since each outco
 $$
 E(X) = \frac{1}{6} \times (1 + 2 + 3 + 4 + 5 + 6) = \frac{21}{6} = 3.5
 $$
+
+<br>
 
 ### 5. Variance
 
@@ -617,7 +649,7 @@ prob_k_customers
 > The normal distribution is the most widely used continuous probability distribution, and is defined by mean $\mu$ and standard deviation $\sigma$. Its **probability density** function is as follows:
 
 $$
-f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( -\frac{(x - \mu)^2}{2 \sigma^2} \right)
+f(x; \mu , \sigma ) = \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( -\frac{(x - \mu)^2}{2 \sigma^2} \right)
 $$
 
 -   $\mu$: mean
@@ -627,6 +659,8 @@ $$
 Normal distribution appears in many natural phenomena and is symmetrical around the median. If the data is clustered around the mean, the normal distribution can be used to model the data.
 
 **Example**: People's heights and test scores are generally normally distributed. For example, we can assume that people's heights are normally distributed with a mean of 170 cm and a standard deviation of 10 cm.
+
+<br>
 
 **정규분포 시뮬레이션**
 
@@ -665,13 +699,19 @@ $$
 f(x; \lambda) = \lambda e^{-\lambda x}, \quad x \geq 0
 $$
 
--   $\lambda$: Incident rate (사건 발생률)
+-   $\lambda$: Incident rate (사건 발생률): 단위 시간 안에서 사건의 발생 횟수
+
+<br>
 
 The exponential distribution is used to model the time intervals between occurrences of certain events (e.g., system failures, customer arrivals). This distribution is used when events occur independently and the average time interval is constant.
 
 -   특정 사건(예: 시스템 고장, 고객 도착)이 발생하기까지의 시간 간격을 모델링하는 데 사용됨. 이 분포는 사건이 독립적으로 발생하고, 평균 시간 간격이 일정할 때 사용됨.
 
+<br>
+
 **Example**: If the mean time between failures for a system is 2 hours, we can assume that the time until the next failure follows an exponential distribution.
+
+<br>
 
 **Simulation**
 
@@ -690,6 +730,8 @@ ggplot(df_exp, aes(x = Value)) +
   theme_minimal()
 
 ```
+
+<br>
 
 > 한 시스템의 평균 고장 간격이 2시간일 때, 다음 고장이 발생할 때까지의 시간이 지수분포를 따른다고 가정하면 아래와 같은 분포.
 
@@ -727,16 +769,17 @@ f(x; \alpha, \beta) = \frac{\beta^\alpha x^{\alpha - 1} e^{-\beta x}}{\Gamma(\al
 $$
 
 -   $\alpha$: shape parameter (형상모수)\
+
 -   $\beta$: scale parameter (척도모수)\
+
 -   $\Gamma(\alpha)$: Gamma function (감마 함수)
 
 The gamma distribution is a generalization of the exponential distribution, modeling the waiting time until $\alpha$ independent events occur. It is applied to time to failure in physical systems, and price movements in financial data.
 
 -   감마분포는 지수분포의 일반화된 형태로, $\alpha$번의 독립적인 사건이 발생할 때까지의 대기 시간을 모델링. 물리적 시스템에서 고장까지의 시간, 금융 데이터에서 주식의 가격 변동 등에 적용됨.
+-   감마 분포의 `shape` (alpha)가1일 때, 감마 분포는 지수 분포가 됨.
 
-**Example**: The gamma distribution can be used to model the time until five major components in a system independently fail.
-
--   **예시**: 한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용할 수 있음.
+<Br>
 
 **Simulation**
 
@@ -744,21 +787,37 @@ The gamma distribution is a generalization of the exponential distribution, mode
 # Gamma Distribution Simulation and Visualization
 shape_gamma <- 2
 rate_gamma <- 1
-gamma_data <- rgamma(1000, shape = shape_gamma, rate = rate_gamma)
+gamma_data <- rgamma(1000, 
+                     shape = shape_gamma, 
+                     rate = rate_gamma)
 
 # Create a data frame for Gamma distribution
 df_gamma <- data.frame(Value = gamma_data)
 
 # Plot Gamma distribution
 ggplot(df_gamma, aes(x = Value)) +
-  geom_histogram(binwidth = 0.5, fill = "orange", alpha = 0.7) +
-  labs(title = "Gamma Distribution (shape = 2, rate = 1)", x = "Value", y = "Frequency") +
+  geom_histogram(binwidth = 0.5, 
+                 fill = "orange", alpha = 0.7) +
+  labs(title = "Gamma Distribution (shape = 2, rate = 1)", 
+       x = "Value", y = "Frequency") +
   theme_minimal()
 ```
 
+> **감마 분포**에서 `shape`와 `rate`는 각각 **형태**와 **비율**을 결정하는 중요한 매개변수. 이 두 매개변수는 감마 분포의 모양과 위치를 결정하는 역할.
+
+1\. **`shape` 매개변수 (shape_gamma = 2)**
+
+-   감마 분포에서 `shape`는 **형태**를 결정하는 매개변수로, `shape`가 클수록 분포는 오른쪽으로 더 늘어나며, **꼬리**가 길어짐. 반대로 `shape`가 작을수록 분포는 더 왼쪽으로 몰리며, 첨도가 높아짐.
+
+2\. **`rate` 매개변수 (rate_gamma = 1)**
+
+-   `rate`는 분포의 **비율**을 나타내며, 분포의 위치와 퍼짐 정도에 영향을 미침. `rate`는 종종 **scale**의 역수. `rate`가 커지면 분포는 왼쪽으로 이동하고, 작아지면 분포가 더 오른쪽으로 늘어남
+
 <br>
 
-한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용
+**Example**: The gamma distribution can be used to model the time until five major components in a system independently fail.
+
+-   **예시**: 한 시스템에서 5개의 주요 부품이 독립적으로 고장날 때까지의 시간을 모델링할 때 감마분포를 사용할 수 있음.
 
 ```{r}
 # 감마분포 예시: 시스템 부품 고장 시간
@@ -770,13 +829,17 @@ beta <- 1  # 척도 모수 (rate)
 n_simulations <- 10000
 
 # 시뮬레이션: 부품 고장까지의 시간
-failure_times <- rgamma(n_simulations, shape = alpha, rate = beta)
+failure_times <- rgamma(n_simulations, 
+                        shape = alpha, 
+                        rate = beta)
 
 # 결과 시각화
 df_gamma <- data.frame(FailureTime = failure_times)
 
 ggplot(df_gamma, aes(x = FailureTime)) +
-  geom_histogram(aes(y = ..density..), bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_histogram(aes(y = ..density..),
+                 bins = 50, fill = "steelblue", 
+                 alpha = 0.7) +
   geom_density(color = "red", size = 1) +
   labs(title = "Gamma Distribution: System Component Failure Times",
        x = "Time until 5 Failures",
@@ -785,9 +848,13 @@ ggplot(df_gamma, aes(x = FailureTime)) +
 
 ```
 
+-   `alpha = 5`:시스템 부품이 고장나기까지 5번의 고장 이벤트를 기다리는 시간에 해당
+
+-   `beta = 1`: 사건(고장)이 **일정한 비율**로 발생하며, 1단위 시간당 평균 1번의 고장이 발생하는 것을 의미
+
 <br>
 
-예를 들어, 어떤 시스템의 주요 부품 5개가 독립적으로 고장날 때까지의 시간을 모델링한다고 가정합니다. 각 부품이 고장날 때까지의 평균 시간이 2시간이라면, 감마분포를 통해 5개의 부품이 고장날 때까지 걸리는 시간을 모델링할 수 있습니다.
+> 예를 들어, 어떤 시스템의 주요 부품 5개가 독립적으로 고장날 때까지의 시간을 모델링한다고 가정. 각 부품이 고장날 때까지의 평균 시간이 2시간이라면, 감마분포를 통해 5개의 부품이 고장날 때까지 걸리는 시간을 모델링.
 
 -   α: 5개의 주요 부품이 모두 고장날 때까지의 이벤트 수.
 
@@ -814,7 +881,10 @@ library(ggplot2)
 df_gamma <- data.frame(FailureTime = failure_times)
 
 ggplot(df_gamma, aes(x = FailureTime)) +
-  geom_histogram(aes(y = ..density..), bins = 50, fill = "steelblue", alpha = 0.7) +
+  geom_histogram(aes(y = ..density..), 
+                 bins = 50, 
+                 fill = "steelblue", 
+                 alpha = 0.7) +
   geom_density(color = "red", size = 1) +
   labs(title = "Gamma Distribution: System Component Failure Times",
        x = "Time until 5 Components Fail (hours)",
@@ -841,12 +911,17 @@ $$
 f(x; \alpha, \beta) = \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha, \beta)}
 $$
 
-\
-$B(\alpha, \beta)$ is Beta function.
+-   $B(\alpha, \beta)$ is Beta function.
+
+$$
+B(\alpha, \beta)=\int_{0}^{1}{t^{\alpha -1}(1-t)^{\beta-1}}dt
+$$
 
 -   $\alpha$, $\beta$: shape parameters (형상 모수)
 
 The beta distribution is mainly used when there is prior knowledge about the probability of success. It is often used to model the uncertainty of probability in A/B testing.
+
+> **베이지안 통계**에서, 베타 분포는 이항 확률 변수의 **사전 분포**로 자주 사용되는데, 베타 함수는 사전 분포와 사후 분포를 계산할 때 중요한 역할을 함. 예를 들어, 성공/실패 실험에서 성공 확률의 사전 신념을 베타 분포로 모델링한 후, 실험 결과를 통해 사후 확률을 업데이트하는 과정에서 베타 함수가 사용된다.
 
 **Example**: When estimating the probability of success for two options in an A/B test, the beta distribution can be used to model uncertainty.
 
@@ -865,10 +940,38 @@ df_beta <- data.frame(Value = beta_data)
 
 # Plot Beta distribution
 ggplot(df_beta, aes(x = Value)) +
-  geom_histogram(binwidth = 0.05, fill = "purple", alpha = 0.7) +
+  geom_histogram(binwidth = 0.05, 
+                 fill = "purple", 
+                 alpha = 0.7) +
   labs(title = "Beta Distribution (shape1 = 2, shape2 = 5)", x = "Value", y = "Frequency") +
   theme_minimal()
 ```
+
+1\. **알파(α, Shape parameter)**: "형상 모수"
+
+-   **직관적 의미**: 알파는 **사건의 횟수** 또는 **발생 건수**를 나타내며, 감마 분포의 모양을 결정. 알파가 사건의 평균적인 빈도 또는 반복되는 횟수를 나타낸다고 생각할 수 있음.
+
+    -   예를 들어, 감마 분포가 시스템의 **고장 발생 시간**을 모델링할 때, 알파가 클수록 더 많은 고장이 발생하는 데 걸리는 시간을 나타냄
+
+    -   **알파가 1일 때**: 감마 분포는 지수 분포와 같아지며, 이는 단일 이벤트(예: 단일 고장) 사이의 대기 시간을 의미.
+
+    -   **알파가 클수록**: 더 많은 이벤트가 누적된 시간(예: 다섯 번의 고장 발생까지의 시간)을 의미하며, 분포의 **꼬리가 더 길어짐 (**오른쪽으로 더 퍼짐)
+
+2\. **베타(β, Scale parameter)**: "척도 모수"
+
+-   **직관적 의미**: 베타는 **시간의 단위** 또는 **이벤트가 발생하는 속도**. 사건이 발생하는 데 걸리는 **시간 척도**를 조절하는 역할.
+
+    -   예를 들어, 베타는 이벤트 간의 **시간 간격**을 조절하여 사건 발생의 빈도나 속도를 결정. 베타는 주로 사건이 얼마나 **빨리 또는 느리게** 일어나는지를 나타냄.
+
+    -   **베타가 클수록**: 사건이 느리게 발생하며, 시간 간격이 더 길어짐. 즉, 사건이 발생하기까지 걸리는 시간이 더 길다.
+
+    -   **베타가 작을수록**: 사건이 더 자주 또는 빠르게 발생하여 시간 간격이 짧아짐.
+
+    -   베타가 1일 때: 사건은 표준적인 속도로 발생.
+
+    -   베타가 0.5라면, 사건이 발생하는 데 시간이 더 많이 걸린다는 뜻.
+
+    -   베타가 2라면, 사건이 더 빨리 발생하며, 시간 간격이 짧아짐.
 
 <br>
 
@@ -898,24 +1001,44 @@ ggplot(df_beta, aes(x = Probability)) +
 
 ```
 
+-   **A 또는 B의 성공 확률이 불확실할 때**, 그 확률을 **베타 분포**로 모델링한 것
+
+<!-- -->
+
+-   베타 분포에서 10,000번 샘플링한 값들을 바탕으로, A 또는 B가 성공할 **확률 분포**를 시각적으로 보여주며, 성공 확률이 주로 어떤 값에 집중되는지 확인할 수 있음.
+
+-   **성공 확률에 대한 불확실성**이 있지만, 이 분포를 보면 대체로 성공 확률이 약 **20%\~40%** 사이에 있을 가능성이 높다는 것을 알 수 있음.
+
+-   `alpha_prior = 2`와 `beta_prior = 5`는 **A 또는 B 옵션의 성공 횟수와 실패 횟수**에 대한 사전 지식을 나타냄
+
+    -   **`alpha_prior = 2`**: A 또는 B 옵션에서 **성공한 횟수**가 2번이라는 것을 의미하고,
+
+    -   **`beta_prior = 5`**: A 또는 B 옵션에서 **실패한 횟수**가 5번이라는 것을 의미함.
+
+-   **베타 분포**는 **성공과 실패의 횟수**에 따라 변하는 확률을 나타내며, `alpha_prior = 2`와 `beta_prior = 5`는 성공 확률이 주로 작을 확률(2번 성공하고 5번 실패했으니까)이 높을 것이라는 신념을 반영.
+
 <br>
 
 ### 8. t-Distribution (t-분포)
 
-> The t-distribution, also known as Student's t-distribution, is a continuous probability distribution that arises when estimating the mean of a normally distributed population with an unknown standard deviation, particularly when the sample size is small. It is similar to the normal distribution but has heavier tails, which means it is more prone to producing values far from its mean. The t-distribution's probability density function is given as follows. t-분포는 모집단의 표준편차가 알려지지 않았을 때, 특히 표본 크기가 작을 때 사용되는 연속 확률 분포. 정규 분포와 유사하지만, 꼬리가 두꺼워 극단적인 값이 더 자주 나타날 수 있음.
+> The t-distribution, also known as Student's t-distribution, is a continuous probability distribution that arises when estimating the mean of a normally distributed population with an unknown standard deviation, particularly when the sample size is small. It is similar to the normal distribution but has heavier tails, which means it is more prone to producing values far from its mean. The t-distribution's probability density function is given as follows.
+>
+> t-분포는 모집단의 표준편차가 알려지지 않았을 때, 특히 표본 크기가 작을 때 사용되는 연속 확률 분포. **표본 크기가 작은 경우**나 **모집단의 표준편차를 모를 때** 모집단 평균에 대한 추론을 할 때 사용. 정규분포와 비슷한 형태를 가지지만, 표본 크기가 작을 때 보다 넓은 꼬리를 가지는 것이 특징인데, 이는 작은 표본에서의 **불확실성**을 반영한 것.
 
 $$
 f(x; \nu) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\frac{\nu}{2}\right)}\left(1 + \frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}
 $$
 
-\
-$\nu$ is the degrees of freedom (자유도).
-
 -   $\nu$: degrees of freedom (자유도)
+-   $\Gamma$ is gamma function
 
 As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. The t-distribution is commonly used in hypothesis testing, particularly in t-tests where the sample size is small, and the population standard deviation is unknown.
 
+-   **자유도**는 일반적으로 표본 크기에서 1을 뺀 값으로 정의됨 (n-1)
+
 **Example**: The t-distribution is used in the one-sample t-test, two-sample t-test, and paired t-test to determine whether there is a significant difference between sample means and population means or between two sample means.
+
+<br>
 
 **Simulation**
 
@@ -959,7 +1082,7 @@ ggplot(df_data, aes(x, density, color = group)) +
 
 ```
 
--   **자유도**가 커질수록, t-분포는 점점 **정규분포**에 가까워지며, 그 차이는 주로 **꼬리 부분**에서 드러납니다.
+-   **자유도**가 커질수록, t-분포는 점점 **정규분포**에 가까워지며, 그 차이는 주로 **꼬리 부분**에서 드러난다.
 
 <br>
 
@@ -1015,7 +1138,7 @@ server <- function(input, output) {
 }
 
 # Run the Shiny app
-# shinyApp(ui = ui, server = server)
+shinyApp(ui = ui, server = server)
 
 ```
 
@@ -1049,6 +1172,8 @@ server <- function(input, output) {
 
 -   **표본 평균**: 76.02137
 
+<br>
+
 #### Two-tail 검정이란?
 
 > **Two-tailed 검정**(양측 검정)은 통계적 가설 검정에서 **대립가설**이 모수가 가설 값과 **다르다**는 것을 검증하는 방식. 즉, 모수가 **가설 값보다 크거나 작다**는 두 가지 가능성을 모두 고려하는 검정.
@@ -1061,6 +1186,8 @@ server <- function(input, output) {
 
 -   **귀무가설 (H0)**: "모수가 가설 값과 같다"는 가설로, 일반적으로 검정하고자 하는 기본 가설.
 
+<br>
+
 **Two-tailed 검정의 예**
 
 예를 들어, 한 제품의 평균 무게가 **500g**인지를 검정한다고 가정할 때, two-tailed 검정에서는 **제품의 평균 무게가 500g보다 클 수도 있고, 작을 수도 있다는 두 가지 가능성**을 모두 고려합니다.
@@ -1068,6 +1195,8 @@ server <- function(input, output) {
 -   **귀무가설 (H0)**: 제품의 평균 무게는 500g이다. 즉, μ=500.
 
 -   **대립가설 (H1)**: 제품의 평균 무게는 500g과 다르다. 즉, μ≠500.
+
+<br>
 
 **Two-tailed 검정의 핵심**
 
@@ -1077,11 +1206,15 @@ server <- function(input, output) {
 
 3.  **p-값**: 검정에서 관찰된 t-값 또는 z-값의 **절대값**을 기준으로 p-값을 계산하며, 양쪽 꼬리의 확률을 더한 값이 **p-값**이 됨.
 
+<br>
+
 **그래프적 해석**
 
 -   **Two-tailed 검정**에서는 **양쪽 꼬리**에 임계값을 할당.
 
 -   예를 들어, 유의수준 α=0.05인 two-tailed 검정에서는 각 꼬리에 0.025씩 배분하여, t-값이 **임계값**을 넘어서는 경우 귀무가설을 기각.
+
+<br>
 
 **Two-tailed 검정 vs One-tailed 검정**
 
@@ -1097,7 +1230,9 @@ server <- function(input, output) {
 
 ### 9. Chi-Squared Distribution (카이제곱 분포)
 
-> The chi-squared distribution is a continuous probability distribution that arises in statistics, particularly in hypothesis testing and confidence interval estimation for variance. It is the distribution of the sum of the squares of independent standard normal random variables. The probability density function of the chi-squared distribution is given by the following formula. 카이제곱 분포는 통계에서 주로 가설 검정과 분산에 대한 신뢰 구간 추정에 사용되는 연속 확률 분포입니다. 카이제곱 분포는 독립적인 표준 정규 확률 변수들의 제곱합의 분포로 정의됩니다. 카이제곱 분포의 확률 밀도 함수는 다음과 같습니다.
+> The chi-squared distribution is a continuous probability distribution that arises in statistics, particularly in hypothesis testing and confidence interval estimation for variance. It is the distribution of the sum of the squares of independent standard normal random variables. The probability density function of the chi-squared distribution is given by the following formula.
+>
+> 카이제곱 분포는 통계에서 주로 가설 검정과 분산에 대한 신뢰 구간 추정에 사용되는 연속 확률 분포. 카이제곱 분포는 독립적인 표준 정규 확률 변수들의 제곱합의 분포로 정의됨.
 
 $$
 f(x; k) = \frac{x^{k/2 - 1} e^{-x/2}}{2^{k/2} \Gamma(k/2)}
@@ -1129,21 +1264,125 @@ ggplot(df_chi_squared, aes(x = Value)) +
 
 <br>
 
+카이제곱 검정은 주로 **카테고리형 데이터**의 분포가 기대되는 분포와 얼마나 다른지를 평가하는 데 사용. 두 가지 주요 유형의 카이제곱 검정은 적합도 검정(Goodness-of-Fit Test)과 독립성 검정(Test of Independence).
+
+**적합도 검정 예시**: 주사위의 공정성 검정
+
+주사위를 60번 굴렸을 때, 각각의 면(1\~6)이 나오는 횟수가 주사위가 공정한 경우와 차이가 있는지 검정해보자. 공정한 주사위는 각 면이 **동일한 확률**(1/6)로 나와야 함.
+
+#### **1. 관측된 데이터(실험 데이터)**:
+
+-   주사위를 60번 던져서 각각의 면이 나온 횟수:
+
+    -   1: 8번
+
+    -   2: 10번
+
+    -   3: 12번
+
+    -   4: 9번
+
+    -   5: 11번
+
+    -   6: 10번
+
+#### **2. 기대되는 데이터**:
+
+-   공정한 주사위라면 각 면은 60번 중 1/6 확률로 나와야 하므로:
+
+    -   각 면의 기대 횟수 = 60/6 = 10
+
+**R 코드: 카이제곱 적합도 검정**
+
+```{r}
+# 관측된 데이터 (실제 주사위를 굴려 나온 결과)
+observed <- c(8, 10, 12, 9, 11, 10)
+
+# 기대값 (공정한 주사위에서 각 면이 나오는 횟수)
+expected <- rep(10, 6)  # 각 면이 10번 나와야 함
+
+# 카이제곱 검정 수행
+chisq_test <- chisq.test(observed, 
+                         p = expected / sum(expected))
+print(chisq_test)
+
+# 카이제곱 검정 결과 시각화
+library(ggplot2)
+
+df <- data.frame(
+  Face = factor(1:6),
+  Observed = observed,
+  Expected = expected
+)
+
+df
+
+# 시각화
+ggplot(df, aes(x = Face)) +
+  geom_bar(aes(y = Observed, fill = "Observed"), stat = "identity", position = "dodge", width = 0.6) +
+  geom_bar(aes(y = Expected, fill = "Expected"), stat = "identity", position = "dodge", width = 0.6) +
+  labs(title = "Chi-Square Test: Observed vs Expected Frequencies",
+       x = "Dice Face", y = "Frequency") +
+  scale_fill_manual(values = c("Observed" = "steelblue", "Expected" = "orange")) +
+  theme_minimal()
+
+```
+
+-   **카이제곱 값(X-squared)**: 검정 통계량은 X-squared. 이 값은 관측된 값과 기대된 값의 차이.
+
+-   **p-value**: 0.9 이상으로 매우 큼. **p-value가 0.05보다 크기 때문에** 귀무가설을 기각할 수 없고, 즉, 주사위가 **공정하다는 가설을 지지**할 수 있음.
+
+<br>
+
+**로지스틱 회귀 모델 적합도 평가**
+
+> 고객이 상품을 구매할 확률을 예측하는 로지스틱 회귀 모델을 만들고, 모델의 예측이 실제 구매 여부와 얼마나 일치하는지 평가한다고 가정해 보자.
+
+```{r}
+# 데이터 준비
+observed <- c(50, 30)  # 실제 구매 여부 (구매, 비구매)
+expected <- c(45, 35)  # 모델이 예측한 구매 확률에 따른 기대값
+
+# 카이제곱 검정 수행
+chisq_test <- chisq.test(observed, p = expected / sum(expected))
+print(chisq_test)
+
+# 시각화
+df <- data.frame(
+  Outcome = factor(c("Purchased", "Not Purchased")),
+  Observed = observed,
+  Expected = expected
+)
+
+library(ggplot2)
+ggplot(df, aes(x = Outcome)) +
+  geom_bar(aes(y = Observed, fill = "Observed"), stat = "identity", position = "dodge", width = 0.6) +
+  geom_bar(aes(y = Expected, fill = "Expected"), stat = "identity", position = "dodge", width = 0.6) +
+  labs(title = "Model Fit: Observed vs Expected",
+       x = "Outcome", y = "Frequency") +
+  scale_fill_manual(values = c("Observed" = "steelblue", "Expected" = "orange")) +
+  theme_minimal()
+
+```
+
+<br>
+
 ### 10. F-Distribution (F-분포)
 
-> The F-distribution is a continuous probability distribution that arises in the testing of whether two variances are equal. It is the ratio of two independent chi-squared distributions, each divided by their respective degrees of freedom. The F-distribution is often used in analysis of variance (ANOVA) and regression analysis. The probability density function of the F-distribution is given by the following formula. F-분포는 두 분산이 동일한지를 검정할 때 나타나는 연속 확률 분포입니다. 이는 각각 자유도로 나눈 두 독립적인 카이제곱 분포의 비율로 정의됩니다. F-분포는 주로 분산 분석(ANOVA)와 회귀 분석에서 사용됩니다. F-분포의 확률 밀도 함수는 다음과 같습니다.
+> The F-distribution is a continuous probability distribution that arises in the testing of whether two variances are equal. It is the ratio of two independent chi-squared distributions, each divided by their respective degrees of freedom. The F-distribution is often used in analysis of variance (ANOVA) and regression analysis. The probability density function of the F-distribution is given by the following formula.
+>
+> F-분포는 두 분산이 동일한지를 검정할 때 나타나는 연속 확률 분포. 이는 각각 자유도로 나눈 두 독립적인 카이제곱 분포의 비율로 정의됨. F-분포는 주로 분산 분석(ANOVA)와 회귀 분석에서 사용.
 
 $$
 f(x; d_1, d_2) = \frac{\sqrt{\left(\frac{d_1 x}{d_1 x + d_2}\right)^{d_1} \left(\frac{d_2}{d_1 x + d_2}\right)^{d_2}}}{x \, B\left(\frac{d_1}{2}, \frac{d_2}{2}\right)}
 $$
 
-\
-$d_1$ and $d_2$ are the degrees of freedom (자유도).
-
 -   $d_1$: degrees of freedom for the numerator (분자 자유도)
 -   $d_2$: degrees of freedom for the denominator (분모 자유도)
 
 The F-distribution is commonly used in ANOVA to compare the variances of multiple groups and in regression analysis to test the overall significance of the model.
+
+<br>
 
 **Example**: The F-distribution is used in ANOVA to test the null hypothesis that the means of several populations are equal.
 
@@ -1160,11 +1399,84 @@ df_f <- data.frame(Value = f_data)
 
 # Plot F-distribution
 ggplot(df_f, aes(x = Value)) +
-  geom_histogram(aes(y = ..density..), binwidth = 0.2, fill = "darkgreen", alpha = 0.7) +
-  stat_function(fun = df, args = list(df1 = d1, df2 = d2), color = "red", size = 1) +
+  geom_histogram(aes(y = ..density..), 
+                 binwidth = 0.2, 
+                 fill = "darkgreen", 
+                 alpha = 0.7) +
   labs(title = "F-Distribution (d1 = 5, d2 = 10)", x = "Value", y = "Density") +
   theme_minimal()
 ```
+
+<br>
+
+> **F-분포**는 두 모집단의 **분산비**를 비교할 때 자주 사용되며, 특히 **분산 분석(ANOVA)**나 **회귀 분석**에서 모델의 적합도를 평가할 때 중요한 역할을 함. F-분포는 두 개의 카이제곱 분포의 비율로 정의되며, 두 집단 간의 분산 차이가 통계적으로 유의미한지 판단하는 데 사용됨.
+
+<br>
+
+**F-분포의 응용: 분산 분석(ANOVA)**
+
+F-분포는 **ANOVA의 검정 통계량**으로 활용. F-분포를 통해 각 그룹 간의 **분산 차이**가 통계적으로 유의미한지 평가할 수 있음.
+
+<bR>
+
+**예시: 세 가지 교육 방법에 따른 학생 성적 비교**
+
+학생들이 세 가지 다른 교육 방법(A, B, C)을 받았을 때, 각 교육 방법에 따라 학생들의 성적에 차이가 있는지 분산 분석(ANOVA)을 통해 확인해 보자.
+
+<br>
+
+**데이터**:
+
+세 가지 교육 방법을 적용한 학생들의 성적 데이터가 다음과 같을 때,
+
+-   **A 그룹**: 85, 90, 88, 92, 87
+
+-   **B 그룹**: 78, 85, 82, 86, 80
+
+-   **C 그룹**: 90, 91, 94, 89, 92
+
+```{r}
+# 데이터 준비
+group_A <- c(85, 90, 88, 92, 87)
+group_B <- c(78, 85, 82, 86, 80)
+group_C <- c(90, 91, 94, 89, 92)
+
+# 데이터 프레임으로 변환
+df <- data.frame(
+  Score = c(group_A, group_B, group_C),
+  Group = factor(rep(c("A", "B", "C"), each = 5))
+)
+
+# ANOVA 수행
+anova_model <- aov(Score ~ Group, data = df)
+summary(anova_model)
+
+# 시각화: 그룹별 점수 분포
+library(ggplot2)
+
+ggplot(df, aes(x = Group, y = Score, fill = Group)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(title = "ANOVA: Scores by Education Method",
+       x = "Education Method", y = "Score") +
+  theme_minimal()
+
+```
+
+-   `aov(Score ~ Group, data = df)` 함수는 ANOVA(분산 분석)를 수행하여 그룹 간 성적 차이가 통계적으로 유의한지를 평가.
+
+-   `summary(anova_model)`은 ANOVA 결과를 출력. 여기서 **F-통계량**과 **p-value**를 확인.
+
+-   F-분포는 다음 두 가지 분산을 비교하는 데 사용
+
+    -   **집단 간 분산(처리 분산)**: 각 그룹의 평균이 전체 평균에서 얼마나 떨어져 있는지.
+
+    -   **집단 내 분산(오차 분산)**: 각 그룹 내부에서 데이터가 얼마나 퍼져 있는지.
+
+![](images/clipboard-3808897993.png)
+
+-   **F-값(F value)** 6.5: 그룹 간의 변동이 그룹 내의 변동에 비해 얼마나 큰지를 나타냄.
+
+-   **p-value**: 0.0172로, 통계적으로 유의미한 차이가 있다는 것을 보여줌.
 
 <br>
 
@@ -1435,6 +1747,10 @@ server <- function(input, output) {
 
 The **Central Limit Theorem** (CLT) is a fundamental theorem in statistics that explains the behavior of the sampling distribution of the sample mean. The theorem states that, regardless of the population distribution, the distribution of the sample mean will tend to follow a normal distribution as the sample size becomes large, provided that the samples are independent and identically distributed (i.i.d.).
 
+> 샘플 사이즈가 커지면서 샘플들의 평균이 어떤 분포에서 추출되어도 결국 정규분포를 따른다는 것
+
+<br>
+
 ### Formal Definition
 
 Let $X_1, X_2, \dots, X_n$ be a sequence of i.i.d. random variables, each with mean $\mu$ and variance $\sigma^2$. The sample mean is defined as:
@@ -1451,6 +1767,8 @@ $$
 
 This means that for large $n$, the distribution of the sample mean $\bar{X}_n$ is approximately normal with mean $\mu$ and variance $\frac{\sigma^2}{n}$, even if the original data are not normally distributed.
 
+<br>
+
 ### Why is CLT Important?
 
 -   **Approximation**: The CLT allows us to approximate the distribution of the sample mean using a normal distribution, which simplifies statistical inference.
@@ -1458,6 +1776,8 @@ This means that for large $n$, the distribution of the sample mean $\bar{X}_n$ i
 -   **Application**: It underpins many methods in hypothesis testing, confidence intervals, and regression analysis.
 
 -   **Real-world Use**: The CLT holds for large sample sizes, making it practical for various data distributions encountered in real-world applications.
+
+<br>
 
 ### R Code to Practice CLT
 
@@ -1485,6 +1805,8 @@ legend("topright", legend = c("Sample Means", "Normal Curve"),
        col = c("lightblue", "darkred"), lwd = 2)
 
 ```
+
+<br>
 
 ### Explanation of R Code
 
@@ -1567,3 +1889,132 @@ server <- function(input, output) {
 <br>
 
 ## 10. Correlation
+
+**Correlation** measures the strength and direction of a linear relationship between two variables. It is a statistical technique used to determine if there is a relationship between two continuous variables and how strongly those variables are related.
+
+-   **Positive correlation**: If one variable increases when the other increases (e.g., height and weight), they have a **positive correlation**.
+
+-   **Negative correlation**: If one variable increases while the other decreases (e.g., exercise and weight), they have a **negative correlation**.
+
+-   **No correlation**: If changes in one variable do not result in systematic changes in the other, the variables have **no correlation**.
+
+<br>
+
+The correlation coefficient, often denoted as r, ranges between -1 and 1:
+
+-   r=1 indicates a perfect positive correlation.
+
+-   r=−1 indicates a perfect negative correlation.
+
+-   r=0 indicates no linear relationship.
+
+<br>
+
+### **Mathematical Definition of Correlation**
+
+The most commonly used measure of correlation is **Pearson's correlation coefficient**, which is defined as:
+
+$$
+r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}
+$$
+
+
+Where:
+
+-   $x_i$ and $y_i$ are individual data points of variables X and Y,
+
+-   $\bar{x}$ and $\bar{y}$ are the means of X and Y,
+
+-   The numerator represents the **covariance** of X and Y,
+
+-   The denominator normalizes the covariance by the standard deviations of X and Y.
+
+
+<br>
+
+```{r}
+# Generate some example data
+set.seed(123)
+x <- rnorm(100, mean = 50, sd = 10)  # Variable X (normally distributed)
+y <- 2 * x + rnorm(100, mean = 0, sd = 5)  # Variable Y (linearly related to X)
+
+# Calculate Pearson's correlation coefficient
+correlation <- cor(x, y)
+print(paste("Pearson's correlation coefficient:", round(correlation, 2)))
+
+# Visualize the correlation
+library(ggplot2)
+df <- data.frame(x, y)
+
+ggplot(df, aes(x = x, y = y)) +
+  geom_point(color = "blue", alpha = 0.6) +  # Scatter plot
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  # Add linear regression line
+  labs(title = paste("Scatter Plot with Correlation:", round(correlation, 2)),
+       x = "X variable", y = "Y variable") +
+  theme_minimal()
+
+```
+
+<br>
+
+
+```{r}
+library(shiny)
+library(MASS)  # For generating correlated data
+library(ggplot2)
+
+# Define UI and server in one file
+ui <- fluidPage(
+  titlePanel("Interactive Correlation Adjuster"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("correlation",
+                  "Adjust the Correlation:",
+                  min = -1, max = 1, value = 0, step = 0.01)
+    ),
+    
+    mainPanel(
+      plotOutput("scatterPlot"),
+      textOutput("correlationValue")
+    )
+  )
+)
+
+server <- function(input, output) {
+  
+  # Reactive expression to generate correlated data based on slider input
+  data <- reactive({
+    rho <- input$correlation
+    mu <- c(0, 0)  # Mean of the variables
+    Sigma <- matrix(c(1, rho, rho, 1), nrow = 2)  # Covariance matrix
+    mvrnorm(n = 500, mu = mu, Sigma = Sigma)  # Generate bivariate normal data
+  })
+  
+  # Render the scatter plot
+  output$scatterPlot <- renderPlot({
+    df <- as.data.frame(data())
+    colnames(df) <- c("x", "y")
+    
+    ggplot(df, aes(x = x, y = y)) +
+      geom_point(color = "blue", alpha = 0.5) +
+      geom_smooth(method = "lm", se = FALSE, color = "red") +
+      labs(title = "Scatter Plot with Correlation",
+           x = "X", y = "Y") +
+      theme_minimal()
+  })
+  
+  # Display the correlation value
+  output$correlationValue <- renderText({
+    paste("Correlation coefficient:", round(input$correlation, 2))
+  })
+}
+
+# Run the application 
+# shinyApp(ui = ui, server = server)
+
+
+```
+
+
+
