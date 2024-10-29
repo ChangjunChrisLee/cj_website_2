@@ -12,13 +12,27 @@ slide-format: revealjs
 
 ## Statistical Inference
 
+> **‘제 2차 세계대전의 손상된 전투기’ 사례**
+>
+> 당시 연합군은 전투기가 격추되는 것을 줄이기 위해 손상된 전투기들의 데이터를 분석했습니다. 대부분의 전투기는 날개와 꼬리에 총탄이 많이 맞은 상태로 돌아왔고, 연구팀은 이 부위에 장갑을 강화해야 한다고 생각했죠. 그런데 통계학자 아브라함 발드(Abraham Wald)는 발상을 뒤집었습니다. 살아 돌아온 전투기들은 총알을 맞아도 생존할 수 있었던 부위에 손상을 입었다는 점을 지적하며, **격추된 전투기들은 아마도 다른 부위가 손상되어 돌아오지 못했을 가능성이 크다고 했습니다.** 그래서 결론적으로 장갑은 덜 손상된 부위에 덧대어야 한다고 주장했죠. 이 분석은 전투기의 생존률을 크게 높였다고 알려져 있습니다.
+
+-   **통계적 추론:** 표본(Sample) 데이터를 통해 모집단(Population)의 특성을 추정하고 이해하는 과정
+
+<br>
+
 ### 1. Introduction to Statistical Inference
 
-**Statistical Inference** is the process of drawing conclusions about population parameters based on a sample from the population. There are two main branches of statistical inference:
+**Statistical Inference** is [the process of drawing conclusions about population parameters based on a sample from the population]{.underline}. There are two main branches of statistical inference:
 
 -   **Estimation**: Involves estimating population parameters (e.g., the mean or variance) using sample data.
 
 -   **Hypothesis Testing**: Involves testing assumptions (hypotheses) about population parameters.
+
+In other words, (in Korean)
+
+-   **Estimation (추정):** 표본 데이터를 사용하여 모집단의 특정 **모수(예: 평균, 분산 등)**를 **알아내고 추정**하는 데 목적이 있음. 주된 목표는 모집단의 실제 모수 값을 가능한 정확히 **근사**하는 것. 예를 들어, 모집단의 평균을 추정하기 위해 표본의 평균을 사용.
+
+-   **Hypothesis Testing (가설 검정):** 모집단의 모수에 대한 특정한 **주장이 참인지 판단**하는 데 목적이 있음. 예를 들어, 모집단 평균이 특정 값(예: 50)인지 아닌지를 확인하고자 할 때, 귀무 가설과 대립 가설을 세워 이를 테스트.
 
 The objective is to make reliable conclusions about a population, recognizing that sample data inherently contains some uncertainty.
 
@@ -54,6 +68,18 @@ $$
 
 -   **Efficiency**: Among unbiased estimators, an efficient estimator has the smallest variance.
 
+![](https://www.researchgate.net/publication/350710941/figure/fig1/AS:1010121870163978@1617843229779/Regression-model-properties-Accuracy-consistency-efficiency-and-bias-of-estimator.ppm)
+
+Source: <https://www.researchgate.net/figure/Regression-model-properties-Accuracy-consistency-efficiency-and-bias-of-estimator_fig1_350710941>
+
+<bR>
+
+![](images/clipboard-4238882567.png)
+
+Source: <http://www.gtmath.com/2018/04/parameter-estimation-part-1-reader.html>
+
+<br>
+
 #### R Code for Point Estimation:
 
 ```{r}
@@ -86,11 +112,21 @@ Where:
 
 -   $\hat{\mu}$ is the sample mean,
 
--   $z_{\alpha/2}$ is the critical value from the standard normal distribution (1.96 for 95% confidence),
+-   $z_{\alpha/2}$ is the critical value (임계값) from the standard normal distribution (1.96 for 95% confidence),
+
+    -   $z_{\alpha/2}$​는 표준 정규 분포에서 특정 신뢰 수준(예: 95%, 99%)을 반영하는 값으로, 예를 들어, 95% 신뢰 구간을 구할 때는 $\alpha = 0.05$이며, $z_{0.025}$​는 약 1.96.
+
+    <!-- -->
+
+    -   신뢰 구간이 얼마나 넓어질지 결정하는 요소
 
 -   $\hat{\sigma}$ is the sample standard deviation,
 
 -   $n$ is the sample size.
+
+    -   **표준 오차**는 표본 크기가 커질수록 작아지며, 이는 표본 평균이 모집단 평균에 더 근접함을 의미.
+
+<bR>
 
 #### R Code for Confidence Interval:
 
@@ -156,11 +192,52 @@ Where:
 
 #### R Code for Hypothesis Testing (One-Sample t-test):
 
+```{r}
+# Sample data
+scores <- c(78, 82, 75, 80, 77, 73, 70, 74, 85, 79)  # Replace with your data
+
+# Hypothesized population mean
+mu_0 <- 75  # Hypothesized mean to test against
+
+# Perform the one-sample t-test
+t_test_result <- t.test(scores, mu = mu_0)
+
+# View the result
+print(t_test_result)
+
+
+# Visualize the sample distribution with a histogram
+hist(scores, 
+     main = "Sample Scores Distribution with Hypothesized Mean", 
+     xlab = "Scores", 
+     col = "skyblue", 
+     border = "white", 
+     breaks = 10)
+
+# Add a line for the sample mean
+abline(v = mean(scores), col = "blue", lwd = 2, lty = 2)
+text(mean(scores), par("usr")[4], labels = "Sample Mean", pos = 3, col = "blue")
+
+# Add a line for the hypothesized mean
+abline(v = mu_0, col = "red", lwd = 2)
+text(mu_0, par("usr")[4], labels = "Hypothesized Mean", pos = 3, col = "red")
+
+# Add confidence interval lines
+ci <- t_test_result$conf.int
+abline(v = ci[1], col = "darkgreen", lwd = 2, lty = 3)
+abline(v = ci[2], col = "darkgreen", lwd = 2, lty = 3)
+text(ci[1], par("usr")[4], labels = "95% CI Lower", pos = 3, col = "darkgreen")
+text(ci[2], par("usr")[4], labels = "95% CI Upper", pos = 3, col = "darkgreen")
+
+```
+
 <br>
 
 ### 5. Types of Errors
 
 In hypothesis testing, we can make two types of errors:
+
+![](images/clipboard-1343055752.png)
 
 -   **Type I Error**: Rejecting the null hypothesis when it is true (false positive).
 
@@ -168,44 +245,88 @@ In hypothesis testing, we can make two types of errors:
 
 The **power** of a test is the probability of correctly rejecting a false null hypothesis (1 - probability of Type II error).
 
+**검정력(Power of a Test)**은 **잘못된 귀무 가설을 정확하게 기각할 확률**. 즉, **귀무 가설이 실제로 틀렸을 때, 이를 제대로 알아채고 기각할 가능성**을 나타내는 지표.
+
+-   검정력은 수식으로 **1 - 제2종 오류의 확률**
+
+    -   **제2종 오류**는 귀무 가설이 틀렸음에도 불구하고 이를 기각하지 못하는 실수
+
+    -   따라서 **검정력**은 제2종 오류를 피하고, 잘못된 가설을 제대로 기각할 확률
+
+    -   ML 성능 측정 지표의 Recall (Sensitivity 민감도, 또는 재현율)과 같음.
+
+        -   참인 값을 놓치지 않는 능력
+
+        -   실제로 양성인 모든 데이터 중에서 모델이 양성이라고 정확히 예측한 비율
+
+<br>
+
 #### R Code for Power Calculation:
+
+> 한 연구자가 **특정 운동 프로그램**이 체력에 미치는 효과를 알아보기 위해 **운동 그룹**과 **대조 그룹(운동하지 않는 그룹)**을 비교하는 연구를 설계했다고 가정해보자. 연구자는 운동 프로그램의 효과가 중간 정도(효과 크기 d = 0.5)일 것으로 예상한다. 각 그룹에는 **100명씩**의 참여자가 포함되며, 연구자는 5% 유의 수준에서 검정을 수행하려고 한다. 연구자는 **검정력(power)**이 충분히 높아야만, 즉 잘못된 귀무 가설을 기각할 확률이 높아야만 연구 결과의 신뢰성을 높일 수 있기 때문에 검정력을 계산하게 된다. 검정력이 80% 이상일 때 보통 신뢰할 만한 연구라고 간주되기 때문이다.
 
 ```{r}
 # Calculate the power of a t-test
 library(pwr)
 
-# Parameters for power calculation: effect size, significance level, sample size
-effect_size <- (55 - 50) / 10  # (difference in means / standard deviation)
-power_result <- pwr.t.test(d = effect_size, n = 100, sig.level = 0.05, type = "two.sample")
+# 효과 크기, 표본 크기, 유의 수준, 양측 검정을 설정하여 검정력 계산
+power_result <- pwr.t.test(d = 0.5, 
+                           n = 100, 
+                           sig.level = 0.05, 
+                           type = "two.sample")
 
 # Output the power of the test
 print(power_result)
 
 ```
 
+-   **검정력 (power)**: 0.94, 즉 94%. 이 값은 연구자가 설정한 조건(효과 크기 0.5, 표본 크기 100명, 유의 수준 0.05)에서, **운동 프로그램이 실제로 효과가 있다면 이를 94% 확률로 감지할 수 있다**는 의미.
+
+-   검정력이 80%를 훨씬 넘는 94%로 나타났기 때문에, 연구자는 이 연구 디자인이 충분히 강력하다고 결론 내릴 수 있음. 만약 효과가 존재한다면, 94%의 확률로 이를 올바르게 발견할 수 있기 때문.
+
+<bR>
+
 ## Frequentist vs. Bayesian
+
+> 어느 날, 당신은 우산을 가져갈지 말지 고민하고 있습니다. 기상청은 “오늘 비가 올 확률이 30%”라고 알려주었다면, Frequentist와 Bayesian 의 접근 방식은 어떻게 달라질까?
+>
+> -   Frequentist는 이 30%를 **장기적인 빈도**로 해석한다. “만약 오늘과 비슷한 조건에서 **100번을 반복한다면**, 그중 30번은 비가 내릴 것이다.” 즉, Frequentist 입장에서는 오늘이 **정확히 비가 오는 날인지 아닌지는 모른 채** 비가 올 가능성을 반복적인 실험 결과로 이해하는 것이다.
+>
+> -   Bayesian은 이 30%를 **현재까지의 정보에 기반한 주관적인 확률**로 해석한다. “오늘 비가 올 확률이 30%”라는 정보를 현재까지의 모든 정보를 반영한 **최신의 신뢰도**로 보는 것이다. 즉, Bayesian 입장에서는 현재 조건에 대해 알고 있는 정보에 따라 **오늘 비가 올 가능성**을 30%로 설정하게 되고 새로운 정보가 들어오면(예: 오후에 구름이 더 많이 끼기 시작) **비 확률을 즉시 업데이트**한다.
+
+일상에서 대부분의 사람들은 Bayesian적인 사고 방식에 더 가깝게 행동한다. 우리는 보통 **새로운 정보를 받으면 기존 믿음이나 추정치를 업데이트**하면서 판단을 내리기 때문. Frequentist 접근은 **장기적인 반복 실험**을 전제로 하는데, 이는 일상생활에서는 어렵거나 의미가 없는 경우가 많다. 예를 들어 친구가 약속에 늦을 확률을 알기 위해 **친구가 여러 번 동일한 상황에서 약속을 지키거나 늦는 실험을 반복**할 수는 없기 때문.
+
+<br>
 
 ### 1. Introduction
 
 In statistics, two major schools of thought exist: **Frequentist** and **Bayesian**. Each has its own interpretation of probability, methods of inference, and philosophy. Let’s explore the key differences, along with some intuitive examples and R code for both approaches.
 
+<bR>
+
 ### 2. Historical Background
 
 #### Frequentist Approach
 
--   **Origins**: The frequentist approach is rooted in the early 20th century, developed by statisticians such as **Ronald A. Fisher**, **Jerzy Neyman**, and **Egon Pearson**.
+-   **Origins**: The frequentist approach is rooted in the early 20th century, developed by statisticians such as *Ronald A. Fisher*, *Jerzy Neyman*, and *Egon Pearson.*
 
--   **Philosophy**: Frequentists define probability as the long-run frequency of events. They believe that population parameters are fixed but unknown, and they use data from random samples to infer these fixed parameters.
+-   **Philosophy**: Frequentists define probability as the **long-run frequency of events.** They believe that [**population parameters are fixed but unknown**]{.underline}, and they use data from random samples to infer these fixed parameters.
 
-    Example: If you flip a coin many times, the frequentist interpretation is that the probability of heads is the long-term proportion of heads after infinite flips.
+-   **Example:** If you flip a coin many times, the frequentist interpretation is that the probability of heads is the long-term proportion of heads after infinite flips.
+
+<br>
 
 #### Bayesian Approach
 
--   **Origins**: Bayesian statistics is named after **Rev. Thomas Bayes**, an 18th-century mathematician. However, it wasn’t until the 20th century that statisticians like **Harold Jeffreys** and **Leonard J. Savage** developed Bayesian ideas more thoroughly.
+-   **Origins**: Bayesian statistics is named after *Rev. Thomas Bayes*, an 18th-century mathematician. However, it wasn’t until the 20th century that statisticians like *Harold Jeffreys* and *Leonard J. Savage* developed Bayesian ideas more thoroughly.
 
--   **Philosophy**: In Bayesian statistics, probability represents a degree of belief or certainty about an event. Bayesian inference updates this belief as new data becomes available, using **Bayes’ Theorem**.
+-   **Philosophy**: In Bayesian statistics, *probability represents **a degree of belief** or certainty about an event*. Bayesian inference updates this belief as new data becomes available, using **Bayes’ Theorem**.
 
-    Example: If you believe that the coin is biased based on previous information (e.g., 60% heads in past experiments), you incorporate that into your analysis and update your belief as new flips are observed.
+-   **Example:** If you believe that the coin is biased based on previous information (e.g., 60% heads in past experiments), you incorporate that into your analysis and update your belief as new flips are observed.
+
+-   확률은 수 많은 실험에 의한 빈도가 아니라 내가 어떤 사건이 일어날지에 대한 '믿음의 정도'로 표현.
+
+<br>
 
 ### 3. Philosophical Differences
 
@@ -213,11 +334,13 @@ In statistics, two major schools of thought exist: **Frequentist** and **Bayesia
 
 -   **Objective**: Population parameters (like the mean or variance) are fixed but unknown, and we use sampling to make inferences about these parameters.
 
--   **Probability**: The probability of an event is the long-run frequency with which the event occurs over repeated experiments.
+-   **Probability**: The probability of an event is **the long-run frequency** with which the event occurs over repeated experiments.
 
 -   **Hypothesis Testing**: Frequentists use **p-values** to test hypotheses and make decisions without explicitly incorporating prior knowledge.
 
-    For example, in hypothesis testing, you might ask: "Given this data, how likely is it to observe this result if the null hypothesis were true?"
+-   For example, in hypothesis testing, you might ask: "Given this data, how likely is it to observe this result if the null hypothesis were true?"
+
+<bR>
 
 #### Bayesian Philosophy
 
@@ -227,7 +350,9 @@ In statistics, two major schools of thought exist: **Frequentist** and **Bayesia
 
 -   **Bayes’ Theorem**: The cornerstone of Bayesian inference, Bayes’ Theorem allows us to update prior beliefs about a parameter in light of new evidence.
 
-    For example, you might ask: "Given this data, how should I update my belief about the true parameter?"
+-   For example, you might ask: "Given this data, how should I update my belief about the true parameter?"
+
+<Br>
 
 ### 4. Bayes' Theorem
 
@@ -247,6 +372,57 @@ $$ Where:
 
 If you’re trying to estimate the probability of getting heads from a potentially biased coin, the Bayesian approach would combine your prior belief (say, you think the coin might be biased towards heads) with the actual results from a series of flips to calculate an updated belief (the posterior).
 
+```{r}
+library(ggplot2)
+# 1. Prior belief: we think the coin might be biased towards heads
+# Setting an initial prior with Beta distribution: Beta(2, 2) - a slight bias towards heads
+prior_a <- 2   # Prior heads count (pseudo-count)
+prior_b <- 2   # Prior tails count (pseudo-count)
+
+# 2. Observed data: results from flipping the coin
+# Let's assume we flip the coin 20 times and get 14 heads and 6 tails
+observed_heads <- 14
+observed_tails <- 6
+
+# 3. Update the prior with observed data to get the posterior
+posterior_a <- prior_a + observed_heads
+posterior_b <- prior_b + observed_tails
+
+# 4. Plot the prior and posterior distributions to visualize belief updates
+theta <- seq(0, 1, length.out = 100)  # Possible values of the probability of heads
+
+# Calculate density for prior and posterior
+prior_density <- dbeta(theta, prior_a, prior_b)
+posterior_density <- dbeta(theta, posterior_a, posterior_b)
+
+# Create a data frame for plotting
+data <- data.frame(
+  theta = rep(theta, 2),
+  density = c(prior_density, posterior_density),
+  Distribution = rep(c("Prior", "Posterior"), each = length(theta))
+)
+
+head(data)
+
+# Plot the prior and posterior
+ggplot(data, aes(x = theta, y = density, color = Distribution, linetype = Distribution)) +
+  geom_line(size = 1.2) +
+  labs(title = "Bayesian Update for Probability of Heads",
+       x = "Probability of Heads (θ)",
+       y = "Density") +
+  theme_minimal() +
+  scale_color_manual(values = c("Prior" = "blue", "Posterior" = "red"))
+
+```
+
+-   **Prior 설정**: `Beta(2, 2)` 분포를 사전 확률로 설정하여 약간 앞면에 치우친 믿음을 반영. `prior_a`와 `prior_b`는 각각 사전 앞면과 뒷면의 "pseudo-count"로 설정.
+
+-   **관찰 데이터**: 동전을 20번 던져 **14번 앞면**이 나오고 **6번 뒷면**이 나온 것을 반영.
+
+-   **Posterior 업데이트**: 관찰 데이터를 반영해 사후 확률 분포를 업데이트. `posterior_a = prior_a + observed_heads`, `posterior_b = prior_b + observed_tails`로 계산.
+
+<br>
+
 ### 5. Intuitive Examples
 
 #### Example 1: Coin Toss (Frequentist vs. Bayesian)
@@ -259,9 +435,11 @@ $$
 \hat{p} = \frac{\text{number of heads}}{\text{total flips}}
 $$ Frequentists would not incorporate any prior beliefs and rely solely on the data at hand.
 
+<bR>
+
 **Bayesian Approach:**
 
-Bayesians would start with a **prior distribution** for ppp, reflecting their belief about the probability of heads before observing any data. After flipping the coin several times, they would update this belief using Bayes' Theorem to obtain the **posterior distribution** for ppp.
+Bayesians would start with a **prior distribution** for p, reflecting their belief about the probability of heads before observing any data. After flipping the coin several times, they would update this belief using Bayes' Theorem to obtain the **posterior distribution** for p.
 
 #### R Code for Coin Toss (Frequentist vs. Bayesian)
 
@@ -308,15 +486,137 @@ ggplot(df, aes(x = p_vals)) +
   theme_minimal()
 ```
 
+<br>
+
+#### R Code for Bayesian estimation of regression
+
+```{r}
+# Install and load the rstanarm package if not already installed
+if(!require("rstanarm")) install.packages("rstanarm", dependencies=TRUE); library("rstanarm")
+
+# Sample data: Suppose we have a dataset with predictor X and response Y
+set.seed(123)
+n <- 100
+X <- rnorm(n, mean = 5, sd = 2)
+Y <- 3 + 1.5 * X + rnorm(n, sd = 1)
+
+# Fit Bayesian linear regression
+bayesian_model <- stan_glm(Y ~ X, data = data.frame(X, Y),
+                           prior = normal(0, 5),      
+                           # Prior for coefficients
+                           prior_intercept = normal(0, 10),  
+                           # Prior for intercept
+                           prior_aux = cauchy(0, 2),  
+                           # Prior for error term
+                           chains = 4, iter = 2000, 
+                           warmup = 500, seed = 123)
+
+# Summary of the Bayesian regression
+print(bayesian_model)
+
+```
+
+<br>
+
+**조금 더 자세한 예제를 통한 학습**
+
+```{r}
+set.seed(123)
+
+# 1. 가상의 데이터 생성
+n <- 100  # 샘플 크기
+X <- rnorm(n, mean = 5, sd = 2)
+true_intercept <- 3
+true_slope <- 1.5
+Y <- true_intercept + true_slope * X + rnorm(n, sd = 1)
+
+# 2. 사전 분포 설정 (여기서는 단순히 정규 분포로 가정)
+prior_mean_intercept <- 0
+prior_sd_intercept <- 10
+prior_mean_slope <- 0
+prior_sd_slope <- 10
+proposal_sd <- 0.1  # 제안 분포의 표준편차
+
+# 3. 초기값 설정
+n_iter <- 5000  # MCMC 반복 수
+intercept_samples <- numeric(n_iter)
+slope_samples <- numeric(n_iter)
+
+# 초기 추정치 설정
+current_intercept <- 0
+current_slope <- 0
+current_log_likelihood <- sum(dnorm(Y, mean = current_intercept + current_slope * X, sd = 1, log = TRUE))
+
+# 4. MCMC 과정 (Metropolis-Hastings 알고리즘 사용)
+for (i in 1:n_iter) {
+  
+  # 4.1. 새로운 제안값 생성 (정규 분포 제안 분포 사용)
+  proposed_intercept <- rnorm(1, mean = current_intercept, sd = proposal_sd)
+  proposed_slope <- rnorm(1, mean = current_slope, sd = proposal_sd)
+  
+  # 4.2. 제안된 값에서의 우도 계산
+  proposed_log_likelihood <- sum(dnorm(Y, mean = proposed_intercept + proposed_slope * X, sd = 1, log = TRUE))
+  
+  # 4.3. 사전 분포 확률 계산 (정규 분포 가정)
+  prior_current <- dnorm(current_intercept, prior_mean_intercept, prior_sd_intercept, log = TRUE) +
+    dnorm(current_slope, prior_mean_slope, prior_sd_slope, log = TRUE)
+  
+  prior_proposed <- dnorm(proposed_intercept, prior_mean_intercept, prior_sd_intercept, log = TRUE) +
+    dnorm(proposed_slope, prior_mean_slope, prior_sd_slope, log = TRUE)
+  
+  # 4.4. 사후 확률 비율 계산 (Metropolis-Hastings acceptance ratio)
+  log_acceptance_ratio <- (proposed_log_likelihood + prior_proposed) - 
+    (current_log_likelihood + prior_current)
+  
+  # 4.5. 제안값을 수용할지 결정
+  if (log(runif(1)) < log_acceptance_ratio) {
+    current_intercept <- proposed_intercept
+    current_slope <- proposed_slope
+    current_log_likelihood <- proposed_log_likelihood
+  }
+  
+  # 4.6. 현재 값을 저장
+  intercept_samples[i] <- current_intercept
+  slope_samples[i] <- current_slope
+}
+
+# 5. 결과 시각화
+par(mfrow = c(2, 2))
+plot(intercept_samples, type = "l", main = "Trace Plot: Intercept", xlab = "Iteration", ylab = "Intercept")
+plot(slope_samples, type = "l", main = "Trace Plot: Slope", xlab = "Iteration", ylab = "Slope")
+hist(intercept_samples, main = "Posterior Distribution: Intercept", xlab = "Intercept", breaks = 30, col = "skyblue")
+hist(slope_samples, main = "Posterior Distribution: Slope", xlab = "Slope", breaks = 30, col = "skyblue")
+
+
+# 기울기 파라미터가 0보다 클 확률 계산
+prob_slope_positive <- mean(slope_samples > 0)
+cat("기울기 파라미터가 0보다 클 확률:", prob_slope_positive, "\n")
+
+# 기울기의 95% 신뢰 구간 계산
+credible_interval_slope <- quantile(slope_samples, probs = c(0.025, 0.975))
+cat("기울기의 95% 신뢰 구간:", credible_interval_slope, "\n")
+
+```
+
+<br>
+
 ### 6. Example 2: Hypothesis Testing (Frequentist vs. Bayesian)
 
 #### Frequentist Hypothesis Testing
 
 In frequentist hypothesis testing, we define a **null hypothesis** H0 (e.g., the population mean is zero) and use a test statistic to determine whether we reject H0 based on a significance level (e.g., $\alpha = 0.05$).
 
+-   **왜 귀무 가설이 필요한가?**
+
+    Frequentist 접근의 기본 철학은 **데이터가 귀무 가설이 참이라는 가정하에서 얼마나 일어날 가능성이 있는지를 평가**하는 데 있다. 이 과정에서 **p-value**를 통해 관찰된 데이터가 귀무 가설 하에서 얼마나 극단적인지(혹은 드문지)를 확인하고, 이를 바탕으로 **귀무 가설을 기각할지 결정한다**.
+
+<br>
+
 #### Bayesian Hypothesis Testing
 
 In Bayesian hypothesis testing, we compute the **posterior probability** of the hypotheses and compare them directly. Instead of a p-value, we might calculate the **Bayes Factor**, which quantifies the evidence in favor of one hypothesis over another.
+
+<br>
 
 #### R Code for Hypothesis Testing (Frequentist vs. Bayesian)
 
@@ -341,6 +641,10 @@ bf <- ttestBF(x = data, mu = 0)
 print(bf)
 ```
 
+[(베이즈 팩터 설명은 생략)]{.underline}
+
+<br>
+
 ### 7. Key Takeaways
 
 -   **Frequentist** statistics is based on the idea of long-run frequencies, and parameters are treated as fixed. Estimations and hypothesis testing are based purely on observed data without incorporating prior beliefs.
@@ -351,9 +655,15 @@ print(bf)
 
 <br>
 
+------------------------------------------------------------------------
+
 ## ANOVA (Analysis of Variance)
 
+![](images/clipboard-730139807.png)
+
 > **여러 집단 간의 평균 차이**를 분석하기 위한 통계적 기법. **두 개 이상의 집단**이 있을 때, 이 집단들의 **평균이 동일한지**를 검정하는 데 사용됨. ANOVA는 일반적으로 **F-검정**을 통해 수행되며, 집단 간의 분산과 집단 내의 분산을 비교하여 집단 평균의 차이가 통계적으로 유의미한지를 결정.
+
+<br>
 
 ### ANOVA의 기본 개념
 
@@ -375,21 +685,31 @@ ANOVA는 **총 변동**을 두 부분으로 나누어 분석.
 
 2.  **집단 내 변동 (Within-group variation)**: 같은 집단 내에서 개별 데이터가 집단 평균에서 얼마나 벗어나는지를 나타냄. 이는 데이터의 **무작위 오차**로 설명할 수 있음.
 
+예를 들어 세 집단 A, B, C가 있을 때, ANOVA 검정은 다음과 같은 경우에도 귀무 가설을 기각할 수 있음.
+
+-   A, B는 비슷한데 C만 평균이 다른 경우
+
+-   A, C는 비슷한데 B만 평균이 다른 경우
+
+즉, **모든 집단이 다르지 않고 하나만 다르더라도** ANOVA는 그 차이를 감지하고, 귀무 가설을 기각할 가능성이 있음. ANOVA는 단순히 "모두 같지 않다"는 사실만을 감지하는 것이므로, 특정 집단이 다르게 보일 경우에도 유의미한 차이가 있다고 판단할 수 있음.
+
+<bR>
+
 ### ANOVA의 F-통계량
 
 ANOVA에서는 **F-통계량**을 계산하여 집단 간 평균 차이가 우연히 발생했는지를 검정. F-통계량은 **집단 간 변동**과 **집단 내 변동**의 비율로 계산.
 
 $$
-F = \frac{\text{집단 간 변동}}{\text{집단 내 변동}}
+F = \frac{\text{Between-group variance}}{\text{Within-group variance}}
 $$
 
--   **집단 간 변동 (Mean Square Between, MSB)**: 각 집단 평균이 전체 평균에서 벗어나는 정도.
+-   **집단 간 변동 (Between-group variance or Mean Square Between, MSB)**: 각 집단 평균이 전체 평균에서 벗어나는 정도.
 
 $$
 \text{MSB} = \frac{\sum_{i=1}^{k} n_i (\bar{X}_i - \bar{X})^2}{k - 1}
 $$
 
-여기서:
+where
 
 -   $n_i$: 각 집단의 샘플 크기
 
@@ -397,13 +717,13 @@ $$
 
 -   $\bar{X}$: 전체 평균
 
--   **집단 내 변동 (Mean Square Within, MSW)**: 각 집단 내에서 개별 데이터가 집단 평균에서 벗어나는 정도.
+-   **집단 내 변동 (Within-group variance or Mean Square Within, MSW)**: 각 집단 내에서 개별 데이터가 집단 평균에서 벗어나는 정도.
 
 $$
 \text{MSW} = \frac{\sum_{i=1}^{k} \sum_{j=1}^{n_i} (X_{ij} - \bar{X}_i)^2}{N - k}
 $$
 
-여기서:
+where
 
 -   $X_{ij}$: i번째 집단의 j번째 관측값
 
@@ -415,11 +735,17 @@ F-값이 **1보다 크면**, 집단 간 변동이 집단 내 변동보다 크다
 
 ### ANOVA의 해석
 
+-   **F-통계량 값이 클수록**: 집단 간 차이가 크고, 이는 **유의미한 차이가 있을 가능성이 높다**는 것을 의미. 따라서 F-통계량이 충분히 큰 경우, 귀무 가설을 기각하고 "적어도 하나의 집단 평균이 다른 집단과 유의미하게 다르다"는 결론을 내릴 수 있음.
+
+-   **F-통계량 값이 작을수록**: 집단 간 차이가 집단 내 차이에 비해 크지 않다는 것을 의미하며, 이는 **모든 집단 평균이 비슷할 가능성이 높다**는 것을 암시. 이 경우 귀무 가설을 기각할 근거가 부족하다고 볼 수 있음.
+
 -   **p-값**: F-값에 대응하는 **p-값**이 유의수준(예: 0.05)보다 작으면, **귀무가설을 기각**하고 **집단 간에 평균 차이가 있다**고 결론지을 수 있음.
 
 -   **귀무가설 기각**: 적어도 하나의 집단 평균이 다른 집단과 다르다는 것을 의미.
 
-### 예시: ANOVA 분석
+<br>
+
+### Example
 
 -   세 개의 서로 다른 교육 방법이 학생들의 수학 성적에 미치는 영향을 분석하고자 한다고 가정.
 
@@ -430,30 +756,69 @@ F-값이 **1보다 크면**, 집단 간 변동이 집단 내 변동보다 크다
 #### R 코드 예시:
 
 ```{r}
-# 세 개의 교육 방법에 대한 학생 성적 데이터
+# 데이터 준비
 group_A <- c(85, 90, 88, 92, 85, 87, 89, 91, 84, 88)
 group_B <- c(78, 82, 80, 75, 79, 81, 77, 83, 76, 80)
 group_C <- c(88, 90, 92, 94, 91, 89, 87, 93, 90, 88)
 
-# 데이터를 합쳐서 그룹 지정
+# 전체 데이터프레임으로 결합
 data <- data.frame(
   score = c(group_A, group_B, group_C),
   group = factor(rep(c("A", "B", "C"), each = 10))
 )
 
-# ANOVA 분석 수행
-anova_result <- aov(score ~ group, data = data)
+data
+
+# 각 그룹의 평균
+mean_A <- mean(group_A)
+mean_B <- mean(group_B)
+mean_C <- mean(group_C)
+
+# 전체 평균
+overall_mean <- mean(data$score)
+
+# 1. 그룹 간 제곱합(SSB) 및 제곱 평균(MSB)
+n_A <- length(group_A)  # 각 그룹의 표본 수
+n_B <- length(group_B)
+n_C <- length(group_C)
+SSB <- n_A * (mean_A - overall_mean)^2 + 
+  n_B * (mean_B - overall_mean)^2 + 
+  n_C * (mean_C - overall_mean)^2
+df_between <- 3 - 1  # 그룹 간 자유도
+MSB <- SSB / df_between
+
+# 2. 그룹 내 제곱합(SSW) 및 제곱 평균(MSW)
+SSW <- sum((group_A - mean_A)^2) + sum((group_B - mean_B)^2) + sum((group_C - mean_C)^2)
+df_within <- length(data$score) - 3  # 그룹 내 자유도
+MSW <- SSW / df_within
+
+# 3. F-통계량 계산
+F_statistic <- MSB / MSW
 
 # 결과 출력
+cat("그룹 간 제곱합(SSB):", SSB, "\n")
+cat("그룹 간 제곱 평균(MSB):", MSB, "\n")
+cat("그룹 내 제곱합(SSW):", SSW, "\n")
+cat("그룹 내 제곱 평균(MSW):", MSW, "\n")
+cat("F-통계량:", F_statistic, "\n")
+
+# ANOVA 검정 결과와 비교
+anova_result <- aov(score ~ group, data = data)
 summary(anova_result)
 
+# Boxplot으로 각 그룹의 성적 분포 시각화
+boxplot(score ~ group, data = data,
+        main = "Distribution of Scores by Education Method",
+        xlab = "Education Method Group",
+        ylab = "Score",
+        col = c("skyblue", "salmon", "lightgreen"))
+
+# 평균선 추가
+means <- tapply(data$score, data$group, mean)
+points(1:3, means, col = "red", pch = 18, cex = 1.5)
+
+
 ```
-
--   **F-값**: 14.96
-
--   **p-값**: 0.00018
-
-> 이 결과에서 p-값이 0.05보다 작으므로, 우리는 귀무가설을 기각. 즉, 세 그룹 중 적어도 하나의 그룹의 평균이 다른 그룹과 **유의미하게 다르다**고 결론 내릴 수 있음.
 
 <bR>
 
@@ -464,6 +829,62 @@ summary(anova_result)
 2.  **이원 분산 분석 (Two-way ANOVA)**: 두 가지 요인(예: 성별과 교육 방법)이 종속 변수에 미치는 영향을 분석.
 
 3.  **반복 측정 ANOVA**: 동일한 개체에 대해 여러 번 반복 측정한 데이터를 분석.
+
+<br>
+
+**Two-way ANOVA**
+
+> **두 개의 독립 변수(factor)**가 종속 변수에 미치는 영향을 동시에 분석하는 방법. 예를 들어, 특정 교육 방법(교육 유형)과 성별이 학생 성적에 미치는 영향을 동시에 분석할 수 있음. Two-way ANOVA에서는 **각 요인의 주 효과(main effects)**와 **두 요인의 상호작용 효과(interaction effect)**를 분석할 수 있음.
+
+```{r}
+# Step 1: 가상의 데이터 생성
+# 교육 방법(A, B)와 성별(Male, Female)이 학생 성적에 미치는 영향을 분석한다고 가정
+
+set.seed(123)
+n <- 20  # 각 그룹당 샘플 수
+
+# 그룹별 데이터 생성
+group_A_male <- rnorm(n, mean = 80, sd = 5)
+group_A_female <- rnorm(n, mean = 85, sd = 5)
+group_B_male <- rnorm(n, mean = 75, sd = 5)
+group_B_female <- rnorm(n, mean = 90, sd = 5)
+
+# 데이터프레임으로 결합
+data <- data.frame(
+  score = c(group_A_male, group_A_female, group_B_male, group_B_female),
+  method = factor(rep(c("A", "A", "B", "B"), each = n)),
+  gender = factor(rep(c("Male", "Female", "Male", "Female"), each = n))
+)
+
+# Step 2: 데이터 확인
+head(data)
+
+# Step 3: Two-way ANOVA 수행
+anova_result <- aov(score ~ method * gender, data = data)
+
+# Step 4: 결과 요약 출력
+summary(anova_result)
+
+# Step 5: 시각화 (상호작용 효과 플롯)
+interaction.plot(data$method, data$gender, data$score,
+                 col = c("blue", "red"), 
+                 main = "Interaction Plot: Method and Gender",
+                 xlab = "Method", ylab = "Score",
+                 legend = TRUE)
+
+```
+
+-   method의 p-value가 유의 수준 0.05보다 크기 때문에, 이 요인은 종속 변수에 유의미한 영향을 미치지 않는다고 할 수 있음.
+
+-   gender의 p-value가 매우 작으며(\<.001) 결과는 성별이 **종속 변수에 매우 유의미한 영향을 미친다는 것을 의미**
+
+-   상호작용 효과의 p-value가 0.001보다 작기 때문에, **교육 방법과 성별 간에 유의미한 상호작용이 있음을 의미**. 이는 성별과 교육 방법이 결합될 때, 성과에 미치는 영향이 더 달라질 수 있다는 것
+
+**상호작용항이 있는 회귀분석과는 어떻게 다른걸까?**
+
+-   **Two-way ANOVA**: **각 요인의 평균 차이를 검정**하고, **두 요인 간 상호작용이 유의미한지 여부**를 판단하는 데 중점. ANOVA는 주로 실험 데이터를 기반으로 집단 간 차이를 확인하기 위한 비교 도구로 사용.
+
+-   **회귀분석:** 종속 변수와 독립 변수 간의 **수학적 관계를 모델링**하고, **예측 및 상호작용의 크기와 방향**을 분석하는 데 목적이 있음. 각 계수의 추정치를 바탕으로 회귀식을 구성하며, 이를 통해 새로운 데이터에 대한 예측도 가능.
 
 <br>
 
@@ -485,47 +906,33 @@ summary(anova_result)
 
 <br>
 
-### 그래프를 통한 이해
-
-```{r}
-library(tidyverse)
-library(ggpubr)
-
-
-# 세 개의 교육 방법에 대한 학생 성적 데이터
-group_A <- c(85, 90, 88, 92, 85, 87, 89, 91, 84, 88)
-group_B <- c(78, 82, 80, 75, 79, 81, 77, 83, 76, 80)
-group_C <- c(88, 90, 92, 94, 91, 89, 87, 93, 90, 88)
-
-# 데이터를 합쳐서 그룹 지정
-data <- data.frame(
-  score = c(group_A, group_B, group_C),
-  group = factor(rep(c("A", "B", "C"), each = 10))
-)
-
-# ANOVA 분석 수행
-anova_result <- aov(score ~ group, data = data)
-
-# 박스플롯과 ANOVA 결과 시각화
-ggboxplot(data, x = "group", y = "score", color = "group", add = "jitter") +
-  stat_compare_means(method = "anova", label = "p.format") +  # ANOVA 결과 추가
-  labs(title = "ANOVA 결과와 그룹별 성적 분포", x = "그룹", y = "성적") +
-  theme_minimal()
-
-
-```
-
 **Tukey HSD 사후 검정**:
 
 -   ANOVA 결과가 유의미하면, **Tukey HSD**를 사용하여 어떤 그룹 간 차이가 유의미한지 확인할 수 있음.
 
--   \*\*`TukeyHSD()`\*\*는 ANOVA 결과에서 **그룹 간의 평균 차이**가 유의미한지 여부를 분석.
+-   `TukeyHSD()`는 ANOVA 결과에서 **그룹 간의 평균 차이**가 유의미한지 여부를 분석.
 
 ```{r}
 
 # 패키지 로드
 library(multcompView)
 library(ggplot2)
+library(dplyr)
+
+# 데이터 준비
+group_A <- c(85, 90, 88, 92, 85, 87, 89, 91, 84, 88)
+group_B <- c(78, 82, 80, 75, 79, 81, 77, 83, 76, 80)
+group_C <- c(88, 90, 92, 94, 91, 89, 87, 93, 90, 88)
+
+# 전체 데이터프레임으로 결합
+data <- data.frame(
+  score = c(group_A, group_B, group_C),
+  group = factor(rep(c("A", "B", "C"), each = 10))
+)
+
+# ANOVA
+anova_result <- aov(score ~ group, data = data)
+
 
 # Tukey HSD 사후 검정 수행
 tukey_result <- TukeyHSD(anova_result)
@@ -548,7 +955,8 @@ mean_data$tukey_label <- tukey_cld$group$Letters
 # 박스플롯에 Tukey HSD 결과 레이블 추가
 ggplot(data, aes(x = group, y = score, fill = group)) +
   geom_boxplot(alpha = 0.5) +
-  geom_text(data = mean_data, aes(x = group, y = mean + 1, label = tukey_label), 
+  geom_text(data = mean_data, 
+            aes(x = group, y = mean + 1, label = tukey_label), 
             color = "red", size = 5) +
   labs(title = "Tukey HSD 결과와 그룹 간 평균 차이", x = "그룹", y = "성적") +
   theme_minimal()
@@ -685,12 +1093,14 @@ t_dist_plot <- ggplot(data.frame(x = x_vals, y = t_dist), aes(x = x, y = y)) +
 }
 
 # Shiny 앱 실행
-shinyApp(ui = ui, server = server)
+# shinyApp(ui = ui, server = server)
 
 
 ```
 
 <br>
+
+------------------------------------------------------------------------
 
 ## Experimental Design
 
@@ -706,6 +1116,8 @@ Experimental design is the process of planning an experiment to ensure that the 
 
 -   **Random Assignment**: The process of assigning participants to experimental conditions in a random manner to ensure that any differences between groups are due to the manipulation of the independent variable rather than pre-existing differences.
 
+<br>
+
 ### 2x2 Factorial Design
 
 A **2x2 factorial design** is one of the simplest forms of experimental design where two independent variables, each with two levels, are manipulated simultaneously. This design allows researchers to examine:
@@ -713,6 +1125,8 @@ A **2x2 factorial design** is one of the simplest forms of experimental design w
 -   The **main effects** of each independent variable on the dependent variable.
 
 -   The **interaction effect** between the two independent variables, which explores whether the effect of one independent variable on the dependent variable depends on the level of the other independent variable.
+
+<Br>
 
 #### **2x2 Design Structure:**
 
@@ -730,9 +1144,9 @@ This creates four possible experimental conditions:
 
 4.  Treatment B in the evening.
 
-##### **Example**:
+<br>
 
-Imagine a study examining the effects of **caffeine** (factor 1: with or without caffeine) and **time of day** (factor 2: morning or evening) on **reaction time** (the dependent variable). This 2x2 design will allow the researcher to investigate:
+> Imagine a study examining the effects of **caffeine** (factor 1: with or without caffeine) and **time of day** (factor 2: morning or evening) on **reaction time** (the dependent variable). This 2x2 design will allow the researcher to investigate:
 
 -   The **main effect** of caffeine (Does caffeine improve reaction time?).
 
@@ -740,35 +1154,84 @@ Imagine a study examining the effects of **caffeine** (factor 1: with or without
 
 -   The **interaction effect** (Is the effect of caffeine different in the morning compared to the evening?).
 
+<br>
+
+**2x2 실험 연구의 표본 크기 계산**
+
+```{r}
+# 패키지 설치 및 로드
+if(!require("pwr")) install.packages("pwr", dependencies = TRUE)
+library(pwr)
+
+# 효과 크기 (Effect Size)
+# 일반적으로 Cohen의 기준을 사용합니다. 예를 들어, 중간 크기의 효과 크기 = 0.25
+effect_size <- 0.25  # 필요에 따라 변경
+
+# 유의 수준 (Significance Level)
+alpha <- 0.05  # 일반적으로 0.05 사용
+
+# 검정력 (Power)
+power <- 0.8  # 일반적으로 0.8 또는 0.9 사용
+
+# 2x2 실험에 필요한 표본 크기 계산
+sample_size <- pwr.anova.test(k = 4,        
+                              # 총 4개 그룹 (2x2 디자인)
+                              f = effect_size, 
+                              sig.level = alpha, 
+                              power = power)
+
+# 결과 출력
+cat("각 그룹당 필요한 표본 크기:", ceiling(sample_size$n), "\n")
+
+```
+
+-   **효과 크기 설정 (effect_size)**: Cohen의 기준에 따라 작은 효과 크기(0.1), 중간 효과 크기(0.25), 큰 효과 크기(0.4)를 선택할 수 있음. 예제에서는 중간 정도의 효과 크기인 0.25로 설정.
+
+-   **유의 수준 (alpha)**: 일반적으로 0.05로 설정하여, 5%의 유의 수준에서 검정을 수행
+
+-   **검정력 (power)**: 0.8로 설정하여, 실제 효과가 있는 경우 이를 80%의 확률로 감지할 수 있도록 함.
+
+-   **`pwr.anova.test` 함수 사용**: 2x2 디자인이므로 총 4개 그룹에 대해 표본 크기를 계산.
+
+<br>
+
 ### Main Effects and Interaction Effects
 
-#### **Main Effects:**
+#### **Main Effects**
 
-The **main effect** of an independent variable is the effect that it has on the dependent variable, averaging across the levels of the other independent variable.
+> The **main effect** of an independent variable is the effect that it has on the dependent variable, averaging across the levels of the other independent variable.
 
 -   **Main effect of IV1 (Caffeine)**: This effect examines whether, overall, participants who received caffeine had faster reaction times than those who did not, regardless of the time of day.
 
 -   **Main effect of IV2 (Time of Day)**: This effect looks at whether participants had faster reaction times in the morning than in the evening, regardless of whether they received caffeine.
 
-#### **Interaction Effects**:
+<br>
 
-An **interaction effect** occurs when the effect of one independent variable on the dependent variable changes depending on the level of the other independent variable. In a 2x2 factorial design, the interaction effect tests whether the impact of one factor depends on the presence or absence of the other factor.
+#### **Interaction Effects**
+
+> An **interaction effect** occurs when the effect of one independent variable on the dependent variable changes depending on the level of the other independent variable. In a 2x2 factorial design, the interaction effect tests whether the impact of one factor depends on the presence or absence of the other factor.
 
 -   **Example**: The interaction between caffeine and time of day might show that caffeine only improves reaction time in the evening, not in the morning. This would suggest that the effect of caffeine depends on the time of day.
 
-#### **Graphical Representation**:
+<br>
 
-A useful way to interpret interaction effects is through graphical representation. In a **line plot**, the presence of an interaction is typically indicated when the lines representing different levels of one factor are not parallel. If the lines are parallel, there is no interaction.
+#### **Graphical Representation**
+
+> A useful way to interpret interaction effects is through graphical representation. In a **line plot**, the presence of an interaction is typically indicated when the lines representing different levels of one factor are not parallel. If the lines are parallel, there is no interaction.
+
+<bR>
 
 ### Between-Subjects vs. Within-Subjects Designs
 
-#### **Between-Subjects Design**:
+![](https://images.ctfassets.net/pdf29us7flmy/3RTUj5OwbevVjMYNFOsbf3/63fe51efa30e184d240ca9a52ec752ef/between-subjects-design.png?w=1440&q=100&fm=avif)
+
+#### **Between-Subjects Design**
 
 In a **between-subjects design**, different participants are assigned to different experimental conditions. This means that each participant experiences only one condition of the experiment.
 
 -   **Advantages**:
 
-    -   No carryover effects, as participants are only exposed to one condition.
+    -   **No carryover effects**, as participants are only exposed to one condition.
 
     -   Less participant fatigue since they experience fewer conditions.
 
@@ -778,7 +1241,9 @@ In a **between-subjects design**, different participants are assigned to differe
 
     -   Greater potential for individual differences to influence the results.
 
-#### **Within-Subjects Design**:
+<br>
+
+#### **Within-Subjects Design**
 
 In a **within-subjects design**, the same participants experience all the experimental conditions. This means that participants act as their own control, which reduces the influence of individual differences.
 
@@ -794,50 +1259,289 @@ In a **within-subjects design**, the same participants experience all the experi
 
     -   Participant fatigue can occur if the experiment is too long or demanding.
 
-### Mixed Factorial Design
+<br>
 
-A **mixed factorial design** combines elements of both between-subjects and within-subjects designs. In this design, one factor is manipulated **between participants** and another is manipulated **within participants**.
+#### **Carryover effect(이월 효과)**
 
--   **Example**: In a study on memory, one group of participants might be exposed to a list of words presented either **audibly** or **visually** (between-subjects factor), while all participants are tested both **immediately** after presentation and **one week later** (within-subjects factor).
+> **실험 연구에서 이전 조건이 이후 조건에 영향을 미치는 현상**. 주로 반복 측정 디자인(repeated measures design)이나 교차 실험(crossover study)에서 나타나며, **두 개 이상의 조건을 순서대로 경험하는 실험**에서 문제가 됨.
 
-### Data Analysis for 2x2 Factorial Designs
+-   예를 들어, 피험자가 새로운 학습 방법(A)과 기존 학습 방법(B)을 순서대로 경험하는 연구를 가정,
 
-The statistical analysis for a 2x2 factorial design typically involves using **ANOVA (Analysis of Variance)** to test for main effects and interaction effects.
+    -   피험자가 먼저 학습 방법 A를 경험한 후 학습 방법 B를 경험하면, 학습 방법 A에서 배운 내용이나 방식이 학습 방법 B를 평가할 때 영향을 줄 수 있음.
 
-#### **ANOVA for Main and Interaction Effects**:
+    -   이렇게 되면 학습 방법 B의 순수한 효과를 평가하기 어려워지는데, 이는 **학습 방법 A에서의 경험이 학습 방법 B로 이월되었기 때문**.
 
-1.  **Main Effect of IV1 (Caffeine)**: Does the average reaction time differ between the caffeine and no-caffeine groups?
+<bR>
 
-2.  **Main Effect of IV2 (Time of Day)**: Does the average reaction time differ between the morning and evening conditions?
+**Carryover Effect의 종류**
 
-3.  **Interaction Effect (Caffeine × Time of Day)**: Does the effect of caffeine on reaction time depend on the time of day?
+1.  **학습 효과(Learning Effect)**: 초기 조건에서의 경험이 이후 조건에서 성과를 향상시키는 경우. 피험자가 실험 절차에 익숙해지거나 기술이 향상되어 이후 조건에서 더 좋은 성과를 낼 수 있음.
 
-If the interaction effect is significant, researchers will often conduct **simple effects tests** to examine the effect of one independent variable at each level of the other independent variable.
+2.  **피로 효과(Fatigue Effect)**: 초기 조건에서의 경험으로 인해 피로가 누적되어 이후 조건에서 성과가 저하되는 경우.
 
-### Practical Example of a 2x2 Factorial Design in R
+3.  **잉여 효과(Residual Effect)**: 특정 조건의 효과가 사라지지 않고 이후 조건에 남아 있는 경우. 예를 들어, 약물 실험에서 특정 약물의 효과가 충분히 사라지지 않은 상태에서 다른 약물을 투여하면 잔여 효과가 새로운 약물의 효과에 영향을 줄 수 있음.
 
-Here’s a simple example of how to analyze a 2x2 factorial design using R, with simulated data for the caffeine and time-of-day example.
+**Carryover Effect를 줄이는 방법**
+
+1.  **워시오프 기간(washout period)** 설정: 이전 조건의 효과가 사라질 시간을 확보하기 위해 두 조건 사이에 충분한 시간 간격을 둠.
+
+2.  **조건의 순서를 무작위화(randomization)**: 조건을 다양한 순서로 제공하여 특정 순서에 의해 발생할 수 있는 carryover effect를 최소화. 예를 들어, 절반의 참가자는 A를 먼저 경험하고, 나머지 절반은 B를 먼저 경험하도록 하는 것.
+
+3.  교차 디자인(crossover design)에서의 통계적 보정: 실험 후 분석 단계에서 carryover effect를 고려하여 결과를 보정할 수 있음.
+
+<br>
+
+$$
+Y_{ij} = \beta_0 + \beta_1 \cdot \text{Condition}_{ij} + \beta_2 \cdot \text{Period}_{ij} + u_i + \epsilon_{ij}
+$$
+
+where
+
+-   $Y_{ij}$: 참가자 $i$가 $j$번째 기간에 수행한 결과 (outcome).
+
+-   $\text{Condition}_{ij}$: 조건 변수로, 각 기간에 A 또는 B 조건이 적용된 경우를 나타냅니다 (범주형 변수).
+
+-   $\text{Period}_{ij}$: 순서 변수로, 첫 번째와 두 번째 기간에 대한 변동성을 나타냅니다 (예: 1 또는 2).
+
+-   $\beta_0$: 전체 평균(intercept), 즉 절편.
+
+-   $\beta_1$: **조건 효과(Condition effect)**로, A와 B 조건의 차이를 나타냄
+
+    -   조건(A 또는 B)에 따라 결과에 미치는 영향의 크기
+
+-   $\beta_2$: **순서 효과(Period effect)**로, 첫 번째 기간과 두 번째 기간에 따른 효과 차이
+
+-   $u_i$: **참가자별 임의 효과(random effect)**로, 참가자 $i$의 개인적 편차를 나타내며, 이는 참가자 간의 차이를 반영
+
+    -   $u_i$는 **임의 효과**로, $u_i \sim N(0, \sigma_u^2)$ 의 정규 분포를 따른다고 가정
+
+    -   **임의 효과의 분산** $\sigma_u^2$: $u_i$가 개체마다 얼마나 다른지를 설명하는 분산. (우리가 추정하려고 하는 것은 임의 효과의 분산)
+
+-   $\epsilon_{ij}$: **오차항(residual)**으로, 참가자 $i$가 $j$번째 기간에 겪는 랜덤 오차, 독립적으로 정규 분포를 따름.
 
 ```{r}
-# Simulate the data
-set.seed(123)
-n <- 100  # Number of participants
-caffeine <- rep(c("Caffeine", "No Caffeine"), each = n/2)
-time_of_day <- rep(c("Morning", "Evening"), times = n/2)
-reaction_time <- c(rnorm(n/2, mean = 200, sd = 20), rnorm(n/2, mean = 220, sd = 20))  # Reaction time
+# 가상의 데이터 생성
+library(lme4)
 
-data <- data.frame(Caffeine = factor(caffeine), TimeOfDay = factor(time_of_day), ReactionTime = reaction_time)
+data <- data.frame(
+  participant = rep(1:10, each = 2),      # 참가자 ID
+  period = rep(1:2, times = 10),          # 각 조건의 순서 (1: 첫 번째 조건, 2: 두 번째 조건)
+  condition = rep(c("A", "B"), each = 1, times = 10),  # 조건 (A와 B)
+  outcome = rnorm(20)                     # 결과 변수 (Y)
+)
 
-# Perform ANOVA
-anova_model <- aov(ReactionTime ~ Caffeine * TimeOfDay, data = data)
-summary(anova_model)
+head(data)
+
+# Carryover effect 고려한 선형 혼합 모델
+model <- lmer(outcome ~ condition + period + (1 | participant), 
+              data = data)
+summary(model)
 
 ```
 
-##### **Interpreting the Results**:
+<br>
 
--   The output will show whether the main effects of **caffeine** and **time of day** are significant, as well as whether there is a significant **interaction effect** between the two factors.
+**임의 효과 (Random Effects)**
 
--   A significant interaction suggests that the effect of caffeine on reaction time depends on whether it is morning or evening.
+-   **참가자(Intercept)**:
 
-> Experimental design, particularly the 2x2 factorial design, provides a robust framework for testing the effects of multiple independent variables on a dependent variable. By understanding the main effects and interaction effects, as well as the differences between **within-subjects** and **between-subjects** designs, researchers can choose the most appropriate design for their research questions. Through careful planning and appropriate analysis, experimental designs can lead to valid and meaningful conclusions about the relationships between variables.
+    -   **분산 (Variance)**: 0.3736 \| **표준 편차 (Std.Dev.)**: 0.6112
+
+    -   참가자들 간의 절편에 약간의 차이가 있음을 보임. 즉, 참가자 개별의 고유 차이(절편 차이)가 결과 변수에 일부 영향을 미친다는 뜻.
+
+-   **잔차 (Residual)**:
+
+    -   **분산 (Variance)**: 0.2865 \| **표준 편차 (Std.Dev.)**: 0.5352
+
+    -   **해석**: 잔차의 분산이 참가자 간 절편 분산과 비슷하므로, 모델에서 설명하지 못한 변동성도 여전히 일부 존재한다는 것.
+
+<br>
+
+**고정 효과 (Fixed Effects)**
+
+-   **(Intercept)**: 절편의 추정값은 -0.28329이며, 이는 `condition = A`와 `period = 1`에서의 예상 outcome 값. 그러나 t 값이 -1.103으로 유의미하지 않으므로, 절편의 값이 통계적으로 의미가 있다고 보기 어려움.
+
+-   **conditionB**: `condition = B`일 때 `condition = A` 대비 outcome에 미치는 효과. 효과 추정치가 0.01578로 매우 작고, t 값도 0.066으로 유의미하지 않으므로, `condition`이 outcome에 미치는 효과는 통계적으로 유의하지 않은 것으로 보임.
+
+<br>
+
+### Mixed Factorial Design
+
+> A **mixed factorial design** combines elements of both between-subjects and within-subjects designs. In this design, one factor is manipulated **between participants** and another is manipulated **within participants**.
+
+-   **Example**: In a study on memory, one group of participants might be exposed to a list of words presented either **audibly** or **visually** (between-subjects factor), while all participants are tested both **immediately** after presentation and **one week later** (within-subjects factor).
+
+<br>
+
+-   **데이터 준비 및 구조화**
+    -   **집단 간 요인**: `presentation_mode`로 명명된 요인으로, "audible"과 "visual" 그룹으로 나뉨.
+
+    -   **집단 내 요인**: `test_time`로 명명된 요인으로, 두 수준(“immediate”와 “one-week later”)을 가짐.
+
+    -   **종속 변수**: 기억력 테스트 점수(`memory_score`)를 종속 변수로 사용.
+
+<br>
+
+-   **2x2 혼합 요인 설계**: 집단 간 요인(between-subjects factor)과 집단 내 요인(within-subjects factor)에 따라 같은 집단이 어떻게 배치되는지를 표시
+
+    | **제시 방식 (집단 간 요인)** | **즉시 테스트 (집집단 내 요인)** | **1주 후 테스트 (집단 내 요인)** |
+    |------------------------------|----------------------------------|----------------------------------|
+    | **audible (청각적 제시)**    | 조건 1 (Group 1)                 | 조건 2 (Group 1)                 |
+    | **visual (시각적 제시)**     | 조건 3 (Group 2)                 | 조건 4 (Group 2)                 |
+
+    -   **Group 1**: 청각적 제시를 받은 참가자들은 조건 1(즉시 테스트)과 조건 2(1주 후 테스트)를 모두 경험. 이 참가자들은 두 시점에서 반복 측정을 받는 **같은 집단**.
+
+    -   **Group 2**: 시각적 제시를 받은 참가자들은 조건 3(즉시 테스트)과 조건 4(1주 후 테스트)를 모두 경험. 이 참가자들 역시 두 시점에서 반복 측정을 받는 **같은 집단**.
+
+<br>
+
+-   **혼합 요인 설계를 반영한 분석 방법 선택**
+    -   **반복 측정 ANOVA**: 두 요인의 주효과와 상호작용 효과를 검정하는 데 적합.
+
+    -   **혼합 효과 모델(mixed-effects model)**: 참가자 간의 고유한 차이를 임의 효과로 포함하여 더 유연하게 분석할 수 있으며, 특히 데이터에 결측치가 있는 경우 더 효과적.
+
+<br>
+
+#### A. **반복 측정 ANOVA**
+
+-   **귀무 가설** (우리가 기각하고자 하는)
+
+    -   **presentation_mode**: 제시 방식에 따른 기억 점수 차이가 없다.
+
+    -   **test_time**: 테스트 시점에 따른 기억 점수 차이가 없다.
+
+    -   **상호작용 효과**: 제시 방식과 테스트 시점이 결합될 때 기억 점수에 추가적인 차이를 유발하지 않는다.
+
+```{r}
+# 데이터 준비 예시
+data <- data.frame(
+  participant = factor(rep(1:30, each = 2 * 2)),  
+  # 30명의 참가자, 각 참가자가 4번 측정
+  presentation_mode = factor(rep(c("audible", "visual"), each = 60)),  
+  # 집단 간 요인 (audible vs. visual)
+  test_time = factor(rep(c("immediate", "one-week"), times = 30)),     
+  # 집단 내 요인 (immediate vs. one-week)
+  memory_score = rnorm(120, mean = 50, sd = 10)  # 가상의 기억 점수
+)
+
+head(data)
+
+# 반복 측정 ANOVA 수행
+anova_result <- aov(memory_score ~ presentation_mode * test_time + Error(participant / test_time), data = data)
+
+# Error 함수
+# participant: 각 참가자를 고유하게 구별하기 위한 식별자로, 참가자마다 독립적인 고유 편차를 허용.
+# participant / test_time: 각 참가자가 두 시점에서 반복 측정되므로, participant 내에서 test_time에 따른 오차를 별도로 계산하도록 설정. 이는 각 참가자 내에서 테스트 시점에 따른 변동을 조정하는 역할.
+
+summary(anova_result)
+
+```
+
+<br>
+
+####  **Error: participant**
+
+-   `presentation_mode` (청각 vs. 시각 제시)
+
+-   **Df (자유도)**: 1 (두 그룹 간의 비교이므로 자유도는 1)
+
+-   `presentation_mode`의 p-value는 0.00568로, 유의 수준 0.01보다 작다. 이는 제시 방식(청각 또는 시각)이 **기억 점수에 유의미한 영향을 미친다는 것을 의미**.
+
+-   **F 값**이 8.972로 높게 나타났으므로, `presentation_mode` 요인에서 두 그룹 간의 차이가 유의미함을 나타냄.
+
+<br>
+
+#### **Error: participant:test_time**
+
+-   `test_time` (즉시 테스트 vs. 1주 후 테스트) 및 `presentation_mode:test_time` 상호작용 효과
+
+-   **`test_time`**: `test_time`의 p-value가 0.300로 유의 수준 0.05보다 크므로, **즉시 테스트와 1주 후 테스트 간의 기억 성과 차이는 통계적으로 유의미하지 않다**고 해석할 수 있음.
+
+-   **`presentation_mode:test_time` 상호작용**: 상호작용 효과의 p-value가 0.955로 매우 높아, **제시 방식(presentation_mode)과 테스트 시점(test_time) 간에 유의미한 상호작용 효과는 존재하지 않는다고 볼 수 있음.**
+
+<br>
+
+#### B. **혼합 효과 모델 (Mixed-Effects Model)**
+
+```{r}
+# 패키지 설치 및 로드
+if(!require("lme4")) install.packages("lme4", dependencies = TRUE)
+library(lme4)
+
+# 혼합 효과 모델 수행
+mixed_model <- lmer(memory_score ~ presentation_mode * test_time + (1 | participant), data = data)
+summary(mixed_model)
+
+```
+
+<br>
+
+`presentation_mode`와 `test_time`의 주효과와 상호작용 효과를 추정할 수 있으며, `participant`를 임의 효과로 추가하여 각 참가자의 고유한 차이를 모델에 반영 (random effect). 이를 통해 참가자 간 차이를 보정하고, 요인 효과에 집중할 수 있음.
+
+<br>
+
+-   **주효과**
+
+    -   `presentation_mode`의 주효과: 제시 방식이 기억 점수에 유의미한 영향을 미치는지 확인.
+
+    -   `test_time`의 주효과: 테스트 시점에 따라 기억 점수에 유의미한 차이가 있는지 확인.
+
+-   **상호작용 효과**: `presentation_mode:test_time` 상호작용 효과는 제시 방식에 따라 테스트 시점의 효과가 달라지는지를 나타냄. 상호작용이 유의미하다면, 특정 제시 방식에서 시간이 지남에 따라 기억 성과가 달라지는 경향이 나타날 수 있음.
+
+<br>
+
+### 언제 어떤 방법을 사용할까?
+
+-   **반복 측정 ANOVA**: 데이터가 균형 잡히고 결측치가 없을 때 적합.
+
+-   **혼합 효과 모델**: 참가자 간의 고유한 차이를 반영하고, 결측치가 있거나 데이터가 불균형한 경우에도 유연하게 적용할 수 있음. [또한 effect size 와 방향에 관심이 있다면 혼합 효과 모형!]{.underline}
+
+<br>
+
+## 마치며 
+
+ANOVA와 관련된 흥미로운 일화
+
+ANOVA를 창시한 로널드 피셔(Ronald A. Fisher)와 그의 동료의 이야기 (From his book "The Design of Experiments")
+
+#### "차 티백을 넣을까, 우유를 먼저 넣을까?"
+
+피셔와 동료들은 어느 날 차를 마시며, 우유를 먼저 넣느냐, 차를 먼저 붓느냐에 따라 맛이 달라질까?라는 질문을 두고 논쟁을 벌였습니다. 그러던 중 머리어 레이디팅이 **자신이 어떤 순서로 차를 만들었는지를 정확히 맞힐 수 있다**고 주장했습니다. 피셔는 이를 기회로 삼아, 실제로 레이디팅이 티의 순서를 감별할 수 있는지 검증하기 위해 작은 실험을 고안했습니다. (쓸데 없이 진지..)
+
+### 실험 설계: 무작위 대조 실험(Randomized Controlled Experiment)
+
+피셔는 **실험을 통해 레이디팅의 감별 능력이 실제로 우연을 넘어서는지를 확인하기 위해, 매우 체계적으로 실험을 설계**했습니다.
+
+1.  **실험 목표**: 레이디팅이 단순히 우연히 맞히는 것이 아니라, 실제로 차와 우유의 순서를 구별할 수 있는지를 확인.
+
+2.  **처치 조건 설정**
+
+    -   피셔는 차를 준비하는 방법을 두 가지로 나누었음.
+
+        -   **우유 먼저 넣은 차** (처치 조건 1)
+
+        -   **차를 먼저 넣은 차** (처치 조건 2)
+
+3.  **무작위로 제시**
+
+    -   피셔는 총 8잔의 차를 준비하였으며, 이 중 절반인 4잔은 **우유를 먼저 넣고**, 나머지 4잔은 **차를 먼저 부은** 차로 준비.
+
+    -   이 차 8잔의 순서를 **무작위로 배치**하여 레이디팅에게 제시했습니다. 이는 **무작위 대조 실험**의 일종으로, 순서가 예측되지 않도록 하여 **실험의 타당성을 확보**하려는 시도.
+
+4.  **레이디팅의 시음과 답변**
+
+    -   레이디팅 박사는 각 차를 시음하고, 각 잔이 **우유를 먼저 넣었는지, 차를 먼저 넣었는지**를 구별해야 했음.
+
+    -   그녀는 시음 후 각 잔의 차를 "우유 먼저" 또는 "차 먼저"로 분류.
+
+5.  **검증 기준**
+
+    -   피셔는 **통계적 유의미성을 검정**하기 위해, 레이디팅이 우연히 맞힐 확률과 실제로 맞힐 확률을 비교할 수 있도록 설정. [**(여기가 핵심!)**]{.underline}
+
+    -   만약 레이디팅이 8잔 중 절반 이상을 정확히 구분할 경우, 이는 우연을 넘어서는 결과로 판단하고, 그녀의 주장이 검증된다고 해석할 수 있는 설정이었음.
+
+### 실험 결과와 통계적 해석
+
+실험 결과, 레이디팅은 상당히 정확하게 **우유와 차의 순서를 구별**해냈고, 이는 피셔에게 **데이터 변동성에 따른 귀무 가설 검정의 중요성**을 시사했습니다. 이 실험은 피셔가 ANOVA와 같은 **통계적 검정 방법**을 개발하는 데 중요한 영감을 제공했으며, 실험 설계와 통계학에서 **유의성 검정**의 초석이 되었습니다.
+
+#### **The End!**
