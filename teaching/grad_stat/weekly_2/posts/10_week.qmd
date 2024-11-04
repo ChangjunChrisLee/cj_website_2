@@ -194,6 +194,8 @@ The study was divided into three main phases:
 
 <br>
 
+### Table 1
+
 ```{r}
 library(tidyverse)
 library(ggpubr)
@@ -239,7 +241,9 @@ etaSquared(aov(connection~responseR*labelR,all), type = 2, anova = T) %>%
   as_tibble %>% round(.,3)
 ```
 
-![](images/clipboard-2638135380.png)
+<br>
+
+![](images/clipboard-1149830399.png)
 
 <br>
 
@@ -300,6 +304,13 @@ all %>% group_by(labelR) %>%
             connection = mean(connection,na.rm=T)) %>%
   mutate_at(vars(feelheard:connection), round, 3)
 
+all %>% group_by(labelR) %>% 
+  summarise(feelheard = sd(feelheard,na.rm=T),
+            accuracy = sd(accuracy,na.rm=T),
+            understoodme = sd(understoodme,na.rm=T),
+            connection = sd(connection,na.rm=T)) %>%
+  mutate_at(vars(feelheard:connection), round, 3)
+
 
 ```
 
@@ -316,9 +327,22 @@ all %>% group_by(responseR) %>%
   mutate_at(vars(feelheard:connection), round, 3)
 
 
+
+all %>% group_by(responseR) %>% 
+  summarise(feelheard = sd(feelheard,na.rm=T),
+            accuracy = sd(accuracy,na.rm=T),
+            understoodme = sd(understoodme,na.rm=T),
+            connection = sd(connection,na.rm=T)) %>%
+  mutate_at(vars(feelheard:connection), round, 3)
+
+
 ```
 
+**The end of the TABLE 1**
+
 <Br>
+
+### Figure 1
 
 ```{r}
 
@@ -337,60 +361,66 @@ apatheme=theme_bw()+theme(panel.grid.major=element_blank(),
 
 ```
 
+<br>
+
 ```{r}
 
-diff.heard.label =independentSamplesTTest(feelheard~labelR,all)
-delta.heard.label=diff.heard.label$mean[1]-diff.heard.label$mean[2]
-conf.heard.label=diff.heard.label$conf.int
+diff.heard.label = independentSamplesTTest(feelheard~labelR,all)
+delta.heard.label= diff.heard.label$mean[1]-diff.heard.label$mean[2]
+conf.heard.label = diff.heard.label$conf.int
+
+diff.heard.label
+delta.heard.label
+conf.heard.label
 
 ```
 
 ```{r}
 diff.accuracy.label =independentSamplesTTest(accuracy~labelR,all)
-delta.accuracy.label=diff.accuracy.label $mean[1]-diff.accuracy.label $mean[2]
-conf.accuracy.label=diff.accuracy.label$conf.int
+delta.accuracy.label= diff.accuracy.label $mean[1]-diff.accuracy.label $mean[2]
+conf.accuracy.label= diff.accuracy.label$conf.int
 
 ```
 
 ```{r}
-diff.understoodme.label =independentSamplesTTest(understoodme~labelR,all)
-delta.understoodme.label=diff.understoodme.label$mean[1]-diff.understoodme.label$mean[2]
-conf.understoodme.label=diff.understoodme.label$conf.int
+diff.understoodme.label = independentSamplesTTest(understoodme~labelR,all)
+delta.understoodme.label= diff.understoodme.label$mean[1]-diff.understoodme.label$mean[2]
+conf.understoodme.label = diff.understoodme.label$conf.int
 
 ```
 
 ```{r}
-diff.connection.label =independentSamplesTTest(connection~labelR,all)
-delta.connection.label=diff.connection.label$mean[1]-diff.connection.label$mean[2]
-conf.connection.label=diff.connection.label$conf.int
+diff.connection.label = independentSamplesTTest(connection~labelR,all)
+delta.connection.label = diff.connection.label$mean[1]-diff.connection.label$mean[2]
+conf.connection.label = diff.connection.label$conf.int
 
 ```
 
 ```{r}
-diff.heard.response =independentSamplesTTest(feelheard~responseR,all)
-delta.heard.response=diff.heard.response$mean[1]-diff.heard.response$mean[2]
-conf.heard.response=diff.heard.response$conf.int
+diff.heard.response = independentSamplesTTest(feelheard~responseR,all)
+delta.heard.response = diff.heard.response$mean[1]-diff.heard.response$mean[2]
+conf.heard.response = diff.heard.response$conf.int
 
 ```
 
 ```{r}
-diff.accuracy.response =independentSamplesTTest(accuracy~responseR,all)
-delta.accuracy.response=diff.accuracy.response $mean[1]-diff.accuracy.response $mean[2]
-conf.accuracy.response=diff.accuracy.response$conf.int
+diff.accuracy.response = independentSamplesTTest(accuracy~responseR,all)
+delta.accuracy.response = diff.accuracy.response $mean[1]-diff.accuracy.response $mean[2]
+conf.accuracy.response = diff.accuracy.response$conf.int
 
 ```
 
 ```{r}
-diff.understoodme.response =independentSamplesTTest(understoodme~responseR,all)
-delta.understoodme.response=diff.understoodme.response$mean[1]-diff.understoodme.response$mean[2]
-conf.understoodme.response=diff.understoodme.response$conf.int
+diff.understoodme.response = independentSamplesTTest(understoodme~responseR,all)
+delta.understoodme.response = diff.understoodme.response$mean[1]-diff.understoodme.response$mean[2]
+conf.understoodme.response = diff.understoodme.response$conf.int
 
 ```
 
 ```{r}
-diff.connection.response =independentSamplesTTest(connection~responseR,all)
-delta.connection.response=diff.connection.response$mean[1]-diff.connection.response$mean[2]
-conf.connection.response=diff.connection.response$conf.int
+diff.connection.response = independentSamplesTTest(connection~responseR,all)
+delta.connection.response = diff.connection.response$mean[1]-diff.connection.response$mean[2]
+conf.connection.response = diff.connection.response$conf.int
 
 ```
 
@@ -406,10 +436,12 @@ deltaplot = data.frame(effect=c('Label','Label','Label','Label','Response','Resp
                        high=c(conf.heard.label[2],conf.accuracy.label[2],conf.understoodme.label[2],conf.connection.label[2],
                               conf.heard.response[2],conf.accuracy.response[2],conf.understoodme.response[2],conf.connection.response[2]))
 
+deltaplot$dv= factor(deltaplot$dv, levels = c("Feeling\nheard", "Response\naccuracy", "Responder\nunderstood me","Connection\nto responder"))
+
+deltaplot
 ```
 
 ```{r}
-deltaplot$dv= factor(deltaplot$dv, levels = c("Feeling\nheard", "Response\naccuracy", "Responder\nunderstood me","Connection\nto responder"))
 
 apatheme=theme_bw()+theme(panel.grid.major=element_blank(),
                           panel.grid.minor=element_blank(),
@@ -434,14 +466,30 @@ figure1
 
 ```
 
+-   **Findings Highlighted**:
+
+    -   **AI response with a human label** often yielded higher ratings compared to when labeled as AI. This suggests that participants felt more positively about responses when they were believed to be human, despite being generated by AI.
+
+    -   **Human response with an AI label** showed lower ratings compared to when labeled as human, demonstrating a consistent bias where an AI label diminished the perceived quality of responses.
+
+    -   The **interaction between response source and label** was not significant, as shown by overlapping error bars for some conditions. This supports the independent effects of response and label without an interactive component.
+
+### Interpretation:
+
+-   The figure underscores that while AI-generated responses can effectively make participants feel heard, an AI label diminishes this perception due to potential biases. Conversely, human responses labeled as AI also suffer reduced ratings, highlighting a broader skepticism toward AI in empathetic communication
+
+<br>
+
+### Multi group contrast
+
 ```{r}
 
 ########multi group contrast###############
 
-temp1= subset(all,responseR=='ai response'&labelR=='ai label')
-temp2 =  subset(all,responseR=='human response'&labelR=='human label')
-temp3 =  subset(all,responseR=='human response'&labelR=='ai label')
-temp4 =  subset(all,responseR=='ai response'&labelR=='human label')
+temp1 = subset(all,responseR=='ai response'&labelR=='ai label')
+temp2 = subset(all,responseR=='human response'&labelR=='human label')
+temp3 = subset(all,responseR=='human response'&labelR=='ai label')
+temp4 = subset(all,responseR=='ai response'&labelR=='human label')
 
 temp1$cond = 'ai response ai label'
 temp2$cond = 'human response human label'
@@ -450,6 +498,8 @@ temp4$cond = 'ai response human label'
 
 all.long = rbind(temp1,temp2,temp3,temp4)
 all.long$cond= factor(all.long$cond, levels = c("ai response human label", "ai response ai label", "human response human label","human response ai label"))
+
+all.long %>% head(10)
 
 ```
 
@@ -513,6 +563,10 @@ table.stats4 <- nice_contrasts(
 # flextable::save_as_docx(my_table1,my_table2,my_table3,my_table4, path = "contrasts.docx")
 ```
 
+<br>
+
+### Figure 2
+
 ```{r}
 
 ## four condition plots
@@ -550,6 +604,7 @@ heard = all.long %>%
   ylab('Feeling Heard')+xlab('')+  
   scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
   apatheme
+heard
 
 ```
 
@@ -565,6 +620,7 @@ accuracy = all.long %>%
   ylab('Response Accuracy')+xlab('')+  
   scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
   apatheme
+accuracy
 
 ```
 
@@ -580,6 +636,7 @@ understood = all.long %>%
   ylab('Responder Understood Me')+xlab('')+  
   scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
   apatheme
+understood
 
 ```
 
@@ -595,6 +652,7 @@ connection = all.long %>%
   ylab('Connnection to Responder')+xlab('')+  
   scale_fill_manual(values = c("black", "darkgrey","grey","white"))+
   apatheme
+connection
 
 ```
 
@@ -604,12 +662,88 @@ figure2
 
 ```
 
+<br>
+
+### Understanding Moderators in Statistical Analysis
+
+Moderators are variables that affect the strength or direction of the relationship between independent and dependent variables. Including moderators in your analysis allows you to explore complex interactions and understand under what conditions certain effects hold true.
+
+### How to Include Moderators in R
+
+In R, moderators can be incorporated into linear models to examine their interaction with independent variables. The general approach involves specifying the interaction term in the model formula.
+
+### Example Code for Moderator Analysis
+
+Below is an example of how to perform moderator analysis in R:
+
+```{r}
+# Perform ANOVA with moderator interaction
+anova(lm(feelheard ~ labelR * atti_bing, all))
+anova(lm(accuracy ~ labelR * atti_bing, all))
+anova(lm(understoodme ~ labelR * atti_bing, all))
+anova(lm(connection ~ labelR * atti_bing, all))
+```
+
+#### Explanation:
+
+-   **`lm()`**: Creates a linear model to analyze the relationship between dependent and independent variables.
+
+-   **`labelR * atti_bing`**: Specifies that the interaction between `labelR` (the label of the response) and `atti_bing` (participants' attitudes toward Bing) should be included.
+
+-   **`anova()`**: Performs ANOVA to determine the significance of the main and interaction effects.
+
+### Steps for Conducting Moderator Analysis
+
+1.  **Fit the Model**: Use `lm()` to fit a linear model with the interaction term.
+
+2.  **Run ANOVA**: Use `anova()` to evaluate the significance of the interaction effect.
+
+3.  **Interpret the Results**:
+
+    -   Check the p-value for the interaction term to see if it is statistically significant.
+
+    -   If significant, this indicates that the effect of `labelR` on the dependent variable varies depending on `atti_bing`.
+
+4.  **Report the Findings**:
+
+    -   Include the F-statistic, degrees of freedom, and p-values to show the significance of the interaction.
+
+    -   Discuss how the moderator influences the relationship between the independent and dependent variables.
+
+<br>
+
+### Example Interpretation:
+
+If the interaction term `labelR:atti_bing` is significant, this suggests that participants' attitudes toward Bing moderate the impact of response labeling on feeling heard. For instance, participants with more positive attitudes may be less affected by an AI label compared to those with neutral or negative attitudes.
+
+### Main Findings
+
+The analysis revealed several key outcomes regarding the effectiveness of AI-generated versus human-generated responses:
+
+1.  **Feeling Heard**: AI-generated responses scored significantly higher on participants' feeling heard (mean = 5.74) compared to human responses (mean = 5.17). This demonstrates that, in terms of content quality, AI responses had a superior effect on making recipients feel heard.
+
+2.  **Perceived Accuracy and Understanding**: Participants rated AI-generated responses as more accurate (mean = 5.92) and understanding (mean = 5.79) compared to human responses (mean = 5.24 for accuracy and 5.07 for understanding). This suggests that AI responses were perceived as better at capturing the essence of the participants' emotions.
+
+3.  **Connection to the Responder**: While AI responses were effective at making participants feel heard, they fell short in fostering a connection when labeled as AI-generated. Participants reported a lower sense of connection to AI responders (mean = 4.71) compared to human responders (mean = 4.06), indicating that knowing the response was from an AI reduced perceived personal closeness.
+
+4.  **Label Effects**: The analysis showed that labeling responses as AI reduced the perceived impact across all measures, including feeling heard, response accuracy, and connection. The “AI label” effect demonstrated a consistent decrease in ratings by approximately 0.68 points for feeling heard and 0.31 points for response accuracy.
+
+<br>
+
+Let's see the real code:
+
+### Figure 3
+
 ```{r}
 
 ###################Moderators####################
+summary(lm(feelheard~labelR*atti_bing,all))
 anova(lm(feelheard~labelR*atti_bing,all))
+
 anova(lm(accuracy~labelR*atti_bing,all))
+
 anova(lm(understoodme~labelR*atti_bing,all))
+
 anova(lm(connection~labelR*atti_bing,all))
 
 ```
@@ -642,30 +776,35 @@ f1=interact_plot(m1, pred = atti_bing, modx = labelRR,interval=T,y.label = "Feel
 ```{r}
 m2=lm(accuracy~labelRR*atti_bing,all)
 f2=interact_plot(m2, pred = atti_bing, modx = labelRR,interval=T,y.label = "Response Accuracy",x.label = 'Attitude towards Bing Chat',legend.main='Label') + theme_apa()
+f2
 
 ```
 
 ```{r}
 m3=lm(understoodme~labelRR*atti_bing,all)
 f3=interact_plot(m3, pred = atti_bing, modx = labelRR,interval=T,y.label = "Responder Understood Me",x.label = 'Attitude towards Bing Chat',legend.main='Label') + theme_apa()
+f3
 
 ```
 
 ```{r}
 m4=lm(connection~labelRR*atti_bing,all)
 f4=interact_plot(m4, pred = atti_bing, modx = labelRR,interval=T,y.label = "Connection to Responder",x.label = 'Attitude towards Bing Chat',legend.main='Label') + theme_apa()
+f4
 
 ```
 
 ```{r}
 m5=lm(connection~labelRR*agency,all)
 f5=interact_plot(m5, pred = agency, modx = labelRR,interval=T,y.label = "Connection to Responder",x.label = 'Mind Perception of Bing Chat \n- Agency',legend.main='Label') + theme_apa()
+f5
 
 ```
 
 ```{r}
 m6=lm(connection~labelRR*experience,all)
 f6=interact_plot(m6, pred = experience, modx = labelRR,interval=T,y.label = "Connection to Responder",x.label = 'Mind Perception of Bing Chat \n- Experience',legend.main='Label') + theme_apa()
+f6
 
 ```
 
@@ -676,11 +815,20 @@ library(gridExtra)
 
 figure3=ggarrange(f1, f2,f3,f4,f5,f6,nrow=2,ncol=3,common.legend = TRUE,legend='bottom')
 figure3
-######################empathic accuracy########################
 
 ```
 
+The end of the Figure 3
+
+<br>
+
+### Empathic Accuracy
+
 ```{r}
+
+######################empathic accuracy########################
+
+
 all$happiness_ai.d = abs(all$happiness_ai-all$happiness_d)
 all$sadness_ai.d = abs(all$sadness_ai-all$sadness_d)
 all$fear_ai.d = abs(all$fear_ai-all$fear_d)
@@ -710,6 +858,10 @@ pairedSamplesTTest( formula= ~surprise_ai.d + surprise_r.d, data=all )
 pairedSamplesTTest( formula= ~anger_ai.d + anger_r.d, data=all )
 
 ```
+
+<br>
+
+### Follow up study
 
 ```{r}
 ######################follow up study####################################
@@ -804,26 +956,52 @@ etaSquared(aov(statelonely~responseR*labelR,all), type = 2, anova = T)
 
 <br>
 
-## Results
+## Discussion
 
-### Main Findings
+The discussion section typically synthesizes the study's findings and places them in the context of existing research. It also addresses the implications, limitations, and future research directions. Here’s what should be explained:
 
-The analysis revealed several key outcomes regarding the effectiveness of AI-generated versus human-generated responses:
+1.  **Interpretation of Findings**:
 
-1.  **Feeling Heard**: AI-generated responses scored significantly higher on participants' feeling heard (mean = 5.74) compared to human responses (mean = 5.17). This demonstrates that, in terms of content quality, AI responses had a superior effect on making recipients feel heard.
+    -   Summarize how the results support or challenge previous assumptions or findings in the field. For instance, the study found that while AI responses were effective at making participants feel heard, labeling them as AI reduced their perceived effectiveness. This finding is significant as it highlights human biases against AI, even when the content is supportive.
 
-2.  **Perceived Accuracy and Understanding**: Participants rated AI-generated responses as more accurate (mean = 5.92) and understanding (mean = 5.79) compared to human responses (mean = 5.24 for accuracy and 5.07 for understanding). This suggests that AI responses were perceived as better at capturing the essence of the participants' emotions.
+2.  **Implications**:
 
-3.  **Connection to the Responder**: While AI responses were effective at making participants feel heard, they fell short in fostering a connection when labeled as AI-generated. Participants reported a lower sense of connection to AI responders (mean = 4.71) compared to human responders (mean = 4.06), indicating that knowing the response was from an AI reduced perceived personal closeness.
+    -   Discuss the real-world applications of these findings. In practical terms, this could mean that organizations using AI for customer support or therapy might consider ways to mitigate the negative impact of an AI label or design interfaces where AI interactions appear more human-like to foster connection.
 
-4.  **Label Effects**: The analysis showed that labeling responses as AI reduced the perceived impact across all measures, including feeling heard, response accuracy, and connection. The “AI label” effect demonstrated a consistent decrease in ratings by approximately 0.68 points for feeling heard and 0.31 points for response accuracy.
+3.  **Limitations**:
 
-### Emotional Support vs. Practical Support
+    -   Acknowledge any limitations of the study, such as the representativeness of the participant sample, potential biases in response interpretation, or limitations in generalizing findings across different AI platforms or interaction types.
 
-Further analysis revealed that AI responses leaned more towards providing emotional support rather than practical advice. Emotional support, such as acknowledging and validating participants’ feelings, was associated with higher scores in feeling heard. In contrast, practical suggestions, more common in human responses, did not significantly influence the sense of being heard.
+4.  **Future Directions**:
 
-### Moderator Analysis
+    -   Suggest areas for further investigation. For example, future research could explore how different types of AI, like chatbots with varying levels of anthropomorphism or transparency about their AI nature, impact perceptions. Additionally, testing these dynamics in more diverse and real-world settings could provide more insights.
 
-Participants with positive attitudes toward AI or those who attributed more agency and experience to AI exhibited weaker negative label effects. This indicates that the perception of AI’s cognitive and experiential capabilities can mitigate some of the devaluation seen with AI labeling.
+5.  **Theoretical Contributions**:
 
-These results collectively highlight the nuanced role of AI in creating empathic interactions and suggest areas where human-AI collaboration could be optimized for better communication and support.
+    -   Detail how the study contributes to theoretical frameworks, such as media richness theory or models of human-computer interaction. It supports the idea that emotional connection and perceived understanding can be influenced by how AI is presented and perceived by users.
+
+6.  **Practical Recommendations**:
+
+    -   Offer actionable strategies, such as training AI to mimic human-like empathy cues more convincingly or developing hybrid models where human agents complement AI responses to maintain high levels of perceived connection.
+
+<br>
+
+Now, see the Discussion of the paper,
+
+-   **Integration of Findings with Existing Literature**: The discussion starts by positioning the findings within the broader context of existing literature on human-AI interaction and empathy. The study confirms that AI can be highly effective in creating responses that make individuals feel heard, aligning with prior research on the capability of natural language processing systems to simulate human-like empathy. However, the discussion emphasizes the new insight that AI labels reduce the perceived quality of these responses, showcasing a bias against AI that persists despite its high performance.
+
+-   **Interpretation of the AI Label Effect**: The section delves into why labeling a response as AI might negatively impact its reception. It theorizes that individuals may associate AI with a lack of genuine emotional capacity or authenticity, which diminishes their emotional connection. This bias can lead participants to undervalue the empathetic quality of AI responses, even when the content itself is indistinguishable from that of a human.
+
+-   **Implications for AI Design and Human-AI Collaboration**: The findings have important implications for designing AI systems, particularly in fields like customer service, mental health support, and personal assistance. Developers and stakeholders are advised to consider the framing and transparency of AI interactions. The study suggests that reducing the salience of the AI label or integrating AI with human oversight might help mitigate biases and enhance the perceived quality of interaction.
+
+-   **The Role of Emotional Validation vs. Practical Support**: A notable aspect of the discussion highlights that AI responses focused more on emotional validation rather than practical advice, which proved effective for making participants feel heard. This reinforces the idea that validation of emotions is a critical component of empathy and supportive communication. Future development of AI systems should prioritize emotional attunement when the goal is to enhance perceived empathy.
+
+-   **Moderating Factors**: The study identifies that individual differences, such as attitudes toward AI, play a moderating role. Participants with more favorable views of AI were less influenced by the negative labeling effect. This insight prompts further research into how user characteristics, like trust in technology or familiarity with AI, affect the reception of AI-generated content.
+
+-   **Limitations and Future Research Directions**: The authors acknowledge the limitations, such as the demographic homogeneity of the sample (e.g., primarily U.S.-based participants) and the artificial nature of the experimental setup compared to real-world applications. They suggest that future studies should include more diverse populations and real-world scenarios to enhance external validity. Additionally, examining other types of AI (e.g., those with more advanced emotional intelligence features) and varying levels of anthropomorphism could provide more comprehensive insights.
+
+-   **Theoretical Contributions**: The paper contributes to theories of media richness and human-computer interaction by demonstrating that the perceived empathy of a response depends not just on the content but also on the framing and perceived source of the response. It underscores that biases can shape user experiences in ways that could limit the effectiveness of even highly capable AI systems.
+
+-   **Concluding Thoughts**: The discussion wraps up by emphasizing the dual-edged nature of AI in supportive roles: it is capable of understanding and validating emotions effectively, but societal biases and perceptions may limit its impact. Addressing these biases is crucial for maximizing the potential of AI in roles traditionally reserved for humans.
+
+<Br>
