@@ -20,23 +20,34 @@ The **Hayes Process Models** provide a powerful framework for analyzing complex 
 
 #### **What is Mediation, Moderation, and Conditional Process Modeling?**
 
-1.  **Mediation**:
+<br>
+
+1.  **Mediation**\
+    ![](images/clipboard-537904527.png){width="400"}
 
     -   Mediation analysis helps identify **why** or **how** a certain effect occurs. It examines whether the relationship between an independent variable (X) and a dependent variable (Y) is explained, at least partially, by a third variable called the **mediator** (M). In simpler terms, mediation investigates if X affects Y **through** M, by decomposing the total effect of X on Y into direct and indirect effects.
 
     -   **Example**: A researcher might hypothesize that the impact of study habits (X) on academic performance (Y) is mediated by motivation (M). The mediation model would test whether better study habits increase motivation, which in turn improves academic performance.
 
-2.  **Moderation**:
+<Br>
+
+2.  **Moderation**\
+    ![](images/clipboard-807546320.png){width="400"}
 
     -   Moderation analysis looks at **when** or **under what conditions** a relationship between X and Y holds. It introduces a **moderator** variable (W), which influences the strength or direction of the effect that X has on Y. The goal is to determine if the effect of X on Y changes depending on the level of W.
 
     -   **Example**: A company might test whether the relationship between employee training (X) and job performance (Y) depends on the years of experience (W) the employees have. If training improves job performance more for experienced workers than for beginners, experience moderates the training-performance relationship.
 
-3.  **Conditional Process Modeling**:
+<br>
+
+3.  **Conditional Process Modeling**\
+    ![](images/clipboard-1801120322.png){width="400"}
 
     -   Conditional process modeling combines mediation and moderation, exploring **both how** and **when** an effect occurs. It investigates whether the indirect effect of X on Y through M is conditional upon the level of a moderator W, allowing researchers to examine more nuanced relationships.
 
     -   **Example**: A researcher could examine whether the indirect effect of parental involvement (X) on a child’s academic success (Y) through school engagement (M) depends on the socio-economic status (W) of the family. In this case, socio-economic status moderates the indirect effect of parental involvement on academic success.
+
+<bR>
 
 #### **The Importance of Hayes Process Models**
 
@@ -49,6 +60,8 @@ Hayes' models have become increasingly popular because they provide a comprehens
 -   Move beyond traditional statistical approaches, which often assume linear, direct relationships, by modeling **indirect**, **conditional**, or **interactive** effects.
 
 The statistical foundation for these models is rooted in **ordinary least squares (OLS) regression** and **bootstrapping** methods, which allow for robust hypothesis testing even when assumptions such as normality are violated. Hayes’ popular PROCESS macro, which integrates into software like SPSS, SAS, and R, simplifies the estimation of mediation and moderation models, making it accessible for researchers with varying levels of statistical expertise.
+
+<br>
 
 #### **Types of Hayes Models**
 
@@ -90,11 +103,9 @@ The relationship between the variables is expressed using the following equation
 
 $$
 M = aX + e_1
-$$
-$$
+$$ $$
 Y= bM + c'X + e_2
 $$
-
 
 Where:
 
@@ -110,12 +121,9 @@ $$
 c = c' + ab
 $$
 
-
 Where **ab** is the indirect effect (product of the a and b paths).
 
-
 <br>
-
 
 #### **Steps in Mediation Analysis**
 
@@ -133,13 +141,19 @@ Mediation analysis generally follows three main steps:
 
     -   The total effect of X on Y (before including M) is divided into two parts: the direct effect (**c'**) and the indirect effect (**ab**). If the direct effect **c'** is significantly reduced when M is included, this supports the presence of mediation.
 
+<br>
+
 **Bootstrapping for Mediation**
 
 Since the product of coefficients (a \* b) often has a non-normal distribution, bootstrapping is commonly used to obtain more accurate confidence intervals for the indirect effect. Bootstrapping repeatedly samples the data with replacement to estimate the distribution of the indirect effect, which allows for more robust statistical inferences.
 
+<br>
+
 #### **Example: Simple Mediation Using Hayes' Model 4 in R**
 
 To illustrate mediation analysis, we will use **Hayes' Model 4**—a simple mediation model. Below is an example of how to run a mediation analysis in R using a fictional dataset where the independent variable (X) is **hours studied**, the mediator (M) is **motivation**, and the dependent variable (Y) is **test score**.
+
+<br>
 
 **Data Simulation Example**
 
@@ -155,6 +169,8 @@ data <- data.frame(X = X, M = M, Y = Y)
 head(data)
 
 ```
+
+<br>
 
 **Running Mediation Analysis in R**
 
@@ -197,11 +213,6 @@ An example interpretation might be:
 
 -   The direct effect of hours studied on test scores remains significant even after accounting for motivation, indicating that both direct and mediated effects are important.
 
-**Bootstrapping Results**
-
-The bootstrapped confidence intervals for the indirect effect provide a more accurate assessment of whether mediation is present. If the confidence interval does not include zero, it indicates that the mediation effect is statistically significant.
-
-
 <br>
 
 #### **Limitations of Mediation Analysis**
@@ -214,18 +225,13 @@ While mediation analysis is powerful, it is not without its limitations:
 
 -   **Measurement Error**: Inaccurate measurement of X, M, or Y can distort the mediation effect.
 
-
 <br>
-
-
 
 ### **Moderation Analysis**
 
 Moderation analysis is a statistical technique used to explore how the relationship between an independent variable (X) and a dependent variable (Y) changes depending on the level of a third variable, known as the **moderator** (W). This technique allows researchers to examine when and under what conditions an effect occurs, rather than simply whether or not it exists. In this chapter, we will introduce the theory behind moderation analysis, explain how to conduct it in R using a practical example, and guide you in interpreting the results.
 
-
 <br>
-
 
 #### **Conceptual Background of Moderation**
 
@@ -244,6 +250,8 @@ A moderator can be either:
 **Example of Moderation**
 
 Imagine we are investigating whether the relationship between **study hours** (X) and **test scores** (Y) is moderated by **sleep quality** (W). It is possible that the effect of studying on test scores is stronger when sleep quality is high and weaker when sleep quality is low. This would suggest that sleep quality moderates the relationship between study hours and test scores.
+
+<br>
 
 **Moderation Formula**
 
@@ -269,6 +277,8 @@ Where:
 
 In this model, the key coefficient of interest is **b3**, which tests whether the interaction between X and W significantly predicts Y. A significant interaction effect (b_3 ≠ 0) indicates the presence of moderation.
 
+<br>
+
 **Path Diagram for Moderation**
 
 A typical moderation model can be depicted as follows:
@@ -278,6 +288,8 @@ A typical moderation model can be depicted as follows:
 -   **W (Moderator)**: The moderator affects the strength or direction of the X → Y relationship.
 
 -   **Interaction Effect (X \* W)**: This term captures the effect of the interaction between X and W on Y. If the interaction term is significant, it indicates that W moderates the relationship between X and Y.
+
+<br>
 
 #### **Steps in Moderation Analysis**
 
@@ -299,6 +311,8 @@ Conducting moderation analysis involves the following steps:
 
     -   If the interaction term is significant, this indicates that the effect of X on Y depends on the level of W. The next step is to probe the interaction by looking at how the relationship between X and Y changes at different levels of W.
 
+<br>
+
 #### **Example: Simple Moderation Using Hayes' Model 1 in R**
 
 To illustrate moderation analysis, we will use **Hayes' Model 1**, which tests for a simple moderation effect. In this example, we will examine whether **motivation** (W) moderates the relationship between **hours studied** (X) and **test score** (Y).
@@ -318,6 +332,8 @@ head(data)
 
 ```
 
+<br>
+
 **Running Moderation Analysis in R**
 
 We can use the `lm()` function to fit the moderation model, including the interaction term between X and W.
@@ -333,11 +349,11 @@ summary(moderation_model)
 
 ```
 
+<br>
+
 **Interpreting the Results**
 
-In the output of the `lm()` function, focus on the coefficient for the interaction term (**X**
-
-). If this term is significant, it means that motivation (W) moderates the relationship between hours studied (X) and test score (Y).
+In the output of the `lm()` function, focus on the coefficient for the interaction term (**X**). If this term is significant, it means that motivation (W) moderates the relationship between hours studied (X) and test score (Y).
 
 -   **Main effects**: The coefficients for **X** and **W** tell us the effect of hours studied and motivation on test scores when the other variable is held constant.
 
@@ -348,6 +364,8 @@ For example:
 -   If the interaction term is positive, the effect of study hours on test scores is stronger when motivation is higher.
 
 -   If the interaction term is negative, the effect of study hours on test scores is weaker when motivation is higher.
+
+<br>
 
 **Visualizing the Interaction Effect**
 
@@ -365,6 +383,8 @@ interact_plot(moderation_model, pred = "X", modx = "W", plot.points = TRUE)
 
 This plot shows how the relationship between hours studied and test scores varies depending on the level of motivation. For example, you might see that at low levels of motivation, hours studied have little effect on test scores, but at high levels of motivation, hours studied have a strong positive effect on test scores.
 
+<br>
+
 #### **Interpreting the Results of Moderation Analysis**
 
 Moderation analysis results need to be interpreted carefully to understand the underlying relationships. The significance of the interaction term helps determine whether moderation exists, and the direction of the interaction coefficient provides insight into how the moderator influences the relationship between X and Y.
@@ -372,6 +392,8 @@ Moderation analysis results need to be interpreted carefully to understand the u
 -   **Significant Interaction**: If the interaction term is significant, W moderates the relationship between X and Y. The interaction plot provides a visual representation of this effect.
 
 -   **Non-Significant Interaction**: If the interaction term is not significant, this suggests that the relationship between X and Y is consistent across levels of W, meaning no moderation effect exists.
+
+<br>
 
 **Simple Slopes Analysis**
 
@@ -461,6 +483,8 @@ Moderated mediation analysis follows a structured approach:
 
     -   Use bootstrapping to obtain confidence intervals for the conditional indirect effects, as traditional significance testing might not be reliable for the product of coefficients.
 
+<br>
+
 #### **Example: Moderated Mediation Using Hayes' Model 7 in R**
 
 Let’s work through an example of moderated mediation using **Hayes’ Model 7**, where we examine whether the indirect effect of **hours studied** (X) on **test score** (Y) through **motivation** (M) is moderated by **interest in the subject** (W).
@@ -479,6 +503,8 @@ Y <- 0.6 * M + 0.3 * X + rnorm(n)  # Test score (Dependent variable)
 data <- data.frame(X = X, W = W, M = M, Y = Y)
 
 ```
+
+<br>
 
 **Running Moderated Mediation Analysis in R**
 
@@ -500,6 +526,8 @@ mod_med_analysis <- mediate(med_model, out_model, treat = "X", mediator = "M", b
 summary(mod_med_analysis)
 
 ```
+
+<br>
 
 **Interpreting the Results**
 
@@ -524,6 +552,8 @@ interact_plot(med_model, pred = "X", modx = "W", plot.points = TRUE)
 ```
 
 This plot will show how the relationship between hours studied (X) and motivation (M) varies at different levels of interest in the subject (W). For example, you might observe that the relationship between hours studied and motivation is stronger for students with high interest in the subject.
+
+<br>
 
 #### **Interpreting Moderated Mediation Results**
 

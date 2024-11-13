@@ -248,23 +248,34 @@ window.Quarto = {
 <p><br></p>
 <section id="what-is-mediation-moderation-and-conditional-process-modeling" class="level4">
 <h4 class="anchored" data-anchor-id="what-is-mediation-moderation-and-conditional-process-modeling"><strong>What is Mediation, Moderation, and Conditional Process Modeling?</strong></h4>
+<p><br></p>
 <ol type="1">
-<li><p><strong>Mediation</strong>:</p>
+<li><p><strong>Mediation</strong><br>
+<img src="images/clipboard-537904527.png" class="img-fluid" width="400"></p>
 <ul>
 <li><p>Mediation analysis helps identify <strong>why</strong> or <strong>how</strong> a certain effect occurs. It examines whether the relationship between an independent variable (X) and a dependent variable (Y) is explained, at least partially, by a third variable called the <strong>mediator</strong> (M). In simpler terms, mediation investigates if X affects Y <strong>through</strong> M, by decomposing the total effect of X on Y into direct and indirect effects.</p></li>
 <li><p><strong>Example</strong>: A researcher might hypothesize that the impact of study habits (X) on academic performance (Y) is mediated by motivation (M). The mediation model would test whether better study habits increase motivation, which in turn improves academic performance.</p></li>
 </ul></li>
-<li><p><strong>Moderation</strong>:</p>
+</ol>
+<p><br></p>
+<ol start="2" type="1">
+<li><p><strong>Moderation</strong><br>
+<img src="images/clipboard-807546320.png" class="img-fluid" width="400"></p>
 <ul>
 <li><p>Moderation analysis looks at <strong>when</strong> or <strong>under what conditions</strong> a relationship between X and Y holds. It introduces a <strong>moderator</strong> variable (W), which influences the strength or direction of the effect that X has on Y. The goal is to determine if the effect of X on Y changes depending on the level of W.</p></li>
 <li><p><strong>Example</strong>: A company might test whether the relationship between employee training (X) and job performance (Y) depends on the years of experience (W) the employees have. If training improves job performance more for experienced workers than for beginners, experience moderates the training-performance relationship.</p></li>
 </ul></li>
-<li><p><strong>Conditional Process Modeling</strong>:</p>
+</ol>
+<p><br></p>
+<ol start="3" type="1">
+<li><p><strong>Conditional Process Modeling</strong><br>
+<img src="images/clipboard-1801120322.png" class="img-fluid" width="400"></p>
 <ul>
 <li><p>Conditional process modeling combines mediation and moderation, exploring <strong>both how</strong> and <strong>when</strong> an effect occurs. It investigates whether the indirect effect of X on Y through M is conditional upon the level of a moderator W, allowing researchers to examine more nuanced relationships.</p></li>
 <li><p><strong>Example</strong>: A researcher could examine whether the indirect effect of parental involvement (X) on a child’s academic success (Y) through school engagement (M) depends on the socio-economic status (W) of the family. In this case, socio-economic status moderates the indirect effect of parental involvement on academic success.</p></li>
 </ul></li>
 </ol>
+<p><br></p>
 </section>
 <section id="the-importance-of-hayes-process-models" class="level4">
 <h4 class="anchored" data-anchor-id="the-importance-of-hayes-process-models"><strong>The Importance of Hayes Process Models</strong></h4>
@@ -275,6 +286,7 @@ window.Quarto = {
 <li><p>Move beyond traditional statistical approaches, which often assume linear, direct relationships, by modeling <strong>indirect</strong>, <strong>conditional</strong>, or <strong>interactive</strong> effects.</p></li>
 </ul>
 <p>The statistical foundation for these models is rooted in <strong>ordinary least squares (OLS) regression</strong> and <strong>bootstrapping</strong> methods, which allow for robust hypothesis testing even when assumptions such as normality are violated. Hayes’ popular PROCESS macro, which integrates into software like SPSS, SAS, and R, simplifies the estimation of mediation and moderation models, making it accessible for researchers with varying levels of statistical expertise.</p>
+<p><br></p>
 </section>
 <section id="types-of-hayes-models" class="level4">
 <h4 class="anchored" data-anchor-id="types-of-hayes-models"><strong>Types of Hayes Models</strong></h4>
@@ -339,12 +351,15 @@ c = c' + ab
 <li>The total effect of X on Y (before including M) is divided into two parts: the direct effect (<strong>c’</strong>) and the indirect effect (<strong>ab</strong>). If the direct effect <strong>c’</strong> is significantly reduced when M is included, this supports the presence of mediation.</li>
 </ul></li>
 </ol>
+<p><br></p>
 <p><strong>Bootstrapping for Mediation</strong></p>
 <p>Since the product of coefficients (a * b) often has a non-normal distribution, bootstrapping is commonly used to obtain more accurate confidence intervals for the indirect effect. Bootstrapping repeatedly samples the data with replacement to estimate the distribution of the indirect effect, which allows for more robust statistical inferences.</p>
+<p><br></p>
 </section>
 <section id="example-simple-mediation-using-hayes-model-4-in-r" class="level4">
 <h4 class="anchored" data-anchor-id="example-simple-mediation-using-hayes-model-4-in-r"><strong>Example: Simple Mediation Using Hayes’ Model 4 in R</strong></h4>
 <p>To illustrate mediation analysis, we will use <strong>Hayes’ Model 4</strong>—a simple mediation model. Below is an example of how to run a mediation analysis in R using a fictional dataset where the independent variable (X) is <strong>hours studied</strong>, the mediator (M) is <strong>motivation</strong>, and the dependent variable (Y) is <strong>test score</strong>.</p>
+<p><br></p>
 <p><strong>Data Simulation Example</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulating the dataset</span></span>
@@ -366,6 +381,7 @@ c = c' + ab
 6 13.430130 6.238818 6.121783</code></pre>
 </div>
 </div>
+<p><br></p>
 <p><strong>Running Mediation Analysis in R</strong></p>
 <p>We will use the <code>mediation</code> package in R, which provides functions for conducting mediation analysis. First, we fit two linear models: one for predicting the mediator (M) and one for predicting the outcome (Y).</p>
 <div class="cell">
@@ -434,8 +450,6 @@ Simulations: 500 </code></pre>
 <li><p>The indirect effect of <strong>hours studied</strong> on <strong>test scores</strong> through <strong>motivation</strong> is significant, meaning motivation partially mediates the relationship between hours studied and test scores.</p></li>
 <li><p>The direct effect of hours studied on test scores remains significant even after accounting for motivation, indicating that both direct and mediated effects are important.</p></li>
 </ul>
-<p><strong>Bootstrapping Results</strong></p>
-<p>The bootstrapped confidence intervals for the indirect effect provide a more accurate assessment of whether mediation is present. If the confidence interval does not include zero, it indicates that the mediation effect is statistically significant.</p>
 <p><br></p>
 </section>
 <section id="limitations-of-mediation-analysis" class="level4">
@@ -465,6 +479,7 @@ Simulations: 500 </code></pre>
 </ul>
 <p><strong>Example of Moderation</strong></p>
 <p>Imagine we are investigating whether the relationship between <strong>study hours</strong> (X) and <strong>test scores</strong> (Y) is moderated by <strong>sleep quality</strong> (W). It is possible that the effect of studying on test scores is stronger when sleep quality is high and weaker when sleep quality is low. This would suggest that sleep quality moderates the relationship between study hours and test scores.</p>
+<p><br></p>
 <p><strong>Moderation Formula</strong></p>
 <p>The general form of a moderation model can be expressed as:</p>
 <p><span class="math display">\[
@@ -480,6 +495,7 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 <li><p><strong>b3</strong> represents the effect of the interaction between X and W on Y.</p></li>
 </ul>
 <p>In this model, the key coefficient of interest is <strong>b3</strong>, which tests whether the interaction between X and W significantly predicts Y. A significant interaction effect (b_3 ≠ 0) indicates the presence of moderation.</p>
+<p><br></p>
 <p><strong>Path Diagram for Moderation</strong></p>
 <p>A typical moderation model can be depicted as follows:</p>
 <ul>
@@ -487,6 +503,7 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 <li><p><strong>W (Moderator)</strong>: The moderator affects the strength or direction of the X → Y relationship.</p></li>
 <li><p><strong>Interaction Effect (X * W)</strong>: This term captures the effect of the interaction between X and W on Y. If the interaction term is significant, it indicates that W moderates the relationship between X and Y.</p></li>
 </ul>
+<p><br></p>
 </section>
 <section id="steps-in-moderation-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="steps-in-moderation-analysis"><strong>Steps in Moderation Analysis</strong></h4>
@@ -509,6 +526,7 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 <li>If the interaction term is significant, this indicates that the effect of X on Y depends on the level of W. The next step is to probe the interaction by looking at how the relationship between X and Y changes at different levels of W.</li>
 </ul></li>
 </ol>
+<p><br></p>
 </section>
 <section id="example-simple-moderation-using-hayes-model-1-in-r" class="level4">
 <h4 class="anchored" data-anchor-id="example-simple-moderation-using-hayes-model-1-in-r"><strong>Example: Simple Moderation Using Hayes’ Model 1 in R</strong></h4>
@@ -534,6 +552,7 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 6 13.430130 4.523753 24.66213</code></pre>
 </div>
 </div>
+<p><br></p>
 <p><strong>Running Moderation Analysis in R</strong></p>
 <p>We can use the <code>lm()</code> function to fit the moderation model, including the interaction term between X and W.</p>
 <div class="cell">
@@ -587,9 +606,9 @@ Multiple R-squared:  0.965, Adjusted R-squared:  0.9645
 F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<p><br></p>
 <p><strong>Interpreting the Results</strong></p>
-<p>In the output of the <code>lm()</code> function, focus on the coefficient for the interaction term (<strong>X</strong></p>
-<p>). If this term is significant, it means that motivation (W) moderates the relationship between hours studied (X) and test score (Y).</p>
+<p>In the output of the <code>lm()</code> function, focus on the coefficient for the interaction term (<strong>X</strong>). If this term is significant, it means that motivation (W) moderates the relationship between hours studied (X) and test score (Y).</p>
 <ul>
 <li><p><strong>Main effects</strong>: The coefficients for <strong>X</strong> and <strong>W</strong> tell us the effect of hours studied and motivation on test scores when the other variable is held constant.</p></li>
 <li><p><strong>Interaction effect</strong>: A significant interaction term indicates that the relationship between hours studied and test scores changes depending on the level of motivation.</p></li>
@@ -599,6 +618,7 @@ F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>If the interaction term is positive, the effect of study hours on test scores is stronger when motivation is higher.</p></li>
 <li><p>If the interaction term is negative, the effect of study hours on test scores is weaker when motivation is higher.</p></li>
 </ul>
+<p><br></p>
 <p><strong>Visualizing the Interaction Effect</strong></p>
 <p>To better understand the moderation effect, it’s helpful to plot the interaction between X and W. The <code>interactions</code> package in R provides convenient functions for visualizing interaction effects.</p>
 <div class="cell">
@@ -617,6 +637,7 @@ F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>This plot shows how the relationship between hours studied and test scores varies depending on the level of motivation. For example, you might see that at low levels of motivation, hours studied have little effect on test scores, but at high levels of motivation, hours studied have a strong positive effect on test scores.</p>
+<p><br></p>
 </section>
 <section id="interpreting-the-results-of-moderation-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="interpreting-the-results-of-moderation-analysis"><strong>Interpreting the Results of Moderation Analysis</strong></h4>
@@ -625,6 +646,7 @@ F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p><strong>Significant Interaction</strong>: If the interaction term is significant, W moderates the relationship between X and Y. The interaction plot provides a visual representation of this effect.</p></li>
 <li><p><strong>Non-Significant Interaction</strong>: If the interaction term is not significant, this suggests that the relationship between X and Y is consistent across levels of W, meaning no moderation effect exists.</p></li>
 </ul>
+<p><br></p>
 <p><strong>Simple Slopes Analysis</strong></p>
 <p>To further interpret a significant moderation effect, a <strong>simple slopes analysis</strong> is often conducted. This involves examining the relationship between X and Y at different levels of the moderator (e.g., low, medium, and high levels of W).</p>
 <p>The simple slopes analysis can provide insights into:</p>
@@ -699,6 +721,7 @@ Y = b_1M + b_2X + b_3W + b_4(X \times W) + e_2
 <li>Use bootstrapping to obtain confidence intervals for the conditional indirect effects, as traditional significance testing might not be reliable for the product of coefficients.</li>
 </ul></li>
 </ol>
+<p><br></p>
 </section>
 <section id="example-moderated-mediation-using-hayes-model-7-in-r" class="level4">
 <h4 class="anchored" data-anchor-id="example-moderated-mediation-using-hayes-model-7-in-r"><strong>Example: Moderated Mediation Using Hayes’ Model 7 in R</strong></h4>
@@ -715,6 +738,7 @@ Y = b_1M + b_2X + b_3W + b_4(X \times W) + e_2
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X, <span class="at">W =</span> W, <span class="at">M =</span> M, <span class="at">Y =</span> Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
 <p><strong>Running Moderated Mediation Analysis in R</strong></p>
 <p>We will use the <code>moderndive</code> package to estimate the moderated mediation model in R. In this example, the mediator is <strong>motivation</strong>, and the moderator is <strong>interest in the subject</strong>.</p>
 <div class="cell">
@@ -757,6 +781,7 @@ Sample Size Used: 200
 Simulations: 500 </code></pre>
 </div>
 </div>
+<p><br></p>
 <p><strong>Interpreting the Results</strong></p>
 <p>The output will provide estimates of the indirect and direct effects of X on Y, conditional on different values of W. Key components to focus on include:</p>
 <ul>
@@ -784,6 +809,7 @@ Simulations: 500 </code></pre>
 </div>
 </div>
 <p>This plot will show how the relationship between hours studied (X) and motivation (M) varies at different levels of interest in the subject (W). For example, you might observe that the relationship between hours studied and motivation is stronger for students with high interest in the subject.</p>
+<p><br></p>
 </section>
 <section id="interpreting-moderated-mediation-results" class="level4">
 <h4 class="anchored" data-anchor-id="interpreting-moderated-mediation-results"><strong>Interpreting Moderated Mediation Results</strong></h4>
