@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CJL &amp; Lab - Modeling</title>
+<title>Modeling – CJL &amp; Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -101,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -145,7 +145,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -155,7 +155,7 @@ window.Quarto = {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Courses</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
@@ -191,7 +191,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -211,7 +211,6 @@ window.Quarto = {
   <li><a href="#mediation-analysis" id="toc-mediation-analysis" class="nav-link" data-scroll-target="#mediation-analysis"><strong>Mediation Analysis</strong></a></li>
   <li><a href="#moderation-analysis" id="toc-moderation-analysis" class="nav-link" data-scroll-target="#moderation-analysis"><strong>Moderation Analysis</strong></a></li>
   <li><a href="#moderated-mediation-conditional-process" id="toc-moderated-mediation-conditional-process" class="nav-link" data-scroll-target="#moderated-mediation-conditional-process"><strong>Moderated Mediation (Conditional Process)</strong></a></li>
-  <li><a href="#interpreting-results-from-hayes-models" id="toc-interpreting-results-from-hayes-models" class="nav-link" data-scroll-target="#interpreting-results-from-hayes-models"><strong>Interpreting Results from Hayes Models</strong></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -327,11 +326,25 @@ Y= bM + c'X + e_2
 <li><p><strong>b</strong> is the regression coefficient for the effect of M on Y (controlling for X).</p></li>
 <li><p><strong>c’</strong> is the direct effect of X on Y after accounting for the mediator.</p></li>
 </ul>
-<p>The <strong>total effect</strong> of X on Y can be decomposed as:</p>
+<p><br></p>
+</section>
+<section id="total-effect" class="level4">
+<h4 class="anchored" data-anchor-id="total-effect"><strong>Total Effect</strong></h4>
+<p>The total effect of X on Y is the sum of:</p>
+<ul>
+<li><p>The <strong>direct effect</strong> of X on Y (c’).</p></li>
+<li><p>The <strong>indirect effect</strong>, which is mediated through M.</p></li>
+</ul>
+<p>Mathematically:</p>
 <p><span class="math display">\[
-c = c' + ab
+c=c'+(a \cdot b)
 \]</span></p>
-<p>Where <strong>ab</strong> is the indirect effect (product of the a and b paths).</p>
+<p>Where:</p>
+<ul>
+<li><p>c: Total effect of X on Y.</p></li>
+<li><p>c’: Direct effect of X on Y (not through M ).</p></li>
+<li><p><span class="math inline">\(a \cdot b\)</span>: Indirect effect of X on Y via M.</p></li>
+</ul>
 <p><br></p>
 </section>
 <section id="steps-in-mediation-analysis" class="level4">
@@ -411,7 +424,12 @@ Version: 4.5.0</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>out_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> M <span class="sc">+</span> X, <span class="at">data =</span> data)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Conduct mediation analysis</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>mediation_analysis <span class="ot">&lt;-</span> <span class="fu">mediate</span>(med_model, out_model, <span class="at">treat =</span> <span class="st">"X"</span>, <span class="at">mediator =</span> <span class="st">"M"</span>, <span class="at">boot =</span> <span class="cn">TRUE</span>, <span class="at">sims =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>mediation_analysis <span class="ot">&lt;-</span> <span class="fu">mediate</span>(med_model, </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                              out_model, </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                              <span class="at">treat =</span> <span class="st">"X"</span>, </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">mediator =</span> <span class="st">"M"</span>, </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">boot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sims =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Running nonparametric bootstrap</code></pre>
 </div>
@@ -465,7 +483,7 @@ Simulations: 500 </code></pre>
 </section>
 <section id="moderation-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="moderation-analysis"><strong>Moderation Analysis</strong></h3>
-<p>Moderation analysis is a statistical technique used to explore how the relationship between an independent variable (X) and a dependent variable (Y) changes depending on the level of a third variable, known as the <strong>moderator</strong> (W). This technique allows researchers to examine when and under what conditions an effect occurs, rather than simply whether or not it exists. In this chapter, we will introduce the theory behind moderation analysis, explain how to conduct it in R using a practical example, and guide you in interpreting the results.</p>
+<p>Moderation analysis is a statistical technique used to explore how the relationship between an independent variable (X) and a dependent variable (Y) changes depending on the level of a third variable, known as the <strong>moderator</strong> (W). This technique allows researchers to examine <u><strong><em>when and under what conditions an effect occurs</em></strong></u>, rather than simply whether or not it exists.</p>
 <p><br></p>
 <section id="conceptual-background-of-moderation" class="level4">
 <h4 class="anchored" data-anchor-id="conceptual-background-of-moderation"><strong>Conceptual Background of Moderation</strong></h4>
@@ -490,11 +508,30 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 <li><p><strong>X</strong> is the independent variable,</p></li>
 <li><p><strong>W</strong> is the moderator,</p></li>
 <li><p><strong>XW</strong> is the interaction term between X and W, representing the moderation effect,</p></li>
-<li><p><strong>b1</strong> represents the effect of X on Y when W is held constant,</p></li>
-<li><p><strong>b2</strong> represents the effect of W on Y,</p></li>
-<li><p><strong>b3</strong> represents the effect of the interaction between X and W on Y.</p></li>
+<li><p><strong>b1</strong> represents the effect of X on Y (when W = 0),</p></li>
+<li><p><strong>b2</strong> represents the effect of W on Y (when X = 0),</p></li>
+<li><p><strong>b3</strong> represents <strong>the effect of the interaction</strong> between X and W on Y, quantifying how W moderates the effect of X on Y.</p></li>
 </ul>
 <p>In this model, the key coefficient of interest is <strong>b3</strong>, which tests whether the interaction between X and W significantly predicts Y. A significant interaction effect (b_3 ≠ 0) indicates the presence of moderation.</p>
+<p><br></p>
+</section>
+<section id="decomposing-effects" class="level4">
+<h4 class="anchored" data-anchor-id="decomposing-effects"><strong>Decomposing Effects</strong></h4>
+<p>The interaction term captures how the effect of X on Y depends on W. Specifically:</p>
+<p><span class="math display">\[
+\text{Effect of X on Y} = \beta_1 + \beta_3 W
+\]</span></p>
+<p>When W increases, the slope of (X on Y) changes by <span class="math inline">\(\beta_3\)</span>​.</p>
+<p><br></p>
+</section>
+<section id="conditional-effects" class="level4">
+<h4 class="anchored" data-anchor-id="conditional-effects"><strong>Conditional Effects</strong></h4>
+<p>The relationship between X and Y is <strong>conditional on the value of</strong> W</p>
+<ul>
+<li><p>If <span class="math inline">\(W=0\)</span>: The effect of X on Y is simply <span class="math inline">\(\beta_1\)</span></p></li>
+<li><p>If <span class="math inline">\(W&gt;0\)</span>: The effect of X on Y becomes <span class="math inline">\(\beta_1+\beta_3W\)</span></p></li>
+</ul>
+<p>This demonstrates that the <strong>magnitude and direction</strong> of X’s effect on Y change depending on W.</p>
 <p><br></p>
 <p><strong>Path Diagram for Moderation</strong></p>
 <p>A typical moderation model can be depicted as follows:</p>
@@ -505,29 +542,6 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 </ul>
 <p><br></p>
 </section>
-<section id="steps-in-moderation-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="steps-in-moderation-analysis"><strong>Steps in Moderation Analysis</strong></h4>
-<p>Conducting moderation analysis involves the following steps:</p>
-<ol type="1">
-<li><p><strong>Centering the Variables</strong>:</p>
-<ul>
-<li>To avoid multicollinearity between X, W, and the interaction term (X × W), it is common practice to <strong>center</strong> the variables by subtracting their means. Centering makes the interpretation of the coefficients easier.</li>
-</ul></li>
-<li><p><strong>Creating the Interaction Term (X × W)</strong>:</p>
-<ul>
-<li>After centering X and W, an interaction term is created by multiplying the centered variables (X_centered × W_centered). This term captures the moderation effect.</li>
-</ul></li>
-<li><p><strong>Fitting the Moderation Model</strong>:</p>
-<ul>
-<li>Using a linear regression model, we fit the relationship between X, W, and the interaction term (X × W) on the outcome variable Y.</li>
-</ul></li>
-<li><p><strong>Interpreting the Interaction</strong>:</p>
-<ul>
-<li>If the interaction term is significant, this indicates that the effect of X on Y depends on the level of W. The next step is to probe the interaction by looking at how the relationship between X and Y changes at different levels of W.</li>
-</ul></li>
-</ol>
-<p><br></p>
-</section>
 <section id="example-simple-moderation-using-hayes-model-1-in-r" class="level4">
 <h4 class="anchored" data-anchor-id="example-simple-moderation-using-hayes-model-1-in-r"><strong>Example: Simple Moderation Using Hayes’ Model 1 in R</strong></h4>
 <p>To illustrate moderation analysis, we will use <strong>Hayes’ Model 1</strong>, which tests for a simple moderation effect. In this example, we will examine whether <strong>motivation</strong> (W) moderates the relationship between <strong>hours studied</strong> (X) and <strong>test score</strong> (Y).</p>
@@ -535,7 +549,7 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulating the dataset</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">300</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)  <span class="co"># Hours studied (X)</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>W <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>)   <span class="co"># Motivation (Moderator, W)</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fl">0.4</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fl">0.6</span> <span class="sc">*</span> W <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> X <span class="sc">*</span> W <span class="sc">+</span> <span class="fu">rnorm</span>(n)  <span class="co"># Test score (Y)</span></span>
@@ -544,12 +558,12 @@ Y = b_0 + b_1X + b_2W + b_3(X \times W)+e
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          X        W        Y
-1  8.879049 7.198810 26.97293
-2  9.539645 6.312413 24.50011
-3 13.117417 4.734855 26.08585
-4 10.141017 5.543194 24.21757
-5 10.258575 4.585660 21.63822
-6 13.430130 4.523753 24.66213</code></pre>
+1  8.879049 4.284758 18.60986
+2  9.539645 4.247311 18.49225
+3 13.117417 4.061461 23.63328
+4 10.141017 3.947487 16.91829
+5 10.258575 4.562840 21.67399
+6 13.430130 5.331179 29.83955</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -566,19 +580,19 @@ lm(formula = Y ~ X + W, data = data)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--2.9683 -0.6654 -0.0246  0.7695  3.2046 
+-2.8798 -0.7630  0.0867  0.6989  4.1000 
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -15.18286    0.59906  -25.34   &lt;2e-16 ***
-X             1.94771    0.04239   45.94   &lt;2e-16 ***
-W             3.54498    0.08030   44.15   &lt;2e-16 ***
+(Intercept) -14.44599    0.50512  -28.60   &lt;2e-16 ***
+X             1.84417    0.03499   52.71   &lt;2e-16 ***
+W             3.59820    0.06692   53.77   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.128 on 197 degrees of freedom
-Multiple R-squared:  0.9525,    Adjusted R-squared:  0.952 
-F-statistic:  1975 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.142 on 297 degrees of freedom
+Multiple R-squared:  0.9474,    Adjusted R-squared:  0.947 
+F-statistic:  2673 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Fit the moderation model (including the interaction term)</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>moderation_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">*</span> W, <span class="at">data =</span> data)</span>
@@ -590,20 +604,20 @@ lm(formula = Y ~ X * W, data = data)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--2.86709 -0.57623  0.05225  0.65798  2.44744 
+-2.52213 -0.72725  0.04238  0.68765  2.63550 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  0.78700    1.97619   0.398   0.6909    
-X            0.34998    0.19432   1.801   0.0732 .  
-W            0.48456    0.37207   1.302   0.1943    
-X:W          0.30649    0.03661   8.371 1.07e-14 ***
+(Intercept) -0.61640    1.77458  -0.347  0.72857    
+X            0.48400    0.17158   2.821  0.00511 ** 
+W            0.78321    0.35421   2.211  0.02779 *  
+X:W          0.27753    0.03441   8.067 1.82e-14 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.9703 on 196 degrees of freedom
-Multiple R-squared:  0.965, Adjusted R-squared:  0.9645 
-F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.036 on 296 degrees of freedom
+Multiple R-squared:  0.9568,    Adjusted R-squared:  0.9564 
+F-statistic:  2188 on 3 and 296 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -627,7 +641,10 @@ F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the interaction effect</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(moderation_model, <span class="at">pred =</span> <span class="st">"X"</span>, <span class="at">modx =</span> <span class="st">"W"</span>, <span class="at">plot.points =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(moderation_model, </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">pred =</span> <span class="st">"X"</span>, </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">modx =</span> <span class="st">"W"</span>, </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">plot.points =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -645,6 +662,24 @@ F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ul>
 <li><p><strong>Significant Interaction</strong>: If the interaction term is significant, W moderates the relationship between X and Y. The interaction plot provides a visual representation of this effect.</p></li>
 <li><p><strong>Non-Significant Interaction</strong>: If the interaction term is not significant, this suggests that the relationship between X and Y is consistent across levels of W, meaning no moderation effect exists.</p></li>
+<li><p><strong>Significant Interaction but Only One Main Effect is Significant:</strong> The significant interaction indicates that the effect of X on Y depends on W, even if X or W alone does not have a straightforward effect on Y.</p>
+<ul>
+<li><p>Example,</p>
+<ul>
+<li><p>Predictor (X): Study habits.</p></li>
+<li><p>Moderator (W): Sleep quality.</p></li>
+<li><p>Outcome (Y): Academic performance.</p></li>
+</ul>
+<p>If the main effect of W (sleep quality) is significant, but the main effect of X (study habits) is not, and the interaction (X×W) is significant:</p>
+<ul>
+<li><p><strong>Interpretation</strong>: Study habits do not independently predict academic performance, but their effect is <strong>moderated by sleep quality</strong>. For example:</p>
+<ul>
+<li><p>When sleep quality is high, study habits have a stronger positive impact on academic performance.</p></li>
+<li><p>When sleep quality is low, the relationship between study habits and academic performance might weaken or even reverse.</p></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Significant interaction, no main effects significant:</strong> The effect of X on Y exists <strong>only through interaction</strong> with W.</p></li>
 </ul>
 <p><br></p>
 <p><strong>Simple Slopes Analysis</strong></p>
@@ -659,16 +694,18 @@ F-statistic:  1802 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="moderated-mediation-conditional-process" class="level3">
 <h3 class="anchored" data-anchor-id="moderated-mediation-conditional-process"><strong>Moderated Mediation (Conditional Process)</strong></h3>
-<p>Moderated mediation, also known as <strong>conditional process modeling</strong>, refers to the integration of both <strong>mediation</strong> and <strong>moderation</strong> in a single model. In a moderated mediation model, the indirect effect of an independent variable (X) on a dependent variable (Y) through a mediator (M) is contingent upon the level of a moderator (W). This chapter will explain the theoretical framework for moderated mediation, guide you through the steps for conducting such an analysis, and demonstrate how to perform this type of analysis in R using Hayes’ Model 7.</p>
+<p>Moderated mediation, also known as <strong>conditional process modeling</strong>, refers to the integration of both <strong>mediation</strong> and <strong>moderation</strong> in a single model. In a moderated mediation model, the indirect effect of an independent variable (X) on a dependent variable (Y) through a mediator (M) is contingent upon the level of a moderator (W). Let me explain the theoretical framework for moderated mediation, guide you through the steps for conducting such an analysis, and demonstrate how to perform this type of analysis in R using Hayes’ Model 7.</p>
 <section id="conceptual-background-of-moderated-mediation" class="level4">
 <h4 class="anchored" data-anchor-id="conceptual-background-of-moderated-mediation"><strong>Conceptual Background of Moderated Mediation</strong></h4>
-<p>Moderated mediation explores both <strong>how</strong> and <strong>when</strong> an effect occurs. Specifically, it investigates whether the strength or direction of the indirect effect of X on Y through M depends on a moderator variable (W). This allows researchers to examine whether the mediation process varies across different conditions or groups.</p>
+<p>Moderated mediation explores both <u><strong>how</strong> and <strong>when</strong> an effect occurs</u>. Specifically, it investigates whether <u><strong>the strength or direction of the indirect effect of X on Y through M depends on a moderator variable (W)</strong></u>. This allows researchers to examine whether the mediation process varies across different conditions or groups.</p>
+<p><br></p>
 <p><strong>Key Questions Answered by Moderated Mediation</strong>:</p>
 <ol type="1">
 <li><p><strong>How does the mediation process work?</strong>: Does X affect Y through a mediator M?</p></li>
 <li><p><strong>When or under what conditions is the mediation stronger or weaker?</strong>: Does the indirect effect of X on Y through M vary based on the level of a moderator W?</p></li>
 </ol>
 <p>Moderated mediation is particularly useful when a simple mediation model is not enough to capture the complexity of the relationships among variables. It allows researchers to test whether the mediation pathway is stronger or weaker under certain conditions.</p>
+<p><br></p>
 <p><strong>Path Diagram for Moderated Mediation</strong></p>
 <p>A typical moderated mediation model can be represented as:</p>
 <ul>
@@ -688,39 +725,32 @@ M = a_1X + a_2W + a_3(X \times W) + e_1
 <li>For the dependent variable (Y):</li>
 </ol>
 <p><span class="math display">\[
-Y = b_1M + b_2X + b_3W + b_4(X \times W) + e_2
+Y = b_1M + b_2X + e_2
 \]</span></p>
 <p>Where:</p>
 <ul>
 <li><p><strong>a₁</strong>: The effect of X on M.</p></li>
 <li><p><strong>a₃</strong>: The interaction between X and W, indicating whether W moderates the relationship between X and M.</p></li>
 <li><p><strong>b₁</strong>: The effect of M on Y (mediated effect).</p></li>
-<li><p><strong>b₄</strong>: The interaction between X and W in predicting Y, showing whether W moderates the direct effect of X on Y.</p></li>
 </ul>
-<p>The <strong>indirect effect</strong> is conditional on the level of W, meaning that the mediation pathway (X → M → Y) changes depending on the moderator.</p>
 <p><br></p>
 </section>
-<section id="steps-in-moderated-mediation-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="steps-in-moderated-mediation-analysis"><strong>Steps in Moderated Mediation Analysis</strong></h4>
-<p>Moderated mediation analysis follows a structured approach:</p>
-<ol type="1">
-<li><p><strong>Test the mediation pathway</strong>:</p>
+<section id="direct-effect" class="level4">
+<h4 class="anchored" data-anchor-id="direct-effect">Direct Effect</h4>
+<p>The direct effect of X on Y is independent of mediation: <span class="math inline">\(\beta_2\)</span></p>
+</section>
+<section id="indirect-effect" class="level4">
+<h4 class="anchored" data-anchor-id="indirect-effect">Indirect Effect</h4>
+<p>The <strong>indirect effect</strong> is conditional on the level of W, meaning that the mediation pathway (X → M → Y) changes depending on the moderator.</p>
+<p><span class="math display">\[
+\text{Indirect Effect}=(a_1+a_3W) \cdot b_1
+\]</span></p>
+<p>Where:</p>
 <ul>
-<li>First, test whether there is evidence of mediation between X and Y through M. This involves estimating the indirect effect of X on Y via M (ab path).</li>
-</ul></li>
-<li><p><strong>Include the moderator</strong>:</p>
-<ul>
-<li>Test whether the moderator W affects the strength of the mediation process. Specifically, assess whether W moderates the path from X to M, M to Y, or both.</li>
-</ul></li>
-<li><p><strong>Estimate conditional indirect effects</strong>:</p>
-<ul>
-<li>If the moderation is significant, estimate the <strong>conditional indirect effects</strong>, i.e., the indirect effects of X on Y through M at different levels of W (e.g., low, medium, high).</li>
-</ul></li>
-<li><p><strong>Bootstrap for significance testing</strong>:</p>
-<ul>
-<li>Use bootstrapping to obtain confidence intervals for the conditional indirect effects, as traditional significance testing might not be reliable for the product of coefficients.</li>
-</ul></li>
-</ol>
+<li><p><span class="math inline">\(a_1\)</span>: Effect of X on M (baseline effect).</p></li>
+<li><p><span class="math inline">\(a_3\)</span>​: Moderation of the X → M path by W.</p></li>
+<li><p><span class="math inline">\(b_1\)</span>​: Effect of M on Y.</p></li>
+</ul>
 <p><br></p>
 </section>
 <section id="example-moderated-mediation-using-hayes-model-7-in-r" class="level4">
@@ -736,31 +766,47 @@ Y = b_1M + b_2X + b_3W + b_4(X \times W) + e_2
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> W <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">*</span> X <span class="sc">*</span> W <span class="sc">+</span> <span class="fu">rnorm</span>(n)  <span class="co"># Motivation (Mediating variable)</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fl">0.6</span> <span class="sc">*</span> M <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(n)  <span class="co"># Test score (Dependent variable)</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X, <span class="at">W =</span> W, <span class="at">M =</span> M, <span class="at">Y =</span> Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X, <span class="at">W =</span> W, <span class="at">M =</span> M, <span class="at">Y =</span> Y)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           X        W        M         Y
+1   8.879049 7.198810 19.30933 15.323324
+2   9.539645 6.312413 17.53853 13.357665
+3  13.117417 4.734855 19.76623 15.761632
+4  10.141017 5.543194 17.94735 12.294647
+5  10.258575 4.585660 16.58415 13.818448
+6  13.430130 4.523753 18.57256 14.961842
+7  10.921832 4.211397 15.57382 11.964096
+8   7.469878 4.405383 12.39449  8.265634
+9   8.626294 6.650907 17.24415 12.634614
+10  9.108676 4.945972 15.27567 11.048945</code></pre>
+</div>
 </div>
 <p><br></p>
 <p><strong>Running Moderated Mediation Analysis in R</strong></p>
 <p>We will use the <code>moderndive</code> package to estimate the moderated mediation model in R. In this example, the mediator is <strong>motivation</strong>, and the moderator is <strong>interest in the subject</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary packages</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"mediation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'mediation' is in use and will not be installed</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mediation)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Fit the model for the mediator (X → M)</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>med_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(M <span class="sc">~</span> X <span class="sc">*</span> W, <span class="at">data =</span> data)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Fit the model for the outcome (Y ~ M + X * W)</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>out_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> M <span class="sc">+</span> X <span class="sc">*</span> W, <span class="at">data =</span> data)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Conduct the moderated mediation analysis</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>mod_med_analysis <span class="ot">&lt;-</span> <span class="fu">mediate</span>(med_model, out_model, <span class="at">treat =</span> <span class="st">"X"</span>, <span class="at">mediator =</span> <span class="st">"M"</span>, <span class="at">boot =</span> <span class="cn">TRUE</span>, <span class="at">sims =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 필요한 패키지 설치 및 로드</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mediation)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Fit the model for the mediator (X → M)</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>med_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(M <span class="sc">~</span> X <span class="sc">*</span> W, <span class="at">data =</span> data)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Fit the model for the outcome (Y ~ M + X * W)</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>out_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> M <span class="sc">+</span> X, <span class="at">data =</span> data)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Conduct the moderated mediation analysis</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>mod_med_analysis <span class="ot">&lt;-</span> <span class="fu">mediate</span>(med_model, </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                            out_model, </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">treat =</span> <span class="st">"X"</span>, </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">mediator =</span> <span class="st">"M"</span>, </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                            <span class="at">boot =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sims =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Running nonparametric bootstrap</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_med_analysis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_med_analysis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Causal Mediation Analysis 
@@ -768,10 +814,10 @@ Causal Mediation Analysis
 Nonparametric Bootstrap Confidence Intervals with the Percentile Method
 
                Estimate 95% CI Lower 95% CI Upper p-value    
-ACME             0.9514       0.7242         1.19  &lt;2e-16 ***
-ADE              0.2267      -0.0165         0.45   0.056 .  
-Total Effect     1.1781       1.0753         1.27  &lt;2e-16 ***
-Prop. Mediated   0.8076       0.6130         1.01  &lt;2e-16 ***
+ACME              0.940        0.824         1.04  &lt;2e-16 ***
+ADE               0.229        0.107         0.35  &lt;2e-16 ***
+Total Effect      1.169        1.065         1.26  &lt;2e-16 ***
+Prop. Mediated    0.804        0.711         0.90  &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -782,125 +828,115 @@ Simulations: 500 </code></pre>
 </div>
 </div>
 <p><br></p>
-<p><strong>Interpreting the Results</strong></p>
-<p>The output will provide estimates of the indirect and direct effects of X on Y, conditional on different values of W. Key components to focus on include:</p>
-<ul>
-<li><p><strong>Conditional Indirect Effects</strong>: These effects represent the mediation at different levels of W (e.g., low, medium, high). A significant conditional indirect effect means that the strength of the mediation depends on W.</p></li>
-<li><p><strong>Moderated Mediation Index</strong>: This is a formal test of whether the indirect effect significantly changes as a function of W. A significant index indicates that W moderates the mediation process.</p></li>
-</ul>
-<p><strong>Visualizing Conditional Indirect Effects</strong></p>
-<p>To visualize how the indirect effect varies across levels of W, you can create a plot that shows the indirect effect at low, medium, and high levels of W. This helps in understanding how the mediation process changes across different conditions.</p>
+<p><strong>Conditional mediation effect analysis</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the interactions package for visualization</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"interactions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'interactions' is in use and will not be installed</code></pre>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># W의 값 설정 (평균, 평균 ± 1표준편차)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>W_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(data<span class="sc">$</span>W) <span class="sc">-</span> <span class="fu">sd</span>(data<span class="sc">$</span>W), </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mean</span>(data<span class="sc">$</span>W), </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mean</span>(data<span class="sc">$</span>W) <span class="sc">+</span> <span class="fu">sd</span>(data<span class="sc">$</span>W))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>W_levels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.046200 5.042121 6.038042</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the interaction effect between X and W on M (X → M, moderated by W)</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(med_model, <span class="at">pred =</span> <span class="st">"X"</span>, <span class="at">modx =</span> <span class="st">"W"</span>, <span class="at">plot.points =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기존 모델에서 계수 추출</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>med_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(med_model)  </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>out_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(out_model)  </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 간접효과 계산</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>indirect_effects <span class="ot">&lt;-</span> <span class="fu">sapply</span>(W_levels, <span class="cf">function</span>(w) {</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 간접효과 = (beta_X + beta_X:W * W) * gamma_M</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  (med_coefs[<span class="st">"X"</span>] <span class="sc">+</span> med_coefs[<span class="st">"X:W"</span>] <span class="sc">*</span> w) <span class="sc">*</span> out_coefs[<span class="st">"M"</span>]</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 출력</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(indirect_effects) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Low W"</span>, <span class="st">"Mean W"</span>, <span class="st">"High W"</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(indirect_effects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Low W    Mean W    High W 
+0.8102705 0.9398953 1.0695201 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 데이터프레임 생성</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>indirect_effects_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">W_level =</span> <span class="fu">c</span>(<span class="st">"Low W"</span>, <span class="st">"Mean W"</span>, <span class="st">"High W"</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Indirect_Effect =</span> indirect_effects</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>indirect_effects_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       W_level Indirect_Effect
+Low W    Low W       0.8102705
+Mean W  Mean W       0.9398953
+High W  High W       1.0695201</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부트스트랩 샘플링 함수 정의</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>bootstrap_indirect_effect <span class="ot">&lt;-</span> <span class="cf">function</span>(data, W_value, <span class="at">n_boot =</span> <span class="dv">5000</span>) {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  boot_results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_boot, {</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 샘플 재추출</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    sample_data <span class="ot">&lt;-</span> data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">replace =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 매개변수 모델</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    med_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(M <span class="sc">~</span> X <span class="sc">*</span> W, <span class="at">data =</span> sample_data)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    med_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(med_model)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 결과 변수 모델</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    out_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> M <span class="sc">+</span> X, <span class="at">data =</span> sample_data)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    out_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(out_model)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 간접효과 계산</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    indirect_effect <span class="ot">&lt;-</span> (med_coefs[<span class="st">"X"</span>] <span class="sc">+</span> med_coefs[<span class="st">"X:W"</span>] <span class="sc">*</span> W_value) <span class="sc">*</span> out_coefs[<span class="st">"M"</span>]</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(indirect_effect)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 평균 및 신뢰구간 계산</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  mean_effect <span class="ot">&lt;-</span> <span class="fu">mean</span>(boot_results)</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  ci_lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_results, <span class="fl">0.025</span>)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  ci_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_results, <span class="fl">0.975</span>)</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(mean_effect, ci_lower, ci_upper))</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a><span class="co"># W 값 설정</span></span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>W_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(data<span class="sc">$</span>W) <span class="sc">-</span> <span class="fu">sd</span>(data<span class="sc">$</span>W), <span class="fu">mean</span>(data<span class="sc">$</span>W), <span class="fu">mean</span>(data<span class="sc">$</span>W) <span class="sc">+</span> <span class="fu">sd</span>(data<span class="sc">$</span>W))</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>W_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Low W"</span>, <span class="st">"Mean W"</span>, <span class="st">"High W"</span>)</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 W 수준에서 간접효과 계산</span></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>indirect_results <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(W_levels, <span class="cf">function</span>(w) <span class="fu">bootstrap_indirect_effect</span>(data, w)))</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(indirect_results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Effect"</span>, <span class="st">"CI_Lower"</span>, <span class="st">"CI_Upper"</span>)</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>indirect_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">W_Level =</span> W_labels, indirect_results)</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>indirect_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  W_Level    Effect  CI_Lower  CI_Upper
+1   Low W 0.8105840 0.7040393 0.9224319
+2  Mean W 0.9414754 0.8352290 1.0516849
+3  High W 1.0718155 0.9442989 1.1969065</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 간접효과 시각화</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(indirect_results, <span class="fu">aes</span>(<span class="at">x =</span> W_Level, <span class="at">y =</span> Effect)) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span>  <span class="co"># Point 표시</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> CI_Lower, <span class="at">ymax =</span> CI_Upper), <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span>  <span class="co"># Error bar 추가</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Conditional Indirect Effects by Moderator Levels (W)"</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Moderator Levels (W)"</span>,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Indirect Effect"</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span>  <span class="co"># Minimal theme</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="12_week_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="12_week_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This plot will show how the relationship between hours studied (X) and motivation (M) varies at different levels of interest in the subject (W). For example, you might observe that the relationship between hours studied and motivation is stronger for students with high interest in the subject.</p>
 <p><br></p>
-</section>
-<section id="interpreting-moderated-mediation-results" class="level4">
-<h4 class="anchored" data-anchor-id="interpreting-moderated-mediation-results"><strong>Interpreting Moderated Mediation Results</strong></h4>
-<p>The results of moderated mediation analysis provide rich insights into the mechanisms underlying complex relationships. Interpretation focuses on:</p>
-<ul>
-<li><p><strong>Conditional indirect effects</strong>: These indicate how the indirect effect of X on Y through M changes depending on W. If the conditional indirect effect is stronger at higher levels of W, this suggests that the mediation process is more effective in those conditions.</p></li>
-<li><p><strong>Moderated mediation index</strong>: This formal test assesses whether the moderation effect is significant. A significant moderated mediation index means that the strength of the mediation varies as a function of W.</p></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-<section id="interpreting-results-from-hayes-models" class="level3">
-<h3 class="anchored" data-anchor-id="interpreting-results-from-hayes-models"><strong>Interpreting Results from Hayes Models</strong></h3>
-<p>Interpreting the results from Hayes Process Models involves understanding the relationships between variables in <strong>mediation</strong>, <strong>moderation</strong>, and <strong>moderated mediation</strong> analyses. Each type of model provides distinct insights into the direct, indirect, and conditional effects that explain how and when one variable influences another. In this section, we will walk through the key components and interpretation strategies for each type of Hayes model.</p>
-<section id="interpreting-mediation-results" class="level4">
-<h4 class="anchored" data-anchor-id="interpreting-mediation-results"><strong>Interpreting Mediation Results</strong></h4>
-<p>Mediation analysis breaks down the total effect of an independent variable (X) on a dependent variable (Y) into two parts:</p>
-<ul>
-<li><p><strong>Direct effect</strong>: The portion of X’s effect on Y that is <strong>not</strong> mediated by the mediator (M).</p></li>
-<li><p><strong>Indirect effect</strong>: The portion of X’s effect on Y that occurs <strong>through</strong> the mediator (M). This is the product of the effect of X on M (path <strong>a</strong>) and the effect of M on Y (path <strong>b</strong>).</p></li>
-</ul>
-<p><strong>Key Terms in Mediation Analysis</strong>:</p>
-<ul>
-<li><p><strong>Total Effect</strong>: The overall relationship between X and Y, accounting for both direct and indirect effects.</p></li>
-<li><p><strong>Direct Effect</strong>: The effect of X on Y when M is included in the model (often denoted as path <strong>c’</strong>).</p></li>
-<li><p><strong>Indirect Effect</strong>: The product of path <strong>a</strong> (X → M) and path <strong>b</strong> (M → Y), representing the mediation.</p></li>
-<li><p><strong>Proportion Mediated</strong>: The proportion of the total effect that is mediated by M.</p></li>
-</ul>
-<p><strong>Interpreting Output</strong>:</p>
-<ul>
-<li><p><strong>Significance of the Indirect Effect</strong>: If the indirect effect (a * b) is statistically significant, it indicates that the mediator plays a significant role in explaining the relationship between X and Y.</p></li>
-<li><p><strong>Bootstrapped Confidence Intervals</strong>: Since indirect effects often do not follow a normal distribution, bootstrapped confidence intervals are commonly used to assess significance. If the confidence interval for the indirect effect does not include zero, it indicates that the mediation effect is significant.</p></li>
-</ul>
-<p><strong>Example Interpretation</strong>:</p>
-<ul>
-<li><p>If the indirect effect of <strong>hours studied</strong> (X) on <strong>test scores</strong> (Y) through <strong>motivation</strong> (M) is significant, we conclude that motivation partially explains the relationship between hours studied and test scores.</p></li>
-<li><p>If the direct effect (<strong>c’</strong>) is still significant, this suggests <strong>partial mediation</strong>, meaning both direct and mediated pathways are important.</p></li>
-</ul>
-</section>
-<section id="interpreting-moderation-results" class="level4">
-<h4 class="anchored" data-anchor-id="interpreting-moderation-results"><strong>Interpreting Moderation Results</strong></h4>
-<p>Moderation analysis explores how the relationship between X and Y changes depending on the level of a moderator (W). The primary focus in moderation analysis is on the <strong>interaction term</strong> between X and W.</p>
-<p><strong>Key Terms in Moderation Analysis</strong>:</p>
-<ul>
-<li><p><strong>Main Effects</strong>: The independent effects of X and W on Y.</p></li>
-<li><p><strong>Interaction Effect</strong>: The term representing the combined effect of X and W on Y. This is typically the product term (X × W) and tells us whether the relationship between X and Y is moderated by W.</p></li>
-</ul>
-<p><strong>Interpreting Output</strong>:</p>
-<ul>
-<li><p><strong>Significance of the Interaction Term</strong>: If the interaction term (X × W) is statistically significant, it means that the effect of X on Y changes depending on the level of W.</p></li>
-<li><p><strong>Direction of the Interaction</strong>: The sign of the interaction coefficient tells you how W moderates the relationship. A positive interaction term indicates that the relationship between X and Y becomes stronger as W increases, while a negative interaction term suggests that the relationship weakens as W increases.</p></li>
-</ul>
-<p><strong>Plotting the Interaction</strong>:</p>
-<ul>
-<li>It is often helpful to visualize the interaction effect by plotting the relationship between X and Y at different levels of W (e.g., low, medium, high). This helps to understand how the moderator influences the relationship between the independent and dependent variables.</li>
-</ul>
-<p><strong>Example Interpretation</strong>:</p>
-<ul>
-<li>If the interaction between <strong>hours studied</strong> (X) and <strong>interest in the subject</strong> (W) is significant, it suggests that the effect of hours studied on <strong>test scores</strong> (Y) varies depending on the level of interest. For example, at higher levels of interest, study time may have a stronger effect on test performance, while at lower levels of interest, study time may have little effect.</li>
-</ul>
-</section>
-<section id="interpreting-moderated-mediation-results-1" class="level4">
-<h4 class="anchored" data-anchor-id="interpreting-moderated-mediation-results-1"><strong>Interpreting Moderated Mediation Results</strong></h4>
-<p>Moderated mediation combines mediation and moderation to examine how the <strong>indirect effect</strong> of X on Y through M varies across levels of a moderator (W). The goal is to assess whether the mediation process itself is moderated by W.</p>
-<p><strong>Key Terms in Moderated Mediation</strong>:</p>
-<ul>
-<li><p><strong>Conditional Indirect Effect</strong>: The indirect effect of X on Y through M at different levels of W. This is often referred to as the conditional mediation effect.</p></li>
-<li><p><strong>Moderated Mediation Index</strong>: This is a formal test that assesses whether the indirect effect of X on Y through M varies significantly across levels of W.</p></li>
-</ul>
-<p><strong>Interpreting Output</strong>:</p>
-<ul>
-<li><p><strong>Significance of Conditional Indirect Effects</strong>: Examine the indirect effects at different levels of W (e.g., low, medium, high). If these effects differ significantly, it indicates that W moderates the mediation process.</p></li>
-<li><p><strong>Moderated Mediation Index</strong>: A significant moderated mediation index suggests that the mediation effect varies across levels of W.</p></li>
-</ul>
-<p><strong>Example Interpretation</strong>:</p>
-<ul>
-<li><p>If the indirect effect of <strong>hours studied</strong> (X) on <strong>test scores</strong> (Y) through <strong>motivation</strong> (M) is stronger for students with higher <strong>interest in the subject</strong> (W), we can conclude that the mediation effect (via motivation) is moderated by interest. In this case, students with greater interest in the subject experience stronger motivation, which enhances the relationship between study time and test scores.</p></li>
-<li><p>The moderated mediation index would provide a formal test for this moderation of the mediation pathway.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="summary-of-interpretation" class="level4">
-<h4 class="anchored" data-anchor-id="summary-of-interpretation"><strong>Summary of Interpretation</strong></h4>
-<p>When interpreting Hayes Process Models, the focus should be on understanding how direct, indirect, and interaction effects contribute to the relationships between variables:</p>
-<ul>
-<li><p><strong>Mediation</strong>: Does M explain the relationship between X and Y? Is the indirect effect significant?</p></li>
-<li><p><strong>Moderation</strong>: Does the effect of X on Y change depending on W? Is the interaction term significant?</p></li>
-<li><p><strong>Moderated Mediation</strong>: Does W influence the strength of the mediation process? Are the conditional indirect effects significant?</p></li>
-</ul>
-<p>Each model provides unique insights into <strong>how</strong> and <strong>when</strong> relationships between variables operate, allowing for a richer understanding of complex data.</p>
-<p>By carefully interpreting each of these components, researchers can draw meaningful conclusions about the nature of the relationships between the variables in their study.</p>
 
 
 </section>
@@ -943,18 +979,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -986,7 +1011,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -994,7 +1041,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

@@ -115,13 +115,29 @@ Where:
 
 -   **c'** is the direct effect of X on Y after accounting for the mediator.
 
-The **total effect** of X on Y can be decomposed as:
+<br>
+
+#### **Total Effect**
+
+The total effect of X on Y is the sum of:
+
+-   The **direct effect** of X on Y (c').
+
+-   The **indirect effect**, which is mediated through M.
+
+Mathematically:
 
 $$
-c = c' + ab
+c=c'+(a \cdot b)
 $$
 
-Where **ab** is the indirect effect (product of the a and b paths).
+Where:
+
+-   c: Total effect of X on Y.
+
+-   c': Direct effect of X on Y (not through M ).
+
+-   $a \cdot b$: Indirect effect of X on Y via M.
 
 <br>
 
@@ -188,7 +204,12 @@ med_model <- lm(M ~ X, data = data)
 out_model <- lm(Y ~ M + X, data = data)
 
 # Step 3: Conduct mediation analysis
-mediation_analysis <- mediate(med_model, out_model, treat = "X", mediator = "M", boot = TRUE, sims = 500)
+mediation_analysis <- mediate(med_model, 
+                              out_model, 
+                              treat = "X", 
+                              mediator = "M", 
+                              boot = TRUE, 
+                              sims = 500)
 summary(mediation_analysis)
 
 ```
@@ -229,7 +250,7 @@ While mediation analysis is powerful, it is not without its limitations:
 
 ### **Moderation Analysis**
 
-Moderation analysis is a statistical technique used to explore how the relationship between an independent variable (X) and a dependent variable (Y) changes depending on the level of a third variable, known as the **moderator** (W). This technique allows researchers to examine when and under what conditions an effect occurs, rather than simply whether or not it exists. In this chapter, we will introduce the theory behind moderation analysis, explain how to conduct it in R using a practical example, and guide you in interpreting the results.
+Moderation analysis is a statistical technique used to explore how the relationship between an independent variable (X) and a dependent variable (Y) changes depending on the level of a third variable, known as the **moderator** (W). This technique allows researchers to examine [***when and under what conditions an effect occurs***]{.underline}, rather than simply whether or not it exists.
 
 <br>
 
@@ -269,13 +290,37 @@ Where:
 
 -   **XW** is the interaction term between X and W, representing the moderation effect,
 
--   **b1** represents the effect of X on Y when W is held constant,
+-   **b1** represents the effect of X on Y (when W = 0),
 
--   **b2** represents the effect of W on Y,
+-   **b2** represents the effect of W on Y (when X = 0),
 
--   **b3** represents the effect of the interaction between X and W on Y.
+-   **b3** represents **the effect of the interaction** between X and W on Y, quantifying how W moderates the effect of X on Y.
 
 In this model, the key coefficient of interest is **b3**, which tests whether the interaction between X and W significantly predicts Y. A significant interaction effect (b_3 ≠ 0) indicates the presence of moderation.
+
+<bR>
+
+#### **Decomposing Effects**
+
+The interaction term captures how the effect of X on Y depends on W. Specifically:
+
+$$
+\text{Effect of X on Y} = \beta_1 + \beta_3 W
+$$
+
+When W increases, the slope of (X on Y) changes by $\beta_3$​.
+
+<br>
+
+#### **Conditional Effects**
+
+The relationship between X and Y is **conditional on the value of** W
+
+-   If $W=0$: The effect of X on Y is simply $\beta_1$
+
+-   If $W>0$: The effect of X on Y becomes $\beta_1+\beta_3W$
+
+This demonstrates that the **magnitude and direction** of X's effect on Y change depending on W.
 
 <br>
 
@@ -291,28 +336,6 @@ A typical moderation model can be depicted as follows:
 
 <br>
 
-#### **Steps in Moderation Analysis**
-
-Conducting moderation analysis involves the following steps:
-
-1.  **Centering the Variables**:
-
-    -   To avoid multicollinearity between X, W, and the interaction term (X × W), it is common practice to **center** the variables by subtracting their means. Centering makes the interpretation of the coefficients easier.
-
-2.  **Creating the Interaction Term (X × W)**:
-
-    -   After centering X and W, an interaction term is created by multiplying the centered variables (X_centered × W_centered). This term captures the moderation effect.
-
-3.  **Fitting the Moderation Model**:
-
-    -   Using a linear regression model, we fit the relationship between X, W, and the interaction term (X × W) on the outcome variable Y.
-
-4.  **Interpreting the Interaction**:
-
-    -   If the interaction term is significant, this indicates that the effect of X on Y depends on the level of W. The next step is to probe the interaction by looking at how the relationship between X and Y changes at different levels of W.
-
-<br>
-
 #### **Example: Simple Moderation Using Hayes' Model 1 in R**
 
 To illustrate moderation analysis, we will use **Hayes' Model 1**, which tests for a simple moderation effect. In this example, we will examine whether **motivation** (W) moderates the relationship between **hours studied** (X) and **test score** (Y).
@@ -322,7 +345,7 @@ To illustrate moderation analysis, we will use **Hayes' Model 1**, which tests f
 ```{r}
 # Simulating the dataset
 set.seed(123)
-n <- 200
+n <- 300
 X <- rnorm(n, mean = 10, sd = 2)  # Hours studied (X)
 W <- rnorm(n, mean = 5, sd = 1)   # Motivation (Moderator, W)
 Y <- 0.4 * X + 0.6 * W + 0.3 * X * W + rnorm(n)  # Test score (Y)
@@ -377,7 +400,10 @@ To better understand the moderation effect, it's helpful to plot the interaction
 library(interactions)
 
 # Plot the interaction effect
-interact_plot(moderation_model, pred = "X", modx = "W", plot.points = TRUE)
+interact_plot(moderation_model, 
+              pred = "X", 
+              modx = "W", 
+              plot.points = TRUE)
 
 ```
 
@@ -392,6 +418,26 @@ Moderation analysis results need to be interpreted carefully to understand the u
 -   **Significant Interaction**: If the interaction term is significant, W moderates the relationship between X and Y. The interaction plot provides a visual representation of this effect.
 
 -   **Non-Significant Interaction**: If the interaction term is not significant, this suggests that the relationship between X and Y is consistent across levels of W, meaning no moderation effect exists.
+
+-   **Significant Interaction but Only One Main Effect is Significant:** The significant interaction indicates that the effect of X on Y depends on W, even if X or W alone does not have a straightforward effect on Y.
+
+    -   Example,
+
+        -   Predictor (X): Study habits.
+
+        -   Moderator (W): Sleep quality.
+
+        -   Outcome (Y): Academic performance.
+
+        If the main effect of W (sleep quality) is significant, but the main effect of X (study habits) is not, and the interaction (X×W) is significant:
+
+        -   **Interpretation**: Study habits do not independently predict academic performance, but their effect is **moderated by sleep quality**. For example:
+
+            -   When sleep quality is high, study habits have a stronger positive impact on academic performance.
+
+            -   When sleep quality is low, the relationship between study habits and academic performance might weaken or even reverse.
+
+-   **Significant interaction, no main effects significant:** The effect of X on Y exists **only through interaction** with W.
 
 <br>
 
@@ -409,11 +455,13 @@ The simple slopes analysis can provide insights into:
 
 ### **Moderated Mediation (Conditional Process)**
 
-Moderated mediation, also known as **conditional process modeling**, refers to the integration of both **mediation** and **moderation** in a single model. In a moderated mediation model, the indirect effect of an independent variable (X) on a dependent variable (Y) through a mediator (M) is contingent upon the level of a moderator (W). This chapter will explain the theoretical framework for moderated mediation, guide you through the steps for conducting such an analysis, and demonstrate how to perform this type of analysis in R using Hayes’ Model 7.
+Moderated mediation, also known as **conditional process modeling**, refers to the integration of both **mediation** and **moderation** in a single model. In a moderated mediation model, the indirect effect of an independent variable (X) on a dependent variable (Y) through a mediator (M) is contingent upon the level of a moderator (W). Let me explain the theoretical framework for moderated mediation, guide you through the steps for conducting such an analysis, and demonstrate how to perform this type of analysis in R using Hayes’ Model 7.
 
 #### **Conceptual Background of Moderated Mediation**
 
-Moderated mediation explores both **how** and **when** an effect occurs. Specifically, it investigates whether the strength or direction of the indirect effect of X on Y through M depends on a moderator variable (W). This allows researchers to examine whether the mediation process varies across different conditions or groups.
+Moderated mediation explores both [**how** and **when** an effect occurs]{.underline}. Specifically, it investigates whether [**the strength or direction of the indirect effect of X on Y through M depends on a moderator variable (W)**]{.underline}. This allows researchers to examine whether the mediation process varies across different conditions or groups.
+
+<br>
 
 **Key Questions Answered by Moderated Mediation**:
 
@@ -422,6 +470,8 @@ Moderated mediation explores both **how** and **when** an effect occurs. Specifi
 2.  **When or under what conditions is the mediation stronger or weaker?**: Does the indirect effect of X on Y through M vary based on the level of a moderator W?
 
 Moderated mediation is particularly useful when a simple mediation model is not enough to capture the complexity of the relationships among variables. It allows researchers to test whether the mediation pathway is stronger or weaker under certain conditions.
+
+<br>
 
 **Path Diagram for Moderated Mediation**
 
@@ -446,7 +496,7 @@ $$
 2.  For the dependent variable (Y):
 
 $$
-Y = b_1M + b_2X + b_3W + b_4(X \times W) + e_2
+Y = b_1M + b_2X + e_2
 $$
 
 Where:
@@ -457,31 +507,27 @@ Where:
 
 -   **b₁**: The effect of M on Y (mediated effect).
 
--   **b₄**: The interaction between X and W in predicting Y, showing whether W moderates the direct effect of X on Y.
+<br>
+
+#### Direct Effect
+
+The direct effect of X on Y is independent of mediation: $\beta_2$
+
+#### Indirect Effect
 
 The **indirect effect** is conditional on the level of W, meaning that the mediation pathway (X → M → Y) changes depending on the moderator.
 
-<bR>
+$$
+\text{Indirect Effect}=(a_1+a_3W) \cdot b_1
+$$
 
-#### **Steps in Moderated Mediation Analysis**
+Where:
 
-Moderated mediation analysis follows a structured approach:
+-   $a_1$: Effect of X on M (baseline effect).
 
-1.  **Test the mediation pathway**:
+-   $a_3$​: Moderation of the X → M path by W.
 
-    -   First, test whether there is evidence of mediation between X and Y through M. This involves estimating the indirect effect of X on Y via M (ab path).
-
-2.  **Include the moderator**:
-
-    -   Test whether the moderator W affects the strength of the mediation process. Specifically, assess whether W moderates the path from X to M, M to Y, or both.
-
-3.  **Estimate conditional indirect effects**:
-
-    -   If the moderation is significant, estimate the **conditional indirect effects**, i.e., the indirect effects of X on Y through M at different levels of W (e.g., low, medium, high).
-
-4.  **Bootstrap for significance testing**:
-
-    -   Use bootstrapping to obtain confidence intervals for the conditional indirect effects, as traditional significance testing might not be reliable for the product of coefficients.
+-   $b_1$​: Effect of M on Y.
 
 <br>
 
@@ -502,6 +548,8 @@ Y <- 0.6 * M + 0.3 * X + rnorm(n)  # Test score (Dependent variable)
 
 data <- data.frame(X = X, W = W, M = M, Y = Y)
 
+head(data, 10)
+
 ```
 
 <br>
@@ -511,152 +559,118 @@ data <- data.frame(X = X, W = W, M = M, Y = Y)
 We will use the `moderndive` package to estimate the moderated mediation model in R. In this example, the mediator is **motivation**, and the moderator is **interest in the subject**.
 
 ```{r}
-# Load necessary packages
-install.packages("mediation")
+# 필요한 패키지 설치 및 로드
 library(mediation)
 
 # Step 1: Fit the model for the mediator (X → M)
 med_model <- lm(M ~ X * W, data = data)
 
 # Step 2: Fit the model for the outcome (Y ~ M + X * W)
-out_model <- lm(Y ~ M + X * W, data = data)
+out_model <- lm(Y ~ M + X, data = data)
 
 # Step 3: Conduct the moderated mediation analysis
-mod_med_analysis <- mediate(med_model, out_model, treat = "X", mediator = "M", boot = TRUE, sims = 500)
+mod_med_analysis <- mediate(med_model, 
+                            out_model, 
+                            treat = "X", 
+                            mediator = "M", 
+                            boot = TRUE, 
+                            sims = 500)
 summary(mod_med_analysis)
 
 ```
 
 <br>
 
-**Interpreting the Results**
-
-The output will provide estimates of the indirect and direct effects of X on Y, conditional on different values of W. Key components to focus on include:
-
--   **Conditional Indirect Effects**: These effects represent the mediation at different levels of W (e.g., low, medium, high). A significant conditional indirect effect means that the strength of the mediation depends on W.
-
--   **Moderated Mediation Index**: This is a formal test of whether the indirect effect significantly changes as a function of W. A significant index indicates that W moderates the mediation process.
-
-**Visualizing Conditional Indirect Effects**
-
-To visualize how the indirect effect varies across levels of W, you can create a plot that shows the indirect effect at low, medium, and high levels of W. This helps in understanding how the mediation process changes across different conditions.
+**Conditional mediation effect analysis**
 
 ```{r}
-# Load the interactions package for visualization
-install.packages("interactions")
-library(interactions)
+# W의 값 설정 (평균, 평균 ± 1표준편차)
+W_levels <- c(mean(data$W) - sd(data$W), 
+              mean(data$W), 
+              mean(data$W) + sd(data$W))
 
-# Plot the interaction effect between X and W on M (X → M, moderated by W)
-interact_plot(med_model, pred = "X", modx = "W", plot.points = TRUE)
+W_levels
+
+# 기존 모델에서 계수 추출
+med_coefs <- coef(med_model)  
+out_coefs <- coef(out_model)  
+
+# 간접효과 계산
+indirect_effects <- sapply(W_levels, function(w) {
+  # 간접효과 = (beta_X + beta_X:W * W) * gamma_M
+  (med_coefs["X"] + med_coefs["X:W"] * w) * out_coefs["M"]
+})
+
+# 결과 출력
+names(indirect_effects) <- c("Low W", "Mean W", "High W")
+print(indirect_effects)
+
+
+# 결과 데이터프레임 생성
+indirect_effects_df <- data.frame(
+  W_level = c("Low W", "Mean W", "High W"),
+  Indirect_Effect = indirect_effects
+)
+indirect_effects_df
 
 ```
 
-This plot will show how the relationship between hours studied (X) and motivation (M) varies at different levels of interest in the subject (W). For example, you might observe that the relationship between hours studied and motivation is stronger for students with high interest in the subject.
+```{r}
+# 부트스트랩 샘플링 함수 정의
+bootstrap_indirect_effect <- function(data, W_value, n_boot = 5000) {
+  boot_results <- replicate(n_boot, {
+    # 샘플 재추출
+    sample_data <- data[sample(1:nrow(data), replace = TRUE), ]
+    
+    # 매개변수 모델
+    med_model <- lm(M ~ X * W, data = sample_data)
+    med_coefs <- coef(med_model)
+    
+    # 결과 변수 모델
+    out_model <- lm(Y ~ M + X, data = sample_data)
+    out_coefs <- coef(out_model)
+    
+    # 간접효과 계산
+    indirect_effect <- (med_coefs["X"] + med_coefs["X:W"] * W_value) * out_coefs["M"]
+    return(indirect_effect)
+  })
+  
+  # 평균 및 신뢰구간 계산
+  mean_effect <- mean(boot_results)
+  ci_lower <- quantile(boot_results, 0.025)
+  ci_upper <- quantile(boot_results, 0.975)
+  
+  return(c(mean_effect, ci_lower, ci_upper))
+}
+
+# W 값 설정
+W_levels <- c(mean(data$W) - sd(data$W), mean(data$W), mean(data$W) + sd(data$W))
+W_labels <- c("Low W", "Mean W", "High W")
+
+# 각 W 수준에서 간접효과 계산
+indirect_results <- t(sapply(W_levels, function(w) bootstrap_indirect_effect(data, w)))
+colnames(indirect_results) <- c("Effect", "CI_Lower", "CI_Upper")
+indirect_results <- data.frame(W_Level = W_labels, indirect_results)
+indirect_results
+
+
+library(ggplot2)
+
+# 간접효과 시각화
+ggplot(indirect_results, aes(x = W_Level, y = Effect)) +
+  geom_point(size = 3, color = "blue") +  # Point 표시
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +  # Error bar 추가
+  labs(
+    title = "Conditional Indirect Effects by Moderator Levels (W)",
+    x = "Moderator Levels (W)",
+    y = "Indirect Effect"
+  ) +
+  theme_minimal(base_size = 14) +  # Minimal theme
+  theme(
+    axis.title = element_text(face = "bold"),
+    plot.title = element_text(face = "bold", hjust = 0.5)
+  )
+
+```
 
 <br>
-
-#### **Interpreting Moderated Mediation Results**
-
-The results of moderated mediation analysis provide rich insights into the mechanisms underlying complex relationships. Interpretation focuses on:
-
--   **Conditional indirect effects**: These indicate how the indirect effect of X on Y through M changes depending on W. If the conditional indirect effect is stronger at higher levels of W, this suggests that the mediation process is more effective in those conditions.
-
--   **Moderated mediation index**: This formal test assesses whether the moderation effect is significant. A significant moderated mediation index means that the strength of the mediation varies as a function of W.
-
-<br>
-
-### **Interpreting Results from Hayes Models**
-
-Interpreting the results from Hayes Process Models involves understanding the relationships between variables in **mediation**, **moderation**, and **moderated mediation** analyses. Each type of model provides distinct insights into the direct, indirect, and conditional effects that explain how and when one variable influences another. In this section, we will walk through the key components and interpretation strategies for each type of Hayes model.
-
-#### **Interpreting Mediation Results**
-
-Mediation analysis breaks down the total effect of an independent variable (X) on a dependent variable (Y) into two parts:
-
--   **Direct effect**: The portion of X's effect on Y that is **not** mediated by the mediator (M).
-
--   **Indirect effect**: The portion of X's effect on Y that occurs **through** the mediator (M). This is the product of the effect of X on M (path **a**) and the effect of M on Y (path **b**).
-
-**Key Terms in Mediation Analysis**:
-
--   **Total Effect**: The overall relationship between X and Y, accounting for both direct and indirect effects.
-
--   **Direct Effect**: The effect of X on Y when M is included in the model (often denoted as path **c'**).
-
--   **Indirect Effect**: The product of path **a** (X → M) and path **b** (M → Y), representing the mediation.
-
--   **Proportion Mediated**: The proportion of the total effect that is mediated by M.
-
-**Interpreting Output**:
-
--   **Significance of the Indirect Effect**: If the indirect effect (a \* b) is statistically significant, it indicates that the mediator plays a significant role in explaining the relationship between X and Y.
-
--   **Bootstrapped Confidence Intervals**: Since indirect effects often do not follow a normal distribution, bootstrapped confidence intervals are commonly used to assess significance. If the confidence interval for the indirect effect does not include zero, it indicates that the mediation effect is significant.
-
-**Example Interpretation**:
-
--   If the indirect effect of **hours studied** (X) on **test scores** (Y) through **motivation** (M) is significant, we conclude that motivation partially explains the relationship between hours studied and test scores.
-
--   If the direct effect (**c'**) is still significant, this suggests **partial mediation**, meaning both direct and mediated pathways are important.
-
-#### **Interpreting Moderation Results**
-
-Moderation analysis explores how the relationship between X and Y changes depending on the level of a moderator (W). The primary focus in moderation analysis is on the **interaction term** between X and W.
-
-**Key Terms in Moderation Analysis**:
-
--   **Main Effects**: The independent effects of X and W on Y.
-
--   **Interaction Effect**: The term representing the combined effect of X and W on Y. This is typically the product term (X × W) and tells us whether the relationship between X and Y is moderated by W.
-
-**Interpreting Output**:
-
--   **Significance of the Interaction Term**: If the interaction term (X × W) is statistically significant, it means that the effect of X on Y changes depending on the level of W.
-
--   **Direction of the Interaction**: The sign of the interaction coefficient tells you how W moderates the relationship. A positive interaction term indicates that the relationship between X and Y becomes stronger as W increases, while a negative interaction term suggests that the relationship weakens as W increases.
-
-**Plotting the Interaction**:
-
--   It is often helpful to visualize the interaction effect by plotting the relationship between X and Y at different levels of W (e.g., low, medium, high). This helps to understand how the moderator influences the relationship between the independent and dependent variables.
-
-**Example Interpretation**:
-
--   If the interaction between **hours studied** (X) and **interest in the subject** (W) is significant, it suggests that the effect of hours studied on **test scores** (Y) varies depending on the level of interest. For example, at higher levels of interest, study time may have a stronger effect on test performance, while at lower levels of interest, study time may have little effect.
-
-#### **Interpreting Moderated Mediation Results**
-
-Moderated mediation combines mediation and moderation to examine how the **indirect effect** of X on Y through M varies across levels of a moderator (W). The goal is to assess whether the mediation process itself is moderated by W.
-
-**Key Terms in Moderated Mediation**:
-
--   **Conditional Indirect Effect**: The indirect effect of X on Y through M at different levels of W. This is often referred to as the conditional mediation effect.
-
--   **Moderated Mediation Index**: This is a formal test that assesses whether the indirect effect of X on Y through M varies significantly across levels of W.
-
-**Interpreting Output**:
-
--   **Significance of Conditional Indirect Effects**: Examine the indirect effects at different levels of W (e.g., low, medium, high). If these effects differ significantly, it indicates that W moderates the mediation process.
-
--   **Moderated Mediation Index**: A significant moderated mediation index suggests that the mediation effect varies across levels of W.
-
-**Example Interpretation**:
-
--   If the indirect effect of **hours studied** (X) on **test scores** (Y) through **motivation** (M) is stronger for students with higher **interest in the subject** (W), we can conclude that the mediation effect (via motivation) is moderated by interest. In this case, students with greater interest in the subject experience stronger motivation, which enhances the relationship between study time and test scores.
-
--   The moderated mediation index would provide a formal test for this moderation of the mediation pathway.
-
-<br>
-
-#### **Summary of Interpretation**
-
-When interpreting Hayes Process Models, the focus should be on understanding how direct, indirect, and interaction effects contribute to the relationships between variables:
-
--   **Mediation**: Does M explain the relationship between X and Y? Is the indirect effect significant?
-
--   **Moderation**: Does the effect of X on Y change depending on W? Is the interaction term significant?
-
--   **Moderated Mediation**: Does W influence the strength of the mediation process? Are the conditional indirect effects significant?
-
-Each model provides unique insights into **how** and **when** relationships between variables operate, allowing for a richer understanding of complex data.
-
-By carefully interpreting each of these components, researchers can draw meaningful conclusions about the nature of the relationships between the variables in their study.
