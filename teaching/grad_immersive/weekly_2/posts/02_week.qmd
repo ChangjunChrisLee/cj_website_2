@@ -22,6 +22,18 @@ Class Material [pdf](content/IMUX_CA.pdf)
 
 <br>
 
+## 참고 논문
+
+-   Kim, J., & **Lee, C.** (2023). The return of the king: The importance of killer content in a competitive ott market. *Journal of Theoretical and Applied Electronic Commerce Research*, *18*(2), 976-994. <https://www.mdpi.com/0718-1876/18/2/50>
+
+-   Jang, S., Lee, H., Kim, Y., **Lee, D.**, Shin, J., & Nam, J. (2024). When, What, and how should generative artificial intelligence explain to Users?. *Telematics and Informatics*, *93*, 102175. <https://www.sciencedirect.com/science/article/abs/pii/S0736585324000790>
+
+-   Yeon, J., Jung, Y., Baek, Y., **Lee, D.**, Shin, J., & Chung, W. Y. (2024). User Preferences on a Generative AI User Interface Through a Choice Experiment. *International Journal of Human–Computer Interaction*, 1-12. <https://www.tandfonline.com/doi/abs/10.1080/10447318.2024.2400379>
+
+-   Kim, M., Oh, J., Kim, D., Shin, J., & **Lee, D.** (2024). Understanding user preferences in developing a mental healthcare AI chatbot: A conjoint analysis approach. *International Journal of Human–Computer Interaction*, 1-9. <https://www.tandfonline.com/doi/abs/10.1080/10447318.2024.2353450>
+
+<br>
+
 ## Class
 
 <Br>
@@ -208,7 +220,7 @@ $$
 
 <br>
 
-## Discrete Choice Model과 수식 전개
+## Discrete Choice Model
 
 컨조인트 분석에서 가장 널리 사용되는 모델은 **이산 선택 모형(Discrete Choice Model)**이며, 특히 **다항 로짓 모델(MNL: Multinomial Logit Model)**이 많이 사용된다.
 
@@ -225,6 +237,61 @@ $$ P_i = \frac{e^{U_i}}{\sum_{j=1}^{J} e^{U_j}} $$
 -   $U_i$ : 대안 의 효용 함수 값
 
 -   $J$ : 가능한 선택지의 개수
+
+<br>
+
+### **(1) 효용 함수의 가정**
+
+MNL에서는 개인 ( n )이 선택 ( i )를 할 때의 효용(Utility)은 다음과 같이 표현된다:
+
+$$
+U_{ni} = V_{ni} + \epsilon_{ni}
+$$
+
+-   $V_{ni}$ : 관측 가능한 결정 요인(설명 변수의 선형 결합)
+-   $\epsilon_{ni}$ : 랜덤 오차 (Gumbel 분포를 따른다고 가정)
+
+### **(2) 확률 유도 과정**
+
+1.  선택 확률은 특정 선택지 ( i )의 효용이 다른 모든 선택지의 효용보다 클 확률로 정의된다:
+
+    $$
+    P_i = P(U_i > U_j \text{ for all } j \neq i)
+    $$
+
+2.  $\epsilon$ 이 Gumbel 분포를 따른다는 가정 하에서, 각 선택지의 확률 분포는 다음과 같이 표현된다:
+
+$$
+   P(U_i < u) = e^{-e^{-(u - V_i)}}
+   $$
+
+3.  따라서 두 개의 선택지 i, j에 대해 확률을 계산하면:
+
+    $$
+    P(U_i > U_j) = P(V_i+\epsilon_i > V_j+\epsilon_j)
+    $$
+
+    이를 변형하면,
+
+    $$
+    P(\epsilon_j-\epsilon_i < V_i - V_j)
+    $$
+
+    이는 두 Gumbel 분포의 차이로 나타나며, 두 개의 Gumbel 분포의 차이는 로지스틱 분포(Logistic Distribution)를 따름.
+
+    $$
+    P(U_i > U_j) = \frac{e^{V_i}}{e^{V_i} + e^{V_j}}
+    $$
+
+4.  일반적으로 ( J )개의 선택지가 있을 때, 특정 선택지 ( i )가 선택될 확률은 다음과 같이 정리된다:
+
+    $$
+    P_i = \frac{e^{V_i}}{\sum_{j=1}^{J} e^{V_j}}
+    $$
+
+    이는 로짓 함수(logit function) 형태를 가지며, 선택 확률이 **다른 선택지의 효용과 상대적인 관계**로 결정됨을 보여준다.
+
+<br>
 
 ### 2. Mixed Logit Model (MLM)
 
