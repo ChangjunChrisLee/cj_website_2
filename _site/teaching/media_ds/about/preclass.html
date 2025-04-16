@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CJL &amp; Lab - Pre-class R code</title>
+<title>Pre-class R code – CJL &amp; Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -79,7 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -88,6 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -101,81 +108,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">CJL &amp; Lab</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Courses</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
         <li>
-    <a class="dropdown-item" href="../../../teaching/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../teaching/index.html">
  <span class="dropdown-text">All Courses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../teaching/cul_tech_101/index.html" rel="" target="">
- <span class="dropdown-text">CNT101</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../teaching/cul_tech/index.html" rel="" target="">
- <span class="dropdown-text">CNT102</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../teaching/ds101/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../teaching/ds101/index.html">
  <span class="dropdown-text">DS101</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../teaching/ml101/index.html" rel="" target="">
- <span class="dropdown-text">ML101</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Research</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
-        <li>
-    <a class="dropdown-item" href="../../../research/index.html" rel="" target="">
- <span class="dropdown-text">Publications</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../research/working.html" rel="" target="">
- <span class="dropdown-text">Work in progress</span></a>
+    <a class="dropdown-item" href="../../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../proj/index.html" rel="" target="">
- <span class="menu-text">Proj</span></a>
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../blogs/index.html" rel="" target="">
- <span class="menu-text">Blogs</span></a>
+    <a class="nav-link" href="../../../proj/index.html"> 
+<span class="menu-text">Proj</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://ctcl.netlify.app" rel="" target="">
- <span class="menu-text">LAB</span></a>
+    <a class="nav-link" href="../../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://axislab.netlify.app/"> 
+<span class="menu-text">LAB</span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -183,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
     </div>
 <!-- main -->
@@ -204,7 +192,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <p>Download data</p>
 <p>[<a href="data_2/data_for_class.zip">data_for_class.zip</a>]</p>
@@ -227,11 +217,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualization</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Petal.Width, iris<span class="sc">$</span>Petal.Length, <span class="at">col=</span>iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -239,7 +237,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Sepal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Tip data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -294,10 +296,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
                                        3rd Qu.:3.00  
                                        Max.   :6.00  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(tips<span class="sc">$</span>total_bill)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualization</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(tips<span class="sc">$</span>total_bill)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualization</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -312,42 +320,68 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(tips<span class="sc">$</span>size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-4.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(tips<span class="sc">$</span>size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-5.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(size)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-6.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(total_bill, tip)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-7.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(total_bill, tip)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col=</span>day))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-8.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(total_bill, tip)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col=</span>day, <span class="at">pch=</span>sex), <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-9.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(total_bill, tip)) <span class="sc">+</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col=</span>day)) <span class="sc">+</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-10.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tips <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(total_bill, tip, <span class="at">col=</span>day, <span class="at">pch=</span>sex)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-1-11.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-1-11.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -359,8 +393,8 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.5</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>xi <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> 2i</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>yi <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> 2i</span>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>xi <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span>i</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>yi <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">2</span>i</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>xi<span class="sc">+</span>yi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2+0i</code></pre>
@@ -399,7 +433,7 @@ Levels: A AB B O</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> 1L      <span class="co"># x에 1L을 입력한 경우 x는 정수형</span></span>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span>L      <span class="co"># x에 1L을 입력한 경우 x는 정수형</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
@@ -733,19 +767,19 @@ v3    9   10   11   12</code></pre>
 <div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))</span>
 <span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x) <span class="co"># 배열 요소를 임의로 섞어 추출</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  2 10 11  1  9  5  4  6  3  7 12  8</code></pre>
+<pre><code> [1] 11  1  6  3  7 12  5  4  8 10  2  9</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">10</span>) <span class="co"># 배열 요소 중 10개를 골라 추출</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 12  6  2  4 11  5  9  3  1 10</code></pre>
+<pre><code> [1] 12  4  9  7  2  8  6 10  5  3</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">10</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)<span class="sc">/</span><span class="dv">24</span>) <span class="co"># 각 요소별 추출 확률을 달리할 수 있음</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  5  9 10  8 12 11  7  2  3  6</code></pre>
+<pre><code> [1]  8 10  7  9  3  2 12 11  5  4</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">10</span>) <span class="co"># 단순히 숫자만 사용하여 샘플을 만들 수 있음</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  3  6  9 10  1  7  2  4  5  8</code></pre>
+<pre><code> [1] 10  2  4  5  3  6  7  9  8  1</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1087,10 +1121,8 @@ $no
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in mean.default(X[[i]], ...): argument is not numeric or logical:
 returning NA
-
 Warning in mean.default(X[[i]], ...): argument is not numeric or logical:
 returning NA
-
 Warning in mean.default(X[[i]], ...): argument is not numeric or logical:
 returning NA</code></pre>
 </div>
@@ -1943,11 +1975,19 @@ FALSE  TRUE
 </div>
 <div class="sourceCode cell-code" id="cb400"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb400-1"><a href="#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(airquality[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)])    <span class="co"># Ozone, Solar.R, Wind, Temp에 대한 boxplot</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb401"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb401-1"><a href="#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(airquality[, <span class="dv">1</span>])<span class="sc">$</span>stats   <span class="co"># Ozone의 boxplot 통계값 계산</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1]
@@ -2053,7 +2093,11 @@ $ gdpPercap &lt;dbl&gt; 779, 821, 853, 836, 740, 786, 978, 852, 649, 635, 727, 9
 <div class="sourceCode cell-code" id="cb417"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb417-1"><a href="#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb417-2"><a href="#cb417-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country<span class="sc">==</span><span class="st">"Croatia"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(year, gdpPercap) <span class="sc">%&gt;%</span> plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb418"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb418-1"><a href="#cb418-1" aria-hidden="true" tabindex="-1"></a>gapminder[gapminder<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Croatia"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2426,7 +2470,11 @@ the `.groups` argument.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb465"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb465-1"><a href="#cb465-1" aria-hidden="true" tabindex="-1"></a>x_avg <span class="sc">%&gt;%</span> <span class="fu">filter</span>(region <span class="sc">!=</span> <span class="st">"TotalUS"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, V_avg, <span class="at">col =</span> type)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb466"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb466-1"><a href="#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ggplot2")</span></span>
 <span id="cb466-2"><a href="#cb466-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -2497,39 +2545,39 @@ the `.groups` argument.</code></pre>
 <span id="cb474-2"><a href="#cb474-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(train_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   106 obs. of  14 variables:
- $ X1                          : int  1 2 3 3 3 1 2 2 2 3 ...
- $ Alcohol                     : num  13.8 11.6 12.5 13.2 12.9 ...
- $ Malic acid                  : num  1.53 1.99 1.24 3.3 4.61 1.97 2.13 1.52 2.83 2.67 ...
- $ Ash                         : num  2.7 2.28 2.25 2.28 2.48 2.68 2.78 2.2 2.22 2.48 ...
- $ Alcalinity of ash           : num  19.5 18 17.5 18.5 21.5 16.8 28.5 19 18 22 ...
- $ Magnesium                   : int  132 98 85 98 86 102 92 162 88 112 ...
- $ Total phenols               : num  2.95 3.02 2 1.8 1.7 3 2.13 2.5 2.45 1.48 ...
- $ Flavanoids                  : num  2.74 2.26 0.58 0.83 0.65 3.23 2.24 2.27 2.25 1.36 ...
- $ Nonflavanoid phenols        : num  0.5 0.17 0.6 0.61 0.47 0.31 0.58 0.32 0.25 0.24 ...
- $ Proanthocyanins             : num  1.35 1.35 1.25 1.87 0.86 1.66 1.76 3.28 1.99 1.26 ...
- $ Color intensity             : num  5.4 3.25 5.45 10.52 7.65 ...
- $ Hue                         : num  1.25 1.16 0.75 0.56 0.54 1.07 0.97 1.16 1.15 0.48 ...
- $ OD280/OD315 of diluted wines: num  3 2.96 1.51 1.51 1.86 2.84 2.44 2.63 3.3 1.47 ...
- $ Proline                     : int  1235 345 650 675 625 1270 466 937 290 480 ...</code></pre>
+ $ X1                          : int  2 3 3 2 3 2 1 2 1 1 ...
+ $ Alcohol                     : num  12.4 13.8 12.8 11.5 12.8 ...
+ $ Malic acid                  : num  1.07 2.76 2.96 3.74 2.39 1.72 4.04 3.17 1.76 3.8 ...
+ $ Ash                         : num  2.1 2.3 2.61 1.82 2.28 1.88 2.44 2.21 2.45 2.65 ...
+ $ Alcalinity of ash           : num  18.5 22 24 19.5 19.5 19.5 18.9 18 15.2 18.6 ...
+ $ Magnesium                   : int  88 90 101 107 86 86 111 88 112 102 ...
+ $ Total phenols               : num  3.52 1.35 2.32 3.18 1.39 2.5 2.85 2.85 3.27 2.41 ...
+ $ Flavanoids                  : num  3.75 0.68 0.6 2.58 0.51 1.64 2.65 2.99 3.39 2.41 ...
+ $ Nonflavanoid phenols        : num  0.24 0.41 0.53 0.24 0.48 0.37 0.3 0.45 0.34 0.25 ...
+ $ Proanthocyanins             : num  1.95 1.03 0.81 3.58 0.64 1.42 1.25 2.81 1.97 1.98 ...
+ $ Color intensity             : num  4.5 9.58 4.92 2.9 9.9 ...
+ $ Hue                         : num  1.04 0.7 0.89 0.75 0.57 0.94 0.87 1.42 1.05 1.03 ...
+ $ OD280/OD315 of diluted wines: num  2.77 1.68 2.15 2.81 1.63 2.44 3.33 2.83 2.85 3.52 ...
+ $ Proline                     : int  660 615 590 562 470 415 1080 406 1450 770 ...</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb476"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb476-1"><a href="#cb476-1" aria-hidden="true" tabindex="-1"></a>test_set <span class="ot">=</span> <span class="fu">setdiff</span>(wine, train_set)</span>
 <span id="cb476-2"><a href="#cb476-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(test_set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   71 obs. of  14 variables:
  $ X1                          : int  1 1 1 1 1 1 1 1 1 1 ...
- $ Alcohol                     : num  14.4 14.1 13.9 14.1 14.1 ...
- $ Malic acid                  : num  1.95 2.15 1.35 2.16 1.48 1.81 1.92 1.57 1.59 1.63 ...
- $ Ash                         : num  2.5 2.61 2.27 2.3 2.32 2.7 2.72 2.62 2.48 2.28 ...
- $ Alcalinity of ash           : num  16.8 17.6 16 18 16.8 17.2 20 20 16.5 16 ...
- $ Magnesium                   : int  113 121 98 105 95 112 120 115 108 126 ...
- $ Total phenols               : num  3.85 2.6 2.98 2.95 2.2 2.85 2.8 2.95 3.3 3 ...
- $ Flavanoids                  : num  3.49 2.51 3.15 3.32 2.43 2.91 3.14 3.4 3.93 3.17 ...
- $ Nonflavanoid phenols        : num  0.24 0.31 0.22 0.22 0.26 0.3 0.33 0.4 0.32 0.24 ...
- $ Proanthocyanins             : num  2.18 1.25 1.85 2.38 1.57 1.46 1.97 1.72 1.86 2.1 ...
- $ Color intensity             : num  7.8 5.05 7.22 5.75 5 7.3 6.2 6.6 8.7 5.65 ...
- $ Hue                         : num  0.86 1.06 1.01 1.25 1.17 1.28 1.07 1.13 1.23 1.09 ...
- $ OD280/OD315 of diluted wines: num  3.45 3.58 3.55 3.17 2.82 2.88 2.65 2.57 2.82 3.71 ...
- $ Proline                     : int  1480 1295 1045 1510 1280 1310 1280 1130 1680 780 ...</code></pre>
+ $ Alcohol                     : num  13.2 13.2 14.1 13.9 14.1 ...
+ $ Malic acid                  : num  1.78 2.59 2.15 1.35 1.48 1.73 1.87 1.92 1.63 1.86 ...
+ $ Ash                         : num  2.14 2.87 2.61 2.27 2.32 2.39 2.38 2.72 2.28 2.36 ...
+ $ Alcalinity of ash           : num  11.2 21 17.6 16 16.8 11.4 12 20 16 16.6 ...
+ $ Magnesium                   : int  100 118 121 98 95 91 102 120 126 101 ...
+ $ Total phenols               : num  2.65 2.8 2.6 2.98 2.2 3.1 3.3 2.8 3 2.61 ...
+ $ Flavanoids                  : num  2.76 2.69 2.51 3.15 2.43 3.69 3.64 3.14 3.17 2.88 ...
+ $ Nonflavanoid phenols        : num  0.26 0.39 0.31 0.22 0.26 0.43 0.29 0.33 0.24 0.27 ...
+ $ Proanthocyanins             : num  1.28 1.82 1.25 1.85 1.57 2.81 2.96 1.97 2.1 1.69 ...
+ $ Color intensity             : num  4.38 4.32 5.05 7.22 5 5.4 7.5 6.2 5.65 3.8 ...
+ $ Hue                         : num  1.05 1.04 1.06 1.01 1.17 1.25 1.2 1.07 1.09 1.11 ...
+ $ OD280/OD315 of diluted wines: num  3.4 2.93 3.58 3.55 2.82 2.73 3 2.65 3.71 4 ...
+ $ Proline                     : int  1050 735 1295 1045 1280 1150 1547 1280 780 1035 ...</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb478"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb478-1"><a href="#cb478-1" aria-hidden="true" tabindex="-1"></a>elec_gen <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"data_2/electricity_generation_per_person.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">fileEncoding =</span> <span class="st">"CP949"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
 <span id="cb478-2"><a href="#cb478-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2634,11 +2682,19 @@ the `.groups` argument.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb501"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb501-1"><a href="#cb501-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">$</span>year, y<span class="sc">$</span>c_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb502"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb502-1"><a href="#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">$</span>year, y<span class="sc">$</span>c_pop, <span class="at">col =</span> y<span class="sc">$</span>continent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb503"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb503-1"><a href="#cb503-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">$</span>year, y<span class="sc">$</span>c_pop, <span class="at">col =</span> y<span class="sc">$</span>continent, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))</span>
 <span id="cb503-2"><a href="#cb503-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y<span class="sc">$</span>year, y<span class="sc">$</span>c_pop, <span class="at">col =</span> y<span class="sc">$</span>continent, <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(y<span class="sc">$</span>continent))))</span>
@@ -2649,7 +2705,11 @@ the `.groups` argument.</code></pre>
 <span id="cb503-7"><a href="#cb503-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 범례 개수를 데이터 개수에 맞게 지정</span></span>
 <span id="cb503-8"><a href="#cb503-8" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="at">legend =</span> <span class="fu">levels</span>((y<span class="sc">$</span>continent)), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(y<span class="sc">$</span>continent))), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(y<span class="sc">$</span>continent))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb504"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb504-1"><a href="#cb504-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 02 시각화의 기본 기능 #</span></span>
 <span id="cb504-2"><a href="#cb504-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gapminder<span class="sc">$</span>gdpPercap, gapminder<span class="sc">$</span>lifeExp, <span class="at">col =</span> gapminder<span class="sc">$</span>continent)</span>
@@ -2657,12 +2717,20 @@ the `.groups` argument.</code></pre>
 <span id="cb504-4"><a href="#cb504-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(gapminder<span class="sc">$</span>continent))), </span>
 <span id="cb504-5"><a href="#cb504-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(y<span class="sc">$</span>continent))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-4.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb505"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb505-1"><a href="#cb505-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(gapminder<span class="sc">$</span>gdpPercap), gapminder<span class="sc">$</span>lifeExp, <span class="at">col =</span> gapminder<span class="sc">$</span>continent)</span>
 <span id="cb505-2"><a href="#cb505-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend  =</span> <span class="fu">levels</span>((gapminder<span class="sc">$</span>continent)), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(gapminder<span class="sc">$</span>continent))), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(y<span class="sc">$</span>continent))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-5.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb506"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb506-1"><a href="#cb506-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ggplot2")</span></span>
 <span id="cb506-2"><a href="#cb506-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -2672,19 +2740,31 @@ the `.groups` argument.</code></pre>
 <span id="cb506-6"><a href="#cb506-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb506-7"><a href="#cb506-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-6.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb507"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb507-1"><a href="#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span>  gdpPercap, <span class="at">y =</span> lifeExp, <span class="at">col =</span> continent, <span class="at">size =</span> pop)) <span class="sc">+</span> </span>
 <span id="cb507-2"><a href="#cb507-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb507-3"><a href="#cb507-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-7.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb508"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb508-1"><a href="#cb508-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp, <span class="at">col =</span> continent, <span class="at">size =</span> pop)) <span class="sc">+</span> </span>
 <span id="cb508-2"><a href="#cb508-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb508-3"><a href="#cb508-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-8.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb509"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb509-1"><a href="#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(gapminder<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2697,21 +2777,33 @@ the `.groups` argument.</code></pre>
 <span id="cb511-3"><a href="#cb511-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb511-4"><a href="#cb511-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-9.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb512"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb512-1"><a href="#cb512-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb512-2"><a href="#cb512-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x=</span>gdpPercap, <span class="at">y=</span>lifeExp, <span class="at">col=</span>continent, <span class="at">size=</span>pop)) <span class="sc">+</span> </span>
 <span id="cb512-3"><a href="#cb512-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb512-4"><a href="#cb512-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-10.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb513"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb513-1"><a href="#cb513-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x=</span>gdpPercap, <span class="at">y=</span>lifeExp, <span class="at">col=</span>continent, <span class="at">size=</span>pop)) <span class="sc">+</span> </span>
 <span id="cb513-2"><a href="#cb513-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
 <span id="cb513-3"><a href="#cb513-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span> </span>
 <span id="cb513-4"><a href="#cb513-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-11.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-11.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb514"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb514-1"><a href="#cb514-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb514-2"><a href="#cb514-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1952</span> <span class="sc">&amp;</span> continent <span class="sc">==</span><span class="st">"Asia"</span>) <span class="sc">%&gt;%</span> </span>
@@ -2719,11 +2811,19 @@ the `.groups` argument.</code></pre>
 <span id="cb514-4"><a href="#cb514-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span> </span>
 <span id="cb514-5"><a href="#cb514-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-12.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-12.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb515"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb515-1"><a href="#cb515-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year<span class="sc">==</span><span class="dv">1952</span> <span class="sc">&amp;</span> continent<span class="sc">==</span> <span class="st">"Asia"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">reorder</span>(country, pop), pop)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat  =</span> <span class="st">"identity"</span>) <span class="sc">+</span> <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-13.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-13.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb516"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb516-1"><a href="#cb516-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb516-2"><a href="#cb516-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>) <span class="sc">%&gt;%</span> </span>
@@ -2731,7 +2831,11 @@ the `.groups` argument.</code></pre>
 <span id="cb516-4"><a href="#cb516-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb516-5"><a href="#cb516-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-14.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-14.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb517"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb517-1"><a href="#cb517-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb517-2"><a href="#cb517-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>) <span class="sc">%&gt;%</span> </span>
@@ -2739,7 +2843,11 @@ the `.groups` argument.</code></pre>
 <span id="cb517-4"><a href="#cb517-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_point() + </span></span>
 <span id="cb517-5"><a href="#cb517-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-15.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-15.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb518"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb518-1"><a href="#cb518-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb518-2"><a href="#cb518-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> </span>
@@ -2749,27 +2857,47 @@ the `.groups` argument.</code></pre>
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-16.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-16.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb520"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb520-1"><a href="#cb520-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">filter</span>(gapminder, year <span class="sc">==</span> <span class="dv">1952</span>)</span>
 <span id="cb520-2"><a href="#cb520-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x<span class="sc">$</span>lifeExp, <span class="at">main =</span> <span class="st">"Histogram of lifeExp in 1952"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-17.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-17.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb521"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb521-1"><a href="#cb521-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(lifeExp)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-18.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-18.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb523"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb523-1"><a href="#cb523-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(continent, lifeExp)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-19.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-19.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb524"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb524-1"><a href="#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(gapminder<span class="sc">$</span>gdpPercap), gapminder<span class="sc">$</span>lifeExp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-15-20.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-15-20.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -2788,50 +2916,94 @@ the `.groups` argument.</code></pre>
 <div class="sourceCode cell-code" id="cb527"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb527-1"><a href="#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="co"># type = "p"는 점 플롯, main = "cars"는 그래프의 제목</span></span>
 <span id="cb527-2"><a href="#cb527-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars, <span class="at">type  =</span> <span class="st">"p"</span>, <span class="at">main  =</span> <span class="st">"cars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb528"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb528-1"><a href="#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">main =</span> <span class="st">"cars"</span>)       <span class="co"># type ="l"은 선을 사용한 플롯</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb529"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb529-1"><a href="#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars, <span class="at">type=</span><span class="st">"b"</span>, <span class="at">main=</span><span class="st">"cars"</span>)   <span class="co"># type ="b"는 점과 선을 모두 사용한 플롯</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb530"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb530-1"><a href="#cb530-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">main =</span> <span class="st">"cars"</span>)  <span class="co"># type ="h"는 히스토그램과 같은 막대 그래프</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb531"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb531-1"><a href="#cb531-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1952</span> <span class="sc">&amp;</span> continent <span class="sc">==</span> <span class="st">"Asia"</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gdp =</span> gdpPercap<span class="sc">*</span>pop) <span class="sc">%&gt;%</span> <span class="fu">select</span>(country, gdp) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(gdp)) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
 <span id="cb531-2"><a href="#cb531-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(x<span class="sc">$</span>gdp, x<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-5.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb532"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb532-1"><a href="#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(x<span class="sc">$</span>gdp, <span class="at">names.arg =</span> x<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-6.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb533"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb533-1"><a href="#cb533-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span> <span class="sc">&amp;</span> continent <span class="sc">==</span> <span class="st">"Asia"</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gdp  =</span> gdpPercap<span class="sc">*</span>pop) <span class="sc">%&gt;%</span> <span class="fu">select</span>(country, gdp) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(gdp)) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span>
 <span id="cb533-2"><a href="#cb533-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(x<span class="sc">$</span>gdp, x<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-7.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb534"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb534-1"><a href="#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(x<span class="sc">$</span>gdp, <span class="at">names.arg =</span> x<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-8.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb535"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb535-1"><a href="#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(iris[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">type =</span> <span class="st">"l"</span>)</span>
 <span id="cb535-2"><a href="#cb535-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="fu">names</span>(iris)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-9.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb536"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb536-1"><a href="#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(cars<span class="sc">$</span>speed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-10.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb537"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb537-1"><a href="#cb537-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-11.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-11.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb538"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb538-1"><a href="#cb538-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(lifeExp<span class="sc">&gt;</span><span class="dv">70</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb538-2"><a href="#cb538-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">%&gt;%</span> </span>
@@ -2839,7 +3011,11 @@ the `.groups` argument.</code></pre>
 <span id="cb538-4"><a href="#cb538-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
 <span id="cb538-5"><a href="#cb538-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-12.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-12.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb539"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb539-1"><a href="#cb539-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb539-2"><a href="#cb539-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> </span>
@@ -2848,7 +3024,11 @@ the `.groups` argument.</code></pre>
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-13.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-13.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb541"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb541-1"><a href="#cb541-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb541-2"><a href="#cb541-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> </span>
@@ -2857,31 +3037,51 @@ the `.groups` argument.</code></pre>
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-14.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-14.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb543"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb543-1"><a href="#cb543-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb543-2"><a href="#cb543-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb543-3"><a href="#cb543-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(continent, lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> </span>
 <span id="cb543-4"><a href="#cb543-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-15.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-15.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb544"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb544-1"><a href="#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> </span>
 <span id="cb544-2"><a href="#cb544-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-16.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-16.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb545"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb545-1"><a href="#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span></span>
 <span id="cb545-2"><a href="#cb545-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="co"># 가로축을 로그 스케일로 변환함.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-17.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-17.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb546"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb546-1"><a href="#cb546-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb546-2"><a href="#cb546-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb546-3"><a href="#cb546-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(country, lifeExp)) <span class="sc">+</span> </span>
 <span id="cb546-4"><a href="#cb546-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat  =</span>  <span class="st">"identity"</span>)                  <span class="co"># [그림 6-35(a)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-18.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-18.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb547"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb547-1"><a href="#cb547-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb547-2"><a href="#cb547-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span>) <span class="sc">%&gt;%</span> </span>
@@ -2889,14 +3089,22 @@ the `.groups` argument.</code></pre>
 <span id="cb547-4"><a href="#cb547-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat  =</span>  <span class="st">"identity"</span>) <span class="sc">+</span> </span>
 <span id="cb547-5"><a href="#cb547-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()    <span class="co"># [그림 6-35(b)] 플롯의 방향을 전환함. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-19.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-19.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb548"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb548-1"><a href="#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("RColorBrewer")</span></span>
 <span id="cb548-2"><a href="#cb548-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
 <span id="cb548-3"><a href="#cb548-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb548-4"><a href="#cb548-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display.brewer.all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-20.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-20.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb549"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb549-1"><a href="#cb549-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [그림 6-37(a)] : 기본 팔레트를 적용한 그래프</span></span>
 <span id="cb549-2"><a href="#cb549-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(lifeExp<span class="sc">&gt;</span><span class="dv">70</span>) <span class="sc">%&gt;%</span> </span>
@@ -2905,7 +3113,11 @@ the `.groups` argument.</code></pre>
 <span id="cb549-5"><a href="#cb549-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
 <span id="cb549-6"><a href="#cb549-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="fu">aes</span>(<span class="at">fill =</span> continent)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-21.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-21.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb550"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb550-1"><a href="#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [그림 6-37(c)] Blues 팔레트를 적용한 그래프</span></span>
 <span id="cb550-2"><a href="#cb550-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
@@ -2915,7 +3127,11 @@ the `.groups` argument.</code></pre>
 <span id="cb550-6"><a href="#cb550-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
 <span id="cb550-7"><a href="#cb550-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="fu">aes</span>(<span class="at">fill =</span> continent)) <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Blues"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-16-22.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-16-22.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -2927,7 +3143,11 @@ the `.groups` argument.</code></pre>
 <span id="cb551-6"><a href="#cb551-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
 <span id="cb551-7"><a href="#cb551-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="fu">aes</span>(<span class="at">fill =</span>  continent)) <span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Oranges"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -2940,7 +3160,11 @@ the `.groups` argument.</code></pre>
 <span id="cb552-7"><a href="#cb552-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="fu">aes</span>(<span class="at">fill =</span>  continent)) <span class="sc">+</span> </span>
 <span id="cb552-8"><a href="#cb552-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette  =</span> <span class="st">"Blues"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb553"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb553-1"><a href="#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 실습!!</span></span>
 <span id="cb553-2"><a href="#cb553-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
@@ -2949,7 +3173,11 @@ the `.groups` argument.</code></pre>
 <span id="cb553-5"><a href="#cb553-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat  =</span>  <span class="st">"identity"</span>) <span class="sc">+</span></span>
 <span id="cb553-6"><a href="#cb553-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb554"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb554-1"><a href="#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
 <span id="cb554-2"><a href="#cb554-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
@@ -2959,7 +3187,11 @@ the `.groups` argument.</code></pre>
 <span id="cb554-6"><a href="#cb554-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()  <span class="sc">+</span> </span>
 <span id="cb554-7"><a href="#cb554-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">"Oranges"</span>, <span class="at">direction=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -2967,7 +3199,11 @@ the `.groups` argument.</code></pre>
 <span id="cb555-2"><a href="#cb555-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb555-3"><a href="#cb555-3" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(gdpPercap, lifeExp, <span class="at">col =</span> continent)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha  =</span>  <span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>year) <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb556"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb556-1"><a href="#cb556-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1952</span> <span class="sc">&amp;</span> gdpPercap <span class="sc">&gt;</span> <span class="dv">10000</span> <span class="sc">&amp;</span> continent <span class="sc">==</span> <span class="st">"Asia"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2978,38 +3214,70 @@ the `.groups` argument.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb558"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb558-1"><a href="#cb558-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Kuwait"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, gdpPercap)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()             <span class="co"># [그림 6-40(a)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb559"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb559-1"><a href="#cb559-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Kuwait"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, pop)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()                   <span class="co"># [그림 6-40(b)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb560"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb560-1"><a href="#cb560-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, gdpPercap)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()        <span class="co"># [그림 6-41(a)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb561"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb561-1"><a href="#cb561-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, pop)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()              <span class="co"># [그림 6-41(b)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb562"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb562-1"><a href="#cb562-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Kuwait"</span> <span class="sc">|</span> country <span class="sc">==</span> <span class="st">"Korea, Rep."</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gdp =</span> gdpPercap<span class="sc">*</span>pop) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, gdp, <span class="at">col =</span> country)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-6.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb563"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb563-1"><a href="#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [그림 6-43(a)] gdpPercap의 변화 비교 </span></span>
 <span id="cb563-2"><a href="#cb563-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Kuwait"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Saudi Arabia"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Iraq"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Iran"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Korea, Rep."</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"China"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Japan"</span>)  <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, gdpPercap, <span class="at">col =</span> country)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-7.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb564"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb564-1"><a href="#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [그림 6-43(b)] pop의 변화 비교 </span></span>
 <span id="cb564-2"><a href="#cb564-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Kuwait"</span><span class="sc">|</span>country<span class="sc">==</span><span class="st">"Saudi Arabia"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Iraq"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Iran"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Korea, Rep."</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"China"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Japan"</span>)  <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, pop, <span class="at">col=</span>country)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-8.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb565"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb565-1"><a href="#cb565-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [그림 6-43(c)] gdp의 변화 비교 </span></span>
 <span id="cb565-2"><a href="#cb565-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Kuwait"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Saudi Arabia"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Iraq"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Iran"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Korea, Rep."</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"China"</span><span class="sc">|</span>country <span class="sc">==</span> <span class="st">"Japan"</span>)  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">gdp=</span>gdpPercap<span class="sc">*</span>pop) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, gdp, <span class="at">col =</span> country)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">scale_y_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="preclass_files/figure-html/unnamed-chunk-19-9.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="preclass_files/figure-html/unnamed-chunk-19-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -3051,18 +3319,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -3094,11 +3351,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -3108,8 +3404,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -3121,7 +3426,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -3165,6 +3593,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -3190,6 +3619,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -3252,7 +3707,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</div>   
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
@@ -3274,6 +3731,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

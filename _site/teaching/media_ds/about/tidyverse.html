@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>CJL &amp; Lab - Data Wranggling with tidyverse in R</title>
+<title>Data Wranggling with tidyverse in R – CJL &amp; Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -79,7 +79,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -88,6 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -101,81 +108,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">CJL &amp; Lab</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Courses</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
         <li>
-    <a class="dropdown-item" href="../../../teaching/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../teaching/index.html">
  <span class="dropdown-text">All Courses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../teaching/cul_tech_101/index.html" rel="" target="">
- <span class="dropdown-text">CNT101</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../teaching/cul_tech/index.html" rel="" target="">
- <span class="dropdown-text">CNT102</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../teaching/ds101/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../teaching/ds101/index.html">
  <span class="dropdown-text">DS101</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../teaching/ml101/index.html" rel="" target="">
- <span class="dropdown-text">ML101</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Research</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
-        <li>
-    <a class="dropdown-item" href="../../../research/index.html" rel="" target="">
- <span class="dropdown-text">Publications</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../../research/working.html" rel="" target="">
- <span class="dropdown-text">Work in progress</span></a>
+    <a class="dropdown-item" href="../../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../proj/index.html" rel="" target="">
- <span class="menu-text">Proj</span></a>
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../blogs/index.html" rel="" target="">
- <span class="menu-text">Blogs</span></a>
+    <a class="nav-link" href="../../../proj/index.html"> 
+<span class="menu-text">Proj</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://ctcl.netlify.app" rel="" target="">
- <span class="menu-text">LAB</span></a>
+    <a class="nav-link" href="../../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://axislab.netlify.app/"> 
+<span class="menu-text">LAB</span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -216,7 +204,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -251,10 +241,10 @@ Object
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
@@ -408,17 +398,17 @@ Valiant           18.1 105 3.460</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 16
 Columns: 11
-$ mpg  &lt;dbl&gt; 21.0, 30.4, 24.4, 14.7, 15.2, 17.3, 19.2, 10.4, 15.5, 22.8, 16.4,…
-$ cyl  &lt;dbl&gt; 6, 4, 4, 8, 8, 8, 8, 8, 8, 4, 8, 8, 8, 4, 4, 8
-$ disp &lt;dbl&gt; 160.0, 75.7, 146.7, 440.0, 304.0, 275.8, 400.0, 472.0, 318.0, 108…
-$ hp   &lt;dbl&gt; 110, 52, 62, 230, 150, 180, 175, 205, 150, 93, 180, 245, 264, 109…
-$ drat &lt;dbl&gt; 3.90, 4.93, 3.69, 3.23, 3.15, 3.07, 3.08, 2.93, 2.76, 3.85, 3.07,…
-$ wt   &lt;dbl&gt; 2.875, 1.615, 3.190, 5.345, 3.435, 3.730, 3.845, 5.250, 3.520, 2.…
-$ qsec &lt;dbl&gt; 17.02, 18.52, 20.00, 17.42, 17.30, 17.60, 17.05, 17.98, 16.87, 18…
-$ vs   &lt;dbl&gt; 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0
-$ am   &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0
-$ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 3, 3, 5, 4, 4, 3
-$ carb &lt;dbl&gt; 4, 2, 2, 4, 2, 3, 2, 4, 2, 1, 3, 4, 4, 2, 1, 3</code></pre>
+$ mpg  &lt;dbl&gt; 14.3, 26.0, 21.4, 16.4, 15.2, 14.7, 19.2, 15.8, 19.2, 19.7, 30.4,…
+$ cyl  &lt;dbl&gt; 8, 4, 6, 8, 8, 8, 8, 8, 6, 6, 4, 8, 4, 6, 8, 4
+$ disp &lt;dbl&gt; 360.0, 120.3, 258.0, 275.8, 304.0, 440.0, 400.0, 351.0, 167.6, 14…
+$ hp   &lt;dbl&gt; 245, 91, 110, 180, 150, 230, 175, 264, 123, 175, 113, 180, 97, 11…
+$ drat &lt;dbl&gt; 3.21, 4.43, 3.08, 3.07, 3.15, 3.23, 3.08, 4.22, 3.92, 3.62, 3.77,…
+$ wt   &lt;dbl&gt; 3.570, 2.140, 3.215, 4.070, 3.435, 5.345, 3.845, 3.170, 3.440, 2.…
+$ qsec &lt;dbl&gt; 15.84, 16.70, 19.44, 17.40, 17.30, 17.42, 17.05, 14.50, 18.30, 15…
+$ vs   &lt;dbl&gt; 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1
+$ am   &lt;dbl&gt; 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0
+$ gear &lt;dbl&gt; 3, 5, 3, 3, 3, 3, 3, 5, 4, 5, 5, 3, 3, 4, 5, 4
+$ carb &lt;dbl&gt; 4, 2, 1, 3, 2, 4, 2, 4, 4, 6, 2, 3, 1, 4, 8, 2</code></pre>
 </div>
 </div>
 <p>Use <code>sample_n()</code> to select a random number of rows from the dataset:</p>
@@ -431,17 +421,17 @@ $ carb &lt;dbl&gt; 4, 2, 2, 4, 2, 3, 2, 4, 2, 1, 3, 4, 4, 2, 1, 3</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 10
 Columns: 11
-$ mpg  &lt;dbl&gt; 22.8, 15.8, 27.3, 15.5, 13.3, 33.9, 21.0, 19.2, 17.3, 21.4
-$ cyl  &lt;dbl&gt; 4, 8, 4, 8, 8, 4, 6, 6, 8, 4
-$ disp &lt;dbl&gt; 140.8, 351.0, 79.0, 318.0, 350.0, 71.1, 160.0, 167.6, 275.8, 121.0
-$ hp   &lt;dbl&gt; 95, 264, 66, 150, 245, 65, 110, 123, 180, 109
-$ drat &lt;dbl&gt; 3.92, 4.22, 4.08, 2.76, 3.73, 4.22, 3.90, 3.92, 3.07, 4.11
-$ wt   &lt;dbl&gt; 3.150, 3.170, 1.935, 3.520, 3.840, 1.835, 2.875, 3.440, 3.730, 2.…
-$ qsec &lt;dbl&gt; 22.90, 14.50, 18.90, 16.87, 15.41, 19.90, 17.02, 18.30, 17.60, 18…
-$ vs   &lt;dbl&gt; 1, 0, 1, 0, 0, 1, 0, 1, 0, 1
-$ am   &lt;dbl&gt; 0, 1, 1, 0, 0, 1, 1, 0, 0, 1
-$ gear &lt;dbl&gt; 4, 5, 4, 3, 3, 4, 4, 4, 3, 4
-$ carb &lt;dbl&gt; 2, 4, 1, 2, 4, 1, 4, 4, 3, 2</code></pre>
+$ mpg  &lt;dbl&gt; 15.8, 22.8, 17.8, 24.4, 15.5, 19.2, 10.4, 17.3, 30.4, 10.4
+$ cyl  &lt;dbl&gt; 8, 4, 6, 4, 8, 8, 8, 8, 4, 8
+$ disp &lt;dbl&gt; 351.0, 108.0, 167.6, 146.7, 318.0, 400.0, 460.0, 275.8, 95.1, 472…
+$ hp   &lt;dbl&gt; 264, 93, 123, 62, 150, 175, 215, 180, 113, 205
+$ drat &lt;dbl&gt; 4.22, 3.85, 3.92, 3.69, 2.76, 3.08, 3.00, 3.07, 3.77, 2.93
+$ wt   &lt;dbl&gt; 3.170, 2.320, 3.440, 3.190, 3.520, 3.845, 5.424, 3.730, 1.513, 5.…
+$ qsec &lt;dbl&gt; 14.50, 18.61, 18.90, 20.00, 16.87, 17.05, 17.82, 17.60, 16.90, 17…
+$ vs   &lt;dbl&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 0
+$ am   &lt;dbl&gt; 1, 1, 0, 0, 0, 0, 0, 0, 1, 0
+$ gear &lt;dbl&gt; 5, 4, 4, 4, 3, 3, 3, 3, 5, 3
+$ carb &lt;dbl&gt; 4, 1, 4, 2, 2, 2, 4, 3, 2, 4</code></pre>
 </div>
 </div>
 <p>Use <code>slice()</code> to select specific rows by index:</p>
@@ -1278,18 +1268,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1321,11 +1300,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1335,8 +1353,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1348,7 +1375,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1392,6 +1542,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1417,6 +1568,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1479,7 +1656,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</div>   
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
@@ -1501,6 +1680,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

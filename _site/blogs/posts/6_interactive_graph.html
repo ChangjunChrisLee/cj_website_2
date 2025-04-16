@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Changjun Lee">
 <meta name="dcterms.date" content="2023-04-12">
 
-<title>CJL &amp; Lab - Make Your Graph Interactive! Transform ggplot Graphs into Interactive Visualizations with Plotly</title>
+<title>Make Your Graph Interactive! Transform ggplot Graphs into Interactive Visualizations with Plotly – CJL &amp; Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,19 +96,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-<script src="../../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="../../site_libs/plotly-binding-4.10.2/plotly.js"></script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="../../site_libs/plotly-binding-4.10.4/plotly.js"></script>
+
 <script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+
 <script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
-<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+<link href="../../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="../../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
 <link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+
 <script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
 
 
 </head>
@@ -111,81 +128,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">CJL &amp; Lab</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Courses</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
         <li>
-    <a class="dropdown-item" href="../../teaching/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../teaching/index.html">
  <span class="dropdown-text">All Courses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../teaching/cul_tech_101/index.html" rel="" target="">
- <span class="dropdown-text">CNT101</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../teaching/cul_tech/index.html" rel="" target="">
- <span class="dropdown-text">CNT102</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../teaching/ds101/index.html" rel="" target="">
+    <a class="dropdown-item" href="../../teaching/ds101/index.html">
  <span class="dropdown-text">DS101</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../teaching/ml101/index.html" rel="" target="">
- <span class="dropdown-text">ML101</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
- <span class="menu-text">Research</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-research">    
-        <li>
-    <a class="dropdown-item" href="../../research/index.html" rel="" target="">
- <span class="dropdown-text">Publications</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../research/working.html" rel="" target="">
- <span class="dropdown-text">Work in progress</span></a>
+    <a class="dropdown-item" href="../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../proj/index.html" rel="" target="">
- <span class="menu-text">Proj</span></a>
+    <a class="nav-link" href="../../research/index.html"> 
+<span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../blogs/index.html" rel="" target="">
- <span class="menu-text">Blogs</span></a>
+    <a class="nav-link" href="../../proj/index.html"> 
+<span class="menu-text">Proj</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://ctcl.netlify.app" rel="" target="">
- <span class="menu-text">LAB</span></a>
+    <a class="nav-link" href="../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://axislab.netlify.app/"> 
+<span class="menu-text">LAB</span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -242,7 +240,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
@@ -303,7 +303,11 @@ Attaching package: 'plotly'</code></pre>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="6_interactive_graph_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="6_interactive_graph_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -317,8 +321,8 @@ Attaching package: 'plotly'</code></pre>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the interactive graph</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>interactive_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-07c84fd2c46ee0d5dc60" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-07c84fd2c46ee0d5dc60">{"x":{"data":[{"x":[-0.33696489819478737,0.53091043032998475,0.63811152749931244,-0.62640377453217422,0.71787702924652352,0.6252048165228038,0.47762953678133729,-0.33959529759849444,-1.0164379218421002,0.25075918134926573,-0.47200124105611108,0.2185053495200224,-2.0342119559060547,-1.3850558150897749,0.84302552655628793,-0.40175270580047001,-1.4982130690170445,-0.2891280919456099,-0.32613112557171908,0.78111727033956802,-0.506878515534116,0.82558080768552311,-0.21736907575859934,0.6859453044522581,-0.29251931096100969,-0.78040074171446872,-0.62274164888087835,1.8989411071671658,0.44396909401409612,1.3973493921395483,-0.31513297096941612,-0.41267547279683248,-1.3518831493145969,1.9165700683114457,-0.52263975942248131,0.47060202174496252,1.4055393166667283,-0.89080738009876348,0.50754319641976031,-1.0559594765803935,1.3086509588817337,-0.48861836981818646,-0.7532828561094681,-1.2187520255979798,-0.24091626535475244,-0.33816238163545731,-1.8668050465760726,1.3956035352852196,-1.0503704417483435,-1.1480348336412793],"y":[1.7522140378673858,0.94937144320865785,-0.18298682318614876,-0.51929465747658821,0.2368507112393349,0.74550550817387273,1.4085094933563325,0.73733210024453943,0.20180094591097938,-0.083909107830719906,-0.26799167546037139,-0.61021801650773866,-1.5829767856801289,0.57713185539917689,-0.28149225589294302,-1.5871947845238275,0.95951090186812971,-2.4057416695016309,-1.845432401455362,-0.47061946937890836,1.3779229455646345,-0.97324045353867294,1.031156086812457,0.97407917207099803,0.50712489713998643,-0.20590899909541754,-1.0830315567381372,0.89560201351490487,-0.73126702125625576,0.5925351347915957,-0.99617928343897777,-0.023021129662584738,-0.14637792362325605,-0.6029366016981963,0.53193855668479606,-0.75697238322906957,-1.2121082294927383,0.21539274815618828,1.0251377616703241,-0.26048044200446363,-1.399291862255686,1.7402770299037844,-0.16666330132530457,-0.25124616224986457,0.38120657179066481,-0.60923236033877015,-0.016780506602376,-0.45319287510673095,-1.2108800309532246,1.4169073923939088],"text":["x: -0.336964898<br />y:  1.752214038","x:  0.530910430<br />y:  0.949371443","x:  0.638111527<br />y: -0.182986823","x: -0.626403775<br />y: -0.519294657","x:  0.717877029<br />y:  0.236850711","x:  0.625204817<br />y:  0.745505508","x:  0.477629537<br />y:  1.408509493","x: -0.339595298<br />y:  0.737332100","x: -1.016437922<br />y:  0.201800946","x:  0.250759181<br />y: -0.083909108","x: -0.472001241<br />y: -0.267991675","x:  0.218505350<br />y: -0.610218017","x: -2.034211956<br />y: -1.582976786","x: -1.385055815<br />y:  0.577131855","x:  0.843025527<br />y: -0.281492256","x: -0.401752706<br />y: -1.587194785","x: -1.498213069<br />y:  0.959510902","x: -0.289128092<br />y: -2.405741670","x: -0.326131126<br />y: -1.845432401","x:  0.781117270<br />y: -0.470619469","x: -0.506878516<br />y:  1.377922946","x:  0.825580808<br />y: -0.973240454","x: -0.217369076<br />y:  1.031156087","x:  0.685945304<br />y:  0.974079172","x: -0.292519311<br />y:  0.507124897","x: -0.780400742<br />y: -0.205908999","x: -0.622741649<br />y: -1.083031557","x:  1.898941107<br />y:  0.895602014","x:  0.443969094<br />y: -0.731267021","x:  1.397349392<br />y:  0.592535135","x: -0.315132971<br />y: -0.996179283","x: -0.412675473<br />y: -0.023021130","x: -1.351883149<br />y: -0.146377924","x:  1.916570068<br />y: -0.602936602","x: -0.522639759<br />y:  0.531938557","x:  0.470602022<br />y: -0.756972383","x:  1.405539317<br />y: -1.212108229","x: -0.890807380<br />y:  0.215392748","x:  0.507543196<br />y:  1.025137762","x: -1.055959477<br />y: -0.260480442","x:  1.308650959<br />y: -1.399291862","x: -0.488618370<br />y:  1.740277030","x: -0.753282856<br />y: -0.166663301","x: -1.218752026<br />y: -0.251246162","x: -0.240916265<br />y:  0.381206572","x: -0.338162382<br />y: -0.609232360","x: -1.866805047<br />y: -0.016780507","x:  1.395603535<br />y: -0.453192875","x: -1.050370442<br />y: -1.210880031","x: -1.148034834<br />y:  1.416907392"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.79609073964182731,0.92900471594117218,0.25510483238272402,0.36493764808834783,2.1251378902876885,-1.3879571508808772,-0.80783934245749889,-0.90860032467488705,-0.38082382406040144,-0.08808069683515761,0.50571440239367393,0.6775066722545996,-1.1595805509946639,1.9883202720528106,0.75449014166020256,0.15341787643378207,0.24117330504958076,-1.2940911629680416,0.26781583531623693,-0.61105155291346236,0.36072220959130058,0.15736473563268485,-0.69643320460483116,0.20369211787446567,0.23417576456874256,0.083052073405364246,-0.69403558327305159,0.090701871679087678,0.84275666513572278,-4.1925268033335312,-0.43217308739245341,-0.6041213275413132,-0.41781160917138133,-0.29121130054804101,1.1214357904121071,0.22972986152242353,-0.9010337639054723,-1.1489161198091806,0.038377402281137001,1.7119219307348816,0.35879251176505716,0.027538726010990788,0.2070666815676783,0.66796832521120975,0.013890951924986343,-1.0120054338400706,-0.0010373418442224587,-0.31445498780983938,0.26067591012476538,0.16822281645630358],"y":[0.30223245605303806,0.23154704005402219,-1.0006092818113925,-0.24081609714984623,0.60895363458756901,1.1750608559219464,0.43022030120003119,-1.5100174273173268,0.64287094078590323,-0.16199390866102131,0.65226299177992153,-0.0080589133988325286,-0.06193699030174464,-2.4741692848112571,-0.42957068851378499,0.1632995500684111,-1.1217652247599437,-1.7481715912110598,-1.0610871896117904,0.06649838909858484,0.89465621717083144,-1.7241554536212707,-0.94657944752384304,-0.22593740813887098,-1.6629249001652495,0.90077708499233322,-0.42927209132815325,-0.36935168951778902,0.4678831734683786,-0.18486701359852012,-1.0743598512751984,-0.45001106288047199,-0.62062549507208675,-0.58670368863480571,0.74769387508207008,0.36116830229445507,1.0609133384006484,-0.29083410091619111,-1.3774712889922827,0.72208508174607555,-0.1988296357788063,0.12576043485508884,-0.13337371795151823,-0.2774368041055944,2.590753712752746,0.47959452992940022,-0.46203959154846108,0.81832882820718533,0.74546718095338038,-0.078425202163440191],"text":["x: -0.796090740<br />y:  0.302232456","x:  0.929004716<br />y:  0.231547040","x:  0.255104832<br />y: -1.000609282","x:  0.364937648<br />y: -0.240816097","x:  2.125137890<br />y:  0.608953635","x: -1.387957151<br />y:  1.175060856","x: -0.807839342<br />y:  0.430220301","x: -0.908600325<br />y: -1.510017427","x: -0.380823824<br />y:  0.642870941","x: -0.088080697<br />y: -0.161993909","x:  0.505714402<br />y:  0.652262992","x:  0.677506672<br />y: -0.008058913","x: -1.159580551<br />y: -0.061936990","x:  1.988320272<br />y: -2.474169285","x:  0.754490142<br />y: -0.429570689","x:  0.153417876<br />y:  0.163299550","x:  0.241173305<br />y: -1.121765225","x: -1.294091163<br />y: -1.748171591","x:  0.267815835<br />y: -1.061087190","x: -0.611051553<br />y:  0.066498389","x:  0.360722210<br />y:  0.894656217","x:  0.157364736<br />y: -1.724155454","x: -0.696433205<br />y: -0.946579448","x:  0.203692118<br />y: -0.225937408","x:  0.234175765<br />y: -1.662924900","x:  0.083052073<br />y:  0.900777085","x: -0.694035583<br />y: -0.429272091","x:  0.090701872<br />y: -0.369351690","x:  0.842756665<br />y:  0.467883173","x: -4.192526803<br />y: -0.184867014","x: -0.432173087<br />y: -1.074359851","x: -0.604121328<br />y: -0.450011063","x: -0.417811609<br />y: -0.620625495","x: -0.291211301<br />y: -0.586703689","x:  1.121435790<br />y:  0.747693875","x:  0.229729862<br />y:  0.361168302","x: -0.901033764<br />y:  1.060913338","x: -1.148916120<br />y: -0.290834101","x:  0.038377402<br />y: -1.377471289","x:  1.711921931<br />y:  0.722085082","x:  0.358792512<br />y: -0.198829636","x:  0.027538726<br />y:  0.125760435","x:  0.207066682<br />y: -0.133373718","x:  0.667968325<br />y: -0.277436804","x:  0.013890952<br />y:  2.590753713","x: -1.012005434<br />y:  0.479594530","x: -0.001037342<br />y: -0.462039592","x: -0.314454988<br />y:  0.818328828","x:  0.260675910<br />y:  0.745467181","x:  0.168222816<br />y: -0.078425202"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"2","legendgroup":"2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283104,"r":7.3059360730593621,"b":40.182648401826491,"l":37.260273972602747},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.5084100380145919,2.4410211249687497],"tickmode":"array","ticktext":["-4","-2","0","2"],"tickvals":[-4,-2,0,2],"categoryorder":"array","categoryarray":["-4","-2","0","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.7274154346894575,2.8439998626309464],"tickmode":"array","ticktext":["-2","-1","0","1","2"],"tickvals":[-2,-0.99999999999999978,0,1,2],"categoryorder":"array","categoryarray":["-2","-1","0","1","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"group","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"a8b435675f63":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"a8b435675f63","visdat":{"a8b435675f63":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-35c6bd74005a542efa6f" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-35c6bd74005a542efa6f">{"x":{"data":[{"x":[0.26902340060129265,-1.4152978710803383,0.53820902570855877,0.57134535895575755,-0.058677965016950245,1.6468803109551178,1.4508987223845737,0.22575061696290943,0.24393921102254326,-0.19212275702448159,-0.1645864510046986,1.9715601591576282,-0.20422172921470561,0.95545857688489699,-1.3059617396394325,0.47111714988074682,0.39776531182126629,-0.62034165080435377,-0.68976998094516262,0.53299560204617102,-1.0620457729623924,0.78600804605212016,0.46818218296220732,2.0863364626965284,-0.12854145221421245,0.69481959689664952,0.22885836921850883,-0.36140695436451953,1.1802558183466096,3.3644600947553935,-0.14380880560949716,-0.83086011107564595,0.013133144920469799,1.7197179792344763,-0.10019127763194949,0.031192309708713919,0.071708726813498103,1.9108313901434255,-1.1792225584992428,0.94227855709400277,-0.03080035687555753,0.38307097421068448,1.2517650445518878,-1.0527944674384282,0.32869546406491468,0.41775442086478276,-0.078173241866044449,0.85233871724398891,0.68830061429080847,-0.47949132109986825],"y":[1.0229742092139076,-0.36146586306021544,-1.2965100477475497,0.069079731585326418,-0.030028033328004661,-1.0288245763038162,0.23301227239691519,-0.84813574378106316,0.045240888219629231,0.0774341409360913,1.7428571756705327,-0.25508347082023114,-0.22734518110422433,1.6212813909919124,0.19135832375018313,1.130164032284128,0.13021586375964381,-0.3847082969824594,1.6558415249832936,-0.47905087426226289,-0.23361792860531524,0.25246180065831264,-0.99185480856869845,0.3231246440093527,0.68850532364192507,0.66153262788559208,-0.055053274220966841,-0.71096531869545032,0.37593841647223353,-1.2711846557095055,0.39381521080567161,0.099472560063909046,-1.3988760512571028,1.1607115023124437,-0.36818026603830806,-2.1853051196277491,1.5704595811004951,0.051343783297099786,-0.95649414035188718,-0.51240117558445708,0.10559694485865154,-0.44656959890815373,-0.6866793809450924,0.63798335768843517,-0.86597706458068435,-1.4540768227136236,-2.2123077822980841,0.74801235856363457,-0.086173634430082802,-1.9605770311472059],"text":["x:  0.26902340<br />y:  1.02297421","x: -1.41529787<br />y: -0.36146586","x:  0.53820903<br />y: -1.29651005","x:  0.57134536<br />y:  0.06907973","x: -0.05867797<br />y: -0.03002803","x:  1.64688031<br />y: -1.02882458","x:  1.45089872<br />y:  0.23301227","x:  0.22575062<br />y: -0.84813574","x:  0.24393921<br />y:  0.04524089","x: -0.19212276<br />y:  0.07743414","x: -0.16458645<br />y:  1.74285718","x:  1.97156016<br />y: -0.25508347","x: -0.20422173<br />y: -0.22734518","x:  0.95545858<br />y:  1.62128139","x: -1.30596174<br />y:  0.19135832","x:  0.47111715<br />y:  1.13016403","x:  0.39776531<br />y:  0.13021586","x: -0.62034165<br />y: -0.38470830","x: -0.68976998<br />y:  1.65584152","x:  0.53299560<br />y: -0.47905087","x: -1.06204577<br />y: -0.23361793","x:  0.78600805<br />y:  0.25246180","x:  0.46818218<br />y: -0.99185481","x:  2.08633646<br />y:  0.32312464","x: -0.12854145<br />y:  0.68850532","x:  0.69481960<br />y:  0.66153263","x:  0.22885837<br />y: -0.05505327","x: -0.36140695<br />y: -0.71096532","x:  1.18025582<br />y:  0.37593842","x:  3.36446009<br />y: -1.27118466","x: -0.14380881<br />y:  0.39381521","x: -0.83086011<br />y:  0.09947256","x:  0.01313314<br />y: -1.39887605","x:  1.71971798<br />y:  1.16071150","x: -0.10019128<br />y: -0.36818027","x:  0.03119231<br />y: -2.18530512","x:  0.07170873<br />y:  1.57045958","x:  1.91083139<br />y:  0.05134378","x: -1.17922256<br />y: -0.95649414","x:  0.94227856<br />y: -0.51240118","x: -0.03080036<br />y:  0.10559694","x:  0.38307097<br />y: -0.44656960","x:  1.25176504<br />y: -0.68667938","x: -1.05279447<br />y:  0.63798336","x:  0.32869546<br />y: -0.86597706","x:  0.41775442<br />y: -1.45407682","x: -0.07817324<br />y: -2.21230778","x:  0.85233872<br />y:  0.74801236","x:  0.68830061<br />y: -0.08617363","x: -0.47949132<br />y: -1.96057703"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.48468314895537845,0.072974073279066617,1.9996322919184522,-0.26229070988216668,0.1451434848995814,0.73576697396137036,0.017338048506481719,0.32845233636702537,-0.024918528987420946,-0.13378079119692568,-1.3320157271187121,-0.36901700719339353,1.7942752878110584,0.44746056276354812,0.38083237620804872,1.9887856328443603,-0.57678975082907225,1.3772659066347377,0.36904075748941934,-0.086314314211365026,-1.2507803933134858,-0.015294018295652549,-2.1473778152753855,-1.9114184755978405,0.078607220858155663,0.42381520891056867,0.48223692566337312,-0.097271741617011076,-0.30467392522879067,-1.2864499740903752,0.40538828169700403,0.88927032908818537,0.87069332459019921,0.24807689777768185,-0.085811963499541621,0.14078985359715321,-1.5196149363329337,0.27625006040572186,0.40034098954011732,-1.714916249862358,-1.0153717946314942,-1.0599153549152238,0.51090776511118474,0.22012999254795473,1.1912856601099262,-1.5704699685448922,1.505972398810143,-0.98721948927857961,0.13962505190218699,-0.56811869864930131],"y":[2.4169475071118747,-1.4501349586503591,-0.83811526930729041,0.026139247706009523,0.28827827370703701,0.50777998067575714,1.5439154032299984,0.36167472519361427,-0.66662821080549151,-1.7547920081543944,0.67610725916500725,1.2053088544339254,-0.50016269823958392,-1.1174172488288692,0.24363885991787809,0.71130383767401262,-1.1095488828680626,0.78772027377087317,0.39736837439801592,-0.29874688818053396,-0.45909754007967463,0.7017356475020442,0.38294639176908302,0.85982251001567955,-0.30101589165802523,-1.2768679010553625,-0.81354836100186845,-0.69120756198863209,-1.4052592694929269,0.47378474785522429,-0.63963091426480967,1.5991634581302654,1.1653469302051505,-1.9659708999369563,-0.67302276742069023,0.73149991276635296,-0.9901546574977711,0.071503647155799349,-0.54815522467696209,1.0938728927503418,-1.8469454256234104,-0.61315268907903975,-0.72619401616378887,-0.35422348444594237,-0.89099878698443324,-0.94863280714957376,-0.17768087929589163,-1.7892603501171047,0.84510532887288992,-0.49219227337829802],"text":["x:  0.48468315<br />y:  2.41694751","x:  0.07297407<br />y: -1.45013496","x:  1.99963229<br />y: -0.83811527","x: -0.26229071<br />y:  0.02613925","x:  0.14514348<br />y:  0.28827827","x:  0.73576697<br />y:  0.50777998","x:  0.01733805<br />y:  1.54391540","x:  0.32845234<br />y:  0.36167473","x: -0.02491853<br />y: -0.66662821","x: -0.13378079<br />y: -1.75479201","x: -1.33201573<br />y:  0.67610726","x: -0.36901701<br />y:  1.20530885","x:  1.79427529<br />y: -0.50016270","x:  0.44746056<br />y: -1.11741725","x:  0.38083238<br />y:  0.24363886","x:  1.98878563<br />y:  0.71130384","x: -0.57678975<br />y: -1.10954888","x:  1.37726591<br />y:  0.78772027","x:  0.36904076<br />y:  0.39736837","x: -0.08631431<br />y: -0.29874689","x: -1.25078039<br />y: -0.45909754","x: -0.01529402<br />y:  0.70173565","x: -2.14737782<br />y:  0.38294639","x: -1.91141848<br />y:  0.85982251","x:  0.07860722<br />y: -0.30101589","x:  0.42381521<br />y: -1.27686790","x:  0.48223693<br />y: -0.81354836","x: -0.09727174<br />y: -0.69120756","x: -0.30467393<br />y: -1.40525927","x: -1.28644997<br />y:  0.47378475","x:  0.40538828<br />y: -0.63963091","x:  0.88927033<br />y:  1.59916346","x:  0.87069332<br />y:  1.16534693","x:  0.24807690<br />y: -1.96597090","x: -0.08581196<br />y: -0.67302277","x:  0.14078985<br />y:  0.73149991","x: -1.51961494<br />y: -0.99015466","x:  0.27625006<br />y:  0.07150365","x:  0.40034099<br />y: -0.54815522","x: -1.71491625<br />y:  1.09387289","x: -1.01537179<br />y: -1.84694543","x: -1.05991535<br />y: -0.61315269","x:  0.51090777<br />y: -0.72619402","x:  0.22012999<br />y: -0.35422348","x:  1.19128566<br />y: -0.89099879","x: -1.57046997<br />y: -0.94863281","x:  1.50597240<br />y: -0.17768088","x: -0.98721949<br />y: -1.78926035","x:  0.13962505<br />y:  0.84510533","x: -0.56811870<br />y: -0.49219227"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"2","legendgroup":"2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283104,"r":7.3059360730593621,"b":40.182648401826491,"l":37.260273972602747},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.4229697107769246,3.6400519902569326],"tickmode":"array","ticktext":["-2","0","2"],"tickvals":[-2,0,2],"categoryorder":"array","categoryarray":["-2","0","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.4437705467685822,2.6484102715823727],"tickmode":"array","ticktext":["-2","-1","0","1","2"],"tickvals":[-2,-1,0,1,2],"categoryorder":"array","categoryarray":["-2","-1","0","1","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"group","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"bd301cb714e2":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"bd301cb714e2","visdat":{"bd301cb714e2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>You now have an interactive scatter plot, which allows users to hover over the points, zoom in and out, and pan the graph for a better view of the data. You can also customize the tooltip and other interactive features according to your needs.</p>
@@ -341,8 +345,8 @@ Attaching package: 'plotly'</code></pre>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the interactive graph with custom labels</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>interactive_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d4ae7d3764559cce9911" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-d4ae7d3764559cce9911">{"x":{"data":[{"x":[-0.33696489819478737,0.53091043032998475,0.63811152749931244,-0.62640377453217422,0.71787702924652352,0.6252048165228038,0.47762953678133729,-0.33959529759849444,-1.0164379218421002,0.25075918134926573,-0.47200124105611108,0.2185053495200224,-2.0342119559060547,-1.3850558150897749,0.84302552655628793,-0.40175270580047001,-1.4982130690170445,-0.2891280919456099,-0.32613112557171908,0.78111727033956802,-0.506878515534116,0.82558080768552311,-0.21736907575859934,0.6859453044522581,-0.29251931096100969,-0.78040074171446872,-0.62274164888087835,1.8989411071671658,0.44396909401409612,1.3973493921395483,-0.31513297096941612,-0.41267547279683248,-1.3518831493145969,1.9165700683114457,-0.52263975942248131,0.47060202174496252,1.4055393166667283,-0.89080738009876348,0.50754319641976031,-1.0559594765803935,1.3086509588817337,-0.48861836981818646,-0.7532828561094681,-1.2187520255979798,-0.24091626535475244,-0.33816238163545731,-1.8668050465760726,1.3956035352852196,-1.0503704417483435,-1.1480348336412793],"y":[1.7522140378673858,0.94937144320865785,-0.18298682318614876,-0.51929465747658821,0.2368507112393349,0.74550550817387273,1.4085094933563325,0.73733210024453943,0.20180094591097938,-0.083909107830719906,-0.26799167546037139,-0.61021801650773866,-1.5829767856801289,0.57713185539917689,-0.28149225589294302,-1.5871947845238275,0.95951090186812971,-2.4057416695016309,-1.845432401455362,-0.47061946937890836,1.3779229455646345,-0.97324045353867294,1.031156086812457,0.97407917207099803,0.50712489713998643,-0.20590899909541754,-1.0830315567381372,0.89560201351490487,-0.73126702125625576,0.5925351347915957,-0.99617928343897777,-0.023021129662584738,-0.14637792362325605,-0.6029366016981963,0.53193855668479606,-0.75697238322906957,-1.2121082294927383,0.21539274815618828,1.0251377616703241,-0.26048044200446363,-1.399291862255686,1.7402770299037844,-0.16666330132530457,-0.25124616224986457,0.38120657179066481,-0.60923236033877015,-0.016780506602376,-0.45319287510673095,-1.2108800309532246,1.4169073923939088],"text":["Group: 1 <br>Point ID: 1","Group: 1 <br>Point ID: 2","Group: 1 <br>Point ID: 3","Group: 1 <br>Point ID: 4","Group: 1 <br>Point ID: 5","Group: 1 <br>Point ID: 6","Group: 1 <br>Point ID: 7","Group: 1 <br>Point ID: 8","Group: 1 <br>Point ID: 9","Group: 1 <br>Point ID: 10","Group: 1 <br>Point ID: 11","Group: 1 <br>Point ID: 12","Group: 1 <br>Point ID: 13","Group: 1 <br>Point ID: 14","Group: 1 <br>Point ID: 15","Group: 1 <br>Point ID: 16","Group: 1 <br>Point ID: 17","Group: 1 <br>Point ID: 18","Group: 1 <br>Point ID: 19","Group: 1 <br>Point ID: 20","Group: 1 <br>Point ID: 21","Group: 1 <br>Point ID: 22","Group: 1 <br>Point ID: 23","Group: 1 <br>Point ID: 24","Group: 1 <br>Point ID: 25","Group: 1 <br>Point ID: 26","Group: 1 <br>Point ID: 27","Group: 1 <br>Point ID: 28","Group: 1 <br>Point ID: 29","Group: 1 <br>Point ID: 30","Group: 1 <br>Point ID: 31","Group: 1 <br>Point ID: 32","Group: 1 <br>Point ID: 33","Group: 1 <br>Point ID: 34","Group: 1 <br>Point ID: 35","Group: 1 <br>Point ID: 36","Group: 1 <br>Point ID: 37","Group: 1 <br>Point ID: 38","Group: 1 <br>Point ID: 39","Group: 1 <br>Point ID: 40","Group: 1 <br>Point ID: 41","Group: 1 <br>Point ID: 42","Group: 1 <br>Point ID: 43","Group: 1 <br>Point ID: 44","Group: 1 <br>Point ID: 45","Group: 1 <br>Point ID: 46","Group: 1 <br>Point ID: 47","Group: 1 <br>Point ID: 48","Group: 1 <br>Point ID: 49","Group: 1 <br>Point ID: 50"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.79609073964182731,0.92900471594117218,0.25510483238272402,0.36493764808834783,2.1251378902876885,-1.3879571508808772,-0.80783934245749889,-0.90860032467488705,-0.38082382406040144,-0.08808069683515761,0.50571440239367393,0.6775066722545996,-1.1595805509946639,1.9883202720528106,0.75449014166020256,0.15341787643378207,0.24117330504958076,-1.2940911629680416,0.26781583531623693,-0.61105155291346236,0.36072220959130058,0.15736473563268485,-0.69643320460483116,0.20369211787446567,0.23417576456874256,0.083052073405364246,-0.69403558327305159,0.090701871679087678,0.84275666513572278,-4.1925268033335312,-0.43217308739245341,-0.6041213275413132,-0.41781160917138133,-0.29121130054804101,1.1214357904121071,0.22972986152242353,-0.9010337639054723,-1.1489161198091806,0.038377402281137001,1.7119219307348816,0.35879251176505716,0.027538726010990788,0.2070666815676783,0.66796832521120975,0.013890951924986343,-1.0120054338400706,-0.0010373418442224587,-0.31445498780983938,0.26067591012476538,0.16822281645630358],"y":[0.30223245605303806,0.23154704005402219,-1.0006092818113925,-0.24081609714984623,0.60895363458756901,1.1750608559219464,0.43022030120003119,-1.5100174273173268,0.64287094078590323,-0.16199390866102131,0.65226299177992153,-0.0080589133988325286,-0.06193699030174464,-2.4741692848112571,-0.42957068851378499,0.1632995500684111,-1.1217652247599437,-1.7481715912110598,-1.0610871896117904,0.06649838909858484,0.89465621717083144,-1.7241554536212707,-0.94657944752384304,-0.22593740813887098,-1.6629249001652495,0.90077708499233322,-0.42927209132815325,-0.36935168951778902,0.4678831734683786,-0.18486701359852012,-1.0743598512751984,-0.45001106288047199,-0.62062549507208675,-0.58670368863480571,0.74769387508207008,0.36116830229445507,1.0609133384006484,-0.29083410091619111,-1.3774712889922827,0.72208508174607555,-0.1988296357788063,0.12576043485508884,-0.13337371795151823,-0.2774368041055944,2.590753712752746,0.47959452992940022,-0.46203959154846108,0.81832882820718533,0.74546718095338038,-0.078425202163440191],"text":["Group: 2 <br>Point ID: 51","Group: 2 <br>Point ID: 52","Group: 2 <br>Point ID: 53","Group: 2 <br>Point ID: 54","Group: 2 <br>Point ID: 55","Group: 2 <br>Point ID: 56","Group: 2 <br>Point ID: 57","Group: 2 <br>Point ID: 58","Group: 2 <br>Point ID: 59","Group: 2 <br>Point ID: 60","Group: 2 <br>Point ID: 61","Group: 2 <br>Point ID: 62","Group: 2 <br>Point ID: 63","Group: 2 <br>Point ID: 64","Group: 2 <br>Point ID: 65","Group: 2 <br>Point ID: 66","Group: 2 <br>Point ID: 67","Group: 2 <br>Point ID: 68","Group: 2 <br>Point ID: 69","Group: 2 <br>Point ID: 70","Group: 2 <br>Point ID: 71","Group: 2 <br>Point ID: 72","Group: 2 <br>Point ID: 73","Group: 2 <br>Point ID: 74","Group: 2 <br>Point ID: 75","Group: 2 <br>Point ID: 76","Group: 2 <br>Point ID: 77","Group: 2 <br>Point ID: 78","Group: 2 <br>Point ID: 79","Group: 2 <br>Point ID: 80","Group: 2 <br>Point ID: 81","Group: 2 <br>Point ID: 82","Group: 2 <br>Point ID: 83","Group: 2 <br>Point ID: 84","Group: 2 <br>Point ID: 85","Group: 2 <br>Point ID: 86","Group: 2 <br>Point ID: 87","Group: 2 <br>Point ID: 88","Group: 2 <br>Point ID: 89","Group: 2 <br>Point ID: 90","Group: 2 <br>Point ID: 91","Group: 2 <br>Point ID: 92","Group: 2 <br>Point ID: 93","Group: 2 <br>Point ID: 94","Group: 2 <br>Point ID: 95","Group: 2 <br>Point ID: 96","Group: 2 <br>Point ID: 97","Group: 2 <br>Point ID: 98","Group: 2 <br>Point ID: 99","Group: 2 <br>Point ID: 100"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"2","legendgroup":"2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283104,"r":7.3059360730593621,"b":40.182648401826491,"l":37.260273972602747},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4.5084100380145919,2.4410211249687497],"tickmode":"array","ticktext":["-4","-2","0","2"],"tickvals":[-4,-2,0,2],"categoryorder":"array","categoryarray":["-4","-2","0","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.7274154346894575,2.8439998626309464],"tickmode":"array","ticktext":["-2","-1","0","1","2"],"tickvals":[-2,-0.99999999999999978,0,1,2],"categoryorder":"array","categoryarray":["-2","-1","0","1","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"group","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"a8b418b33ce":{"x":{},"y":{},"colour":{},"text":{},"type":"scatter"}},"cur_data":"a8b418b33ce","visdat":{"a8b418b33ce":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-55cb62f5b59e2212a781" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-55cb62f5b59e2212a781">{"x":{"data":[{"x":[0.26902340060129265,-1.4152978710803383,0.53820902570855877,0.57134535895575755,-0.058677965016950245,1.6468803109551178,1.4508987223845737,0.22575061696290943,0.24393921102254326,-0.19212275702448159,-0.1645864510046986,1.9715601591576282,-0.20422172921470561,0.95545857688489699,-1.3059617396394325,0.47111714988074682,0.39776531182126629,-0.62034165080435377,-0.68976998094516262,0.53299560204617102,-1.0620457729623924,0.78600804605212016,0.46818218296220732,2.0863364626965284,-0.12854145221421245,0.69481959689664952,0.22885836921850883,-0.36140695436451953,1.1802558183466096,3.3644600947553935,-0.14380880560949716,-0.83086011107564595,0.013133144920469799,1.7197179792344763,-0.10019127763194949,0.031192309708713919,0.071708726813498103,1.9108313901434255,-1.1792225584992428,0.94227855709400277,-0.03080035687555753,0.38307097421068448,1.2517650445518878,-1.0527944674384282,0.32869546406491468,0.41775442086478276,-0.078173241866044449,0.85233871724398891,0.68830061429080847,-0.47949132109986825],"y":[1.0229742092139076,-0.36146586306021544,-1.2965100477475497,0.069079731585326418,-0.030028033328004661,-1.0288245763038162,0.23301227239691519,-0.84813574378106316,0.045240888219629231,0.0774341409360913,1.7428571756705327,-0.25508347082023114,-0.22734518110422433,1.6212813909919124,0.19135832375018313,1.130164032284128,0.13021586375964381,-0.3847082969824594,1.6558415249832936,-0.47905087426226289,-0.23361792860531524,0.25246180065831264,-0.99185480856869845,0.3231246440093527,0.68850532364192507,0.66153262788559208,-0.055053274220966841,-0.71096531869545032,0.37593841647223353,-1.2711846557095055,0.39381521080567161,0.099472560063909046,-1.3988760512571028,1.1607115023124437,-0.36818026603830806,-2.1853051196277491,1.5704595811004951,0.051343783297099786,-0.95649414035188718,-0.51240117558445708,0.10559694485865154,-0.44656959890815373,-0.6866793809450924,0.63798335768843517,-0.86597706458068435,-1.4540768227136236,-2.2123077822980841,0.74801235856363457,-0.086173634430082802,-1.9605770311472059],"text":["Group: 1 <br>Point ID: 1","Group: 1 <br>Point ID: 2","Group: 1 <br>Point ID: 3","Group: 1 <br>Point ID: 4","Group: 1 <br>Point ID: 5","Group: 1 <br>Point ID: 6","Group: 1 <br>Point ID: 7","Group: 1 <br>Point ID: 8","Group: 1 <br>Point ID: 9","Group: 1 <br>Point ID: 10","Group: 1 <br>Point ID: 11","Group: 1 <br>Point ID: 12","Group: 1 <br>Point ID: 13","Group: 1 <br>Point ID: 14","Group: 1 <br>Point ID: 15","Group: 1 <br>Point ID: 16","Group: 1 <br>Point ID: 17","Group: 1 <br>Point ID: 18","Group: 1 <br>Point ID: 19","Group: 1 <br>Point ID: 20","Group: 1 <br>Point ID: 21","Group: 1 <br>Point ID: 22","Group: 1 <br>Point ID: 23","Group: 1 <br>Point ID: 24","Group: 1 <br>Point ID: 25","Group: 1 <br>Point ID: 26","Group: 1 <br>Point ID: 27","Group: 1 <br>Point ID: 28","Group: 1 <br>Point ID: 29","Group: 1 <br>Point ID: 30","Group: 1 <br>Point ID: 31","Group: 1 <br>Point ID: 32","Group: 1 <br>Point ID: 33","Group: 1 <br>Point ID: 34","Group: 1 <br>Point ID: 35","Group: 1 <br>Point ID: 36","Group: 1 <br>Point ID: 37","Group: 1 <br>Point ID: 38","Group: 1 <br>Point ID: 39","Group: 1 <br>Point ID: 40","Group: 1 <br>Point ID: 41","Group: 1 <br>Point ID: 42","Group: 1 <br>Point ID: 43","Group: 1 <br>Point ID: 44","Group: 1 <br>Point ID: 45","Group: 1 <br>Point ID: 46","Group: 1 <br>Point ID: 47","Group: 1 <br>Point ID: 48","Group: 1 <br>Point ID: 49","Group: 1 <br>Point ID: 50"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"1","legendgroup":"1","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.48468314895537845,0.072974073279066617,1.9996322919184522,-0.26229070988216668,0.1451434848995814,0.73576697396137036,0.017338048506481719,0.32845233636702537,-0.024918528987420946,-0.13378079119692568,-1.3320157271187121,-0.36901700719339353,1.7942752878110584,0.44746056276354812,0.38083237620804872,1.9887856328443603,-0.57678975082907225,1.3772659066347377,0.36904075748941934,-0.086314314211365026,-1.2507803933134858,-0.015294018295652549,-2.1473778152753855,-1.9114184755978405,0.078607220858155663,0.42381520891056867,0.48223692566337312,-0.097271741617011076,-0.30467392522879067,-1.2864499740903752,0.40538828169700403,0.88927032908818537,0.87069332459019921,0.24807689777768185,-0.085811963499541621,0.14078985359715321,-1.5196149363329337,0.27625006040572186,0.40034098954011732,-1.714916249862358,-1.0153717946314942,-1.0599153549152238,0.51090776511118474,0.22012999254795473,1.1912856601099262,-1.5704699685448922,1.505972398810143,-0.98721948927857961,0.13962505190218699,-0.56811869864930131],"y":[2.4169475071118747,-1.4501349586503591,-0.83811526930729041,0.026139247706009523,0.28827827370703701,0.50777998067575714,1.5439154032299984,0.36167472519361427,-0.66662821080549151,-1.7547920081543944,0.67610725916500725,1.2053088544339254,-0.50016269823958392,-1.1174172488288692,0.24363885991787809,0.71130383767401262,-1.1095488828680626,0.78772027377087317,0.39736837439801592,-0.29874688818053396,-0.45909754007967463,0.7017356475020442,0.38294639176908302,0.85982251001567955,-0.30101589165802523,-1.2768679010553625,-0.81354836100186845,-0.69120756198863209,-1.4052592694929269,0.47378474785522429,-0.63963091426480967,1.5991634581302654,1.1653469302051505,-1.9659708999369563,-0.67302276742069023,0.73149991276635296,-0.9901546574977711,0.071503647155799349,-0.54815522467696209,1.0938728927503418,-1.8469454256234104,-0.61315268907903975,-0.72619401616378887,-0.35422348444594237,-0.89099878698443324,-0.94863280714957376,-0.17768087929589163,-1.7892603501171047,0.84510532887288992,-0.49219227337829802],"text":["Group: 2 <br>Point ID: 51","Group: 2 <br>Point ID: 52","Group: 2 <br>Point ID: 53","Group: 2 <br>Point ID: 54","Group: 2 <br>Point ID: 55","Group: 2 <br>Point ID: 56","Group: 2 <br>Point ID: 57","Group: 2 <br>Point ID: 58","Group: 2 <br>Point ID: 59","Group: 2 <br>Point ID: 60","Group: 2 <br>Point ID: 61","Group: 2 <br>Point ID: 62","Group: 2 <br>Point ID: 63","Group: 2 <br>Point ID: 64","Group: 2 <br>Point ID: 65","Group: 2 <br>Point ID: 66","Group: 2 <br>Point ID: 67","Group: 2 <br>Point ID: 68","Group: 2 <br>Point ID: 69","Group: 2 <br>Point ID: 70","Group: 2 <br>Point ID: 71","Group: 2 <br>Point ID: 72","Group: 2 <br>Point ID: 73","Group: 2 <br>Point ID: 74","Group: 2 <br>Point ID: 75","Group: 2 <br>Point ID: 76","Group: 2 <br>Point ID: 77","Group: 2 <br>Point ID: 78","Group: 2 <br>Point ID: 79","Group: 2 <br>Point ID: 80","Group: 2 <br>Point ID: 81","Group: 2 <br>Point ID: 82","Group: 2 <br>Point ID: 83","Group: 2 <br>Point ID: 84","Group: 2 <br>Point ID: 85","Group: 2 <br>Point ID: 86","Group: 2 <br>Point ID: 87","Group: 2 <br>Point ID: 88","Group: 2 <br>Point ID: 89","Group: 2 <br>Point ID: 90","Group: 2 <br>Point ID: 91","Group: 2 <br>Point ID: 92","Group: 2 <br>Point ID: 93","Group: 2 <br>Point ID: 94","Group: 2 <br>Point ID: 95","Group: 2 <br>Point ID: 96","Group: 2 <br>Point ID: 97","Group: 2 <br>Point ID: 98","Group: 2 <br>Point ID: 99","Group: 2 <br>Point ID: 100"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"2","legendgroup":"2","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.228310502283104,"r":7.3059360730593621,"b":40.182648401826491,"l":37.260273972602747},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.4229697107769246,3.6400519902569326],"tickmode":"array","ticktext":["-2","0","2"],"tickvals":[-2,0,2],"categoryorder":"array","categoryarray":["-2","0","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"x","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.4437705467685822,2.6484102715823727],"tickmode":"array","ticktext":["-2","-1","0","1","2"],"tickvals":[-2,-1,0,1,2],"categoryorder":"array","categoryarray":["-2","-1","0","1","2"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498},"title":{"text":"group","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"bd301cb1345a":{"x":{},"y":{},"colour":{},"text":{},"type":"scatter"}},"cur_data":"bd301cb1345a","visdat":{"bd301cb1345a":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>In this example, we’ve added a new column to the dataset called label containing custom text to be displayed when hovering over the points. We’ve updated the aes() function in ggplot to include the text aesthetic, and then specified the tooltip attribute in the ggplotly function to use the “text” aesthetic for tooltips.</p>
@@ -391,18 +395,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -434,11 +427,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -448,8 +480,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -461,7 +502,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -505,6 +669,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -530,6 +695,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -592,7 +783,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</div>   
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
@@ -614,6 +807,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
+
 
 
 

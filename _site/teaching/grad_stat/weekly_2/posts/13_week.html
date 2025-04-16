@@ -164,12 +164,12 @@ window.Quarto = {
  <span class="dropdown-text">All Courses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../teaching/ml101/index.html">
- <span class="dropdown-text">ML101</span></a>
+    <a class="dropdown-item" href="../../../../teaching/ds101/index.html">
+ <span class="dropdown-text">DS101</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../teaching/grad_stat/index.html">
- <span class="dropdown-text">STAT101</span></a>
+    <a class="dropdown-item" href="../../../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
   </li>  
     </ul>
   </li>
@@ -186,7 +186,7 @@ window.Quarto = {
 <span class="menu-text">Blogs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://ctcl.netlify.app"> 
+    <a class="nav-link" href="https://axislab.netlify.app/"> 
 <span class="menu-text">LAB</span></a>
   </li>  
 </ul>
@@ -804,15 +804,15 @@ Attaching package: 'Matrix'</code></pre>
 <span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Model summary and interpretation</span></span>
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso - Optimal Lambda:"</span>, cv_lasso<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Lasso - Optimal Lambda: 0.1500372 </code></pre>
+<pre><code>Lasso - Optimal Lambda: 0.0338637 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge - Optimal Lambda:"</span>, cv_ridge<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Ridge - Optimal Lambda: 1.08339 </code></pre>
+<pre><code>Ridge - Optimal Lambda: 0.5146981 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net - Optimal Lambda:"</span>, cv_elastic_net<span class="sc">$</span>lambda.min, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Elastic Net - Optimal Lambda: 0.1717136 </code></pre>
+<pre><code>Elastic Net - Optimal Lambda: 0.2491271 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions using Lasso, Ridge, and Elastic Net models:</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for predictions</span></span>
@@ -833,15 +833,15 @@ Attaching package: 'Matrix'</code></pre>
 <span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="co"># View predictions</span></span>
 <span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Lasso Predictions:"</span>, lasso_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Lasso Predictions: 25.12561 20.87896 16.63232 </code></pre>
+<pre><code>Lasso Predictions: 25.23425 20.89185 16.54944 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Ridge Predictions:"</span>, ridge_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Ridge Predictions: 24.97359 20.77241 16.57123 </code></pre>
+<pre><code>Ridge Predictions: 25.13371 20.8278 16.52189 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Elastic Net Predictions:"</span>, elastic_net_predictions, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Elastic Net Predictions: 25.16585 20.87327 16.58069 </code></pre>
+<pre><code>Elastic Net Predictions: 25.11972 20.8634 16.60707 </code></pre>
 </div>
 </div>
 <p><br></p>
