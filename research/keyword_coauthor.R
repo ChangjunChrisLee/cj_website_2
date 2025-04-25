@@ -148,7 +148,7 @@ library(igraph)
 # membership_vec <- membership(g_community)
 
 # ① cluster_leiden() → Louvain 개선 버전 (세분화 가능)
-g_community <- cluster_leiden(g, resolution_parameter = 0.3)  
+g_community <- cluster_leiden(g, resolution_parameter = 0.2)  
 membership_vec <- membership(g_community)
 
 # ② 노드에 group 컬럼 추가
