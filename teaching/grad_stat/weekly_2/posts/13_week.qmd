@@ -1,6 +1,6 @@
 ---
-title: "Hayes Models(2)"
-subtitle: "Practice" 
+title: "구조방정식 모델 & Clustering"
+subtitle: "Structural Equation Model" 
 Week: 13
 format: html
 slide-format: revealjs
@@ -9,3 +9,947 @@ slide-format: revealjs
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 <br>
+
+<br>
+
+## Structural Equation Modeling: Foundations and Applications
+
+<br>
+
+### **Introduction**
+
+Structural Equation Modeling (SEM) is **a comprehensive statistical methodology that combines factor analysis and multiple regression techniques to examine complex relationships among observed and latent variables**. Over the past few decades, SEM has become a powerful tool for researchers across disciplines such as social sciences, psychology, education, business, and health sciences. This chapter introduces the theoretical underpinnings of SEM, its key components, and practical applications, with an emphasis on latent variables and path analysis.
+
+<bR>
+
+### **Key Concepts in SEM**
+
+#### **1. Observed and Latent Variables**
+
+-   **Observed Variables**: These are directly measured variables, often referred to as indicators. For example, responses to survey items like "I enjoy learning" and "I find studying rewarding" can serve as observed variables for the latent construct "Motivation."
+
+-   **Latent Variables**: These are unobserved constructs that are inferred from observed variables. SEM excels in estimating latent variables while accounting for measurement error.
+
+#### **2. Measurement Error**
+
+Measurement error is the discrepancy between the observed value and the true value of a variable. SEM explicitly incorporates measurement error into its models, which sets it apart from traditional regression approaches.
+
+![](images/clipboard-167134754.png)
+
+#### **3. Path Diagrams**
+
+Path diagrams visually represent SEM models. Key components include:
+
+-   **Circles**: Represent latent variables.
+
+-   **Squares**: Represent observed variables.
+
+-   **Arrows**: Depict causal relationships or associations.
+
+<br>
+
+### **Components of SEM**
+
+#### **1. Measurement Model**
+
+The measurement model specifies the relationships between latent variables and their observed indicators. It answers the question: [*How well do the observed variables measure the underlying construct?*]{.underline}
+
+**Example**: Motivation as a latent variable might be measured by three observed items:
+
+$$
+Motivation \sim Item_1 + Item_2 + Item_3
+$$
+
+​<br>
+
+#### **2. Structural Model**
+
+The structural model specifies the relationships between latent variables (or between latent and observed variables). It answers the question: *What are the causal relationships between constructs?*
+
+**Example**: Testing whether motivation mediates the relationship between hours studied and test performance:
+
+$$
+Test\_Score = Motivation + Hours\_Studied
+$$
+
+$$
+Motivation = Hours\_Studied
+$$
+
+<br>
+
+### **Steps in Conducting SEM**
+
+#### **Step 1: Define the Model**
+
+Develop a theoretical model based on prior research or hypotheses. Clearly specify the relationships among variables in a path diagram.
+
+#### **Step 2: Specify the Model**
+
+Translate the path diagram into a set of equations. This involves defining the measurement and structural models.
+
+#### **Step 3: Collect Data**
+
+Ensure the dataset includes sufficient sample size and all observed indicators for latent variables.
+
+#### **Step 4: Estimate the Model**
+
+Use software such as R (`lavaan` package), AMOS, Mplus, or LISREL to estimate the parameters.
+
+#### **Step 5: Evaluate Model Fit**
+
+Examine fit indices and modify the model, if necessary, based on theoretical justifications.
+
+#### **Step 6: Interpret the Results**
+
+Interpret path coefficients, factor loadings, and fit indices in the context of your research question.
+
+<Br>
+
+## **Cronbach's Alpha: A Measure of Reliability**
+
+#### **Introduction**
+
+Cronbach's Alpha (α) is a widely used statistic in research to assess the **internal consistency reliability** of a set of items or indicators. It is particularly useful for measuring the reliability of scales, tests, or questionnaires in social sciences, psychology, education, and other fields. Reliability refers to the extent to which a scale produces consistent results across repeated measurements or multiple items measuring the same construct.
+
+### **Conceptual Foundation**
+
+#### **Internal Consistency**
+
+Internal consistency evaluates how well the items in a scale measure the same underlying construct. If items are highly correlated, it suggests they are measuring the same concept, which contributes to higher reliability.
+
+For example:
+
+-   A scale measuring **motivation** might include items like:
+
+    -   "I enjoy learning new things."
+
+    -   "I am motivated to achieve my goals."
+
+    -   "I find studying rewarding."
+
+If these items are highly interrelated, the scale has good internal consistency.
+
+#### **Definition of Cronbach's Alpha**
+
+Cronbach's Alpha quantifies internal consistency as a value between 0 and 1. Higher values indicate better reliability. The formula for α is:
+
+$$
+\alpha = \frac{k}{k - 1} \left(1 - \frac{\sum s_i^2}{s_t^2}\right)
+$$
+
+Where:
+
+-   k: Number of items in the scale.
+
+    -   문항 수가 많을 수록 신뢰도를 과소평가하는 경향이 있어 이를 보정
+
+-   $s_i^2$​: Variance of each individual item.
+
+    -   개별 문항 분산의 합: 개별 문항들이 얼마나 **독립적**으로 변동하는지
+
+-   $s_t^2$​: Variance of the total scale score.
+
+    -   총합 점수의 분산으로, 문항ndefined들이 **함께 변동**하는 정도
+
+    -   비율: 각 문항이 개별적으로 변동하는 정도를 전체 점수의 변동과 비교
+
+        -   비율의 값이 클 수록 문항들이 서로 독립적으로 작동, 내적 일관성이 낮아짐
+
+        -   값이 작을 수록 문항들이 함께 움직이며, 내적 일관성이 높아짐
+
+        -   1에서 이 비율을 뺌으로써 문항들이 공통으로 기여하는 정도를 측정
+
+<br>
+
+### **Interpreting Cronbach's Alpha**
+
+-   α \> 0.90: Excellent reliability (possibly redundant items).
+
+-   0.80 ≤ α \< 0.90: Good reliability.
+
+-   0.70 ≤ α \< 0.80: Acceptable reliability.
+
+-   0.60 ≤ α \< 0.70: Questionable reliability.
+
+-   α \< 0.60: Poor reliability (likely indicates issues with item quality or scale design).
+
+<Br>
+
+### **Assumptions of Cronbach's Alpha**
+
+1.  **Unidimensionality**: The scale should measure a single construct.
+
+2.  **Equal Variance Contribution**: Each item should contribute equally to the total score (violations can lead to under- or overestimation of reliability).
+
+3.  **Correlation Between Items**: Items should be positively correlated.
+
+<Br>
+
+### **Practical Example: Calculating Cronbach's Alpha in R**
+
+#### **Simulating a Dataset**
+
+```{r}
+# Simulate data for a 5-item motivation scale
+set.seed(123)
+n <- 100  # Number of respondents
+motivation_data <- data.frame(
+  Q1 = rnorm(n, mean = 4, sd = 0.8),  # Item 1
+  Q2 = rnorm(n, mean = 4.2, sd = 0.7),  # Item 2
+  Q3 = rnorm(n, mean = 3.9, sd = 0.9),  # Item 3
+  Q4 = rnorm(n, mean = 4.1, sd = 0.6),  # Item 4
+  Q5 = rnorm(n, mean = 4.0, sd = 0.8)   # Item 5
+)
+head(motivation_data, 10)
+
+```
+
+```{r}
+# Install and load the psych package
+# install.packages("psych")
+library(psych)
+
+# Calculate Cronbach's Alpha
+alpha_result <- psych::alpha(motivation_data)
+print(alpha_result)
+
+```
+
+#### **Output Interpretation**
+
+The output includes:
+
+-   **Raw Alpha**: The Cronbach's Alpha for the current scale.
+
+    -   **raw_alpha (-0.38)**
+
+        -   음수의 알파 값은 **내적 일관성이 전혀 없거나, 문항들이 서로 부정적인 관계를 가질 가능성**을 나타냄
+
+        -   문항들이 측정하려는 동일한 개념(동일 구성 개념)을 반영하지 않거나, 측정 대상이 전혀 다른 경우에 나타남
+
+-   **Standardized Alpha**: Adjusted for standardized item variances.
+
+-   **Item-Total Correlations**: Correlation of each item with the total scale score.
+
+-   **Alpha If Deleted**: The α value if a specific item is removed.
+
+<br>
+
+### **Improving Reliability**
+
+1.  **Increase the Number of Items**: Add more items that measure the same construct.
+
+2.  **Refine Items**: Ensure items are clear, relevant, and unambiguous.
+
+3.  **Remove Low-Quality Items**: Exclude items that weaken the overall reliability (α).
+
+<br>
+
+## **Confirmatory Factor Analysis (CFA)**
+
+### **Introduction**
+
+Confirmatory Factor Analysis (CFA) is **a statistical technique used to test whether a hypothesized measurement model fits the observed data**. Unlike Exploratory Factor Analysis (EFA), which identifies underlying factor structures without prior assumptions, CFA is **hypothesis-driven** and requires the researcher to specify the relationships between observed variables and latent factors before analysis.
+
+CFA is widely used in psychology, education, and social sciences to validate measurement scales, confirm theoretical constructs, and ensure the reliability of instruments.
+
+<br>
+
+### **Key Concepts in CFA**
+
+#### **1. Latent Variables**
+
+Latent variables are unobserved constructs that are inferred from multiple observed variables. For example:
+
+-   **Motivation** might be a latent variable inferred from survey items like "I enjoy studying" and "I set academic goals."
+
+#### **2. Observed Variables (Indicators)**
+
+These are measurable variables that serve as proxies for the latent variable. In CFA, each observed variable is expected to load on a specific latent factor.
+
+#### **3. Factor Loadings**
+
+Factor loadings quantify the relationship between observed variables and their underlying latent factor. Higher loadings indicate stronger relationships.
+
+#### **4. Measurement Errors**
+
+CFA explicitly models measurement error for each observed variable, improving the accuracy of parameter estimates compared to traditional methods.
+
+<br>
+
+### **The CFA Model**
+
+The CFA model is typically represented as:
+
+$$
+X = \Lambda \xi + \delta
+$$
+
+Where:
+
+-   X: Vector of observed variables.
+
+-   Λ: Matrix of factor loadings.
+
+-   ξ: Vector of latent variables.
+
+-   δ: Vector of measurement errors.
+
+<bR>
+
+### **Model Fit Indices in CFA**
+
+Several indices are used to assess the goodness of fit of a CFA model:
+
+1.  **Chi-Square**:
+
+    -   Tests the [null hypothesis that the model fits the data perfectly.]{.underline}
+
+    -   Smaller, non-significant values indicate a good fit.
+
+    -   Sensitive to sample size.
+
+2.  **CFI (Comparative Fit Index)**:
+
+    -   Compares the fit of the hypothesized model to a null model.
+
+    -   Values \> 0.90 indicate good fit; \> 0.95 indicates excellent fit.
+
+3.  **TLI (Tucker-Lewis Index)**:
+
+    -   Adjusts for model complexity.
+
+    -   Values \> 0.90 indicate good fit.
+
+4.  **RMSEA (Root Mean Square Error of Approximation)**:
+
+    -   Measures the discrepancy between the model and the data per degree of freedom.
+
+    -   Values \< 0.08 indicate acceptable fit; \< 0.05 indicates excellent fit.
+
+5.  **SRMR (Standardized Root Mean Square Residual)**:
+
+    -   Measures the average discrepancy between observed and predicted correlations.
+
+    -   Values \< 0.08 indicate a good fit.
+
+<br>
+
+### **Example of CFA in R**
+
+Here, we validate a hypothetical 3-factor model with 9 observed variables.
+
+#### **Simulating the Data**
+
+```{r}
+# Simulate data for a 3-factor model
+set.seed(123)
+n <- 300
+
+# Latent variables
+Factor1 <- rnorm(n, mean = 5, sd = 1)
+Factor2 <- rnorm(n, mean = 3, sd = 1)
+Factor3 <- rnorm(n, mean = 4, sd = 1)
+
+# Observed variables
+Item1 <- 0.8 * Factor1 + rnorm(n, sd = 0.5)
+Item2 <- 0.7 * Factor1 + rnorm(n, sd = 0.5)
+Item3 <- 0.9 * Factor1 + rnorm(n, sd = 0.5)
+
+Item4 <- 0.8 * Factor2 + rnorm(n, sd = 0.5)
+Item5 <- 0.7 * Factor2 + rnorm(n, sd = 0.5)
+Item6 <- 0.9 * Factor2 + rnorm(n, sd = 0.5)
+
+Item7 <- 0.8 * Factor3 + rnorm(n, sd = 0.5)
+Item8 <- 0.7 * Factor3 + rnorm(n, sd = 0.5)
+Item9 <- 0.9 * Factor3 + rnorm(n, sd = 0.5)
+
+data <- data.frame(Item1, Item2, Item3, Item4, Item5, Item6, Item7, Item8, Item9)
+
+head(data, 10)
+```
+
+Defining and Running the CFA Model
+
+```{r}
+# Load lavaan package
+library(lavaan)
+
+# Define the CFA model
+model <- '
+  Factor1 =~ Item1 + Item2 + Item3
+  Factor2 =~ Item4 + Item5 + Item6
+  Factor3 =~ Item7 + Item8 + Item9
+'
+
+# Fit the model
+fit <- cfa(model, data = data)
+
+# Summary with standardized estimates
+summary(fit, fit.measures = TRUE, standardized = TRUE)
+
+```
+
+#### **Output**
+
+#### (1) **Chi-square 테스트**
+
+-   **Test statistic = 16.404, Degrees of freedom = 24, P-value = 0.873**
+
+    -   높은 p값(0.873)은 귀무가설(H0)을 기각하지 않음을 나타냄.
+
+    -   **귀무가설:** "모형이 데이터와 잘 맞는다" → p \> 0.05이므로, 데이터가 모형에 잘 적합한다고 해석할 수 있음.
+
+#### (2) **Comparative Fit Index (CFI)와 Tucker-Lewis Index (TLI)**
+
+-   **CFI = 1.000, TLI = 1.008**
+
+    -   CFI와 TLI 값이 0.95 이상이면 적합성이 매우 우수하다고 판단.
+
+    -   여기서는 두 지표 모두 매우 높은 값(1 이상)을 보여, 모델 적합성이 뛰어나다는 것을 보임.
+
+#### (3) **Root Mean Square Error of Approximation (RMSEA)**
+
+-   **RMSEA = 0.000, 90% CI = \[0.000, 0.024\], P-value = 0.998**
+
+    -   RMSEA 값이 0.05 이하이고, 90% 신뢰구간의 상한선도 0.05 이하라면 적합성이 우수하다고 볼 수 있음.
+
+    -   P-value H0: RMSEA ≤ 0.050 = 0.998 → "RMSEA가 0.05 이하"라는 귀무가설을 채택.
+
+    -   RMSEA가 0에 가까워 매우 좋은 적합도를 나타냄.
+
+#### (4) **Standardized Root Mean Square Residual (SRMR)**
+
+-   **SRMR = 0.021**
+
+    -   SRMR 값이 0.08 이하라면 적합성이 양호하다고 판단.
+
+#### (5) **요인 적재값(Factor Loadings)**
+
+-   각 항목이 요인에 대해 얼마나 강하게 연관되어 있는지
+
+    -   **Factor1:**
+
+        -   Item1: 0.805 (표준화된 적재값 0.877)
+
+        -   Item2: 0.596 (표준화된 적재값 0.772)
+
+        -   Item3: 0.793 (표준화된 적재값 0.834)
+
+    -   **Factor2:**
+
+        -   Item4: 0.768 (표준화된 적재값 0.835)
+
+        -   Item5: 0.662 (표준화된 적재값 0.807)
+
+        -   Item6: 0.924 (표준화된 적재값 0.898)
+
+    -   **Factor3:**
+
+        -   Item7: 0.786 (표준화된 적재값 0.845)
+
+        -   Item8: 0.647 (표준화된 적재값 0.772)
+
+        -   Item9: 0.969 (표준화된 적재값 0.903)
+
+-   표준화 적재값이 **0.7 이상**이면 해당 항목이 요인에 강하게 기여한다고 판단.
+
+#### (6) **요인 간 공분산(Covariances)**
+
+-   Factor1 \~\~ Factor2 = -0.033 (p = 0.615)
+
+-   Factor1 \~\~ Factor3 = -0.015 (p = 0.820)
+
+-   Factor2 \~\~ Factor3 = -0.027 (p = 0.680)
+
+    -   요인 간 공분산이 매우 낮고 통계적으로 유의하지 않음.
+
+    -   요인들이 서로 독립적(서로 다른 구성 개념을 측정)을 나타냄.
+
+#### **(7) 항목의 잔차(Residual Variances)**
+
+-   각 항목의 분산 중 설명되지 않는 부분(잔차)
+
+    -   Item1: 잔차 분산 = 0.194 (설명되지 않는 분산 비율 = 23.1%)
+
+    -   Item6: 잔차 분산 = 0.204 (설명되지 않는 분산 비율 = 19.3%)
+
+    -   대부분의 항목에서 설명되지 않는 분산 비율이 적어(50% 미만), 요인이 해당 항목들을 잘 설명하고 있음을 나타냄.
+
+<br>
+
+## SEM Practice
+
+```{r}
+# Install lavaan if not already installed
+# install.packages("lavaan")
+
+# Load lavaan
+library(lavaan)
+
+```
+
+```{r}
+# Load required package for data simulation
+library(MASS)
+
+# Set random seed for reproducibility
+set.seed(123)
+
+# Number of observations
+n <- 300
+
+# Define factor structure (3 latent factors, uncorrelated)
+latent_factors <- mvrnorm(
+  n = n,
+  mu = c(0, 0, 0),       # Mean of latent factors
+  Sigma = diag(3)        # Identity matrix implies no correlation between factors
+)
+
+# Factor loadings for each latent factor
+loadings <- list(
+  Factor1 = c(0.8, 0.7, 0.9),  # Loadings for Item1, Item2, Item3
+  Factor2 = c(0.9, 0.8, 0.85), # Loadings for Item4, Item5, Item6
+  Factor3 = c(0.85, 0.75, 0.9) # Loadings for Item7, Item8, Item9
+)
+
+# Residual variances (to ensure observed variables are not perfectly predicted by latent factors)
+residuals <- list(
+  Factor1 = c(0.4, 0.5, 0.3),
+  Factor2 = c(0.3, 0.4, 0.35),
+  Factor3 = c(0.35, 0.5, 0.3)
+)
+
+# Generate observed variables for each factor
+observed_data <- data.frame(
+  Item1 = latent_factors[, 1] * loadings$Factor1[1] + rnorm(n, 0, residuals$Factor1[1]),
+  Item2 = latent_factors[, 1] * loadings$Factor1[2] + rnorm(n, 0, residuals$Factor1[2]),
+  Item3 = latent_factors[, 1] * loadings$Factor1[3] + rnorm(n, 0, residuals$Factor1[3]),
+  Item4 = latent_factors[, 2] * loadings$Factor2[1] + rnorm(n, 0, residuals$Factor2[1]),
+  Item5 = latent_factors[, 2] * loadings$Factor2[2] + rnorm(n, 0, residuals$Factor2[2]),
+  Item6 = latent_factors[, 2] * loadings$Factor2[3] + rnorm(n, 0, residuals$Factor2[3]),
+  Item7 = latent_factors[, 3] * loadings$Factor3[1] + rnorm(n, 0, residuals$Factor3[1]),
+  Item8 = latent_factors[, 3] * loadings$Factor3[2] + rnorm(n, 0, residuals$Factor3[2]),
+  Item9 = latent_factors[, 3] * loadings$Factor3[3] + rnorm(n, 0, residuals$Factor3[3])
+)
+
+# Check summary
+summary(observed_data)
+
+```
+
+-   CFA first
+
+```{r}
+# Load lavaan package for SEM
+library(lavaan)
+
+# Define the CFA model
+cfa_model <- '
+  # Latent variables
+  Factor1 =~ Item1 + Item2 + Item3
+  Factor2 =~ Item4 + Item5 + Item6
+  Factor3 =~ Item7 + Item8 + Item9
+
+  # Covariances (optional; default assumes correlated factors)
+  Factor1 ~~ Factor2
+  Factor1 ~~ Factor3
+  Factor2 ~~ Factor3
+'
+
+# Fit the CFA model
+cfa_fit <- cfa(model = cfa_model, data = observed_data)
+
+# Summarize results
+summary(cfa_fit, fit.measures = TRUE, standardized = TRUE)
+
+# Check model fit indices
+fitMeasures(cfa_fit)
+
+# Inspect modification indices (to identify potential model improvements)
+modificationIndices(cfa_fit, sort = TRUE)
+
+# Residuals analysis
+residuals(cfa_fit, type = "cor")
+
+# Visualize the model (optional)
+# install.packages("semPlot")
+library(semPlot)
+semPaths(cfa_fit, what = "std", layout = "tree", 
+         nCharNodes = 0, edge.label.cex = 0.8)
+
+```
+
+-   **적합도 지표 (Fit Indices):**
+
+    -   좋은 적합도 기준:
+
+        -   **CFI, TLI ≥ 0.95**
+
+        -   **RMSEA ≤ 0.05**
+
+        -   **SRMR ≤ 0.08**
+
+-   **표준화 요인 적재값 (Standardized Factor Loadings):**
+
+    -   각 항목이 대응하는 잠재변수에 대해 얼마나 강하게 기여하는지
+
+    -   기준: 적재값 ≥ 0.7이면 "강한 기여"로 해석.
+
+-   **수정지수 (Modification Indices):**
+
+    -   모델 개선 가능성이 높은 항목 간의 경로를 제안합니다. 수정이 필요한 경우 수정 후 재분석 가능.
+
+-   **잔차 (Residuals):**
+
+    -   관찰된 값과 모델로 예측된 값 간의 차이를 분석합니다. 잔차가 작을수록 모델이 데이터를 잘 설명.
+
+```{r}
+# Standardized loadings table
+inspect(cfa_fit, what = "std")
+
+# Covariance matrix of latent factors
+inspect(cfa_fit, what = "cov.lv")
+
+```
+
+<br>
+
+#### Fitting to SEM
+
+```{r}
+# SEM 모델 정의
+sem_model <- '
+  # Measurement model (측정 모델: 요인 구조 정의)
+  Factor1 =~ Item1 + Item2 + Item3
+  Factor2 =~ Item4 + Item5 + Item6
+  Factor3 =~ Item7 + Item8 + Item9
+
+  # Structural model (구조 모델: 요인 간 관계 정의)
+  Factor2 ~ Factor1  # Factor1이 Factor2에 영향을 미침
+  Factor3 ~ Factor2  # Factor2가 Factor3에 영향을 미침
+  Factor3 ~ Factor1 + Factor2 #매개효과
+'
+
+```
+
+```{r}
+# SEM 모델 적합
+sem_fit <- sem(model = sem_model, data = observed_data)
+
+# 결과 요약
+summary(sem_fit, fit.measures = TRUE, standardized = TRUE)
+
+# 적합도 지표 확인
+fitMeasures(sem_fit)
+
+# 수정지수 확인 (필요시 모델 수정)
+modificationIndices(sem_fit, sort = TRUE)
+
+```
+
+```{r}
+# semPaths() 함수 수정: 경로의 투명도 및 색상 조정
+semPaths(
+  object = sem_fit,         # SEM 모델 객체
+  what = "std",             # 표준화된 경로 계수 표시
+  layout = "tree",          # 트리 레이아웃
+  edge.label.cex = 1.2,     # 경로 레이블 크기 (더 크게)
+  edge.color = "black",     # 선 색상 지정
+  edge.width = 1,         # 선의 두께
+  residuals = TRUE,         # 잔차 포함
+  intercepts = FALSE,       # 절편 제거
+  fade = FALSE,             # 투명도 조정 (FALSE로 설정하여 선을 더 선명하게)
+  nCharNodes = 0            # 노드 이름의 길이 제한 없음
+)
+
+```
+
+<br>
+
+## Clustering
+
+-   About Mechanism [pdf](content/clustering.pdf)
+
+### **K-Means Clustering in R**
+
+> The basic idea behind k-means clustering consists of defining clusters so that the total intra-cluster variation (known as *total within-cluster variation*) is minimized. There are several k-means algorithms available. The standard algorithm is the Hartigan-Wong algorithm (Hartigan and Wong 1979), which defines the total within-cluster variation as the sum of squared distances Euclidean distances between items and the corresponding centroid
+
+<br>
+
+Let's experiment with this simple shiny app
+
+<https://jjallaire.shinyapps.io/shiny-k-means/>
+
+<br>
+
+**Hands-on practice**
+
+Data we'll use is `USArrests`. The data must [contains only continuous variables]{.underline}, as the k-means algorithm uses variable means.
+
+```{r}
+library(tidyverse)
+
+data("USArrests")      # Loading the data set
+head(USArrests)
+```
+
+The **`USArrests`** dataset is a built-in dataset in R that contains data on crime rates (number of arrests per 100,000 residents) in the United States in 1973. The dataset has 50 observations, corresponding to the 50 US states, and 4 variables:
+
+-   **`Murder`**: Murder arrests (number of arrests for murder per 100,000 residents).
+
+-   **`Assault`**: Assault arrests (number of arrests for assault per 100,000 residents).
+
+-   **`UrbanPop`**: Urban population (percentage of the population living in urban areas).
+
+-   **`Rape`**: Rape arrests (number of arrests for rape per 100,000 residents).
+
+<br>
+
+**Visualize the data**
+
+See the [link](https://givitallugot.github.io/articles/2020-03/R-visualization-2-usmap) for the detail (in Korean)
+
+-   Let's create a new column for the state name
+
+```{r}
+#change row names to column (variable)
+crime <- rownames_to_column(USArrests, var="state") 
+head(crime)
+```
+
+```{r}
+#change the upper letter to lower character in state variable
+crime$state <- tolower(crime$state) 
+head(crime)
+```
+
+The **`states_map <- map_data("state")`** code is used to create a dataframe that contains map data for the 50 states in the United States.
+
+The **`map_data()`** function is from the **`ggplot2`** package, and it returns a dataframe that contains latitude and longitude coordinates for the boundaries of each state, along with additional information that can be used to plot the map.
+
+The argument to the **`map_data()`** function is the name of the region for which to retrieve the map data. In this case, the argument is **`"state"`**, which indicates that we want map data for the 50 states in the US.
+
+The resulting **`states_map`** dataframe contains the following columns:
+
+-   **`long`**: A vector of longitudes representing the boundaries of the state.
+
+-   **`lat`**: A vector of latitudes representing the boundaries of the state.
+
+-   **`group`**: An integer indicating the group to which each point belongs. This is used to group the points together when plotting the map.
+
+-   **`order`**: An integer indicating the order in which the points should be plotted.
+
+-   **`region`**: A character string indicating the name of the state.
+
+-   **`subregion`**: A character string indicating the name of a subregion within the state, if applicable. This is usually **`NA`** for the state maps.
+
+```{r}
+
+states_map <- map_data("state")
+head(states_map)
+```
+
+```{r}
+
+```
+
+The code **`library(ggiraphExtra)`** loads the **`ggiraphExtra`** package, which extends the functionality of the **`ggplot2`** package to allow for interactive graphics in R.
+
+The **`ggChoropleth()`** function is from the **`ggiraphExtra`** package and is used to create a choropleth map in which each state is colored according to its value of a specified variable.
+
+The first argument to **`ggChoropleth()`** is the data frame containing the data to be plotted, which is **`crime`** in this case.
+
+The second argument is the **`aes()`** function, which is used to map variables in the data frame to visual properties of the plot. The **`fill`** aesthetic is used to specify that the color of each state should be determined by the value of the **`Murder`** variable in the **`crime`** data frame. The **`map_id`** aesthetic is used to specify that each state should be identified by its name, which is found in the **`state`** variable in the **`crime`** data frame.
+
+The third argument is the **`map`** argument, which specifies the data frame containing the map data. In this case, the **`states_map`** data frame is used, which was created earlier using the **`map_data()`** function.
+
+```{r}
+
+# install.packages("ggiraphExtra")
+library(ggiraphExtra)
+
+ggChoropleth(data=crime, aes(fill=Murder, map_id=state), map=states_map)
+
+```
+
+-   Remove legend and change background color
+
+-   Murder rate by state
+
+```{r}
+library(ggthemes)
+ggChoropleth(data=crime, aes(fill=Murder, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+-   Urban pop by state
+
+```{r}
+ggChoropleth(data=crime, aes(fill=UrbanPop, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+-   Assault rate by state
+
+```{r}
+ggChoropleth(data=crime, aes(fill=Assault, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+-   Rape rate by state
+
+```{r}
+ggChoropleth(data=crime, aes(fill=Rape, map_id=state), map=states_map) + 
+  theme_map() + theme(legend.position="right")
+```
+
+Required R packages and functions The standard R function for k-means clustering is `kmeans()` \[stats package\], which simplified format is as follow:
+
+`kmeans(x, centers, iter.max = 10, nstart = 1)`
+
+```{r}
+glimpse(USArrests)
+```
+
+-   **Z-score Standardization** for k-means clustering
+
+```{r}
+df <- scale(USArrests) # Scaling the data
+head(df)
+summary(df)
+```
+
+To create a beautiful graph of the clusters generated with the `kmeans()` function, will use the `factoextra` package.
+
+```{r}
+# install.packages("factoextra")
+library(factoextra)
+```
+
+-   How many clusters (k) is the best?
+
+```{r}
+g1<-fviz_nbclust(df, kmeans, method = "wss")
+g1
+
+```
+
+```{r}
+g2<-fviz_nbclust(df, kmeans, method = "silhouette")
+g2
+```
+
+This code uses the **`fviz_nbclust()`** function from the **`factoextra`** package in R to determine the optimal number of clusters to use in a K-means clustering analysis.
+
+The first argument of **`fviz_nbclust()`** is the data frame **`df`** that contains the variables to be used in the clustering analysis.
+
+The second argument is the clustering function **`kmeans`** that specifies the algorithm to be used for clustering.
+
+The third argument **`method`** specifies the method to be used to determine the optimal number of clusters. In this case, two methods are used:
+
+-   **`"wss"`**: **Within-cluster sum of squares**. This method computes the sum of squared distances between each observation and its assigned cluster center, and then adds up these values across all clusters. The goal is to find the number of clusters that minimize the within-cluster sum of squares.
+
+-   **`"silhouette"`**: **Silhouette width**. This method computes a silhouette width for each observation, which measures [how similar the observation is to its own cluster compared to other clusters]{.underline}. The goal is to find the number of clusters that maximize the average silhouette width across all observations.
+
+Let's run unsupervised clustering given ***k=4***
+
+```{r}
+# Compute k-means with k = 4
+set.seed(123)
+km.res <- kmeans(df, 4, nstart = 25)
+```
+
+As the final result of k-means clustering result is sensitive to the random starting assignments, we specify `nstart = 25`. This means that R will try 25 different random starting assignments and then select the best results corresponding to the one with the lowest within cluster variation. The default value of nstart in R is one. But, it's strongly recommended to compute k-means clustering with a large value of nstart such as 25 or 50, in order to have a more stable result.
+
+-   Print the result
+
+```{r}
+# Print the results
+print(km.res)
+```
+
+> The printed output displays: the cluster means or centers: a matrix, which rows are cluster number (1 to 4) and columns are variables the clustering vector: A vector of integers (from 1:k) indicating the cluster to which each point is allocated
+
+If you want to add the point classifications to the original data, use this:
+
+```{r}
+str(km.res)
+km.res$cluster
+
+```
+
+-   Create a new data frame including cluster information
+
+```{r}
+dd <- data.frame(USArrests, cluster = km.res$cluster)
+head(dd)
+```
+
+-   Check groups' characteristics
+
+```{r}
+dd %>% 
+  group_by(cluster) %>% 
+  summarize_all(mean)
+```
+
+-   Cluster number for each of the observations
+
+```{r}
+table(dd$cluster)
+```
+
+-   Reshape the dataset to visualize
+
+```{r}
+library(reshape2)
+dd %>% 
+  melt(id.vars="cluster") %>% 
+  mutate(cluster=as.factor(cluster)) %>% 
+  head(20)
+```
+
+-   Check groups' characteristics with ggplot
+
+```{r}
+dd %>% 
+  melt(id.vars="cluster") %>% 
+  mutate(cluster=as.factor(cluster)) %>% 
+  ggplot(aes(x=cluster, y=value))+
+  geom_boxplot()+
+  facet_wrap(~variable, scale="free_y")
+
+```
+
+-   cluster 1: Rural area with high murder, assault
+-   cluster 2: Peaceful rural areas
+-   cluster 3: Good city with low crime
+-   cluster 4: City Gotham...?
+
+Let's see clusters are well made
+
+```{r}
+
+fviz_cluster(km.res, data = df)
+
+```
+
+Let's play with different k (number of clusters)
+
+```{r}
+k2 <- kmeans(df, centers = 2, nstart = 25)
+k3 <- kmeans(df, centers = 3, nstart = 25)
+k4 <- kmeans(df, centers = 4, nstart = 25)
+k5 <- kmeans(df, centers = 5, nstart = 25)
+
+# plots to compare
+p1 <- fviz_cluster(k2, geom = "point", data = df) + ggtitle("k = 2")
+p2 <- fviz_cluster(k3, geom = "point",  data = df) + ggtitle("k = 3")
+p3 <- fviz_cluster(k4, geom = "point",  data = df) + ggtitle("k = 4")
+p4 <- fviz_cluster(k5, geom = "point",  data = df) + ggtitle("k = 5")
+
+library(gridExtra)
+grid.arrange(p1, p2, p3, p4, nrow = 2)
+```
