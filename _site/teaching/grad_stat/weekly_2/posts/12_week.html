@@ -302,6 +302,8 @@ window.Quarto = {
 </ul>
 <p>These models provide flexible and easily interpretable ways to test intricate theoretical relationships.</p>
 <p><br></p>
+<p><a href="https://eli.johogo.com/Class/CCU/SEM/_Introduction%20to%20Mediation%20Moderation%20and%20Conditional%20Process%20Analysis%20by%20Andrew%20F%20Hayes.pdf"><strong>His book link</strong></a></p>
+<p><br></p>
 </section>
 </section>
 <section id="mediation-analysis" class="level3">
@@ -368,6 +370,54 @@ c=c'+(a \cdot b)
 <ul>
 <li>The total effect of X on Y (before including M) is divided into two parts: the direct effect (<strong>c’</strong>) and the indirect effect (<strong>ab</strong>). If the direct effect <strong>c’</strong> is significantly reduced when M is included, this supports the presence of mediation.</li>
 </ul></li>
+</ol>
+<p><br></p>
+</section>
+<section id="하지만-hayes나-현대적-mediation에서는-조금-뉘앙스가-다름" class="level4">
+<h4 class="anchored" data-anchor-id="하지만-hayes나-현대적-mediation에서는-조금-뉘앙스가-다름">하지만 Hayes나 현대적 Mediation에서는 조금 뉘앙스가 다름</h4>
+<ul>
+<li><p>과거 Baron &amp; Kenny (1986) 접근에서는 path a, b, c’가 모두 유의해야 mediation이라고 결론냈지만, 현대적 접근(특히 Hayes PROCESS)에서는 경로 각각의 유의성보다 <strong>indirect effect = a × b 자체가 유의한지</strong>가 더 중요함.</p></li>
+<li><p><strong>indirect effect는 부트스트랩으로 검정</strong></p>
+<ul>
+<li><p>H₀: a×b = 0</p></li>
+<li><p>H₁: a×b ≠ 0</p></li>
+</ul></li>
+</ul>
+<p><br></p>
+</section>
+<section id="부트스트랩이-가정을-완화하는-메커니즘" class="level4">
+<h4 class="anchored" data-anchor-id="부트스트랩이-가정을-완화하는-메커니즘">부트스트랩이 가정을 완화하는 메커니즘</h4>
+<p><strong>1) 데이터를 직접 재표집(resampling)하여 분포를 “경험적으로” 만듦</strong></p>
+<ul>
+<li><p>전통적 검정은 “이 통계량은 정규분포일 것이다”라는 <strong>이론적 분포 가정</strong>을 사용.</p></li>
+<li><p>부트스트랩은 <strong>정규성 가정을 사용하지 않고, 원데이터에서 재표집된 분포를 그대로 사용</strong>.</p></li>
+<li><p><strong>비정규성(non-normality)</strong> 문제를 해결</p></li>
+</ul>
+<p><strong>2) 간접효과 ab 같은 복잡한 통계량도 분포를 직접 구성</strong></p>
+<ul>
+<li><p>a × b의 분포는 정규가 아니고 <strong>skewed</strong> 형태.</p></li>
+<li><p>하지만 부트스트랩은 원표본을 재표집하여 a와 b를 계속 추정</p></li>
+<li><p>매 반복마다 a × b 값을 쌓아 실제 분포를 재구성</p></li>
+<li><p>자연스럽게 간접효과의 실제 경험적 분포를 얻고, 그 위에서 신뢰구간(CI)이나 유의성 판단</p></li>
+</ul>
+<p><strong>3) 표본이 적거나 잔차가 이분산일 때도 안정적인 추론 가능</strong></p>
+<ul>
+<li><p>부트스트랩은 데이터의 특성을 있는 그대로 반영하기 때문에</p></li>
+<li><p>차가 정규적이지 않아도, 이상치가 있어도, 이분산성이 있어도, 표본이 작아도 → 표본 분포를 직접 재구성하므로 “견고한(robust)” 추론이 가능</p></li>
+</ul>
+<p><br></p>
+</section>
+<section id="process는-어떻게-작동하나" class="level4">
+<h4 class="anchored" data-anchor-id="process는-어떻게-작동하나">PROCESS는 어떻게 작동하나?</h4>
+<ol type="1">
+<li><p>기본 모델은 OLS 회귀식 (매개: X→M, M→Y / 조절: 상호작용항 등)</p></li>
+<li><p>하지만 추론, 특히 간접효과 검정은 <em>Bootstrapped confidence interval (BCa CI)</em> 사용</p></li>
+<li><p>그래서 PROCESS는 다음 가정을 완화:</p>
+<ol type="1">
+<li><p>정규성 가정 완화</p></li>
+<li><p>간접효과 분포의 정상성 가정 제거</p></li>
+<li><p>표본크기의 민감도 완화</p></li>
+</ol></li>
 </ol>
 <p><br></p>
 <p><strong>Bootstrapping for Mediation</strong></p>

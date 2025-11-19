@@ -77,6 +77,10 @@ These models provide flexible and easily interpretable ways to test intricate th
 
 <br>
 
+[**His book link**](https://eli.johogo.com/Class/CCU/SEM/_Introduction%20to%20Mediation%20Moderation%20and%20Conditional%20Process%20Analysis%20by%20Andrew%20F%20Hayes.pdf)
+
+<br>
+
 ### **Mediation Analysis**
 
 Mediation analysis is a statistical technique used to explore the underlying process or mechanism through which an independent variable (X) influences a dependent variable (Y) through a third variable, called the **mediator** (M). This chapter will provide an in-depth look at the theory behind mediation, introduce you to the necessary statistical steps, and show how to conduct mediation analysis using R with practical examples.
@@ -156,6 +160,62 @@ Mediation analysis generally follows three main steps:
 3.  **Testing the direct effect of X on Y (path c')**:
 
     -   The total effect of X on Y (before including M) is divided into two parts: the direct effect (**c'**) and the indirect effect (**ab**). If the direct effect **c'** is significantly reduced when M is included, this supports the presence of mediation.
+
+<bR>
+
+#### 하지만 Hayes나 현대적 Mediation에서는 조금 뉘앙스가 다름
+
+-   과거 Baron & Kenny (1986) 접근에서는 path a, b, c'가 모두 유의해야 mediation이라고 결론냈지만, 현대적 접근(특히 Hayes PROCESS)에서는 경로 각각의 유의성보다 **indirect effect = a × b 자체가 유의한지**가 더 중요함.
+
+-   **indirect effect는 부트스트랩으로 검정**
+
+    -   H₀: a×b = 0
+
+    -   H₁: a×b ≠ 0
+
+<br>
+
+#### 부트스트랩이 가정을 완화하는 메커니즘
+
+**1) 데이터를 직접 재표집(resampling)하여 분포를 “경험적으로” 만듦**
+
+-    전통적 검정은 “이 통계량은 정규분포일 것이다”라는 **이론적 분포 가정**을 사용.
+
+-   부트스트랩은 **정규성 가정을 사용하지 않고, 원데이터에서 재표집된 분포를 그대로 사용**.
+
+-   **비정규성(non-normality)** 문제를 해결
+
+**2) 간접효과 ab 같은 복잡한 통계량도 분포를 직접 구성**
+
+-   a × b의 분포는 정규가 아니고 **skewed** 형태.
+
+-   하지만 부트스트랩은 원표본을 재표집하여 a와 b를 계속 추정
+
+-   매 반복마다 a × b 값을 쌓아 실제 분포를 재구성
+
+-   자연스럽게 간접효과의 실제 경험적 분포를 얻고, 그 위에서 신뢰구간(CI)이나 유의성 판단
+
+**3) 표본이 적거나 잔차가 이분산일 때도 안정적인 추론 가능**
+
+-   부트스트랩은 데이터의 특성을 있는 그대로 반영하기 때문에
+
+-   차가 정규적이지 않아도, 이상치가 있어도, 이분산성이 있어도, 표본이 작아도 → 표본 분포를 직접 재구성하므로 “견고한(robust)” 추론이 가능
+
+<br>
+
+#### PROCESS는 어떻게 작동하나?
+
+1.   기본 모델은 OLS 회귀식 (매개: X→M, M→Y / 조절: 상호작용항 등)
+
+2.  하지만 추론, 특히 간접효과 검정은 *Bootstrapped confidence interval (BCa CI)* 사용
+
+3.  그래서 PROCESS는 다음 가정을 완화:
+
+    1.  정규성 가정 완화
+
+    2.  간접효과 분포의 정상성 가정 제거
+
+    3.  표본크기의 민감도 완화
 
 <br>
 
