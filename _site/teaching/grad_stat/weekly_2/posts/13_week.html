@@ -233,6 +233,10 @@ window.Quarto = {
   <li><a href="#example-of-cfa-in-r" id="toc-example-of-cfa-in-r" class="nav-link" data-scroll-target="#example-of-cfa-in-r"><strong>Example of CFA in R</strong></a></li>
   </ul></li>
   <li><a href="#sem-practice" id="toc-sem-practice" class="nav-link" data-scroll-target="#sem-practice">SEM Practice</a></li>
+  <li><a href="#exploratory-factor-analysis-efa" id="toc-exploratory-factor-analysis-efa" class="nav-link" data-scroll-target="#exploratory-factor-analysis-efa"><strong>Exploratory Factor Analysis (EFA)</strong></a>
+  <ul class="collapse">
+  <li><a href="#efa-vs-cfa-핵심-차이" id="toc-efa-vs-cfa-핵심-차이" class="nav-link" data-scroll-target="#efa-vs-cfa-핵심-차이">EFA vs CFA: 핵심 차이</a></li>
+  </ul></li>
   <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a>
   <ul class="collapse">
   <li><a href="#k-means-clustering-in-r" id="toc-k-means-clustering-in-r" class="nav-link" data-scroll-target="#k-means-clustering-in-r"><strong>K-Means Clustering in R</strong></a></li>
@@ -285,7 +289,7 @@ window.Quarto = {
 </section>
 <section id="measurement-error" class="level4">
 <h4 class="anchored" data-anchor-id="measurement-error"><strong>2. Measurement Error</strong></h4>
-<p>Measurement error is the discrepancy between the observed value and the true value of a variable. SEM explicitly incorporates measurement error into its models, which sets it apart from traditional regression approaches.</p>
+<p>Measurement error is the discrepancy between the observed value and the true value of a variable. <u>SEM explicitly incorporates measurement error into its models, which sets it apart from traditional regression approaches</u>.</p>
 <p><img src="images/clipboard-167134754.png" class="img-fluid"></p>
 </section>
 <section id="path-diagrams" class="level4">
@@ -296,6 +300,41 @@ window.Quarto = {
 <li><p><strong>Squares</strong>: Represent observed variables.</p></li>
 <li><p><strong>Arrows</strong>: Depict causal relationships or associations.</p></li>
 </ul>
+<p><br></p>
+<blockquote class="blockquote">
+<p>구조방정식 모형(SEM)의 주요 장점</p>
+<p><strong>1. 관찰변수 + 잠재변수를 동시에 모델링할 수 있다</strong></p>
+<ul>
+<li><p>SEM의 가장 큰 장점은 <strong>Measurement model(측정모형)</strong> 과 <strong>Structural model(구조모형)</strong> 을 <strong>한 번에</strong> 추정한다는 점. 즉, <strong>측정 오류를 통제하면서</strong> 이론적 관계(경로)를 분석할 수 있다.</p></li>
+<li><p>반면 PROCESS(Hayes)는 <strong>관찰변수 기반 회귀분석</strong> → 측정오류를 반영하지 못함.</p></li>
+</ul>
+<p><strong>2. 복잡한 이론 모델을 깔끔하게 설계할 수 있다</strong></p>
+<ul>
+<li><p>다중 매개(multiple mediation)</p></li>
+<li><p>연속 매개(sequential / serial mediation)</p></li>
+<li><p>다중 조절(multiple moderation)</p></li>
+<li><p>조절된 매개(mod moderated mediation)</p></li>
+<li><p>매개된 조절(mediated moderation)</p></li>
+<li><p>다집단 분석(multi-group analysis)</p></li>
+<li><p>잠재성장모형(LGM)</p></li>
+<li><p>확인적 요인분석(CFA)</p></li>
+</ul>
+<p><strong>3. 전체 모형 적합도를 평가할 수 있다 (Fit indices)</strong></p>
+<ul>
+<li>회귀나 PROCESS는 <strong>“이 관계가 유의한가?”</strong> 까지만. SEM은 더 나아가 <strong>“이 모델 전체가 데이터에 얼마나 잘 맞는가?”</strong> 를 평가할 수 있음</li>
+</ul>
+<p><strong>4. 오차 간 상관(Residual covariance)이나 제약을 자유롭게 줄 수 있음</strong></p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p><strong>그렇다면 왜 SEM이 ’계수가 잘 흔들린다’고 느껴질까?</strong></p>
+<p>SEM은 <strong>모델을 어떻게 그리느냐에 따라 추정값이 달라지는 구조</strong>이기 때문.</p>
+<ul>
+<li><p>오차 간 상관을 허용하면 계수가 바뀜</p></li>
+<li><p>불필요한 경로를 제거하면 전체 계수가 변화</p></li>
+<li><p>측정모형의 factor loading 구조에 따라 구조경로가 변함</p></li>
+</ul>
+</blockquote>
 <p><br></p>
 </section>
 </section>
@@ -327,7 +366,7 @@ Motivation = Hours\_Studied
 <h3 class="anchored" data-anchor-id="steps-in-conducting-sem"><strong>Steps in Conducting SEM</strong></h3>
 <section id="step-1-define-the-model" class="level4">
 <h4 class="anchored" data-anchor-id="step-1-define-the-model"><strong>Step 1: Define the Model</strong></h4>
-<p>Develop a theoretical model based on prior research or hypotheses. Clearly specify the relationships among variables in a path diagram.</p>
+<p><u>Develop a theoretical model based on prior research or hypotheses.</u> Clearly specify the relationships among variables in a path diagram. (탐색적 분석에는 부적합)</p>
 </section>
 <section id="step-2-specify-the-model" class="level4">
 <h4 class="anchored" data-anchor-id="step-2-specify-the-model"><strong>Step 2: Specify the Model</strong></h4>
@@ -357,6 +396,7 @@ Motivation = Hours\_Studied
 <section id="introduction-1" class="level4">
 <h4 class="anchored" data-anchor-id="introduction-1"><strong>Introduction</strong></h4>
 <p>Cronbach’s Alpha (α) is a widely used statistic in research to assess the <strong>internal consistency reliability</strong> of a set of items or indicators. It is particularly useful for measuring the reliability of scales, tests, or questionnaires in social sciences, psychology, education, and other fields. Reliability refers to the extent to which a scale produces consistent results across repeated measurements or multiple items measuring the same construct.</p>
+<p><br></p>
 </section>
 <section id="conceptual-foundation" class="level3">
 <h3 class="anchored" data-anchor-id="conceptual-foundation"><strong>Conceptual Foundation</strong></h3>
@@ -422,6 +462,39 @@ Motivation = Hours\_Studied
 <li><p><strong>Equal Variance Contribution</strong>: Each item should contribute equally to the total score (violations can lead to under- or overestimation of reliability).</p></li>
 <li><p><strong>Correlation Between Items</strong>: Items should be positively correlated.</p></li>
 </ol>
+<p><br></p>
+<blockquote class="blockquote">
+<p>하나의 잠재 변수에 측정변수는 왜 3개 이상이 권장될까?</p>
+<p><strong>1. 잠재변수(latent variable)를 식별(identification)하기 위한 기본 기준</strong></p>
+<p>잠재변수 1개를 CFA/SEM에서 추정하려면 <strong>최소 2개의 지표(아이템)</strong> 이면 모델을 <strong>식별 가능</strong>하게 만들 수 있음.</p>
+<p>하지만 2개만 있을 때는 아래 문제가 생김.</p>
+<ul>
+<li><p>잠재변수의 <strong>오차분산이 제대로 분리되지 않음</strong></p></li>
+<li><p><strong>모델 식별이 불안정</strong></p></li>
+<li><p><strong>추정값의 표준오차가 커짐</strong></p></li>
+<li><p><strong>신뢰도 검증(CR, AVE, Cronbach α)이 부정확</strong></p></li>
+<li><p>그래서 <strong>실무와 학계에서는 3개 이상</strong>을 추천하는 것.</p></li>
+</ul>
+<p>그렇다면 왜 2개는 불안한가?</p>
+<p><strong>① 2개 지표는 사실상 “그래야만 겨우 식별”되는 구조라서</strong> 구조적 제약을 강제로 걸어야 식별이 됨.</p>
+<ul>
+<li>예: 두 아이템의 loading 을 동일하게 설정하거나, 잠재변수 분산을 1로 고정하는 식. 즉, <strong>자연스럽지 않은 형태로 모델을 고정해야 함.</strong></li>
+</ul>
+<p><strong>② 신뢰도 검증이 어려움</strong></p>
+<p>2개만 있으면:</p>
+<ul>
+<li><p>Cronbach’s α 가 안정적이지 않음</p></li>
+<li><p>AVE 계산 시 분산 추정이 불안정</p></li>
+<li><p>Composite Reliability(CR)가 낮게 나오는 경향</p></li>
+</ul>
+<p><strong>③ 단일 아이템 편향(single-item bias)이 강하게 작동</strong></p>
+<p>아이템이 적을수록</p>
+<ul>
+<li><p>각 문항의 측정 오류가 잠재변수 전체에 그대로 전달</p></li>
+<li><p>비정상적인 loading 값이 생기면 수정할 여지가 없음</p></li>
+<li><p>즉, <strong>두 문항 중 하나만 문제여도 잠재변수 전체가 흔들림.</strong></p></li>
+</ul>
+</blockquote>
 <p><br></p>
 </section>
 <section id="practical-example-calculating-cronbachs-alpha-in-r" class="level3">
@@ -890,64 +963,91 @@ Variances:
 </ul></li>
 </ul>
 <p><br></p>
+<blockquote class="blockquote">
+<p><strong>CFA/SEM에서 가장 널리 쓰는 4대 핵심 Model Fit 지표</strong></p>
+<ul>
+<li><strong>CFI (Comparative Fit Index)</strong></li>
+</ul>
+<pre><code>-   *기준*: **≥ 0.90 (권장 ≥ 0.95)**
+
+-   기준모델(null model)과 비교했을 때 얼마나 개선되었는지.</code></pre>
+<ul>
+<li><p><strong>TLI (Tucker–Lewis Index, NNFI)</strong></p>
+<ul>
+<li><p><em>기준</em>: <strong>≥ 0.90 (권장 ≥ 0.95)</strong></p></li>
+<li><p>모형 복잡성(자유도)을 감안한 상대 적합도.</p></li>
+</ul></li>
+<li><p><strong>RMSEA (Root Mean Square Error of Approximation)</strong></p>
+<ul>
+<li><p><em>기준</em>: <strong>≤ 0.08 (좋음 ≤ 0.06)</strong></p></li>
+<li><p>모형이 “근사적으로 얼마나 잘 맞는가”를 나타내는 핵심 지표.</p></li>
+</ul></li>
+<li><p><strong>SRMR (Standardized Root Mean Square Residual)</strong></p>
+<ul>
+<li><p><em>기준</em>: <strong>≤ 0.08</strong></p></li>
+<li><p>관찰 공분산 vs 모델이 예측한 공분산의 평균 차이.</p></li>
+</ul></li>
+</ul>
+</blockquote>
+<p><br></p>
 </section>
 </section>
 </section>
 <section id="sem-practice" class="level2">
 <h2 class="anchored" data-anchor-id="sem-practice">SEM Practice</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install lavaan if not already installed</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("lavaan")</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load lavaan</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install lavaan if not already installed</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("lavaan")</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load lavaan</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required package for data simulation</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of observations</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">300</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Define factor structure (3 latent factors, uncorrelated)</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>latent_factors <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),       <span class="co"># Mean of latent factors</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sigma =</span> <span class="fu">diag</span>(<span class="dv">3</span>)        <span class="co"># Identity matrix implies no correlation between factors</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor loadings for each latent factor</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>loadings <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor1 =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>),  <span class="co"># Loadings for Item1, Item2, Item3</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor2 =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>, <span class="fl">0.85</span>), <span class="co"># Loadings for Item4, Item5, Item6</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor3 =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.75</span>, <span class="fl">0.9</span>) <span class="co"># Loadings for Item7, Item8, Item9</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Residual variances (to ensure observed variables are not perfectly predicted by latent factors)</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor1 =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>),</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor2 =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.35</span>),</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor3 =</span> <span class="fu">c</span>(<span class="fl">0.35</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>)</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate observed variables for each factor</span></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>observed_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item1 =</span> latent_factors[, <span class="dv">1</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor1[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor1[<span class="dv">1</span>]),</span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item2 =</span> latent_factors[, <span class="dv">1</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor1[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor1[<span class="dv">2</span>]),</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item3 =</span> latent_factors[, <span class="dv">1</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor1[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor1[<span class="dv">3</span>]),</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item4 =</span> latent_factors[, <span class="dv">2</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor2[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor2[<span class="dv">1</span>]),</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item5 =</span> latent_factors[, <span class="dv">2</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor2[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor2[<span class="dv">2</span>]),</span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item6 =</span> latent_factors[, <span class="dv">2</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor2[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor2[<span class="dv">3</span>]),</span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item7 =</span> latent_factors[, <span class="dv">3</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor3[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor3[<span class="dv">1</span>]),</span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item8 =</span> latent_factors[, <span class="dv">3</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor3[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor3[<span class="dv">2</span>]),</span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item9 =</span> latent_factors[, <span class="dv">3</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor3[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor3[<span class="dv">3</span>])</span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Check summary</span></span>
-<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(observed_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required package for data simulation</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of observations</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Define factor structure (3 latent factors, uncorrelated)</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>latent_factors <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> n,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),       <span class="co"># Mean of latent factors</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sigma =</span> <span class="fu">diag</span>(<span class="dv">3</span>)        <span class="co"># Identity matrix implies no correlation between factors</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor loadings for each latent factor</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>loadings <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor1 =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>),  <span class="co"># Loadings for Item1, Item2, Item3</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor2 =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>, <span class="fl">0.85</span>), <span class="co"># Loadings for Item4, Item5, Item6</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor3 =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.75</span>, <span class="fl">0.9</span>) <span class="co"># Loadings for Item7, Item8, Item9</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Residual variances (to ensure observed variables are not perfectly predicted by latent factors)</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor1 =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>),</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor2 =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.35</span>),</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">Factor3 =</span> <span class="fu">c</span>(<span class="fl">0.35</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>)</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate observed variables for each factor</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>observed_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item1 =</span> latent_factors[, <span class="dv">1</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor1[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor1[<span class="dv">1</span>]),</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item2 =</span> latent_factors[, <span class="dv">1</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor1[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor1[<span class="dv">2</span>]),</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item3 =</span> latent_factors[, <span class="dv">1</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor1[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor1[<span class="dv">3</span>]),</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item4 =</span> latent_factors[, <span class="dv">2</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor2[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor2[<span class="dv">1</span>]),</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item5 =</span> latent_factors[, <span class="dv">2</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor2[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor2[<span class="dv">2</span>]),</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item6 =</span> latent_factors[, <span class="dv">2</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor2[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor2[<span class="dv">3</span>]),</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item7 =</span> latent_factors[, <span class="dv">3</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor3[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor3[<span class="dv">1</span>]),</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item8 =</span> latent_factors[, <span class="dv">3</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor3[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor3[<span class="dv">2</span>]),</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">Item9 =</span> latent_factors[, <span class="dv">3</span>] <span class="sc">*</span> loadings<span class="sc">$</span>Factor3[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, residuals<span class="sc">$</span>Factor3[<span class="dv">3</span>])</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Check summary</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(observed_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Item1              Item2              Item3             Item4         
  Min.   :-2.25631   Min.   :-2.32729   Min.   :-2.5787   Min.   :-2.67780  
@@ -976,27 +1076,27 @@ Variances:
 <li>CFA first</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load lavaan package for SEM</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the CFA model</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>cfa_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # Latent variables</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 =~ Item1 + Item2 + Item3</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 =~ Item4 + Item5 + Item6</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 =~ Item7 + Item8 + Item9</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="st">  # Covariances (optional; default assumes correlated factors)</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 ~~ Factor2</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 ~~ Factor3</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 ~~ Factor3</span></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the CFA model</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>cfa_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(<span class="at">model =</span> cfa_model, <span class="at">data =</span> observed_data)</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize results</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa_fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load lavaan package for SEM</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the CFA model</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>cfa_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # Latent variables</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 =~ Item1 + Item2 + Item3</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 =~ Item4 + Item5 + Item6</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 =~ Item7 + Item8 + Item9</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="st">  # Covariances (optional; default assumes correlated factors)</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 ~~ Factor2</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 ~~ Factor3</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 ~~ Factor3</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the CFA model</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>cfa_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(<span class="at">model =</span> cfa_model, <span class="at">data =</span> observed_data)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize results</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cfa_fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-19 ended normally after 34 iterations
 
@@ -1088,8 +1188,8 @@ Variances:
     Factor2           0.766    0.071   10.807    0.000    1.000    1.000
     Factor3           0.671    0.066   10.185    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model fit indices</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(cfa_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check model fit indices</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(cfa_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 npar                  fmin                 chisq 
                21.000                 0.038                22.719 
@@ -1124,8 +1224,8 @@ Variances:
                  ecvi 
                 0.216 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect modification indices (to identify potential model improvements)</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationIndices</span>(cfa_fit, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect modification indices (to identify potential model improvements)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationIndices</span>(cfa_fit, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       lhs op   rhs    mi    epc sepc.lv sepc.all sepc.nox
 76   Item7 ~~ Item8 5.993 -0.412  -0.412   -2.282   -2.282
@@ -1183,8 +1283,8 @@ Variances:
 39 Factor3 =~ Item3 0.000  0.001   0.000    0.000    0.000
 27 Factor1 =~ Item6 0.000  0.000   0.000    0.000    0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals analysis</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(cfa_fit, <span class="at">type =</span> <span class="st">"cor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Residuals analysis</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(cfa_fit, <span class="at">type =</span> <span class="st">"cor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$type
 [1] "cor.bollen"
@@ -1201,14 +1301,14 @@ Item7 -0.016 -0.046 -0.024 -0.007 -0.040 -0.025  0.000
 Item8 -0.030 -0.072 -0.049  0.024  0.002  0.000 -0.002  0.000       
 Item9  0.044 -0.021  0.026  0.019 -0.006  0.010  0.000  0.001  0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the model (optional)</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("semPlot")</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the model (optional)</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("semPlot")</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'semPlot' was built under R version 4.4.2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfa_fit, <span class="at">what =</span> <span class="st">"std"</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>, <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfa_fit, <span class="at">what =</span> <span class="st">"std"</span>, <span class="at">layout =</span> <span class="st">"tree"</span>, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nCharNodes =</span> <span class="dv">0</span>, <span class="at">edge.label.cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1242,8 +1342,8 @@ Item9  0.044 -0.021  0.026  0.019 -0.006  0.010  0.000  0.001  0.000</code></pre
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardized loadings table</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(cfa_fit, <span class="at">what =</span> <span class="st">"std"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardized loadings table</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(cfa_fit, <span class="at">what =</span> <span class="st">"std"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$lambda
       Factr1 Factr2 Factr3
@@ -1275,8 +1375,8 @@ Factor1  1.000
 Factor2 -0.024  1.000       
 Factor3 -0.084 -0.047  1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariance matrix of latent factors</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(cfa_fit, <span class="at">what =</span> <span class="st">"cov.lv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covariance matrix of latent factors</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(cfa_fit, <span class="at">what =</span> <span class="st">"cov.lv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Factr1 Factr2 Factr3
 Factor1  0.742              
@@ -1288,25 +1388,25 @@ Factor3 -0.059 -0.034  0.671</code></pre>
 <section id="fitting-to-sem" class="level4">
 <h4 class="anchored" data-anchor-id="fitting-to-sem">Fitting to SEM</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SEM 모델 정의</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sem_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model (측정 모델: 요인 구조 정의)</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 =~ Item1 + Item2 + Item3</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 =~ Item4 + Item5 + Item6</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 =~ Item7 + Item8 + Item9</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural model (구조 모델: 요인 간 관계 정의)</span></span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 ~ Factor1  # Factor1이 Factor2에 영향을 미침</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 ~ Factor2  # Factor2가 Factor3에 영향을 미침</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 ~ Factor1 + Factor2 #매개효과</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SEM 모델 정의</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sem_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model (측정 모델: 요인 구조 정의)</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor1 =~ Item1 + Item2 + Item3</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 =~ Item4 + Item5 + Item6</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 =~ Item7 + Item8 + Item9</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural model (구조 모델: 요인 간 관계 정의)</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor2 ~ Factor1  # Factor1이 Factor2에 영향을 미침</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 ~ Factor2  # Factor2가 Factor3에 영향을 미침</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="st">  Factor3 ~ Factor1 + Factor2 #매개효과</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SEM 모델 적합</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sem_fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> sem_model, <span class="at">data =</span> observed_data)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 요약</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SEM 모델 적합</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sem_fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(<span class="at">model =</span> sem_model, <span class="at">data =</span> observed_data)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 요약</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_fit, <span class="at">fit.measures =</span> <span class="cn">TRUE</span>, <span class="at">standardized =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6-19 ended normally after 35 iterations
 
@@ -1398,8 +1498,8 @@ Variances:
    .Factor2           0.766    0.071   10.806    0.000    0.999    0.999
    .Factor3           0.665    0.065   10.177    0.000    0.990    0.990</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 적합도 지표 확인</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(sem_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 적합도 지표 확인</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fitMeasures</span>(sem_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 npar                  fmin                 chisq 
                21.000                 0.038                22.719 
@@ -1434,8 +1534,8 @@ Variances:
                  ecvi 
                 0.216 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수정지수 확인 (필요시 모델 수정)</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationIndices</span>(sem_fit, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수정지수 확인 (필요시 모델 수정)</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modificationIndices</span>(sem_fit, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       lhs op   rhs    mi    epc sepc.lv sepc.all sepc.nox
 76   Item7 ~~ Item8 5.993 -0.412  -0.412   -2.282   -2.282
@@ -1495,19 +1595,19 @@ Variances:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># semPaths() 함수 수정: 경로의 투명도 및 색상 조정</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> sem_fit,         <span class="co"># SEM 모델 객체</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"std"</span>,             <span class="co"># 표준화된 경로 계수 표시</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">layout =</span> <span class="st">"tree"</span>,          <span class="co"># 트리 레이아웃</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.label.cex =</span> <span class="fl">1.2</span>,     <span class="co"># 경로 레이블 크기 (더 크게)</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.color =</span> <span class="st">"black"</span>,     <span class="co"># 선 색상 지정</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.width =</span> <span class="dv">1</span>,         <span class="co"># 선의 두께</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuals =</span> <span class="cn">TRUE</span>,         <span class="co"># 잔차 포함</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">intercepts =</span> <span class="cn">FALSE</span>,       <span class="co"># 절편 제거</span></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fade =</span> <span class="cn">FALSE</span>,             <span class="co"># 투명도 조정 (FALSE로 설정하여 선을 더 선명하게)</span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">nCharNodes =</span> <span class="dv">0</span>            <span class="co"># 노드 이름의 길이 제한 없음</span></span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># semPaths() 함수 수정: 경로의 투명도 및 색상 조정</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> sem_fit,         <span class="co"># SEM 모델 객체</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"std"</span>,             <span class="co"># 표준화된 경로 계수 표시</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">layout =</span> <span class="st">"tree"</span>,          <span class="co"># 트리 레이아웃</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.label.cex =</span> <span class="fl">1.2</span>,     <span class="co"># 경로 레이블 크기 (더 크게)</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.color =</span> <span class="st">"black"</span>,     <span class="co"># 선 색상 지정</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">edge.width =</span> <span class="dv">1</span>,         <span class="co"># 선의 두께</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuals =</span> <span class="cn">TRUE</span>,         <span class="co"># 잔차 포함</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">intercepts =</span> <span class="cn">FALSE</span>,       <span class="co"># 절편 제거</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fade =</span> <span class="cn">FALSE</span>,             <span class="co"># 투명도 조정 (FALSE로 설정하여 선을 더 선명하게)</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">nCharNodes =</span> <span class="dv">0</span>            <span class="co"># 노드 이름의 길이 제한 없음</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1516,6 +1616,229 @@ Variances:
 </div>
 </div>
 </div>
+<p><br></p>
+</section>
+</section>
+<section id="exploratory-factor-analysis-efa" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-factor-analysis-efa"><strong>Exploratory Factor Analysis (EFA)</strong></h2>
+<blockquote class="blockquote">
+<p><strong>데이터가 스스로 말하도록 해서 ’숨겨진 구조(잠재 요인)’를 찾는 통계 기법.</strong><br>
+설문 문항들이 어떤 요인들로 자연스럽게 묶이는지를 <strong>사전에 가정하지 않고</strong> 탐색하는 방법.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Load psych package</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Determine the number of factors</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    - Parallel analysis (가장 추천되는 방법)</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.parallel</span>(observed_data, </span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">fa =</span> <span class="st">"fa"</span>,         <span class="co"># factor analysis</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.iter =</span> <span class="dv">100</span>,      <span class="co"># bootstrap iterations</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">"Parallel Analysis for Factor Selection"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, :
+The estimated weights for the factor scores are probably incorrect.  Try a
+different factor score estimation method.
+Warning in fa.stats(r = r, f = f, phi = phi, n.obs = n.obs, np.obs = np.obs, :
+The estimated weights for the factor scores are probably incorrect.  Try a
+different factor score estimation method.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="13_week_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Parallel analysis suggests that the number of factors =  3  and the number of components =  NA </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Run EFA (Exploratory Factor Analysis)</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    - 여기서는 3개 요인 지정 (위에서 우리가 생성한 구조)</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    - rotation = "promax": oblique rotation (요인 상관 허용)</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>efa_result <span class="ot">&lt;-</span> <span class="fu">fa</span>(observed_data, </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">nfactors =</span> <span class="dv">3</span>, </span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fm =</span> <span class="st">"ml"</span>,      <span class="co"># maximum likelihood (추천)</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">rotate =</span> <span class="st">"promax"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required namespace: GPArotation</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Print EFA result</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(efa_result, <span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Factor Analysis using method =  ml
+Call: fa(r = observed_data, nfactors = 3, rotate = "promax", fm = "ml")
+Standardized loadings (pattern matrix) based upon correlation matrix
+         ML1    ML3    ML2    h2     u2  com
+Item1  0.039  0.928  0.028 0.856 0.1438 1.01
+Item2 -0.019  0.830 -0.032 0.698 0.3023 1.00
+Item3 -0.018  0.940  0.008 0.883 0.1167 1.00
+Item4  0.945 -0.011  0.013 0.892 0.1077 1.00
+Item5  0.896  0.014 -0.013 0.804 0.1965 1.00
+Item6  0.934 -0.004 -0.001 0.872 0.1279 1.00
+Item7 -0.024 -0.008  0.916 0.844 0.1562 1.00
+Item8  0.010 -0.033  0.793 0.636 0.3640 1.00
+Item9  0.011  0.049  0.962 0.916 0.0841 1.01
+
+                        ML1   ML3   ML2
+SS loadings           2.570 2.437 2.394
+Proportion Var        0.286 0.271 0.266
+Cumulative Var        0.286 0.556 0.822
+Proportion Explained  0.347 0.329 0.323
+Cumulative Proportion 0.347 0.677 1.000
+
+ With factor correlations of 
+       ML1    ML3    ML2
+ML1  1.000 -0.022 -0.049
+ML3 -0.022  1.000 -0.115
+ML2 -0.049 -0.115  1.000
+
+Mean item complexity =  1
+Test of the hypothesis that 3 factors are sufficient.
+
+df null model =  36  with the objective function =  7.799 with Chi Square =  2302.136
+df of  the model are 12  and the objective function was  0.027 
+
+The root mean square of the residuals (RMSR) is  0.005 
+The df corrected root mean square of the residuals is  0.009 
+
+The harmonic n.obs is  300 with the empirical chi square  0.592  with prob &lt;  1 
+The total n.obs was  300  with Likelihood Chi Square =  7.975  with prob &lt;  0.787 
+
+Tucker Lewis Index of factoring reliability =  1.0054
+RMSEA index =  0  and the 90 % confidence intervals are  0 0.0395
+BIC =  -60.47
+Fit based upon off diagonal values = 1
+Measures of factor score adequacy             
+                                                    ML1   ML3   ML2
+Correlation of (regression) scores with factors   0.975 0.970 0.973
+Multiple R square of scores with factors          0.951 0.941 0.948
+Minimum correlation of possible factor scores     0.901 0.881 0.895</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Factor loadings table only</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>loadings <span class="ot">&lt;-</span> <span class="fu">print</span>(efa_result<span class="sc">$</span>loadings, <span class="at">cutoff =</span> <span class="fl">0.30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Loadings:
+      ML1    ML3    ML2   
+Item1         0.928       
+Item2         0.830       
+Item3         0.940       
+Item4  0.945              
+Item5  0.896              
+Item6  0.934              
+Item7                0.916
+Item8                0.793
+Item9                0.962
+
+                 ML1   ML3   ML2
+SS loadings    2.570 2.439 2.396
+Proportion Var 0.286 0.271 0.266
+Cumulative Var 0.286 0.557 0.823</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Visualize factor structure (optional)</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.diagram</span>(efa_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="13_week_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Extract factor scores for further analysis </span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>factor_scores <span class="ot">&lt;-</span> efa_result<span class="sc">$</span>scores</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(factor_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             ML1         ML3         ML2
+[1,] -0.95361531  0.73108813 -0.92275225
+[2,] -0.85017187 -0.27595359  0.11931322
+[3,] -0.91241928 -0.05636701  1.34704044
+[4,] -0.90538277 -1.08583694 -0.02188601
+[5,] -0.05095542  1.05816930 -0.25046229
+[6,]  0.25766548  0.06198505  1.56489748</code></pre>
+</div>
+</div>
+<p><br></p>
+<section id="efa-vs-cfa-핵심-차이" class="level3">
+<h3 class="anchored" data-anchor-id="efa-vs-cfa-핵심-차이">EFA vs CFA: 핵심 차이</h3>
+<p><strong>1. 목적 차이</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 요인 구조를 <em>탐색</em>하는 분석 (무엇이 어디에 적재될지 모를 때)</p></li>
+<li><p><strong>CFA:</strong> 요인 구조를 <em>검증</em>하는 분석 (이론 기반 가설을 테스트할 때)</p></li>
+</ul>
+<p><strong>2. 아이템–요인 관계 설정</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 모든 문항이 모든 요인에 적재될 가능성을 열어둠</p></li>
+<li><p><strong>CFA:</strong> 어떤 문항이 어떤 요인에만 적재될지 연구자가 <em>사전에 지정</em></p></li>
+<li><p><strong>EFA:</strong> cross-loading 허용</p></li>
+<li><p><strong>CFA:</strong> cross-loading 대부분 금지</p></li>
+</ul>
+<p><strong>3. 회전(rotation)</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 필수 (varimax, promax 등)</p></li>
+<li><p><strong>CFA:</strong> 없음 (모델 자체가 구조를 고정하고 있기 때문에)</p></li>
+</ul>
+<p><strong>4. 연구자의 역할</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 데이터가 말하게 하는 분석(데이터 기반 구조 탐색)</p></li>
+<li><p><strong>CFA:</strong> 이론이 구조를 정하는 분석(가설 기반 구조 설정)</p></li>
+</ul>
+<p><strong>5. 적합도 평가(Fit indices)</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 전통적으로 크게 사용 X (요인 수 결정과 loading 패턴이 핵심)</p></li>
+<li><p><strong>CFA:</strong> CFI, TLI, RMSEA, SRMR 등 <em>fit index 필수</em></p></li>
+</ul>
+<p><strong>6. 분석 맥락(언제 사용?)</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 새로운 척도 개발, 미지의 구조 탐색, 초기 단계</p></li>
+<li><p><strong>CFA:</strong> 이미 개발된 척도의 구조 검증, SEM으로 이어지는 단계</p></li>
+</ul>
+<p><strong>7. 모델 제약</strong></p>
+<ul>
+<li><p><strong>EFA:</strong> 제약 거의 없음 → 자유도가 높음</p></li>
+<li><p><strong>CFA:</strong> 경로와 loading을 엄격하게 제약 → 이론 검증 중심</p></li>
+</ul>
+<p><strong>8. 학문적 흐름</strong></p>
+<ul>
+<li><p><strong>표준 절차:</strong> EFA → CFA → SEM</p></li>
+<li><p>EFA로 구조를 찾고, CFA로 검증하고, SEM으로 인과관계를 분석</p></li>
+</ul>
+<p><br></p>
+<blockquote class="blockquote">
+<p><strong>요인분석에서 ’회전(rotation)’이란?</strong></p>
+<ul>
+<li><p>요인 부하(loadings) 구조를 더 해석하기 쉽도록, 요인의 좌표축을 돌려서 문항들이 특정 요인에 더 선명하게 적재되도록 만드는 과정.</p></li>
+<li><p>EFA를 처음 실행하면 문항들이 여러 요인에 비슷하게 적재되어 해석이 모호하거나 요인별 특징이 명확하지 않음. <strong>요인의 축을 돌려서(rotate)</strong> “어떤 문항이 어떤 요인에 가장 가깝다”를 <strong>더 명확하게 만들어주는 과정.</strong></p></li>
+</ul>
+<p><strong>회전의 종류</strong></p>
+<ul>
+<li><p><strong>직교 회전(orthogonal)</strong></p>
+<ul>
+<li><p>요인 간 상관 = 0 으로 가정 (예: Varimax)</p></li>
+<li><p>깔끔할 수 있지만 현실적이진 않음</p></li>
+</ul></li>
+<li><p><strong>사각 회전(oblique)</strong></p>
+<ul>
+<li><p>요인 간 상관 허용 (연구에서는 보통 이게 더 현실적) 예: Promax, Oblimin</p></li>
+<li><p>인문사회·행태 연구에서 <em>기본 선택</em></p></li>
+</ul></li>
+</ul>
+</blockquote>
 <p><br></p>
 </section>
 </section>
@@ -1536,7 +1859,7 @@ Variances:
 <p><strong>Hands-on practice</strong></p>
 <p>Data we’ll use is <code>USArrests</code>. The data must <u>contains only continuous variables</u>, as the k-means algorithm uses variable means.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -1552,8 +1875,8 @@ Variances:
 ✖ dplyr::select()  masks MASS::select()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"USArrests"</span>)      <span class="co"># Loading the data set</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(USArrests)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"USArrests"</span>)      <span class="co"># Loading the data set</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(USArrests)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Murder Assault UrbanPop Rape
 Alabama      13.2     236       58 21.2
@@ -1578,9 +1901,9 @@ Colorado      7.9     204       78 38.7</code></pre>
 <li>Let’s create a new column for the state name</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#change row names to column (variable)</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>crime <span class="ot">&lt;-</span> <span class="fu">rownames_to_column</span>(USArrests, <span class="at">var=</span><span class="st">"state"</span>) </span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(crime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co">#change row names to column (variable)</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>crime <span class="ot">&lt;-</span> <span class="fu">rownames_to_column</span>(USArrests, <span class="at">var=</span><span class="st">"state"</span>) </span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(crime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       state Murder Assault UrbanPop Rape
 1    Alabama   13.2     236       58 21.2
@@ -1592,9 +1915,9 @@ Colorado      7.9     204       78 38.7</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#change the upper letter to lower character in state variable</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>crime<span class="sc">$</span>state <span class="ot">&lt;-</span> <span class="fu">tolower</span>(crime<span class="sc">$</span>state) </span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(crime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co">#change the upper letter to lower character in state variable</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>crime<span class="sc">$</span>state <span class="ot">&lt;-</span> <span class="fu">tolower</span>(crime<span class="sc">$</span>state) </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(crime)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       state Murder Assault UrbanPop Rape
 1    alabama   13.2     236       58 21.2
@@ -1618,8 +1941,8 @@ Colorado      7.9     204       78 38.7</code></pre>
 <li><p><strong><code>subregion</code></strong>: A character string indicating the name of a subregion within the state, if applicable. This is usually <strong><code>NA</code></strong> for the state maps.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(states_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>states_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"state"</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(states_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       long      lat group order  region subregion
 1 -87.46201 30.38968     1     1 alabama      &lt;NA&gt;
@@ -1636,35 +1959,10 @@ Colorado      7.9     204       78 38.7</code></pre>
 <p>The second argument is the <strong><code>aes()</code></strong> function, which is used to map variables in the data frame to visual properties of the plot. The <strong><code>fill</code></strong> aesthetic is used to specify that the color of each state should be determined by the value of the <strong><code>Murder</code></strong> variable in the <strong><code>crime</code></strong> data frame. The <strong><code>map_id</code></strong> aesthetic is used to specify that each state should be identified by its name, which is found in the <strong><code>state</code></strong> variable in the <strong><code>crime</code></strong> data frame.</p>
 <p>The third argument is the <strong><code>map</code></strong> argument, which specifies the data frame containing the map data. In this case, the <strong><code>states_map</code></strong> data frame is used, which was created earlier using the <strong><code>map_data()</code></strong> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ggiraphExtra")</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Murder, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="13_week_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<ul>
-<li><p>Remove legend and change background color</p></li>
-<li><p>Murder rate by state</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'ggthemes'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:ggiraphExtra':
-
-    theme_clean</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Murder, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("ggiraphExtra")</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraphExtra)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Murder, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1674,11 +1972,22 @@ Attaching package: 'ggthemes'</code></pre>
 </div>
 </div>
 <ul>
-<li>Urban pop by state</li>
+<li><p>Remove legend and change background color</p></li>
+<li><p>Murder rate by state</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>UrbanPop, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ggthemes'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggiraphExtra':
+
+    theme_clean</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Murder, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1688,11 +1997,11 @@ Attaching package: 'ggthemes'</code></pre>
 </div>
 </div>
 <ul>
-<li>Assault rate by state</li>
+<li>Urban pop by state</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Assault, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>UrbanPop, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1702,11 +2011,11 @@ Attaching package: 'ggthemes'</code></pre>
 </div>
 </div>
 <ul>
-<li>Rape rate by state</li>
+<li>Assault rate by state</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Rape, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Assault, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1715,10 +2024,24 @@ Attaching package: 'ggthemes'</code></pre>
 </div>
 </div>
 </div>
+<ul>
+<li>Rape rate by state</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggChoropleth</span>(<span class="at">data=</span>crime, <span class="fu">aes</span>(<span class="at">fill=</span>Rape, <span class="at">map_id=</span>state), <span class="at">map=</span>states_map) <span class="sc">+</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="13_week_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Required R packages and functions The standard R function for k-means clustering is <code>kmeans()</code> [stats package], which simplified format is as follow:</p>
 <p><code>kmeans(x, centers, iter.max = 10, nstart = 1)</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(USArrests)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(USArrests)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 50
 Columns: 4
@@ -1732,8 +2055,8 @@ $ Rape     &lt;dbl&gt; 21.2, 44.5, 31.0, 19.5, 40.6, 38.7, 11.1, 15.8, 31.9, 25.
 <li><strong>Z-score Standardization</strong> for k-means clustering</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests) <span class="co"># Scaling the data</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests) <span class="co"># Scaling the data</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Murder   Assault   UrbanPop         Rape
 Alabama    1.24256408 0.7828393 -0.5209066 -0.003416473
@@ -1743,7 +2066,7 @@ Arkansas   0.23234938 0.2308680 -1.0735927 -0.184916602
 California 0.27826823 1.2628144  1.7589234  2.067820292
 Colorado   0.02571456 0.3988593  0.8608085  1.864967207</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Murder           Assault           UrbanPop             Rape        
  Min.   :-1.6044   Min.   :-1.5090   Min.   :-2.31714   Min.   :-1.4874  
@@ -1756,8 +2079,8 @@ Colorado   0.02571456 0.3988593  0.8608085  1.864967207</code></pre>
 </div>
 <p>To create a beautiful graph of the clusters generated with the <code>kmeans()</code> function, will use the <code>factoextra</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("factoextra")</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("factoextra")</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</code></pre>
 </div>
@@ -1766,23 +2089,23 @@ Colorado   0.02571456 0.3988593  0.8608085  1.864967207</code></pre>
 <li>How many clusters (k) is the best?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>g1<span class="ot">&lt;-</span><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">"wss"</span>)</span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>g1<span class="ot">&lt;-</span><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">"wss"</span>)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="13_week_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="13_week_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>g2<span class="ot">&lt;-</span><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">"silhouette"</span>)</span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>g2<span class="ot">&lt;-</span><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">"silhouette"</span>)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="13_week_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="13_week_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1797,17 +2120,17 @@ Colorado   0.02571456 0.3988593  0.8608085  1.864967207</code></pre>
 </ul>
 <p>Let’s run unsupervised clustering given <strong><em>k=4</em></strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute k-means with k = 4</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>km.res <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute k-means with k = 4</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>km.res <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As the final result of k-means clustering result is sensitive to the random starting assignments, we specify <code>nstart = 25</code>. This means that R will try 25 different random starting assignments and then select the best results corresponding to the one with the lowest within cluster variation. The default value of nstart in R is one. But, it’s strongly recommended to compute k-means clustering with a large value of nstart such as 25 or 50, in order to have a more stable result.</p>
 <ul>
 <li>Print the result</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(km.res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(km.res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>K-means clustering with 4 clusters of sizes 8, 13, 16, 13
 
@@ -1855,7 +2178,7 @@ Available components:
 </blockquote>
 <p>If you want to add the point classifications to the original data, use this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(km.res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(km.res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
  $ cluster     : Named int [1:50] 1 4 4 1 4 4 3 3 4 1 ...
@@ -1873,7 +2196,7 @@ Available components:
  $ ifault      : int 0
  - attr(*, "class")= chr "kmeans"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>km.res<span class="sc">$</span>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>km.res<span class="sc">$</span>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Alabama         Alaska        Arizona       Arkansas     California 
              1              4              4              1              4 
@@ -1901,8 +2224,8 @@ Available components:
 <li>Create a new data frame including cluster information</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(USArrests, <span class="at">cluster =</span> km.res<span class="sc">$</span>cluster)</span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(USArrests, <span class="at">cluster =</span> km.res<span class="sc">$</span>cluster)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Murder Assault UrbanPop Rape cluster
 Alabama      13.2     236       58 21.2       1
@@ -1917,9 +2240,9 @@ Colorado      7.9     204       78 38.7       4</code></pre>
 <li>Check groups’ characteristics</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span> </span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_all</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   cluster Murder Assault UrbanPop  Rape
@@ -1934,7 +2257,7 @@ Colorado      7.9     204       78 38.7       4</code></pre>
 <li>Cluster number for each of the observations</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dd<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dd<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  1  2  3  4 
@@ -1945,7 +2268,7 @@ Colorado      7.9     204       78 38.7       4</code></pre>
 <li>Reshape the dataset to visualize</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'reshape2'</code></pre>
@@ -1955,10 +2278,10 @@ Attaching package: 'reshape2'</code></pre>
 
     smiths</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>(<span class="at">id.vars=</span><span class="st">"cluster"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster=</span><span class="fu">as.factor</span>(cluster)) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>(<span class="at">id.vars=</span><span class="st">"cluster"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster=</span><span class="fu">as.factor</span>(cluster)) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   cluster variable value
 1        1   Murder  13.2
@@ -1987,16 +2310,16 @@ Attaching package: 'reshape2'</code></pre>
 <li>Check groups’ characteristics with ggplot</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>(<span class="at">id.vars=</span><span class="st">"cluster"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster=</span><span class="fu">as.factor</span>(cluster)) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>cluster, <span class="at">y=</span>value))<span class="sc">+</span></span>
-<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
-<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scale=</span><span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>(<span class="at">id.vars=</span><span class="st">"cluster"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster=</span><span class="fu">as.factor</span>(cluster)) <span class="sc">%&gt;%</span> </span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>cluster, <span class="at">y=</span>value))<span class="sc">+</span></span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scale=</span><span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="13_week_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="13_week_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -2009,29 +2332,29 @@ Attaching package: 'reshape2'</code></pre>
 </ul>
 <p>Let’s see clusters are well made</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(km.res, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(km.res, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="13_week_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="13_week_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Let’s play with different k (number of clusters)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>k2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>k3 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">3</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
-<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>k4 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
-<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>k5 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">5</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
-<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plots to compare</span></span>
-<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k2, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 2"</span>)</span>
-<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k3, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 3"</span>)</span>
-<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k4, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 4"</span>)</span>
-<span id="cb94-10"><a href="#cb94-10" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k5, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 5"</span>)</span>
-<span id="cb94-11"><a href="#cb94-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-12"><a href="#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>k2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>k3 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">3</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>k4 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>k5 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">5</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plots to compare</span></span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k2, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 2"</span>)</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k3, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 3"</span>)</span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k4, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 4"</span>)</span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k5, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 5"</span>)</span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'gridExtra'</code></pre>
@@ -2041,11 +2364,11 @@ Attaching package: 'gridExtra'</code></pre>
 
     combine</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, p3, p4, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, p3, p4, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="13_week_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="13_week_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
