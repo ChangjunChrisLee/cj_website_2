@@ -4,8 +4,218 @@ subtitle: ""
 Week: 5
 format: html
 slide-format: revealjs
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-[Weekly content](https://changjunlee.com/teaching/grad_immersive/weekly_2/)
+[Weekly
+content](https://changjunlee.com/teaching/grad_immersive/weekly_2/)
+
+<br>
+
+## 대학원 시절 알았으면 좋았을 것들
+
+-   질문은 처음 생각한 것의 절반 크기로
+
+    -   큰 질문보다 끝낼 수 있는 질문이 훨씬 중요
+
+-   논문은 다 끝난 뒤 쓰는 게 아니라, 쓰면서 설계가 좋아지는 것
+
+    -   서론 초안과 방법론 초안을 빨리 써보는 습관이 중요
+
+-   폴더 정리, 파일명 규칙, 분석 로그, 코드 정리, 자주 쓰는 프롬프트
+    등은 초반에
+
+    -   나중에 기억이 아니라 기록이 연구를 살릴 수 있음
+
+-   지도교수와의 미팅은 ‘질문 3개 + 선택지 2개 + 내 추천안 1개’로.
+
+    -   “어떻게 할까요?” 는 되려 편하게 가는 길이 아님
+
+-   완벽한 하루보다 반복 가능한 한 주 (Daily Grinding)
+
+    -   대학원은 스퍼트보다 마라톤
+
+<bR>
+
+## 한 번에 통과하는 IRB
+
+-   **IRB가 보는 것**
+
+    -   연구 목적
+
+    -   연구 대상자
+
+    -   모집 방식
+
+    -   동의 절차
+
+    -   예상 위험과 불편
+
+    -   보상
+
+    -   개인정보/민감정보 처리
+
+    -   데이터 저장·폐기 방식
+
+<br>
+
+-   **연구계획서의 기본 문장 구조**
+
+    -   누가, 어떤 절차에 참여하고,
+    -   어떤 위험이 있고,
+    -   그 위험을 어떻게 줄이며,
+    -   수집된 자료를 어떻게 관리하는가
+
+<br>
+
+-   **자주 막히는 포인트**
+
+    -   예상치 못한 행정 포인트 (생각보다 오래 걸리고 반려 많음)
+
+    -   모집 공고는 자율 참여처럼 보이는데 실제로는 권력관계가 있는 경우
+
+    -   이름, 학번, 이메일 등 불필요한 식별정보를 과하게 받는 경우
+
+    -   데이터 보관 계획이 너무 모호한 경우
+
+    -   철회 가능성, 중도 중단 절차가 빠진 경우
+
+    -   보상이 지나치게 커서 사실상 압박이 되는 경우
+
+<br>
+
+## 논문의 구성: 서론-문헌고찰-방법론-결과-토론-결론
+
+| Chapter | 답하는 질문 | 핵심 역할 |
+|-----------------|--------------------------|-----------------------------|
+| 서론 | 왜 이 연구가 중요한가? | 문제 제기, 연구 질문, 기여 |
+| 문헌고찰(2장) | 지금까지 무엇이 알려져 있고 무엇이 비어 있는가? | 선행연구 정리, gap 제시, 이론적 위치 잡기 |
+| 방법론 | 그 질문을 어떻게 검증했는가? | 자료, 표본, 설계, 변수, 절차, 분석전략 |
+| 결과 | 실제로 무엇이 나왔는가? | 해석보다 사실 보고 중심 |
+| 토론 | 이 결과가 무엇을 의미하는가? | 이론적 의미 (2장에서 다룬 내용들이 결과와 함께 다시 다루어져야 함), 실무적 함의, 한계 |
+| 결론 | 결국 무엇을 남기는가? | 가장 짧고 강한 take-away |
+
+<br>
+
+## Conjoint 실험 설문 설계
+
+> 콘조인트는 “중요한 변수를 다 넣는 방법”이 아니라 “선택의 trade-off를
+> 설계하는 방법”
+
+-   **속성(attribute)**: 선택 대상을 구성하는 차원
+
+<!-- -->
+
+-   **수준(level)**: 각 속성이 가질 수 있는 값
+
+<!-- -->
+
+-   **프로파일(profile/card)**: 여러 속성 수준이 조합된 하나의 대안
+
+<!-- -->
+
+-   **choice task**: 응답자가 여러 대안 중 하나를 고르는 문제
+
+<bR>
+
+**“대학원생이 선호하는 연구방법 워크숍 프로그램”**
+
+속성과 수준을 예로 들면:
+
+-   **수업 방식**: 대면 / 온라인 / 하이브리드
+
+-   **수업 길이**: 2주 / 4주 / 8주
+
+-   **비용**: 무료 / 5만원 / 10만원
+
+-   **제공 내용**: 이론 중심 / 실습 중심 / 논문 작성 중심
+
+이 경우 가능한 전체 조합은 3 × 3 × 3 × 3 = **81개 프로파일**. 이걸 다
+보여줄 수 없으므로 fractional/orthogonal design으로 줄이는 것.
+`conjoint::caFactorialDesign()`는 full or fractional factorial design을
+만들고 orthogonal design도 반환할 수 있음.
+
+<bR>
+
+```{r}
+# install.packages("conjoint")
+library(conjoint)
+
+# 속성 수준 정의
+profiles <- expand.grid(
+  Mode   = c("Face", "Online", "Hybrid"),
+  Length = c("2weeks", "4weeks", "8weeks"),
+  Cost   = c("Free", "50k", "100k"),
+  Focus  = c("Theory", "Practice", "Writing")
+)
+
+# 전체 조합 확인
+nrow(profiles)   # 81
+head(profiles)
+
+# 직교/축약 설계 생성
+set.seed(123)
+design_orth <- caFactorialDesign(profiles, type = "orthogonal")
+
+design_orth
+nrow(design_orth)
+```
+
+<br>
+
+`AlgDesign::optFederov()`는 Federov exchange algorithm을 이용해
+exact/approximate optimal design을 계산
+
+```{r}
+# install.packages("AlgDesign")
+library(AlgDesign)
+
+cand <- gen.factorial(levels = c(3,3,3,3),
+                      factors = "all",
+                      varNames = c("Mode", "Length", "Cost", "Focus"))
+
+head(cand)
+nrow(cand)  # 81
+
+set.seed(123)
+des_opt <- optFederov(~ Mode + Length + Cost + Focus,
+                      data = cand,
+                      nTrials = 12)
+
+des_opt$design
+```
+
+<br>
+
+### 카드 배치 원칙
+
+1.  한 응답자에게 너무 많은 카드를 주지 말 것
+
+2.  choice set당 대안 수를 일정하게 유지할 것
+
+3.  순서를 랜덤화하거나 버전을 나눌 것
+
+4.  지배적(dominant) 카드만 반복되지 않게 점검할 것
+
+5.  파일럿으로 인지 부담을 확인할 것
+
+<br>
+
+**12개 카드를 4개 choice task로 나누기**
+
+```{r}
+design_cards <- des_opt$design
+
+design_cards$card_id <- 1:nrow(design_cards)
+
+design_cards
+
+# 단순 예시: 3개씩 묶어서 4개 task 생성
+design_cards$task <- rep(1:4, each = 3)
+
+design_cards
+```
 
 <br>
