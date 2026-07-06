@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Blogs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://axislab.netlify.app/"> 
+    <a class="nav-link" href="https://axislabskkku.com/"> 
 <span class="menu-text">LAB</span></a>
   </li>  
 </ul>
@@ -182,6 +182,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#conjoint-실험-설문-설계" id="toc-conjoint-실험-설문-설계" class="nav-link" data-scroll-target="#conjoint-실험-설문-설계">Conjoint 실험 설문 설계</a>
   <ul class="collapse">
   <li><a href="#카드-배치-원칙" id="toc-카드-배치-원칙" class="nav-link" data-scroll-target="#카드-배치-원칙">카드 배치 원칙</a></li>
+  </ul></li>
+  <li><a href="#설문-데이터-구조와-분석" id="toc-설문-데이터-구조와-분석" class="nav-link" data-scroll-target="#설문-데이터-구조와-분석">설문 데이터 구조와 분석</a>
+  <ul class="collapse">
+  <li><a href="#분석을-위한-더미-코딩" id="toc-분석을-위한-더미-코딩" class="nav-link" data-scroll-target="#분석을-위한-더미-코딩">분석을 위한 더미 코딩</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -279,9 +284,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="논문의-구성-서론-문헌고찰-방법론-결과-토론-결론">논문의 구성: 서론-문헌고찰-방법론-결과-토론-결론</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 36%">
-<col style="width: 40%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -509,6 +514,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><br></p>
+</section>
+</section>
+<section id="설문-데이터-구조와-분석" class="level2">
+<h2 class="anchored" data-anchor-id="설문-데이터-구조와-분석">설문 데이터 구조와 분석</h2>
+<ul>
+<li><p>응답 데이터는 보통 <strong>long format</strong>으로 정리</p></li>
+<li><p><code>mlogit</code>는 선택모형 추정을 위해 롱폼을 요구</p></li>
+<li><p><code>mlogit</code>는 random utility 기반의 multinomial logit 모델을 최대우도로 추정하는 패키지</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>survey_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>task, <span class="sc">~</span>alt, <span class="sc">~</span>choice, <span class="sc">~</span>Mode,     <span class="sc">~</span>Length,   <span class="sc">~</span>Cost,   <span class="sc">~</span>Focus,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span>,    <span class="dv">1</span>,   <span class="st">"A"</span>,    <span class="dv">1</span>,    <span class="st">"Face"</span>,    <span class="st">"2weeks"</span>, <span class="st">"Free"</span>,  <span class="st">"Practice"</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span>,    <span class="dv">1</span>,   <span class="st">"B"</span>,    <span class="dv">0</span>,    <span class="st">"Hybrid"</span>,  <span class="st">"4weeks"</span>, <span class="st">"50k"</span>,   <span class="st">"Writing"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span>,    <span class="dv">2</span>,   <span class="st">"A"</span>,    <span class="dv">0</span>,    <span class="st">"Online"</span>,  <span class="st">"8weeks"</span>, <span class="st">"100k"</span>,  <span class="st">"Theory"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>   <span class="dv">1</span>,    <span class="dv">2</span>,   <span class="st">"B"</span>,    <span class="dv">1</span>,    <span class="st">"Face"</span>,    <span class="st">"4weeks"</span>, <span class="st">"Free"</span>,  <span class="st">"Writing"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>   <span class="dv">2</span>,    <span class="dv">1</span>,   <span class="st">"A"</span>,    <span class="dv">0</span>,    <span class="st">"Face"</span>,    <span class="st">"2weeks"</span>, <span class="st">"Free"</span>,  <span class="st">"Practice"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>   <span class="dv">2</span>,    <span class="dv">1</span>,   <span class="st">"B"</span>,    <span class="dv">1</span>,    <span class="st">"Hybrid"</span>,  <span class="st">"4weeks"</span>, <span class="st">"50k"</span>,   <span class="st">"Writing"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>   <span class="dv">2</span>,    <span class="dv">2</span>,   <span class="st">"A"</span>,    <span class="dv">1</span>,    <span class="st">"Online"</span>,  <span class="st">"8weeks"</span>, <span class="st">"100k"</span>,  <span class="st">"Theory"</span>,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>   <span class="dv">2</span>,    <span class="dv">2</span>,   <span class="st">"B"</span>,    <span class="dv">0</span>,    <span class="st">"Face"</span>,    <span class="st">"4weeks"</span>, <span class="st">"Free"</span>,  <span class="st">"Writing"</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>survey_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 8
+     id  task alt   choice Mode   Length Cost  Focus   
+  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   
+1     1     1 A          1 Face   2weeks Free  Practice
+2     1     1 B          0 Hybrid 4weeks 50k   Writing 
+3     1     2 A          0 Online 8weeks 100k  Theory  
+4     1     2 B          1 Face   4weeks Free  Writing 
+5     2     1 A          0 Face   2weeks Free  Practice
+6     2     1 B          1 Hybrid 4weeks 50k   Writing 
+7     2     2 A          1 Online 8weeks 100k  Theory  
+8     2     2 B          0 Face   4weeks Free  Writing </code></pre>
+</div>
+</div>
+<section id="분석을-위한-더미-코딩" class="level3">
+<h3 class="anchored" data-anchor-id="분석을-위한-더미-코딩">분석을 위한 더미 코딩</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>survey_data <span class="ot">&lt;-</span> survey_data <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mode   =</span> <span class="fu">factor</span>(Mode),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Length =</span> <span class="fu">factor</span>(Length),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Cost   =</span> <span class="fu">factor</span>(Cost),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Focus  =</span> <span class="fu">factor</span>(Focus)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>survey_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 8
+     id  task alt   choice Mode   Length Cost  Focus   
+  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt;   
+1     1     1 A          1 Face   2weeks Free  Practice
+2     1     1 B          0 Hybrid 4weeks 50k   Writing 
+3     1     2 A          0 Online 8weeks 100k  Theory  
+4     1     2 B          1 Face   4weeks Free  Writing 
+5     2     1 A          0 Face   2weeks Free  Practice
+6     2     1 B          1 Hybrid 4weeks 50k   Writing 
+7     2     2 A          1 Online 8weeks 100k  Theory  
+8     2     2 B          0 Face   4weeks Free  Writing </code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
 
 
 </section>
@@ -949,12 +1035,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
       <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
-      <i class="bi bi-twitter" role="img">
 </i> 
     </a>
   </li>  

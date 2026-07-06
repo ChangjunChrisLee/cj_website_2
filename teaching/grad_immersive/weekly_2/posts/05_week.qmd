@@ -89,7 +89,7 @@ content](https://changjunlee.com/teaching/grad_immersive/weekly_2/)
 ## 논문의 구성: 서론-문헌고찰-방법론-결과-토론-결론
 
 | Chapter | 답하는 질문 | 핵심 역할 |
-|-----------------|--------------------------|-----------------------------|
+|----|----|----|
 | 서론 | 왜 이 연구가 중요한가? | 문제 제기, 연구 질문, 기여 |
 | 문헌고찰(2장) | 지금까지 무엇이 알려져 있고 무엇이 비어 있는가? | 선행연구 정리, gap 제시, 이론적 위치 잡기 |
 | 방법론 | 그 질문을 어떻게 검증했는가? | 자료, 표본, 설계, 변수, 절차, 분석전략 |
@@ -219,3 +219,46 @@ design_cards
 ```
 
 <br>
+
+## 설문 데이터 구조와 분석
+
+-   응답 데이터는 보통 **long format**으로 정리
+
+-   `mlogit`는 선택모형 추정을 위해 롱폼을 요구
+
+-   `mlogit`는 random utility 기반의 multinomial logit 모델을 최대우도로
+    추정하는 패키지
+
+```{r}
+library(dplyr)
+
+survey_data <- tibble::tribble(
+  ~id, ~task, ~alt, ~choice, ~Mode,     ~Length,   ~Cost,   ~Focus,
+   1,    1,   "A",    1,    "Face",    "2weeks", "Free",  "Practice",
+   1,    1,   "B",    0,    "Hybrid",  "4weeks", "50k",   "Writing",
+   1,    2,   "A",    0,    "Online",  "8weeks", "100k",  "Theory",
+   1,    2,   "B",    1,    "Face",    "4weeks", "Free",  "Writing",
+
+   2,    1,   "A",    0,    "Face",    "2weeks", "Free",  "Practice",
+   2,    1,   "B",    1,    "Hybrid",  "4weeks", "50k",   "Writing",
+   2,    2,   "A",    1,    "Online",  "8weeks", "100k",  "Theory",
+   2,    2,   "B",    0,    "Face",    "4weeks", "Free",  "Writing"
+)
+
+survey_data
+```
+
+### 분석을 위한 더미 코딩
+
+```{r}
+survey_data <- survey_data %>%
+  mutate(
+    Mode   = factor(Mode),
+    Length = factor(Length),
+    Cost   = factor(Cost),
+    Focus  = factor(Focus)
+  )
+survey_data
+```
+
+### 
