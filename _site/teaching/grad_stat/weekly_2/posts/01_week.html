@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -66,6 +100,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -119,15 +156,11 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../../research/index.html"> 
-<span class="menu-text">Research</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../../../blogs/index.html"> 
 <span class="menu-text">Blogs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://axislab.netlify.app/"> 
+    <a class="nav-link" href="https://axislabskku.com/"> 
 <span class="menu-text">LAB</span></a>
   </li>  
 </ul>
@@ -148,31 +181,55 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#first-week-orientation" id="toc-first-week-orientation" class="nav-link active" data-scroll-target="#first-week-orientation">First Week Orientation</a>
   <ul class="collapse">
-  <li><a href="#content" id="toc-content" class="nav-link" data-scroll-target="#content">Content</a></li>
+  <li><a href="#todays-roadmap" id="toc-todays-roadmap" class="nav-link" data-scroll-target="#todays-roadmap">Today’s Roadmap</a></li>
   </ul></li>
-  <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">Course description</a></li>
-  <li><a href="#about-lecturer" id="toc-about-lecturer" class="nav-link" data-scroll-target="#about-lecturer">About Lecturer</a></li>
+  <li><a href="#course-description" id="toc-course-description" class="nav-link" data-scroll-target="#course-description">Course Description</a></li>
+  <li><a href="#about-the-lecturer" id="toc-about-the-lecturer" class="nav-link" data-scroll-target="#about-the-lecturer">About the Lecturer</a></li>
   <li><a href="#weekly-design" id="toc-weekly-design" class="nav-link" data-scroll-target="#weekly-design">Weekly Design</a></li>
   <li><a href="#research-statistics" id="toc-research-statistics" class="nav-link" data-scroll-target="#research-statistics">Research &amp; Statistics</a>
   <ul class="collapse">
-  <li><a href="#why-is-statistics-important-in-grad-school" id="toc-why-is-statistics-important-in-grad-school" class="nav-link" data-scroll-target="#why-is-statistics-important-in-grad-school">Why is Statistics Important in Grad School?</a></li>
-  <li><a href="#the-role-of-statistics-in-research" id="toc-the-role-of-statistics-in-research" class="nav-link" data-scroll-target="#the-role-of-statistics-in-research">The Role of Statistics in Research</a></li>
-  <li><a href="#how-to-learn-statistics-as-a-grad-student" id="toc-how-to-learn-statistics-as-a-grad-student" class="nav-link" data-scroll-target="#how-to-learn-statistics-as-a-grad-student">How to Learn Statistics as a Grad Student</a></li>
-  <li><a href="#the-importance-of-daily-grinding" id="toc-the-importance-of-daily-grinding" class="nav-link" data-scroll-target="#the-importance-of-daily-grinding">The Importance of Daily Grinding</a></li>
+  <li><a href="#why-is-statistics-important-in-graduate-school" id="toc-why-is-statistics-important-in-graduate-school" class="nav-link" data-scroll-target="#why-is-statistics-important-in-graduate-school">Why Is Statistics Important in Graduate School?</a></li>
+  <li><a href="#statistics-across-the-research-workflow" id="toc-statistics-across-the-research-workflow" class="nav-link" data-scroll-target="#statistics-across-the-research-workflow">Statistics Across the Research Workflow</a></li>
+  <li><a href="#from-a-vague-idea-to-a-testable-hci-hypothesis" id="toc-from-a-vague-idea-to-a-testable-hci-hypothesis" class="nav-link" data-scroll-target="#from-a-vague-idea-to-a-testable-hci-hypothesis">From a Vague Idea to a Testable HCI Hypothesis</a></li>
+  <li><a href="#three-common-statistical-misunderstandings" id="toc-three-common-statistical-misunderstandings" class="nav-link" data-scroll-target="#three-common-statistical-misunderstandings">Three Common Statistical Misunderstandings</a></li>
+  <li><a href="#how-to-learn-statistics-as-a-graduate-student" id="toc-how-to-learn-statistics-as-a-graduate-student" class="nav-link" data-scroll-target="#how-to-learn-statistics-as-a-graduate-student">How to Learn Statistics as a Graduate Student</a></li>
+  <li><a href="#the-importance-of-daily-grinding" id="toc-the-importance-of-daily-grinding" class="nav-link" data-scroll-target="#the-importance-of-daily-grinding">The Importance of “Daily Grinding”</a></li>
   </ul></li>
   <li><a href="#data-science-r" id="toc-data-science-r" class="nav-link" data-scroll-target="#data-science-r">Data Science &amp; R</a>
   <ul class="collapse">
-  <li><a href="#why-data-science-is-so-important-to-learn" id="toc-why-data-science-is-so-important-to-learn" class="nav-link" data-scroll-target="#why-data-science-is-so-important-to-learn"><strong>Why Data Science is So Important to Learn?</strong></a></li>
-  <li><a href="#so-data-scientist-is.." id="toc-so-data-scientist-is.." class="nav-link" data-scroll-target="#so-data-scientist-is..">So Data Scientist is..</a></li>
-  <li><a href="#why-r-is-the-best-language-for-non-computer-majors-to-learn-data-science" id="toc-why-r-is-the-best-language-for-non-computer-majors-to-learn-data-science" class="nav-link" data-scroll-target="#why-r-is-the-best-language-for-non-computer-majors-to-learn-data-science"><strong>Why R is the Best Language for Non-Computer Majors to Learn Data Science</strong></a></li>
+  <li><a href="#common-data-sources-in-hci" id="toc-common-data-sources-in-hci" class="nav-link" data-scroll-target="#common-data-sources-in-hci">Common Data Sources in HCI</a></li>
+  <li><a href="#why-learn-data-science" id="toc-why-learn-data-science" class="nav-link" data-scroll-target="#why-learn-data-science">Why Learn Data Science?</a></li>
+  <li><a href="#so-what-does-a-data-scientist-do" id="toc-so-what-does-a-data-scientist-do" class="nav-link" data-scroll-target="#so-what-does-a-data-scientist-do">So, What Does a Data Scientist Do?</a></li>
+  </ul></li>
+  <li><a href="#why-we-use-r-in-this-course" id="toc-why-we-use-r-in-this-course" class="nav-link" data-scroll-target="#why-we-use-r-in-this-course">Why We Use R in This Course</a>
+  <ul class="collapse">
+  <li><a href="#designed-for-statistical-analysis" id="toc-designed-for-statistical-analysis" class="nav-link" data-scroll-target="#designed-for-statistical-analysis">1. Designed for Statistical Analysis</a></li>
+  <li><a href="#a-coherent-data-workflow" id="toc-a-coherent-data-workflow" class="nav-link" data-scroll-target="#a-coherent-data-workflow">2. A Coherent Data Workflow</a></li>
+  <li><a href="#strong-visualization" id="toc-strong-visualization" class="nav-link" data-scroll-target="#strong-visualization">3. Strong Visualization</a></li>
+  <li><a href="#reproducible-documents-with-quarto" id="toc-reproducible-documents-with-quarto" class="nav-link" data-scroll-target="#reproducible-documents-with-quarto">4. Reproducible Documents With Quarto</a></li>
+  <li><a href="#open-and-extensible" id="toc-open-and-extensible" class="nav-link" data-scroll-target="#open-and-extensible">5. Open and Extensible</a></li>
+  <li><a href="#strong-research-community" id="toc-strong-research-community" class="nav-link" data-scroll-target="#strong-research-community">6. Strong Research Community</a></li>
+  </ul></li>
   <li><a href="#how-about-python" id="toc-how-about-python" class="nav-link" data-scroll-target="#how-about-python">How About Python?</a></li>
-  <li><a href="#specialization-in-statistical-analysis" id="toc-specialization-in-statistical-analysis" class="nav-link" data-scroll-target="#specialization-in-statistical-analysis"><strong>1. Specialization in Statistical Analysis</strong></a></li>
-  <li><a href="#superior-data-visualization" id="toc-superior-data-visualization" class="nav-link" data-scroll-target="#superior-data-visualization"><strong>2. Superior Data Visualization</strong></a></li>
-  <li><a href="#integrated-development-environment-ide-support" id="toc-integrated-development-environment-ide-support" class="nav-link" data-scroll-target="#integrated-development-environment-ide-support"><strong>3. Integrated Development Environment (IDE) Support</strong></a></li>
-  <li><a href="#community-and-support" id="toc-community-and-support" class="nav-link" data-scroll-target="#community-and-support"><strong>4. Community and Support</strong></a></li>
-  <li><a href="#data-handling-and-analysis" id="toc-data-handling-and-analysis" class="nav-link" data-scroll-target="#data-handling-and-analysis"><strong>5. Data Handling and Analysis</strong></a></li>
-  <li><a href="#comparative-consideration" id="toc-comparative-consideration" class="nav-link" data-scroll-target="#comparative-consideration"><strong>Comparative Consideration</strong></a></li>
-  <li><a href="#install-gadgets" id="toc-install-gadgets" class="nav-link" data-scroll-target="#install-gadgets">Install gadgets</a></li>
+  <li><a href="#setup-r-rstudio-and-quarto" id="toc-setup-r-rstudio-and-quarto" class="nav-link" data-scroll-target="#setup-r-rstudio-and-quarto">Setup: R, RStudio, and Quarto</a>
+  <ul class="collapse">
+  <li><a href="#install-r" id="toc-install-r" class="nav-link" data-scroll-target="#install-r">1. Install R</a></li>
+  <li><a href="#install-rstudio-desktop" id="toc-install-rstudio-desktop" class="nav-link" data-scroll-target="#install-rstudio-desktop">2. Install RStudio Desktop</a></li>
+  <li><a href="#check-quarto" id="toc-check-quarto" class="nav-link" data-scroll-target="#check-quarto">3. Check Quarto</a></li>
+  <li><a href="#rtools-for-windows-optional-at-first" id="toc-rtools-for-windows-optional-at-first" class="nav-link" data-scroll-target="#rtools-for-windows-optional-at-first">4. Rtools for Windows: Optional at First</a></li>
+  <li><a href="#recommended-project-folder" id="toc-recommended-project-folder" class="nav-link" data-scroll-target="#recommended-project-folder">Recommended Project Folder</a></li>
+  <li><a href="#install-the-starter-packages" id="toc-install-the-starter-packages" class="nav-link" data-scroll-target="#install-the-starter-packages">Install the Starter Packages</a></li>
+  </ul></li>
+  <li><a href="#first-r-practice" id="toc-first-r-practice" class="nav-link" data-scroll-target="#first-r-practice">First R Practice</a></li>
+  <li><a href="#using-generative-ai-responsibly" id="toc-using-generative-ai-responsibly" class="nav-link" data-scroll-target="#using-generative-ai-responsibly">Using Generative AI Responsibly</a>
+  <ul class="collapse">
+  <li><a href="#productive-uses" id="toc-productive-uses" class="nav-link" data-scroll-target="#productive-uses">Productive Uses</a></li>
+  <li><a href="#your-responsibilities" id="toc-your-responsibilities" class="nav-link" data-scroll-target="#your-responsibilities">Your Responsibilities</a></li>
+  <li><a href="#unacceptable-uses" id="toc-unacceptable-uses" class="nav-link" data-scroll-target="#unacceptable-uses">Unacceptable Uses</a></li>
+  </ul></li>
+  <li><a href="#week-1-completion-checklist" id="toc-week-1-completion-checklist" class="nav-link" data-scroll-target="#week-1-completion-checklist">Week 1 Completion Checklist</a>
+  <ul class="collapse">
+  <li><a href="#useful-references" id="toc-useful-references" class="nav-link" data-scroll-target="#useful-references">Useful References</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -183,7 +240,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Course Intro</h1>
-<p class="subtitle lead">Course Intro</p>
+<p class="subtitle lead">Statistics, Data Science, and R for HCI Research</p>
 </div>
 
 
@@ -203,329 +260,909 @@ ul.task-list li input[type="checkbox"] {
 <section id="first-week-orientation" class="level2">
 <h2 class="anchored" data-anchor-id="first-week-orientation">First Week Orientation</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/jOH_sRJvrfo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p><br></p>
-<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
-<p><br></p>
-<section id="content" class="level3">
-<h3 class="anchored" data-anchor-id="content">Content</h3>
+<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a> | <a href="https://changjunlee.com/teaching/grad_stat/about/">Course description &amp; communication</a></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Week 1 Learning Goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this week, you should be able to:</p>
+<ol type="1">
+<li>explain how statistics and data science support HCI research;</li>
+<li>distinguish a research question, research design, measurement, and analysis;</li>
+<li>describe why this course uses R, RStudio, and Quarto;</li>
+<li>set up a reproducible R project and run a first analysis; and</li>
+<li>use generative AI as a learning and debugging aid without outsourcing statistical judgment.</li>
+</ol>
+</div>
+</div>
+<section id="todays-roadmap" class="level3">
+<h3 class="anchored" data-anchor-id="todays-roadmap">Today’s Roadmap</h3>
 <ul>
-<li><p><a href="https://changjunlee.com/teaching/grad_stat/about/">Course description</a></p></li>
-<li><p>About Lecturer</p></li>
-<li><p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly design</a></p></li>
-<li><p>Research &amp; Statistics</p></li>
-<li><p>Data science &amp; R</p></li>
+<li>Course overview and learning expectations</li>
+<li>About the lecturer</li>
+<li>How the course is organized</li>
+<li>Research, statistics, and statistical thinking</li>
+<li>Data science for HCI</li>
+<li>Why R—and how it relates to Python</li>
+<li>Software setup and first R practice</li>
+<li>Responsible use of generative AI</li>
 </ul>
 <hr>
 </section>
 </section>
 <section id="course-description" class="level2">
-<h2 class="anchored" data-anchor-id="course-description">Course description</h2>
+<h2 class="anchored" data-anchor-id="course-description">Course Description</h2>
+<blockquote class="blockquote">
+<p>This course introduces foundational concepts in statistics and data science for Human–Computer Interaction (HCI) research. Using R and Quarto, students will learn how to design studies, manage and visualize data, select and evaluate statistical models, interpret uncertainty, and communicate results reproducibly.</p>
+</blockquote>
+<p>The central question of the course is:</p>
+<blockquote class="blockquote">
+<p><strong>How can we turn an HCI research question into credible, interpretable, and reproducible evidence?</strong></p>
+</blockquote>
+<p>This course emphasizes four connected capabilities:</p>
 <ul>
-<li><a href="https://changjunlee.com/teaching/grad_stat/about/">Course description</a></li>
+<li><strong>Research design:</strong> translating a substantive question into a study that can answer it;</li>
+<li><strong>Statistical reasoning:</strong> reasoning about variation, uncertainty, assumptions, and evidence;</li>
+<li><strong>Data workflow:</strong> importing, cleaning, transforming, visualizing, and modeling data in R; and</li>
+<li><strong>Communication:</strong> explaining what the results mean, what they do not mean, and how they were produced.</li>
 </ul>
-<p><br></p>
+<p>This is <strong>not</strong> a course in memorizing formulas or mechanically matching a research question to a statistical test. Coding is an important tool, but the final goal is defensible research reasoning.</p>
+<p>See the full <a href="https://changjunlee.com/teaching/grad_stat/about/">course description, evaluation, schedule, and communication channels</a>.</p>
+<hr>
 </section>
-<section id="about-lecturer" class="level2">
-<h2 class="anchored" data-anchor-id="about-lecturer">About Lecturer</h2>
+<section id="about-the-lecturer" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-lecturer">About the Lecturer</h2>
 <p><strong>Changjun LEE</strong></p>
 <ul>
-<li>Home: <a href="https://changjunlee.com/" class="uri">https://changjunlee.com/</a></li>
+<li><strong>Position:</strong> Associate Professor and Head of Culture &amp; Technology</li>
+<li><strong>Affiliation:</strong> School of Convergence, College of Computing and Informatics, Sungkyunkwan University (SKKU)</li>
+<li><strong>Home:</strong> <a href="https://changjunlee.com/" class="uri">https://changjunlee.com/</a></li>
+<li><strong>Research areas:</strong> Human–AI Interaction, media and innovation, immersive media and user experience, computational social science, and technology management</li>
+<li><strong>Teaching areas:</strong> Statistics for HCI, machine learning for understanding humans and society, culture and technology, and applied data science</li>
 </ul>
-<p>Associate Professor (Head of Culture &amp; Tech)</p>
-<p>School of Convergence. SKKU.</p>
 <blockquote class="blockquote">
-<p>As a computational social scientist, I bring a unique interdisciplinary perspective to the fields of economics, innovation studies, and convergence technologies. With a background in natural sciences, including a bachelor’s degree in biology and chemistry, I went on to earn a Ph.D.&nbsp;in technology management, economics, and policy. My research focuses on utilizing computational methods to tackle a wide range of social phenomena, including technology evolution &amp; regional growth, knowledge management, and technology &amp; convergence innovation. I am passionate about using technology and data to drive innovation and solve real-world problems.</p>
+<p>I am a computational social scientist who uses statistical and computational methods to study how people, technologies, media, firms, and institutions interact. My academic background spans biology, chemistry, economics, technology management, and policy. This interdisciplinary path shapes the way I approach HCI: begin with a meaningful real-world question, design the study carefully, and use data to build a transparent argument.</p>
 </blockquote>
-<ul>
-<li><p><strong>Research interest:</strong> Media &amp; Innovation, Immersive media and users’ behavior, Technology management, Anything can be solved using Data Science</p></li>
-<li><p><strong>Teaching:</strong> Culture &amp; Technology | Data Science in CNT | STAT101</p></li>
-<li><p>Things I love</p>
-<ul>
-<li><p>Research</p></li>
-<li><p>Chat &amp; Coffee &amp; MBTI</p></li>
-<li><p>Travel</p></li>
-<li><p>Play (Things)</p></li>
-</ul></li>
-</ul>
-<p><br></p>
+<p><strong>Things I enjoy:</strong> research, conversations over coffee, MBTI, travel, and playful experiments with technology and data.</p>
+<hr>
 </section>
 <section id="weekly-design" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-design">Weekly Design</h2>
-<ul>
-<li><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly design</a></li>
-</ul>
-<p><br></p>
+<p>The course progresses from <strong>design</strong>, to <strong>data</strong>, to <strong>inference</strong>, and finally to <strong>application and communication</strong>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Phase</th>
+<th style="text-align: right;">Weeks</th>
+<th>Main Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Foundations</td>
+<td style="text-align: right;">1–4</td>
+<td>HCI research design, measurement, data types, and R workflows</td>
+</tr>
+<tr class="even">
+<td>Explore</td>
+<td style="text-align: right;">5–8</td>
+<td>Visualization, descriptive statistics, probability, and statistical inference</td>
+</tr>
+<tr class="odd">
+<td>Model</td>
+<td style="text-align: right;">9–12</td>
+<td>Experimental analysis, regression, mediation/moderation, SEM, and clustering</td>
+</tr>
+<tr class="even">
+<td>Apply &amp; Communicate</td>
+<td style="text-align: right;">13–16</td>
+<td>Additional methods, paper reconstruction, final report, and individual consultation</td>
+</tr>
+</tbody>
+</table>
+<p>See the detailed <a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">weekly content</a>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+2026 Schedule Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Because Week 2 coincides with participation in Ars Electronica, the core research-design perspective will also be introduced during Week 1. The full Week 2 materials remain available online for review and self-study.</p>
+</div>
+</div>
+<hr>
 </section>
 <section id="research-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="research-statistics">Research &amp; Statistics</h2>
 <blockquote class="blockquote">
-<p>Entering grad school (Doing your master / Ph.D.) is an exciting milestone. It’s a chance to dive deep into your field, contribute to groundbreaking research, and refine your expertise. However, regardless of your discipline—be it psychology, biology, economics, or even education—one skill remains a constant necessity: statistics.</p>
+<p><strong>Statistics is not merely a collection of tests. It is a disciplined way to design studies, learn from noisy data, and communicate uncertainty.</strong></p>
 </blockquote>
-<p><br></p>
-<section id="why-is-statistics-important-in-grad-school" class="level3">
-<h3 class="anchored" data-anchor-id="why-is-statistics-important-in-grad-school">Why is Statistics Important in Grad School?</h3>
-<p>Graduate school is often synonymous with research. Whether you’re collecting data, interpreting results, or reading existing literature, you’ll need to understand how to analyze and make sense of numbers. That’s where statistics comes in. Statistics provides the tools to turn raw data into meaningful insights, enabling you to make evidence-based conclusions.</p>
-<p><strong>1. Informed Decision-Making</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><br>
-Research is all about making informed decisions. <strong><em>Is the difference between two groups significant?</em></strong> (How likely is it that the results you found are due to chance? 우연히 일어난 일이 아니라는 근거는?) Statistics gives you the methods to answer these questions with confidence.</p>
-<p><br></p>
-<p><strong>2. Data Interpretation</strong> (논문을 읽으려면 꼭 알아야 하는 통계)<br>
-Understanding research papers is a core part of grad school. But to critically evaluate these papers, you need to grasp the statistics used in them. Whether it’s regression analysis, ANOVA, or chi-square tests, you need to know how the data was analyzed to assess whether the conclusions are sound. (읽다보면 패턴이 보일 것)</p>
-<p><br></p>
-<p><strong>3. Research Design</strong> (끝까지 상상하고 디자인 하라)<br>
-When designing your own studies, statistical knowledge helps you choose the right sample size, measurement tools, and analysis methods. It ensures that your research is both scientifically rigorous and ethical, minimizing biases and errors.</p>
-<p><br></p>
-</section>
-<section id="the-role-of-statistics-in-research" class="level3">
-<h3 class="anchored" data-anchor-id="the-role-of-statistics-in-research">The Role of Statistics in Research</h3>
-<p>Statistics isn’t just about crunching numbers. It plays a pivotal role in every stage of the research process, from conceptualization to publication.</p>
+<p>Graduate research repeatedly asks us to make decisions with incomplete information. We observe a sample, but want to understand a broader population, process, or theoretical mechanism. Statistics helps us connect what we observed to what we want to know—while being explicit about uncertainty and assumptions.</p>
+<section id="why-is-statistics-important-in-graduate-school" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-statistics-important-in-graduate-school">Why Is Statistics Important in Graduate School?</h3>
+<section id="reading-research-critically" class="level4">
+<h4 class="anchored" data-anchor-id="reading-research-critically">1. Reading Research Critically</h4>
+<p>To evaluate a paper, you need to look beyond whether a result is “significant.” Ask:</p>
 <ul>
-<li><p><strong>Formulating Hypotheses:</strong> At the start of your research, you’ll develop hypotheses that are <strong><em>testable</em></strong> using statistical methods. Understanding the statistical underpinnings of these hypotheses helps you design studies that can accurately assess the relationships you’re interested in.</p>
+<li>What was the research design?</li>
+<li>How were the key concepts measured?</li>
+<li>What population or process is the study trying to describe?</li>
+<li>What is the estimated effect, and in what unit?</li>
+<li>How uncertain is the estimate?</li>
+<li>Which assumptions support the conclusion?</li>
+<li>Is the result theoretically or practically meaningful?</li>
+</ul>
+<p>Regression, ANOVA, chi-square tests, mediation models, and machine-learning models are easier to understand once you see them as different tools for answering different questions under different assumptions.</p>
+</section>
+<section id="designing-the-study-before-collecting-data" class="level4">
+<h4 class="anchored" data-anchor-id="designing-the-study-before-collecting-data">2. Designing the Study Before Collecting Data</h4>
+<p>Statistical reasoning begins <strong>before</strong> analysis. It informs:</p>
+<ul>
+<li>the unit of analysis;</li>
+<li>experimental conditions or comparison groups;</li>
+<li>sampling and recruitment;</li>
+<li>operationalization and measurement;</li>
+<li>sample size and statistical power;</li>
+<li>exclusion and missing-data rules; and</li>
+<li>the claims that the design can reasonably support.</li>
+</ul>
+<p>A sophisticated analysis cannot repair a poorly defined construct, an inappropriate sample, or a design that does not match the research question.</p>
+</section>
+<section id="reasoning-under-uncertainty" class="level4">
+<h4 class="anchored" data-anchor-id="reasoning-under-uncertainty">3. Reasoning Under Uncertainty</h4>
+<p>Research data contain variation due to individual differences, measurement error, context, and sampling. Statistics helps us distinguish a stable pattern from noise, but it does not eliminate uncertainty.</p>
+<p>Instead of asking only:</p>
 <blockquote class="blockquote">
-<p><strong>잘못된 가설:</strong> “새로운 약물이 혈압에 영향을 줄 것이다.”</p>
+<p><strong>Is</strong> <em>p</em> <strong>&lt; .05?</strong></p>
+</blockquote>
+<p>also ask:</p>
 <ul>
-<li><p><strong>구체성이 부족:</strong> “영향을 줄 것이다”라는 표현이 모호해서 혈압을 올릴 것인지, 낮출 것인지, 또는 그 효과가 얼마나 클 것인지 구체적으로 언급하지 않았음.</p></li>
-<li><p><strong>통계적 검증의 어려움:</strong> 명확한 가설이 없으면 어떤 통계 분석 방법을 사용해야 할지도 불분명해짐. 혈압이 증가하거나 감소할 것이라는 구체적인 예측이 없으면 통계적으로 검증하기가 어렵기 때문.</p></li>
+<li>How large is the effect?</li>
+<li>What range of values is compatible with the data and model?</li>
+<li>Would the effect matter in an actual HCI setting?</li>
+<li>How sensitive is the conclusion to alternative specifications or assumptions?</li>
 </ul>
-<p><strong>올바른 가설:</strong> “새로운 약물이 고혈압 환자의 혈압을 유의미하게 감소시킬 것이다.”</p>
-</blockquote></li>
-<li><p><strong>Data Collection:</strong> Statistical principles guide the way you collect data, ensuring that your methods minimize bias and maximize reliability. Sampling techniques, for example, are essential in ensuring that your study results can be generalized to the broader population.</p></li>
-<li><p><strong>Data Analysis:</strong> Once you’ve collected your data, statistics helps you determine the best way to analyze it. Different research questions require different statistical tests, and knowing which test to use—and how to use it—can make or break your study.</p></li>
-<li><p><strong>Reporting Results:</strong> Properly reporting your findings involves more than just stating whether your results were significant. You’ll need to provide effect sizes, confidence intervals, and possibly even power analyses to show that your results are both meaningful and reliable. Statistics helps you communicate your findings clearly and effectively. (논문을 읽을 때와 마찬가지로 쓸 때 깊이가 생기기 시작함. 아는 만큼 보이기 때문)</p></li>
-</ul>
-<p><br></p>
 </section>
-<section id="how-to-learn-statistics-as-a-grad-student" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-learn-statistics-as-a-grad-student">How to Learn Statistics as a Grad Student</h3>
-<p>For many, statistics can be intimidating. However, like any skill, it can be learned with <em>dedication</em> and <em>practice</em>. Here are some tips to help you master statistics during your graduate studies.</p>
-<p><br></p>
-<p><strong>1. Start with the Basics</strong><br>
-If you’re new to statistics, don’t worry. Start with the basics—mean, median, mode, standard deviation—and gradually build your knowledge. Courses, textbooks, and online resources like Coursera can help you get started. (온라인 에듀 플랫폼? 도움이 된다!)</p>
-<p><br></p>
-<p><strong>2. Apply What You Learn</strong><br>
-Statistics is best learned by doing. Apply what you learn to real datasets. Whether it’s data from your research, a class project, or publicly available datasets, practicing with real data will help solidify your understanding. (응용 없는 배움은? 고급 취미)</p>
-<p><br></p>
-<p><strong>3. Use Statistical Software</strong><br>
-In grad school, you’ll likely need to use statistical software like <em>R</em> and <em>Python</em>. Learning to use these tools is essential, as they’ll help you manage and analyze large datasets efficiently. Don’t be afraid to dive into tutorials and online forums to help you get comfortable with the software.</p>
-<p><br></p>
-<p><strong>4. Seek Help</strong> (Create a group study)<br>
-Grad school can be overwhelming, and it’s okay to seek help. Attend statistics workshops, study groups, or even work with a tutor if needed. Collaborating with peers and seeking guidance from professors can help clarify complex concepts.</p>
-<p><br></p>
-<p><strong>5. Make Statistics a Daily Habit</strong><br>
-Just like any other skill, becoming proficient in statistics requires daily practice. Dedicate time each day to work on problems, analyze data, or review concepts. Consistency is key to retaining what you learn and becoming comfortable with statistical methods.</p>
-<p><br></p>
+<section id="communicating-evidence" class="level4">
+<h4 class="anchored" data-anchor-id="communicating-evidence">4. Communicating Evidence</h4>
+<p>Strong reporting includes more than a binary significant/non-significant conclusion. Depending on the study, report:</p>
+<ul>
+<li>descriptive statistics and visualizations;</li>
+<li>effect sizes;</li>
+<li>confidence or uncertainty intervals;</li>
+<li>model assumptions and diagnostics;</li>
+<li>robustness or sensitivity checks;</li>
+<li>limitations and scope conditions; and</li>
+<li>enough information for another researcher to reproduce the analysis.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="statistics-across-the-research-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="statistics-across-the-research-workflow">Statistics Across the Research Workflow</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Research Question] --&gt; B[Theory and Design]
+    B --&gt; C[Measurement and Sampling]
+    C --&gt; D[Data Collection]
+    D --&gt; E[Wrangling and Visualization]
+    E --&gt; F[Modeling and Uncertainty]
+    F --&gt; G[Interpretation in Context]
+    G --&gt; H[Reproducible Communication]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Statistics plays a role at every stage:</p>
+<ul>
+<li><strong>Research question and estimand:</strong> What exactly do we want to learn or estimate?</li>
+<li><strong>Theory and design:</strong> What comparison would provide relevant evidence?</li>
+<li><strong>Measurement:</strong> How will an abstract construct become observable data?</li>
+<li><strong>Sampling:</strong> From whom, when, and under what conditions will data be collected?</li>
+<li><strong>Analysis:</strong> Which model represents the design, outcome, and assumptions?</li>
+<li><strong>Interpretation:</strong> What do the estimates mean in the substantive HCI context?</li>
+<li><strong>Communication:</strong> Can another person inspect, understand, and reproduce the analysis?</li>
+</ul>
+<hr>
+</section>
+<section id="from-a-vague-idea-to-a-testable-hci-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="from-a-vague-idea-to-a-testable-hci-hypothesis">From a Vague Idea to a Testable HCI Hypothesis</h3>
+<blockquote class="blockquote">
+<p><strong>Vague statement:</strong> “AI explanations affect user trust.”</p>
+</blockquote>
+<p>This is difficult to evaluate because it does not specify:</p>
+<ul>
+<li>the type of AI system;</li>
+<li>the explanation format or comparison condition;</li>
+<li>the target users and task;</li>
+<li>how trust will be measured;</li>
+<li>the expected direction of the relationship; or</li>
+<li>the time point at which the outcome is observed.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Improved research question:</strong> “Among first-time users of an AI decision-support interface, how does an example-based explanation, compared with a feature-importance explanation, affect post-task trust measured on a validated 1–7 scale?”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Directional hypothesis:</strong> “Users who receive an example-based explanation will report higher mean post-task trust than users who receive a feature-importance explanation after completing the same decision task.”</p>
+</blockquote>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Writing a Better Hypothesis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A useful hypothesis is theoretically motivated, operationalized, linked to a feasible design, and directional when theory justifies a direction. Avoid writing “statistically significantly” into the substantive hypothesis; statistical significance is an analysis result, not the phenomenon being predicted.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="three-common-statistical-misunderstandings" class="level3">
+<h3 class="anchored" data-anchor-id="three-common-statistical-misunderstandings">Three Common Statistical Misunderstandings</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Be Careful
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>A <em>p</em>-value is <strong>not</strong> the probability that the null hypothesis is true.</li>
+<li>“Statistically significant” does <strong>not</strong> necessarily mean large, important, or practically useful.</li>
+<li>A large dataset does <strong>not</strong> compensate for poor measurement, biased sampling, confounding, or an unsuitable research design.</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+<section id="how-to-learn-statistics-as-a-graduate-student" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-learn-statistics-as-a-graduate-student">How to Learn Statistics as a Graduate Student</h3>
+<section id="learn-the-question-before-the-function" class="level4">
+<h4 class="anchored" data-anchor-id="learn-the-question-before-the-function">1. Learn the Question Before the Function</h4>
+<p>Before searching for an R command, state:</p>
+<ul>
+<li>what you want to know;</li>
+<li>what each variable represents;</li>
+<li>which observations are being compared; and</li>
+<li>what result would answer the question.</li>
+</ul>
+</section>
+<section id="apply-every-concept-to-data" class="level4">
+<h4 class="anchored" data-anchor-id="apply-every-concept-to-data">2. Apply Every Concept to Data</h4>
+<p>Statistics is learned by doing. Use your own research data, class datasets, or openly available data. Each concept should eventually become:</p>
+<ol type="1">
+<li>a research question;</li>
+<li>a small piece of code;</li>
+<li>a table or figure; and</li>
+<li>a sentence that interprets the result.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>응용 없는 배움은 고급 취미입니다.</strong> A statistical concept becomes useful when you can apply it to data and explain the result in ordinary language.</p>
+</div>
+</div>
+</section>
+<section id="work-from-scripts-and-quarto-documents" class="level4">
+<h4 class="anchored" data-anchor-id="work-from-scripts-and-quarto-documents">3. Work From Scripts and Quarto Documents</h4>
+<p>The Console is useful for quick experiments, but analyses should live in a script or <code>.qmd</code> document. This creates a record of what you did and makes it possible to rerun the work from the beginning.</p>
+</section>
+<section id="seek-helpbut-diagnose-first" class="level4">
+<h4 class="anchored" data-anchor-id="seek-helpbut-diagnose-first">4. Seek Help—but Diagnose First</h4>
+<p>Study groups, documentation, online communities, instructors, and AI tools can all help. Before asking for help, record:</p>
+<ul>
+<li>the code you ran;</li>
+<li>the complete error message;</li>
+<li>what you expected to happen; and</li>
+<li>a small reproducible example when possible.</li>
+</ul>
+</section>
+<section id="explain-every-result" class="level4">
+<h4 class="anchored" data-anchor-id="explain-every-result">5. Explain Every Result</h4>
+<p>Running a model is not the end. You should be able to explain:</p>
+<ul>
+<li>what was estimated;</li>
+<li>which group or unit is the reference;</li>
+<li>what the coefficient or comparison means;</li>
+<li>how uncertainty is represented; and</li>
+<li>what conclusion is and is not justified.</li>
+</ul>
+<hr>
+</section>
 </section>
 <section id="the-importance-of-daily-grinding" class="level3">
-<h3 class="anchored" data-anchor-id="the-importance-of-daily-grinding">The Importance of Daily Grinding</h3>
-<p>The most effective way to master statistics—and research methods more broadly—is through consistent, daily effort. By integrating statistics into your daily routine, you’ll gradually build confidence and proficiency. Daily grinding may not be glamorous, but it’s a proven strategy for success in grad school.</p>
-<p>Here’s why:</p>
+<h3 class="anchored" data-anchor-id="the-importance-of-daily-grinding">The Importance of “Daily Grinding”</h3>
+<p>Small, frequent practice is more effective than a single end-of-semester coding marathon. A sustainable routine might include 20–30 minutes of practice several times per week.</p>
+<p>Regular practice improves:</p>
 <ul>
-<li><p><strong>Retention:</strong> Daily practice helps reinforce what you learn, making it easier to recall concepts when you need them.</p></li>
-<li><p><strong>Problem-Solving:</strong> Regular exposure to different statistical problems improves your problem-solving skills and allows you to tackle more complex analyses over time.</p></li>
-<li><p><strong>Confidence:</strong> As you practice more, your confidence grows, reducing the anxiety that often accompanies statistical analysis.</p></li>
+<li><strong>Retention:</strong> concepts and syntax become easier to retrieve;</li>
+<li><strong>Pattern recognition:</strong> common data structures and error messages become familiar;</li>
+<li><strong>Problem solving:</strong> you learn to break an analysis into manageable steps;</li>
+<li><strong>Independence:</strong> you become less dependent on copied code; and</li>
+<li><strong>Confidence:</strong> statistical and coding anxiety decreases as the workflow becomes familiar.</li>
 </ul>
-<p><br></p>
+<p>Useful habits include:</p>
+<ul>
+<li>typing and modifying examples instead of only copying them;</li>
+<li>predicting the output before running code;</li>
+<li>keeping one RStudio Project for each analysis;</li>
+<li>using clear object names and comments that explain <strong>why</strong>, not only <strong>what</strong>;</li>
+<li>restarting R and rendering the document from a clean session; and</li>
+<li>saving versions with Git/GitHub when appropriate.</li>
+</ul>
+<hr>
 </section>
 </section>
 <section id="data-science-r" class="level2">
 <h2 class="anchored" data-anchor-id="data-science-r">Data Science &amp; R</h2>
 <blockquote class="blockquote">
-<p>Data Science is a modern academic area helping people to draw useful information and intuition so that making them to make reasonable decisions</p>
+<p><strong>Data science is an iterative practice of asking questions, acquiring and structuring data, exploring patterns, building and evaluating models, and communicating results responsibly.</strong></p>
 </blockquote>
-<section id="why-data-science-is-so-important-to-learn" class="level3">
-<h3 class="anchored" data-anchor-id="why-data-science-is-so-important-to-learn"><strong>Why Data Science is So Important to Learn?</strong></h3>
-<p>In the age of information, data science has emerged as a pivotal skill set across industries, transforming the way decisions are made and offering insights that were previously inaccessible. Its importance stems from the ability to analyze and derive meaningful insights from data, which can drive strategic business decisions, lead to technological innovations, and solve complex problems. Here’s why learning data science is crucial, even for those not pursuing a career in computer science.</p>
-<section id="data-driven-decision-making" class="level4">
-<h4 class="anchored" data-anchor-id="data-driven-decision-making">Data-Driven Decision Making</h4>
-<p>One of the foremost reasons for learning data science is its role in data-driven decision making. <u>With an increasing amount of data generated every day, the ability to sift through, analyze, and interpret this data can be the difference between staying ahead or falling behind in any industr</u>y. Data science skills enable individuals and organizations to make informed decisions based on empirical evidence rather than intuition or speculation.</p>
+<p>For HCI researchers, data science connects theory and design to increasingly diverse forms of evidence.</p>
+<section id="common-data-sources-in-hci" class="level3">
+<h3 class="anchored" data-anchor-id="common-data-sources-in-hci">Common Data Sources in HCI</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data Source</th>
+<th>Example</th>
+<th>Typical Question</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Experiment</td>
+<td>Alternative interface or explanation conditions</td>
+<td>Does changing a design feature cause a difference in behavior or experience?</td>
+</tr>
+<tr class="even">
+<td>Survey</td>
+<td>Trust, usability, presence, satisfaction, or privacy-concern scales</td>
+<td>How are perceptions and attitudes related?</td>
+</tr>
+<tr class="odd">
+<td>Behavioral log</td>
+<td>Clicks, dwell time, errors, navigation paths</td>
+<td>How do people actually use a system over time?</td>
+</tr>
+<tr class="even">
+<td>Text, image, audio, or video</td>
+<td>Reviews, chat logs, interviews, screen recordings</td>
+<td>What themes, meanings, or interaction patterns appear in unstructured data?</td>
+</tr>
+<tr class="odd">
+<td>Sensor or contextual data</td>
+<td>GPS, eye tracking, physiological signals</td>
+<td>How does behavior change across contexts or states?</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="cross-disciplinary-application" class="level4">
-<h4 class="anchored" data-anchor-id="cross-disciplinary-application">Cross-Disciplinary Application</h4>
-<p>Data science is not confined to the tech industry. <u>It finds applications in healthcare, finance, retail, education, and more.</u> For instance, in healthcare, data science can predict disease outbreaks, in finance, it can assess risk and in retail, it can help understand consumer behavior. This cross-disciplinary nature of data science means that learning it can open up opportunities in virtually any field, making it a valuable skill set for all majors.</p>
+<section id="why-learn-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="why-learn-data-science">Why Learn Data Science?</h3>
+<section id="data-informed-hci-decisions" class="level4">
+<h4 class="anchored" data-anchor-id="data-informed-hci-decisions">Data-Informed HCI Decisions</h4>
+<p>Data science helps researchers and designers move from intuition alone to evidence. It can reveal where users struggle, which design alternatives perform differently, and how effects vary across users and contexts.</p>
 </section>
-<section id="enhancing-problem-solving-skills" class="level4">
-<h4 class="anchored" data-anchor-id="enhancing-problem-solving-skills">Enhancing Problem-Solving Skills</h4>
-<p>Learning data science enhances critical thinking and problem-solving skills. It involves <u>identifying patterns, making predictions, and solving complex problems using a data-driven approach</u>. These skills are transferable and valuable in any career path, making data science learning beneficial beyond the technical aspects.</p>
+<section id="cross-disciplinary-integration" class="level4">
+<h4 class="anchored" data-anchor-id="cross-disciplinary-integration">Cross-Disciplinary Integration</h4>
+<p>HCI draws on psychology, communication, design, computer science, sociology, business, and engineering. Data science provides a shared workflow through which these disciplines can combine theories, measurements, and computational methods.</p>
 </section>
-<section id="future-job-market" class="level4">
-<h4 class="anchored" data-anchor-id="future-job-market">Future Job Market</h4>
-<p>The demand for data science skills is growing rapidly. According to the U.S. Bureau of Labor Statistics, <u>the job market for data science and analytical roles is projected to grow much faster than the average for all occupations</u>. Learning data science can thus provide a competitive edge in the job market, even for those in non-computer science fields.</p>
+<section id="reproducibility-and-scale" class="level4">
+<h4 class="anchored" data-anchor-id="reproducibility-and-scale">Reproducibility and Scale</h4>
+<p>Modern datasets can be large, messy, longitudinal, multimodal, or repeatedly updated. A coded workflow makes it easier to clean data consistently, document decisions, rerun analyses, and detect mistakes.</p>
 </section>
-<section id="empowering-innovation" class="level4">
-<h4 class="anchored" data-anchor-id="empowering-innovation">Empowering Innovation</h4>
-<p>Data science is at the heart of innovation today. <u>From developing new products and services to improving existing processes, the insights derived from data science can lead to significant advancements and efficiencies</u>. By understanding data science, individuals in non-computer science fields can contribute to innovation within their industries.</p>
+<section id="transferable-problem-solving" class="level4">
+<h4 class="anchored" data-anchor-id="transferable-problem-solving">Transferable Problem-Solving</h4>
+<p>The ability to frame a question, inspect data quality, evaluate evidence, and communicate uncertainty is useful in academic research, product analytics, UX research, policy, and many other settings.</p>
 </section>
-<section id="for-non-computer-science-majors-you-are-the-one-who-has-to-learn-this." class="level4">
-<h4 class="anchored" data-anchor-id="for-non-computer-science-majors-you-are-the-one-who-has-to-learn-this.">For non-computer science majors: You are the one who has to learn this.</h4>
-<p>The importance of data science transcends traditional boundaries of computer science and technology. It is a critical skill for the future, enabling individuals to navigate and excel in a data-driven world. <u>For non-computer science majors, learning data science not only enhances employability and problem-solving skills but also <strong>opens up new avenues for innovation and impact in their respective fields</strong></u>. In essence, data science is a universal language of the future, and learning it is key to unlocking potential across the spectrum of professional endeavors.</p>
-<p><br></p>
+<section id="responsible-innovation" class="level4">
+<h4 class="anchored" data-anchor-id="responsible-innovation">Responsible Innovation</h4>
+<p>Data science also creates responsibilities. Researchers must consider consent, privacy, fairness, representativeness, measurement validity, and the downstream consequences of models and visualizations.</p>
 <ul>
-<li>Again, Data Never Sleeps</li>
+<li><a href="https://www.domo.com/data-never-sleeps">Data Never Sleeps</a></li>
 </ul>
-<p><a href="https://www.domo.com/data-never-sleeps" class="uri">https://www.domo.com/data-never-sleeps</a></p>
-<p><br></p>
+<hr>
 </section>
 </section>
-<section id="so-data-scientist-is.." class="level3">
-<h3 class="anchored" data-anchor-id="so-data-scientist-is..">So Data Scientist is..</h3>
-<ul>
-<li><p>데이터를 가지고 길을 만드는 사람.</p></li>
-<li><p>Requirements</p>
-<ul>
-<li><p><strong>Domain Expertise</strong> is getting more important as the world is getting more complicated</p></li>
-<li><p>This course will cover coding part and a little bit of statistical skills</p></li>
-<li><p>Don’t worry! <strong>Practice makes perfect.</strong></p></li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-<section id="why-r-is-the-best-language-for-non-computer-majors-to-learn-data-science" class="level3">
-<h3 class="anchored" data-anchor-id="why-r-is-the-best-language-for-non-computer-majors-to-learn-data-science"><strong>Why R is the Best Language for Non-Computer Majors to Learn Data Science</strong></h3>
-<p>In the realm of data science, the choice of programming language is pivotal. For non-computer majors venturing into this field, R stands out as a particularly accessible and powerful tool. Here’s why R is often considered the best language for those new to data science.</p>
-<section id="designed-for-statistics-and-data-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="designed-for-statistics-and-data-analysis">1. Designed for Statistics and Data Analysis</h4>
-<p>R was specifically created for statistical analysis and data visualization. Unlike general-purpose programming languages that can be used for data science, R’s syntax and functions are tailored to statistical analysis, making it more intuitive for analyzing data. For students and professionals without a computer science background, this focus makes R an excellent entry point into data science.</p>
-</section>
-<section id="comprehensive-libraries-and-packages" class="level4">
-<h4 class="anchored" data-anchor-id="comprehensive-libraries-and-packages">2. Comprehensive Libraries and Packages</h4>
-<p>R boasts a vast ecosystem of packages designed for data science tasks, including dplyr for data manipulation, ggplot2 for data visualization, and caret for machine learning. These packages simplify complex tasks into more manageable functions, allowing users to perform sophisticated data analysis with relatively simple commands. This extensive library support means that non-computer majors can accomplish more with less coding expertise.</p>
-</section>
-<section id="strong-community-and-support" class="level4">
-<h4 class="anchored" data-anchor-id="strong-community-and-support">3. Strong Community and Support</h4>
-<p>The R community is known for its inclusivity and support, especially for beginners. Numerous online forums, such as R-bloggers and Stack Overflow, provide a platform for learners to seek help, exchange ideas, and stay updated on the latest developments in R. This community support is invaluable for non-computer majors who may require guidance as they navigate their data science journey.</p>
-</section>
-<section id="free-and-open-source" class="level4">
-<h4 class="anchored" data-anchor-id="free-and-open-source">4. Free and Open Source</h4>
-<p>R is a free, open-source software, making it accessible to everyone without the need for expensive licenses or subscriptions. This democratizes the learning process, allowing individuals from diverse backgrounds to explore data science without financial barriers. Moreover, being open-source encourages users to contribute to the development of R, further enriching its capabilities and resources.</p>
-</section>
-<section id="versatile-data-visualization-capabilities" class="level4">
-<h4 class="anchored" data-anchor-id="versatile-data-visualization-capabilities">5. Versatile Data Visualization Capabilities</h4>
-<p>Visual data representation is crucial in data science for understanding complex datasets and communicating findings effectively. R’s superior data visualization capabilities, particularly through the ggplot2 package, allow users to create high-quality, publication-ready graphs and plots. This is particularly beneficial for non-computer majors, who might rely more heavily on visual representations to understand and present data insights.</p>
-</section>
-<section id="industry-adoption-and-academic-support" class="level4">
-<h4 class="anchored" data-anchor-id="industry-adoption-and-academic-support">6. Industry Adoption and Academic Support</h4>
-<p>R is widely adopted in both academia and industry for research and data analysis. This widespread use means that learning R can open up opportunities in various fields, including biostatistics, epidemiology, economics, and social sciences. For non-computer majors, the ability to apply their data science skills directly to their field of study or industry is a significant advantage.</p>
+<section id="so-what-does-a-data-scientist-do" class="level3">
+<h3 class="anchored" data-anchor-id="so-what-does-a-data-scientist-do">So, What Does a Data Scientist Do?</h3>
 <blockquote class="blockquote">
-<p>For non-computer majors looking to delve into data science, R offers a unique blend of accessibility, specialized functionality, and community support. Its design for statistical analysis, along with a rich ecosystem of packages and resources, makes R an ideal starting point for those new to programming and data analysis. By learning R, non-computer majors can not only gain valuable data science skills but also apply these skills directly to their fields of interest, enhancing their research capabilities and career prospects.</p>
+<p><strong>A data scientist creates a defensible path from a question to evidence.</strong></p>
 </blockquote>
-<p><br></p>
-</section>
-</section>
-<section id="how-about-python" class="level3">
-<h3 class="anchored" data-anchor-id="how-about-python">How About Python?</h3>
-<p>A good quesiton! R and Python are both powerful and popular programming languages in the data science community, each with its unique strengths. <u>When comparing R to Python, especially from the perspective of those with non-computer science backgrounds or specific analytical needs, several aspects of R stand out, highlighting its strengths:</u></p>
-</section>
-<section id="specialization-in-statistical-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="specialization-in-statistical-analysis"><strong>1. Specialization in Statistical Analysis</strong></h3>
+<p>That path requires more than coding:</p>
 <ul>
-<li><p><strong>R’s Foundation</strong>: R is specifically designed for statistical analysis and graphical models. It was developed by statisticians for statisticians. This specialization gives it an edge in handling complex statistical data analyses out of the box, without the need for extensive programming knowledge or additional libraries.</p></li>
-<li><p><strong>Comprehensive Statistical Packages</strong>: R has a comprehensive collection of packages for various statistical analyses, including linear and nonlinear modeling, classical statistical tests, time-series analysis, classification, clustering, and more. These packages are often written by statisticians and subject matter experts, ensuring they are tailored for rigorous statistical analysis.</p></li>
+<li><strong>Domain expertise:</strong> understanding the phenomenon, users, technology, and context;</li>
+<li><strong>Research design:</strong> knowing what comparison or data would answer the question;</li>
+<li><strong>Statistics:</strong> quantifying patterns, relationships, uncertainty, and model performance;</li>
+<li><strong>Computation:</strong> managing data and automating a transparent workflow;</li>
+<li><strong>Communication:</strong> translating technical output into a clear substantive argument; and</li>
+<li><strong>Ethics:</strong> recognizing risks, limitations, and people affected by the analysis.</li>
+</ul>
+<p>This course uses coding to support statistical and research reasoning. The code is not the final product; the final product is a credible interpretation supported by a reproducible analysis.</p>
+<hr>
+</section>
+</section>
+<section id="why-we-use-r-in-this-course" class="level2">
+<h2 class="anchored" data-anchor-id="why-we-use-r-in-this-course">Why We Use R in This Course</h2>
+<p>R is not the only language for data science, but it is especially well matched to this course.</p>
+<section id="designed-for-statistical-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="designed-for-statistical-analysis">1. Designed for Statistical Analysis</h3>
+<p>R was developed for statistical computing and graphics. Its functions, modeling conventions, and package ecosystem support the kinds of estimation and inference commonly used in HCI and social-science research.</p>
+</section>
+<section id="a-coherent-data-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="a-coherent-data-workflow">2. A Coherent Data Workflow</h3>
+<p>The <code>tidyverse</code> ecosystem provides a consistent grammar for importing, transforming, summarizing, and visualizing data. Packages such as <code>dplyr</code>, <code>tidyr</code>, <code>readr</code>, and <code>ggplot2</code> allow us to focus on the logic of an analysis rather than low-level programming details.</p>
+</section>
+<section id="strong-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="strong-visualization">3. Strong Visualization</h3>
+<p><code>ggplot2</code> supports layered, publication-ready graphics. Visualization is not merely decoration: it is an essential tool for checking data quality, understanding distributions, discovering patterns, evaluating models, and communicating uncertainty.</p>
+</section>
+<section id="reproducible-documents-with-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="reproducible-documents-with-quarto">4. Reproducible Documents With Quarto</h3>
+<p>Quarto combines narrative text, citations, equations, code, figures, tables, and model output in a single <code>.qmd</code> file. The same source can be rendered to HTML, PDF, Word, slides, and other formats.</p>
+</section>
+<section id="open-and-extensible" class="level3">
+<h3 class="anchored" data-anchor-id="open-and-extensible">5. Open and Extensible</h3>
+<p>R is free and open source. Its packages support classical statistics, causal inference, psychometrics, network analysis, machine learning, Bayesian modeling, text analysis, spatial analysis, and many other methods relevant to HCI.</p>
+</section>
+<section id="strong-research-community" class="level3">
+<h3 class="anchored" data-anchor-id="strong-research-community">6. Strong Research Community</h3>
+<p>R is widely used in academia, public policy, health research, economics, psychology, communication, and data science. This creates extensive documentation, examples, books, and community support.</p>
+<hr>
+</section>
+</section>
+<section id="how-about-python" class="level2">
+<h2 class="anchored" data-anchor-id="how-about-python">How About Python?</h2>
+<p>R and Python are complementary rather than mutually exclusive.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimension</th>
+<th>R</th>
+<th>Python</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Core strength</td>
+<td>Statistical analysis, inference, visualization, and research reporting</td>
+<td>General-purpose programming, machine learning, deployment, and system integration</td>
+</tr>
+<tr class="even">
+<td>Common workflow</td>
+<td><code>tidyverse</code>, <code>ggplot2</code>, <code>tidymodels</code>, Quarto</td>
+<td><code>pandas</code>/<code>polars</code>, <code>scikit-learn</code>, PyTorch, Jupyter</td>
+</tr>
+<tr class="odd">
+<td>Often preferred when</td>
+<td>The main task is statistical modeling, exploratory analysis, or publication-ready reporting</td>
+<td>The analysis is part of a larger application, production system, or deep-learning pipeline</td>
+</tr>
+<tr class="even">
+<td>Role in this course</td>
+<td>Primary language</td>
+<td>Complementary language and transferable reference point</td>
+</tr>
+</tbody>
+</table>
+<p>We use R because the course prioritizes statistical reasoning, visualization, and reproducible research. The deeper skills—defining variables, understanding assumptions, evaluating models, and interpreting evidence—transfer to Python and other analytical environments.</p>
+<hr>
+</section>
+<section id="setup-r-rstudio-and-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="setup-r-rstudio-and-quarto">Setup: R, RStudio, and Quarto</h2>
+<section id="install-r" class="level3">
+<h3 class="anchored" data-anchor-id="install-r">1. Install R</h3>
+<p>Install the current release of R using the default installation options.</p>
+<ul>
+<li><a href="https://cran.r-project.org/bin/windows/base/">R for Windows</a></li>
+<li><a href="https://cran.r-project.org/bin/macosx/">R for macOS</a></li>
 </ul>
 </section>
-<section id="superior-data-visualization" class="level3">
-<h3 class="anchored" data-anchor-id="superior-data-visualization"><strong>2. Superior Data Visualization</strong></h3>
-<ul>
-<li><p><strong>ggplot2 and Beyond</strong>: R’s <code>ggplot2</code> package is renowned for its capability to create advanced and beautiful data visualizations with ease. The grammar of graphics implemented by <code>ggplot2</code> allows for the layering of data, aesthetic mappings, and statistical transformations, facilitating the creation of complex plots intuitively.</p></li>
-<li><p><strong>Rich Ecosystem for Visualization</strong>: Beyond <code>ggplot2</code>, R offers a rich ecosystem of visualization packages like lattice, <code>plotly</code> (for interactive plots), and <code>shiny</code> (for interactive web apps), providing a wide range of options for presenting data insights effectively.</p></li>
-</ul>
+<section id="install-rstudio-desktop" class="level3">
+<h3 class="anchored" data-anchor-id="install-rstudio-desktop">2. Install RStudio Desktop</h3>
+<p>Install the latest compatible open-source release of <a href="https://posit.co/download/rstudio-desktop/">RStudio Desktop</a>. R should be installed before opening RStudio for the first time.</p>
 </section>
-<section id="integrated-development-environment-ide-support" class="level3">
-<h3 class="anchored" data-anchor-id="integrated-development-environment-ide-support"><strong>3. Integrated Development Environment (IDE) Support</strong></h3>
-<ul>
-<li><strong>RStudio</strong>: RStudio is a powerful and popular IDE specifically designed for R. It provides an integrated environment that makes data analysis, visualization, and programming more accessible. RStudio enhances the R programming experience with features like code completion, easy package management, and markdown <strong>(quarto, nowadays)</strong> support for reproducible research.</li>
-</ul>
+<section id="check-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="check-quarto">3. Check Quarto</h3>
+<p>Recent RStudio releases provide integrated support for editing and previewing Quarto documents. After installing RStudio, open the <strong>Terminal</strong> pane and run:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> check</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If Quarto is unavailable or outdated, follow the official <a href="https://quarto.org/docs/get-started/">Quarto installation guide</a>.</p>
 </section>
-<section id="community-and-support" class="level3">
-<h3 class="anchored" data-anchor-id="community-and-support"><strong>4. Community and Support</strong></h3>
-<ul>
-<li><p><strong>Dedicated Community</strong>: R has a vibrant and welcoming community, particularly attractive to those in academia, research, and various scientific disciplines. The community offers extensive resources, forums, and groups for support, making it easier for newcomers to get started and for experts to dive deep into specific statistical challenges.</p></li>
-<li><p><strong>CRAN Repository</strong>: The Comprehensive R Archive Network (<a href="https://cran.r-project.org/">CRAN</a>) is a repository of over 16,000 R packages (as of my last update in April 2023). This vast and well-organized repository ensures that R users have access to tools and libraries for nearly every statistical and graphical method imaginable.</p></li>
-</ul>
-</section>
-<section id="data-handling-and-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="data-handling-and-analysis"><strong>5. Data Handling and Analysis</strong></h3>
-<ul>
-<li><p><strong>Data Wrangling</strong>: While Python’s pandas library is powerful for data manipulation, R’s <code>dplyr</code> and <code>data.table</code> packages offer syntax that is arguably more intuitive for data transformation and aggregation, especially for those with a background in SQL or those new to programming.</p></li>
-<li><p><strong>Analysis Workflow</strong>: R is designed with an analysis-first approach, emphasizing data exploration and analysis workflows. This makes R particularly suited for iterative data exploration, hypothesis testing, and modeling in a way that is highly accessible to researchers and analysts.</p></li>
-<li><p><strong>R is intuitive for analysis:</strong> R may not work with a wide variety of projects, but it is the best choice for analysis and inference work. If you plan to work in a specialized field, you’ll want a specialized programming language. R also offers a powerful environment ideally suited to the types of <u>data visualizations</u> data scientists employ.</p></li>
-</ul>
-</section>
-<section id="comparative-consideration" class="level3">
-<h3 class="anchored" data-anchor-id="comparative-consideration"><strong>Comparative Consideration</strong></h3>
-<p>While Python is a general-purpose programming language with broad applications ranging from web development to software engineering and has significant strengths in machine learning and deep learning with libraries like TensorFlow and PyTorch, <u>R’s focused design for statistical analysis and data visualization makes it exceptionally well-suited for data scientists, statisticians, and researchers.</u> This focus, combined with its comprehensive statistical packages, superior data visualization capabilities, and supportive community, positions R as a strong choice for those particularly interested in the statistical and analytical aspects of data science.</p>
-<p>Source: <a href="https://www.edx.org/resources/r-vs-python-for-data-science-explainer-learning-tips" class="uri">https://www.edx.org/resources/r-vs-python-for-data-science-explainer-learning-tips</a></p>
-<p><br></p>
-</section>
-<section id="install-gadgets" class="level3">
-<h3 class="anchored" data-anchor-id="install-gadgets">Install gadgets</h3>
-<ul>
-<li><p>Install R, R Studio, &amp; Rtools</p>
-<ul>
-<li><p><strong>R</strong></p>
-<ul>
-<li><p>For window <a href="https://cran.r-project.org/bin/windows/base/" class="uri">https://cran.r-project.org/bin/windows/base/</a></p></li>
-<li><p>For mac <a href="https://cran.r-project.org/bin/macosx/" class="uri">https://cran.r-project.org/bin/macosx/</a></p></li>
-</ul></li>
-<li><p><strong>R Studio</strong></p>
-<ul>
-<li><a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></li>
-</ul></li>
-<li><p><strong>Rtools</strong> (only for window user)</p>
-<ul>
-<li><p><a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a></p></li>
-<li><p>To install R packages containing C/C++ language for window users (no need for Linux and Mac users)</p></li>
-</ul></li>
-</ul></li>
-<li><p>Things you need to know</p>
-<ul>
-<li><p>Don’t Use OneDrive.</p>
-<ul>
-<li><p>Use <code>Github</code> instead</p></li>
-<li><p>Many people get an error when installing because of <code>OneDrive</code></p></li>
-</ul></li>
-<li><p>Set Windows user name to English</p>
-<ul>
-<li>If Korean characters are mixed in the installation path, there is a high probability of error occurrence</li>
-</ul></li>
-</ul></li>
-<li><p>Installation Order</p>
-<ul>
-<li><p><strong>Step 1</strong> ‑ Download the file</p>
-<ul>
-<li>Download R, Rtools, Rstudio installation files</li>
-</ul></li>
-<li><p><strong>Step 2</strong> - Install R</p>
-<ul>
-<li><p>Unified installation path: All will be installed in the <code>C:/R</code> folder</p></li>
-<li><p>Run in administrator mode when running the R installation file</p></li>
-<li><p>After installing R, grant write permission to the R folder, Right-click and turn off read only</p></li>
-</ul></li>
-<li><p><strong>Step 3</strong> ‑ Install Rtools</p>
-<ul>
-<li><p><strong>Rtools?</strong> <code>RTools</code> is <u>a collection of software tools and libraries that are necessary for building and compiling packages in the R programming language, especially on Windows</u>.</p></li>
-<li><p>Administrator mode execution installation and folder setting as C:\R\rtools40</p></li>
-<li><p>Create environment variable RTOOLS40_HOME after installation: Value - C:\R\rtools40\</p></li>
-<li><p>Add <em>%RTOOLS40_HOME%\usr\bin\</em> to the Path variable.</p></li>
-</ul></li>
-<li><p><strong>Step 4</strong> - Install Rstudio</p>
-<ul>
-<li><p>Right-click and run as administrator - installation path C:\R\Rstudio</p></li>
-<li><p>Check rtools connection with Sys.which(“make”) command after installation</p></li>
-</ul></li>
-</ul></li>
-</ul>
-<p><br></p>
-
-
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>An informed decision is&nbsp;a choice that individuals make once they have all the information related to the decision topic. It involves analyzing potential outcomes, benefits and risks associated with each option, then deciding which choice is the best for you.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<section id="rtools-for-windows-optional-at-first" class="level3">
+<h3 class="anchored" data-anchor-id="rtools-for-windows-optional-at-first">4. Rtools for Windows: Optional at First</h3>
+<p><a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> is required only when Windows users need to build R packages from source that contain compiled C, C++, or Fortran code. Most students can begin the course without it because CRAN normally provides precompiled Windows binaries.</p>
+<p>If R specifically reports that Rtools is required:</p>
+<ol type="1">
+<li>choose the Rtools version that matches your installed version of R;</li>
+<li>use the default installation location; and</li>
+<li>do not manually edit environment variables unless the official instructions or a specific error requires it.</li>
 </ol>
-</section></div></main> <!-- /main -->
+<hr>
+</section>
+<section id="recommended-project-folder" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-project-folder">Recommended Project Folder</h3>
+<p>Create a short, local project path such as:</p>
+<ul>
+<li>Windows: <code>C:/r-projects/grad-stat/</code></li>
+<li>macOS/Linux: <code>~/r-projects/grad-stat/</code></li>
+</ul>
+<p>Then create an <strong>RStudio Project</strong> in that folder.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About OneDrive, iCloud, and Other Sync Folders
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cloud-synced folders are not prohibited, but active synchronization can occasionally lock files, create conflicting copies, or produce long path names while R or Quarto is rendering. For class exercises, a short local project folder is the safest choice. Back up or synchronize the project after closing RStudio, or use Git/GitHub for version history if you are comfortable with it.</p>
+</div>
+</div>
+<p>Additional recommendations:</p>
+<ul>
+<li>Prefer project-relative paths rather than absolute paths.</li>
+<li>Avoid repeatedly using <code>setwd()</code> inside scripts.</li>
+<li>Use <code>here::here()</code> when building file paths.</li>
+<li>If an installation or rendering error occurs, test the project in a short path without spaces or non-ASCII characters before changing your Windows account name or system configuration.</li>
+</ul>
+<hr>
+</section>
+<section id="install-the-starter-packages" class="level3">
+<h3 class="anchored" data-anchor-id="install-the-starter-packages">Install the Starter Packages</h3>
+<p>Run the following code <strong>once</strong> in the R Console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>starter_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"here"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"janitor"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"skimr"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"palmerpenguins"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"broom"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"knitr"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>installed <span class="ot">&lt;-</span> <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>new_packages <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(starter_packages, installed)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(new_packages) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(new_packages)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You install a package once, but load it again in each new R session with <code>library()</code>.</p>
+<hr>
+</section>
+</section>
+<section id="first-r-practice" class="level2">
+<h2 class="anchored" data-anchor-id="first-r-practice">First R Practice</h2>
+<p>Create an RStudio Project, open a new Quarto document, and run the following code.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>penguin_summary <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_body_mass_g =</span> <span class="fu">mean</span>(body_mass_g),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_body_mass_g =</span> <span class="fu">sd</span>(body_mass_g),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>penguin_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then answer:</p>
+<ol type="1">
+<li>What is the <strong>unit of analysis</strong> in the original dataset?</li>
+<li>What does each row of <code>penguin_summary</code> represent?</li>
+<li>Why are <code>n</code>, the mean, and the standard deviation all useful?</li>
+<li>Which species has the highest mean body mass in the observed sample?</li>
+<li>What additional information would you need before generalizing beyond this dataset?</li>
+</ol>
+<p>Finally, render the <code>.qmd</code> file to HTML. The goal is not only to obtain output, but to confirm that the complete workflow—R, packages, code, and Quarto rendering—works on your computer.</p>
+<hr>
+</section>
+<section id="using-generative-ai-responsibly" class="level2">
+<h2 class="anchored" data-anchor-id="using-generative-ai-responsibly">Using Generative AI Responsibly</h2>
+<p>Generative AI may be used as a <strong>tutor, explainer, and debugging partner</strong>. It should not replace your responsibility for research design, statistical judgment, or interpretation.</p>
+<section id="productive-uses" class="level3">
+<h3 class="anchored" data-anchor-id="productive-uses">Productive Uses</h3>
+<ul>
+<li>asking for a plain-language explanation of an error message;</li>
+<li>requesting alternative ways to write the same R code;</li>
+<li>asking why a model or function behaves in a particular way;</li>
+<li>generating a small example to clarify a concept;</li>
+<li>checking whether your interpretation is logically consistent; and</li>
+<li>improving comments, labels, or the readability of code.</li>
+</ul>
+</section>
+<section id="your-responsibilities" class="level3">
+<h3 class="anchored" data-anchor-id="your-responsibilities">Your Responsibilities</h3>
+<ul>
+<li>Run and verify all suggested code.</li>
+<li>Be able to explain every submitted line and analytical choice.</li>
+<li>Check package documentation and original sources when accuracy matters.</li>
+<li>Disclose substantial AI assistance when required by the assignment.</li>
+<li>Never upload identifiable participant data, confidential research files, unpublished proprietary data, or information restricted by IRB/consent conditions.</li>
+</ul>
+</section>
+<section id="unacceptable-uses" class="level3">
+<h3 class="anchored" data-anchor-id="unacceptable-uses">Unacceptable Uses</h3>
+<ul>
+<li>submitting code or interpretations that you cannot explain;</li>
+<li>inventing references, data, results, or diagnostics;</li>
+<li>asking AI to select an analysis without checking the research design and assumptions; or</li>
+<li>treating fluent output as evidence that an answer is statistically correct.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>A useful rule:</strong> AI can help you write and debug code, but you remain accountable for the question, data, assumptions, evidence, and conclusion.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="week-1-completion-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="week-1-completion-checklist">Week 1 Completion Checklist</h2>
+<p>Before moving on, confirm that you can:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">open RStudio and verify that R starts correctly;</label></li>
+<li><label><input type="checkbox">create and reopen an RStudio Project;</label></li>
+<li><label><input type="checkbox">install and load the starter packages;</label></li>
+<li><label><input type="checkbox">run code using the base pipe <code>|&gt;</code>;</label></li>
+<li><label><input type="checkbox">describe the unit of analysis in a dataset;</label></li>
+<li><label><input type="checkbox">distinguish a research question from an analysis command;</label></li>
+<li><label><input type="checkbox">render a <code>.qmd</code> document to HTML from a clean R session; and</label></li>
+<li><label><input type="checkbox">bring one HCI research question that you would like to investigate with data.</label></li>
+</ul>
+<section id="useful-references" class="level3">
+<h3 class="anchored" data-anchor-id="useful-references">Useful References</h3>
+<ul>
+<li><a href="https://moderndive.com/">ModernDive: Statistical Inference via Data Science</a></li>
+<li><a href="https://r4ds.hadley.nz/">R for Data Science, 2nd edition</a></li>
+<li><a href="https://quarto.org/docs/">Quarto Documentation</a></li>
+<li><a href="https://docs.posit.co/ide/user/">RStudio IDE User Guide</a></li>
+</ul>
+<!-- --- -->
+<!-- title: "Course Intro" -->
+<!-- subtitle: "Course Intro"  -->
+<!-- Week: 1 -->
+<!-- format: html -->
+<!-- slide-format: revealjs -->
+<!-- --- -->
+<!-- ## First Week Orientation -->
+<!--  -->
+<!-- <br> -->
+<!-- [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+<!-- <br> -->
+<!-- ### Content -->
+<!-- -   [Course description](https://changjunlee.com/teaching/grad_stat/about/) -->
+<!-- -   About Lecturer -->
+<!-- -   [Weekly design](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+<!-- -   Research & Statistics -->
+<!-- -   Data science & R -->
+<!-- ------------------------------------------------------------------------ -->
+<!-- ## Course description -->
+<!-- -   [Course description](https://changjunlee.com/teaching/grad_stat/about/) -->
+<!-- <br> -->
+<!-- ## About Lecturer -->
+<!-- **Changjun LEE** -->
+<!-- -   Home: <https://changjunlee.com/> -->
+<!-- Associate Professor (Head of Culture & Tech) -->
+<!-- School of Convergence. SKKU. -->
+<!-- > As a computational social scientist, I bring a unique interdisciplinary perspective to the fields of economics, innovation studies, and convergence technologies. With a background in natural sciences, including a bachelor’s degree in biology and chemistry, I went on to earn a Ph.D. in technology management, economics, and policy. My research focuses on utilizing computational methods to tackle a wide range of social phenomena, including technology evolution & regional growth, knowledge management, and technology & convergence innovation. I am passionate about using technology and data to drive innovation and solve real-world problems. -->
+<!-- -   **Research interest:** Media & Innovation, Immersive media and users' behavior, Technology management, Anything can be solved using Data Science -->
+<!-- -   **Teaching:** Culture & Technology \| Data Science in CNT \| STAT101 -->
+<!-- -   Things I love -->
+<!--     -   Research -->
+<!--     -   Chat & Coffee & MBTI -->
+<!--     -   Travel -->
+<!--     -   Play (Things) -->
+<!-- <br> -->
+<!-- ## Weekly Design -->
+<!-- -   [Weekly design](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+<!-- <br> -->
+<!-- ## Research & Statistics -->
+<!-- > Entering grad school (Doing your master / Ph.D.) is an exciting milestone. It's a chance to dive deep into your field, contribute to groundbreaking research, and refine your expertise. However, regardless of your discipline—be it psychology, biology, economics, or even education—one skill remains a constant necessity: statistics. -->
+<!-- <br> -->
+<!-- ### Why is Statistics Important in Grad School? -->
+<!-- Graduate school is often synonymous with research. Whether you're collecting data, interpreting results, or reading existing literature, you'll need to understand how to analyze and make sense of numbers. That's where statistics comes in. Statistics provides the tools to turn raw data into meaningful insights, enabling you to make evidence-based conclusions. -->
+<!-- **1. Informed Decision-Making**[^1]\ -->
+<!-- Research is all about making informed decisions. ***Is the difference between two groups significant?*** (How likely is it that the results you found are due to chance? 우연히 일어난 일이 아니라는 근거는?) Statistics gives you the methods to answer these questions with confidence. -->
+<!-- [^1]: An informed decision is a choice that individuals make once they have all the information related to the decision topic. It involves analyzing potential outcomes, benefits and risks associated with each option, then deciding which choice is the best for you. -->
+<!-- <br> -->
+<!-- **2. Data Interpretation** (논문을 읽으려면 꼭 알아야 하는 통계)\ -->
+<!-- Understanding research papers is a core part of grad school. But to critically evaluate these papers, you need to grasp the statistics used in them. Whether it's regression analysis, ANOVA, or chi-square tests, you need to know how the data was analyzed to assess whether the conclusions are sound. (읽다보면 패턴이 보일 것) -->
+<!-- <br> -->
+<!-- **3. Research Design** (끝까지 상상하고 디자인 하라)\ -->
+<!-- When designing your own studies, statistical knowledge helps you choose the right sample size, measurement tools, and analysis methods. It ensures that your research is both scientifically rigorous and ethical, minimizing biases and errors. -->
+<!-- <br> -->
+<!-- ### The Role of Statistics in Research -->
+<!-- Statistics isn't just about crunching numbers. It plays a pivotal role in every stage of the research process, from conceptualization to publication. -->
+<!-- -   **Formulating Hypotheses:** At the start of your research, you’ll develop hypotheses that are ***testable*** using statistical methods. Understanding the statistical underpinnings of these hypotheses helps you design studies that can accurately assess the relationships you're interested in. -->
+<!--     > **잘못된 가설:** "새로운 약물이 혈압에 영향을 줄 것이다." -->
+<!--     > -->
+<!--     > -   **구체성이 부족:** "영향을 줄 것이다"라는 표현이 모호해서 혈압을 올릴 것인지, 낮출 것인지, 또는 그 효과가 얼마나 클 것인지 구체적으로 언급하지 않았음. -->
+<!--     > -->
+<!--     > -   **통계적 검증의 어려움:** 명확한 가설이 없으면 어떤 통계 분석 방법을 사용해야 할지도 불분명해짐. 혈압이 증가하거나 감소할 것이라는 구체적인 예측이 없으면 통계적으로 검증하기가 어렵기 때문. -->
+<!--     > -->
+<!--     > **올바른 가설:** "새로운 약물이 고혈압 환자의 혈압을 유의미하게 감소시킬 것이다." -->
+<!-- -   **Data Collection:** Statistical principles guide the way you collect data, ensuring that your methods minimize bias and maximize reliability. Sampling techniques, for example, are essential in ensuring that your study results can be generalized to the broader population. -->
+<!-- -   **Data Analysis:** Once you've collected your data, statistics helps you determine the best way to analyze it. Different research questions require different statistical tests, and knowing which test to use—and how to use it—can make or break your study. -->
+<!-- -   **Reporting Results:** Properly reporting your findings involves more than just stating whether your results were significant. You'll need to provide effect sizes, confidence intervals, and possibly even power analyses to show that your results are both meaningful and reliable. Statistics helps you communicate your findings clearly and effectively. (논문을 읽을 때와 마찬가지로 쓸 때 깊이가 생기기 시작함. 아는 만큼 보이기 때문) -->
+<!-- <br> -->
+<!-- ### How to Learn Statistics as a Grad Student -->
+<!-- For many, statistics can be intimidating. However, like any skill, it can be learned with *dedication* and *practice*. Here are some tips to help you master statistics during your graduate studies. -->
+<!-- <br> -->
+<!-- **1. Start with the Basics**\ -->
+<!-- If you're new to statistics, don't worry. Start with the basics—mean, median, mode, standard deviation—and gradually build your knowledge. Courses, textbooks, and online resources like Coursera can help you get started. (온라인 에듀 플랫폼? 도움이 된다!) -->
+<!-- <br> -->
+<!-- **2. Apply What You Learn**\ -->
+<!-- Statistics is best learned by doing. Apply what you learn to real datasets. Whether it’s data from your research, a class project, or publicly available datasets, practicing with real data will help solidify your understanding. (응용 없는 배움은? 고급 취미) -->
+<!-- <br> -->
+<!-- **3. Use Statistical Software**\ -->
+<!-- In grad school, you'll likely need to use statistical software like *R* and *Python*. Learning to use these tools is essential, as they'll help you manage and analyze large datasets efficiently. Don't be afraid to dive into tutorials and online forums to help you get comfortable with the software. -->
+<!-- <br> -->
+<!-- **4. Seek Help** (Create a group study)\ -->
+<!-- Grad school can be overwhelming, and it's okay to seek help. Attend statistics workshops, study groups, or even work with a tutor if needed. Collaborating with peers and seeking guidance from professors can help clarify complex concepts. -->
+<!-- <Br> -->
+<!-- **5. Make Statistics a Daily Habit**\ -->
+<!-- Just like any other skill, becoming proficient in statistics requires daily practice. Dedicate time each day to work on problems, analyze data, or review concepts. Consistency is key to retaining what you learn and becoming comfortable with statistical methods. -->
+<!-- <br> -->
+<!-- ### The Importance of Daily Grinding -->
+<!-- The most effective way to master statistics—and research methods more broadly—is through consistent, daily effort. By integrating statistics into your daily routine, you’ll gradually build confidence and proficiency. Daily grinding may not be glamorous, but it’s a proven strategy for success in grad school. -->
+<!-- Here’s why: -->
+<!-- -   **Retention:** Daily practice helps reinforce what you learn, making it easier to recall concepts when you need them. -->
+<!-- -   **Problem-Solving:** Regular exposure to different statistical problems improves your problem-solving skills and allows you to tackle more complex analyses over time. -->
+<!-- -   **Confidence:** As you practice more, your confidence grows, reducing the anxiety that often accompanies statistical analysis. -->
+<!-- <br> -->
+<!-- ## Data Science & R -->
+<!-- > Data Science is a modern academic area helping people to draw useful information and intuition so that making them to make reasonable decisions -->
+<!-- ### **Why Data Science is So Important to Learn?** -->
+<!-- In the age of information, data science has emerged as a pivotal skill set across industries, transforming the way decisions are made and offering insights that were previously inaccessible. Its importance stems from the ability to analyze and derive meaningful insights from data, which can drive strategic business decisions, lead to technological innovations, and solve complex problems. Here’s why learning data science is crucial, even for those not pursuing a career in computer science. -->
+<!-- #### Data-Driven Decision Making -->
+<!-- One of the foremost reasons for learning data science is its role in data-driven decision making. [With an increasing amount of data generated every day, the ability to sift through, analyze, and interpret this data can be the difference between staying ahead or falling behind in any industr]{.underline}y. Data science skills enable individuals and organizations to make informed decisions based on empirical evidence rather than intuition or speculation. -->
+<!-- #### Cross-Disciplinary Application -->
+<!-- Data science is not confined to the tech industry. [It finds applications in healthcare, finance, retail, education, and more.]{.underline} For instance, in healthcare, data science can predict disease outbreaks, in finance, it can assess risk and in retail, it can help understand consumer behavior. This cross-disciplinary nature of data science means that learning it can open up opportunities in virtually any field, making it a valuable skill set for all majors. -->
+<!-- #### Enhancing Problem-Solving Skills -->
+<!-- Learning data science enhances critical thinking and problem-solving skills. It involves [identifying patterns, making predictions, and solving complex problems using a data-driven approach]{.underline}. These skills are transferable and valuable in any career path, making data science learning beneficial beyond the technical aspects. -->
+<!-- #### Future Job Market -->
+<!-- The demand for data science skills is growing rapidly. According to the U.S. Bureau of Labor Statistics, [the job market for data science and analytical roles is projected to grow much faster than the average for all occupations]{.underline}. Learning data science can thus provide a competitive edge in the job market, even for those in non-computer science fields. -->
+<!-- #### Empowering Innovation -->
+<!-- Data science is at the heart of innovation today. [From developing new products and services to improving existing processes, the insights derived from data science can lead to significant advancements and efficiencies]{.underline}. By understanding data science, individuals in non-computer science fields can contribute to innovation within their industries. -->
+<!-- #### For non-computer science majors: You are the one who has to learn this. -->
+<!-- The importance of data science transcends traditional boundaries of computer science and technology. It is a critical skill for the future, enabling individuals to navigate and excel in a data-driven world. [For non-computer science majors, learning data science not only enhances employability and problem-solving skills but also **opens up new avenues for innovation and impact in their respective fields**]{.underline}. In essence, data science is a universal language of the future, and learning it is key to unlocking potential across the spectrum of professional endeavors. -->
+<!-- <br> -->
+<!-- -   Again, Data Never Sleeps -->
+<!-- <https://www.domo.com/data-never-sleeps> -->
+<!-- <br> -->
+<!-- ### So Data Scientist is.. -->
+<!-- -   데이터를 가지고 길을 만드는 사람. -->
+<!-- -   Requirements -->
+<!--     -   **Domain Expertise** is getting more important as the world is getting more complicated -->
+<!--     -   This course will cover coding part and a little bit of statistical skills -->
+<!--     -   Don't worry! **Practice makes perfect.** -->
+<!-- <br> -->
+<!-- ### **Why R is the Best Language for Non-Computer Majors to Learn Data Science** -->
+<!-- In the realm of data science, the choice of programming language is pivotal. For non-computer majors venturing into this field, R stands out as a particularly accessible and powerful tool. Here’s why R is often considered the best language for those new to data science. -->
+<!-- #### 1. Designed for Statistics and Data Analysis -->
+<!-- R was specifically created for statistical analysis and data visualization. Unlike general-purpose programming languages that can be used for data science, R’s syntax and functions are tailored to statistical analysis, making it more intuitive for analyzing data. For students and professionals without a computer science background, this focus makes R an excellent entry point into data science. -->
+<!-- #### 2. Comprehensive Libraries and Packages -->
+<!-- R boasts a vast ecosystem of packages designed for data science tasks, including dplyr for data manipulation, ggplot2 for data visualization, and caret for machine learning. These packages simplify complex tasks into more manageable functions, allowing users to perform sophisticated data analysis with relatively simple commands. This extensive library support means that non-computer majors can accomplish more with less coding expertise. -->
+<!-- #### 3. Strong Community and Support -->
+<!-- The R community is known for its inclusivity and support, especially for beginners. Numerous online forums, such as R-bloggers and Stack Overflow, provide a platform for learners to seek help, exchange ideas, and stay updated on the latest developments in R. This community support is invaluable for non-computer majors who may require guidance as they navigate their data science journey. -->
+<!-- #### 4. Free and Open Source -->
+<!-- R is a free, open-source software, making it accessible to everyone without the need for expensive licenses or subscriptions. This democratizes the learning process, allowing individuals from diverse backgrounds to explore data science without financial barriers. Moreover, being open-source encourages users to contribute to the development of R, further enriching its capabilities and resources. -->
+<!-- #### 5. Versatile Data Visualization Capabilities -->
+<!-- Visual data representation is crucial in data science for understanding complex datasets and communicating findings effectively. R's superior data visualization capabilities, particularly through the ggplot2 package, allow users to create high-quality, publication-ready graphs and plots. This is particularly beneficial for non-computer majors, who might rely more heavily on visual representations to understand and present data insights. -->
+<!-- #### 6. Industry Adoption and Academic Support -->
+<!-- R is widely adopted in both academia and industry for research and data analysis. This widespread use means that learning R can open up opportunities in various fields, including biostatistics, epidemiology, economics, and social sciences. For non-computer majors, the ability to apply their data science skills directly to their field of study or industry is a significant advantage. -->
+<!-- > For non-computer majors looking to delve into data science, R offers a unique blend of accessibility, specialized functionality, and community support. Its design for statistical analysis, along with a rich ecosystem of packages and resources, makes R an ideal starting point for those new to programming and data analysis. By learning R, non-computer majors can not only gain valuable data science skills but also apply these skills directly to their fields of interest, enhancing their research capabilities and career prospects. -->
+<!-- <br> -->
+<!-- ### How About Python? -->
+<!-- A good quesiton! R and Python are both powerful and popular programming languages in the data science community, each with its unique strengths. [When comparing R to Python, especially from the perspective of those with non-computer science backgrounds or specific analytical needs, several aspects of R stand out, highlighting its strengths:]{.underline} -->
+<!-- ### **1. Specialization in Statistical Analysis** -->
+<!-- -   **R's Foundation**: R is specifically designed for statistical analysis and graphical models. It was developed by statisticians for statisticians. This specialization gives it an edge in handling complex statistical data analyses out of the box, without the need for extensive programming knowledge or additional libraries. -->
+<!-- -   **Comprehensive Statistical Packages**: R has a comprehensive collection of packages for various statistical analyses, including linear and nonlinear modeling, classical statistical tests, time-series analysis, classification, clustering, and more. These packages are often written by statisticians and subject matter experts, ensuring they are tailored for rigorous statistical analysis. -->
+<!-- ### **2. Superior Data Visualization** -->
+<!-- -   **ggplot2 and Beyond**: R's `ggplot2` package is renowned for its capability to create advanced and beautiful data visualizations with ease. The grammar of graphics implemented by `ggplot2` allows for the layering of data, aesthetic mappings, and statistical transformations, facilitating the creation of complex plots intuitively. -->
+<!-- -   **Rich Ecosystem for Visualization**: Beyond `ggplot2`, R offers a rich ecosystem of visualization packages like lattice, `plotly` (for interactive plots), and `shiny` (for interactive web apps), providing a wide range of options for presenting data insights effectively. -->
+<!-- ### **3. Integrated Development Environment (IDE) Support** -->
+<!-- -   **RStudio**: RStudio is a powerful and popular IDE specifically designed for R. It provides an integrated environment that makes data analysis, visualization, and programming more accessible. RStudio enhances the R programming experience with features like code completion, easy package management, and markdown **(quarto, nowadays)** support for reproducible research. -->
+<!-- ### **4. Community and Support** -->
+<!-- -   **Dedicated Community**: R has a vibrant and welcoming community, particularly attractive to those in academia, research, and various scientific disciplines. The community offers extensive resources, forums, and groups for support, making it easier for newcomers to get started and for experts to dive deep into specific statistical challenges. -->
+<!-- -   **CRAN Repository**: The Comprehensive R Archive Network ([CRAN](https://cran.r-project.org/)) is a repository of over 16,000 R packages (as of my last update in April 2023). This vast and well-organized repository ensures that R users have access to tools and libraries for nearly every statistical and graphical method imaginable. -->
+<!-- ### **5. Data Handling and Analysis** -->
+<!-- -   **Data Wrangling**: While Python's pandas library is powerful for data manipulation, R's `dplyr` and `data.table` packages offer syntax that is arguably more intuitive for data transformation and aggregation, especially for those with a background in SQL or those new to programming. -->
+<!-- -   **Analysis Workflow**: R is designed with an analysis-first approach, emphasizing data exploration and analysis workflows. This makes R particularly suited for iterative data exploration, hypothesis testing, and modeling in a way that is highly accessible to researchers and analysts. -->
+<!-- -   **R is intuitive for analysis:** R may not work with a wide variety of projects, but it is the best choice for analysis and inference work. If you plan to work in a specialized field, you'll want a specialized programming language. R also offers a powerful environment ideally suited to the types of [data visualizations]{.underline} data scientists employ. -->
+<!-- ### **Comparative Consideration** -->
+<!-- While Python is a general-purpose programming language with broad applications ranging from web development to software engineering and has significant strengths in machine learning and deep learning with libraries like TensorFlow and PyTorch, [R's focused design for statistical analysis and data visualization makes it exceptionally well-suited for data scientists, statisticians, and researchers.]{.underline} This focus, combined with its comprehensive statistical packages, superior data visualization capabilities, and supportive community, positions R as a strong choice for those particularly interested in the statistical and analytical aspects of data science. -->
+<!-- Source: <https://www.edx.org/resources/r-vs-python-for-data-science-explainer-learning-tips> -->
+<!-- <br> -->
+<!-- ### Install gadgets -->
+<!-- -   Install R, R Studio, & Rtools -->
+<!--     -   **R** -->
+<!--         -   For window <https://cran.r-project.org/bin/windows/base/> -->
+<!--         -   For mac <https://cran.r-project.org/bin/macosx/> -->
+<!--     -   **R Studio** -->
+<!--         -   <https://posit.co/download/rstudio-desktop/> -->
+<!--     -   **Rtools** (only for window user) -->
+<!--         -   <https://cran.r-project.org/bin/windows/Rtools/> -->
+<!--         -   To install R packages containing C/C++ language for window users (no need for Linux and Mac users) -->
+<!-- -   Things you need to know -->
+<!--     -   Don't Use OneDrive. -->
+<!--         -   Use `Github` instead -->
+<!--         -   Many people get an error when installing because of `OneDrive` -->
+<!--     -   Set Windows user name to English -->
+<!--         -   If Korean characters are mixed in the installation path, there is a high probability of error occurrence -->
+<!-- -   Installation Order -->
+<!--     -   **Step 1** ‑ Download the file -->
+<!--         -   Download R, Rtools, Rstudio installation files -->
+<!--     -   **Step 2** - Install R -->
+<!--         -   Unified installation path: All will be installed in the `C:/R` folder -->
+<!--         -   Run in administrator mode when running the R installation file -->
+<!--         -   After installing R, grant write permission to the R folder, Right-click and turn off read only -->
+<!--     -   **Step 3** ‑ Install Rtools -->
+<!--         -   **Rtools?** `RTools` is [a collection of software tools and libraries that are necessary for building and compiling packages in the R programming language, especially on Windows]{.underline}. -->
+<!--         -   Administrator mode execution installation and folder setting as C:\\R\\rtools40 -->
+<!--         -   Create environment variable RTOOLS40_HOME after installation: Value - C:\\R\\rtools40\\ -->
+<!--         -   Add *%RTOOLS40_HOME%\\usr\\bin\\* to the Path variable. -->
+<!--     -   **Step 4** - Install Rstudio -->
+<!--         -   Right-click and run as administrator - installation path C:\\R\\Rstudio -->
+<!--         -   Check rtools connection with Sys.which("make") command after installation -->
+<!-- <br> -->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -960,12 +1597,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
       <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
-      <i class="bi bi-twitter" role="img">
 </i> 
     </a>
   </li>  

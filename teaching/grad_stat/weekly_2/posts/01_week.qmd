@@ -1,363 +1,942 @@
 ---
 title: "Course Intro"
-subtitle: "Course Intro" 
+subtitle: "Statistics, Data Science, and R for HCI Research"
 Week: 1
 format: html
 slide-format: revealjs
 ---
 
-
 ## First Week Orientation
-
 
 {{< video https://youtu.be/jOH_sRJvrfo >}}
 
+[Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/) | [Course description & communication](https://changjunlee.com/teaching/grad_stat/about/)
 
-<br>
+::: {.callout-note}
+## Week 1 Learning Goals
 
+By the end of this week, you should be able to:
 
+1. explain how statistics and data science support HCI research;
+2. distinguish a research question, research design, measurement, and analysis;
+3. describe why this course uses R, RStudio, and Quarto;
+4. set up a reproducible R project and run a first analysis; and
+5. use generative AI as a learning and debugging aid without outsourcing statistical judgment.
+:::
 
+### Today's Roadmap
 
-[Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
-
-<br>
-
-### Content
-
--   [Course description](https://changjunlee.com/teaching/grad_stat/about/)
-
--   About Lecturer
-
--   [Weekly design](https://changjunlee.com/teaching/grad_stat/weekly_2/)
-
--   Research & Statistics
-
--   Data science & R
+- Course overview and learning expectations
+- About the lecturer
+- How the course is organized
+- Research, statistics, and statistical thinking
+- Data science for HCI
+- Why R—and how it relates to Python
+- Software setup and first R practice
+- Responsible use of generative AI
 
 ------------------------------------------------------------------------
 
-## Course description
+## Course Description
 
--   [Course description](https://changjunlee.com/teaching/grad_stat/about/)
+> This course introduces foundational concepts in statistics and data science for Human–Computer Interaction (HCI) research. Using R and Quarto, students will learn how to design studies, manage and visualize data, select and evaluate statistical models, interpret uncertainty, and communicate results reproducibly.
 
-<br>
+The central question of the course is:
 
-## About Lecturer
+> **How can we turn an HCI research question into credible, interpretable, and reproducible evidence?**
+
+This course emphasizes four connected capabilities:
+
+- **Research design:** translating a substantive question into a study that can answer it;
+- **Statistical reasoning:** reasoning about variation, uncertainty, assumptions, and evidence;
+- **Data workflow:** importing, cleaning, transforming, visualizing, and modeling data in R; and
+- **Communication:** explaining what the results mean, what they do not mean, and how they were produced.
+
+This is **not** a course in memorizing formulas or mechanically matching a research question to a statistical test. Coding is an important tool, but the final goal is defensible research reasoning.
+
+See the full [course description, evaluation, schedule, and communication channels](https://changjunlee.com/teaching/grad_stat/about/).
+
+------------------------------------------------------------------------
+
+## About the Lecturer
 
 **Changjun LEE**
 
--   Home: <https://changjunlee.com/>
+- **Position:** Associate Professor and Head of Culture & Technology
+- **Affiliation:** School of Convergence, College of Computing and Informatics, Sungkyunkwan University (SKKU)
+- **Home:** <https://changjunlee.com/>
+- **Research areas:** Human–AI Interaction, media and innovation, immersive media and user experience, computational social science, and technology management
+- **Teaching areas:** Statistics for HCI, machine learning for understanding humans and society, culture and technology, and applied data science
 
-Associate Professor (Head of Culture & Tech)
+> I am a computational social scientist who uses statistical and computational methods to study how people, technologies, media, firms, and institutions interact. My academic background spans biology, chemistry, economics, technology management, and policy. This interdisciplinary path shapes the way I approach HCI: begin with a meaningful real-world question, design the study carefully, and use data to build a transparent argument.
 
-School of Convergence. SKKU.
+**Things I enjoy:** research, conversations over coffee, MBTI, travel, and playful experiments with technology and data.
 
-> As a computational social scientist, I bring a unique interdisciplinary perspective to the fields of economics, innovation studies, and convergence technologies. With a background in natural sciences, including a bachelor’s degree in biology and chemistry, I went on to earn a Ph.D. in technology management, economics, and policy. My research focuses on utilizing computational methods to tackle a wide range of social phenomena, including technology evolution & regional growth, knowledge management, and technology & convergence innovation. I am passionate about using technology and data to drive innovation and solve real-world problems.
-
--   **Research interest:** Media & Innovation, Immersive media and users' behavior, Technology management, Anything can be solved using Data Science
-
--   **Teaching:** Culture & Technology \| Data Science in CNT \| STAT101
-
--   Things I love
-
-    -   Research
-
-    -   Chat & Coffee & MBTI
-
-    -   Travel
-
-    -   Play (Things)
-
-<br>
+------------------------------------------------------------------------
 
 ## Weekly Design
 
--   [Weekly design](https://changjunlee.com/teaching/grad_stat/weekly_2/)
+The course progresses from **design**, to **data**, to **inference**, and finally to **application and communication**.
 
-<br>
+| Phase | Weeks | Main Focus |
+|---|---:|---|
+| Foundations | 1–4 | HCI research design, measurement, data types, and R workflows |
+| Explore | 5–8 | Visualization, descriptive statistics, probability, and statistical inference |
+| Model | 9–12 | Experimental analysis, regression, mediation/moderation, SEM, and clustering |
+| Apply & Communicate | 13–16 | Additional methods, paper reconstruction, final report, and individual consultation |
+
+See the detailed [weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/).
+
+::: {.callout-important}
+## 2026 Schedule Note
+
+Because Week 2 coincides with participation in Ars Electronica, the core research-design perspective will also be introduced during Week 1. The full Week 2 materials remain available online for review and self-study.
+:::
+
+------------------------------------------------------------------------
 
 ## Research & Statistics
 
-> Entering grad school (Doing your master / Ph.D.) is an exciting milestone. It's a chance to dive deep into your field, contribute to groundbreaking research, and refine your expertise. However, regardless of your discipline—be it psychology, biology, economics, or even education—one skill remains a constant necessity: statistics.
+> **Statistics is not merely a collection of tests. It is a disciplined way to design studies, learn from noisy data, and communicate uncertainty.**
 
-<br>
+Graduate research repeatedly asks us to make decisions with incomplete information. We observe a sample, but want to understand a broader population, process, or theoretical mechanism. Statistics helps us connect what we observed to what we want to know—while being explicit about uncertainty and assumptions.
 
-### Why is Statistics Important in Grad School?
+### Why Is Statistics Important in Graduate School?
 
-Graduate school is often synonymous with research. Whether you're collecting data, interpreting results, or reading existing literature, you'll need to understand how to analyze and make sense of numbers. That's where statistics comes in. Statistics provides the tools to turn raw data into meaningful insights, enabling you to make evidence-based conclusions.
+#### 1. Reading Research Critically
 
-**1. Informed Decision-Making**[^1]\
-Research is all about making informed decisions. ***Is the difference between two groups significant?*** (How likely is it that the results you found are due to chance? 우연히 일어난 일이 아니라는 근거는?) Statistics gives you the methods to answer these questions with confidence.
+To evaluate a paper, you need to look beyond whether a result is “significant.” Ask:
 
-[^1]: An informed decision is a choice that individuals make once they have all the information related to the decision topic. It involves analyzing potential outcomes, benefits and risks associated with each option, then deciding which choice is the best for you.
+- What was the research design?
+- How were the key concepts measured?
+- What population or process is the study trying to describe?
+- What is the estimated effect, and in what unit?
+- How uncertain is the estimate?
+- Which assumptions support the conclusion?
+- Is the result theoretically or practically meaningful?
 
-<br>
+Regression, ANOVA, chi-square tests, mediation models, and machine-learning models are easier to understand once you see them as different tools for answering different questions under different assumptions.
 
-**2. Data Interpretation** (논문을 읽으려면 꼭 알아야 하는 통계)\
-Understanding research papers is a core part of grad school. But to critically evaluate these papers, you need to grasp the statistics used in them. Whether it's regression analysis, ANOVA, or chi-square tests, you need to know how the data was analyzed to assess whether the conclusions are sound. (읽다보면 패턴이 보일 것)
+#### 2. Designing the Study Before Collecting Data
 
-<br>
+Statistical reasoning begins **before** analysis. It informs:
 
-**3. Research Design** (끝까지 상상하고 디자인 하라)\
-When designing your own studies, statistical knowledge helps you choose the right sample size, measurement tools, and analysis methods. It ensures that your research is both scientifically rigorous and ethical, minimizing biases and errors.
+- the unit of analysis;
+- experimental conditions or comparison groups;
+- sampling and recruitment;
+- operationalization and measurement;
+- sample size and statistical power;
+- exclusion and missing-data rules; and
+- the claims that the design can reasonably support.
 
-<br>
+A sophisticated analysis cannot repair a poorly defined construct, an inappropriate sample, or a design that does not match the research question.
 
-### The Role of Statistics in Research
+#### 3. Reasoning Under Uncertainty
 
-Statistics isn't just about crunching numbers. It plays a pivotal role in every stage of the research process, from conceptualization to publication.
+Research data contain variation due to individual differences, measurement error, context, and sampling. Statistics helps us distinguish a stable pattern from noise, but it does not eliminate uncertainty.
 
--   **Formulating Hypotheses:** At the start of your research, you’ll develop hypotheses that are ***testable*** using statistical methods. Understanding the statistical underpinnings of these hypotheses helps you design studies that can accurately assess the relationships you're interested in.
+Instead of asking only:
 
-    > **잘못된 가설:** "새로운 약물이 혈압에 영향을 줄 것이다."
-    >
-    > -   **구체성이 부족:** "영향을 줄 것이다"라는 표현이 모호해서 혈압을 올릴 것인지, 낮출 것인지, 또는 그 효과가 얼마나 클 것인지 구체적으로 언급하지 않았음.
-    >
-    > -   **통계적 검증의 어려움:** 명확한 가설이 없으면 어떤 통계 분석 방법을 사용해야 할지도 불분명해짐. 혈압이 증가하거나 감소할 것이라는 구체적인 예측이 없으면 통계적으로 검증하기가 어렵기 때문.
-    >
-    > **올바른 가설:** "새로운 약물이 고혈압 환자의 혈압을 유의미하게 감소시킬 것이다."
+> **Is** *p* **< .05?**
 
--   **Data Collection:** Statistical principles guide the way you collect data, ensuring that your methods minimize bias and maximize reliability. Sampling techniques, for example, are essential in ensuring that your study results can be generalized to the broader population.
+also ask:
 
--   **Data Analysis:** Once you've collected your data, statistics helps you determine the best way to analyze it. Different research questions require different statistical tests, and knowing which test to use—and how to use it—can make or break your study.
+- How large is the effect?
+- What range of values is compatible with the data and model?
+- Would the effect matter in an actual HCI setting?
+- How sensitive is the conclusion to alternative specifications or assumptions?
 
--   **Reporting Results:** Properly reporting your findings involves more than just stating whether your results were significant. You'll need to provide effect sizes, confidence intervals, and possibly even power analyses to show that your results are both meaningful and reliable. Statistics helps you communicate your findings clearly and effectively. (논문을 읽을 때와 마찬가지로 쓸 때 깊이가 생기기 시작함. 아는 만큼 보이기 때문)
+#### 4. Communicating Evidence
 
-<br>
+Strong reporting includes more than a binary significant/non-significant conclusion. Depending on the study, report:
 
-### How to Learn Statistics as a Grad Student
+- descriptive statistics and visualizations;
+- effect sizes;
+- confidence or uncertainty intervals;
+- model assumptions and diagnostics;
+- robustness or sensitivity checks;
+- limitations and scope conditions; and
+- enough information for another researcher to reproduce the analysis.
 
-For many, statistics can be intimidating. However, like any skill, it can be learned with *dedication* and *practice*. Here are some tips to help you master statistics during your graduate studies.
+------------------------------------------------------------------------
 
-<br>
+### Statistics Across the Research Workflow
 
-**1. Start with the Basics**\
-If you're new to statistics, don't worry. Start with the basics—mean, median, mode, standard deviation—and gradually build your knowledge. Courses, textbooks, and online resources like Coursera can help you get started. (온라인 에듀 플랫폼? 도움이 된다!)
+```{mermaid}
+flowchart LR
+    A[Research Question] --> B[Theory and Design]
+    B --> C[Measurement and Sampling]
+    C --> D[Data Collection]
+    D --> E[Wrangling and Visualization]
+    E --> F[Modeling and Uncertainty]
+    F --> G[Interpretation in Context]
+    G --> H[Reproducible Communication]
+```
 
-<br>
+Statistics plays a role at every stage:
 
-**2. Apply What You Learn**\
-Statistics is best learned by doing. Apply what you learn to real datasets. Whether it’s data from your research, a class project, or publicly available datasets, practicing with real data will help solidify your understanding. (응용 없는 배움은? 고급 취미)
+- **Research question and estimand:** What exactly do we want to learn or estimate?
+- **Theory and design:** What comparison would provide relevant evidence?
+- **Measurement:** How will an abstract construct become observable data?
+- **Sampling:** From whom, when, and under what conditions will data be collected?
+- **Analysis:** Which model represents the design, outcome, and assumptions?
+- **Interpretation:** What do the estimates mean in the substantive HCI context?
+- **Communication:** Can another person inspect, understand, and reproduce the analysis?
 
-<br>
+------------------------------------------------------------------------
 
-**3. Use Statistical Software**\
-In grad school, you'll likely need to use statistical software like *R* and *Python*. Learning to use these tools is essential, as they'll help you manage and analyze large datasets efficiently. Don't be afraid to dive into tutorials and online forums to help you get comfortable with the software.
+### From a Vague Idea to a Testable HCI Hypothesis
 
-<br>
+> **Vague statement:** “AI explanations affect user trust.”
 
-**4. Seek Help** (Create a group study)\
-Grad school can be overwhelming, and it's okay to seek help. Attend statistics workshops, study groups, or even work with a tutor if needed. Collaborating with peers and seeking guidance from professors can help clarify complex concepts.
+This is difficult to evaluate because it does not specify:
 
-<Br>
+- the type of AI system;
+- the explanation format or comparison condition;
+- the target users and task;
+- how trust will be measured;
+- the expected direction of the relationship; or
+- the time point at which the outcome is observed.
 
-**5. Make Statistics a Daily Habit**\
-Just like any other skill, becoming proficient in statistics requires daily practice. Dedicate time each day to work on problems, analyze data, or review concepts. Consistency is key to retaining what you learn and becoming comfortable with statistical methods.
+> **Improved research question:** “Among first-time users of an AI decision-support interface, how does an example-based explanation, compared with a feature-importance explanation, affect post-task trust measured on a validated 1–7 scale?”
 
-<br>
+> **Directional hypothesis:** “Users who receive an example-based explanation will report higher mean post-task trust than users who receive a feature-importance explanation after completing the same decision task.”
 
-### The Importance of Daily Grinding
+::: {.callout-tip}
+## Writing a Better Hypothesis
 
-The most effective way to master statistics—and research methods more broadly—is through consistent, daily effort. By integrating statistics into your daily routine, you’ll gradually build confidence and proficiency. Daily grinding may not be glamorous, but it’s a proven strategy for success in grad school.
+A useful hypothesis is theoretically motivated, operationalized, linked to a feasible design, and directional when theory justifies a direction. Avoid writing “statistically significantly” into the substantive hypothesis; statistical significance is an analysis result, not the phenomenon being predicted.
+:::
 
-Here’s why:
+------------------------------------------------------------------------
 
--   **Retention:** Daily practice helps reinforce what you learn, making it easier to recall concepts when you need them.
+### Three Common Statistical Misunderstandings
 
--   **Problem-Solving:** Regular exposure to different statistical problems improves your problem-solving skills and allows you to tackle more complex analyses over time.
+::: {.callout-warning}
+## Be Careful
 
--   **Confidence:** As you practice more, your confidence grows, reducing the anxiety that often accompanies statistical analysis.
+1. A *p*-value is **not** the probability that the null hypothesis is true.
+2. “Statistically significant” does **not** necessarily mean large, important, or practically useful.
+3. A large dataset does **not** compensate for poor measurement, biased sampling, confounding, or an unsuitable research design.
+:::
 
-<br>
+------------------------------------------------------------------------
+
+### How to Learn Statistics as a Graduate Student
+
+#### 1. Learn the Question Before the Function
+
+Before searching for an R command, state:
+
+- what you want to know;
+- what each variable represents;
+- which observations are being compared; and
+- what result would answer the question.
+
+#### 2. Apply Every Concept to Data
+
+Statistics is learned by doing. Use your own research data, class datasets, or openly available data. Each concept should eventually become:
+
+1. a research question;
+2. a small piece of code;
+3. a table or figure; and
+4. a sentence that interprets the result.
+
+::: {.callout-tip}
+**응용 없는 배움은 고급 취미입니다.** A statistical concept becomes useful when you can apply it to data and explain the result in ordinary language.
+:::
+
+#### 3. Work From Scripts and Quarto Documents
+
+The Console is useful for quick experiments, but analyses should live in a script or `.qmd` document. This creates a record of what you did and makes it possible to rerun the work from the beginning.
+
+#### 4. Seek Help—but Diagnose First
+
+Study groups, documentation, online communities, instructors, and AI tools can all help. Before asking for help, record:
+
+- the code you ran;
+- the complete error message;
+- what you expected to happen; and
+- a small reproducible example when possible.
+
+#### 5. Explain Every Result
+
+Running a model is not the end. You should be able to explain:
+
+- what was estimated;
+- which group or unit is the reference;
+- what the coefficient or comparison means;
+- how uncertainty is represented; and
+- what conclusion is and is not justified.
+
+------------------------------------------------------------------------
+
+### The Importance of “Daily Grinding”
+
+Small, frequent practice is more effective than a single end-of-semester coding marathon. A sustainable routine might include 20–30 minutes of practice several times per week.
+
+Regular practice improves:
+
+- **Retention:** concepts and syntax become easier to retrieve;
+- **Pattern recognition:** common data structures and error messages become familiar;
+- **Problem solving:** you learn to break an analysis into manageable steps;
+- **Independence:** you become less dependent on copied code; and
+- **Confidence:** statistical and coding anxiety decreases as the workflow becomes familiar.
+
+Useful habits include:
+
+- typing and modifying examples instead of only copying them;
+- predicting the output before running code;
+- keeping one RStudio Project for each analysis;
+- using clear object names and comments that explain **why**, not only **what**;
+- restarting R and rendering the document from a clean session; and
+- saving versions with Git/GitHub when appropriate.
+
+------------------------------------------------------------------------
 
 ## Data Science & R
 
-> Data Science is a modern academic area helping people to draw useful information and intuition so that making them to make reasonable decisions
+> **Data science is an iterative practice of asking questions, acquiring and structuring data, exploring patterns, building and evaluating models, and communicating results responsibly.**
 
-### **Why Data Science is So Important to Learn?**
+For HCI researchers, data science connects theory and design to increasingly diverse forms of evidence.
 
-In the age of information, data science has emerged as a pivotal skill set across industries, transforming the way decisions are made and offering insights that were previously inaccessible. Its importance stems from the ability to analyze and derive meaningful insights from data, which can drive strategic business decisions, lead to technological innovations, and solve complex problems. Here’s why learning data science is crucial, even for those not pursuing a career in computer science.
+### Common Data Sources in HCI
 
-#### Data-Driven Decision Making
+| Data Source | Example | Typical Question |
+|---|---|---|
+| Experiment | Alternative interface or explanation conditions | Does changing a design feature cause a difference in behavior or experience? |
+| Survey | Trust, usability, presence, satisfaction, or privacy-concern scales | How are perceptions and attitudes related? |
+| Behavioral log | Clicks, dwell time, errors, navigation paths | How do people actually use a system over time? |
+| Text, image, audio, or video | Reviews, chat logs, interviews, screen recordings | What themes, meanings, or interaction patterns appear in unstructured data? |
+| Sensor or contextual data | GPS, eye tracking, physiological signals | How does behavior change across contexts or states? |
 
-One of the foremost reasons for learning data science is its role in data-driven decision making. [With an increasing amount of data generated every day, the ability to sift through, analyze, and interpret this data can be the difference between staying ahead or falling behind in any industr]{.underline}y. Data science skills enable individuals and organizations to make informed decisions based on empirical evidence rather than intuition or speculation.
+### Why Learn Data Science?
 
-#### Cross-Disciplinary Application
+#### Data-Informed HCI Decisions
 
-Data science is not confined to the tech industry. [It finds applications in healthcare, finance, retail, education, and more.]{.underline} For instance, in healthcare, data science can predict disease outbreaks, in finance, it can assess risk and in retail, it can help understand consumer behavior. This cross-disciplinary nature of data science means that learning it can open up opportunities in virtually any field, making it a valuable skill set for all majors.
+Data science helps researchers and designers move from intuition alone to evidence. It can reveal where users struggle, which design alternatives perform differently, and how effects vary across users and contexts.
 
-#### Enhancing Problem-Solving Skills
+#### Cross-Disciplinary Integration
 
-Learning data science enhances critical thinking and problem-solving skills. It involves [identifying patterns, making predictions, and solving complex problems using a data-driven approach]{.underline}. These skills are transferable and valuable in any career path, making data science learning beneficial beyond the technical aspects.
+HCI draws on psychology, communication, design, computer science, sociology, business, and engineering. Data science provides a shared workflow through which these disciplines can combine theories, measurements, and computational methods.
 
-#### Future Job Market
+#### Reproducibility and Scale
 
-The demand for data science skills is growing rapidly. According to the U.S. Bureau of Labor Statistics, [the job market for data science and analytical roles is projected to grow much faster than the average for all occupations]{.underline}. Learning data science can thus provide a competitive edge in the job market, even for those in non-computer science fields.
+Modern datasets can be large, messy, longitudinal, multimodal, or repeatedly updated. A coded workflow makes it easier to clean data consistently, document decisions, rerun analyses, and detect mistakes.
 
-#### Empowering Innovation
+#### Transferable Problem-Solving
 
-Data science is at the heart of innovation today. [From developing new products and services to improving existing processes, the insights derived from data science can lead to significant advancements and efficiencies]{.underline}. By understanding data science, individuals in non-computer science fields can contribute to innovation within their industries.
+The ability to frame a question, inspect data quality, evaluate evidence, and communicate uncertainty is useful in academic research, product analytics, UX research, policy, and many other settings.
 
-#### For non-computer science majors: You are the one who has to learn this.
+#### Responsible Innovation
 
-The importance of data science transcends traditional boundaries of computer science and technology. It is a critical skill for the future, enabling individuals to navigate and excel in a data-driven world. [For non-computer science majors, learning data science not only enhances employability and problem-solving skills but also **opens up new avenues for innovation and impact in their respective fields**]{.underline}. In essence, data science is a universal language of the future, and learning it is key to unlocking potential across the spectrum of professional endeavors.
+Data science also creates responsibilities. Researchers must consider consent, privacy, fairness, representativeness, measurement validity, and the downstream consequences of models and visualizations.
 
-<br>
+- [Data Never Sleeps](https://www.domo.com/data-never-sleeps)
 
--   Again, Data Never Sleeps
+------------------------------------------------------------------------
 
-<https://www.domo.com/data-never-sleeps>
+### So, What Does a Data Scientist Do?
 
-<br>
+> **A data scientist creates a defensible path from a question to evidence.**
 
-### So Data Scientist is..
+That path requires more than coding:
 
--   데이터를 가지고 길을 만드는 사람.
+- **Domain expertise:** understanding the phenomenon, users, technology, and context;
+- **Research design:** knowing what comparison or data would answer the question;
+- **Statistics:** quantifying patterns, relationships, uncertainty, and model performance;
+- **Computation:** managing data and automating a transparent workflow;
+- **Communication:** translating technical output into a clear substantive argument; and
+- **Ethics:** recognizing risks, limitations, and people affected by the analysis.
 
--   Requirements
+This course uses coding to support statistical and research reasoning. The code is not the final product; the final product is a credible interpretation supported by a reproducible analysis.
 
-    -   **Domain Expertise** is getting more important as the world is getting more complicated
+------------------------------------------------------------------------
 
-    -   This course will cover coding part and a little bit of statistical skills
+## Why We Use R in This Course
 
-    -   Don't worry! **Practice makes perfect.**
+R is not the only language for data science, but it is especially well matched to this course.
 
-<br>
+### 1. Designed for Statistical Analysis
 
-### **Why R is the Best Language for Non-Computer Majors to Learn Data Science**
+R was developed for statistical computing and graphics. Its functions, modeling conventions, and package ecosystem support the kinds of estimation and inference commonly used in HCI and social-science research.
 
-In the realm of data science, the choice of programming language is pivotal. For non-computer majors venturing into this field, R stands out as a particularly accessible and powerful tool. Here’s why R is often considered the best language for those new to data science.
+### 2. A Coherent Data Workflow
 
-#### 1. Designed for Statistics and Data Analysis
+The `tidyverse` ecosystem provides a consistent grammar for importing, transforming, summarizing, and visualizing data. Packages such as `dplyr`, `tidyr`, `readr`, and `ggplot2` allow us to focus on the logic of an analysis rather than low-level programming details.
 
-R was specifically created for statistical analysis and data visualization. Unlike general-purpose programming languages that can be used for data science, R’s syntax and functions are tailored to statistical analysis, making it more intuitive for analyzing data. For students and professionals without a computer science background, this focus makes R an excellent entry point into data science.
+### 3. Strong Visualization
 
-#### 2. Comprehensive Libraries and Packages
+`ggplot2` supports layered, publication-ready graphics. Visualization is not merely decoration: it is an essential tool for checking data quality, understanding distributions, discovering patterns, evaluating models, and communicating uncertainty.
 
-R boasts a vast ecosystem of packages designed for data science tasks, including dplyr for data manipulation, ggplot2 for data visualization, and caret for machine learning. These packages simplify complex tasks into more manageable functions, allowing users to perform sophisticated data analysis with relatively simple commands. This extensive library support means that non-computer majors can accomplish more with less coding expertise.
+### 4. Reproducible Documents With Quarto
 
-#### 3. Strong Community and Support
+Quarto combines narrative text, citations, equations, code, figures, tables, and model output in a single `.qmd` file. The same source can be rendered to HTML, PDF, Word, slides, and other formats.
 
-The R community is known for its inclusivity and support, especially for beginners. Numerous online forums, such as R-bloggers and Stack Overflow, provide a platform for learners to seek help, exchange ideas, and stay updated on the latest developments in R. This community support is invaluable for non-computer majors who may require guidance as they navigate their data science journey.
+### 5. Open and Extensible
 
-#### 4. Free and Open Source
+R is free and open source. Its packages support classical statistics, causal inference, psychometrics, network analysis, machine learning, Bayesian modeling, text analysis, spatial analysis, and many other methods relevant to HCI.
 
-R is a free, open-source software, making it accessible to everyone without the need for expensive licenses or subscriptions. This democratizes the learning process, allowing individuals from diverse backgrounds to explore data science without financial barriers. Moreover, being open-source encourages users to contribute to the development of R, further enriching its capabilities and resources.
+### 6. Strong Research Community
 
-#### 5. Versatile Data Visualization Capabilities
+R is widely used in academia, public policy, health research, economics, psychology, communication, and data science. This creates extensive documentation, examples, books, and community support.
 
-Visual data representation is crucial in data science for understanding complex datasets and communicating findings effectively. R's superior data visualization capabilities, particularly through the ggplot2 package, allow users to create high-quality, publication-ready graphs and plots. This is particularly beneficial for non-computer majors, who might rely more heavily on visual representations to understand and present data insights.
+------------------------------------------------------------------------
 
-#### 6. Industry Adoption and Academic Support
+## How About Python?
 
-R is widely adopted in both academia and industry for research and data analysis. This widespread use means that learning R can open up opportunities in various fields, including biostatistics, epidemiology, economics, and social sciences. For non-computer majors, the ability to apply their data science skills directly to their field of study or industry is a significant advantage.
+R and Python are complementary rather than mutually exclusive.
 
-> For non-computer majors looking to delve into data science, R offers a unique blend of accessibility, specialized functionality, and community support. Its design for statistical analysis, along with a rich ecosystem of packages and resources, makes R an ideal starting point for those new to programming and data analysis. By learning R, non-computer majors can not only gain valuable data science skills but also apply these skills directly to their fields of interest, enhancing their research capabilities and career prospects.
+| Dimension | R | Python |
+|---|---|---|
+| Core strength | Statistical analysis, inference, visualization, and research reporting | General-purpose programming, machine learning, deployment, and system integration |
+| Common workflow | `tidyverse`, `ggplot2`, `tidymodels`, Quarto | `pandas`/`polars`, `scikit-learn`, PyTorch, Jupyter |
+| Often preferred when | The main task is statistical modeling, exploratory analysis, or publication-ready reporting | The analysis is part of a larger application, production system, or deep-learning pipeline |
+| Role in this course | Primary language | Complementary language and transferable reference point |
 
-<br>
+We use R because the course prioritizes statistical reasoning, visualization, and reproducible research. The deeper skills—defining variables, understanding assumptions, evaluating models, and interpreting evidence—transfer to Python and other analytical environments.
 
-### How About Python?
+------------------------------------------------------------------------
 
-A good quesiton! R and Python are both powerful and popular programming languages in the data science community, each with its unique strengths. [When comparing R to Python, especially from the perspective of those with non-computer science backgrounds or specific analytical needs, several aspects of R stand out, highlighting its strengths:]{.underline}
+## Setup: R, RStudio, and Quarto
 
-### **1. Specialization in Statistical Analysis**
+### 1. Install R
 
--   **R's Foundation**: R is specifically designed for statistical analysis and graphical models. It was developed by statisticians for statisticians. This specialization gives it an edge in handling complex statistical data analyses out of the box, without the need for extensive programming knowledge or additional libraries.
+Install the current release of R using the default installation options.
 
--   **Comprehensive Statistical Packages**: R has a comprehensive collection of packages for various statistical analyses, including linear and nonlinear modeling, classical statistical tests, time-series analysis, classification, clustering, and more. These packages are often written by statisticians and subject matter experts, ensuring they are tailored for rigorous statistical analysis.
+- [R for Windows](https://cran.r-project.org/bin/windows/base/)
+- [R for macOS](https://cran.r-project.org/bin/macosx/)
 
-### **2. Superior Data Visualization**
+### 2. Install RStudio Desktop
 
--   **ggplot2 and Beyond**: R's `ggplot2` package is renowned for its capability to create advanced and beautiful data visualizations with ease. The grammar of graphics implemented by `ggplot2` allows for the layering of data, aesthetic mappings, and statistical transformations, facilitating the creation of complex plots intuitively.
+Install the latest compatible open-source release of [RStudio Desktop](https://posit.co/download/rstudio-desktop/). R should be installed before opening RStudio for the first time.
 
--   **Rich Ecosystem for Visualization**: Beyond `ggplot2`, R offers a rich ecosystem of visualization packages like lattice, `plotly` (for interactive plots), and `shiny` (for interactive web apps), providing a wide range of options for presenting data insights effectively.
+### 3. Check Quarto
 
-### **3. Integrated Development Environment (IDE) Support**
+Recent RStudio releases provide integrated support for editing and previewing Quarto documents. After installing RStudio, open the **Terminal** pane and run:
 
--   **RStudio**: RStudio is a powerful and popular IDE specifically designed for R. It provides an integrated environment that makes data analysis, visualization, and programming more accessible. RStudio enhances the R programming experience with features like code completion, easy package management, and markdown **(quarto, nowadays)** support for reproducible research.
+```bash
+quarto check
+```
 
-### **4. Community and Support**
+If Quarto is unavailable or outdated, follow the official [Quarto installation guide](https://quarto.org/docs/get-started/).
 
--   **Dedicated Community**: R has a vibrant and welcoming community, particularly attractive to those in academia, research, and various scientific disciplines. The community offers extensive resources, forums, and groups for support, making it easier for newcomers to get started and for experts to dive deep into specific statistical challenges.
+### 4. Rtools for Windows: Optional at First
 
--   **CRAN Repository**: The Comprehensive R Archive Network ([CRAN](https://cran.r-project.org/)) is a repository of over 16,000 R packages (as of my last update in April 2023). This vast and well-organized repository ensures that R users have access to tools and libraries for nearly every statistical and graphical method imaginable.
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) is required only when Windows users need to build R packages from source that contain compiled C, C++, or Fortran code. Most students can begin the course without it because CRAN normally provides precompiled Windows binaries.
 
-### **5. Data Handling and Analysis**
+If R specifically reports that Rtools is required:
 
--   **Data Wrangling**: While Python's pandas library is powerful for data manipulation, R's `dplyr` and `data.table` packages offer syntax that is arguably more intuitive for data transformation and aggregation, especially for those with a background in SQL or those new to programming.
+1. choose the Rtools version that matches your installed version of R;
+2. use the default installation location; and
+3. do not manually edit environment variables unless the official instructions or a specific error requires it.
 
--   **Analysis Workflow**: R is designed with an analysis-first approach, emphasizing data exploration and analysis workflows. This makes R particularly suited for iterative data exploration, hypothesis testing, and modeling in a way that is highly accessible to researchers and analysts.
+------------------------------------------------------------------------
 
--   **R is intuitive for analysis:** R may not work with a wide variety of projects, but it is the best choice for analysis and inference work. If you plan to work in a specialized field, you'll want a specialized programming language. R also offers a powerful environment ideally suited to the types of [data visualizations]{.underline} data scientists employ.
+### Recommended Project Folder
 
-### **Comparative Consideration**
+Create a short, local project path such as:
 
-While Python is a general-purpose programming language with broad applications ranging from web development to software engineering and has significant strengths in machine learning and deep learning with libraries like TensorFlow and PyTorch, [R's focused design for statistical analysis and data visualization makes it exceptionally well-suited for data scientists, statisticians, and researchers.]{.underline} This focus, combined with its comprehensive statistical packages, superior data visualization capabilities, and supportive community, positions R as a strong choice for those particularly interested in the statistical and analytical aspects of data science.
+- Windows: `C:/r-projects/grad-stat/`
+- macOS/Linux: `~/r-projects/grad-stat/`
 
-Source: <https://www.edx.org/resources/r-vs-python-for-data-science-explainer-learning-tips>
+Then create an **RStudio Project** in that folder.
 
-<br>
+::: {.callout-note}
+## About OneDrive, iCloud, and Other Sync Folders
 
-### Install gadgets
+Cloud-synced folders are not prohibited, but active synchronization can occasionally lock files, create conflicting copies, or produce long path names while R or Quarto is rendering. For class exercises, a short local project folder is the safest choice. Back up or synchronize the project after closing RStudio, or use Git/GitHub for version history if you are comfortable with it.
+:::
 
--   Install R, R Studio, & Rtools
+Additional recommendations:
 
-    -   **R**
+- Prefer project-relative paths rather than absolute paths.
+- Avoid repeatedly using `setwd()` inside scripts.
+- Use `here::here()` when building file paths.
+- If an installation or rendering error occurs, test the project in a short path without spaces or non-ASCII characters before changing your Windows account name or system configuration.
 
-        -   For window <https://cran.r-project.org/bin/windows/base/>
+------------------------------------------------------------------------
 
-        -   For mac <https://cran.r-project.org/bin/macosx/>
+### Install the Starter Packages
 
-    -   **R Studio**
+Run the following code **once** in the R Console:
 
-        -   <https://posit.co/download/rstudio-desktop/>
+```{r}
+#| eval: false
 
-    -   **Rtools** (only for window user)
+starter_packages <- c(
+  "tidyverse",
+  "here",
+  "janitor",
+  "skimr",
+  "palmerpenguins",
+  "broom",
+  "knitr"
+)
 
-        -   <https://cran.r-project.org/bin/windows/Rtools/>
+installed <- rownames(installed.packages())
+new_packages <- setdiff(starter_packages, installed)
 
-        -   To install R packages containing C/C++ language for window users (no need for Linux and Mac users)
+if (length(new_packages) > 0) {
+  install.packages(new_packages)
+}
+```
 
--   Things you need to know
+You install a package once, but load it again in each new R session with `library()`.
 
-    -   Don't Use OneDrive.
+------------------------------------------------------------------------
 
-        -   Use `Github` instead
+## First R Practice
 
-        -   Many people get an error when installing because of `OneDrive`
+Create an RStudio Project, open a new Quarto document, and run the following code.
 
-    -   Set Windows user name to English
+```{r}
+#| eval: false
 
-        -   If Korean characters are mixed in the installation path, there is a high probability of error occurrence
+library(tidyverse)
+library(palmerpenguins)
 
--   Installation Order
+penguin_summary <- penguins |>
+  filter(!is.na(body_mass_g)) |>
+  group_by(species) |>
+  summarise(
+    n = n(),
+    mean_body_mass_g = mean(body_mass_g),
+    sd_body_mass_g = sd(body_mass_g),
+    .groups = "drop"
+  )
 
-    -   **Step 1** ‑ Download the file
+penguin_summary
+```
 
-        -   Download R, Rtools, Rstudio installation files
+Then answer:
 
-    -   **Step 2** - Install R
+1. What is the **unit of analysis** in the original dataset?
+2. What does each row of `penguin_summary` represent?
+3. Why are `n`, the mean, and the standard deviation all useful?
+4. Which species has the highest mean body mass in the observed sample?
+5. What additional information would you need before generalizing beyond this dataset?
 
-        -   Unified installation path: All will be installed in the `C:/R` folder
+Finally, render the `.qmd` file to HTML. The goal is not only to obtain output, but to confirm that the complete workflow—R, packages, code, and Quarto rendering—works on your computer.
 
-        -   Run in administrator mode when running the R installation file
+------------------------------------------------------------------------
 
-        -   After installing R, grant write permission to the R folder, Right-click and turn off read only
+## Using Generative AI Responsibly
 
-    -   **Step 3** ‑ Install Rtools
+Generative AI may be used as a **tutor, explainer, and debugging partner**. It should not replace your responsibility for research design, statistical judgment, or interpretation.
 
-        -   **Rtools?** `RTools` is [a collection of software tools and libraries that are necessary for building and compiling packages in the R programming language, especially on Windows]{.underline}.
+### Productive Uses
 
-        -   Administrator mode execution installation and folder setting as C:\\R\\rtools40
+- asking for a plain-language explanation of an error message;
+- requesting alternative ways to write the same R code;
+- asking why a model or function behaves in a particular way;
+- generating a small example to clarify a concept;
+- checking whether your interpretation is logically consistent; and
+- improving comments, labels, or the readability of code.
 
-        -   Create environment variable RTOOLS40_HOME after installation: Value - C:\\R\\rtools40\\
+### Your Responsibilities
 
-        -   Add *%RTOOLS40_HOME%\\usr\\bin\\* to the Path variable.
+- Run and verify all suggested code.
+- Be able to explain every submitted line and analytical choice.
+- Check package documentation and original sources when accuracy matters.
+- Disclose substantial AI assistance when required by the assignment.
+- Never upload identifiable participant data, confidential research files, unpublished proprietary data, or information restricted by IRB/consent conditions.
 
-    -   **Step 4** - Install Rstudio
+### Unacceptable Uses
 
-        -   Right-click and run as administrator - installation path C:\\R\\Rstudio
+- submitting code or interpretations that you cannot explain;
+- inventing references, data, results, or diagnostics;
+- asking AI to select an analysis without checking the research design and assumptions; or
+- treating fluent output as evidence that an answer is statistically correct.
 
-        -   Check rtools connection with Sys.which("make") command after installation
+> **A useful rule:** AI can help you write and debug code, but you remain accountable for the question, data, assumptions, evidence, and conclusion.
 
-<br>
+------------------------------------------------------------------------
+
+## Week 1 Completion Checklist
+
+Before moving on, confirm that you can:
+
+- [ ] open RStudio and verify that R starts correctly;
+- [ ] create and reopen an RStudio Project;
+- [ ] install and load the starter packages;
+- [ ] run code using the base pipe `|>`;
+- [ ] describe the unit of analysis in a dataset;
+- [ ] distinguish a research question from an analysis command;
+- [ ] render a `.qmd` document to HTML from a clean R session; and
+- [ ] bring one HCI research question that you would like to investigate with data.
+
+### Useful References
+
+- [ModernDive: Statistical Inference via Data Science](https://moderndive.com/)
+- [R for Data Science, 2nd edition](https://r4ds.hadley.nz/)
+- [Quarto Documentation](https://quarto.org/docs/)
+- [RStudio IDE User Guide](https://docs.posit.co/ide/user/)
+
+
+
+
+
+<!-- --- -->
+<!-- title: "Course Intro" -->
+<!-- subtitle: "Course Intro"  -->
+<!-- Week: 1 -->
+<!-- format: html -->
+<!-- slide-format: revealjs -->
+<!-- --- -->
+
+
+<!-- ## First Week Orientation -->
+
+
+<!-- {{< video https://youtu.be/jOH_sRJvrfo >}} -->
+
+
+<!-- <br> -->
+
+
+
+
+<!-- [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+
+<!-- <br> -->
+
+<!-- ### Content -->
+
+<!-- -   [Course description](https://changjunlee.com/teaching/grad_stat/about/) -->
+
+<!-- -   About Lecturer -->
+
+<!-- -   [Weekly design](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+
+<!-- -   Research & Statistics -->
+
+<!-- -   Data science & R -->
+
+<!-- ------------------------------------------------------------------------ -->
+
+<!-- ## Course description -->
+
+<!-- -   [Course description](https://changjunlee.com/teaching/grad_stat/about/) -->
+
+<!-- <br> -->
+
+<!-- ## About Lecturer -->
+
+<!-- **Changjun LEE** -->
+
+<!-- -   Home: <https://changjunlee.com/> -->
+
+<!-- Associate Professor (Head of Culture & Tech) -->
+
+<!-- School of Convergence. SKKU. -->
+
+<!-- > As a computational social scientist, I bring a unique interdisciplinary perspective to the fields of economics, innovation studies, and convergence technologies. With a background in natural sciences, including a bachelor’s degree in biology and chemistry, I went on to earn a Ph.D. in technology management, economics, and policy. My research focuses on utilizing computational methods to tackle a wide range of social phenomena, including technology evolution & regional growth, knowledge management, and technology & convergence innovation. I am passionate about using technology and data to drive innovation and solve real-world problems. -->
+
+<!-- -   **Research interest:** Media & Innovation, Immersive media and users' behavior, Technology management, Anything can be solved using Data Science -->
+
+<!-- -   **Teaching:** Culture & Technology \| Data Science in CNT \| STAT101 -->
+
+<!-- -   Things I love -->
+
+<!--     -   Research -->
+
+<!--     -   Chat & Coffee & MBTI -->
+
+<!--     -   Travel -->
+
+<!--     -   Play (Things) -->
+
+<!-- <br> -->
+
+<!-- ## Weekly Design -->
+
+<!-- -   [Weekly design](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+
+<!-- <br> -->
+
+<!-- ## Research & Statistics -->
+
+<!-- > Entering grad school (Doing your master / Ph.D.) is an exciting milestone. It's a chance to dive deep into your field, contribute to groundbreaking research, and refine your expertise. However, regardless of your discipline—be it psychology, biology, economics, or even education—one skill remains a constant necessity: statistics. -->
+
+<!-- <br> -->
+
+<!-- ### Why is Statistics Important in Grad School? -->
+
+<!-- Graduate school is often synonymous with research. Whether you're collecting data, interpreting results, or reading existing literature, you'll need to understand how to analyze and make sense of numbers. That's where statistics comes in. Statistics provides the tools to turn raw data into meaningful insights, enabling you to make evidence-based conclusions. -->
+
+<!-- **1. Informed Decision-Making**[^1]\ -->
+<!-- Research is all about making informed decisions. ***Is the difference between two groups significant?*** (How likely is it that the results you found are due to chance? 우연히 일어난 일이 아니라는 근거는?) Statistics gives you the methods to answer these questions with confidence. -->
+
+<!-- [^1]: An informed decision is a choice that individuals make once they have all the information related to the decision topic. It involves analyzing potential outcomes, benefits and risks associated with each option, then deciding which choice is the best for you. -->
+
+<!-- <br> -->
+
+<!-- **2. Data Interpretation** (논문을 읽으려면 꼭 알아야 하는 통계)\ -->
+<!-- Understanding research papers is a core part of grad school. But to critically evaluate these papers, you need to grasp the statistics used in them. Whether it's regression analysis, ANOVA, or chi-square tests, you need to know how the data was analyzed to assess whether the conclusions are sound. (읽다보면 패턴이 보일 것) -->
+
+<!-- <br> -->
+
+<!-- **3. Research Design** (끝까지 상상하고 디자인 하라)\ -->
+<!-- When designing your own studies, statistical knowledge helps you choose the right sample size, measurement tools, and analysis methods. It ensures that your research is both scientifically rigorous and ethical, minimizing biases and errors. -->
+
+<!-- <br> -->
+
+<!-- ### The Role of Statistics in Research -->
+
+<!-- Statistics isn't just about crunching numbers. It plays a pivotal role in every stage of the research process, from conceptualization to publication. -->
+
+<!-- -   **Formulating Hypotheses:** At the start of your research, you’ll develop hypotheses that are ***testable*** using statistical methods. Understanding the statistical underpinnings of these hypotheses helps you design studies that can accurately assess the relationships you're interested in. -->
+
+<!--     > **잘못된 가설:** "새로운 약물이 혈압에 영향을 줄 것이다." -->
+<!--     > -->
+<!--     > -   **구체성이 부족:** "영향을 줄 것이다"라는 표현이 모호해서 혈압을 올릴 것인지, 낮출 것인지, 또는 그 효과가 얼마나 클 것인지 구체적으로 언급하지 않았음. -->
+<!--     > -->
+<!--     > -   **통계적 검증의 어려움:** 명확한 가설이 없으면 어떤 통계 분석 방법을 사용해야 할지도 불분명해짐. 혈압이 증가하거나 감소할 것이라는 구체적인 예측이 없으면 통계적으로 검증하기가 어렵기 때문. -->
+<!--     > -->
+<!--     > **올바른 가설:** "새로운 약물이 고혈압 환자의 혈압을 유의미하게 감소시킬 것이다." -->
+
+<!-- -   **Data Collection:** Statistical principles guide the way you collect data, ensuring that your methods minimize bias and maximize reliability. Sampling techniques, for example, are essential in ensuring that your study results can be generalized to the broader population. -->
+
+<!-- -   **Data Analysis:** Once you've collected your data, statistics helps you determine the best way to analyze it. Different research questions require different statistical tests, and knowing which test to use—and how to use it—can make or break your study. -->
+
+<!-- -   **Reporting Results:** Properly reporting your findings involves more than just stating whether your results were significant. You'll need to provide effect sizes, confidence intervals, and possibly even power analyses to show that your results are both meaningful and reliable. Statistics helps you communicate your findings clearly and effectively. (논문을 읽을 때와 마찬가지로 쓸 때 깊이가 생기기 시작함. 아는 만큼 보이기 때문) -->
+
+<!-- <br> -->
+
+<!-- ### How to Learn Statistics as a Grad Student -->
+
+<!-- For many, statistics can be intimidating. However, like any skill, it can be learned with *dedication* and *practice*. Here are some tips to help you master statistics during your graduate studies. -->
+
+<!-- <br> -->
+
+<!-- **1. Start with the Basics**\ -->
+<!-- If you're new to statistics, don't worry. Start with the basics—mean, median, mode, standard deviation—and gradually build your knowledge. Courses, textbooks, and online resources like Coursera can help you get started. (온라인 에듀 플랫폼? 도움이 된다!) -->
+
+<!-- <br> -->
+
+<!-- **2. Apply What You Learn**\ -->
+<!-- Statistics is best learned by doing. Apply what you learn to real datasets. Whether it’s data from your research, a class project, or publicly available datasets, practicing with real data will help solidify your understanding. (응용 없는 배움은? 고급 취미) -->
+
+<!-- <br> -->
+
+<!-- **3. Use Statistical Software**\ -->
+<!-- In grad school, you'll likely need to use statistical software like *R* and *Python*. Learning to use these tools is essential, as they'll help you manage and analyze large datasets efficiently. Don't be afraid to dive into tutorials and online forums to help you get comfortable with the software. -->
+
+<!-- <br> -->
+
+<!-- **4. Seek Help** (Create a group study)\ -->
+<!-- Grad school can be overwhelming, and it's okay to seek help. Attend statistics workshops, study groups, or even work with a tutor if needed. Collaborating with peers and seeking guidance from professors can help clarify complex concepts. -->
+
+<!-- <Br> -->
+
+<!-- **5. Make Statistics a Daily Habit**\ -->
+<!-- Just like any other skill, becoming proficient in statistics requires daily practice. Dedicate time each day to work on problems, analyze data, or review concepts. Consistency is key to retaining what you learn and becoming comfortable with statistical methods. -->
+
+<!-- <br> -->
+
+<!-- ### The Importance of Daily Grinding -->
+
+<!-- The most effective way to master statistics—and research methods more broadly—is through consistent, daily effort. By integrating statistics into your daily routine, you’ll gradually build confidence and proficiency. Daily grinding may not be glamorous, but it’s a proven strategy for success in grad school. -->
+
+<!-- Here’s why: -->
+
+<!-- -   **Retention:** Daily practice helps reinforce what you learn, making it easier to recall concepts when you need them. -->
+
+<!-- -   **Problem-Solving:** Regular exposure to different statistical problems improves your problem-solving skills and allows you to tackle more complex analyses over time. -->
+
+<!-- -   **Confidence:** As you practice more, your confidence grows, reducing the anxiety that often accompanies statistical analysis. -->
+
+<!-- <br> -->
+
+<!-- ## Data Science & R -->
+
+<!-- > Data Science is a modern academic area helping people to draw useful information and intuition so that making them to make reasonable decisions -->
+
+<!-- ### **Why Data Science is So Important to Learn?** -->
+
+<!-- In the age of information, data science has emerged as a pivotal skill set across industries, transforming the way decisions are made and offering insights that were previously inaccessible. Its importance stems from the ability to analyze and derive meaningful insights from data, which can drive strategic business decisions, lead to technological innovations, and solve complex problems. Here’s why learning data science is crucial, even for those not pursuing a career in computer science. -->
+
+<!-- #### Data-Driven Decision Making -->
+
+<!-- One of the foremost reasons for learning data science is its role in data-driven decision making. [With an increasing amount of data generated every day, the ability to sift through, analyze, and interpret this data can be the difference between staying ahead or falling behind in any industr]{.underline}y. Data science skills enable individuals and organizations to make informed decisions based on empirical evidence rather than intuition or speculation. -->
+
+<!-- #### Cross-Disciplinary Application -->
+
+<!-- Data science is not confined to the tech industry. [It finds applications in healthcare, finance, retail, education, and more.]{.underline} For instance, in healthcare, data science can predict disease outbreaks, in finance, it can assess risk and in retail, it can help understand consumer behavior. This cross-disciplinary nature of data science means that learning it can open up opportunities in virtually any field, making it a valuable skill set for all majors. -->
+
+<!-- #### Enhancing Problem-Solving Skills -->
+
+<!-- Learning data science enhances critical thinking and problem-solving skills. It involves [identifying patterns, making predictions, and solving complex problems using a data-driven approach]{.underline}. These skills are transferable and valuable in any career path, making data science learning beneficial beyond the technical aspects. -->
+
+<!-- #### Future Job Market -->
+
+<!-- The demand for data science skills is growing rapidly. According to the U.S. Bureau of Labor Statistics, [the job market for data science and analytical roles is projected to grow much faster than the average for all occupations]{.underline}. Learning data science can thus provide a competitive edge in the job market, even for those in non-computer science fields. -->
+
+<!-- #### Empowering Innovation -->
+
+<!-- Data science is at the heart of innovation today. [From developing new products and services to improving existing processes, the insights derived from data science can lead to significant advancements and efficiencies]{.underline}. By understanding data science, individuals in non-computer science fields can contribute to innovation within their industries. -->
+
+<!-- #### For non-computer science majors: You are the one who has to learn this. -->
+
+<!-- The importance of data science transcends traditional boundaries of computer science and technology. It is a critical skill for the future, enabling individuals to navigate and excel in a data-driven world. [For non-computer science majors, learning data science not only enhances employability and problem-solving skills but also **opens up new avenues for innovation and impact in their respective fields**]{.underline}. In essence, data science is a universal language of the future, and learning it is key to unlocking potential across the spectrum of professional endeavors. -->
+
+<!-- <br> -->
+
+<!-- -   Again, Data Never Sleeps -->
+
+<!-- <https://www.domo.com/data-never-sleeps> -->
+
+<!-- <br> -->
+
+<!-- ### So Data Scientist is.. -->
+
+<!-- -   데이터를 가지고 길을 만드는 사람. -->
+
+<!-- -   Requirements -->
+
+<!--     -   **Domain Expertise** is getting more important as the world is getting more complicated -->
+
+<!--     -   This course will cover coding part and a little bit of statistical skills -->
+
+<!--     -   Don't worry! **Practice makes perfect.** -->
+
+<!-- <br> -->
+
+<!-- ### **Why R is the Best Language for Non-Computer Majors to Learn Data Science** -->
+
+<!-- In the realm of data science, the choice of programming language is pivotal. For non-computer majors venturing into this field, R stands out as a particularly accessible and powerful tool. Here’s why R is often considered the best language for those new to data science. -->
+
+<!-- #### 1. Designed for Statistics and Data Analysis -->
+
+<!-- R was specifically created for statistical analysis and data visualization. Unlike general-purpose programming languages that can be used for data science, R’s syntax and functions are tailored to statistical analysis, making it more intuitive for analyzing data. For students and professionals without a computer science background, this focus makes R an excellent entry point into data science. -->
+
+<!-- #### 2. Comprehensive Libraries and Packages -->
+
+<!-- R boasts a vast ecosystem of packages designed for data science tasks, including dplyr for data manipulation, ggplot2 for data visualization, and caret for machine learning. These packages simplify complex tasks into more manageable functions, allowing users to perform sophisticated data analysis with relatively simple commands. This extensive library support means that non-computer majors can accomplish more with less coding expertise. -->
+
+<!-- #### 3. Strong Community and Support -->
+
+<!-- The R community is known for its inclusivity and support, especially for beginners. Numerous online forums, such as R-bloggers and Stack Overflow, provide a platform for learners to seek help, exchange ideas, and stay updated on the latest developments in R. This community support is invaluable for non-computer majors who may require guidance as they navigate their data science journey. -->
+
+<!-- #### 4. Free and Open Source -->
+
+<!-- R is a free, open-source software, making it accessible to everyone without the need for expensive licenses or subscriptions. This democratizes the learning process, allowing individuals from diverse backgrounds to explore data science without financial barriers. Moreover, being open-source encourages users to contribute to the development of R, further enriching its capabilities and resources. -->
+
+<!-- #### 5. Versatile Data Visualization Capabilities -->
+
+<!-- Visual data representation is crucial in data science for understanding complex datasets and communicating findings effectively. R's superior data visualization capabilities, particularly through the ggplot2 package, allow users to create high-quality, publication-ready graphs and plots. This is particularly beneficial for non-computer majors, who might rely more heavily on visual representations to understand and present data insights. -->
+
+<!-- #### 6. Industry Adoption and Academic Support -->
+
+<!-- R is widely adopted in both academia and industry for research and data analysis. This widespread use means that learning R can open up opportunities in various fields, including biostatistics, epidemiology, economics, and social sciences. For non-computer majors, the ability to apply their data science skills directly to their field of study or industry is a significant advantage. -->
+
+<!-- > For non-computer majors looking to delve into data science, R offers a unique blend of accessibility, specialized functionality, and community support. Its design for statistical analysis, along with a rich ecosystem of packages and resources, makes R an ideal starting point for those new to programming and data analysis. By learning R, non-computer majors can not only gain valuable data science skills but also apply these skills directly to their fields of interest, enhancing their research capabilities and career prospects. -->
+
+<!-- <br> -->
+
+<!-- ### How About Python? -->
+
+<!-- A good quesiton! R and Python are both powerful and popular programming languages in the data science community, each with its unique strengths. [When comparing R to Python, especially from the perspective of those with non-computer science backgrounds or specific analytical needs, several aspects of R stand out, highlighting its strengths:]{.underline} -->
+
+<!-- ### **1. Specialization in Statistical Analysis** -->
+
+<!-- -   **R's Foundation**: R is specifically designed for statistical analysis and graphical models. It was developed by statisticians for statisticians. This specialization gives it an edge in handling complex statistical data analyses out of the box, without the need for extensive programming knowledge or additional libraries. -->
+
+<!-- -   **Comprehensive Statistical Packages**: R has a comprehensive collection of packages for various statistical analyses, including linear and nonlinear modeling, classical statistical tests, time-series analysis, classification, clustering, and more. These packages are often written by statisticians and subject matter experts, ensuring they are tailored for rigorous statistical analysis. -->
+
+<!-- ### **2. Superior Data Visualization** -->
+
+<!-- -   **ggplot2 and Beyond**: R's `ggplot2` package is renowned for its capability to create advanced and beautiful data visualizations with ease. The grammar of graphics implemented by `ggplot2` allows for the layering of data, aesthetic mappings, and statistical transformations, facilitating the creation of complex plots intuitively. -->
+
+<!-- -   **Rich Ecosystem for Visualization**: Beyond `ggplot2`, R offers a rich ecosystem of visualization packages like lattice, `plotly` (for interactive plots), and `shiny` (for interactive web apps), providing a wide range of options for presenting data insights effectively. -->
+
+<!-- ### **3. Integrated Development Environment (IDE) Support** -->
+
+<!-- -   **RStudio**: RStudio is a powerful and popular IDE specifically designed for R. It provides an integrated environment that makes data analysis, visualization, and programming more accessible. RStudio enhances the R programming experience with features like code completion, easy package management, and markdown **(quarto, nowadays)** support for reproducible research. -->
+
+<!-- ### **4. Community and Support** -->
+
+<!-- -   **Dedicated Community**: R has a vibrant and welcoming community, particularly attractive to those in academia, research, and various scientific disciplines. The community offers extensive resources, forums, and groups for support, making it easier for newcomers to get started and for experts to dive deep into specific statistical challenges. -->
+
+<!-- -   **CRAN Repository**: The Comprehensive R Archive Network ([CRAN](https://cran.r-project.org/)) is a repository of over 16,000 R packages (as of my last update in April 2023). This vast and well-organized repository ensures that R users have access to tools and libraries for nearly every statistical and graphical method imaginable. -->
+
+<!-- ### **5. Data Handling and Analysis** -->
+
+<!-- -   **Data Wrangling**: While Python's pandas library is powerful for data manipulation, R's `dplyr` and `data.table` packages offer syntax that is arguably more intuitive for data transformation and aggregation, especially for those with a background in SQL or those new to programming. -->
+
+<!-- -   **Analysis Workflow**: R is designed with an analysis-first approach, emphasizing data exploration and analysis workflows. This makes R particularly suited for iterative data exploration, hypothesis testing, and modeling in a way that is highly accessible to researchers and analysts. -->
+
+<!-- -   **R is intuitive for analysis:** R may not work with a wide variety of projects, but it is the best choice for analysis and inference work. If you plan to work in a specialized field, you'll want a specialized programming language. R also offers a powerful environment ideally suited to the types of [data visualizations]{.underline} data scientists employ. -->
+
+<!-- ### **Comparative Consideration** -->
+
+<!-- While Python is a general-purpose programming language with broad applications ranging from web development to software engineering and has significant strengths in machine learning and deep learning with libraries like TensorFlow and PyTorch, [R's focused design for statistical analysis and data visualization makes it exceptionally well-suited for data scientists, statisticians, and researchers.]{.underline} This focus, combined with its comprehensive statistical packages, superior data visualization capabilities, and supportive community, positions R as a strong choice for those particularly interested in the statistical and analytical aspects of data science. -->
+
+<!-- Source: <https://www.edx.org/resources/r-vs-python-for-data-science-explainer-learning-tips> -->
+
+<!-- <br> -->
+
+<!-- ### Install gadgets -->
+
+<!-- -   Install R, R Studio, & Rtools -->
+
+<!--     -   **R** -->
+
+<!--         -   For window <https://cran.r-project.org/bin/windows/base/> -->
+
+<!--         -   For mac <https://cran.r-project.org/bin/macosx/> -->
+
+<!--     -   **R Studio** -->
+
+<!--         -   <https://posit.co/download/rstudio-desktop/> -->
+
+<!--     -   **Rtools** (only for window user) -->
+
+<!--         -   <https://cran.r-project.org/bin/windows/Rtools/> -->
+
+<!--         -   To install R packages containing C/C++ language for window users (no need for Linux and Mac users) -->
+
+<!-- -   Things you need to know -->
+
+<!--     -   Don't Use OneDrive. -->
+
+<!--         -   Use `Github` instead -->
+
+<!--         -   Many people get an error when installing because of `OneDrive` -->
+
+<!--     -   Set Windows user name to English -->
+
+<!--         -   If Korean characters are mixed in the installation path, there is a high probability of error occurrence -->
+
+<!-- -   Installation Order -->
+
+<!--     -   **Step 1** ‑ Download the file -->
+
+<!--         -   Download R, Rtools, Rstudio installation files -->
+
+<!--     -   **Step 2** - Install R -->
+
+<!--         -   Unified installation path: All will be installed in the `C:/R` folder -->
+
+<!--         -   Run in administrator mode when running the R installation file -->
+
+<!--         -   After installing R, grant write permission to the R folder, Right-click and turn off read only -->
+
+<!--     -   **Step 3** ‑ Install Rtools -->
+
+<!--         -   **Rtools?** `RTools` is [a collection of software tools and libraries that are necessary for building and compiling packages in the R programming language, especially on Windows]{.underline}. -->
+
+<!--         -   Administrator mode execution installation and folder setting as C:\\R\\rtools40 -->
+
+<!--         -   Create environment variable RTOOLS40_HOME after installation: Value - C:\\R\\rtools40\\ -->
+
+<!--         -   Add *%RTOOLS40_HOME%\\usr\\bin\\* to the Path variable. -->
+
+<!--     -   **Step 4** - Install Rstudio -->
+
+<!--         -   Right-click and run as administrator - installation path C:\\R\\Rstudio -->
+
+<!--         -   Check rtools connection with Sys.which("make") command after installation -->
+
+<!-- <br> -->
