@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HCI 실험 디자인 개론 – CJL &amp; Lab</title>
+<title>HCI 연구설계 개론 – CJL &amp; Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -66,6 +100,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -119,15 +156,11 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../../research/index.html"> 
-<span class="menu-text">Research</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../../../blogs/index.html"> 
 <span class="menu-text">Blogs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://axislab.netlify.app/"> 
+    <a class="nav-link" href="https://axislabskku.com/"> 
 <span class="menu-text">LAB</span></a>
   </li>  
 </ul>
@@ -146,52 +179,86 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#hcihuman-computer-interaction" id="toc-hcihuman-computer-interaction" class="nav-link active" data-scroll-target="#hcihuman-computer-interaction">HCI(Human-Computer Interaction)</a>
+  <li><a href="#주차-학습목표" id="toc-주차-학습목표" class="nav-link active" data-scroll-target="#주차-학습목표">2주차 학습목표</a>
   <ul class="collapse">
-  <li><a href="#hci의-중요성" id="toc-hci의-중요성" class="nav-link" data-scroll-target="#hci의-중요성">HCI의 중요성</a></li>
+  <li><a href="#오늘의-핵심-질문" id="toc-오늘의-핵심-질문" class="nav-link" data-scroll-target="#오늘의-핵심-질문">오늘의 핵심 질문</a></li>
   </ul></li>
-  <li><a href="#hci-연구와-연구-디자인" id="toc-hci-연구와-연구-디자인" class="nav-link" data-scroll-target="#hci-연구와-연구-디자인">HCI 연구와 연구 디자인</a>
+  <li><a href="#hci는-무엇을-연구하는가" id="toc-hci는-무엇을-연구하는가" class="nav-link" data-scroll-target="#hci는-무엇을-연구하는가">HCI는 무엇을 연구하는가?</a></li>
+  <li><a href="#hci-연구에서-설계가-중요한-이유" id="toc-hci-연구에서-설계가-중요한-이유" class="nav-link" data-scroll-target="#hci-연구에서-설계가-중요한-이유">HCI 연구에서 설계가 중요한 이유</a></li>
+  <li><a href="#연구질문이-먼저-방법은-나중" id="toc-연구질문이-먼저-방법은-나중" class="nav-link" data-scroll-target="#연구질문이-먼저-방법은-나중">연구질문이 먼저, 방법은 나중</a></li>
+  <li><a href="#연구질문의-네-가지-유형" id="toc-연구질문의-네-가지-유형" class="nav-link" data-scroll-target="#연구질문의-네-가지-유형">연구질문의 네 가지 유형</a></li>
+  <li><a href="#연구질문에서-검증-가능한-주장으로" id="toc-연구질문에서-검증-가능한-주장으로" class="nav-link" data-scroll-target="#연구질문에서-검증-가능한-주장으로">연구질문에서 검증 가능한 주장으로</a>
   <ul class="collapse">
-  <li><a href="#hci-실험-디자인의-기본-요소" id="toc-hci-실험-디자인의-기본-요소" class="nav-link" data-scroll-target="#hci-실험-디자인의-기본-요소">HCI 실험 디자인의 기본 요소</a></li>
-  <li><a href="#hci-실험-연구-사례" id="toc-hci-실험-연구-사례" class="nav-link" data-scroll-target="#hci-실험-연구-사례"><strong>HCI 실험 연구 사례</strong></a></li>
-  <li><a href="#hci-설문-연구" id="toc-hci-설문-연구" class="nav-link" data-scroll-target="#hci-설문-연구"><strong>HCI 설문 연구</strong></a></li>
-  <li><a href="#설문-기반-hci-연구의-기본-요소" id="toc-설문-기반-hci-연구의-기본-요소" class="nav-link" data-scroll-target="#설문-기반-hci-연구의-기본-요소"><strong>설문 기반 HCI 연구의 기본 요소</strong></a></li>
+  <li><a href="#연구질문research-question" id="toc-연구질문research-question" class="nav-link" data-scroll-target="#연구질문research-question">연구질문(Research Question)</a></li>
+  <li><a href="#가설hypothesis" id="toc-가설hypothesis" class="nav-link" data-scroll-target="#가설hypothesis">가설(Hypothesis)</a></li>
+  <li><a href="#목표-비교target-contrast-estimand" id="toc-목표-비교target-contrast-estimand" class="nav-link" data-scroll-target="#목표-비교target-contrast-estimand">목표 비교(Target Contrast; Estimand)</a></li>
   </ul></li>
-  <li><a href="#hci-연구에서-실험-설문조사-빅데이터-분석의-장단점-비교" id="toc-hci-연구에서-실험-설문조사-빅데이터-분석의-장단점-비교" class="nav-link" data-scroll-target="#hci-연구에서-실험-설문조사-빅데이터-분석의-장단점-비교">HCI 연구에서 실험, 설문조사, 빅데이터 분석의 장단점 비교</a>
+  <li><a href="#연구설계-청사진" id="toc-연구설계-청사진" class="nav-link" data-scroll-target="#연구설계-청사진">연구설계 청사진</a></li>
+  <li><a href="#먼저-구분하기-연구설계와-자료수집-방법" id="toc-먼저-구분하기-연구설계와-자료수집-방법" class="nav-link" data-scroll-target="#먼저-구분하기-연구설계와-자료수집-방법">먼저 구분하기: 연구설계와 자료수집 방법</a></li>
+  <li><a href="#hci에서-자주-사용하는-자료수집-방법" id="toc-hci에서-자주-사용하는-자료수집-방법" class="nav-link" data-scroll-target="#hci에서-자주-사용하는-자료수집-방법">HCI에서 자주 사용하는 자료수집 방법</a></li>
+  <li><a href="#방법을-선택하는-기준" id="toc-방법을-선택하는-기준" class="nav-link" data-scroll-target="#방법을-선택하는-기준">방법을 선택하는 기준</a></li>
+  <li><a href="#실험-인과적-비교를-설계하기" id="toc-실험-인과적-비교를-설계하기" class="nav-link" data-scroll-target="#실험-인과적-비교를-설계하기">실험: 인과적 비교를 설계하기</a></li>
+  <li><a href="#설문-경험과-인식을-측정하기" id="toc-설문-경험과-인식을-측정하기" class="nav-link" data-scroll-target="#설문-경험과-인식을-측정하기">설문: 경험과 인식을 측정하기</a></li>
+  <li><a href="#표준화-척도를-사용할-때" id="toc-표준화-척도를-사용할-때" class="nav-link" data-scroll-target="#표준화-척도를-사용할-때">표준화 척도를 사용할 때</a></li>
+  <li><a href="#로그와-행동-데이터-실제-사용-흔적-읽기" id="toc-로그와-행동-데이터-실제-사용-흔적-읽기" class="nav-link" data-scroll-target="#로그와-행동-데이터-실제-사용-흔적-읽기">로그와 행동 데이터: 실제 사용 흔적 읽기</a></li>
+  <li><a href="#인터뷰관찰사례연구" id="toc-인터뷰관찰사례연구" class="nav-link" data-scroll-target="#인터뷰관찰사례연구">인터뷰·관찰·사례연구</a></li>
+  <li><a href="#혼합방법mixed-methods" id="toc-혼합방법mixed-methods" class="nav-link" data-scroll-target="#혼합방법mixed-methods">혼합방법(Mixed Methods)</a></li>
+  <li><a href="#표본과-일반화" id="toc-표본과-일반화" class="nav-link" data-scroll-target="#표본과-일반화">표본과 일반화</a></li>
+  <li><a href="#표본-수에-무조건-30명은-없다" id="toc-표본-수에-무조건-30명은-없다" class="nav-link" data-scroll-target="#표본-수에-무조건-30명은-없다">표본 수에 “무조건 30명”은 없다</a></li>
+  <li><a href="#측정measurement이란" id="toc-측정measurement이란" class="nav-link" data-scroll-target="#측정measurement이란">측정(Measurement)이란?</a></li>
+  <li><a href="#construct-operationalization-measure-variable" id="toc-construct-operationalization-measure-variable" class="nav-link" data-scroll-target="#construct-operationalization-measure-variable">Construct → Operationalization → Measure → Variable</a></li>
+  <li><a href="#하나의-구성개념-여러-측정" id="toc-하나의-구성개념-여러-측정" class="nav-link" data-scroll-target="#하나의-구성개념-여러-측정">하나의 구성개념, 여러 측정</a></li>
+  <li><a href="#분석단위unit-of-analysis" id="toc-분석단위unit-of-analysis" class="nav-link" data-scroll-target="#분석단위unit-of-analysis">분석단위(Unit of Analysis)</a></li>
+  <li><a href="#측정-수준scales-of-measurement" id="toc-측정-수준scales-of-measurement" class="nav-link" data-scroll-target="#측정-수준scales-of-measurement">측정 수준(Scales of Measurement)</a></li>
+  <li><a href="#명목척도nominal-scale" id="toc-명목척도nominal-scale" class="nav-link" data-scroll-target="#명목척도nominal-scale">명목척도(Nominal Scale)</a></li>
+  <li><a href="#순서척도ordinal-scale" id="toc-순서척도ordinal-scale" class="nav-link" data-scroll-target="#순서척도ordinal-scale">순서척도(Ordinal Scale)</a></li>
+  <li><a href="#간격척도와-비율척도" id="toc-간격척도와-비율척도" class="nav-link" data-scroll-target="#간격척도와-비율척도">간격척도와 비율척도</a>
   <ul class="collapse">
-  <li><a href="#데이터-수집-범위-및-규모" id="toc-데이터-수집-범위-및-규모" class="nav-link" data-scroll-target="#데이터-수집-범위-및-규모">1. <strong>데이터 수집 범위 및 규모</strong></a></li>
-  <li><a href="#분석의-정밀도-및-인과관계-도출" id="toc-분석의-정밀도-및-인과관계-도출" class="nav-link" data-scroll-target="#분석의-정밀도-및-인과관계-도출">2. <strong>분석의 정밀도 및 인과관계 도출</strong></a></li>
-  <li><a href="#비용-및-효율성" id="toc-비용-및-효율성" class="nav-link" data-scroll-target="#비용-및-효율성">3. <strong>비용 및 효율성</strong></a></li>
+  <li><a href="#간격척도interval-scale" id="toc-간격척도interval-scale" class="nav-link" data-scroll-target="#간격척도interval-scale">간격척도(Interval Scale)</a></li>
+  <li><a href="#비율척도ratio-scale" id="toc-비율척도ratio-scale" class="nav-link" data-scroll-target="#비율척도ratio-scale">비율척도(Ratio Scale)</a></li>
   </ul></li>
-  <li><a href="#통계학-기반-연구-디자인" id="toc-통계학-기반-연구-디자인" class="nav-link" data-scroll-target="#통계학-기반-연구-디자인">통계학 기반 연구 디자인</a>
+  <li><a href="#측정-수준과-연속이산은-다른-차원" id="toc-측정-수준과-연속이산은-다른-차원" class="nav-link" data-scroll-target="#측정-수준과-연속이산은-다른-차원">측정 수준과 연속·이산은 다른 차원</a></li>
+  <li><a href="#숫자로-저장되었다고-수치형-개념은-아니다" id="toc-숫자로-저장되었다고-수치형-개념은-아니다" class="nav-link" data-scroll-target="#숫자로-저장되었다고-수치형-개념은-아니다">숫자로 저장되었다고 수치형 개념은 아니다</a></li>
+  <li><a href="#likert-문항과-likert-척도" id="toc-likert-문항과-likert-척도" class="nav-link" data-scroll-target="#likert-문항과-likert-척도">Likert 문항과 Likert 척도</a></li>
+  <li><a href="#likert-자료를-어떻게-분석할까" id="toc-likert-자료를-어떻게-분석할까" class="nav-link" data-scroll-target="#likert-자료를-어떻게-분석할까">Likert 자료를 어떻게 분석할까?</a></li>
+  <li><a href="#신뢰도와-타당도" id="toc-신뢰도와-타당도" class="nav-link" data-scroll-target="#신뢰도와-타당도">신뢰도와 타당도</a>
   <ul class="collapse">
-  <li><a href="#measurement" id="toc-measurement" class="nav-link" data-scroll-target="#measurement">Measurement</a></li>
-  <li><a href="#측정의-미묘함-나이의-사례" id="toc-측정의-미묘함-나이의-사례" class="nav-link" data-scroll-target="#측정의-미묘함-나이의-사례">측정의 미묘함: ’나이’의 사례</a></li>
-  <li><a href="#측정-방법은-어떻게-정할까" id="toc-측정-방법은-어떻게-정할까" class="nav-link" data-scroll-target="#측정-방법은-어떻게-정할까">측정 방법은 어떻게 정할까?</a></li>
-  <li><a href="#groseries-to-check" id="toc-groseries-to-check" class="nav-link" data-scroll-target="#groseries-to-check">Groseries to check!</a></li>
+  <li><a href="#신뢰도reliability" id="toc-신뢰도reliability" class="nav-link" data-scroll-target="#신뢰도reliability">신뢰도(Reliability)</a></li>
+  <li><a href="#타당도validity" id="toc-타당도validity" class="nav-link" data-scroll-target="#타당도validity">타당도(Validity)</a></li>
   </ul></li>
-  <li><a href="#scales-of-measurement" id="toc-scales-of-measurement" class="nav-link" data-scroll-target="#scales-of-measurement">Scales of measurement</a>
+  <li><a href="#신뢰도의-여러-형태" id="toc-신뢰도의-여러-형태" class="nav-link" data-scroll-target="#신뢰도의-여러-형태">신뢰도의 여러 형태</a></li>
+  <li><a href="#타당도의-근거" id="toc-타당도의-근거" class="nav-link" data-scroll-target="#타당도의-근거">타당도의 근거</a></li>
+  <li><a href="#측정-품질-체크리스트" id="toc-측정-품질-체크리스트" class="nav-link" data-scroll-target="#측정-품질-체크리스트">측정 품질 체크리스트</a></li>
+  <li><a href="#변수의-역할-ivdv와-predictoroutcome" id="toc-변수의-역할-ivdv와-predictoroutcome" class="nav-link" data-scroll-target="#변수의-역할-ivdv와-predictoroutcome">변수의 역할: IV/DV와 Predictor/Outcome</a></li>
+  <li><a href="#실험의-인과-논리" id="toc-실험의-인과-논리" class="nav-link" data-scroll-target="#실험의-인과-논리">실험의 인과 논리</a></li>
+  <li><a href="#무작위-할당과-무작위-표집은-다르다" id="toc-무작위-할당과-무작위-표집은-다르다" class="nav-link" data-scroll-target="#무작위-할당과-무작위-표집은-다르다">무작위 할당과 무작위 표집은 다르다</a></li>
+  <li><a href="#참여자-간-설계between-subjects-design" id="toc-참여자-간-설계between-subjects-design" class="nav-link" data-scroll-target="#참여자-간-설계between-subjects-design">참여자 간 설계(Between-Subjects Design)</a></li>
+  <li><a href="#참여자-내-설계within-subjects-design" id="toc-참여자-내-설계within-subjects-design" class="nav-link" data-scroll-target="#참여자-내-설계within-subjects-design">참여자 내 설계(Within-Subjects Design)</a></li>
+  <li><a href="#순서효과와-counterbalancing" id="toc-순서효과와-counterbalancing" class="nav-link" data-scroll-target="#순서효과와-counterbalancing">순서효과와 Counterbalancing</a></li>
+  <li><a href="#요인설계factorial-design와-상호작용" id="toc-요인설계factorial-design와-상호작용" class="nav-link" data-scroll-target="#요인설계factorial-design와-상호작용">요인설계(Factorial Design)와 상호작용</a></li>
+  <li><a href="#실험설계에서-자주-생기는-위협" id="toc-실험설계에서-자주-생기는-위협" class="nav-link" data-scroll-target="#실험설계에서-자주-생기는-위협">실험설계에서 자주 생기는 위협</a></li>
+  <li><a href="#비실험-연구non-experimental-research" id="toc-비실험-연구non-experimental-research" class="nav-link" data-scroll-target="#비실험-연구non-experimental-research">비실험 연구(Non-Experimental Research)</a></li>
+  <li><a href="#준실험quasi-experimental-design" id="toc-준실험quasi-experimental-design" class="nav-link" data-scroll-target="#준실험quasi-experimental-design">준실험(Quasi-Experimental Design)</a></li>
+  <li><a href="#윤리적인-hci-연구설계" id="toc-윤리적인-hci-연구설계" class="nav-link" data-scroll-target="#윤리적인-hci-연구설계">윤리적인 HCI 연구설계</a></li>
+  <li><a href="#연구설계는-데이터-구조가-된다" id="toc-연구설계는-데이터-구조가-된다" class="nav-link" data-scroll-target="#연구설계는-데이터-구조가-된다">연구설계는 데이터 구조가 된다</a></li>
+  <li><a href="#데이터-수집-전에-codebook-만들기" id="toc-데이터-수집-전에-codebook-만들기" class="nav-link" data-scroll-target="#데이터-수집-전에-codebook-만들기">데이터 수집 전에 Codebook 만들기</a></li>
+  <li><a href="#r에서-연구설계-표현하기" id="toc-r에서-연구설계-표현하기" class="nav-link" data-scroll-target="#r에서-연구설계-표현하기">R에서 연구설계 표현하기</a></li>
+  <li><a href="#조별-활동-세-가지-hci-사례" id="toc-조별-활동-세-가지-hci-사례" class="nav-link" data-scroll-target="#조별-활동-세-가지-hci-사례">조별 활동: 세 가지 HCI 사례</a>
   <ul class="collapse">
-  <li><a href="#nominal-scale" id="toc-nominal-scale" class="nav-link" data-scroll-target="#nominal-scale">Nominal scale</a></li>
-  <li><a href="#ordinal-scale" id="toc-ordinal-scale" class="nav-link" data-scroll-target="#ordinal-scale">Ordinal scale</a></li>
-  <li><a href="#interval-scale" id="toc-interval-scale" class="nav-link" data-scroll-target="#interval-scale">Interval scale</a></li>
-  <li><a href="#ratio-scale" id="toc-ratio-scale" class="nav-link" data-scroll-target="#ratio-scale">Ratio scale</a></li>
-  <li><a href="#continuous-versus-discrete-variables" id="toc-continuous-versus-discrete-variables" class="nav-link" data-scroll-target="#continuous-versus-discrete-variables">Continuous versus discrete variables</a></li>
-  <li><a href="#some-complexities---리커트-척도의-애매함" id="toc-some-complexities---리커트-척도의-애매함" class="nav-link" data-scroll-target="#some-complexities---리커트-척도의-애매함">Some complexities - 리커트 척도의 애매함</a></li>
+  <li><a href="#사례-a-vr" id="toc-사례-a-vr" class="nav-link" data-scroll-target="#사례-a-vr">사례 A: VR</a></li>
+  <li><a href="#사례-b-모바일-ui" id="toc-사례-b-모바일-ui" class="nav-link" data-scroll-target="#사례-b-모바일-ui">사례 B: 모바일 UI</a></li>
+  <li><a href="#사례-c-음성-인터페이스" id="toc-사례-c-음성-인터페이스" class="nav-link" data-scroll-target="#사례-c-음성-인터페이스">사례 C: 음성 인터페이스</a></li>
   </ul></li>
-  <li><a href="#assessing-the-reliability-of-a-measurement" id="toc-assessing-the-reliability-of-a-measurement" class="nav-link" data-scroll-target="#assessing-the-reliability-of-a-measurement">Assessing the reliability of a measurement</a></li>
-  <li><a href="#the-role-of-variables-predictors-and-outcomes" id="toc-the-role-of-variables-predictors-and-outcomes" class="nav-link" data-scroll-target="#the-role-of-variables-predictors-and-outcomes">The “role” of variables: predictors and outcomes</a></li>
-  <li><a href="#experimental-and-non-experimental-research" id="toc-experimental-and-non-experimental-research" class="nav-link" data-scroll-target="#experimental-and-non-experimental-research">Experimental and non-experimental research</a>
+  <li><a href="#조별-활동-design-canvas" id="toc-조별-활동-design-canvas" class="nav-link" data-scroll-target="#조별-활동-design-canvas">조별 활동: Design Canvas</a>
   <ul class="collapse">
-  <li><a href="#experimental-research" id="toc-experimental-research" class="nav-link" data-scroll-target="#experimental-research">Experimental research</a></li>
-  <li><a href="#non-experimental-research" id="toc-non-experimental-research" class="nav-link" data-scroll-target="#non-experimental-research">Non-experimental research</a></li>
+  <li><a href="#공유-형식" id="toc-공유-형식" class="nav-link" data-scroll-target="#공유-형식">공유 형식</a></li>
   </ul></li>
-  <li><a href="#프로그래밍-언어" id="toc-프로그래밍-언어" class="nav-link" data-scroll-target="#프로그래밍-언어">프로그래밍 언어</a>
+  <li><a href="#개인-활동-내가-자주-쓰는-서비스" id="toc-개인-활동-내가-자주-쓰는-서비스" class="nav-link" data-scroll-target="#개인-활동-내가-자주-쓰는-서비스">개인 활동: 내가 자주 쓰는 서비스</a>
   <ul class="collapse">
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#programming-language" id="toc-programming-language" class="nav-link" data-scroll-target="#programming-language">Programming language</a></li>
+  <li><a href="#예시" id="toc-예시" class="nav-link" data-scroll-target="#예시">예시</a></li>
   </ul></li>
-  <li><a href="#activity" id="toc-activity" class="nav-link" data-scroll-target="#activity">Activity</a></li>
+  <li><a href="#핵심-정리" id="toc-핵심-정리" class="nav-link" data-scroll-target="#핵심-정리">핵심 정리</a></li>
+  <li><a href="#다음-주-전까지" id="toc-다음-주-전까지" class="nav-link" data-scroll-target="#다음-주-전까지">다음 주 전까지</a></li>
   </ul>
 </nav>
     </div>
@@ -200,8 +267,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HCI 실험 디자인 개론</h1>
-<p class="subtitle lead">통계학을 기반으로 한 연구 설계</p>
+<h1 class="title">HCI 연구설계 개론</h1>
+<p class="subtitle lead">연구질문에서 측정과 인과추론까지</p>
 </div>
 
 
@@ -218,762 +285,2016 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
-<p><br></p>
-<p><a href="content/HCI_stat_ds_w2.pdf">Week2_lecture_pdf</a></p>
-<p><br></p>
-<section id="hcihuman-computer-interaction" class="level2">
-<h2 class="anchored" data-anchor-id="hcihuman-computer-interaction">HCI(Human-Computer Interaction)</h2>
-<ul>
-<li><p>사용자가 컴퓨터, 모바일 기기, 가상현실(VR), 증강현실(AR), 웨어러블 디바이스, 인공지능 시스템 등 다양한 기술과 어떻게 상호작용하는지를 연구하는 학문 분야</p></li>
-<li><p>초기의 HCI는 <strong>“사람이 컴퓨터를 얼마나 효율적으로 사용할 수 있는가”</strong>(예: 작업 속도, 오류율, 사용 편의성) 같은 <strong>사용성(usability)</strong> 중심의 문제에서 출발. 그러나 오늘날에는 훨씬 더 확장되어, 다음과 같은 주제들을 포괄하게 되었음:</p>
-<ul>
-<li><p><strong>경험(UX, User Experience)</strong>: 단순히 효율성만이 아니라 즐거움, 몰입감, 정서적 반응까지 포함</p></li>
-<li><p><strong>AI 및 지능형 인터페이스</strong>: 음성 비서, 추천 시스템, 생성형 AI 등 새로운 상호작용 방식</p></li>
-<li><p><strong>사회적·윤리적 측면</strong>: 개인정보 보호, 알고리즘 편향, 디지털 웰빙 등</p></li>
-</ul></li>
-</ul>
-<p><br></p>
-<section id="hci의-중요성" class="level3">
-<h3 class="anchored" data-anchor-id="hci의-중요성">HCI의 중요성</h3>
-<ul>
-<li><p>HCI는 단순한 학문적 연구를 넘어, <strong>디지털 사회 전반을 설계하는 핵심 기반</strong>이 되고 있음.</p>
-<ul>
-<li><p><strong>산업적 중요성</strong>: 성공적인 제품·서비스는 뛰어난 기술만으로는 불가능하며, 사람들이 실제로 <em>쉽고 즐겁게</em> 사용할 수 있도록 설계되어야 함. (예: 아이폰, 넷플릭스, 카카오톡)</p></li>
-<li><p><strong>사회적 중요성</strong>: 기술 사용 경험이 삶의 질, 사회적 관계, 심지어 정신 건강까지 직결됨.</p></li>
-<li><p><strong>학문적 중요성</strong>: 심리학, 사회학, 디자인, 데이터과학 등과 깊이 연결되는 다학제적 연구 영역.</p></li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-<section id="hci-연구와-연구-디자인" class="level2">
-<h2 class="anchored" data-anchor-id="hci-연구와-연구-디자인">HCI 연구와 연구 디자인</h2>
-<ul>
-<li><p>HCI 연구에서 <strong>연구 디자인(research design)</strong>은 특히 중요한데, 이는 곧 “우리가 어떤 질문을 던지고, 어떤 방법으로 답을 찾을 것인가”를 결정하는 단계이기 때문</p></li>
-<li><p><strong>연구 질문에 따라 방법이 달라짐</strong>:</p>
-<ul>
-<li><p>예: “UI 색상 변화가 사용자 만족도에 영향을 주는가?” → 실험(Experiment) 설계 필요</p></li>
-<li><p>예: “어떤 요인이 사람들이 특정 앱을 더 오래 사용하게 만드는가?” → 설문조사나 로그 데이터 분석 활용</p></li>
-<li><p><strong>잘못된 연구 디자인 → 잘못된 결론</strong>: 연구 질문과 방법의 불일치가 발생하면, 얻어진 결과는 신뢰성과 타당성을 확보하기 어려움.</p></li>
-</ul></li>
-<li><p>즉, HCI 연구에서 연구 디자인은 단순한 절차적 준비가 아니라 <strong>연구의 성공과 실패를 좌우하는 설계도(blueprint)</strong></p></li>
-</ul>
-<p><br></p>
-<section id="hci-실험-디자인의-기본-요소" class="level3">
-<h3 class="anchored" data-anchor-id="hci-실험-디자인의-기본-요소">HCI 실험 디자인의 기본 요소</h3>
-<ul>
-<li><p><strong>연구 문제</strong> <strong>정의</strong>: 연구의 핵심 질문을 명확히 설정. 연구 문제에 따라 실험(또는 설문)의 방향이 결정되므로, 이를 명확히 규정하는 것이 필수적.</p>
-<ul>
-<li><p><strong>핵심</strong>: 연구의 출발점은 <em>“무엇을 알고 싶은가?”</em></p></li>
-<li><p><strong>의미</strong>: 연구 문제를 명확히 규정하지 않으면, 실험 변수를 어떻게 설정할지, 어떤 데이터를 수집할지 방향이 흐려짐</p></li>
-<li><p><strong>예시</strong>:</p>
-<ul>
-<li><p><em>“앱에서 알림 빈도가 사용자 집중도에 영향을 미치는가?”</em></p></li>
-<li><p><em>“메타버스 아바타의 외형 선택이 몰입감에 어떤 차이를 만드는가?”</em></p></li>
-</ul></li>
-<li><p><strong>주의</strong>: 연구 문제는 <strong>측정 가능한 형태</strong>로 구체화해야 함. “재미있다”보다 “재미 점수(1–7 Likert 척도)”처럼 명시적이어야 실험으로 옮길 수 있다는 것.</p></li>
-</ul></li>
-<li><p><strong>독립 변수와 종속 변수 결정</strong>: HCI 연구에서는 독립 변수(변경 가능한 요소)와 종속 변수(결과로 관찰되는 측정값)를 정의해야 함. 예를 들어, UI 디자인의 색상(독립 변수)이 사용자 만족도(종속 변수)에 미치는 영향을 연구할 수 있음</p>
-<ul>
-<li><p><strong>독립 변수 (IV)</strong>: 연구자가 조작하거나 변화시키는 요소.</p></li>
-<li><p><strong>종속 변수 (DV)</strong>: 그 변화의 결과로 관찰되는 측정값.</p></li>
-<li><p><strong>예시</strong>:</p>
-<ul>
-<li><p><strong>IV</strong>: UI 버튼 색상 (파랑 vs 빨강)</p></li>
-<li><p><strong>DV</strong>: 사용자 클릭률, 작업 성공률, 만족도 설문 점수</p></li>
-</ul></li>
-</ul></li>
-<li><p><strong>참여자 모집</strong>: 실험(또는 설문)에 필요한 참여자 수와 참여자 특성을 고려하여 실험 대상을 모집. 참여자의 다양성은 연구 결과의 일반화 가능성에 영향을 미칠 수 있음.</p>
-<ul>
-<li><p><strong>참여자 수 (Sample size)</strong>: 통계적 검정력을 확보하기 위해 충분한 수가 필요 (예: t-test에서 최소 30명, 실험군·대조군 각각 15명 이상 등)</p></li>
-<li><p><strong>참여자 특성</strong>: 성별, 연령, 디지털 리터러시 수준, 문화적 배경 등은 결과 해석에 큰 영향을 줄 수 있음. 결과의 일반화 가능성 (External validity)이 높을 수록 좋은 연구.</p></li>
-<li><p><strong>예시</strong>:</p>
-<ul>
-<li><p>아동 대상 교육용 앱 연구 → 참여자 나이 범위(7–12세)</p></li>
-<li><p>고령층 대상 모바일 뱅킹 연구 → 디지털 경험 수준이 중요한 통제 요인</p></li>
-</ul></li>
-</ul></li>
-<li><p><strong>연구 환경 설정</strong>: 실험(또는 설문)이 진행되는 환경은 실험 결과에 큰 영향을 미칠 수 있음. 온라인 실험(설문), 실제 환경에서의 관찰, 또는 실험실 내에서의 설정 등 적합한 환경을 선택해야 함.</p>
-<ul>
-<li><p><strong>실험실</strong>: 변수 통제가 용이하나, 현실감이 낮을 수 있음.</p></li>
-<li><p><strong>현장(실제 사용 환경)</strong>: 높은 생태 타당도(실제성), 그러나 외부 요인 통제가 어려움.</p></li>
-<li><p><strong>온라인</strong>: 많은 참여자 모집 가능, 다양한 기기·환경 노출, 그러나 데이터 품질 관리가 관건.</p></li>
-</ul></li>
-<li><p><strong>데이터 수집 방법</strong>: 실험(설문) 중 어떤 데이터를 어떻게 수집할지 결정. 설문조사, 사용 로그 분석, 인터뷰 등 다양한 방법을 사용할 수 있으며, 각 방법은 그 나름의 장단점이 있음.</p>
-<ul>
-<li><p><strong>설문조사</strong>: 태도, 인식, 만족도 등 주관적 평가에 유용</p></li>
-<li><p><strong>사용 로그 분석</strong>: 클릭 수, 체류 시간, 오류율 등 객관적 행동 데이터 확보</p></li>
-<li><p><strong>인터뷰 / 포커스 그룹</strong>: 정성적 인사이트 도출</p></li>
-<li><p><strong>생체 데이터</strong>: 뇌파(EEG), 심박수, 시선 추적 등 → 몰입감·스트레스 같은 비의식적 반응 측정</p></li>
-<li><p><strong>예시</strong>:</p>
-<ul>
-<li><p>UX 만족도 → 설문</p></li>
-<li><p>UI 버튼 오류율 → 사용 로그</p></li>
-<li><p>VR 몰입감 → 설문 + 심박수 결합</p></li>
-</ul></li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-<section id="hci-실험-연구-사례" class="level3">
-<h3 class="anchored" data-anchor-id="hci-실험-연구-사례"><strong>HCI 실험 연구 사례</strong></h3>
-<section id="사례-1-가상-현실vr에서의-사용자-경험-연구" class="level4">
-<h4 class="anchored" data-anchor-id="사례-1-가상-현실vr에서의-사용자-경험-연구"><strong>사례 1: 가상 현실(VR)에서의 사용자 경험 연구</strong></h4>
-<ul>
-<li><p>가상 현실에서 사용자의 몰입감을 측정하는 연구는 HCI 분야에서 활발히 진행되고 있음.</p></li>
-<li><p>예를 들어, <strong>몰입감</strong>이 어떻게 사용자 만족도에 영향을 미치는지 알아보기 위해 실험을 설계할 수 있는데, 이 실험에서 독립 변수는 <strong>그래픽 품질</strong>이나 <strong>상호작용 방식</strong>이 될 수 있고, 종속 변수는 <strong>사용자 몰입감</strong>과 <strong>사용자 만족도</strong>.</p></li>
-<li><p>실험 참가자들은 각각 다른 그래픽 품질과 상호작용 방식을 경험하고, 이후 설문을 통해 몰입감과 만족도를 평가.</p></li>
-<li><p>연구자는 이 데이터를 통해 가상 현실 환경에서의 UX(User Experience)를 개선하는 인사이트를 얻을 수 있음.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="사례-2-음성-인터페이스-연구" class="level4">
-<h4 class="anchored" data-anchor-id="사례-2-음성-인터페이스-연구"><strong>사례 2: 음성 인터페이스 연구</strong></h4>
-<ul>
-<li><p>음성 비서(AI Assistant)와의 상호작용에서 사용자 경험을 연구하는 실험도 HCI 연구에서 중요한 부분.</p></li>
-<li><p>이 실험에서는 <strong>음성 인식 정확도</strong>와 <strong>응답 시간</strong>을 독립 변수로 설정하고, <strong>사용자 만족도</strong>와 <strong>과제 완료 시간</strong>을 종속 변수로 측정할 수 있음.</p></li>
-<li><p>참여자들은 다양한 명령어를 음성 비서를 통해 수행하게 되고, 음성 인식 정확도나 응답 시간이 사용자에게 어떤 영향을 미치는지 분석할 수 있음.</p></li>
-<li><p>이를 통해 음성 인터페이스의 성능을 향상시키는 방법을 도출할 수 있을 것으로 기대.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="사례-3-모바일-ui-디자인-평가" class="level4">
-<h4 class="anchored" data-anchor-id="사례-3-모바일-ui-디자인-평가"><strong>사례 3: 모바일 UI 디자인 평가</strong></h4>
-<ul>
-<li><p>모바일 앱의 UI 디자인이 사용성에 미치는 영향을 분석하는 실험도 많이 수행됨</p></li>
-<li><p>예를 들어, <strong>버튼 크기</strong>나 <strong>색상 대비</strong>가 사용자의 <strong>과제 수행 시간</strong>에 어떤 영향을 미치는지 연구할 수 있는데, 이 때 연구자는 다양한 UI 디자인을 실험 참가자들에게 제시하고, 그들이 과제를 얼마나 빠르고 정확하게 수행하는지를 측정.</p></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-<section id="hci-설문-연구" class="level3">
-<h3 class="anchored" data-anchor-id="hci-설문-연구"><strong>HCI 설문 연구</strong></h3>
-<blockquote class="blockquote">
-<p>HCI(Human–Computer Interaction) 연구에서 <strong>실험</strong>은 인과관계를 밝히는 데 강점이 있지만, 항상 가능하거나 효율적인 방법은 아님. 특히 <strong>사용자 경험(UX), 만족도, 태도, 인식</strong>과 같은 <strong>심리적·주관적 요소</strong>를 측정할 때는 <strong>설문조사(survey)</strong>가 매우 효과적입니다.</p>
-<ul>
-<li><p><strong>대규모 사용자 데이터를 수집할 때</strong></p></li>
-<li><p><strong>실험 환경을 통제하기 어려운 경우</strong> (예: 특정 앱의 실제 사용자 집단)</p></li>
-</ul>
-</blockquote>
-</section>
-<section id="설문-기반-hci-연구의-기본-요소" class="level3">
-<h3 class="anchored" data-anchor-id="설문-기반-hci-연구의-기본-요소"><strong>설문 기반 HCI 연구의 기본 요소</strong></h3>
-<ul>
-<li><strong>명확한 질문 구성</strong>: 설문 질문은 명확하고 간결하게. 사용자들이 질문을 쉽게 이해하고 응답할 수 있어야 정확한 데이터를 얻을 수 있음.
-<ul>
-<li>잘못된 질문 → “앱이 재미있고 유용하다고 생각하시나요?” (두 가지 의미 혼합)</li>
-<li>개선된 질문 → “앱이 재미있다고 느끼시나요?” / “앱이 유용하다고 느끼시나요?” (분리)</li>
-</ul></li>
-<li><strong>적절한 질문 유형 선택</strong>: 리커트 척도(Likert scale), 선택형 질문, 개방형 질문 등을 적절히 조합하여 다양한 정보를 수집할 수 있는데, 연구 질문과 모형에 따라 질문의 유형을 잘 선택해야 함.
-<ul>
-<li>지나치게 긴 개방형 문항은 응답 피로감을 높이므로, 적절히 배치하는 것이 중요</li>
-</ul></li>
-<li><strong>참여자 모집 및 샘플링</strong>: 설문조사의 신뢰성을 높이기 위해 적절한 표본을 선택하고 다양한 참여자들의 의견을 반영하는 것이 중요.</li>
-</ul>
-<p><br></p>
-<section id="사례-1-웹사이트-사용성-평가" class="level4">
-<h4 class="anchored" data-anchor-id="사례-1-웹사이트-사용성-평가"><strong>사례 1: 웹사이트 사용성 평가</strong></h4>
-<ul>
-<li><p>웹사이트의 <strong>사용성</strong>을 평가하기 위해 설문조사를 활용한 연구: 주로 <strong>시스템 사용성 척도</strong>(System Usability Scale, SUS) 같은 표준화된 설문을 사용하여 웹사이트의 사용성 점수를 측정.</p></li>
-<li><p>사용자가 웹사이트를 사용한 후, SUS 설문을 통해 <strong>직관성</strong>, <strong>효율성</strong>, <strong>만족도</strong> 등을 평가.</p></li>
-<li><p>리커트 척도를 사용하여 사용자들이 각 문항에 대해 평가할 수 있도록 구성.</p></li>
-<li><p>수집된 데이터를 바탕으로 웹사이트의 사용성에 대한 총점을 산출하고, 이를 기반으로 문제점과 개선 사항을 도출.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="사례-2-모바일-앱-사용자-경험ux-연구" class="level4">
-<h4 class="anchored" data-anchor-id="사례-2-모바일-앱-사용자-경험ux-연구"><strong>사례 2: 모바일 앱 사용자 경험(UX) 연구</strong></h4>
-<ul>
-<li><p>모바일 애플리케이션의 사용자 경험(UX)을 평가하는 설문 연구는 HCI에서 중요한 역할을 하는데, 예를 들어, 연구자는 <strong>앱의 인터페이스 디자인</strong>, <strong>성능</strong>, <strong>기능성</strong>에 대한 사용자 피드백을 수집할 수 있음</p></li>
-<li><p>설문 문항은 <strong>사용 편의성</strong>, <strong>디자인의 일관성</strong>, <strong>앱의 반응성</strong> 등을 평가하는 항목으로 구성.</p></li>
-<li><p>리커트 척도를 사용하여 사용자가 각 항목에 대해 얼마나 만족하는지 평가.</p></li>
-<li><p>개방형 질문을 포함하여 사용자가 자유롭게 의견을 제시할 수 있도록 하여 정성적 데이터를 수집.</p></li>
-<li><p>이 데이터를 분석하여 UX 개선 방향을 도출하고, 추가 기능 구현이나 디자인 개선을 계획할 수 있음.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="사례-3-소셜-미디어-사용-패턴-연구" class="level4">
-<h4 class="anchored" data-anchor-id="사례-3-소셜-미디어-사용-패턴-연구"><strong>사례 3: 소셜 미디어 사용 패턴 연구</strong></h4>
-<ul>
-<li><p>소셜 미디어 플랫폼에서의 <strong>사용자 행동 패턴</strong>을 분석하기 위한 연구도 많이 진행: 사용자의 <strong>행동</strong>과 <strong>태도</strong>를 조사하여 소셜 미디어 사용이 개인에게 미치는 영향을 분석</p></li>
-<li><p>설문을 통해 사용자의 <strong>일일 사용 시간</strong>, <strong>주로 사용하는 기능</strong>, <strong>소셜 미디어를 사용하는 동기</strong> 등에 대한 데이터를 수집.</p></li>
-<li><p>또한 <strong>소셜 미디어 사용이 정서적 상태</strong>나 <strong>대인관계</strong>에 미치는 영향을 평가하는 질문을 포함할 수 있음.</p></li>
-<li><p>수집된 데이터를 통해 사용자의 소셜 미디어 사용 패턴을 분석하고, 플랫폼 설계 개선 및 기능 업데이트에 필요한 인사이트를 얻을 수 있음.</p></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-</section>
-<section id="hci-연구에서-실험-설문조사-빅데이터-분석의-장단점-비교" class="level2">
-<h2 class="anchored" data-anchor-id="hci-연구에서-실험-설문조사-빅데이터-분석의-장단점-비교">HCI 연구에서 실험, 설문조사, 빅데이터 분석의 장단점 비교</h2>
-<blockquote class="blockquote">
-<p><strong>HCI(Human-Computer Interaction)</strong> 연구에서 <strong>실험</strong>과 <strong>설문조사</strong>는 전통적으로 많이 사용되었지만, 최근에는 <strong>빅데이터 분석</strong>이 점점 더 중요한 연구 방법으로 자리 잡고 있음. 빅데이터를 활용하면 방대한 양의 사용자 데이터를 기반으로 더 깊이 있는 분석이 가능하며, 새로운 인사이트를 얻을 수 있음.</p>
-</blockquote>
-<section id="데이터-수집-범위-및-규모" class="level3">
-<h3 class="anchored" data-anchor-id="데이터-수집-범위-및-규모">1. <strong>데이터 수집 범위 및 규모</strong></h3>
-<ul>
-<li><p><strong>실험 연구</strong></p>
-<ul>
-<li><p><strong>장점:</strong> 실험은 특정한 연구 질문에 맞게 <strong>제어된 환경</strong>에서 데이터를 수집할 수 있어, 데이터의 신뢰성이 높음</p></li>
-<li><p><strong>단점:</strong> 실험에서 수집할 수 있는 데이터는 제한적이며, 시간과 비용이 많이 들기 때문에 <strong>데이터 규모가 작을 수</strong> 있음.</p></li>
-</ul></li>
-<li><p><strong>설문조사</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 설문조사는 <strong>대규모 데이터</strong>를 수집할 수 있어 다양한 사람들의 의견을 반영할 수 있음.</p></li>
-<li><p><strong>단점</strong>: 설문에 응답하는 사람들의 수가 많더라도 응답의 신뢰성과 응답자 성실성에 의존하기 때문에 <strong>질적인 한계</strong>가 있을 수 있음.</p></li>
-</ul></li>
-<li><p><strong>빅데이터 분석</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 빅데이터 분석은 <strong>광범위한 사용자 행동</strong>과 상호작용 데이터를 실시간으로 수집할 수 있으며, 사용자 그룹 간의 행동 패턴을 대규모로 분석할 수 있음. 특히, <strong>실제 사용 환경</strong>에서의 데이터가 포함되어 있어 현실적인 인사이트를 도출할 수 있음.</p></li>
-<li><p><strong>단점</strong>: 빅데이터는 방대한 데이터 처리를 요구하므로 <strong>전문적 기술</strong>과 <strong>인프라</strong>가 필요. 또한, 데이터의 정확성과 품질을 보장하기 어려울 수 있음.</p></li>
-</ul></li>
-</ul>
-</section>
-<section id="분석의-정밀도-및-인과관계-도출" class="level3">
-<h3 class="anchored" data-anchor-id="분석의-정밀도-및-인과관계-도출">2. <strong>분석의 정밀도 및 인과관계 도출</strong></h3>
-<ul>
-<li><p><strong>실험</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 실험은 독립 변수와 종속 변수를 명확히 설정하여 (연구 설계가 제대로 되었다면) 인과관계를 명확히 도출할 수 있음. <strong>변수 조작</strong>이 가능하기 때문에 결과에 대한 해석이 명확한 편.</p></li>
-<li><p><strong>단점</strong>: 실험 환경이 통제된 상황에서 이루어지기 때문에 실제 사용 환경과는 다를 수 있으며, 실험의 <strong>외적 타당도</strong>가 떨어질 수 있음.</p></li>
-</ul></li>
-<li><p><strong>설문조사</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 설문은 사용자의 <strong>주관적 경험</strong>이나 태도에 대한 깊이 있는 정보를 얻는 데 적합. 다양한 의견을 수집함으로써 정성적인 인사이트를 도출할 수 있음.</p></li>
-<li><p><strong>단점</strong>: 설문조사 결과만으로는 <strong>명확한 인과관계</strong>를 도출하기 어려움. 응답자의 주관적 인식과 실제 행동이 다를 수 있기 때문.</p></li>
-</ul></li>
-<li><p><strong>빅데이터 분석</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 빅데이터 분석을 통해 실제 사용자 행동을 기반으로 <strong>패턴</strong>과 <strong>상관관계</strong>를 도출할 수 있으며, <strong>정밀한 예측 모델</strong>을 만들 수 있음. 대규모 데이터를 통해 변수 간의 관계를 자동으로 분석하고, 예상치 못한 인사이트를 발견할 수 있음.</p></li>
-<li><p><strong>단점</strong>: 빅데이터는 <strong>상관관계</strong>를 잘 도출하지만, <strong>인과관계</strong>를 직접적으로 도출하기 어려울 수 있음. 추가적인 실험이나 분석이 필요할 수도 있음.</p></li>
-</ul></li>
-</ul>
-</section>
-<section id="비용-및-효율성" class="level3">
-<h3 class="anchored" data-anchor-id="비용-및-효율성">3. <strong>비용 및 효율성</strong></h3>
-<ul>
-<li><p><strong>실험</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 연구 목적에 맞는 특정 변수를 제어하여 <strong>효율적</strong>으로 데이터를 수집할 수 있음. 데이터의 품질이 높기 때문에 작은 규모로도 유의미한 결과를 얻을 수 있음.</p></li>
-<li><p><strong>단점</strong>: 실험 환경을 구축하고, 참여자를 모집하며, 데이터를 분석하는 데 많은 <strong>시간</strong>과 <strong>비용</strong>이 소요. 특히 대규모 실험을 진행할 경우 상당한 자원이 필요.</p></li>
-</ul></li>
-<li><p><strong>설문조사</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 설문조사는 상대적으로 <strong>저렴한 비용</strong>으로 대규모 데이터를 수집할 수 있음. 특히 온라인 설문 플랫폼을 활용하면 시간과 비용을 절약할 수 있음.</p></li>
-<li><p><strong>단점</strong>: 설문조사 자체는 효율적이지만, 설문 설계가 잘못되거나 응답자들이 성실하지 않다면 <strong>데이터의 품질</strong>이 떨어질 수 있음.</p></li>
-</ul></li>
-<li><p><strong>빅데이터 분석</strong></p>
-<ul>
-<li><p><strong>장점</strong>: 기존에 축적된 데이터를 사용하면 <strong>추가적인 비용 없이</strong> 방대한 데이터를 분석할 수 있음. 이미 수집된 데이터에서 <strong>실시간 분석</strong>이 가능하여 <strong>신속한 의사결정</strong>에 도움을 줄 수 있음.</p></li>
-<li><p><strong>단점</strong>: 빅데이터 분석을 시작하기 위해서는 <strong>데이터 수집 인프라</strong>와 <strong>전문가</strong>가 필요하며, 초기 구축 및 유지 비용이 매우 높을 수 있음.</p></li>
-</ul></li>
-</ul>
-<blockquote class="blockquote">
-<p>실험, 설문조사, 빅데이터 분석은 각각의 장단점이 뚜렷하며, 연구 목적과 상황에 따라 적합한 방법을 선택하거나 <strong>상호 보완적으로</strong> 활용할 수 있음.</p>
-</blockquote>
-<ul>
-<li><p><strong>실험</strong>은 인과관계를 명확하게 밝히고 정밀한 통제를 가능하게 하지만, 시간과 비용이 많이 들며 대규모로 확대하기 어려움</p></li>
-<li><p><strong>설문조사</strong>는 비용 효율적이고 대규모 데이터를 수집할 수 있지만, 주관적 응답에 의존하기 때문에 신뢰성과 인과관계 분석에 한계가 있음</p></li>
-<li><p><strong>빅데이터 분석</strong>은 실제 사용자 데이터를 기반으로 대규모 패턴 분석이 가능하지만, 인과관계 도출이 어려우며 초기 인프라 구축 비용이 많이 들어감</p></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-<section id="통계학-기반-연구-디자인" class="level2">
-<h2 class="anchored" data-anchor-id="통계학-기반-연구-디자인">통계학 기반 연구 디자인</h2>
-<blockquote class="blockquote">
-<p><em>“실험이 끝난 후에야 통계학자를 찾는 것은, 이미 죽은 환자를 부검해 달라고 부탁하는 것과 같다. 그는 아마도 실험이 왜 죽었는지 말해줄 수 있을 뿐이다.”</em> by Ronald Fisher</p>
-</blockquote>
-<p><br></p>
-<ul>
-<li><strong>연구 설계 단계에서부터 통계적 사고를 반영해야 함:</strong> 실험을 다 끝내고 나서야 분석 방법을 고민하면, 그 결과가 이미 한계에 부딪힌 상태일 수 있음.</li>
-</ul>
-<p><br></p>
-<p>가장 먼저 이해해야 할 것은 데이터 수집을 일종의 측정(measurement)으로 생각할 수 있다는 것. 즉, 우리가 여기서 하려는 것은 인간의 행동이나 인간의 마음에 대한 무언가를 측정(measure)하는 것. <strong><em>“측정”이란 무엇을 의미할까?</em></strong></p>
-<section id="measurement" class="level3">
-<h3 class="anchored" data-anchor-id="measurement">Measurement</h3>
-<blockquote class="blockquote">
-<p>연구에서 우리가 하는 일은 결국 <strong>어떤 개념을 수치나 분류로 표현하는 것</strong>. 이것이 바로 <strong>측정(measurement)</strong></p>
-</blockquote>
-<ul>
-<li><p>My <strong>age</strong> is <em>33 years</em>.</p></li>
-<li><p>I <em>do not</em> <strong>like anchovies</strong>.</p></li>
-<li><p>My <strong>chromosomal gender</strong> is <em>male</em>.</p></li>
-<li><p>My <strong>self-identified gender</strong> is <em>male</em>.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="측정의-미묘함-나이의-사례" class="level3">
-<h3 class="anchored" data-anchor-id="측정의-미묘함-나이의-사례">측정의 미묘함: ’나이’의 사례</h3>
-<ul>
-<li><p>겉보기에 단순해 보이는 <strong>나이</strong>조차, 어떻게 정의하느냐에 따라 다른 결과가 나오기도 함.</p>
-<ul>
-<li><p><strong>보통</strong>: 출생 이후의 시간(예: 25세)</p></li>
-<li><p><strong>발달 심리학</strong>: 아동은 ‘년;월(예: 2;11)’ 단위로 측정 → 발달 단계 구분을 더 정밀하게 반영</p></li>
-<li><p><strong>신생아 연구</strong>: 출생 이후 일수·시간 단위로 측정</p></li>
-<li><p><strong>생물학적 관점</strong>: 수정 이후 경과 시간으로 계산 → 조산/만산 아기의 발달 비교에서 더 의미 있을 수 있음</p></li>
-</ul></li>
-<li><p>예를 들어,</p>
-<ul>
-<li><p>아기 하임이는 3주 일찍 태어났고</p></li>
-<li><p>아기 하운이는 1주 늦게 태어났다고 하자.</p></li>
-</ul></li>
-<li><p>둘 다 “출생 후 2시간”이라면 같은 나이라고 볼 수 있을까?</p>
-<ul>
-<li>사회적으로는 그렇다고 하겠지만, <strong>생물학적 발달 상태</strong>를 연구한다면 그렇지 않을 수도 있음.</li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-<section id="측정-방법은-어떻게-정할까" class="level3">
-<h3 class="anchored" data-anchor-id="측정-방법은-어떻게-정할까">측정 방법은 어떻게 정할까?</h3>
-<ul>
-<li><p>어떤 방식으로 “나이”를 물을지는 연구 목적에 따라 달라짐</p>
-<ul>
-<li><p>자기보고: “당신은 몇 살 입니까?”</p></li>
-<li><p>부모 보고: “자녀 A의 나이는 몇 살입니까?”</p></li>
-<li><p>공식 기록: 출생 신고일, 병원 진단서 등</p></li>
-</ul></li>
-<li><p>즉, <strong>동일한 개념(나이)</strong>이라도 <strong>연구 맥락</strong>과 <strong>분석 목적</strong>에 따라 다른 방식으로 operationalize(구체화)할 수 있다는 것.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="groseries-to-check" class="level3">
-<h3 class="anchored" data-anchor-id="groseries-to-check">Groseries to check!</h3>
-<ul>
-<li><p><strong><em>A theoretical construct</em></strong>. This is the thing that you’re trying to take a measurement of, like “age”, “gender” or an “opinion”. A theoretical construct can’t be directly observed, and often they’re actually a bit vague.</p></li>
-<li><p><strong><em>A measure</em></strong>. The measure refers to the method or the tool that you use to make your observations. A question in a survey, a behavioural observation or a brain scan could all count as a measure.</p></li>
-<li><p><strong><em>An operationalisation</em></strong>. The term “operationalisation” refers to the logical connection between the measure and the theoretical construct, or to the process by which we try to derive a measure from a theoretical construct.</p></li>
-<li><p><strong><em>A variable</em></strong>. Finally, a new term. A variable is what we end up with when we apply our measure to something in the world. That is, variables are the actual “data” that we end up with in our data sets.</p></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-<section id="scales-of-measurement" class="level2">
-<h2 class="anchored" data-anchor-id="scales-of-measurement">Scales of measurement</h2>
-<blockquote class="blockquote">
-<p>But not all variables are of the same qualitative type, and it’s very useful to understand what types there are. A very useful concept for distinguishing between different types of variables is what’s known as&nbsp;<strong><em>scales of measurement</em></strong>.</p>
-</blockquote>
-<section id="nominal-scale" class="level3">
-<h3 class="anchored" data-anchor-id="nominal-scale">Nominal scale</h3>
-<ul>
-<li><p>명목 척도 변수(범주형 변수라고도 함, categorical variable)는 다양한 가능성 간에 특별한 관계가 없는 변수.</p>
-<ul>
-<li><p>그 중 하나가 다른 변수보다 “더 크거나” “더 낫다”고 말하는 것은 말이 되지 않으며, 평균을 내는 것도 전혀 말이 되지 않는다.</p></li>
-<li><p>전형적인 예는 “눈 색깔”. 눈은 파란색, 초록색, 갈색 등 여러 가지 가능성이 있지만, 그 중 어느 것도 다른 변수보다 “더 나은” 것은 아님.</p></li>
-<li><p>성별도 명목적. 남성이 여성보다 더 좋거나 나쁘지 않으며, “평균 성별”에 대해 이야기하는 것도 말이 되지 않기 때문.</p></li>
-</ul></li>
-</ul>
-<blockquote class="blockquote">
-<p>Suppose I was doing research on how people commute to and from work. One variable I would have to measure would be what kind of transportation people use to get to work. This “transport type” variable could have quite a few possible values, including: “train”, “bus”, “car”, “bicycle”, etc. For now, let’s suppose that these four are the only possibilities, and suppose that when I ask 100 people how they got to work today, and I get this:</p>
-</blockquote>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th><strong>Transportation</strong></th>
-<th><strong>Number of people</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(1) Train</td>
-<td>12</td>
-</tr>
-<tr class="even">
-<td>(2) Bus</td>
-<td>30</td>
-</tr>
-<tr class="odd">
-<td>(3) Car</td>
-<td>48</td>
-</tr>
-<tr class="even">
-<td>(4) Bicycle</td>
-<td>10</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>So, what’s the average transportation type?&nbsp;</p></li>
-<li><p>Similarly, notice that the order in which I list the options isn’t very interesting</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="ordinal-scale" class="level3">
-<h3 class="anchored" data-anchor-id="ordinal-scale">Ordinal scale</h3>
-<ul>
-<li><p>순서형 척도 변수는 명목형 척도 변수보다 구조가 조금 더 있지만 크게 다르지는 않다. 순서형 척도 변수는 <u><strong>다양한 가능성을 자연스럽고 의미 있게 정렬할 수 있는 방법이 있음</strong></u></p></li>
-<li><p>순서형 변수의 일반적인 예는 “경주에서 마무리하는 순위”. 1위를 차지한 사람이 2위를 차지한 사람보다 더 빨랐다고 말할 수 있지만 얼마나 더 빨랐는지는 알 수 없음.</p></li>
-<li><p>결과적으로 1위 &gt; 2위, 2위 &gt; 3위라는 것을 알 수 있지만 1위와 2위의 차이는 2위와 3위의 차이보다 훨씬 클 수 있음.</p></li>
-</ul>
-<p>심리적으로 더 흥미로운 예를 들어보면, 연구에서 사람들의 기후 변화에 대한 태도에 관심이 있다고 가정하고, 설문 응답자들에게 다음 네 가지 진술 중 자신의 신념과 가장 일치하는 것을 선택하라고 요청하였다.</p>
+<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a> | <a href="content/HCI_stat_ds_w2.pdf">Week 2 lecture PDF</a></p>
+<section id="주차-학습목표" class="level2">
+<h2 class="anchored" data-anchor-id="주차-학습목표">2주차 학습목표</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이번 주 학습을 마치면 다음을 할 수 있어야 합니다.</p>
 <ol type="1">
-<li>Temperatures are rising, because of human activity</li>
-<li>Temperatures are rising, but we don’t know why</li>
-<li>Temperatures are rising, but not because of humans</li>
-<li>Temperatures are not rising</li>
+<li>HCI 연구질문을 <strong>기술·연관·인과·해석</strong> 질문으로 구분한다.</li>
+<li>연구설계와 자료수집 방법을 구분하고, 질문에 맞는 방법을 선택한다.</li>
+<li>이론적 구성개념을 측정 가능한 변수로 <strong>조작화(operationalization)</strong>한다.</li>
+<li>명목·순서·간격·비율 척도와 연속·이산 변수를 구분한다.</li>
+<li>신뢰도와 타당도의 차이를 설명하고 측정도구를 비판적으로 평가한다.</li>
+<li>실험에서 무작위 할당, 참여자 간·참여자 내 설계, 교란, 순서효과를 설명한다.</li>
+<li>연구설계가 실제 데이터셋의 행과 열로 어떻게 이어지는지 설계한다.</li>
 </ol>
-<p>위 네 가지 진술은 실제로 “현재 과학에 동의하는 정도”라는 측면에서 자연스러운 순서가 있다. 진술 1은 거의 일치하고, 진술 2는 적당히 일치하고, 진술 3은 잘 일치하지 않으며, 진술 4는 과학에 강하게 반대. 따라서 연구자가 관심 있는 것(사람들이 과학을 지지하는 정도)의 측면에서 항목을 1 &gt; 2 &gt; 3 &gt; 4로 정렬할 수 있음.</p>
-<ol type="1">
-<li>과학적 합의와 <strong>거의 일치</strong></li>
-<li>온난화는 인정하지만 원인에 대해 <strong>중립적</strong></li>
-<li>온난화는 인정하지만 원인에 대해 <strong>과학과 불일치</strong></li>
-<li>온난화 자체를 부정 (<strong>강한 불일치</strong>)</li>
-</ol>
-<p><br></p>
-<section id="그런데-순서를-뒤섞으면" class="level4">
-<h4 class="anchored" data-anchor-id="그런데-순서를-뒤섞으면">그런데 순서를 뒤섞으면?</h4>
-<p>만약 문항을 이렇게 배치한다고 해보자:</p>
-<ul>
-<li><p>Temperatures are rising, but not because of humans</p></li>
-<li><p>Temperatures are rising, because of human activity</p></li>
-<li><p>Temperatures are not rising</p></li>
-<li><p>Temperatures are rising, but we don’t know why</p></li>
-</ul>
-<p>여기서는 <strong>1–2–3–4의 자연스러운 흐름</strong>이 깨짐: 응답자가 보기에 “논리적 구조”가 불명확해져서 헷갈릴 수 있음 → 마치 “매우 동의한다, 조금 동의한다, 전혀 동의하지 않는다, 어느 정도 동의한다” 같은 이상한 순서로 선택지를 배열한 셈이 되기 때문.</p>
-<p><br></p>
-</section>
-</section>
-<section id="interval-scale" class="level3">
-<h3 class="anchored" data-anchor-id="interval-scale">Interval scale</h3>
-<ul>
-<li><p>명목형 및 순서형 척도 변수와 달리 간격 척도 (interval scale) 및 비율 척도 변수 (ratio scale variable) 는 숫자 값이 진정으로 의미 있는 변수.</p></li>
-<li><p>간격 척도 변수의 경우 숫자 간의 차이는 해석 가능하지만 변수에는 “자연스러운” 0 (natural zero)값이 없다.</p></li>
-<li><p>간격 척도 변수의 좋은 예: 섭씨 온도.</p>
-<ul>
-<li><p>예를 들어 어제가 15도 였고 오늘은 18도 였다면 두 값 사이의 3도 차이는 진정으로 의미가 있음. 게다가 그 3도 차이는 7도 와 10도 사이의 3도 차이와 정확히 같다. 간단히 말해 간격 척도 변수의 경우 덧셈과 뺄셈이 의미가 있다고 할 수 있다.</p></li>
-<li><p>그러나 0도가 “온도가 전혀 없음”을 의미하는 것이 아니라는 점에 유의. 실제로는 “물이 얼 때의 온도”를 의미하는데, 이는 매우 임의적인 것.</p></li>
-<li><p>결과적으로 온도를 곱하거나 나누는 것은 무의미해짐. 20도 가 10도 보다 두 배 더 뜨겁다고 말하는 것은 잘못된 것이며, 20도 가 -10도 보다 -2배 더 뜨겁다고 주장하는 것도 이상하고 무의미함.</p></li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-<section id="ratio-scale" class="level3">
-<h3 class="anchored" data-anchor-id="ratio-scale">Ratio scale</h3>
-<ul>
-<li><p>비율 척도 변수에서 0은 실제로 0을 의미하며 곱하고 나누어도 됨.</p></li>
-<li><p>비율 척도 변수의 좋은 심리학적 예는 응답 시간(RT).</p>
-<ul>
-<li><p>많은 작업에서 누군가가 문제를 해결하거나 질문에 답하는 데 걸리는 시간을 기록하는 것은 매우 일반적. 이는 작업의 어려움을 나타내는 지표이기 때문.</p></li>
-<li><p>Alan이 질문에 답하는 데 2.3초가 걸리는 반면 Ben은 3.1초가 걸린다고 가정해 보자. 간격 척도 변수와 마찬가지로 덧셈과 뺄셈은 여기에서 모두 의미가 있음. Ben은 실제로 Alan보다 3.1 - 2.3 = 0.8초 더 걸렸음.</p></li>
-<li><p>그러나 곱셈과 나눗셈도 여기에서 의미가 있습니다. Ben은 Alan보다 질문에 답하는 데 3.1 / 2.3 = 1.35배 더 오래 걸렸습니다. 그리고 이렇게 할 수 있는 이유는 RT와 같은 비율 척도 변수의 경우 “0초”는 실제로 “시간이 전혀 없음”을 의미하기 때문.</p></li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-<section id="continuous-versus-discrete-variables" class="level3">
-<h3 class="anchored" data-anchor-id="continuous-versus-discrete-variables">Continuous versus discrete variables</h3>
+</div>
+</div>
+<section id="오늘의-핵심-질문" class="level3">
+<h3 class="anchored" data-anchor-id="오늘의-핵심-질문">오늘의 핵심 질문</h3>
 <blockquote class="blockquote">
-<p>A continuous variable is one in which, for any two values that you can think of, it’s always logically possible to have another value in between. A discrete variable is, in effect, a variable that isn’t continuous. For a discrete variable, it’s sometimes the case that there’s nothing in the middle.</p>
-<p>어렵다면: 그래서 중간이 있는거야 없는거야? 라고 물어보자!</p>
+<p><strong>어떤 데이터를 수집할 것인가보다 먼저, 그 데이터로 어떤 주장을 하려는지를 정해야 합니다.</strong></p>
 </blockquote>
 <ul>
-<li><p>이러한 정의는 약간 추상적으로 보일 수 있지만 몇 가지 예를 보면 매우 간단함.</p>
-<ul>
-<li><p>예를 들어, 응답 시간은 연속적입니다. Alan이 질문에 응답하는 데 3.1초가 걸리고 Ben이 2.3초가 걸리면 Cameron의 응답 시간은 3.0초가 걸려서 그 사이에 있을 수 있음. 물론 David가 응답하는 데 3.031초가 걸릴 수도 있으므로 그의 RT는 Cameron과 Alan 사이에 있을 것.</p></li>
-<li><p>실제로 RT를 그렇게 정확하게 측정하는 것은 불가능할 수 있지만, 원칙적으로는 확실히 가능. 우리는 항상 다른 두 RT 사이에 새로운 RT 값을 찾을 수 있기 때문에 RT가 연속적이라고 할 수 있음.</p></li>
-</ul></li>
-<li><p>이 규칙을 위반하면 이산 변수가 발생.</p>
-<ul>
-<li><p>예를 들어, 명목 척도 변수는 항상 이산적. 기차와 자전거 사이에 있는 교통 수단은 없음. 따라서 교통 수단 유형은 이산적.</p></li>
-<li><p>마찬가지로 순서 척도 변수는 항상 이산적. “2위”가 “1위”와 “3위” 사이에 있지만, 논리적으로 “1위”와 “2위” 사이에 있을 수 있는 것은 없기 때문.</p></li>
-<li><p><strong>간격 척도와 비율 척도 변수는 어느 쪽으로든 갈 수 있다.</strong> 위에서 보았듯이 반응 시간(비율 척도 변수)은 연속적. 섭씨 온도(간격 척도 변수)도 연속적. 그러나 학교에 다닌 해(간격 척도 변수)는 이산적. 2002년과 2003년 사이에는 년도 구분이 없기 때문.</p></li>
-<li><p>참/거짓 테스트(비율 척도 변수)에서 정답을 맞힌 문제의 수도 이산적. (5/10과 6/10 사이에는 아무것도 없다). 참/거짓 문제는 “부분적으로 옳을” 수 없기 때문에 이산적.</p></li>
-</ul></li>
+<li>우리는 정확히 무엇을 알고 싶은가?</li>
+<li>누구와 어떤 맥락에 대해 말하려는가?</li>
+<li>어떤 비교가 그 질문에 답해 주는가?</li>
+<li>추상적인 개념을 어떻게 관찰 가능한 자료로 바꿀 것인가?</li>
+<li>이 설계로 어디까지 결론을 내릴 수 있는가?</li>
 </ul>
-<p>아래 표의 체크 표시는 가능성을 나타낸 것</p>
-<table class="caption-top table">
-<tbody>
-<tr class="odd">
-<td></td>
-<td>continuous</td>
-<td>discrete</td>
-</tr>
-<tr class="even">
-<td>nominal</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>ordinal</td>
-<td></td>
-<td>✓</td>
-</tr>
-<tr class="even">
-<td>interval</td>
-<td>✓</td>
-<td>✓</td>
-</tr>
-<tr class="odd">
-<td>ratio</td>
-<td>✓</td>
-<td>✓</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-</section>
-<section id="some-complexities---리커트-척도의-애매함" class="level3">
-<h3 class="anchored" data-anchor-id="some-complexities---리커트-척도의-애매함">Some complexities - 리커트 척도의 애매함</h3>
-<blockquote class="blockquote">
-<p>현실의 데이터는 교과서처럼 깔끔하지 않음. 변수들이 항상 명확히 “명목형, 순서형, 간격형, 비율형” 중 하나에만 딱 맞아떨어지는 건 아니기 때문. 연구자는 이 분류 체계를 <strong>절대적인 규칙이 아니라 ‘실무적 잣대’</strong> 정도로 이해할 필요가 있음. (뭣이 중한디..)</p>
-</blockquote>
-<p><br></p>
-<section id="심리학에서의-고전적인-예-리커트-척도" class="level4">
-<h4 class="anchored" data-anchor-id="심리학에서의-고전적인-예-리커트-척도">심리학에서의 고전적인 예: 리커트 척도</h4>
-<p>리커트 척도는 설문 연구에서 가장 흔히 쓰이는 도구. 예를 들어 이런 질문이 있다고 해보자:</p>
-<blockquote class="blockquote">
-<p><strong>“모든 해적은 멋지다”라는 주장에 대해 당신의 의견은?</strong></p>
-</blockquote>
-<p>응답을 5점 리커트 척도로 받으면:</p>
-<ul>
-<li><p>Strongly disagree</p></li>
-<li><p>Disagree</p></li>
-<li><p>Neither agree nor disagree</p></li>
-<li><p>Agree</p></li>
-<li><p>Strongly agree</p></li>
-</ul>
-<p>전형적인 <strong>5점 리커트 척도</strong>.</p>
-<p><br></p>
-</section>
-<section id="문제-리커트-척도는-어떤-변수인가" class="level4">
-<h4 class="anchored" data-anchor-id="문제-리커트-척도는-어떤-변수인가">문제: 리커트 척도는 어떤 변수인가?</h4>
-<ul>
-<li><p><strong>명목형은 아님</strong>: 항목에 자연스러운 순서가 있음.</p></li>
-<li><p><strong>비율형도 아님</strong>: “0”이라는 절대적 기준이 없음.</p></li>
-<li><p>남는 건 <strong>순서형 vs 간격형</strong></p></li>
-</ul>
-</section>
-<section id="순서형ordinal으로-볼-때" class="level4">
-<h4 class="anchored" data-anchor-id="순서형ordinal으로-볼-때">순서형(Ordinal)으로 볼 때</h4>
-<ul>
-<li><p>“강력히 동의” &gt; “동의” &gt; “중립” &gt; “동의 안 함” &gt; “강력히 동의 안 함”</p></li>
-<li><p>순서는 명확</p></li>
-<li><p>하지만 각 단계 사이 간격이 같은지는 보장할 수 없음</p>
-<ul>
-<li><p>“강력히 동의 ↔︎ 동의” 간 차이와</p></li>
-<li><p>“동의 ↔︎ 중립” 간 차이가 <strong>같다고 말할 근거는 없음</strong>.</p></li>
-</ul></li>
-</ul>
-</section>
-<section id="간격형interval처럼-쓸-때" class="level4">
-<h4 class="anchored" data-anchor-id="간격형interval처럼-쓸-때">간격형(Interval)처럼 쓸 때</h4>
-<ul>
-<li><p>실제 응답자들은 이 척도를 숫자 1~5점처럼 다루는 경향이 있음.</p></li>
-<li><p>연구자도 편의상 이걸 평균 내고, t-test·회귀분석 등에 넣기도 함. (나도 많은 연구에서 그렇게 했음)</p></li>
-<li><p>엄밀히는 간격형이 아니지만, “준간격척도(quasi-interval)”처럼 다룰 수 있을 만큼 현실에서는 충분히 유용.</p></li>
-<li><p>리커트 척도 데이터는 <strong>순서형이 원칙</strong>이지만, 많은 연구자들은 분석의 편의성을 위해 <strong>간격형에 가깝다고 보고 활용</strong>하고 있음.</p></li>
-<li><p>논문에서 리커트 척도를 쓸 때는 → “본 연구에서는 리커트 척도를 간격형 변수처럼 다루었다”고 밝혀주는 것이 안전함.</p></li>
-</ul>
-<p><br></p>
+<hr>
 </section>
 </section>
-</section>
-<section id="assessing-the-reliability-of-a-measurement" class="level2">
-<h2 class="anchored" data-anchor-id="assessing-the-reliability-of-a-measurement">Assessing the reliability of a measurement</h2>
-<blockquote class="blockquote">
-<p>위에서 우리는 이론적 구성을 작동화하고 심리적 측정을 만드는 방법에 대해 생각해 보았음. 그리고 심리적 측정을 적용하면 여러 유형으로 나타날 수 있는 변수가 생긴다는 것을 알게 되었음.</p>
-<p>그렇다면, <strong>측정이 유용한가?</strong> (Is the measurement any good?)</p>
-<p>이 논의는 <strong>신뢰성(reliability)과 타당성(validity)</strong>이라는 두 가지 관련 아이디어의 관점에서 살펴봐야 함.</p>
-<p>측정의 <strong>신뢰성은 무언가를 얼마나 정확하게 측정</strong>하는지 알려주는 반면, 측정의 <strong>타당성은 측정이 얼마나 정확한지</strong> 알려주는 것.</p>
-</blockquote>
-<ul>
-<li><p>신뢰성은 실제로 매우 간단한 개념: 측정의 <strong>반복성(repeatability)</strong> 또는 <strong>일관성(consistency)</strong>을 말한다.</p>
-<ul>
-<li><p><strong>높은 신뢰성:</strong> “욕실 저울”을 사용하여 제 체중을 측정하는 것은 매우 신뢰할 수 있다. 저울에 계속해서 올라타고 내려도 저울은 같은 답을 줄 것이다.</p></li>
-<li><p><strong>낮은 신뢰성:</strong> “엄마한테 물어봐서” 내 지능을 측정하는 것은 매우 신뢰할 수 없다. 어떤 날은 내가 좀 둔하다고 말하고, 다른 날은 내가 완전히 멍청하다고 말한다.</p></li>
-</ul></li>
-<li><p><strong>타당성:</strong> 이 신뢰성의 개념은 측정이 정확한지 여부에 대한 질문과는 다르다. 내가 감자 자루를 들고 욕실 저울에 오르내릴 때에도 측정은 여전히 ​​신뢰할 수 있다. 항상 같은 답이 나올 것이기 때문이다. 그러나 이 신뢰할 수 있는 답은 내 실제 체중과 전혀 맞지 않으므로 틀렸다. 즉, 기술적으로 말하면, 이것은 <strong>신뢰할 수 있지만 타당하지 않은 측정</strong>이라고 할 수 있다.</p></li>
-</ul>
-<p><br></p>
-<p>그렇다면, 신뢰성을 측정할 수 있는 다양한 방법에 대해 생각해 보자.</p>
-<ul>
-<li><p><strong><em>Test-retest reliability</em></strong>. This relates to consistency <strong>over time</strong>: if we repeat the measurement at a later date, do we get a the same answer?</p></li>
-<li><p><strong><em>Inter-rater reliability</em></strong>. This relates to consistency <strong>across people</strong>: if someone else repeats the measurement (e.g., someone else rates my intelligence) will they produce the same answer?</p></li>
-<li><p><strong><em>Parallel forms reliability</em></strong>. This relates to consistency <strong>across theoretically-equivalent measurements</strong>: if I use a different set of bathroom scales to measure my weight, does it give the same answer?</p></li>
-<li><p><strong><em>Internal consistency reliability</em></strong>. If a measurement is constructed from lots of different parts that perform similar functions (e.g., a personality questionnaire result is added up across several questions) do the individual parts tend to give similar answers.</p></li>
-</ul>
-<p><br></p>
-</section>
-<section id="the-role-of-variables-predictors-and-outcomes" class="level2">
-<h2 class="anchored" data-anchor-id="the-role-of-variables-predictors-and-outcomes">The “role” of variables: predictors and outcomes</h2>
-<blockquote class="blockquote">
-<p>일반적으로 연구를 하면 다양한 변수가 많이 나온다. 그런 다음 데이터를 분석할 때 일반적으로 다른 변수의 관점에서 일부 변수를 설명하려고 한다. “설명하는 것”과 “설명되는 것”의 두 역할을 구분하는 것이 중요함.</p>
-</blockquote>
-<ul>
-<li><p>분석에서, X 와 Y 에 익숙해져야 함: 분석에서 서로 다른 역할을 하기 때문.</p></li>
-<li><p>독립 변수(IV)와 종속 변수(DV)</p>
-<ul>
-<li><p>IV는 설명을 위해 사용하는 변수(예: X )이고 DV는 설명되는 변수(예: Y ).</p></li>
-<li><p><strong>어원:</strong> X 와 Y 사이에 실제로 관계가 있다면 Y 가 X 에 의존(종속)한다고 말할 수 있고, 연구를 “적절하게” 설계했다면 X 가 다른 어떤 것에도 의존하지 않는다(독립).</p></li>
-<li><p>하지만 IV는 실제로 “다른 모든 것과 독립적이지” 않고 (b) 관계가 없다면 DV가 실제로 IV에 의존하지 않는다.</p></li>
-<li><p>대안: <strong>예측 변수와 결과 변수</strong>. X (예측 변수)를 사용하여 Y (결과)에 대한 추측을 하는 것</p></li>
-</ul></li>
-</ul>
+<section id="hci는-무엇을-연구하는가" class="level2">
+<h2 class="anchored" data-anchor-id="hci는-무엇을-연구하는가">HCI는 무엇을 연구하는가?</h2>
+<p><strong>Human–Computer Interaction(HCI)</strong>은 사람, 디지털 기술, 과업, 사회적 맥락 사이의 상호작용을 <strong>이해하고, 설계하고, 평가하는</strong> 다학제적 연구 분야입니다.</p>
+<p>초기의 HCI가 작업 속도, 오류율, 학습 용이성 같은 <strong>사용성(usability)</strong> 문제에 집중했다면, 오늘날의 HCI는 다음을 함께 다룹니다.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 37%">
-<col style="width: 38%">
-<col style="width: 24%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th><strong>role of the variable</strong></th>
-<th><strong>classical name</strong></th>
-<th><strong>modern name</strong></th>
+<th>관심 영역</th>
+<th>예시 질문</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>to be explained</td>
-<td>dependent variable (DV)</td>
-<td>outcome</td>
+<td>수행과 사용성</td>
+<td>사용자가 과업을 얼마나 빠르고 정확하게 완료하는가?</td>
 </tr>
 <tr class="even">
-<td>to do the explaining</td>
-<td>independent variable (IV)</td>
-<td>predictor</td>
+<td>사용자 경험(UX)</td>
+<td>기술이 즐거움, 몰입, 불안, 피로에 어떤 경험을 만드는가?</td>
+</tr>
+<tr class="odd">
+<td>Human–AI Interaction</td>
+<td>사용자는 AI의 설명, 추천, 오류, 자율성을 어떻게 이해하고 신뢰하는가?</td>
+</tr>
+<tr class="even">
+<td>사회적 상호작용</td>
+<td>플랫폼과 아바타가 관계, 협업, 정체성 표현을 어떻게 바꾸는가?</td>
+</tr>
+<tr class="odd">
+<td>윤리와 포용성</td>
+<td>인터페이스가 누구를 배제하며, 개인정보·편향·웰빙에 어떤 영향을 주는가?</td>
 </tr>
 </tbody>
 </table>
-<p><br></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>HCI의 대상은 화면이나 장치만이 아닙니다. <strong>사람이 기술을 사용하는 과업과 맥락 전체</strong>가 연구 대상입니다.</p>
+</div>
+</div>
+<hr>
 </section>
-<section id="experimental-and-non-experimental-research" class="level2">
-<h2 class="anchored" data-anchor-id="experimental-and-non-experimental-research">Experimental and non-experimental research</h2>
-<section id="experimental-research" class="level3">
-<h3 class="anchored" data-anchor-id="experimental-research">Experimental research</h3>
+<section id="hci-연구에서-설계가-중요한-이유" class="level2">
+<h2 class="anchored" data-anchor-id="hci-연구에서-설계가-중요한-이유">HCI 연구에서 설계가 중요한 이유</h2>
+<p>연구설계(research design)는 단순한 절차표가 아니라, <strong>수집한 데이터가 어떤 주장을 지지할 수 있는지를 결정하는 논리적 청사진</strong>입니다.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Research Goal] --&gt; B[Research Question]
+    B --&gt; C[Target Population &amp; Context]
+    C --&gt; D[Constructs &amp; Operationalization]
+    D --&gt; E[Design &amp; Comparison]
+    E --&gt; F[Sampling &amp; Data Collection]
+    F --&gt; G[Analysis]
+    G --&gt; H[Claim &amp; Scope]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>설계가 질문과 맞지 않으면 분석을 복잡하게 해도 근본적인 문제가 해결되지 않습니다.</p>
 <ul>
-<li><p>실험 연구의 주요 특징은 연구자가 연구의 모든 측면, 특히 연구 중에 참가자가 경험하는 것을 제어한다는 것. 특히 연구자는 예측 변수(IV)를 조작하거나 변경한 다음 결과 변수(DV)가 자연스럽게 변하도록 한다.</p></li>
-<li><p>여기서 아이디어는 예측 변수(IV)를 의도적으로 변경하여 결과에 인과 관계가 있는지 확인하는 것. 또한 예측 변수 이외의 다른 것이 결과를 일으킬 가능성이 없도록 하기 위해 다른 모든 것은 일정하게 유지되거나 다른 방식으로 “균형”을 이루어 결과에 영향을 미치지 않도록 해야 한다.</p></li>
-<li><p>실제로 실험 결과에 영향을 미칠 수 있는 다른 모든 것을 생각하는 것은 거의 불가능하며, 더군다나 일정하게 유지하는 것은 더욱 불가능하다.</p></li>
-<li><p>이에 대한 <u><strong>표준 솔루션은 무작위화</strong> (randomization)</u>.</p>
-<ul>
-<li><p>즉, 사람들을 무작위로 다른 그룹에 할당한 다음 각 그룹에 다른 처리를 제공하는 것(즉, 예측 변수의 다른 값을 할당).</p></li>
-<li><p>무작위화는 예측 변수를 처리 하는 일이 그룹 간에 체계적인 차이가 있을 가능성을 최소화하는 것(물론 없앨 수는 없음).</p></li>
-</ul></li>
-<li><p>매우 간단하고 완전히 비현실적이며 극도로 비윤리적인 예를 생각해 보자.</p>
-<ul>
-<li><p>흡연이 폐암을 유발하는지 알아보고 싶다고 가정해 보자.</p></li>
-<li><p>이를 위한 한 가지 방법은 흡연자와 비흡연자를 찾아 흡연자의 폐암 발병률이 더 높은지 확인하는 것.</p>
-<ul>
-<li><p>이는 연구자가 흡연자와 비흡연자를 통제할 수 없기 때문에 적절한 실험이 아님</p></li>
-<li><p>예를 들어, 담배를 피우기로 선택한 사람들은 식단이 좋지 않거나 석면 광산에서 일하는 경향이 있을 수 있음.</p></li>
-<li><p>여기서 요점은 그룹(흡연자와 비흡연자)이 흡연뿐만 아니라 실제로 많은 면에서 다르다는 것.</p></li>
-<li><p>따라서 흡연자 사이에서 폐암 발병률이 높은 것은 흡연 자체가 아닌 다른 요인 때문일 수 있음.</p></li>
-<li><p>기술적으로 이러한 다른 요인(예: 식단)을 “혼동 요인(confounding factors)”이라고 함.</p></li>
-</ul></li>
-<li><p>적절한 실험이라면?</p>
-<ul>
-<li><p>윤리적인 실험을 할 필요가 없다면 해결책은 누가 흡연하고 누가 흡연하지 않는지 통제하는 것.</p></li>
-<li><p>구체적으로, 참가자를 무작위로 두 그룹으로 나누고 그 중 절반을 흡연자로 만든다면, 절반이 흡연한다는 사실 외에는 그룹이 어떤 면에서든 다를 가능성이 매우 낮다.</p></li>
-<li><p>그렇게 하면 흡연 그룹이 비흡연 그룹보다 암에 걸릴 확률이 더 높다면 흡연이 암을 유발한다고 더 명확하게 말할 수 있는 것.</p></li>
-</ul></li>
-</ul></li>
+<li>측정하지 않은 개념은 분석할 수 없습니다.</li>
+<li>비교 가능한 집단이 아니면 인과효과를 분리하기 어렵습니다.</li>
+<li>표본이 목표 집단과 다르면 일반화 범위가 제한됩니다.</li>
+<li>반복 측정 구조를 무시하면 독립성 가정이 깨질 수 있습니다.</li>
 </ul>
-<p><br></p>
-</section>
-<section id="non-experimental-research" class="level3">
-<h3 class="anchored" data-anchor-id="non-experimental-research">Non-experimental research</h3>
-<ul>
-<li><p>비실험적 연구는 <strong>“연구자가 실험에서만큼 통제력이 없는 모든 연구”</strong>를 포괄하는 광범위한 용어.</p></li>
-<li><p>분명히 과학자들은 통제력을 갖고 싶어하지만, 이전 예에서 알 수 있듯이 통제력을 얻으려고 시도할 수 없거나 시도해서는 안 되는 상황이 많이 있음.</p>
-<ul>
-<li><p>암에 걸리는지 알아보기 위해 사람들에게 흡연을 강요하는 것은 매우 비윤리적이고(거의 확실히 범죄) 실험적 통제력을 얻으려고 시도해서는 안 되는 상황의 좋은 예</p></li>
-<li><p>하지만 윤리적 문제를 제쳐두더라도 “흡연 실험”에는 몇 가지 다른 문제가 있음.</p></li>
-<li><p>예를 들어, 절반의 사람들을 흡연자로 “강제”하자고 제안했을 때, 비흡연자 샘플로 시작해서 흡연자가 되도록 강요하는 것에 대해 이야기했을 것.</p></li>
-<li><p>이것은 미친 과학자가 좋아할 만한 사악한 실험 설계처럼 들리지만, 현실 세계에서 그 효과를 조사하는 데는 그다지 타당한 방법이 아닐 수 있음.</p></li>
-<li><p>예를 들어, 흡연은 사람들이 나쁜 식단을 먹을 때만 폐암을 유발한다고 가정하고, 일반적으로 흡연하는 사람들은 나쁜 식단을 먹는 경향이 있다고 가정하자.</p></li>
-<li><p>하지만 우리 실험에서 “흡연자”는 “자연적인” 흡연자가 아니기 때문에(즉, 우리는 비흡연자를 흡연자가 되도록 강요했기 때문에 흡연자가 가질 수 있는 다른 모든 정상적이고 실제적인 특성을 가지고 있지 않았다).</p></li>
-<li><p>따라서 아마도 자연적인 흡연자보다 강요된 흡연자는 더 나은 식단을 먹을 것. 아마도 이 처치 그룹은 폐암에 걸릴 확률이 대조 그룹과 크게 다르지 않을 것이고, 우리의 실험은 “자연적인” 세계의 구조를 위반하기 때문에 실패할 것(“Artificial” result).</p></li>
-</ul></li>
-<li><p>준실험적 연구(Quasi-experimental Study)와 사례 연구(Case Study)</p>
-<ul>
-<li><p>앞서 실험 연구에서 잘못되 예로 논의한 예는 흡연자와 비흡연자의 폐암 발생률을 조사하고자 했지만, 누가 흡연하고 누가 흡연하지 않는지 통제하려고 하지 않았다.</p>
-<ul>
-<li>이것은 준실험적 설계라고 볼 수 있다. 즉, 실험과 동일하지만 예측 변수(IV)를 제어하지 않은 것. 여전히 통계를 사용하여 결과를 분석할 수 있지만 훨씬 더 조심해야 함.</li>
-</ul></li>
-<li><p>대안적인 접근 방식인 사례 연구는 하나 또는 몇 가지 사례에 대한 매우 자세한 설명을 제공하는 것을 목표로 한다.</p>
-<ul>
-<li><p>일반적으로 통계를 사용하여 사례 연구의 결과를 분석할 수 없으며 몇 가지 고립된 사례에서 “일반인”에 대한 일반적인 결론을 도출하는 것은 일반적으로 매우 어렵다.</p></li>
-<li><p>사례 연구가 유용한 순간은, 첫째, 대안이 없는 상황. 때로는 특정 영역에서 뇌 손상을 입은 사람을 많이 찾을 수 없으므로 할 수 있는 일은 가능한 한 자세하고 세심하게 사례를 설명하는 것뿐.</p></li>
-<li><p>그러나 사례 연구에는 몇 가지 진정한 이점도 있음. 연구할 사람이 많지 않기 때문에 각 사례에서 작용하는 특정 요소를 이해하기 위해 많은 시간과 노력을 투자하게 된다. (깊이 있는 연구가 가능 like documentary)</p></li>
-<li><p>결과적으로 사례 연구는 실험 및 준실험 설계에서 볼 수 있는 통계 지향적 접근 방식을 보완할 수 있다.</p></li>
-</ul></li>
-</ul></li>
-</ul>
-<p><br></p>
-</section>
-</section>
-<section id="프로그래밍-언어" class="level2">
-<h2 class="anchored" data-anchor-id="프로그래밍-언어">프로그래밍 언어</h2>
-<section id="data" class="level3">
-<h3 class="anchored" data-anchor-id="data">Data</h3>
-<ul>
-<li><p>인간은 데이터를 수집하고 결합하여 분석을 하는 작업을 태어날 때부터 수행.</p>
-<ul>
-<li><p>우리가 사용할 수 있는 모든 감각 기관을 통해서 수집한 데이터는 뇌에 저장되고 처리되고 이러한 과정을 통하여 인간은 예측하고 결정하며 행동.</p></li>
-<li><p>이러한 인간의 능력을 컴퓨터로 구현하려는 학문이 기계학습(machine learning)과 인공지능(Artifical intelligence).</p></li>
-</ul></li>
-<li><p>우리가 느끼고 보고 듣는 것들이 어떻게 인간의 뇌에 저장되는지는 여전히 Blackbox</p>
-<ul>
-<li><p>하지만 우리는 다양한 자료를 컴퓨터에 저장할 수 있는 방법을 만들었고 이를 통상적으로 <strong>데이터(data)</strong>라고 부름</p></li>
-<li><p>특별히, 우리가 현재 말하는 데이터는 <strong>디지털화된 자료</strong> 로서 기본적으로 0과 1로, 즉 <code>BIT</code> 로 이루어진 자료.</p></li>
-<li><p>IT 기술은 단순한 0과 1의 조합으로 다양한 데이터를 아주 많이 그리고 편리하게 저장할 수 있게 해 주었음.</p></li>
-</ul></li>
-</ul>
-</section>
-<section id="programming-language" class="level3">
-<h3 class="anchored" data-anchor-id="programming-language">Programming language</h3>
 <blockquote class="blockquote">
-<p>Language is a communication</p>
+<p><strong>분석은 연구가 끝난 뒤 붙이는 마지막 단계가 아니라, 연구설계 단계부터 역으로 상상해야 하는 과정입니다.</strong></p>
 </blockquote>
+<hr>
+</section>
+<section id="연구질문이-먼저-방법은-나중" class="level2">
+<h2 class="anchored" data-anchor-id="연구질문이-먼저-방법은-나중">연구질문이 먼저, 방법은 나중</h2>
+<p>좋은 연구는 “어떤 통계기법을 쓸까?”가 아니라 다음 질문에서 시작합니다.</p>
+<blockquote class="blockquote">
+<p><strong>무엇을 알고 싶고, 어떤 관찰이나 비교가 그 질문에 답할 수 있는가?</strong></p>
+</blockquote>
+<p>예를 들어 “AI 설명이 신뢰에 영향을 주는가?”라는 아이디어는 아직 충분히 구체적이지 않습니다.</p>
 <ul>
-<li><p>사람들은 언어를 통하여 자신의 의사를 전달하고 타인의 생각을 이해하며 서로 소통함</p>
+<li>어떤 AI 시스템인가?</li>
+<li>어떤 설명 방식끼리 비교하는가?</li>
+<li>누구를 대상으로 하는가?</li>
+<li>어떤 과업을 수행하는가?</li>
+<li>신뢰는 언제, 어떤 방법으로 측정하는가?</li>
+<li>신뢰의 차이인가, 실제 의존 행동의 차이인가?</li>
+</ul>
+<p><strong>구체화된 연구질문</strong></p>
+<blockquote class="blockquote">
+<p>처음 AI 의사결정 지원 도구를 사용하는 성인 이용자에게 사례 기반 설명과 특성 중요도 설명을 제시했을 때, 동일한 과업 수행 후 보고한 신뢰 수준에 차이가 있는가?</p>
+</blockquote>
+<p>이제야 비교 조건, 대상, 맥락, 결과변수가 드러나기 시작합니다.</p>
+<hr>
+</section>
+<section id="연구질문의-네-가지-유형" class="level2">
+<h2 class="anchored" data-anchor-id="연구질문의-네-가지-유형">연구질문의 네 가지 유형</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>질문 유형</th>
+<th>핵심 질문</th>
+<th>가능한 설계·자료</th>
+<th>허용되는 주장</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>기술(descriptive)</strong></td>
+<td>무엇이, 얼마나, 어떻게 나타나는가?</td>
+<td>설문, 관찰, 로그, 기술통계</td>
+<td>분포·빈도·패턴</td>
+</tr>
+<tr class="even">
+<td><strong>연관(associational)</strong></td>
+<td>X와 Y는 함께 변하는가?</td>
+<td>설문, 패널, 로그, 회귀모형</td>
+<td>관계·예측, 단 인과는 아님</td>
+</tr>
+<tr class="odd">
+<td><strong>인과(causal)</strong></td>
+<td>X를 바꾸면 Y가 달라지는가?</td>
+<td>무작위 실험, 타당한 준실험</td>
+<td>설계와 가정이 지지하는 인과효과</td>
+</tr>
+<tr class="even">
+<td><strong>해석·생성(interpretive/generative)</strong></td>
+<td>사용자는 왜 그렇게 경험하며, 무엇을 필요로 하는가?</td>
+<td>인터뷰, 관찰, 사례연구, 참여적 디자인</td>
+<td>의미·과정·설계 통찰</td>
+</tr>
+</tbody>
+</table>
+<p>한 연구가 여러 유형의 질문을 포함할 수 있지만, 각 질문에 필요한 증거는 다릅니다.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>상관관계가 강하거나 표본이 매우 크더라도, <strong>설계가 인과 비교를 지지하지 않으면 인과관계를 자동으로 주장할 수 없습니다.</strong></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="연구질문에서-검증-가능한-주장으로" class="level2">
+<h2 class="anchored" data-anchor-id="연구질문에서-검증-가능한-주장으로">연구질문에서 검증 가능한 주장으로</h2>
+<section id="연구질문research-question" class="level3">
+<h3 class="anchored" data-anchor-id="연구질문research-question">연구질문(Research Question)</h3>
+<blockquote class="blockquote">
+<p>AI 설명 방식에 따라 사용자 신뢰가 달라지는가?</p>
+</blockquote>
+</section>
+<section id="가설hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="가설hypothesis">가설(Hypothesis)</h3>
+<blockquote class="blockquote">
+<p>사례 기반 설명을 받은 사용자는 특성 중요도 설명을 받은 사용자보다 과업 후 신뢰 점수가 높을 것이다.</p>
+</blockquote>
+</section>
+<section id="목표-비교target-contrast-estimand" class="level3">
+<h3 class="anchored" data-anchor-id="목표-비교target-contrast-estimand">목표 비교(Target Contrast; Estimand)</h3>
+<blockquote class="blockquote">
+<p>동일한 대상과 과업에서, <strong>사례 기반 설명 조건과 특성 중요도 설명 조건의 평균 신뢰 차이</strong>는 얼마인가?</p>
+</blockquote>
+<p>가설은 “통계적으로 유의할 것이다”라고 쓰기보다, 이론이 예측하는 <strong>현상과 방향</strong>을 명시하는 것이 좋습니다. 통계적 유의성은 분석 결과이지 연구 현상 자체가 아닙니다.</p>
+<hr>
+</section>
+</section>
+<section id="연구설계-청사진" class="level2">
+<h2 class="anchored" data-anchor-id="연구설계-청사진">연구설계 청사진</h2>
+<p>연구를 시작하기 전에 다음 항목을 한 페이지 안에 설명할 수 있어야 합니다.</p>
+<ol type="1">
+<li><strong>목표와 연구질문:</strong> 무엇을 알고 싶은가?</li>
+<li><strong>대상과 맥락:</strong> 누구에게, 어떤 기술·과업·환경에서 말하려는가?</li>
+<li><strong>분석단위:</strong> 사람, 세션, 과업, 시행(trial), 게시물 중 무엇인가?</li>
+<li><strong>구성개념:</strong> 신뢰, 몰입, 사용성처럼 직접 관찰하기 어려운 개념은 무엇인가?</li>
+<li><strong>조작화:</strong> 각 개념을 어떤 자극·문항·행동·로그로 표현할 것인가?</li>
+<li><strong>비교:</strong> 어떤 조건이나 집단을 비교해야 질문에 답할 수 있는가?</li>
+<li><strong>표집과 할당:</strong> 누구를 어떻게 모집하고 조건에 어떻게 배정할 것인가?</li>
+<li><strong>분석계획:</strong> 어떤 요약, 시각화, 모형, 불확실성 지표를 사용할 것인가?</li>
+<li><strong>윤리와 재현성:</strong> 동의, 개인정보, 제외 기준, 분석 기록을 어떻게 관리할 것인가?</li>
+<li><strong>주장의 범위:</strong> 결과로 무엇을 말할 수 있고 무엇은 말할 수 없는가?</li>
+</ol>
+<hr>
+</section>
+<section id="먼저-구분하기-연구설계와-자료수집-방법" class="level2">
+<h2 class="anchored" data-anchor-id="먼저-구분하기-연구설계와-자료수집-방법">먼저 구분하기: 연구설계와 자료수집 방법</h2>
+<p>기존 연구방법 설명에서 자주 생기는 혼동은 <strong>실험</strong>, <strong>설문</strong>, <strong>로그 데이터</strong>를 서로 경쟁하는 하나의 목록처럼 보는 것입니다. 그러나 이들은 같은 층위가 아닙니다.</p>
 <ul>
-<li><p>언어를 이용하여 상대방에 자신이 원하는 일을 시킬 수 있고 또한 언어를 통하여 자신의 생각과 수행한 일을 다른 사람에게 설명할 수 있음.</p></li>
-<li><p>인간과 인간을 연결해주는 언어는 수 천 가지 종류가 있고(예를 들어 한국어, 영어, 일본어, 독일어 등) 언어를 표현하는 문자(writing system)와 문자들을 배열하는 규칙인 문법(grammar)이 있음.</p></li>
-<li><p>예를 들어 우리는 영어를 사용하는 사람들과 소통하기 위하여 영어 단어를 외우고 문법을 익혀서 말하고 듣고 읽어서 의사를 전달하고 여러 가지 다양한 일을 수행.</p></li>
+<li><strong>연구설계(design):</strong> 비교를 어떻게 만들고 어떤 추론을 할 것인가
+<ul>
+<li>무작위 실험, 준실험, 관찰연구, 사례연구 등</li>
 </ul></li>
-<li><p><strong>프로그래밍 언어</strong>는 <strong>컴퓨터와 소통하기 위해서 개발된 언어</strong></p>
+<li><strong>자료수집 방법(data collection):</strong> 무엇을 어떤 도구로 관찰할 것인가
 <ul>
-<li><p>프로그래밍 언어도 인간 사이의 언어와 같이 언어를 구성하는 단어도 있으며 문법도 존재.</p></li>
-<li><p>인간 사이의 언어 소통에서 단어를 잘못 선택하거나 문법이 틀리면 소통이 어려운 것과 마찬가지로 컴퓨터와 소통하는 경우에도 선택된 프로그래밍 언어의 단어와 문법에 맞게 사용해야 오류 없이 소통할 수 있음.</p></li>
-<li><p>프로그래밍 언어도 인간의 언어와 마찬가지로 하나만 있는 것이 아님. 가장 초기에 나온<code>Fortran</code>&nbsp;언어가 있고 그 이후에&nbsp;<code>C</code>,&nbsp;<code>Lisp</code>,&nbsp;<code>JAVA</code>,&nbsp;<code>R</code>&nbsp;등 매우 많은 언어가 개발됨.</p></li>
-<li><p>이렇게 많은 프로그래밍 언어들 중에 무엇을 배울지 선택하는 것은 어렵지만 많이 사용되는 언어를 배우면 여러 면에서 편리한 것처럼 프로그래밍 언어도 마찬가지일 것.</p></li>
+<li>설문, 과업 수행 기록, 시스템 로그, 인터뷰, 관찰, 센서 등</li>
 </ul></li>
+<li><strong>자료의 규모와 구조:</strong> 몇 명·몇 회·몇 개의 사건이 어떤 형태로 축적되는가
+<ul>
+<li>소규모 심층자료, 반복측정자료, 대규모 로그 등</li>
+</ul></li>
+</ul>
+<p>예를 들어 하나의 온라인 실험에서 다음을 동시에 수집할 수 있습니다.</p>
+<ul>
+<li>무작위로 배정된 인터페이스 조건</li>
+<li>과업 완료 시간과 오류 로그</li>
+<li>과업 후 만족도 설문</li>
+<li>일부 참여자 대상 후속 인터뷰</li>
+</ul>
+<p>즉, <strong>실험이면서 설문 연구이고 로그 연구이며 혼합방법 연구</strong>일 수 있습니다.</p>
+<hr>
+</section>
+<section id="hci에서-자주-사용하는-자료수집-방법" class="level2">
+<h2 class="anchored" data-anchor-id="hci에서-자주-사용하는-자료수집-방법">HCI에서 자주 사용하는 자료수집 방법</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>자료수집 방법</th>
+<th>잘 포착하는 것</th>
+<th>주요 한계</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>설문·자기보고</td>
+<td>태도, 인식, 만족, 신뢰, 주관적 경험</td>
+<td>회상오류, 사회적 바람직성, 공통방법편향</td>
+</tr>
+<tr class="even">
+<td>수행자료</td>
+<td>완료시간, 성공률, 오류, 선택</td>
+<td>과업과 지표가 실제 사용을 충분히 대표하는지 확인 필요</td>
+</tr>
+<tr class="odd">
+<td>시스템 로그·디지털 흔적</td>
+<td>실제 클릭, 탐색경로, 체류, 반복 사용</td>
+<td>의도와 맥락이 보이지 않으며 계측 오류·선택편향 가능</td>
+</tr>
+<tr class="even">
+<td>인터뷰·포커스그룹</td>
+<td>이유, 의미, 예상하지 못한 경험</td>
+<td>표본이 작고 분석자의 해석과 절차가 중요</td>
+</tr>
+<tr class="odd">
+<td>관찰·현장연구</td>
+<td>실제 맥락, 협업, 우회 행동</td>
+<td>통제가 어렵고 기록·해석에 많은 시간 필요</td>
+</tr>
+<tr class="even">
+<td>생리·센서자료</td>
+<td>시선, 심박, 움직임 등 시간적으로 세밀한 반응</td>
+<td>신호가 특정 심리상태를 직접 의미하지 않으며 전처리·해석이 복잡</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“객관적 데이터”와 “주관적 데이터”를 단순히 우열로 나누지 않습니다. 로그는 행동을 보여주지만 이유를 말해주지 않고, 설문은 경험을 알려주지만 실제 행동과 다를 수 있습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="방법을-선택하는-기준" class="level2">
+<h2 class="anchored" data-anchor-id="방법을-선택하는-기준">방법을 선택하는 기준</h2>
+<p>방법은 데이터 크기보다 <strong>질문과 추론 목표</strong>에 맞춰 선택합니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>연구 목표</th>
+<th>우선 고려할 설계</th>
+<th>보완하면 좋은 자료</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>두 인터페이스의 효과 비교</td>
+<td>무작위 실험</td>
+<td>수행자료 + 자기보고 + 조작점검</td>
+</tr>
+<tr class="even">
+<td>실제 장기 사용 패턴 파악</td>
+<td>관찰 로그·패널</td>
+<td>설문 또는 인터뷰로 맥락 보완</td>
+</tr>
+<tr class="odd">
+<td>새로운 문제와 사용자 요구 발견</td>
+<td>인터뷰·관찰·사례연구</td>
+<td>프로토타입 평가 또는 후속 설문</td>
+</tr>
+<tr class="even">
+<td>서비스 출시 전 사용성 문제 진단</td>
+<td>과업 기반 사용성 평가</td>
+<td>관찰, think-aloud, 오류 로그</td>
+</tr>
+<tr class="odd">
+<td>정책·시스템 변경의 영향 추정</td>
+<td>준실험·중단 시계열 등</td>
+<td>사전 추세, 비교집단, 질적 맥락</td>
+</tr>
+</tbody>
+</table>
+<p>데이터가 많다는 사실은 다음 문제를 자동으로 해결하지 않습니다.</p>
+<ul>
+<li>측정의 부정확성</li>
+<li>표집 및 플랫폼 선택편향</li>
+<li>교란</li>
+<li>누락된 맥락</li>
+<li>잘못된 분석단위</li>
+<li>비윤리적 수집과 이용</li>
 </ul>
 <hr>
-<p><br></p>
 </section>
-</section>
-<section id="activity" class="level2">
-<h2 class="anchored" data-anchor-id="activity">Activity</h2>
-<blockquote class="blockquote">
-<p><strong>사례 A (VR 연구)</strong><br>
-VR 환경에서 <strong>그래픽 품질(고해상도 vs 저해상도)</strong> 이 <strong>사용자의 몰입감</strong>에 어떤 영향을 주는가?</p>
-<p><strong>사례 B (모바일 앱 UI 연구)</strong><br>
-스마트폰 앱에서 <strong>버튼 크기(작게 vs 크게)</strong> 와 <strong>색상 대비(낮음 vs 높음)</strong> 가 <strong>작업 수행 시간</strong> 및 <strong>오류율</strong>에 미치는 영향은 무엇인가?</p>
-<p><strong>사례 C (음성 인터페이스 연구)</strong><br>
-스마트 스피커에서 <strong>음성 인식 정확도(높음 vs 낮음)</strong> 와 <strong>응답 지연 시간(짧음 vs 김)</strong> 이 <strong>사용자 만족도</strong>에 어떤 차이를 만드는가?</p>
-</blockquote>
-<p><br></p>
+<section id="실험-인과적-비교를-설계하기" class="level2">
+<h2 class="anchored" data-anchor-id="실험-인과적-비교를-설계하기">실험: 인과적 비교를 설계하기</h2>
+<p>실험의 핵심은 연구자가 <strong>처치 또는 조건을 조작</strong>하고, 가능한 경우 참여자를 조건에 <strong>무작위 할당(random assignment)</strong>하여 비교 가능성을 높이는 것입니다.</p>
+<p>예: 음성 인터페이스 연구</p>
 <ul>
-<li><p>Q1. 각 사례에서 <strong>독립변수(IV)</strong>와 <strong>종속변수(DV)</strong>는 무엇인가요?</p></li>
-<li><p>Q2. 이 연구에 숨겨진 <strong>통제 변수</strong>(Control Variable)는 무엇이 있을까요? (예: VR 연구에서 사용자의 게임 경험 수준, 앱 연구에서 화면 크기 등)</p></li>
-<li><p>Q3. 만약 여러분이 이 연구를 설계한다면 <strong>측정 방법</strong>을 어떻게 operationalize 하시겠습니까? (예: 몰입감 = 설문 척도, 오류율 = 시스템 로그, 만족도 = 리커트 척도 등)</p></li>
+<li><strong>요인 1:</strong> 음성 인식 정확도(높음 vs 낮음)</li>
+<li><strong>요인 2:</strong> 응답 지연(짧은 지연 vs 긴 지연)</li>
+<li><strong>결과:</strong> 과업 완료시간, 오류, 만족도, 재사용 의도</li>
+<li><strong>통제:</strong> 과업 난이도, 음성 크기, 안내문, 장치, 실험 진행 절차</li>
 </ul>
-<p><br></p>
-<p><strong>내가 자주 쓰는 앱/디지털 서비스</strong>를 하나 골라 IV와 DV를 설정해보고, 짧게 실험 시나리오를 공유해보자.</p>
+<p>실험이 인과추론에 강한 이유는 단지 “독립변수와 종속변수가 있기 때문”이 아닙니다. <strong>대안적 설명을 줄이는 비교 구조</strong>가 있기 때문입니다.</p>
+<hr>
+</section>
+<section id="설문-경험과-인식을-측정하기" class="level2">
+<h2 class="anchored" data-anchor-id="설문-경험과-인식을-측정하기">설문: 경험과 인식을 측정하기</h2>
+<p>설문은 신뢰, 만족, 인지된 유용성, 기술수용, 정서, 자기보고 행동처럼 직접 관찰하기 어려운 특성을 측정하는 데 유용합니다.</p>
+<p>좋은 설문 문항은 다음을 지향합니다.</p>
 <ul>
-<li><p><strong>시나리오 예시</strong></p>
+<li>한 문항에는 하나의 판단만 묻기</li>
+<li>모호한 시간범위를 피하고 회상기간을 명시하기</li>
+<li>유도질문과 가치판단적 표현을 피하기</li>
+<li>응답범주를 상호배타적이고 충분하게 만들기</li>
+<li>검증된 척도라면 문항·응답범주·채점법을 함부로 바꾸지 않기</li>
+<li>본 조사 전 인지면접(cognitive interview)이나 파일럿으로 이해도를 확인하기</li>
+</ul>
+<p><strong>이중질문(double-barreled question)</strong></p>
 <ul>
-<li><p>앱: 인스타그램</p></li>
-<li><p>IV: 피드 알고리즘 (시간순 vs 추천순)</p></li>
-<li><p>DV: 사용자가 머무는 시간, 포스트 좋아요 수</p></li>
-<li><p>통제 변수: 사용자의 팔로워 수, 인터넷 속도</p></li>
+<li>좋지 않은 문항: “이 앱은 재미있고 유용하다.”</li>
+<li>개선: “이 앱은 재미있다.” / “이 앱은 유용하다.”</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>설문은 자료수집 방법입니다. 설문 안에 무작위 자극을 넣은 <strong>survey experiment</strong>는 인과 비교가 가능할 수 있지만, 단순 횡단 설문에서 변수 간 상관만으로 인과관계를 주장하기는 어렵습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="표준화-척도를-사용할-때" class="level2">
+<h2 class="anchored" data-anchor-id="표준화-척도를-사용할-때">표준화 척도를 사용할 때</h2>
+<p>HCI에서는 System Usability Scale(SUS), UMUX-Lite, NASA-TLX, 신뢰·몰입·사회적 실재감 척도 등 기존 측정도구를 자주 활용합니다. 그러나 “유명한 척도”라는 이유만으로 현재 연구에 자동으로 적합한 것은 아닙니다.</p>
+<p>확인할 사항:</p>
+<ul>
+<li>원래 어떤 구성개념과 맥락을 위해 개발되었는가?</li>
+<li>현재 대상 집단과 기술 맥락에도 문항이 자연스러운가?</li>
+<li>번역본의 출처와 번역 절차가 명확한가?</li>
+<li>문항 삭제·수정 후에도 기존 채점법을 그대로 써도 되는가?</li>
+<li>전체 점수와 하위차원을 어떻게 계산하는가?</li>
+<li>점수 해석에 필요한 신뢰도와 타당도 근거가 있는가?</li>
+</ul>
+<p>예를 들어 SUS는 전반적인 <strong>인지된 사용성</strong>을 요약하는 도구로 유용하지만, 각 문항을 직관성·효율성·만족도의 독립적 하위척도처럼 임의로 해석해서는 안 됩니다.</p>
+<hr>
+</section>
+<section id="로그와-행동-데이터-실제-사용-흔적-읽기" class="level2">
+<h2 class="anchored" data-anchor-id="로그와-행동-데이터-실제-사용-흔적-읽기">로그와 행동 데이터: 실제 사용 흔적 읽기</h2>
+<p>로그 데이터는 다음과 같은 질문에 강합니다.</p>
+<ul>
+<li>어떤 기능을 실제로 사용했는가?</li>
+<li>어떤 경로에서 이탈했는가?</li>
+<li>오류 이후 어떻게 회복했는가?</li>
+<li>사용 패턴이 시간에 따라 어떻게 변하는가?</li>
+</ul>
+<p>그러나 로그에 없는 것도 중요합니다.</p>
+<ul>
+<li>사용하지 않은 이유</li>
+<li>여러 사람이 하나의 계정을 공유했는지 여부</li>
+<li>백그라운드 실행과 실제 주의의 차이</li>
+<li>플랫폼 밖에서 일어난 행동</li>
+<li>로그 생성 규칙이 업데이트된 시점</li>
+<li>데이터에서 제외된 비사용자와 이탈자</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>기록된 행동은 현실 그 자체가 아니라, 시스템이 기록하도록 설계된 현실의 일부입니다.</strong></p>
+</blockquote>
+<hr>
+</section>
+<section id="인터뷰관찰사례연구" class="level2">
+<h2 class="anchored" data-anchor-id="인터뷰관찰사례연구">인터뷰·관찰·사례연구</h2>
+<p>질적 접근은 다음과 같은 질문에 특히 유용합니다.</p>
+<ul>
+<li>사용자는 기술을 어떤 의미로 해석하는가?</li>
+<li>예상하지 못한 불편과 우회 행동은 무엇인가?</li>
+<li>개인·조직·문화적 맥락이 사용 경험을 어떻게 형성하는가?</li>
+<li>수치만으로 설명되지 않는 과정과 메커니즘은 무엇인가?</li>
+</ul>
+<p>사례연구는 하나 또는 소수의 사례를 깊이 분석합니다. 통계적 일반화가 주목적이 아닐 수 있지만, 다음을 통해 이론적·분석적 일반화에 기여할 수 있습니다.</p>
+<ul>
+<li>사례 선정 논리</li>
+<li>다양한 자료원의 삼각검증</li>
+<li>시간적 과정과 맥락에 대한 상세한 기록</li>
+<li>대안적 설명과 부정적 사례의 검토</li>
+</ul>
+<p>사례연구도 설문, 로그, 통계, 문서, 인터뷰를 함께 사용할 수 있습니다. “사례연구는 통계를 사용할 수 없다”는 뜻은 아닙니다.</p>
+<hr>
+</section>
+<section id="혼합방법mixed-methods" class="level2">
+<h2 class="anchored" data-anchor-id="혼합방법mixed-methods">혼합방법(Mixed Methods)</h2>
+<p>서로 다른 자료는 같은 현상을 다른 각도에서 보여줍니다.</p>
+<ul>
+<li><strong>삼각검증(triangulation):</strong> 서로 다른 자료에서 같은 결론이 나타나는가?</li>
+<li><strong>보완(complementarity):</strong> 로그가 보여준 행동을 인터뷰가 설명하는가?</li>
+<li><strong>개발(development):</strong> 인터뷰 결과로 설문문항이나 실험 자극을 만드는가?</li>
+<li><strong>확장(expansion):</strong> 실험의 단기효과와 현장 로그의 장기패턴을 함께 보는가?</li>
+</ul>
+<p>예:</p>
+<blockquote class="blockquote">
+<p>A/B 테스트에서 새 추천 인터페이스가 체류시간을 늘렸지만 만족도는 낮아졌다. 후속 인터뷰를 통해 사용자가 “흥미로워서 오래 본 것”이 아니라 “원하는 콘텐츠를 찾기 어려워 오래 머문 것”임을 확인할 수 있다.</p>
+</blockquote>
+<hr>
+</section>
+<section id="표본과-일반화" class="level2">
+<h2 class="anchored" data-anchor-id="표본과-일반화">표본과 일반화</h2>
+<p>표집(sampling)은 단순히 참여자를 많이 모으는 일이 아닙니다.</p>
+<ul>
+<li><strong>목표 모집단:</strong> 누구에 대해 결론을 내리려는가?</li>
+<li><strong>표집틀:</strong> 실제로 누구에게 모집 공고가 도달하는가?</li>
+<li><strong>포함·제외 기준:</strong> 연구질문과 안전에 비추어 누가 참여할 수 있는가?</li>
+<li><strong>자기선택:</strong> 참여 의사가 있는 사람은 그렇지 않은 사람과 어떻게 다른가?</li>
+<li><strong>맥락의 범위:</strong> 특정 국가, 장치, 플랫폼, 과업에 한정되는가?</li>
+</ul>
+<p>외적 타당도(external validity)는 무조건 높을수록 좋다는 단일 점수가 아닙니다. <strong>어떤 대상과 맥락으로 일반화하려는지 명확히 하고, 표본과 연구환경이 그 목표에 얼마나 부합하는지</strong> 평가해야 합니다.</p>
+<hr>
+</section>
+<section id="표본-수에-무조건-30명은-없다" class="level2">
+<h2 class="anchored" data-anchor-id="표본-수에-무조건-30명은-없다">표본 수에 “무조건 30명”은 없다</h2>
+<p>“t-test는 30명이면 된다” 또는 “집단당 15명이면 된다”는 보편 규칙은 없습니다. 필요한 표본 수는 다음에 따라 달라집니다.</p>
+<ul>
+<li>검출하고 싶은 최소한의 의미 있는 효과</li>
+<li>결과변수의 변동성과 측정 신뢰도</li>
+<li>참여자 간 또는 참여자 내 설계</li>
+<li>조건 수와 상호작용의 수</li>
+<li>반복측정 횟수와 개인 내 상관</li>
+<li>원하는 검정력과 유의수준</li>
+<li>결측, 중도이탈, 제외 예상 비율</li>
+<li>사용할 모형의 복잡도</li>
+</ul>
+<p>권장 접근:</p>
+<ol type="1">
+<li>이론·선행연구·실질적 의미를 바탕으로 <strong>최소 관심 효과</strong>를 정한다.</li>
+<li>검정력 분석 또는 시뮬레이션으로 표본 수를 계획한다.</li>
+<li>가정과 예상 이탈률을 기록한다.</li>
+<li>파일럿 연구는 주로 절차, 이해도, 측정 변동성을 점검하는 데 활용한다.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>소수 참여자의 사용성 테스트가 무가치한 것은 아닙니다. 다만 소규모 진단 연구와 모집단 효과를 정밀하게 추정하는 가설검증 연구는 <strong>목적과 주장 범위가 다릅니다.</strong></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="측정measurement이란" class="level2">
+<h2 class="anchored" data-anchor-id="측정measurement이란">측정(Measurement)이란?</h2>
+<p>HCI 연구에서는 신뢰, 몰입, 인지부하, 사용성처럼 직접 눈으로 볼 수 없는 개념을 자주 다룹니다.</p>
+<p><strong>측정</strong>은 관심 있는 속성이나 구성개념을 일정한 규칙에 따라 관찰하고, 값이나 범주로 표현하는 과정입니다.</p>
+<p>예:</p>
+<ul>
+<li><strong>과업 효율성</strong> → 완료시간, 클릭 수, 오류 수</li>
+<li><strong>인지된 사용성</strong> → 검증된 설문 척도의 총점</li>
+<li><strong>신뢰</strong> → 자기보고 신뢰 점수 + AI 권고 수용 행동</li>
+<li><strong>주의 배분</strong> → 시선 고정시간과 위치</li>
+<li><strong>지속 사용</strong> → 일정 기간의 재방문 로그</li>
+</ul>
+<p>중요한 점은 측정값이 구성개념 자체가 아니라는 것입니다.</p>
+<blockquote class="blockquote">
+<p>완료시간이 짧다고 반드시 경험이 좋았던 것은 아니며, 신뢰 점수가 높다고 반드시 AI의 권고를 실제로 따르는 것도 아닙니다.</p>
+</blockquote>
+<hr>
+</section>
+<section id="construct-operationalization-measure-variable" class="level2">
+<h2 class="anchored" data-anchor-id="construct-operationalization-measure-variable">Construct → Operationalization → Measure → Variable</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    A["Theoretical Construct&lt;br&gt;신뢰"]
+    B["Operational Definition&lt;br&gt;과업 후 인지된 신뢰"]
+    C["Measure / Instrument&lt;br&gt;1-7점 다문항 척도"]
+    D["Observed Variables&lt;br&gt;trust_1 ... trust_5"]
+    E["Scored Variable&lt;br&gt;mean_trust"]
+
+    A --&gt; B --&gt; C --&gt; D --&gt; E
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>이론적 구성개념(theoretical construct):</strong> 연구하고 싶은 추상적 개념</li>
+<li><strong>조작화·조작적 정의(operationalization):</strong> 그 개념을 현재 연구에서 어떻게 관찰할지 정하는 논리와 과정</li>
+<li><strong>측정도구(measure/instrument):</strong> 실제 관찰에 사용하는 문항, 과업, 센서, 기록 규칙</li>
+<li><strong>변수(variable):</strong> 측정 결과 데이터셋에 저장된 값</li>
+</ul>
+<p>같은 구성개념도 연구 목적과 맥락에 따라 다르게 조작화할 수 있습니다. 따라서 조작화의 선택에는 항상 이론적 근거와 한계가 따릅니다.</p>
+<hr>
+</section>
+<section id="하나의-구성개념-여러-측정" class="level2">
+<h2 class="anchored" data-anchor-id="하나의-구성개념-여러-측정">하나의 구성개념, 여러 측정</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구성개념</th>
+<th>자기보고 측정</th>
+<th>행동·수행 측정</th>
+<th>주의할 점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>사용성</td>
+<td>SUS 등 인지된 사용성 척도</td>
+<td>성공률, 시간, 오류</td>
+<td>인지된 사용성과 수행은 동일하지 않음</td>
+</tr>
+<tr class="even">
+<td>신뢰</td>
+<td>신뢰 척도</td>
+<td>권고 수용, 재확인, override</td>
+<td>순응(compliance)이 곧 적절한 신뢰는 아님</td>
+</tr>
+<tr class="odd">
+<td>몰입·실재감</td>
+<td>몰입·presence 척도</td>
+<td>탐색, 움직임, 중단 행동</td>
+<td>단일 생리지표로 직접 추론하기 어려움</td>
+</tr>
+<tr class="even">
+<td>인지부하</td>
+<td>NASA-TLX 등</td>
+<td>이중과업 성과, 반응시간</td>
+<td>과업 난이도와 능력 차이의 영향 고려</td>
+</tr>
+<tr class="odd">
+<td>참여(engagement)</td>
+<td>흥미·관여 자기보고</td>
+<td>체류, 재방문, 상호작용</td>
+<td>긴 체류가 긍정 경험을 의미하지 않을 수 있음</td>
+</tr>
+</tbody>
+</table>
+<p>여러 측정을 결합하면 구성개념을 더 입체적으로 이해할 수 있지만, 서로 다른 지표가 반드시 같은 결과를 보여야 하는 것은 아닙니다.</p>
+<hr>
+</section>
+<section id="분석단위unit-of-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="분석단위unit-of-analysis">분석단위(Unit of Analysis)</h2>
+<p>연구설계에서 자주 놓치는 질문은 “한 행이 무엇을 의미하는가?”입니다.</p>
+<ul>
+<li>참여자 1명</li>
+<li>참여자 × 조건</li>
+<li>참여자 × 과업</li>
+<li>참여자 × 시행(trial)</li>
+<li>세션</li>
+<li>게시물 또는 댓글</li>
+<li>팀 또는 조직</li>
+</ul>
+<p>예를 들어 40명이 각자 20회의 과업을 수행하면 관측값은 800개이지만, <strong>독립적인 참여자가 800명인 것은 아닙니다.</strong> 같은 사람에게서 나온 반복 관측은 서로 연관되어 있습니다.</p>
+<p>이 선택은 다음을 결정합니다.</p>
+<ul>
+<li>데이터의 행 구조</li>
+<li>표본 수를 어떻게 해석할지</li>
+<li>어떤 통계모형을 사용할지</li>
+<li>독립성 가정이 성립하는지</li>
+</ul>
+<hr>
+</section>
+<section id="측정-수준scales-of-measurement" class="level2">
+<h2 class="anchored" data-anchor-id="측정-수준scales-of-measurement">측정 수준(Scales of Measurement)</h2>
+<p>측정 수준은 값 사이에 어떤 관계와 연산이 의미 있는지를 설명합니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>수준</th>
+<th>값이 표현하는 것</th>
+<th>HCI 예시</th>
+<th>의미 있는 비교</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>명목(nominal)</strong></td>
+<td>이름·범주</td>
+<td>OS, 조건, 장치 유형</td>
+<td>같음/다름, 빈도·비율</td>
+</tr>
+<tr class="even">
+<td><strong>순서(ordinal)</strong></td>
+<td>순위·정렬</td>
+<td>단일 동의 문항, 선호 순위</td>
+<td>크고 작음, 중앙값·순위</td>
+</tr>
+<tr class="odd">
+<td><strong>간격(interval)</strong></td>
+<td>동일한 간격, 자연적 0 없음</td>
+<td>섭씨온도, 일부 표준화 점수</td>
+<td>차이, 평균·표준편차</td>
+</tr>
+<tr class="even">
+<td><strong>비율(ratio)</strong></td>
+<td>동일한 간격과 의미 있는 0</td>
+<td>반응시간, 오류 수, 거리</td>
+<td>차이와 비율</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>측정 수준은 분석 선택에 중요한 정보를 주지만, 분석법을 혼자 결정하지는 않습니다. 연구설계, 분포, 표본 크기, 반복측정 구조, 모형 가정을 함께 고려해야 합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="명목척도nominal-scale" class="level2">
+<h2 class="anchored" data-anchor-id="명목척도nominal-scale">명목척도(Nominal Scale)</h2>
+<p>명목변수는 범주 사이에 자연스러운 순서가 없습니다.</p>
+<p>예:</p>
+<ul>
+<li>실험 조건: 텍스트 설명 / 시각 설명 / 설명 없음</li>
+<li>장치: 데스크톱 / 태블릿 / 스마트폰</li>
+<li>입력 방식: 터치 / 음성 / 시선</li>
+<li>운영체제: Windows / macOS / Linux</li>
+</ul>
+<p>범주를 1, 2, 3으로 저장하더라도 숫자는 <strong>코드</strong>일 뿐입니다.</p>
+<ul>
+<li>평균 장치 유형 = 1.8 → 해석 불가능</li>
+<li>스마트폰(3)이 태블릿(2)보다 “더 크다” → 해석 불가능</li>
+</ul>
+<p>명목변수에서는 빈도, 비율, 최빈값, 교차표, 범주 간 차이가 주요 관심이 됩니다.</p>
+<hr>
+</section>
+<section id="순서척도ordinal-scale" class="level2">
+<h2 class="anchored" data-anchor-id="순서척도ordinal-scale">순서척도(Ordinal Scale)</h2>
+<p>순서변수는 범주를 의미 있게 정렬할 수 있지만, 인접 범주 사이의 간격이 같다고 보장할 수 없습니다.</p>
+<p>예:</p>
+<ul>
+<li>과업 난이도: 매우 쉬움 &lt; 쉬움 &lt; 보통 &lt; 어려움 &lt; 매우 어려움</li>
+<li>선호 순위: 1위, 2위, 3위</li>
+<li>문제 심각도: 경미, 보통, 심각</li>
+<li>단일 Likert-type 동의 문항</li>
+</ul>
+<p>1위와 2위의 차이가 2위와 3위의 차이와 같다고 말할 수는 없습니다.</p>
+<p>응답 선택지는 논리적 순서로 제시해야 하며, 방향을 일관되게 유지해야 합니다.</p>
+<blockquote class="blockquote">
+<p>매우 반대 → 반대 → 보통 → 동의 → 매우 동의</p>
+</blockquote>
+<hr>
+</section>
+<section id="간격척도와-비율척도" class="level2">
+<h2 class="anchored" data-anchor-id="간격척도와-비율척도">간격척도와 비율척도</h2>
+<section id="간격척도interval-scale" class="level3">
+<h3 class="anchored" data-anchor-id="간격척도interval-scale">간격척도(Interval Scale)</h3>
+<ul>
+<li>값 사이의 <strong>차이</strong>가 동일한 의미를 가집니다.</li>
+<li>자연적이고 절대적인 0이 없습니다.</li>
+<li>대표 예: 섭씨온도</li>
+<li>20°C와 10°C의 차이는 10도이지만, 20°C가 10°C보다 “두 배 뜨겁다”고 말할 수는 없습니다.</li>
+</ul>
+</section>
+<section id="비율척도ratio-scale" class="level3">
+<h3 class="anchored" data-anchor-id="비율척도ratio-scale">비율척도(Ratio Scale)</h3>
+<ul>
+<li>동일한 간격과 의미 있는 0을 가집니다.</li>
+<li>차이뿐 아니라 비율도 해석할 수 있습니다.</li>
+<li>HCI 예: 반응시간, 과업 완료시간, 오류 수, 클릭 수, 이동 거리</li>
+<li>4초는 2초보다 두 배 긴 시간입니다.</li>
+</ul>
+<p>단, 오류 수가 0이라는 사실은 “오류가 관찰되지 않았다”는 뜻이지, 사용성 문제가 전혀 없다는 뜻은 아닙니다.</p>
+<hr>
+</section>
+</section>
+<section id="측정-수준과-연속이산은-다른-차원" class="level2">
+<h2 class="anchored" data-anchor-id="측정-수준과-연속이산은-다른-차원">측정 수준과 연속·이산은 다른 차원</h2>
+<p><strong>연속형(continuous)</strong>과 <strong>이산형(discrete)</strong>은 값 사이에 이론적으로 중간값이 가능한지를 묻습니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>변수</th>
+<th>측정 수준</th>
+<th>연속/이산</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>장치 유형</td>
+<td>명목</td>
+<td>이산</td>
+</tr>
+<tr class="even">
+<td>선호 순위</td>
+<td>순서</td>
+<td>이산</td>
+</tr>
+<tr class="odd">
+<td>반응시간</td>
+<td>비율</td>
+<td>연속</td>
+</tr>
+<tr class="even">
+<td>오류 수</td>
+<td>비율</td>
+<td>이산</td>
+</tr>
+<tr class="odd">
+<td>섭씨온도</td>
+<td>간격</td>
+<td>연속</td>
+</tr>
+<tr class="even">
+<td>1–7점 단일 동의 문항</td>
+<td>순서</td>
+<td>이산</td>
+</tr>
+</tbody>
+</table>
+<p>측정 장비가 반응시간을 0.01초 단위로 저장한다고 해도, 반응시간 자체는 이론적으로 연속적인 양입니다. 반대로 오류 수는 2.4개처럼 관찰할 수 없으므로 이산적입니다.</p>
+<hr>
+</section>
+<section id="숫자로-저장되었다고-수치형-개념은-아니다" class="level2">
+<h2 class="anchored" data-anchor-id="숫자로-저장되었다고-수치형-개념은-아니다">숫자로 저장되었다고 수치형 개념은 아니다</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>condition <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 = control, 2 = text explanation, 3 = visual explanation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>이 변수는 숫자로 저장되어 있지만 <strong>명목변수</strong>입니다.</p>
+<p>반대로 다음 변수는 문자로 읽혀도 순서정보를 가질 수 있습니다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>difficulty <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"easy"</span>, <span class="st">"hard"</span>, <span class="st">"medium"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>분석 전에 데이터 저장형(type)과 측정의 의미(level)를 구분해야 합니다.</p>
+<ul>
+<li>R의 <code>numeric</code>, <code>character</code>, <code>factor</code>는 저장·처리 방식</li>
+<li>명목, 순서, 간격, 비율은 값의 해석과 측정 수준</li>
+</ul>
+<hr>
+</section>
+<section id="likert-문항과-likert-척도" class="level2">
+<h2 class="anchored" data-anchor-id="likert-문항과-likert-척도">Likert 문항과 Likert 척도</h2>
+<p>두 용어를 구분해 사용하는 것이 좋습니다.</p>
+<ul>
+<li><strong>Likert-type item:</strong> 하나의 동의 문항
+<ul>
+<li>예: “이 AI의 권고를 신뢰한다.” 1 = 전혀 동의하지 않음, 7 = 매우 동의함</li>
+<li>원칙적으로 순서형</li>
+</ul></li>
+<li><strong>Likert scale:</strong> 같은 구성개념을 측정하는 여러 문항을 합산하거나 평균한 척도
+<ul>
+<li>예: 신뢰 문항 5개의 평균</li>
+<li>문항들이 실제로 같은 구성개념을 측정하는지 확인해야 함</li>
 </ul></li>
 </ul>
+<p>단일 문항의 1과 2 사이 간격이 5와 6 사이 간격과 동일하다고 직접 관찰할 수는 없습니다.</p>
+<hr>
+</section>
+<section id="likert-자료를-어떻게-분석할까" class="level2">
+<h2 class="anchored" data-anchor-id="likert-자료를-어떻게-분석할까">Likert 자료를 어떻게 분석할까?</h2>
+<p>실무에서는 다문항 척도의 합계나 평균을 연속형에 가깝게 분석하는 경우가 많습니다. 그러나 “무조건 가능” 또는 “무조건 불가능”으로 단순화할 필요는 없습니다.</p>
+<p>연속형에 가까운 분석을 고려할 조건:</p>
+<ul>
+<li>동일한 구성개념을 측정하는 여러 문항으로 구성</li>
+<li>충분한 응답범주와 적절한 점수분포</li>
+<li>척도 구조와 신뢰도에 대한 근거</li>
+<li>사용한 모형이 어느 정도의 비정규성에 견고함</li>
+</ul>
+<p>더 신중해야 하는 경우:</p>
+<ul>
+<li>단일 문항</li>
+<li>응답범주가 매우 적음</li>
+<li>극심한 천장·바닥 효과나 치우침</li>
+<li>표본이 작음</li>
+<li>범주 사이 차이가 특히 해석의 핵심임</li>
+</ul>
+<p>이 경우 순서형 모형, 비모수적 요약, 강건성 분석을 고려할 수 있습니다. 논문에서는 관행을 반복하기보다 <strong>왜 그 분석이 연구질문과 자료에 적절한지</strong> 설명하는 것이 중요합니다.</p>
+<hr>
+</section>
+<section id="신뢰도와-타당도" class="level2">
+<h2 class="anchored" data-anchor-id="신뢰도와-타당도">신뢰도와 타당도</h2>
+<section id="신뢰도reliability" class="level3">
+<h3 class="anchored" data-anchor-id="신뢰도reliability">신뢰도(Reliability)</h3>
+<p>측정이 반복되거나 여러 문항·평가자에게 적용될 때 얼마나 <strong>일관되고 정밀한가</strong>에 관한 문제입니다.</p>
+</section>
+<section id="타당도validity" class="level3">
+<h3 class="anchored" data-anchor-id="타당도validity">타당도(Validity)</h3>
+<p>측정점수의 해석과 사용이 의도한 구성개념과 목적에 대해 얼마나 <strong>충분한 근거를 갖는가</strong>에 관한 문제입니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>신뢰도 높음</th>
+<th>신뢰도 낮음</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>타당도 높음</strong></td>
+<td>바람직한 측정</td>
+<td>안정적으로 측정되지 않아 해석 제한</td>
+</tr>
+<tr class="even">
+<td><strong>타당도 낮음</strong></td>
+<td>일관되게 잘못된 것을 측정할 수 있음</td>
+<td>측정으로서 매우 취약</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>신뢰도는 타당도를 보장하지 않지만, 지나치게 낮은 신뢰도는 타당한 해석을 어렵게 합니다.</p>
+</blockquote>
+<p>또한 “척도 자체가 항상 타당하다”기보다, <strong>특정 대상·언어·기술·목적에서 그 점수를 어떻게 해석하는지가 타당한가</strong>를 평가합니다.</p>
+<hr>
+</section>
+</section>
+<section id="신뢰도의-여러-형태" class="level2">
+<h2 class="anchored" data-anchor-id="신뢰도의-여러-형태">신뢰도의 여러 형태</h2>
+<ul>
+<li><strong>검사–재검사 신뢰도(test–retest):</strong> 시간이 달라도 안정적인 특성의 점수가 일관되는가?</li>
+<li><strong>평가자 간 신뢰도(inter-rater):</strong> 여러 평가자가 같은 행동이나 자료를 유사하게 코딩하는가?</li>
+<li><strong>동형검사 신뢰도(parallel/alternate forms):</strong> 동등한 형태의 측정도구가 유사한 결과를 내는가?</li>
+<li><strong>내적 일관성(internal consistency):</strong> 같은 구성개념을 측정하려는 문항들이 서로 일관되는가?</li>
+</ul>
+<p>측정과 자료 유형에 따라 alpha, omega, ICC, kappa 등 적절한 지표가 달라집니다.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cronbach’s alpha가 높다는 사실만으로 척도가 단일차원이며 타당하다고 결론 내릴 수 없습니다. 문항 수가 많으면 alpha가 높아질 수 있고, 서로 다른 하위개념이 섞여 있어도 높게 나타날 수 있습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="타당도의-근거" class="level2">
+<h2 class="anchored" data-anchor-id="타당도의-근거">타당도의 근거</h2>
+<p>측정도구를 평가할 때 여러 형태의 근거를 함께 봅니다.</p>
+<ul>
+<li><strong>내용 근거(content evidence):</strong> 문항이 구성개념의 중요한 영역을 충분히 포함하는가?</li>
+<li><strong>응답과정(response process):</strong> 참여자가 문항을 연구자가 의도한 방식으로 이해하고 응답하는가?</li>
+<li><strong>내적 구조(internal structure):</strong> 문항 간 관계와 요인구조가 이론과 일치하는가?</li>
+<li><strong>수렴·판별 근거(convergent/discriminant):</strong> 관련 개념과는 연관되고 구별되는 개념과는 구분되는가?</li>
+<li><strong>준거 관련 근거(criterion-related):</strong> 관련 행동이나 외부 준거를 설명·예측하는가?</li>
+<li><strong>집단·맥락 간 동등성:</strong> 다른 집단이나 언어에서도 같은 의미로 작동하는가?</li>
+</ul>
+<p>겉보기에 그럴듯한 <strong>안면타당도(face validity)</strong>는 출발점일 수 있지만 충분한 근거는 아닙니다.</p>
+<hr>
+</section>
+<section id="측정-품질-체크리스트" class="level2">
+<h2 class="anchored" data-anchor-id="측정-품질-체크리스트">측정 품질 체크리스트</h2>
+<ul>
+<li>구성개념을 한 문장으로 정의했는가?</li>
+<li>기존 척도를 썼다면 원문과 개발 목적을 확인했는가?</li>
+<li>번역·역번역 또는 인지면접 절차가 필요한가?</li>
+<li>자기보고 외에 행동 또는 수행 지표를 보완할 수 있는가?</li>
+<li>측정 시점이 원인과 결과의 시간순서를 반영하는가?</li>
+<li>문항 순서, 역문항, 응답범주가 혼동을 만들지 않는가?</li>
+<li>점수 산출 규칙과 결측 처리 규칙이 사전에 정해졌는가?</li>
+<li>동일한 척도가 비교하려는 집단에서 같은 의미를 갖는가?</li>
+<li>측정오차가 예상 효과를 약화하거나 왜곡할 가능성은 없는가?</li>
+</ul>
+<hr>
+</section>
+<section id="변수의-역할-ivdv와-predictoroutcome" class="level2">
+<h2 class="anchored" data-anchor-id="변수의-역할-ivdv와-predictoroutcome">변수의 역할: IV/DV와 Predictor/Outcome</h2>
+<p>연구 맥락에 따라 변수 이름을 구분해 사용하는 것이 정확합니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>역할</th>
+<th>실험에서 자주 쓰는 용어</th>
+<th>관찰·예측 연구에서 자주 쓰는 용어</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>설명하거나 비교하는 변수</td>
+<td>독립변수(IV), factor, treatment</td>
+<td>예측변수(predictor), 노출(exposure)</td>
+</tr>
+<tr class="even">
+<td>설명되는 결과</td>
+<td>종속변수(DV)</td>
+<td>결과변수(outcome), response</td>
+</tr>
+<tr class="odd">
+<td>함께 고려하는 변수</td>
+<td>공변량(covariate), 통제변수</td>
+<td>공변량, 통제변수</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>독립변수</strong>라는 이름이 “현실의 모든 것과 독립적”이라는 뜻은 아닙니다.</li>
+<li>실험에서는 연구자가 조작한 조건을 IV라고 부르기 쉽습니다.</li>
+<li>관찰자료에서는 성별, 사용시간, 자기선택 조건 등을 무조건 IV라고 부르기보다 predictor 또는 exposure라고 부르는 편이 정확할 수 있습니다.</li>
+<li><strong>교란변수(confounder)</strong>는 노출/조건과 결과 모두에 관련되어 관찰된 관계에 대안적 설명을 만드는 변수입니다.</li>
+</ul>
+<hr>
+</section>
+<section id="실험의-인과-논리" class="level2">
+<h2 class="anchored" data-anchor-id="실험의-인과-논리">실험의 인과 논리</h2>
+<p>인과효과를 알고 싶다면 이상적으로 같은 사람이 같은 시점에 두 조건을 모두 경험했을 때의 결과를 비교하고 싶습니다.</p>
+<ul>
+<li>AI 설명을 받은 상태의 결과</li>
+<li>같은 사람이 같은 순간 설명을 받지 않은 상태의 결과</li>
+</ul>
+<p>그러나 두 상태를 동시에 관찰할 수는 없습니다. 이를 <strong>근본적 인과추론 문제</strong>라고 생각할 수 있습니다.</p>
+<p>무작위 할당은 여러 참여자를 조건에 배정하여, 조건 외의 특성이 집단 사이에 <strong>평균적으로 균형을 이루도록 기대</strong>하게 만듭니다. 그 결과 관찰된 평균 차이를 처치 효과로 해석할 근거가 강화됩니다.</p>
+<p>무작위화가 모든 문제를 없애는 것은 아닙니다.</p>
+<ul>
+<li>작은 표본에서는 우연한 불균형이 남을 수 있음</li>
+<li>조작이 제대로 전달되지 않을 수 있음</li>
+<li>중도이탈과 비순응이 조건별로 다를 수 있음</li>
+<li>측정과 분석이 부정확할 수 있음</li>
+</ul>
+<hr>
+</section>
+<section id="무작위-할당과-무작위-표집은-다르다" class="level2">
+<h2 class="anchored" data-anchor-id="무작위-할당과-무작위-표집은-다르다">무작위 할당과 무작위 표집은 다르다</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>개념</th>
+<th>목적</th>
+<th>주로 강화하는 타당도</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>무작위 할당(random assignment)</strong></td>
+<td>참여자를 실험 조건에 우연히 배정</td>
+<td>집단 비교의 내적 타당도, 인과추론</td>
+</tr>
+<tr class="even">
+<td><strong>무작위 표집(random sampling)</strong></td>
+<td>모집단에서 참여자를 우연히 선택</td>
+<td>모집단 일반화, 외적 타당도</td>
+</tr>
+</tbody>
+</table>
+<p>대학생 편의표본을 두 조건에 무작위 할당한 연구는 조건 간 인과비교에는 강할 수 있지만, 모든 연령과 문화에 자동으로 일반화되지는 않습니다.</p>
+<p>반대로 대표성 높은 설문표본에서 두 변수의 상관을 관찰했다고 해도, 무작위 할당이 없다면 인과효과를 바로 주장할 수 없습니다.</p>
+<hr>
+</section>
+<section id="참여자-간-설계between-subjects-design" class="level2">
+<h2 class="anchored" data-anchor-id="참여자-간-설계between-subjects-design">참여자 간 설계(Between-Subjects Design)</h2>
+<p>각 참여자는 하나의 조건만 경험합니다.</p>
+<p>예: 120명을 세 집단에 무작위 할당</p>
+<ul>
+<li>설명 없음</li>
+<li>텍스트 설명</li>
+<li>시각 설명</li>
+</ul>
+<p><strong>장점</strong></p>
+<ul>
+<li>순서효과와 학습효과가 적음</li>
+<li>서로 다른 자극의 목적을 눈치챌 가능성이 낮음</li>
+<li>장기적이거나 되돌릴 수 없는 처치에 적합</li>
+</ul>
+<p><strong>한계</strong></p>
+<ul>
+<li>개인차가 오차에 포함됨</li>
+<li>같은 검정력을 위해 더 많은 참여자가 필요할 수 있음</li>
+<li>조건 간 우연한 불균형을 점검해야 함</li>
+</ul>
+<hr>
+</section>
+<section id="참여자-내-설계within-subjects-design" class="level2">
+<h2 class="anchored" data-anchor-id="참여자-내-설계within-subjects-design">참여자 내 설계(Within-Subjects Design)</h2>
+<p>각 참여자가 여러 조건을 경험합니다.</p>
+<p>예: 같은 참여자가 텍스트 설명과 시각 설명을 각각 사용</p>
+<p><strong>장점</strong></p>
+<ul>
+<li>참여자가 자신의 통제 역할을 하므로 개인차를 줄일 수 있음</li>
+<li>같은 참여자 수에서 비교의 정밀도가 높아질 수 있음</li>
+<li>개인 수준의 변화와 선호를 볼 수 있음</li>
+</ul>
+<p><strong>한계</strong></p>
+<ul>
+<li>학습, 피로, 적응, 이월효과(carryover)</li>
+<li>연구 목적과 조건 차이를 쉽게 눈치챌 수 있음</li>
+<li>반복 측정 간 의존성을 분석에 반영해야 함</li>
+</ul>
+<p>설계 선택은 “어느 것이 더 좋다”가 아니라 과업, 처치의 지속성, 예상 효과, 현실적 제약에 따라 달라집니다.</p>
+<hr>
+</section>
+<section id="순서효과와-counterbalancing" class="level2">
+<h2 class="anchored" data-anchor-id="순서효과와-counterbalancing">순서효과와 Counterbalancing</h2>
+<p>참여자 내 설계에서 모든 참여자가 A 다음 B를 경험하면, 조건 차이와 순서 차이를 구분하기 어렵습니다.</p>
+<ul>
+<li>절반: A → B</li>
+<li>절반: B → A</li>
+</ul>
+<p>이를 <strong>counterbalancing</strong>의 가장 단순한 형태라고 합니다.</p>
+<p>조건이 많으면 완전 counterbalancing, Latin square, 무작위 순서 등을 고려할 수 있습니다. 또한 다음을 설계해야 합니다.</p>
+<ul>
+<li>조건 사이 휴식 또는 washout</li>
+<li>연습 trial과 본 trial의 구분</li>
+<li>과업 난이도의 균형</li>
+<li>동일 자극 반복으로 인한 기억효과</li>
+<li>순서와 조건의 상호작용 가능성</li>
+</ul>
+<hr>
+</section>
+<section id="요인설계factorial-design와-상호작용" class="level2">
+<h2 class="anchored" data-anchor-id="요인설계factorial-design와-상호작용">요인설계(Factorial Design)와 상호작용</h2>
+<p>모바일 UI 연구에서 두 요인을 동시에 조작한다고 해봅시다.</p>
+<ul>
+<li><strong>버튼 크기:</strong> 작음 vs 큼</li>
+<li><strong>색상 대비:</strong> 낮음 vs 높음</li>
+</ul>
+<p>이는 <code>2 × 2</code> 요인설계로 네 조건을 만듭니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>낮은 대비</th>
+<th>높은 대비</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>작은 버튼</td>
+<td>조건 1</td>
+<td>조건 2</td>
+</tr>
+<tr class="even">
+<td>큰 버튼</td>
+<td>조건 3</td>
+<td>조건 4</td>
+</tr>
+</tbody>
+</table>
+<p>확인할 수 있는 효과:</p>
+<ul>
+<li>버튼 크기의 <strong>주효과(main effect)</strong></li>
+<li>색상 대비의 <strong>주효과</strong></li>
+<li>버튼 크기의 효과가 대비 수준에 따라 달라지는 <strong>상호작용(interaction)</strong></li>
+</ul>
+<blockquote class="blockquote">
+<p>예를 들어 큰 버튼의 이점이 낮은 대비에서만 크게 나타난다면 상호작용이 존재할 수 있습니다.</p>
+</blockquote>
+<hr>
+</section>
+<section id="실험설계에서-자주-생기는-위협" class="level2">
+<h2 class="anchored" data-anchor-id="실험설계에서-자주-생기는-위협">실험설계에서 자주 생기는 위협</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>위협</th>
+<th>예시</th>
+<th>대응 아이디어</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>교란(confounding)</td>
+<td>설명 형식과 함께 정보량도 달라짐</td>
+<td>한 번에 목표 요인만 체계적으로 조작</td>
+</tr>
+<tr class="even">
+<td>선택편향</td>
+<td>고급 기능 사용자가 스스로 새 UI를 선택</td>
+<td>무작위 할당 또는 설계·모형으로 조정</td>
+</tr>
+<tr class="odd">
+<td>순서·학습효과</td>
+<td>두 번째 조건에서 과업에 익숙해짐</td>
+<td>counterbalancing, 연습과업</td>
+</tr>
+<tr class="even">
+<td>요구특성</td>
+<td>참여자가 연구가 원하는 답을 추측</td>
+<td>중립적 안내, 가능한 눈가림, 사후 질문</td>
+</tr>
+<tr class="odd">
+<td>측정 반응성</td>
+<td>설문을 반복하며 태도가 변함</td>
+<td>측정 횟수와 시점 최소화·정당화</td>
+</tr>
+<tr class="even">
+<td>중도이탈</td>
+<td>어려운 조건에서 더 많이 이탈</td>
+<td>조건별 이탈 보고, 원인 점검</td>
+</tr>
+<tr class="odd">
+<td>계측 변화</td>
+<td>로그 수집 코드가 중간에 업데이트</td>
+<td>버전 기록, 데이터 품질 검사</td>
+</tr>
+<tr class="even">
+<td>다중분석</td>
+<td>많은 결과 중 유의한 것만 선택</td>
+<td>주요 결과 사전 지정, 전체 분석 투명하게 보고</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="비실험-연구non-experimental-research" class="level2">
+<h2 class="anchored" data-anchor-id="비실험-연구non-experimental-research">비실험 연구(Non-Experimental Research)</h2>
+<p>비실험 연구에서는 연구자가 핵심 노출이나 조건을 무작위로 배정하지 않습니다.</p>
+<p>대표적 형태:</p>
+<ul>
+<li><strong>횡단연구:</strong> 한 시점에서 변수 간 관계 조사</li>
+<li><strong>종단·패널연구:</strong> 같은 대상을 여러 시점에 추적</li>
+<li><strong>관찰 로그 연구:</strong> 자연스럽게 발생한 행동 기록 분석</li>
+<li><strong>코호트 연구:</strong> 특정 특성을 가진 집단을 시간에 따라 비교</li>
+<li><strong>질적 현장연구:</strong> 맥락 속 경험과 과정을 관찰·해석</li>
+</ul>
+<p>비실험 연구는 현실적이고 윤리적으로 중요한 질문을 다룰 수 있지만, 다음을 조심해야 합니다.</p>
+<ul>
+<li>교란과 자기선택</li>
+<li>원인과 결과의 시간순서</li>
+<li>역인과성</li>
+<li>측정되지 않은 변수</li>
+<li>플랫폼·표본 선택편향</li>
+</ul>
+<p>“통제변수를 회귀식에 넣었다”는 사실만으로 모든 교란이 제거되는 것은 아닙니다.</p>
+<hr>
+</section>
+<section id="준실험quasi-experimental-design" class="level2">
+<h2 class="anchored" data-anchor-id="준실험quasi-experimental-design">준실험(Quasi-Experimental Design)</h2>
+<p>준실험은 단순히 “실험처럼 보이지만 IV를 통제하지 않은 연구”가 아닙니다. 무작위 할당은 없지만, <strong>정책·시점·기준점·외생적 변화가 만든 비교 구조</strong>를 활용해 인과효과에 접근하는 설계입니다.</p>
+<p>예:</p>
+<ul>
+<li><strong>중단 시계열(interrupted time series):</strong> 추천 알고리즘 변경 전후의 장기 추세 비교</li>
+<li><strong>차이의 차이(difference-in-differences):</strong> 변경 대상 플랫폼과 비교 플랫폼의 전후 변화 비교</li>
+<li><strong>회귀불연속(regression discontinuity):</strong> 점수 기준선을 중심으로 기능 제공 여부가 달라진 경우</li>
+<li><strong>자연실험:</strong> 연구자가 만들지 않은 외부 사건이 노출을 사실상 나눈 경우</li>
+</ul>
+<p>각 설계는 평행추세, 기준점 조작 불가, 다른 동시 사건의 부재 등 고유한 가정을 요구합니다. 따라서 단순한 사전–사후 평균 차이보다 훨씬 정교한 설계 논리가 필요합니다.</p>
+<hr>
+</section>
+<section id="윤리적인-hci-연구설계" class="level2">
+<h2 class="anchored" data-anchor-id="윤리적인-hci-연구설계">윤리적인 HCI 연구설계</h2>
+<p>HCI 데이터는 사람의 행동, 관계, 위치, 감정, 생체신호를 포함할 수 있으므로 설계 단계부터 윤리를 고려해야 합니다.</p>
+<ul>
+<li>충분한 설명과 자발적 동의</li>
+<li>최소위험 원칙과 취약한 참여자 보호</li>
+<li>필요한 정보만 수집하는 데이터 최소화</li>
+<li>개인정보와 식별 가능 로그의 분리·보호</li>
+<li>기만이 필요한 경우 정당성, 최소화, 사후설명</li>
+<li>철회와 데이터 삭제 가능성의 명확한 안내</li>
+<li>플랫폼 이용약관과 제3자 데이터 권리 확인</li>
+<li>보관기간, 접근권한, 공유 범위 결정</li>
+<li>생성형 AI 서비스에 민감한 연구자료를 무단 업로드하지 않기</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>온라인에서 접근할 수 있거나 공개된 데이터라고 해서 연구윤리상 자유롭게 수집·분석·공개할 수 있다는 뜻은 아닙니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="연구설계는-데이터-구조가-된다" class="level2">
+<h2 class="anchored" data-anchor-id="연구설계는-데이터-구조가-된다">연구설계는 데이터 구조가 된다</h2>
+<p>연구를 데이터셋으로 옮길 때 기본 원칙은 다음과 같습니다.</p>
+<ul>
+<li><strong>행(row):</strong> 한 관측단위</li>
+<li><strong>열(column):</strong> 한 변수</li>
+<li><strong>셀(cell):</strong> 한 관측값</li>
+</ul>
+<p>예: 참여자마다 두 조건에서 세 과업을 수행했다면, 한 행을 <code>참여자 × 조건 × 과업</code>으로 두는 long format이 자연스럽습니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>participant_id</th>
+<th>condition</th>
+<th>task_id</th>
+<th style="text-align: right;">trial_order</th>
+<th style="text-align: right;">time_sec</th>
+<th style="text-align: right;">errors</th>
+<th style="text-align: right;">trust</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P01</td>
+<td>text</td>
+<td>T01</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5.8</td>
+</tr>
+<tr class="even">
+<td>P01</td>
+<td>visual</td>
+<td>T01</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">35.4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.2</td>
+</tr>
+<tr class="odd">
+<td>P02</td>
+<td>visual</td>
+<td>T01</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">51.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4.6</td>
+</tr>
+</tbody>
+</table>
+<p>이 구조에서는 같은 참여자의 행이 여러 개이므로, 분석에서도 반복측정 구조를 반영해야 합니다. <code>task_id</code>는 과업의 이름표이고, <code>trial_order</code>는 제시 순서를 나타냅니다.</p>
+<hr>
+</section>
+<section id="데이터-수집-전에-codebook-만들기" class="level2">
+<h2 class="anchored" data-anchor-id="데이터-수집-전에-codebook-만들기">데이터 수집 전에 Codebook 만들기</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>variable</th>
+<th>역할</th>
+<th>측정·코딩</th>
+<th>유형</th>
+<th>허용값·단위</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>participant_id</code></td>
+<td>식별키</td>
+<td>익명 연구 ID</td>
+<td>nominal</td>
+<td>P001, P002, …</td>
+</tr>
+<tr class="even">
+<td><code>condition</code></td>
+<td>실험요인</td>
+<td>설명 형식</td>
+<td>nominal</td>
+<td>control, text, visual</td>
+</tr>
+<tr class="odd">
+<td><code>task_id</code></td>
+<td>반복단위</td>
+<td>과업 식별자</td>
+<td>nominal</td>
+<td>T01, T02, …</td>
+</tr>
+<tr class="even">
+<td><code>trial_order</code></td>
+<td>순서</td>
+<td>참여자별 제시 순서</td>
+<td>ordinal, discrete</td>
+<td>1–6</td>
+</tr>
+<tr class="odd">
+<td><code>time_sec</code></td>
+<td>결과</td>
+<td>시작–완료 시간</td>
+<td>ratio, continuous</td>
+<td>seconds</td>
+</tr>
+<tr class="even">
+<td><code>errors</code></td>
+<td>결과</td>
+<td>사전 정의 오류 수</td>
+<td>ratio, discrete</td>
+<td>0 이상의 정수</td>
+</tr>
+<tr class="odd">
+<td><code>trust_1</code>–<code>trust_5</code></td>
+<td>측정문항</td>
+<td>1–7점 동의</td>
+<td>ordinal</td>
+<td>1–7</td>
+</tr>
+<tr class="even">
+<td><code>mean_trust</code></td>
+<td>척도점수</td>
+<td>유효 문항 평균</td>
+<td>합성점수(연속형 근사)</td>
+<td>1–7</td>
+</tr>
+</tbody>
+</table>
+<p>Codebook에는 다음도 기록합니다.</p>
+<ul>
+<li>결측값 표기와 발생 이유</li>
+<li>역코딩 문항</li>
+<li>제외 기준</li>
+<li>단위와 시간대</li>
+<li>로그 버전과 생성 규칙</li>
+<li>파생변수 계산식</li>
+</ul>
+<hr>
+</section>
+<section id="r에서-연구설계-표현하기" class="level2">
+<h2 class="anchored" data-anchor-id="r에서-연구설계-표현하기">R에서 연구설계 표현하기</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>study <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>participant_id, <span class="sc">~</span>condition, <span class="sc">~</span>task_id, <span class="sc">~</span>trial_order, <span class="sc">~</span>time_sec, <span class="sc">~</span>errors, <span class="sc">~</span>trust,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"P01"</span>,           <span class="st">"text"</span>,     <span class="st">"T01"</span>,            <span class="dv">1</span>,       <span class="fl">42.1</span>,       <span class="dv">1</span>,     <span class="fl">5.8</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"P01"</span>,           <span class="st">"visual"</span>,   <span class="st">"T01"</span>,            <span class="dv">2</span>,       <span class="fl">35.4</span>,       <span class="dv">0</span>,     <span class="fl">6.2</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"P02"</span>,           <span class="st">"visual"</span>,   <span class="st">"T01"</span>,            <span class="dv">1</span>,       <span class="fl">51.0</span>,       <span class="dv">2</span>,     <span class="fl">4.6</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"P02"</span>,           <span class="st">"text"</span>,     <span class="st">"T01"</span>,            <span class="dv">2</span>,       <span class="fl">55.3</span>,       <span class="dv">2</span>,     <span class="fl">4.2</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(study)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>study <span class="sc">|&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(condition) <span class="sc">|&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_rows =</span> <span class="fu">n</span>(),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_time =</span> <span class="fu">mean</span>(time_sec),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_trust =</span> <span class="fu">mean</span>(trust)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>코드를 실행하기 전에 먼저 설명해 봅시다.</p>
+<ul>
+<li>한 행의 관측단위는 무엇인가?</li>
+<li><code>n_rows</code>는 독립적인 참여자 수와 같은가?</li>
+<li><code>condition</code>은 문자로 저장되었지만 어떤 측정 수준인가?</li>
+<li>단순 조건별 평균이 반복측정 구조를 충분히 반영하는가?</li>
+</ul>
+<hr>
+</section>
+<section id="조별-활동-세-가지-hci-사례" class="level2">
+<h2 class="anchored" data-anchor-id="조별-활동-세-가지-hci-사례">조별 활동: 세 가지 HCI 사례</h2>
+<section id="사례-a-vr" class="level3">
+<h3 class="anchored" data-anchor-id="사례-a-vr">사례 A: VR</h3>
+<blockquote class="blockquote">
+<p>그래픽 품질(고해상도 vs 저해상도)이 사용자의 몰입과 멀미에 어떤 영향을 주는가?</p>
+</blockquote>
+</section>
+<section id="사례-b-모바일-ui" class="level3">
+<h3 class="anchored" data-anchor-id="사례-b-모바일-ui">사례 B: 모바일 UI</h3>
+<blockquote class="blockquote">
+<p>버튼 크기(작음 vs 큼)와 색상 대비(낮음 vs 높음)가 과업시간과 오류율에 어떤 영향을 주는가?</p>
+</blockquote>
+</section>
+<section id="사례-c-음성-인터페이스" class="level3">
+<h3 class="anchored" data-anchor-id="사례-c-음성-인터페이스">사례 C: 음성 인터페이스</h3>
+<blockquote class="blockquote">
+<p>음성 인식 정확도(높음 vs 낮음)와 응답 지연(짧은 지연 vs 긴 지연)이 만족도와 재시도 행동에 어떤 영향을 주는가?</p>
+</blockquote>
+<p>각 조는 한 사례를 선택합니다.</p>
+<hr>
+</section>
+</section>
+<section id="조별-활동-design-canvas" class="level2">
+<h2 class="anchored" data-anchor-id="조별-활동-design-canvas">조별 활동: Design Canvas</h2>
+<p>선택한 사례를 다음 항목으로 설계하세요.</p>
+<ol type="1">
+<li>연구질문은 기술·연관·인과·해석 중 무엇인가?</li>
+<li>목표 모집단과 사용 맥락은 무엇인가?</li>
+<li>분석단위는 참여자, 과업, trial 중 무엇인가?</li>
+<li>조작할 요인과 각 수준은 무엇인가?</li>
+<li>결과변수는 무엇이며 어떻게 측정할 것인가?</li>
+<li>참여자 간 또는 참여자 내 설계 중 무엇을 선택할 것인가?</li>
+<li>무작위 할당 또는 순서 균형화(counterbalancing)은 어떻게 할 것인가?</li>
+<li>예상되는 교란, 학습, 피로, 요구특성은 무엇인가?</li>
+<li>표본 수는 어떤 근거로 계획할 것인가?</li>
+<li>데이터셋의 한 행과 주요 열은 무엇인가?</li>
+<li>이 설계로 가능한 결론과 불가능한 결론은 무엇인가?</li>
+</ol>
+<section id="공유-형식" class="level3">
+<h3 class="anchored" data-anchor-id="공유-형식">공유 형식</h3>
+<blockquote class="blockquote">
+<p>“우리 연구는 <strong>[대상]</strong>이 <strong>[맥락]</strong>에서 <strong>[조건 A와 B]</strong>를 경험할 때 <strong>[결과]</strong>가 얼마나 달라지는지 추정한다. 이를 위해 <strong>[설계]</strong>를 사용하고, <strong>[측정]</strong>으로 결과를 관찰한다.”</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="개인-활동-내가-자주-쓰는-서비스" class="level2">
+<h2 class="anchored" data-anchor-id="개인-활동-내가-자주-쓰는-서비스">개인 활동: 내가 자주 쓰는 서비스</h2>
+<p>자주 쓰는 앱·AI·디지털 서비스를 하나 선택하고 다음을 작성합니다.</p>
+<ul>
+<li>관찰한 문제 또는 궁금한 현상</li>
+<li>연구질문</li>
+<li>대상과 맥락</li>
+<li>예측변수 또는 조작할 조건</li>
+<li>결과변수</li>
+<li>조작화와 측정도구</li>
+<li>설계 유형</li>
+<li>주요 교란 또는 위협</li>
+<li>예상 데이터 구조</li>
+</ul>
+<section id="예시" class="level3">
+<h3 class="anchored" data-anchor-id="예시">예시</h3>
+<ul>
+<li><strong>서비스:</strong> 인스타그램</li>
+<li><strong>질문:</strong> 피드 정렬 방식이 콘텐츠 탐색 경험에 미치는 영향은 무엇인가?</li>
+<li><strong>조건:</strong> 시간순 vs 추천순</li>
+<li><strong>결과:</strong> 원하는 게시물 발견시간, 스크롤 수, 만족도</li>
+<li><strong>설계:</strong> 참여자 내 설계 + 순서 균형화(counterbalancing)</li>
+<li><strong>주의:</strong> 기존 사용 습관, 팔로우 구성, 콘텐츠 난이도를 통제하거나 균형화</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="핵심-정리" class="level2">
+<h2 class="anchored" data-anchor-id="핵심-정리">핵심 정리</h2>
+<ol type="1">
+<li><strong>연구질문이 방법보다 먼저</strong>입니다.</li>
+<li>연구설계, 자료수집 방법, 데이터 규모는 서로 다른 차원입니다.</li>
+<li>측정값은 구성개념 그 자체가 아니라 하나의 조작화 결과입니다.</li>
+<li>측정 수준과 연속·이산 여부를 구분해야 합니다.</li>
+<li>신뢰도는 일관성, 타당도는 점수 해석과 사용의 근거에 관한 문제입니다.</li>
+<li>인과추론은 IV/DV라는 이름이 아니라 비교 구조, 무작위화, 교란 통제에서 나옵니다.</li>
+<li>참여자 내·간 설계, 순서효과, 반복측정 구조를 데이터와 분석에 반영해야 합니다.</li>
+<li>큰 데이터도 잘못된 측정과 설계를 보상하지 못합니다.</li>
+<li>좋은 연구설계는 마지막에 <strong>깔끔한 데이터 구조와 정직한 주장 범위</strong>로 나타납니다.</li>
+</ol>
+<hr>
+</section>
+<section id="다음-주-전까지" class="level2">
+<h2 class="anchored" data-anchor-id="다음-주-전까지">다음 주 전까지</h2>
+<ul>
+<li>오늘 만든 Design Canvas를 한 페이지로 정리합니다.</li>
+<li>각 변수에 대해 구성개념, 조작화, 측정 수준, 분석단위를 기록합니다.</li>
+<li>데이터셋의 예상 열 이름을 codebook 형태로 작성합니다.</li>
+<li>“내 설계로 가능한 주장”과 “불가능한 주장”을 각각 한 문장으로 씁니다.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>다음 주부터 코드를 배울 때도 항상 먼저 질문합니다. <strong>이 행은 무엇이고, 이 열은 무엇을 측정하며, 이 숫자로 어떤 주장을 하려는가?</strong></p>
+</div>
+</div>
+<!-- [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/) -->
+<!-- <br> -->
+<!-- [Week2_lecture_pdf](content/HCI_stat_ds_w2.pdf) -->
+<!-- <br> -->
+<!-- ## HCI(Human-Computer Interaction) -->
+<!-- -   사용자가 컴퓨터, 모바일 기기, 가상현실(VR), 증강현실(AR), 웨어러블 디바이스, 인공지능 시스템 등 다양한 기술과 어떻게 상호작용하는지를 연구하는 학문 분야 -->
+<!-- -   초기의 HCI는 **“사람이 컴퓨터를 얼마나 효율적으로 사용할 수 있는가”**(예: 작업 속도, 오류율, 사용 편의성) 같은 **사용성(usability)** 중심의 문제에서 출발. 그러나 오늘날에는 훨씬 더 확장되어, 다음과 같은 주제들을 포괄하게 되었음: -->
+<!--     -   **경험(UX, User Experience)**: 단순히 효율성만이 아니라 즐거움, 몰입감, 정서적 반응까지 포함 -->
+<!--     -   **AI 및 지능형 인터페이스**: 음성 비서, 추천 시스템, 생성형 AI 등 새로운 상호작용 방식 -->
+<!--     -   **사회적·윤리적 측면**: 개인정보 보호, 알고리즘 편향, 디지털 웰빙 등 -->
+<!-- <br> -->
+<!-- ### HCI의 중요성 -->
+<!-- -   HCI는 단순한 학문적 연구를 넘어, **디지털 사회 전반을 설계하는 핵심 기반**이 되고 있음. -->
+<!--     -   **산업적 중요성**: 성공적인 제품·서비스는 뛰어난 기술만으로는 불가능하며, 사람들이 실제로 *쉽고 즐겁게* 사용할 수 있도록 설계되어야 함. (예: 아이폰, 넷플릭스, 카카오톡) -->
+<!--     -   **사회적 중요성**: 기술 사용 경험이 삶의 질, 사회적 관계, 심지어 정신 건강까지 직결됨. -->
+<!--     -   **학문적 중요성**: 심리학, 사회학, 디자인, 데이터과학 등과 깊이 연결되는 다학제적 연구 영역. -->
+<!-- <bR> -->
+<!-- ## HCI 연구와 연구 디자인 -->
+<!-- -   HCI 연구에서 **연구 디자인(research design)**은 특히 중요한데, 이는 곧 “우리가 어떤 질문을 던지고, 어떤 방법으로 답을 찾을 것인가”를 결정하는 단계이기 때문 -->
+<!-- -   **연구 질문에 따라 방법이 달라짐**: -->
+<!--     -   예: “UI 색상 변화가 사용자 만족도에 영향을 주는가?” → 실험(Experiment) 설계 필요 -->
+<!--     -   예: “어떤 요인이 사람들이 특정 앱을 더 오래 사용하게 만드는가?” → 설문조사나 로그 데이터 분석 활용 -->
+<!--     -   **잘못된 연구 디자인 → 잘못된 결론**: 연구 질문과 방법의 불일치가 발생하면, 얻어진 결과는 신뢰성과 타당성을 확보하기 어려움. -->
+<!-- -   즉, HCI 연구에서 연구 디자인은 단순한 절차적 준비가 아니라 **연구의 성공과 실패를 좌우하는 설계도(blueprint)** -->
+<!-- <br> -->
+<!-- ### HCI 실험 디자인의 기본 요소 -->
+<!-- -   **연구 문제** **정의**: 연구의 핵심 질문을 명확히 설정. 연구 문제에 따라 실험(또는 설문)의 방향이 결정되므로, 이를 명확히 규정하는 것이 필수적. -->
+<!--     -   **핵심**: 연구의 출발점은 *“무엇을 알고 싶은가?”* -->
+<!--     -   **의미**: 연구 문제를 명확히 규정하지 않으면, 실험 변수를 어떻게 설정할지, 어떤 데이터를 수집할지 방향이 흐려짐 -->
+<!--     -   **예시**: -->
+<!--         -   *“앱에서 알림 빈도가 사용자 집중도에 영향을 미치는가?”* -->
+<!--         -   *“메타버스 아바타의 외형 선택이 몰입감에 어떤 차이를 만드는가?”* -->
+<!--     -   **주의**: 연구 문제는 **측정 가능한 형태**로 구체화해야 함. “재미있다”보다 “재미 점수(1–7 Likert 척도)”처럼 명시적이어야 실험으로 옮길 수 있다는 것. -->
+<!-- -   **독립 변수와 종속 변수 결정**: HCI 연구에서는 독립 변수(변경 가능한 요소)와 종속 변수(결과로 관찰되는 측정값)를 정의해야 함. 예를 들어, UI 디자인의 색상(독립 변수)이 사용자 만족도(종속 변수)에 미치는 영향을 연구할 수 있음 -->
+<!--     -   **독립 변수 (IV)**: 연구자가 조작하거나 변화시키는 요소. -->
+<!--     -   **종속 변수 (DV)**: 그 변화의 결과로 관찰되는 측정값. -->
+<!--     -   **예시**: -->
+<!--         -   **IV**: UI 버튼 색상 (파랑 vs 빨강) -->
+<!--         -   **DV**: 사용자 클릭률, 작업 성공률, 만족도 설문 점수 -->
+<!-- -   **참여자 모집**: 실험(또는 설문)에 필요한 참여자 수와 참여자 특성을 고려하여 실험 대상을 모집. 참여자의 다양성은 연구 결과의 일반화 가능성에 영향을 미칠 수 있음. -->
+<!--     -   **참여자 수 (Sample size)**: 통계적 검정력을 확보하기 위해 충분한 수가 필요 (예: t-test에서 최소 30명, 실험군·대조군 각각 15명 이상 등) -->
+<!--     -   **참여자 특성**: 성별, 연령, 디지털 리터러시 수준, 문화적 배경 등은 결과 해석에 큰 영향을 줄 수 있음. 결과의 일반화 가능성 (External validity)이 높을 수록 좋은 연구. -->
+<!--     -   **예시**: -->
+<!--         -   아동 대상 교육용 앱 연구 → 참여자 나이 범위(7–12세) -->
+<!--         -   고령층 대상 모바일 뱅킹 연구 → 디지털 경험 수준이 중요한 통제 요인 -->
+<!-- -   **연구 환경 설정**: 실험(또는 설문)이 진행되는 환경은 실험 결과에 큰 영향을 미칠 수 있음. 온라인 실험(설문), 실제 환경에서의 관찰, 또는 실험실 내에서의 설정 등 적합한 환경을 선택해야 함. -->
+<!--     -   **실험실**: 변수 통제가 용이하나, 현실감이 낮을 수 있음. -->
+<!--     -   **현장(실제 사용 환경)**: 높은 생태 타당도(실제성), 그러나 외부 요인 통제가 어려움. -->
+<!--     -   **온라인**: 많은 참여자 모집 가능, 다양한 기기·환경 노출, 그러나 데이터 품질 관리가 관건. -->
+<!-- -   **데이터 수집 방법**: 실험(설문) 중 어떤 데이터를 어떻게 수집할지 결정. 설문조사, 사용 로그 분석, 인터뷰 등 다양한 방법을 사용할 수 있으며, 각 방법은 그 나름의 장단점이 있음. -->
+<!--     -   **설문조사**: 태도, 인식, 만족도 등 주관적 평가에 유용 -->
+<!--     -   **사용 로그 분석**: 클릭 수, 체류 시간, 오류율 등 객관적 행동 데이터 확보 -->
+<!--     -   **인터뷰 / 포커스 그룹**: 정성적 인사이트 도출 -->
+<!--     -   **생체 데이터**: 뇌파(EEG), 심박수, 시선 추적 등 → 몰입감·스트레스 같은 비의식적 반응 측정 -->
+<!--     -   **예시**: -->
+<!--         -   UX 만족도 → 설문 -->
+<!--         -   UI 버튼 오류율 → 사용 로그 -->
+<!--         -   VR 몰입감 → 설문 + 심박수 결합 -->
+<!-- <br> -->
+<!-- ### **HCI 실험 연구 사례** -->
+<!-- #### **사례 1: 가상 현실(VR)에서의 사용자 경험 연구** -->
+<!-- -   가상 현실에서 사용자의 몰입감을 측정하는 연구는 HCI 분야에서 활발히 진행되고 있음. -->
+<!-- -   예를 들어, **몰입감**이 어떻게 사용자 만족도에 영향을 미치는지 알아보기 위해 실험을 설계할 수 있는데, 이 실험에서 독립 변수는 **그래픽 품질**이나 **상호작용 방식**이 될 수 있고, 종속 변수는 **사용자 몰입감**과 **사용자 만족도**. -->
+<!-- -   실험 참가자들은 각각 다른 그래픽 품질과 상호작용 방식을 경험하고, 이후 설문을 통해 몰입감과 만족도를 평가. -->
+<!-- -   연구자는 이 데이터를 통해 가상 현실 환경에서의 UX(User Experience)를 개선하는 인사이트를 얻을 수 있음. -->
+<!-- <br> -->
+<!-- #### **사례 2: 음성 인터페이스 연구** -->
+<!-- -   음성 비서(AI Assistant)와의 상호작용에서 사용자 경험을 연구하는 실험도 HCI 연구에서 중요한 부분. -->
+<!-- -   이 실험에서는 **음성 인식 정확도**와 **응답 시간**을 독립 변수로 설정하고, **사용자 만족도**와 **과제 완료 시간**을 종속 변수로 측정할 수 있음. -->
+<!-- -   참여자들은 다양한 명령어를 음성 비서를 통해 수행하게 되고, 음성 인식 정확도나 응답 시간이 사용자에게 어떤 영향을 미치는지 분석할 수 있음. -->
+<!-- -   이를 통해 음성 인터페이스의 성능을 향상시키는 방법을 도출할 수 있을 것으로 기대. -->
+<!-- <br> -->
+<!-- #### **사례 3: 모바일 UI 디자인 평가** -->
+<!-- -   모바일 앱의 UI 디자인이 사용성에 미치는 영향을 분석하는 실험도 많이 수행됨 -->
+<!-- -   예를 들어, **버튼 크기**나 **색상 대비**가 사용자의 **과제 수행 시간**에 어떤 영향을 미치는지 연구할 수 있는데, 이 때 연구자는 다양한 UI 디자인을 실험 참가자들에게 제시하고, 그들이 과제를 얼마나 빠르고 정확하게 수행하는지를 측정. -->
+<!-- <br> -->
+<!-- ### **HCI 설문 연구** -->
+<!-- > HCI(Human–Computer Interaction) 연구에서 **실험**은 인과관계를 밝히는 데 강점이 있지만, 항상 가능하거나 효율적인 방법은 아님. 특히 **사용자 경험(UX), 만족도, 태도, 인식**과 같은 **심리적·주관적 요소**를 측정할 때는 **설문조사(survey)**가 매우 효과적입니다. -->
+<!-- > -->
+<!-- > -   **대규모 사용자 데이터를 수집할 때** -->
+<!-- > -->
+<!-- > -   **실험 환경을 통제하기 어려운 경우** (예: 특정 앱의 실제 사용자 집단) -->
+<!-- ### **설문 기반 HCI 연구의 기본 요소** -->
+<!-- -   **명확한 질문 구성**: 설문 질문은 명확하고 간결하게. 사용자들이 질문을 쉽게 이해하고 응답할 수 있어야 정확한 데이터를 얻을 수 있음. -->
+<!--     -   잘못된 질문 → “앱이 재미있고 유용하다고 생각하시나요?” (두 가지 의미 혼합) -->
+<!--     -   개선된 질문 → “앱이 재미있다고 느끼시나요?” / “앱이 유용하다고 느끼시나요?” (분리) -->
+<!-- -   **적절한 질문 유형 선택**: 리커트 척도(Likert scale), 선택형 질문, 개방형 질문 등을 적절히 조합하여 다양한 정보를 수집할 수 있는데, 연구 질문과 모형에 따라 질문의 유형을 잘 선택해야 함. -->
+<!--     -   지나치게 긴 개방형 문항은 응답 피로감을 높이므로, 적절히 배치하는 것이 중요 -->
+<!-- -   **참여자 모집 및 샘플링**: 설문조사의 신뢰성을 높이기 위해 적절한 표본을 선택하고 다양한 참여자들의 의견을 반영하는 것이 중요. -->
+<!-- <br> -->
+<!-- #### **사례 1: 웹사이트 사용성 평가** -->
+<!-- -   웹사이트의 **사용성**을 평가하기 위해 설문조사를 활용한 연구: 주로 **시스템 사용성 척도**(System Usability Scale, SUS) 같은 표준화된 설문을 사용하여 웹사이트의 사용성 점수를 측정. -->
+<!-- -   사용자가 웹사이트를 사용한 후, SUS 설문을 통해 **직관성**, **효율성**, **만족도** 등을 평가. -->
+<!-- -   리커트 척도를 사용하여 사용자들이 각 문항에 대해 평가할 수 있도록 구성. -->
+<!-- -   수집된 데이터를 바탕으로 웹사이트의 사용성에 대한 총점을 산출하고, 이를 기반으로 문제점과 개선 사항을 도출. -->
+<!-- <br> -->
+<!-- #### **사례 2: 모바일 앱 사용자 경험(UX) 연구** -->
+<!-- -   모바일 애플리케이션의 사용자 경험(UX)을 평가하는 설문 연구는 HCI에서 중요한 역할을 하는데, 예를 들어, 연구자는 **앱의 인터페이스 디자인**, **성능**, **기능성**에 대한 사용자 피드백을 수집할 수 있음 -->
+<!-- -   설문 문항은 **사용 편의성**, **디자인의 일관성**, **앱의 반응성** 등을 평가하는 항목으로 구성. -->
+<!-- -   리커트 척도를 사용하여 사용자가 각 항목에 대해 얼마나 만족하는지 평가. -->
+<!-- -   개방형 질문을 포함하여 사용자가 자유롭게 의견을 제시할 수 있도록 하여 정성적 데이터를 수집. -->
+<!-- -   이 데이터를 분석하여 UX 개선 방향을 도출하고, 추가 기능 구현이나 디자인 개선을 계획할 수 있음. -->
+<!-- <br> -->
+<!-- #### **사례 3: 소셜 미디어 사용 패턴 연구** -->
+<!-- -   소셜 미디어 플랫폼에서의 **사용자 행동 패턴**을 분석하기 위한 연구도 많이 진행: 사용자의 **행동**과 **태도**를 조사하여 소셜 미디어 사용이 개인에게 미치는 영향을 분석 -->
+<!-- -   설문을 통해 사용자의 **일일 사용 시간**, **주로 사용하는 기능**, **소셜 미디어를 사용하는 동기** 등에 대한 데이터를 수집. -->
+<!-- -   또한 **소셜 미디어 사용이 정서적 상태**나 **대인관계**에 미치는 영향을 평가하는 질문을 포함할 수 있음. -->
+<!-- -   수집된 데이터를 통해 사용자의 소셜 미디어 사용 패턴을 분석하고, 플랫폼 설계 개선 및 기능 업데이트에 필요한 인사이트를 얻을 수 있음. -->
+<!-- <br> -->
+<!-- ## HCI 연구에서 실험, 설문조사, 빅데이터 분석의 장단점 비교 -->
+<!-- > **HCI(Human-Computer Interaction)** 연구에서 **실험**과 **설문조사**는 전통적으로 많이 사용되었지만, 최근에는 **빅데이터 분석**이 점점 더 중요한 연구 방법으로 자리 잡고 있음. 빅데이터를 활용하면 방대한 양의 사용자 데이터를 기반으로 더 깊이 있는 분석이 가능하며, 새로운 인사이트를 얻을 수 있음. -->
+<!-- ### 1. **데이터 수집 범위 및 규모** -->
+<!-- -   **실험 연구** -->
+<!--     -   **장점:** 실험은 특정한 연구 질문에 맞게 **제어된 환경**에서 데이터를 수집할 수 있어, 데이터의 신뢰성이 높음 -->
+<!--     -   **단점:** 실험에서 수집할 수 있는 데이터는 제한적이며, 시간과 비용이 많이 들기 때문에 **데이터 규모가 작을 수** 있음. -->
+<!-- -   **설문조사** -->
+<!--     -   **장점**: 설문조사는 **대규모 데이터**를 수집할 수 있어 다양한 사람들의 의견을 반영할 수 있음. -->
+<!--     -   **단점**: 설문에 응답하는 사람들의 수가 많더라도 응답의 신뢰성과 응답자 성실성에 의존하기 때문에 **질적인 한계**가 있을 수 있음. -->
+<!-- -   **빅데이터 분석** -->
+<!--     -   **장점**: 빅데이터 분석은 **광범위한 사용자 행동**과 상호작용 데이터를 실시간으로 수집할 수 있으며, 사용자 그룹 간의 행동 패턴을 대규모로 분석할 수 있음. 특히, **실제 사용 환경**에서의 데이터가 포함되어 있어 현실적인 인사이트를 도출할 수 있음. -->
+<!--     -   **단점**: 빅데이터는 방대한 데이터 처리를 요구하므로 **전문적 기술**과 **인프라**가 필요. 또한, 데이터의 정확성과 품질을 보장하기 어려울 수 있음. -->
+<!-- ### 2. **분석의 정밀도 및 인과관계 도출** -->
+<!-- -   **실험** -->
+<!--     -   **장점**: 실험은 독립 변수와 종속 변수를 명확히 설정하여 (연구 설계가 제대로 되었다면) 인과관계를 명확히 도출할 수 있음. **변수 조작**이 가능하기 때문에 결과에 대한 해석이 명확한 편. -->
+<!--     -   **단점**: 실험 환경이 통제된 상황에서 이루어지기 때문에 실제 사용 환경과는 다를 수 있으며, 실험의 **외적 타당도**가 떨어질 수 있음. -->
+<!-- -   **설문조사** -->
+<!--     -   **장점**: 설문은 사용자의 **주관적 경험**이나 태도에 대한 깊이 있는 정보를 얻는 데 적합. 다양한 의견을 수집함으로써 정성적인 인사이트를 도출할 수 있음. -->
+<!--     -   **단점**: 설문조사 결과만으로는 **명확한 인과관계**를 도출하기 어려움. 응답자의 주관적 인식과 실제 행동이 다를 수 있기 때문. -->
+<!-- -   **빅데이터 분석** -->
+<!--     -   **장점**: 빅데이터 분석을 통해 실제 사용자 행동을 기반으로 **패턴**과 **상관관계**를 도출할 수 있으며, **정밀한 예측 모델**을 만들 수 있음. 대규모 데이터를 통해 변수 간의 관계를 자동으로 분석하고, 예상치 못한 인사이트를 발견할 수 있음. -->
+<!--     -   **단점**: 빅데이터는 **상관관계**를 잘 도출하지만, **인과관계**를 직접적으로 도출하기 어려울 수 있음. 추가적인 실험이나 분석이 필요할 수도 있음. -->
+<!-- ### 3. **비용 및 효율성** -->
+<!-- -   **실험** -->
+<!--     -   **장점**: 연구 목적에 맞는 특정 변수를 제어하여 **효율적**으로 데이터를 수집할 수 있음. 데이터의 품질이 높기 때문에 작은 규모로도 유의미한 결과를 얻을 수 있음. -->
+<!--     -   **단점**: 실험 환경을 구축하고, 참여자를 모집하며, 데이터를 분석하는 데 많은 **시간**과 **비용**이 소요. 특히 대규모 실험을 진행할 경우 상당한 자원이 필요. -->
+<!-- -   **설문조사** -->
+<!--     -   **장점**: 설문조사는 상대적으로 **저렴한 비용**으로 대규모 데이터를 수집할 수 있음. 특히 온라인 설문 플랫폼을 활용하면 시간과 비용을 절약할 수 있음. -->
+<!--     -   **단점**: 설문조사 자체는 효율적이지만, 설문 설계가 잘못되거나 응답자들이 성실하지 않다면 **데이터의 품질**이 떨어질 수 있음. -->
+<!-- -   **빅데이터 분석** -->
+<!--     -   **장점**: 기존에 축적된 데이터를 사용하면 **추가적인 비용 없이** 방대한 데이터를 분석할 수 있음. 이미 수집된 데이터에서 **실시간 분석**이 가능하여 **신속한 의사결정**에 도움을 줄 수 있음. -->
+<!--     -   **단점**: 빅데이터 분석을 시작하기 위해서는 **데이터 수집 인프라**와 **전문가**가 필요하며, 초기 구축 및 유지 비용이 매우 높을 수 있음. -->
+<!-- > 실험, 설문조사, 빅데이터 분석은 각각의 장단점이 뚜렷하며, 연구 목적과 상황에 따라 적합한 방법을 선택하거나 **상호 보완적으로** 활용할 수 있음. -->
+<!-- -   **실험**은 인과관계를 명확하게 밝히고 정밀한 통제를 가능하게 하지만, 시간과 비용이 많이 들며 대규모로 확대하기 어려움 -->
+<!-- -   **설문조사**는 비용 효율적이고 대규모 데이터를 수집할 수 있지만, 주관적 응답에 의존하기 때문에 신뢰성과 인과관계 분석에 한계가 있음 -->
+<!-- -   **빅데이터 분석**은 실제 사용자 데이터를 기반으로 대규모 패턴 분석이 가능하지만, 인과관계 도출이 어려우며 초기 인프라 구축 비용이 많이 들어감 -->
+<!-- <br> -->
+<!-- ## 통계학 기반 연구 디자인 -->
+<!-- > *“실험이 끝난 후에야 통계학자를 찾는 것은, 이미 죽은 환자를 부검해 달라고 부탁하는 것과 같다. 그는 아마도 실험이 왜 죽었는지 말해줄 수 있을 뿐이다.”* by Ronald Fisher -->
+<!-- <br> -->
+<!-- -   **연구 설계 단계에서부터 통계적 사고를 반영해야 함:** 실험을 다 끝내고 나서야 분석 방법을 고민하면, 그 결과가 이미 한계에 부딪힌 상태일 수 있음. -->
+<!-- <br> -->
+<!-- 가장 먼저 이해해야 할 것은 데이터 수집을 일종의 측정(measurement)으로 생각할 수 있다는 것. 즉, 우리가 여기서 하려는 것은 인간의 행동이나 인간의 마음에 대한 무언가를 측정(measure)하는 것. ***"측정"이란 무엇을 의미할까?*** -->
+<!-- ### Measurement -->
+<!-- > 연구에서 우리가 하는 일은 결국 **어떤 개념을 수치나 분류로 표현하는 것**. 이것이 바로 **측정(measurement)** -->
+<!-- -   My **age** is *33 years*. -->
+<!-- -   I *do not* **like anchovies**. -->
+<!-- -   My **chromosomal gender** is *male*. -->
+<!-- -   My **self-identified gender** is *male*. -->
+<!-- <bR> -->
+<!-- ### 측정의 미묘함: ‘나이’의 사례 -->
+<!-- -   겉보기에 단순해 보이는 **나이**조차, 어떻게 정의하느냐에 따라 다른 결과가 나오기도 함. -->
+<!--     -   **보통**: 출생 이후의 시간(예: 25세) -->
+<!--     -   **발달 심리학**: 아동은 ‘년;월(예: 2;11)’ 단위로 측정 → 발달 단계 구분을 더 정밀하게 반영 -->
+<!--     -   **신생아 연구**: 출생 이후 일수·시간 단위로 측정 -->
+<!--     -   **생물학적 관점**: 수정 이후 경과 시간으로 계산 → 조산/만산 아기의 발달 비교에서 더 의미 있을 수 있음 -->
+<!-- -   예를 들어, -->
+<!--     -   아기 하임이는 3주 일찍 태어났고 -->
+<!--     -   아기 하운이는 1주 늦게 태어났다고 하자. -->
+<!-- -   둘 다 “출생 후 2시간”이라면 같은 나이라고 볼 수 있을까? -->
+<!--     -   사회적으로는 그렇다고 하겠지만, **생물학적 발달 상태**를 연구한다면 그렇지 않을 수도 있음. -->
+<!-- <br> -->
+<!-- ### 측정 방법은 어떻게 정할까? -->
+<!-- -   어떤 방식으로 “나이”를 물을지는 연구 목적에 따라 달라짐 -->
+<!--     -   자기보고: “당신은 몇 살 입니까?” -->
+<!--     -   부모 보고: “자녀 A의 나이는 몇 살입니까?” -->
+<!--     -   공식 기록: 출생 신고일, 병원 진단서 등 -->
+<!-- -   즉, **동일한 개념(나이)**이라도 **연구 맥락**과 **분석 목적**에 따라 다른 방식으로 operationalize(구체화)할 수 있다는 것. -->
+<!-- <Br> -->
+<!-- ### Groseries to check! -->
+<!-- -   ***A theoretical construct***. This is the thing that you’re trying to take a measurement of, like “age”, “gender” or an “opinion”. A theoretical construct can’t be directly observed, and often they’re actually a bit vague. -->
+<!-- -   ***A measure***. The measure refers to the method or the tool that you use to make your observations. A question in a survey, a behavioural observation or a brain scan could all count as a measure. -->
+<!-- -   ***An operationalisation***. The term “operationalisation” refers to the logical connection between the measure and the theoretical construct, or to the process by which we try to derive a measure from a theoretical construct. -->
+<!-- -   ***A variable***. Finally, a new term. A variable is what we end up with when we apply our measure to something in the world. That is, variables are the actual “data” that we end up with in our data sets. -->
+<!-- <br> -->
+<!-- ## Scales of measurement -->
+<!-- > But not all variables are of the same qualitative type, and it’s very useful to understand what types there are. A very useful concept for distinguishing between different types of variables is what’s known as ***scales of measurement***. -->
+<!-- ### Nominal scale -->
+<!-- -   명목 척도 변수(범주형 변수라고도 함, categorical variable)는 다양한 가능성 간에 특별한 관계가 없는 변수. -->
+<!--     -   그 중 하나가 다른 변수보다 "더 크거나" "더 낫다"고 말하는 것은 말이 되지 않으며, 평균을 내는 것도 전혀 말이 되지 않는다. -->
+<!--     -   전형적인 예는 "눈 색깔". 눈은 파란색, 초록색, 갈색 등 여러 가지 가능성이 있지만, 그 중 어느 것도 다른 변수보다 "더 나은" 것은 아님. -->
+<!--     -   성별도 명목적. 남성이 여성보다 더 좋거나 나쁘지 않으며, "평균 성별"에 대해 이야기하는 것도 말이 되지 않기 때문. -->
+<!-- > Suppose I was doing research on how people commute to and from work. One variable I would have to measure would be what kind of transportation people use to get to work. This “transport type” variable could have quite a few possible values, including: “train”, “bus”, “car”, “bicycle”, etc. For now, let’s suppose that these four are the only possibilities, and suppose that when I ask 100 people how they got to work today, and I get this: -->
+<!-- | **Transportation** | **Number of people** | -->
+<!-- |--------------------|----------------------| -->
+<!-- | \(1\) Train        | 12                   | -->
+<!-- | \(2\) Bus          | 30                   | -->
+<!-- | \(3\) Car          | 48                   | -->
+<!-- | \(4\) Bicycle      | 10                   | -->
+<!-- -   So, what’s the average transportation type?  -->
+<!-- -   Similarly, notice that the order in which I list the options isn’t very interesting -->
+<!-- <br> -->
+<!-- ### Ordinal scale -->
+<!-- -   순서형 척도 변수는 명목형 척도 변수보다 구조가 조금 더 있지만 크게 다르지는 않다. 순서형 척도 변수는 [**다양한 가능성을 자연스럽고 의미 있게 정렬할 수 있는 방법이 있음**]{.underline} -->
+<!-- -   순서형 변수의 일반적인 예는 "경주에서 마무리하는 순위". 1위를 차지한 사람이 2위를 차지한 사람보다 더 빨랐다고 말할 수 있지만 얼마나 더 빨랐는지는 알 수 없음. -->
+<!-- -   결과적으로 1위 \> 2위, 2위 \> 3위라는 것을 알 수 있지만 1위와 2위의 차이는 2위와 3위의 차이보다 훨씬 클 수 있음. -->
+<!-- 심리적으로 더 흥미로운 예를 들어보면, 연구에서 사람들의 기후 변화에 대한 태도에 관심이 있다고 가정하고, 설문 응답자들에게 다음 네 가지 진술 중 자신의 신념과 가장 일치하는 것을 선택하라고 요청하였다. -->
+<!-- 1.  Temperatures are rising, because of human activity -->
+<!-- 2.  Temperatures are rising, but we don’t know why -->
+<!-- 3.  Temperatures are rising, but not because of humans -->
+<!-- 4.  Temperatures are not rising -->
+<!-- 위 네 가지 진술은 실제로 "현재 과학에 동의하는 정도"라는 측면에서 자연스러운 순서가 있다. 진술 1은 거의 일치하고, 진술 2는 적당히 일치하고, 진술 3은 잘 일치하지 않으며, 진술 4는 과학에 강하게 반대. 따라서 연구자가 관심 있는 것(사람들이 과학을 지지하는 정도)의 측면에서 항목을 1 \> 2 \> 3 \> 4로 정렬할 수 있음. -->
+<!-- 1.  과학적 합의와 **거의 일치** -->
+<!-- 2.  온난화는 인정하지만 원인에 대해 **중립적** -->
+<!-- 3.  온난화는 인정하지만 원인에 대해 **과학과 불일치** -->
+<!-- 4.  온난화 자체를 부정 (**강한 불일치**) -->
+<!-- <br> -->
+<!-- #### 그런데 순서를 뒤섞으면? -->
+<!-- 만약 문항을 이렇게 배치한다고 해보자: -->
+<!-- -   Temperatures are rising, but not because of humans -->
+<!-- -   Temperatures are rising, because of human activity -->
+<!-- -   Temperatures are not rising -->
+<!-- -   Temperatures are rising, but we don’t know why -->
+<!-- 여기서는 **1–2–3–4의 자연스러운 흐름**이 깨짐: 응답자가 보기에 “논리적 구조”가 불명확해져서 헷갈릴 수 있음 → 마치 “매우 동의한다, 조금 동의한다, 전혀 동의하지 않는다, 어느 정도 동의한다” 같은 이상한 순서로 선택지를 배열한 셈이 되기 때문. -->
+<!-- <br> -->
+<!-- ### Interval scale -->
+<!-- -   명목형 및 순서형 척도 변수와 달리 간격 척도 (interval scale) 및 비율 척도 변수 (ratio scale variable) 는 숫자 값이 진정으로 의미 있는 변수. -->
+<!-- -   간격 척도 변수의 경우 숫자 간의 차이는 해석 가능하지만 변수에는 "자연스러운" 0 (natural zero)값이 없다. -->
+<!-- -   간격 척도 변수의 좋은 예: 섭씨 온도. -->
+<!--     -   예를 들어 어제가 15도 였고 오늘은 18도 였다면 두 값 사이의 3도 차이는 진정으로 의미가 있음. 게다가 그 3도 차이는 7도 와 10도 사이의 3도 차이와 정확히 같다. 간단히 말해 간격 척도 변수의 경우 덧셈과 뺄셈이 의미가 있다고 할 수 있다. -->
+<!--     -   그러나 0도가 "온도가 전혀 없음"을 의미하는 것이 아니라는 점에 유의. 실제로는 "물이 얼 때의 온도"를 의미하는데, 이는 매우 임의적인 것. -->
+<!--     -   결과적으로 온도를 곱하거나 나누는 것은 무의미해짐. 20도 가 10도 보다 두 배 더 뜨겁다고 말하는 것은 잘못된 것이며, 20도 가 -10도 보다 -2배 더 뜨겁다고 주장하는 것도 이상하고 무의미함. -->
+<!-- <br> -->
+<!-- ### Ratio scale -->
+<!-- -   비율 척도 변수에서 0은 실제로 0을 의미하며 곱하고 나누어도 됨. -->
+<!-- -   비율 척도 변수의 좋은 심리학적 예는 응답 시간(RT). -->
+<!--     -   많은 작업에서 누군가가 문제를 해결하거나 질문에 답하는 데 걸리는 시간을 기록하는 것은 매우 일반적. 이는 작업의 어려움을 나타내는 지표이기 때문. -->
+<!--     -   Alan이 질문에 답하는 데 2.3초가 걸리는 반면 Ben은 3.1초가 걸린다고 가정해 보자. 간격 척도 변수와 마찬가지로 덧셈과 뺄셈은 여기에서 모두 의미가 있음. Ben은 실제로 Alan보다 3.1 - 2.3 = 0.8초 더 걸렸음. -->
+<!--     -   그러나 곱셈과 나눗셈도 여기에서 의미가 있습니다. Ben은 Alan보다 질문에 답하는 데 3.1 / 2.3 = 1.35배 더 오래 걸렸습니다. 그리고 이렇게 할 수 있는 이유는 RT와 같은 비율 척도 변수의 경우 "0초"는 실제로 "시간이 전혀 없음"을 의미하기 때문. -->
+<!-- <br> -->
+<!-- ### Continuous versus discrete variables -->
+<!-- > A continuous variable is one in which, for any two values that you can think of, it’s always logically possible to have another value in between. A discrete variable is, in effect, a variable that isn’t continuous. For a discrete variable, it’s sometimes the case that there’s nothing in the middle. -->
+<!-- > -->
+<!-- > 어렵다면: 그래서 중간이 있는거야 없는거야? 라고 물어보자! -->
+<!-- -   이러한 정의는 약간 추상적으로 보일 수 있지만 몇 가지 예를 보면 매우 간단함. -->
+<!--     -   예를 들어, 응답 시간은 연속적입니다. Alan이 질문에 응답하는 데 3.1초가 걸리고 Ben이 2.3초가 걸리면 Cameron의 응답 시간은 3.0초가 걸려서 그 사이에 있을 수 있음. 물론 David가 응답하는 데 3.031초가 걸릴 수도 있으므로 그의 RT는 Cameron과 Alan 사이에 있을 것. -->
+<!--     -   실제로 RT를 그렇게 정확하게 측정하는 것은 불가능할 수 있지만, 원칙적으로는 확실히 가능. 우리는 항상 다른 두 RT 사이에 새로운 RT 값을 찾을 수 있기 때문에 RT가 연속적이라고 할 수 있음. -->
+<!-- -   이 규칙을 위반하면 이산 변수가 발생. -->
+<!--     -   예를 들어, 명목 척도 변수는 항상 이산적. 기차와 자전거 사이에 있는 교통 수단은 없음. 따라서 교통 수단 유형은 이산적. -->
+<!--     -   마찬가지로 순서 척도 변수는 항상 이산적. "2위"가 "1위"와 "3위" 사이에 있지만, 논리적으로 "1위"와 "2위" 사이에 있을 수 있는 것은 없기 때문. -->
+<!--     -   **간격 척도와 비율 척도 변수는 어느 쪽으로든 갈 수 있다.** 위에서 보았듯이 반응 시간(비율 척도 변수)은 연속적. 섭씨 온도(간격 척도 변수)도 연속적. 그러나 학교에 다닌 해(간격 척도 변수)는 이산적. 2002년과 2003년 사이에는 년도 구분이 없기 때문. -->
+<!--     -   참/거짓 테스트(비율 척도 변수)에서 정답을 맞힌 문제의 수도 이산적. (5/10과 6/10 사이에는 아무것도 없다). 참/거짓 문제는 "부분적으로 옳을" 수 없기 때문에 이산적. -->
+<!-- 아래 표의 체크 표시는 가능성을 나타낸 것 -->
+<!-- |          |            |          | -->
+<!-- |----------|------------|----------| -->
+<!-- |          | continuous | discrete | -->
+<!-- | nominal  |            | ✓        | -->
+<!-- | ordinal  |            | ✓        | -->
+<!-- | interval | ✓          | ✓        | -->
+<!-- | ratio    | ✓          | ✓        | -->
+<!-- <br> -->
+<!-- ### Some complexities - 리커트 척도의 애매함 -->
+<!-- > 현실의 데이터는 교과서처럼 깔끔하지 않음. 변수들이 항상 명확히 “명목형, 순서형, 간격형, 비율형” 중 하나에만 딱 맞아떨어지는 건 아니기 때문. 연구자는 이 분류 체계를 **절대적인 규칙이 아니라 ‘실무적 잣대’** 정도로 이해할 필요가 있음. (뭣이 중한디..) -->
+<!-- <br> -->
+<!-- #### 심리학에서의 고전적인 예: 리커트 척도 -->
+<!-- 리커트 척도는 설문 연구에서 가장 흔히 쓰이는 도구. 예를 들어 이런 질문이 있다고 해보자: -->
+<!-- > **“모든 해적은 멋지다”라는 주장에 대해 당신의 의견은?** -->
+<!-- 응답을 5점 리커트 척도로 받으면: -->
+<!-- -   Strongly disagree -->
+<!-- -   Disagree -->
+<!-- -   Neither agree nor disagree -->
+<!-- -   Agree -->
+<!-- -   Strongly agree -->
+<!-- 전형적인 **5점 리커트 척도**. -->
+<!-- <br> -->
+<!-- #### 문제: 리커트 척도는 어떤 변수인가? -->
+<!-- -   **명목형은 아님**: 항목에 자연스러운 순서가 있음. -->
+<!-- -   **비율형도 아님**: “0”이라는 절대적 기준이 없음. -->
+<!-- -   남는 건 **순서형 vs 간격형** -->
+<!-- #### 순서형(Ordinal)으로 볼 때 -->
+<!-- -   "강력히 동의" \> "동의" \> "중립" \> "동의 안 함" \> "강력히 동의 안 함" -->
+<!-- -   순서는 명확 -->
+<!-- -   하지만 각 단계 사이 간격이 같은지는 보장할 수 없음 -->
+<!--     -   “강력히 동의 ↔ 동의” 간 차이와 -->
+<!--     -   “동의 ↔ 중립” 간 차이가 **같다고 말할 근거는 없음**. -->
+<!-- #### 간격형(Interval)처럼 쓸 때 -->
+<!-- -   실제 응답자들은 이 척도를 숫자 1\~5점처럼 다루는 경향이 있음. -->
+<!-- -   연구자도 편의상 이걸 평균 내고, t-test·회귀분석 등에 넣기도 함. (나도 많은 연구에서 그렇게 했음) -->
+<!-- -   엄밀히는 간격형이 아니지만, “준간격척도(quasi-interval)”처럼 다룰 수 있을 만큼 현실에서는 충분히 유용. -->
+<!-- -   리커트 척도 데이터는 **순서형이 원칙**이지만, 많은 연구자들은 분석의 편의성을 위해 **간격형에 가깝다고 보고 활용**하고 있음. -->
+<!-- -   논문에서 리커트 척도를 쓸 때는 → “본 연구에서는 리커트 척도를 간격형 변수처럼 다루었다”고 밝혀주는 것이 안전함. -->
+<!-- <br> -->
+<!-- ## Assessing the reliability of a measurement -->
+<!-- > 위에서 우리는 이론적 구성을 작동화하고 심리적 측정을 만드는 방법에 대해 생각해 보았음. 그리고 심리적 측정을 적용하면 여러 유형으로 나타날 수 있는 변수가 생긴다는 것을 알게 되었음. -->
+<!-- > -->
+<!-- > 그렇다면, **측정이 유용한가?** (Is the measurement any good?) -->
+<!-- > -->
+<!-- > 이 논의는 **신뢰성(reliability)과 타당성(validity)**이라는 두 가지 관련 아이디어의 관점에서 살펴봐야 함. -->
+<!-- > -->
+<!-- > 측정의 **신뢰성은 무언가를 얼마나 정확하게 측정**하는지 알려주는 반면, 측정의 **타당성은 측정이 얼마나 정확한지** 알려주는 것. -->
+<!-- -   신뢰성은 실제로 매우 간단한 개념: 측정의 **반복성(repeatability)** 또는 **일관성(consistency)**을 말한다. -->
+<!--     -   **높은 신뢰성:** "욕실 저울"을 사용하여 제 체중을 측정하는 것은 매우 신뢰할 수 있다. 저울에 계속해서 올라타고 내려도 저울은 같은 답을 줄 것이다. -->
+<!--     -   **낮은 신뢰성:** "엄마한테 물어봐서" 내 지능을 측정하는 것은 매우 신뢰할 수 없다. 어떤 날은 내가 좀 둔하다고 말하고, 다른 날은 내가 완전히 멍청하다고 말한다. -->
+<!-- -   **타당성:** 이 신뢰성의 개념은 측정이 정확한지 여부에 대한 질문과는 다르다. 내가 감자 자루를 들고 욕실 저울에 오르내릴 때에도 측정은 여전히 ​​신뢰할 수 있다. 항상 같은 답이 나올 것이기 때문이다. 그러나 이 신뢰할 수 있는 답은 내 실제 체중과 전혀 맞지 않으므로 틀렸다. 즉, 기술적으로 말하면, 이것은 **신뢰할 수 있지만 타당하지 않은 측정**이라고 할 수 있다. -->
+<!-- <bR> -->
+<!-- 그렇다면, 신뢰성을 측정할 수 있는 다양한 방법에 대해 생각해 보자. -->
+<!-- -   ***Test-retest reliability***. This relates to consistency **over time**: if we repeat the measurement at a later date, do we get a the same answer? -->
+<!-- -   ***Inter-rater reliability***. This relates to consistency **across people**: if someone else repeats the measurement (e.g., someone else rates my intelligence) will they produce the same answer? -->
+<!-- -   ***Parallel forms reliability***. This relates to consistency **across theoretically-equivalent measurements**: if I use a different set of bathroom scales to measure my weight, does it give the same answer? -->
+<!-- -   ***Internal consistency reliability***. If a measurement is constructed from lots of different parts that perform similar functions (e.g., a personality questionnaire result is added up across several questions) do the individual parts tend to give similar answers. -->
+<!-- <br> -->
+<!-- ## The “role” of variables: predictors and outcomes -->
+<!-- > 일반적으로 연구를 하면 다양한 변수가 많이 나온다. 그런 다음 데이터를 분석할 때 일반적으로 다른 변수의 관점에서 일부 변수를 설명하려고 한다. "설명하는 것"과 "설명되는 것"의 두 역할을 구분하는 것이 중요함. -->
+<!-- -   분석에서, X 와 Y 에 익숙해져야 함: 분석에서 서로 다른 역할을 하기 때문. -->
+<!-- -   독립 변수(IV)와 종속 변수(DV) -->
+<!--     -   IV는 설명을 위해 사용하는 변수(예: X )이고 DV는 설명되는 변수(예: Y ). -->
+<!--     -   **어원:** X 와 Y 사이에 실제로 관계가 있다면 Y 가 X 에 의존(종속)한다고 말할 수 있고, 연구를 "적절하게" 설계했다면 X 가 다른 어떤 것에도 의존하지 않는다(독립). -->
+<!--     -   하지만 IV는 실제로 "다른 모든 것과 독립적이지" 않고 (b) 관계가 없다면 DV가 실제로 IV에 의존하지 않는다. -->
+<!--     -   대안: **예측 변수와 결과 변수**. X (예측 변수)를 사용하여 Y (결과)에 대한 추측을 하는 것 -->
+<!-- | **role of the variable** | **classical name**        | **modern name** | -->
+<!-- |--------------------------|---------------------------|-----------------| -->
+<!-- | to be explained          | dependent variable (DV)   | outcome         | -->
+<!-- | to do the explaining     | independent variable (IV) | predictor       | -->
+<!-- <br> -->
+<!-- ## Experimental and non-experimental research -->
+<!-- ### Experimental research -->
+<!-- -   실험 연구의 주요 특징은 연구자가 연구의 모든 측면, 특히 연구 중에 참가자가 경험하는 것을 제어한다는 것. 특히 연구자는 예측 변수(IV)를 조작하거나 변경한 다음 결과 변수(DV)가 자연스럽게 변하도록 한다. -->
+<!-- -   여기서 아이디어는 예측 변수(IV)를 의도적으로 변경하여 결과에 인과 관계가 있는지 확인하는 것. 또한 예측 변수 이외의 다른 것이 결과를 일으킬 가능성이 없도록 하기 위해 다른 모든 것은 일정하게 유지되거나 다른 방식으로 "균형"을 이루어 결과에 영향을 미치지 않도록 해야 한다. -->
+<!-- -   실제로 실험 결과에 영향을 미칠 수 있는 다른 모든 것을 생각하는 것은 거의 불가능하며, 더군다나 일정하게 유지하는 것은 더욱 불가능하다. -->
+<!-- -   이에 대한 [**표준 솔루션은 무작위화** (randomization)]{.underline}. -->
+<!--     -   즉, 사람들을 무작위로 다른 그룹에 할당한 다음 각 그룹에 다른 처리를 제공하는 것(즉, 예측 변수의 다른 값을 할당). -->
+<!--     -   무작위화는 예측 변수를 처리 하는 일이 그룹 간에 체계적인 차이가 있을 가능성을 최소화하는 것(물론 없앨 수는 없음). -->
+<!-- -   매우 간단하고 완전히 비현실적이며 극도로 비윤리적인 예를 생각해 보자. -->
+<!--     -   흡연이 폐암을 유발하는지 알아보고 싶다고 가정해 보자. -->
+<!--     -   이를 위한 한 가지 방법은 흡연자와 비흡연자를 찾아 흡연자의 폐암 발병률이 더 높은지 확인하는 것. -->
+<!--         -   이는 연구자가 흡연자와 비흡연자를 통제할 수 없기 때문에 적절한 실험이 아님 -->
+<!--         -   예를 들어, 담배를 피우기로 선택한 사람들은 식단이 좋지 않거나 석면 광산에서 일하는 경향이 있을 수 있음. -->
+<!--         -   여기서 요점은 그룹(흡연자와 비흡연자)이 흡연뿐만 아니라 실제로 많은 면에서 다르다는 것. -->
+<!--         -   따라서 흡연자 사이에서 폐암 발병률이 높은 것은 흡연 자체가 아닌 다른 요인 때문일 수 있음. -->
+<!--         -   기술적으로 이러한 다른 요인(예: 식단)을 "혼동 요인(confounding factors)"이라고 함. -->
+<!--     -   적절한 실험이라면? -->
+<!--         -   윤리적인 실험을 할 필요가 없다면 해결책은 누가 흡연하고 누가 흡연하지 않는지 통제하는 것. -->
+<!--         -   구체적으로, 참가자를 무작위로 두 그룹으로 나누고 그 중 절반을 흡연자로 만든다면, 절반이 흡연한다는 사실 외에는 그룹이 어떤 면에서든 다를 가능성이 매우 낮다. -->
+<!--         -   그렇게 하면 흡연 그룹이 비흡연 그룹보다 암에 걸릴 확률이 더 높다면 흡연이 암을 유발한다고 더 명확하게 말할 수 있는 것. -->
+<!-- <br> -->
+<!-- ### Non-experimental research -->
+<!-- -   비실험적 연구는 **"연구자가 실험에서만큼 통제력이 없는 모든 연구"**를 포괄하는 광범위한 용어. -->
+<!-- -   분명히 과학자들은 통제력을 갖고 싶어하지만, 이전 예에서 알 수 있듯이 통제력을 얻으려고 시도할 수 없거나 시도해서는 안 되는 상황이 많이 있음. -->
+<!--     -   암에 걸리는지 알아보기 위해 사람들에게 흡연을 강요하는 것은 매우 비윤리적이고(거의 확실히 범죄) 실험적 통제력을 얻으려고 시도해서는 안 되는 상황의 좋은 예 -->
+<!--     -   하지만 윤리적 문제를 제쳐두더라도 "흡연 실험"에는 몇 가지 다른 문제가 있음. -->
+<!--     -   예를 들어, 절반의 사람들을 흡연자로 "강제"하자고 제안했을 때, 비흡연자 샘플로 시작해서 흡연자가 되도록 강요하는 것에 대해 이야기했을 것. -->
+<!--     -   이것은 미친 과학자가 좋아할 만한 사악한 실험 설계처럼 들리지만, 현실 세계에서 그 효과를 조사하는 데는 그다지 타당한 방법이 아닐 수 있음. -->
+<!--     -   예를 들어, 흡연은 사람들이 나쁜 식단을 먹을 때만 폐암을 유발한다고 가정하고, 일반적으로 흡연하는 사람들은 나쁜 식단을 먹는 경향이 있다고 가정하자. -->
+<!--     -   하지만 우리 실험에서 "흡연자"는 "자연적인" 흡연자가 아니기 때문에(즉, 우리는 비흡연자를 흡연자가 되도록 강요했기 때문에 흡연자가 가질 수 있는 다른 모든 정상적이고 실제적인 특성을 가지고 있지 않았다). -->
+<!--     -   따라서 아마도 자연적인 흡연자보다 강요된 흡연자는 더 나은 식단을 먹을 것. 아마도 이 처치 그룹은 폐암에 걸릴 확률이 대조 그룹과 크게 다르지 않을 것이고, 우리의 실험은 "자연적인" 세계의 구조를 위반하기 때문에 실패할 것("Artificial" result). -->
+<!-- -   준실험적 연구(Quasi-experimental Study)와 사례 연구(Case Study) -->
+<!--     -   앞서 실험 연구에서 잘못되 예로 논의한 예는 흡연자와 비흡연자의 폐암 발생률을 조사하고자 했지만, 누가 흡연하고 누가 흡연하지 않는지 통제하려고 하지 않았다. -->
+<!--         -   이것은 준실험적 설계라고 볼 수 있다. 즉, 실험과 동일하지만 예측 변수(IV)를 제어하지 않은 것. 여전히 통계를 사용하여 결과를 분석할 수 있지만 훨씬 더 조심해야 함. -->
+<!--     -   대안적인 접근 방식인 사례 연구는 하나 또는 몇 가지 사례에 대한 매우 자세한 설명을 제공하는 것을 목표로 한다. -->
+<!--         -   일반적으로 통계를 사용하여 사례 연구의 결과를 분석할 수 없으며 몇 가지 고립된 사례에서 "일반인"에 대한 일반적인 결론을 도출하는 것은 일반적으로 매우 어렵다. -->
+<!--         -   사례 연구가 유용한 순간은, 첫째, 대안이 없는 상황. 때로는 특정 영역에서 뇌 손상을 입은 사람을 많이 찾을 수 없으므로 할 수 있는 일은 가능한 한 자세하고 세심하게 사례를 설명하는 것뿐. -->
+<!--         -   그러나 사례 연구에는 몇 가지 진정한 이점도 있음. 연구할 사람이 많지 않기 때문에 각 사례에서 작용하는 특정 요소를 이해하기 위해 많은 시간과 노력을 투자하게 된다. (깊이 있는 연구가 가능 like documentary) -->
+<!--         -   결과적으로 사례 연구는 실험 및 준실험 설계에서 볼 수 있는 통계 지향적 접근 방식을 보완할 수 있다. -->
+<!-- <br> -->
+<!-- ## 프로그래밍 언어 -->
+<!-- ### Data -->
+<!-- -   인간은 데이터를 수집하고 결합하여 분석을 하는 작업을 태어날 때부터 수행. -->
+<!--     -   우리가 사용할 수 있는 모든 감각 기관을 통해서 수집한 데이터는 뇌에 저장되고 처리되고 이러한 과정을 통하여 인간은 예측하고 결정하며 행동. -->
+<!--     -   이러한 인간의 능력을 컴퓨터로 구현하려는 학문이 기계학습(machine learning)과 인공지능(Artifical intelligence). -->
+<!-- -   우리가 느끼고 보고 듣는 것들이 어떻게 인간의 뇌에 저장되는지는 여전히 Blackbox -->
+<!--     -   하지만 우리는 다양한 자료를 컴퓨터에 저장할 수 있는 방법을 만들었고 이를 통상적으로 **데이터(data)**라고 부름 -->
+<!--     -   특별히, 우리가 현재 말하는 데이터는 **디지털화된 자료** 로서 기본적으로 0과 1로, 즉 `BIT` 로 이루어진 자료. -->
+<!--     -   IT 기술은 단순한 0과 1의 조합으로 다양한 데이터를 아주 많이 그리고 편리하게 저장할 수 있게 해 주었음. -->
+<!-- ### Programming language -->
+<!-- > Language is a communication -->
+<!-- -   사람들은 언어를 통하여 자신의 의사를 전달하고 타인의 생각을 이해하며 서로 소통함 -->
+<!--     -   언어를 이용하여 상대방에 자신이 원하는 일을 시킬 수 있고 또한 언어를 통하여 자신의 생각과 수행한 일을 다른 사람에게 설명할 수 있음. -->
+<!--     -   인간과 인간을 연결해주는 언어는 수 천 가지 종류가 있고(예를 들어 한국어, 영어, 일본어, 독일어 등) 언어를 표현하는 문자(writing system)와 문자들을 배열하는 규칙인 문법(grammar)이 있음. -->
+<!--     -   예를 들어 우리는 영어를 사용하는 사람들과 소통하기 위하여 영어 단어를 외우고 문법을 익혀서 말하고 듣고 읽어서 의사를 전달하고 여러 가지 다양한 일을 수행. -->
+<!-- -   **프로그래밍 언어**는 **컴퓨터와 소통하기 위해서 개발된 언어** -->
+<!--     -   프로그래밍 언어도 인간 사이의 언어와 같이 언어를 구성하는 단어도 있으며 문법도 존재. -->
+<!--     -   인간 사이의 언어 소통에서 단어를 잘못 선택하거나 문법이 틀리면 소통이 어려운 것과 마찬가지로 컴퓨터와 소통하는 경우에도 선택된 프로그래밍 언어의 단어와 문법에 맞게 사용해야 오류 없이 소통할 수 있음. -->
+<!--     -   프로그래밍 언어도 인간의 언어와 마찬가지로 하나만 있는 것이 아님. 가장 초기에 나온`Fortran` 언어가 있고 그 이후에 `C`, `Lisp`, `JAVA`, `R` 등 매우 많은 언어가 개발됨. -->
+<!--     -   이렇게 많은 프로그래밍 언어들 중에 무엇을 배울지 선택하는 것은 어렵지만 많이 사용되는 언어를 배우면 여러 면에서 편리한 것처럼 프로그래밍 언어도 마찬가지일 것. -->
+<!-- ------------------------------------------------------------------------ -->
+<!-- <br> -->
+<!-- ## Activity -->
+<!-- > **사례 A (VR 연구)**\ -->
+<!-- > VR 환경에서 **그래픽 품질(고해상도 vs 저해상도)** 이 **사용자의 몰입감**에 어떤 영향을 주는가? -->
+<!-- > -->
+<!-- > **사례 B (모바일 앱 UI 연구)**\ -->
+<!-- > 스마트폰 앱에서 **버튼 크기(작게 vs 크게)** 와 **색상 대비(낮음 vs 높음)** 가 **작업 수행 시간** 및 **오류율**에 미치는 영향은 무엇인가? -->
+<!-- > -->
+<!-- > **사례 C (음성 인터페이스 연구)**\ -->
+<!-- > 스마트 스피커에서 **음성 인식 정확도(높음 vs 낮음)** 와 **응답 지연 시간(짧음 vs 김)** 이 **사용자 만족도**에 어떤 차이를 만드는가? -->
+<!-- <bR> -->
+<!-- -   Q1. 각 사례에서 **독립변수(IV)**와 **종속변수(DV)**는 무엇인가요? -->
+<!-- -   Q2. 이 연구에 숨겨진 **통제 변수**(Control Variable)는 무엇이 있을까요? (예: VR 연구에서 사용자의 게임 경험 수준, 앱 연구에서 화면 크기 등) -->
+<!-- -   Q3. 만약 여러분이 이 연구를 설계한다면 **측정 방법**을 어떻게 operationalize 하시겠습니까? (예: 몰입감 = 설문 척도, 오류율 = 시스템 로그, 만족도 = 리커트 척도 등) -->
+<!-- <br> -->
+<!-- **내가 자주 쓰는 앱/디지털 서비스**를 하나 골라 IV와 DV를 설정해보고, 짧게 실험 시나리오를 공유해보자. -->
+<!-- -   **시나리오 예시** -->
+<!--     -   앱: 인스타그램 -->
+<!--     -   IV: 피드 알고리즘 (시간순 vs 추천순) -->
+<!--     -   DV: 사용자가 머무는 시간, 포스트 좋아요 수 -->
+<!--     -   통제 변수: 사용자의 팔로워 수, 인터넷 속도 -->
+<!-- <!--#  -->
+<p>–&gt;</p>
 
 
 </section>
@@ -1413,12 +2734,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
       <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Dr_CJLee">
-      <i class="bi bi-twitter" role="img">
 </i> 
     </a>
   </li>  
