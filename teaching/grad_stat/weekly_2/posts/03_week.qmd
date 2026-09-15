@@ -1,0 +1,3186 @@
+---
+title: "데이터 유형과 구조 (1)"
+subtitle: "R와 GenAI로 HCI 연구 데이터를 읽고, 만들고, 검증하기"
+Week: 3
+format: html
+slide-format: revealjs
+---
+
+[Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
+
+<br>
+
+-   R 기초 문법 (1)
+
+{{< video https://youtu.be/zQu4LNOA_EE >}}
+
+-   R 기초 문법 (2)
+
+{{< video https://youtu.be/2u92_R_VyzI >}}
+
+<br>
+
+## 3주차 학습목표
+
+::: {.callout-note}
+이번 주 학습을 마치면 다음을 할 수 있어야 합니다.
+
+1. R, RStudio, Quarto의 역할을 구분하고 프로젝트 기반으로 작업한다.
+2. R의 **이름(name), 객체(object), 값(value), 자료형(type), 자료구조(structure)**를 구분한다.
+3. 벡터를 만들고, 인덱싱하고, 벡터화 연산과 재활용 규칙을 설명한다.
+4. `matrix`/`array`, `data.frame`, `list`의 차이를 이해하고 연구자료에 맞는 구조를 선택한다.
+5. 데이터의 관측단위와 변수 유형을 확인하고, 간단한 탐색적 데이터 분석을 수행한다.
+6. 코드 결과를 그대로 받아들이지 않고 **증거, 해석, 한계**를 함께 설명한다.
+7. ChatGPT와 같은 GenAI를 설명자·페어 프로그래머·비판적 검토자로 활용하고, 제안을 R에서 검증한다.
+:::
+
+### 오늘의 핵심 질문
+
+> **지난주에 설계한 측정값은 R 안에서 어떤 형태로 존재하며, 그 형태가 분석에 어떤 영향을 줄까?**
+
+- 한 행은 한 사람인가, 한 과업인가, 한 번의 클릭인가?
+- 숫자로 저장되어 있으면 모두 수치형 변수인가?
+- `NA`는 0과 같은가?
+- 1–7점 응답의 평균을 계산하려면 무엇을 먼저 확인해야 하는가?
+- 코드가 실행되었다는 사실만으로 결과를 믿어도 되는가?
+- GenAI가 제시한 코드와 해석은 무엇을 확인한 뒤 사용할 수 있는가?
+
+------------------------------------------------------------------------
+
+## 이번 주의 GenAI 활용 원칙
+
+이번 주에는 ChatGPT와 같은 GenAI를 별도의 부가도구가 아니라 **분석 과정에 질문을 던지는 협업자**로 사용합니다. 다만 연구질문, 측정의 의미, 분석 선택, 최종 주장의 책임은 연구자에게 있습니다.
+
+```{mermaid}
+flowchart LR
+    A["1. Attempt<br>먼저 예측하고 직접 시도"] --> B["2. Ask<br>맥락과 제약을 포함해 질문"]
+    B --> C["3. Test<br>R에서 실행하고 결과 확인"]
+    C --> D["4. Explain<br>채택·수정·기각 이유 설명"]
+    D -. "필요하면 다시 질문" .-> B
+```
+
+| GenAI의 역할 | 유용한 활용 | 맡기면 안 되는 판단 |
+|---|---|---|
+| **Tutor** | 개념을 다른 예시로 설명, 이해 확인 질문 생성 | 이해한 척 대신하기 |
+| **Pair programmer** | 코드 초안, 오류 원인 후보, 대안 문법 제시 | 실행하지 않은 코드를 정답으로 간주하기 |
+| **Data critic** | 결측·이상값·자료형·관측단위 점검 질문 제안 | 삭제·대체 규칙을 연구 맥락 없이 결정하기 |
+| **Reviewer** | 과도한 주장, 대안 설명, 추가 자료 제안 | 결과의 타당성을 최종 판정하기 |
+
+### 좋은 프롬프트의 기본 구조
+
+> **Context + Goal + Evidence + Constraints + Desired output + Verification**
+
+```text
+나는 HCI 대학원 수업에서 R을 배우고 있다.
+목표는 코드를 대신 작성받는 것이 아니라 자료구조를 이해하는 것이다.
+아래에 str() 출력과 내가 작성한 코드를 제공하겠다.
+
+1. 먼저 관측단위와 각 변수의 자료형을 질문해 달라.
+2. 오류의 원인 후보를 최대 3개만 제시하라.
+3. 완성 코드를 바로 주지 말고, 확인할 R 명령을 한 번에 하나씩 제시하라.
+4. 인과관계는 추론하지 말라.
+5. 마지막에 내가 설명해야 할 핵심 개념을 한 문장 질문으로 만들어 달라.
+```
+
+::: {.callout-important title="GenAI 사용의 네 가지 원칙"}
+1. **Human first:** AI를 열기 전에 관측단위, 예상 결과, 첫 코드를 직접 적습니다.  
+2. **Run everything:** AI가 만든 R 코드는 반드시 자신의 세션에서 실행합니다.  
+3. **Verify meaning:** 실행 여부뿐 아니라 변수의 의미, 단위, 표본, 결측, 주장 범위를 확인합니다.  
+4. **Protect data:** IRB 자료, 개인정보, 비공개 로그, API key는 공개형 GenAI에 업로드하지 않습니다. 예제 또는 비식별·합성 자료를 사용합니다.
+:::
+
+::: {.callout-note title="ChatGPT Data Analysis를 사용할 때"}
+지원되는 환경에서는 CSV나 스프레드시트를 업로드해 표를 탐색하고 코드를 생성할 수 있습니다. 그러나 이 수업에서는 AI 화면의 결과만 제출하지 않고, **핵심 분석을 R 코드로 재현하고 해석을 검증**합니다. 기능과 파일 지원 범위는 계정 및 환경에 따라 달라질 수 있습니다.
+
+- [OpenAI 공식 안내: Data analysis with ChatGPT](https://help.openai.com/en/articles/8437071-data-analysis-with-chatgpt)
+:::
+
+------------------------------------------------------------------------
+
+## 연구설계에서 데이터 구조로
+
+지난주에는 이론적 구성개념을 측정 가능한 변수로 조작화했습니다. 이번 주에는 그 변수가 실제 데이터셋과 R 객체로 어떻게 표현되는지 살펴봅니다.
+
+```{mermaid}
+flowchart LR
+    A["Theoretical Construct"] --> B["Operationalization"]
+    B --> C["Observed Variable"]
+    C --> D["R Data Type"]
+    D --> E["Data Structure"]
+    E --> F["Analysis and Claim"]
+```
+
+예를 들어 **AI 신뢰**라는 구성개념을 1–7점 다문항 척도로 측정했다면 다음과 같은 결정이 필요합니다.
+
+| 연구 단계 | 질문 | R에서의 표현 예시 |
+|---|---|---|
+| 측정 | 문항 응답은 어떤 값인가? | `integer`, `ordered factor` |
+| 점수화 | 다문항 점수를 어떻게 합칠 것인가? | numeric vector `mean_trust` |
+| 관측단위 | 한 행은 사람인가, 과업인가? | participant-level 또는 trial-level `data.frame` |
+| 반복측정 | 한 사람이 여러 조건을 경험하는가? | 동일한 `participant_id`가 여러 행에 반복 |
+| 결측 | 응답하지 않은 값은 무엇인가? | `NA` |
+| 분석 | 조건별 신뢰를 어떻게 비교할 것인가? | 요약, 시각화, 통계모형 |
+
+::: {.callout-important}
+R은 데이터의 **형식**을 알 수 있지만, 그 값이 무엇을 **의미**하는지는 자동으로 알지 못합니다. 의미는 연구설계, 코드북, 변수명, 분석자의 판단에서 나옵니다.
+:::
+
+::: {.callout-tip title="GenAI Checkpoint 1 — 연구설계를 데이터 스키마로 번역하기"}
+먼저 3분 동안 직접 한 행의 관측단위와 필요한 열을 적은 뒤, GenAI에게 대안을 요청합니다.
+
+```text
+다음 HCI 연구를 long-format 데이터로 설계하려고 한다.
+- 한 참여자가 text와 voice 인터페이스를 모두 경험한다.
+- 각 조건에서 search와 booking 과업을 수행한다.
+- 결과는 completion_time, errors, trust_1~trust_5이다.
+
+다음을 표로 제안하라.
+1. 한 행의 관측단위
+2. 필요한 변수명
+3. 각 변수의 R type/class
+4. key와 반복되는 ID
+5. 결측값 코드와 확인해야 할 애매한 점
+완성 코드는 만들지 말고, 설계상 질문을 먼저 제시하라.
+```
+
+AI의 답에서 특히 확인할 것은 다음입니다.
+
+- 참여자 수준 변수와 시행 수준 변수가 섞이지 않았는가?
+- `trust_1`부터 `trust_5`가 문항인지, 합성점수인지 구분했는가?
+- within-subject 설계에서 같은 사람의 행이 반복된다는 사실을 반영했는가?
+- 숫자로 저장되는 조건 코드를 연속형 변수로 오해하지 않았는가?
+:::
+
+------------------------------------------------------------------------
+
+## 첫 질문: CSV가 열리면 데이터 준비는 끝난 걸까?
+
+다음은 네 명의 참여자가 인터페이스 과업을 수행한 자료라고 가정해 봅시다.
+
+```{r}
+raw_hci <- data.frame(
+  participant_id = c("P01", "P02", "P03", "P04"),
+  interface = c("voice", "text", "voice", "text"),
+  completion_time = c("42.1", "38.4", "timeout", "35.2"),
+  trust = c(6, 5, NA, 4)
+)
+
+raw_hci
+str(raw_hci)
+```
+
+`completion_time`에는 숫자처럼 보이는 값이 세 개 있지만, `"timeout"`이 하나 들어가면서 전체 열이 문자형(character)이 되었습니다.
+
+```{r}
+mean(raw_hci$completion_time)
+```
+
+::: {.callout-warning}
+데이터 파일이 열렸다는 것은 **문자열을 읽는 데 성공했다**는 뜻일 뿐입니다. 분석 가능한 데이터가 되었다는 뜻은 아닙니다.
+:::
+
+### 60초 진단
+
+1. 이 데이터의 관측단위는 무엇인가요?
+2. `trust`의 `NA`는 0점과 같은 의미인가요?
+3. `timeout`을 결측값으로 바꾸면 충분한가요, 아니면 별도의 사건으로 보존해야 할까요?
+4. 한 참여자가 여러 과업을 수행했다면 현재 구조는 어떻게 바뀌어야 할까요?
+
+> 데이터 전처리는 단순한 청소가 아니라 **연구에서 무엇이 일어났는지를 데이터 구조에 정직하게 표현하는 과정**입니다.
+
+::: {.callout-tip title="GenAI Checkpoint 2 — 원자료 대신 진단 출력으로 상담하기"}
+민감한 원자료를 그대로 업로드하기보다 `str()`, `head()`, `summary()`, 결측 개수처럼 필요한 진단 정보만 제공합니다.
+
+```text
+아래는 HCI 실험 데이터의 str()와 summary() 출력이다.
+관측단위는 한 참여자의 한 과업 수행이다.
+
+1. 출력에서 직접 확인되는 문제와 추정에 불과한 문제를 구분하라.
+2. 확인해야 할 데이터 품질 이슈를 우선순위대로 제시하라.
+3. 각 이슈를 검증할 짧은 R 코드만 제시하라.
+4. 값을 삭제하거나 대체하는 결정은 내리지 말라.
+```
+
+AI가 `timeout`을 `NA`로 바꾸자고 제안하더라도 바로 따르지 않습니다. 다음을 먼저 결정해야 합니다.
+
+- timeout은 단순 누락인가, 과업 실패라는 결과인가?
+- 제한시간은 몇 초였는가?
+- 분석에서 시간과 성공 여부를 분리할 것인가?
+- 사전에 정한 제외 규칙이 있는가?
+:::
+
+------------------------------------------------------------------------
+
+## R & RStudio
+
+### R, RStudio, Quarto는 서로 다른 도구
+
+| 도구 | 역할 | 비유 |
+|---|---|---|
+| **R** | 코드를 계산하고 결과를 만드는 프로그래밍 언어와 실행 엔진 | 주방의 조리 장비 |
+| **RStudio** | 코드, 파일, 그래프, 도움말을 한곳에서 다루는 IDE | 정리된 주방과 작업대 |
+| **Quarto** | 코드, 설명, 표, 그림을 하나의 재현 가능한 문서로 묶음 | 조리법과 완성된 보고서 |
+
+RStudio의 Console에서 실행한 코드는 빠르게 시험하기 좋지만 기록이 남기 어렵습니다. 중요한 분석은 `.R` 스크립트나 `.qmd` 문서에 남겨야 합니다.
+
+::: {.callout-tip}
+**Console은 실험장, script와 Quarto는 연구기록입니다.**
+:::
+
+### Base R: 먼저 데이터와 대화하기
+
+R에는 연습용 데이터셋이 기본으로 포함되어 있습니다.
+
+```{r}
+#| eval: false
+data()
+```
+
+`cars` 데이터는 자동차의 속도와 정지거리를 기록한 간단한 자료입니다.
+
+```{r}
+str(cars)
+head(cars)
+summary(cars)
+dim(cars)
+names(cars)
+```
+
+이 함수들은 서로 다른 질문에 답합니다.
+
+| 함수 | 묻는 질문 |
+|---|---|
+| `str()` | 이 객체는 어떤 구조이며 각 변수의 자료형은 무엇인가? |
+| `head()` / `tail()` | 실제 행은 어떤 모습인가? |
+| `summary()` | 값의 범위와 중심, 결측, 범주 분포는 어떠한가? |
+| `dim()` | 행과 열은 몇 개인가? |
+| `names()` | 변수 이름은 무엇인가? |
+
+> 새로운 데이터를 받으면 바로 모형을 적합하지 말고, 먼저 **구조를 읽는 습관**을 들입니다.
+
+### 그래프를 한 단계씩 만들기
+
+가장 단순한 그래프부터 시작합니다.
+
+```{r}
+plot(cars)
+```
+
+축 이름을 명확하게 만듭니다.
+
+```{r}
+plot(
+  cars$speed,
+  cars$dist,
+  xlab = "Speed",
+  ylab = "Stopping distance"
+)
+```
+
+점의 형태와 제목을 추가합니다.
+
+```{r}
+plot(
+  cars$speed,
+  cars$dist,
+  xlab = "Speed",
+  ylab = "Stopping distance",
+  pch = 19,
+  main = "Speed and stopping distance"
+)
+```
+
+::: {.callout-note}
+한꺼번에 긴 코드를 쓰기보다 **실행 → 확인 → 한 요소 추가 → 다시 확인**의 순서로 작업하면 오류가 발생한 지점을 찾기 쉽습니다.
+:::
+
+------------------------------------------------------------------------
+
+### Good habits in learning data science
+
+#### 1. 도움말을 읽는 것도 코딩이다
+
+```{r}
+#| eval: false
+?plot
+help(plot)
+example(plot)
+```
+
+도움말에서 최소한 다음 항목을 확인합니다.
+
+- **Usage:** 함수의 기본 형태
+- **Arguments:** 각 입력값의 의미
+- **Value:** 함수가 반환하는 객체
+- **Examples:** 실행 가능한 사용 예시
+
+#### 2. 작업 폴더보다 프로젝트를 사용한다
+
+```{r}
+getwd()
+```
+
+`setwd("C:/...")`를 문서마다 반복하면 다른 컴퓨터에서 코드가 작동하지 않을 가능성이 큽니다. RStudio Project를 만들고 프로젝트 폴더를 기준으로 상대경로를 사용합니다.
+
+```text
+week03_project/
+├─ week03.Rproj
+├─ 03_week.qmd
+├─ data_raw/
+├─ data_processed/
+├─ figures/
+└─ R/
+```
+
+예를 들어 원자료는 다음과 같이 읽습니다.
+
+```{r}
+# 프로젝트 폴더를 기준으로 한 상대경로 예시
+# logs <- read.csv("data_raw/user_logs.csv")
+```
+
+::: {.callout-warning}
+분석 중간에 `setwd()`로 위치를 계속 바꾸면 코드가 어느 폴더를 기준으로 작동하는지 추적하기 어렵습니다. 프로젝트를 열고, 상대경로를 사용하세요.
+:::
+
+#### 3. 패키지 설치와 불러오기를 구분한다
+
+```{r}
+#| eval: false
+# 한 컴퓨터에서 보통 한 번만 설치
+install.packages(c("dplyr", "ggplot2"))
+```
+
+```{r}
+# R 세션을 새로 시작할 때마다 불러오기
+library(dplyr)
+library(ggplot2)
+```
+
+- `install.packages()`는 패키지를 컴퓨터에 저장합니다.
+- `library()`는 설치된 패키지를 현재 R 세션에서 사용할 수 있게 합니다.
+- 패키지 이름과 함수 이름이 충돌할 때는 `dplyr::filter()`처럼 출처를 명시할 수 있습니다.
+
+#### 4. 오류 메시지를 마지막 줄부터 읽는다
+
+| 오류·경고 | 먼저 확인할 것 |
+|---|---|
+| `object 'x' not found` | 객체를 만들었는가? 이름 철자가 같은가? 해당 청크를 먼저 실행했는가? |
+| `could not find function` | 패키지를 설치하고 `library()`로 불러왔는가? |
+| `unexpected symbol` | 괄호, 쉼표, 따옴표가 빠지지 않았는가? |
+| `non-numeric argument` | 숫자여야 할 열이 문자형으로 읽히지 않았는가? |
+| `NAs introduced by coercion` | 숫자로 바꿀 수 없는 문자열이 포함되어 있지 않은가? |
+
+#### 5. 재현 가능한 최소 예시를 만든다
+
+오류가 생기면 전체 연구자료를 복사하기보다 문제를 재현하는 작은 객체를 만듭니다.
+
+```{r}
+bad_time <- c("42.1", "38.4", "timeout", "35.2")
+as.numeric(bad_time)
+```
+
+이제 어떤 값이 변환을 방해했는지 분명하게 보입니다.
+
+#### 6. GenAI에는 “정답”보다 “진단 순서”를 요청한다
+
+오류 메시지, 관련 코드, 객체 구조, 기대한 결과를 함께 제공해야 유용한 답을 얻을 수 있습니다.
+
+```text
+당신은 R 디버깅 튜터다.
+아래 코드에서 오류가 발생했다.
+
+- 기대한 결과: completion_time의 평균
+- 실제 오류: argument is not numeric or logical: returning NA
+- str() 결과: completion_time은 character
+- 최소 재현 코드: bad_time <- c("42.1", "38.4", "timeout", "35.2")
+
+완성된 해결 코드를 한꺼번에 주지 말고,
+(1) 오류의 뜻, (2) 첫 확인 명령, (3) 확인 결과에 따른 다음 분기를 제시하라.
+```
+
+::: {.callout-warning}
+AI가 “작동하는 코드”를 만들었다고 해서 연구적으로 올바른 처리가 된 것은 아닙니다. 예를 들어 `timeout`을 임의의 큰 숫자나 평균값으로 바꾸면 코드는 실행되지만 결과의 의미가 왜곡될 수 있습니다.
+:::
+
+------------------------------------------------------------------------
+
+### Data for example: `iris`
+
+`iris`는 세 종의 붓꽃에서 꽃받침과 꽃잎의 길이·너비를 측정한 고전적인 데이터셋입니다. 오늘은 분류모형보다 **자료형과 구조를 읽는 연습**에 사용합니다.
+
+```{r}
+str(iris)
+head(iris, 10)
+summary(iris)
+```
+
+#### 구조를 읽어봅시다
+
+- 한 행(row)의 관측단위는 무엇인가요?
+- 수치형 변수는 몇 개인가요?
+- 범주형 변수는 무엇이며 몇 개의 수준(level)을 가지나요?
+- 종(species)을 숫자 1, 2, 3으로 저장하면 수치형 변수가 되는 걸까요?
+
+```{r}
+levels(iris$Species)
+table(iris$Species)
+```
+
+변수 두 개의 관계를 먼저 봅니다.
+
+```{r}
+plot(
+  iris$Petal.Width,
+  iris$Petal.Length,
+  col = iris$Species,
+  pch = 19,
+  xlab = "Petal width",
+  ylab = "Petal length"
+)
+```
+
+::: {.callout-important}
+그래프에서 종별 군집이 보인다고 해서 꽃잎 너비가 종을 **원인적으로 결정한다**는 뜻은 아닙니다. 시각화가 보여주는 패턴과 연구설계가 허용하는 주장을 구분해야 합니다.
+:::
+
+::: {.callout-tip title="GenAI Checkpoint 3 — 설명을 듣기 전에 예측하기"}
+다음 프롬프트처럼 GenAI를 **소크라틱 튜터**로 사용합니다.
+
+```text
+iris 데이터를 공부 중이다. 답을 먼저 설명하지 말고,
+str(iris), table(iris$Species), 산점도에서 내가 읽어야 할 내용을
+한 번에 한 질문씩 물어봐라.
+내 답을 받은 뒤 틀린 부분만 피드백하고 다음 질문으로 넘어가라.
+인과관계 표현이 나오면 즉시 지적하라.
+```
+
+핵심은 설명을 복사하는 것이 아니라, **내가 먼저 관찰하고 AI가 빈틈을 질문하게 하는 것**입니다.
+:::
+
+------------------------------------------------------------------------
+
+### Data Science Process with example data
+
+데이터 분석은 한 방향으로 끝나는 직선 과정이 아니라, 질문과 자료 사이를 반복해서 오가는 과정입니다.
+
+```{mermaid}
+flowchart LR
+    A["Question"] --> B["Collect or Import"]
+    B --> C["Inspect"]
+    C --> D["Clean and Transform"]
+    D --> E["Explore"]
+    E --> F["Model or Infer"]
+    F --> G["Communicate"]
+    G -. "Revise the question" .-> A
+```
+
+### GenAI를 각 단계에 배치하기
+
+| 분석 단계 | GenAI가 도울 수 있는 일 | 연구자가 반드시 확인할 것 |
+|---|---|---|
+| **Question** | 질문을 더 측정 가능하게 바꾸기, 반대 가설과 대안 조작화 제안 | 연구목적, 이론적 중요성, 실제 측정 가능성 |
+| **Collect / Import** | 데이터 사전 초안, 파일 읽기 코드, 필요한 메타데이터 목록 | 출처, 동의 범위, 관측단위, 개인정보 |
+| **Inspect** | `str()`·`summary()` 출력 설명, 품질 점검 코드 제안 | AI가 보지 못한 값, 단위, 범주 의미, 표본구조 |
+| **Clean / Transform** | 변환 코드 초안, 이름 정리, 결측 유형 질문 | 삭제·대체 규칙의 연구적 근거와 원자료 보존 |
+| **Explore** | 질문에 맞는 표·그래프 후보와 코드 제안 | 축·단위·분모·표본 수·분포·과도한 패턴 해석 |
+| **Model / Infer** | 가능한 모형과 가정 비교, 진단 코드 제안 | 설계와 모형의 일치, 독립성, 불확실성, 인과 주장 |
+| **Communicate** | 요약 초안, 대안 설명, reviewer 역할 | 실제 출력과 일치 여부, 효과크기, 한계, 최종 문장 |
+
+::: {.callout-important}
+GenAI는 단계 사이의 이동을 빠르게 할 수 있지만, **잘못 정의한 관측단위나 측정값을 자동으로 구해 주지는 못합니다.** 빠른 분석보다 올바른 질문과 구조가 먼저입니다.
+:::
+
+#### Example: restaurant `tips` data
+
+이 데이터는 한 식당에서 기록된 계산서와 팁 정보를 담고 있습니다.
+
+```{r}
+tips_url <- "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+tips <- read.csv(tips_url)
+
+str(tips)
+head(tips)
+```
+
+::: {.callout-note}
+원격 URL은 수업 예제에는 편리하지만 장기적으로 안정적이지 않을 수 있습니다. 실제 연구에서는 원자료를 `data_raw/`에 보존하고, 출처와 다운로드 날짜를 함께 기록하세요.
+:::
+
+#### Step 1. 관측단위를 먼저 확인한다
+
+이 데이터의 한 행은 **한 사람**이 아니라 **한 테이블의 한 계산서**입니다.
+
+```{r}
+dim(tips)
+names(tips)
+```
+
+주요 변수는 다음과 같습니다.
+
+| 변수 | 의미 | 예상 자료형 |
+|---|---|---|
+| `total_bill` | 총 계산금액 | numeric |
+| `tip` | 팁 금액 | numeric |
+| `sex` | 데이터에 기록된 계산자의 성별 범주 | character/factor |
+| `smoker` | 흡연석 여부 | character/factor |
+| `day` | 요일 | character/factor |
+| `time` | 점심/저녁 | character/factor |
+| `size` | 테이블 인원 수 | integer/numeric |
+
+첫 번째 행을 읽어봅시다.
+
+```{r}
+tips[1, ]
+```
+
+첫 행은 일요일 저녁, 2인 테이블에서 총액이 16.99이고 팁이 1.01인 계산서를 나타냅니다.
+
+::: {.callout-tip title="AI Move — 관측단위와 변수사전 점검"}
+`names(tips)`와 첫 3행을 제시하고 “각 행이 누구 또는 무엇을 의미하는지, 변수 정의에서 애매한 부분이 무엇인지” 질문합니다. AI가 `sex`를 서버의 성별인지 계산자의 성별인지 단정한다면, 그것은 데이터만으로 확인할 수 없는 추정입니다. **모르는 것을 모른다고 표시하는 능력**도 데이터 리터러시입니다.
+:::
+
+#### Step 2. 데이터 품질을 확인한다
+
+```{r}
+summary(tips)
+colSums(is.na(tips))
+```
+
+질문해 봅시다.
+
+- 총액이나 팁에 음수 또는 0이 있는가?
+- 테이블 인원 수의 범위가 현실적인가?
+- 범주 이름의 철자와 대소문자는 일관적인가?
+- 중복된 행은 있는가?
+
+```{r}
+sum(tips$total_bill <= 0)
+sum(tips$tip < 0)
+range(tips$size)
+sum(duplicated(tips))
+```
+
+::: {.callout-tip title="AI Move — 품질 점검 코드를 감사받기"}
+직접 작성한 점검 코드를 AI에게 보여주고, 빠진 검사를 찾게 합니다.
+
+```text
+아래 코드는 tips 데이터 품질 점검용이다.
+코드를 다시 쓰기보다, 이 코드가 확인하는 것과 확인하지 못하는 것을 표로 정리하라.
+금액, 범주, 중복, 결측, 관측단위, 표본구조 중 빠진 항목이 있으면
+추가 진단 코드 한 줄씩만 제안하라.
+```
+
+AI가 제안한 검사도 실제 값의 범위와 데이터 문서를 바탕으로 판단합니다. “이상해 보이는 값”과 “불가능한 값”은 다릅니다.
+:::
+
+#### Step 3. 분석에 필요한 변수를 만든다
+
+팁 금액만 비교하면 총 계산금액의 영향을 크게 받습니다. 따라서 팁 비율을 함께 봅니다.
+
+```{r}
+tips <- tips |>
+  mutate(tip_rate = 100 * tip / total_bill)
+
+head(tips)
+```
+
+::: {.callout-warning}
+새 변수를 만들기 전에 분모가 0이거나 결측인지 확인해야 합니다. 또한 팁 비율이 높다는 사실이 반드시 서비스 만족도가 높았음을 의미하지는 않습니다.
+:::
+
+::: {.callout-tip title="AI Move — 파생변수의 계산과 개념을 함께 검토하기"}
+
+```text
+tip과 total_bill로 만들 수 있는 파생변수 후보를 3개 제안하라.
+각 후보에 대해 (1) 계산식, (2) 답할 수 있는 질문,
+(3) 0·결측·극단값 위험, (4) 개념적으로 오해할 가능성을 설명하라.
+가장 복잡한 변수가 아니라 가장 해석 가능한 변수를 추천하라.
+```
+
+AI가 수학적으로 계산 가능한 지표를 제안해도, 연구질문과 측정 의미가 불분명하면 만들지 않습니다.
+:::
+
+#### Step 4. 수치와 그림으로 탐색한다
+
+```{r}
+tips |>
+  summarise(
+    n = n(),
+    mean_bill = mean(total_bill),
+    median_bill = median(total_bill),
+    mean_tip_rate = mean(tip_rate),
+    median_tip_rate = median(tip_rate)
+  )
+```
+
+```{r}
+tips |>
+  ggplot(aes(x = total_bill)) +
+  geom_histogram(binwidth = 5, boundary = 0) +
+  labs(
+    x = "Total bill",
+    y = "Number of tables",
+    title = "Distribution of total bills"
+  )
+```
+
+```{r}
+tips |>
+  ggplot(aes(x = total_bill, y = tip)) +
+  geom_point(alpha = 0.65) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Total bill",
+    y = "Tip",
+    title = "Larger bills tend to include larger tips"
+  )
+```
+
+```{r}
+tips |>
+  group_by(day) |>
+  summarise(
+    n = n(),
+    median_tip_rate = median(tip_rate),
+    .groups = "drop"
+  )
+```
+
+```{r}
+tips |>
+  ggplot(aes(x = day, y = tip_rate)) +
+  geom_boxplot() +
+  labs(
+    x = "Day",
+    y = "Tip rate (%)",
+    title = "Tip-rate distributions by day"
+  )
+```
+
+::: {.callout-tip title="AI Move — 그래프 코드를 받기 전에 그래프의 목적을 묻기"}
+
+```text
+연구질문은 “요일별 팁 비율의 분포는 어떻게 다른가?”이다.
+코드를 먼저 주지 말고, 서로 다른 목적을 가진 시각화 3개를 제안하라.
+각각 무엇을 보여주고 무엇을 숨길 수 있는지 설명한 뒤,
+표본 수와 분포를 함께 볼 수 있는 한 가지를 추천하라.
+내가 선택하면 그때 ggplot2 코드를 작성하라.
+```
+
+이렇게 하면 “예쁜 그래프를 만들어 달라”가 아니라 **질문에 맞는 시각적 증거를 선택하는 연습**이 됩니다.
+:::
+
+#### Step 5. 관찰과 해석을 구분한다
+
+| 수준 | 예시 |
+|---|---|
+| **관찰** | 총 계산금액이 큰 테이블에서 팁 금액도 대체로 크다. |
+| **수치적 증거** | 산점도에서 양의 관계가 보이고, 두 변수의 상관계수를 계산할 수 있다. |
+| **해석** | 팁이 계산금액에 비례해 결정되는 관행과 관련될 수 있다. |
+| **말할 수 없는 것** | 계산금액을 인위적으로 높이면 동일한 비율로 팁이 증가한다고 단정할 수 없다. |
+| **추가로 필요한 자료** | 서버, 주문 품목, 서비스 평가, 시간대, 반복 방문자, 프로모션 등 |
+
+```{r}
+cor(tips$total_bill, tips$tip)
+```
+
+::: {.callout-tip title="AI Move — GenAI를 반대편 reviewer로 사용하기"}
+내 해석을 강화해 달라고 하기보다 먼저 공격하게 합니다.
+
+```text
+다음 주장을 비판적인 HCI/데이터과학 reviewer처럼 검토하라.
+“계산금액이 클수록 고객이 더 만족해서 팁을 많이 준다.”
+
+1. 데이터가 직접 지지하는 부분
+2. 과도한 인과 표현
+3. 가능한 대안 설명 3개
+4. 더 안전한 문장
+5. 주장을 강화하려면 필요한 추가 자료
+를 구분하라.
+```
+
+AI가 만든 대안 설명 역시 사실로 간주하지 않습니다. 그것은 **추가로 검토할 가설 목록**입니다.
+:::
+
+#### Step 6. Modeling은 무엇을 더하는가?
+
+모형은 여러 변수를 동시에 고려해 **설명하거나 예측**할 수 있게 합니다. 다만 모형이 복잡해진다고 연구설계의 한계가 사라지지는 않습니다.
+
+```{r}
+#| eval: false
+# 다음 주차 이후에 해석할 예고편
+tip_model <- lm(tip ~ total_bill + size + day, data = tips)
+summary(tip_model)
+```
+
+> **모형은 데이터에 질문하는 문법이지, 인과관계를 자동으로 만들어 주는 기계가 아닙니다.**
+
+::: {.callout-tip title="AI Move — 모형 이름보다 가정과 데이터 구조를 묻기"}
+
+```text
+아래 연구질문과 데이터 구조에 가능한 분석 접근을 비교하라.
+- outcome: tip 또는 tip_rate
+- predictors: total_bill, size, day
+- 한 행: 한 계산서
+- 표본: 한 식당에서 수집
+
+각 접근에 대해 필요한 가정, 진단, 해석 가능한 주장,
+해석하면 안 되는 인과 주장을 표로 정리하라.
+R 코드는 아직 작성하지 말라.
+```
+
+“어떤 검정을 쓰면 되나요?”보다 **자료구조와 가정을 먼저 제공하는 질문**이 더 좋은 답을 만듭니다.
+:::
+
+------------------------------------------------------------------------
+
+## Setup your project!
+
+### 권장 프로젝트 구조
+
+```text
+hci-stat-week03/
+├─ hci-stat-week03.Rproj
+├─ 03_week.qmd
+├─ data_raw/
+│  └─ tips.csv
+├─ data_processed/
+├─ figures/
+└─ R/
+```
+
+1. RStudio에서 **File → New Project**를 선택합니다.
+2. `.Rproj` 파일이 있는 폴더를 프로젝트 루트로 사용합니다.
+3. 원자료는 `data_raw/`에 보존하고 직접 덮어쓰지 않습니다.
+4. 처리한 데이터는 `data_processed/`에 별도로 저장합니다.
+5. 코드와 설명은 `.R` 또는 `.qmd` 파일에 남깁니다.
+
+::: {.callout-tip}
+분석이 꼬였을 때 작업공간을 무조건 지우는 코드보다 **Session → Restart R**로 깨끗한 세션에서 문서를 처음부터 실행해 보는 것이 더 좋은 재현성 검사입니다.
+:::
+
+::: {.callout-note title="GenAI와 함께 프로젝트를 시작할 때 제공할 맥락"}
+GenAI에게 매번 전체 코드를 설명하지 않도록 프로젝트의 간단한 규칙을 먼저 알려줄 수 있습니다.
+
+```text
+이 프로젝트는 R + Quarto를 사용한다.
+프로젝트 루트 기준 상대경로만 사용하고 setwd()는 쓰지 않는다.
+원자료는 data_raw/에서 읽고 덮어쓰지 않는다.
+새 변수는 snake_case를 사용한다.
+모든 코드에는 관측단위와 결측 처리 근거가 드러나야 한다.
+Base R 또는 dplyr 중 사용한 방식을 명시하라.
+```
+
+다만 AI가 이 규칙을 기억한다고 가정하지 말고, 중요한 제약은 요청마다 다시 확인합니다.
+:::
+
+### Object, name, value: “variable”의 두 가지 의미
+
+R 프로그래밍에서 이름은 객체를 가리킵니다.
+
+```{r}
+my_vector <- c(1, 2, 3)
+```
+
+- `my_vector`: 객체를 가리키는 **이름(name)**
+- `c(1, 2, 3)`: 메모리에 만들어진 **벡터 객체(object)**
+- `1`, `2`, `3`: 객체 안의 **값(value)**
+
+통계에서 “변수(variable)”는 대개 데이터프레임의 열처럼 사람이나 사건마다 달라지는 속성을 뜻합니다. 따라서 다음 두 문장은 서로 다른 의미로 “변수”라는 말을 사용합니다.
+
+- 프로그래밍: “`x`라는 변수에 값을 저장한다.”
+- 연구방법: “신뢰 점수는 결과변수다.”
+
+### 객체를 검사하는 기본 도구
+
+```{r}
+x <- c(4, 7, 9)
+
+class(x)
+typeof(x)
+length(x)
+attributes(x)
+str(x)
+```
+
+| 함수 | 확인하는 것 |
+|---|---|
+| `typeof()` | 객체가 내부적으로 저장되는 기본 유형 |
+| `class()` | 객체가 어떤 방식으로 동작하도록 정의된 클래스 |
+| `length()` | 원소 수 |
+| `dim()` | 행·열·차원의 크기 |
+| `attributes()` | 이름, 차원, 수준 등 부가정보 |
+| `str()` | 위 정보를 한 번에 압축해 보여주는 구조 요약 |
+
+------------------------------------------------------------------------
+
+## Basic Syntax
+
+### 주석, 할당, 함수 호출
+
+```{r}
+# 이 줄은 주석입니다.
+
+x <- 5
+y <- 2
+z <- x + y
+z
+```
+
+이 수업에서는 객체 할당에 `<-`를 기본으로 사용합니다. `=`도 많은 상황에서 작동하지만, 함수의 인수 지정과 객체 할당을 시각적으로 구분하기 위해 `<-`를 권장합니다.
+
+```{r}
+round(x = 3.14159, digits = 2)
+```
+
+- `round`: 함수 이름
+- `x`, `digits`: 인수(argument) 이름
+- `3.14159`, `2`: 함수에 전달한 값
+- 반환값 `3.14`: 함수가 새로 만든 결과 객체
+
+### 객체 이름 짓기
+
+```{r}
+participant_id <- "P01"
+completion_time <- 42.1
+trust_score <- 6
+```
+
+권장 원칙은 다음과 같습니다.
+
+- 의미가 드러나는 이름을 사용합니다.
+- 여러 단어는 `snake_case`로 연결합니다.
+- 공백, 하이픈, 한글 파일경로처럼 호환성을 해칠 수 있는 요소는 가급적 피합니다.
+- `data`, `mean`, `filter`처럼 함수 이름과 쉽게 충돌하는 지나치게 일반적인 이름을 피합니다.
+
+### Native pipe `|>`
+
+파이프는 이전 단계의 결과를 다음 함수로 전달합니다.
+
+```{r}
+tips |>
+  head(3)
+```
+
+다음 두 코드는 같은 결과를 냅니다.
+
+```{r}
+head(tips, 3)
+
+tips |>
+  head(3)
+```
+
+파이프는 분석 절차를 위에서 아래로 읽을 수 있게 해 줍니다.
+
+```{r}
+tips |>
+  filter(total_bill >= 40) |>
+  select(total_bill, tip, size)
+```
+
+::: {.callout-tip title="GenAI Micro-lab — Explain → Predict → Modify"}
+하나의 코드를 세 단계로 공부합니다.
+
+1. **Explain:** 각 함수가 입력으로 무엇을 받고 무엇을 반환하는지 AI에게 설명하게 합니다.
+2. **Predict:** 코드를 실행하기 전에 결과의 행·열과 자료형을 직접 예측합니다.
+3. **Modify:** 조건 하나를 바꾼 변형 문제를 AI에게 만들게 하고 직접 해결합니다.
+
+```text
+아래 R 코드를 줄별 번역하지 말고 데이터의 변화 중심으로 설명하라.
+그 다음 실행 결과의 행 수와 열 이름을 예측하는 질문을 나에게 하라.
+내가 답하기 전에는 정답을 공개하지 말라.
+마지막에는 난이도가 조금 더 높은 변형 문제 하나를 만들어라.
+```
+:::
+
+------------------------------------------------------------------------
+
+### R의 기본 자료형
+
+R의 원자 벡터(atomic vector)는 한 가지 기본 유형의 값만 담습니다.
+
+| 기본 유형 | 예시 | `typeof()` 결과 |
+|---|---|---|
+| logical | `TRUE`, `FALSE` | `"logical"` |
+| integer | `1L`, `20L` | `"integer"` |
+| double | `1`, `3.14` | `"double"` |
+| complex | `1 + 2i` | `"complex"` |
+| character | `"voice"`, `"P01"` | `"character"` |
+
+```{r}
+typeof(TRUE)
+typeof(1L)
+typeof(1)
+typeof(1 + 2i)
+typeof("P01")
+```
+
+::: {.callout-note}
+R에서 `1`은 기본적으로 double이며, 정수형을 명시하려면 `1L`처럼 `L`을 붙입니다. 대부분의 기초 통계분석에서는 두 유형의 차이를 크게 의식하지 않아도 되지만, 자료구조를 읽을 때는 알아둘 필요가 있습니다.
+:::
+
+### `factor`는 무엇인가?
+
+`factor`는 범주형 변수를 표현하는 클래스입니다. 내부적으로는 정수 코드와 수준(level) 정보를 함께 저장합니다.
+
+```{r}
+interface <- factor(
+  c("voice", "text", "voice", "text"),
+  levels = c("text", "voice")
+)
+
+interface
+class(interface)
+typeof(interface)
+levels(interface)
+```
+
+순서가 있는 범주는 ordered factor로 표현할 수 있습니다.
+
+```{r}
+satisfaction <- factor(
+  c("low", "high", "medium", "high"),
+  levels = c("low", "medium", "high"),
+  ordered = TRUE
+)
+
+satisfaction
+```
+
+::: {.callout-warning}
+`as.numeric(factor_object)`는 화면에 보이는 라벨을 숫자로 바꾸는 것이 아니라 내부 정수 코드를 반환합니다. 범주 라벨이 숫자로 되어 있어도 변환 과정을 반드시 확인하세요.
+:::
+
+```{r}
+rating <- factor(c("10", "20", "10"))
+
+as.numeric(rating)                # 내부 코드 1, 2, 1
+as.numeric(as.character(rating))  # 라벨 10, 20, 10
+```
+
+### 자동 형변환(coercion)
+
+한 벡터에는 한 가지 기본 유형만 들어갈 수 있으므로 서로 다른 유형을 섞으면 R이 공통 유형으로 변환합니다.
+
+```{r}
+c(1, 2, 3)
+c(1, TRUE, 3)
+c(1, "2", TRUE)
+```
+
+#### 실행 전에 예측해 봅시다
+
+```{r}
+#| error: true
+x <- c(1, "2", 3)
+typeof(x)
+x + 1
+```
+
+
+- 숫자처럼 보이는 문자 `"2"`는 자동으로 숫자가 아닙니다.
+- `str()`와 `typeof()`를 먼저 확인하는 습관이 필요합니다.
+
+::: {.callout-tip title="GenAI Micro-lab — 자료형 함정 만들기"}
+
+```text
+R 초보자가 자료형을 오해하기 쉬운 HCI 데이터 예제 3개를 만들어라.
+각 예제에는 character, factor, numeric, logical 중 최소 두 유형이 섞이게 하라.
+정답은 숨기고, 내가 typeof(), class(), str() 중 무엇을 실행할지 고르게 하라.
+내 답 뒤에만 해설하라.
+```
+
+AI가 만든 예제도 직접 실행해 결과가 설명과 일치하는지 확인합니다.
+:::
+
+### 자료형 확인과 변환
+
+```{r}
+x <- "42.1"
+
+is.character(x)
+as.numeric(x)
+```
+
+```{r}
+condition_code <- c(1, 2, 1, 2)
+condition_factor <- factor(
+  condition_code,
+  levels = c(1, 2),
+  labels = c("control", "AI")
+)
+
+condition_factor
+```
+
+숫자 1과 2로 저장되어 있다는 이유만으로 실험조건이 수치형 변수인 것은 아닙니다. **저장 형식과 변수의 의미를 구분**해야 합니다.
+
+------------------------------------------------------------------------
+
+### Special values: `NA`, `NaN`, `Inf`, `NULL`
+
+| 값 | 의미 | 예시 |
+|---|---|---|
+| `NA` | 값이 결측됨 | 설문 무응답, 센서 기록 누락 |
+| `NaN` | 정의되지 않은 수치 계산 결과 | `0 / 0` |
+| `Inf`, `-Inf` | 양·음의 무한대 | `1 / 0` |
+| `NULL` | 객체나 요소가 존재하지 않음, 길이 0 | 리스트 요소 제거, 반환할 값 없음 |
+
+```{r}
+c(NA, NaN, Inf, -Inf)
+
+0 / 0
+1 / 0
+length(NULL)
+```
+
+#### 결측값은 `== NA`로 찾지 않는다
+
+```{r}
+trust <- c(6, 5, NA, 4)
+
+trust == NA
+is.na(trust)
+anyNA(trust)
+```
+
+결측값이 포함된 계산은 기본적으로 `NA`를 반환합니다.
+
+```{r}
+mean(trust)
+mean(trust, na.rm = TRUE)
+```
+
+::: {.callout-warning}
+`na.rm = TRUE`는 결측을 “해결”한 것이 아니라 계산에서 제외한 것입니다. 왜 결측되었는지, 어떤 참여자가 제외되는지, 결과가 달라지는지를 별도로 검토해야 합니다.
+:::
+
+### 연산자
+
+#### 산술 연산자
+
+| 연산자 | 의미 | 예시 |
+|---|---|---|
+| `+`, `-` | 더하기, 빼기 | `5 + 2` |
+| `*`, `/` | 곱하기, 나누기 | `5 / 2` |
+| `^` | 거듭제곱 | `2^3` |
+| `%%` | 나머지 | `5 %% 2` |
+| `%/%` | 정수 나눗셈 | `5 %/% 2` |
+
+```{r}
+5 + 2
+5 / 2
+2^3
+5 %% 2
+5 %/% 2
+```
+
+#### 비교·논리 연산자
+
+| 연산자 | 의미 |
+|---|---|
+| `<`, `<=`, `>`, `>=` | 크기 비교 |
+| `==`, `!=` | 같음, 다름 |
+| `!` | NOT |
+| `&` | 원소별 AND |
+| `|` | 원소별 OR |
+| `%in%` | 집합에 포함되는지 확인 |
+
+```{r}
+completion_time <- c(42.1, 38.4, 55.0, 35.2)
+errors <- c(0, 1, 3, 0)
+
+completion_time < 45
+errors == 0
+(completion_time < 45) & (errors == 0)
+```
+
+```{r}
+day <- c("Thur", "Fri", "Sat", "Sun")
+day %in% c("Sat", "Sun")
+```
+
+::: {.callout-tip}
+`=`는 할당에도 사용할 수 있지만, **비교는 반드시 `==`**를 사용합니다.
+:::
+
+------------------------------------------------------------------------
+
+## Vector
+
+> 벡터는 R의 가장 기본적인 자료구조입니다. 숫자 하나도 길이가 1인 벡터이며, 데이터프레임의 각 열도 기본적으로 벡터입니다.
+
+### Creating a vector
+
+```{r}
+completion_time <- c(42.1, 38.4, 55.0, 35.2)
+participant_id <- c("P01", "P02", "P03", "P04")
+success <- c(TRUE, TRUE, FALSE, TRUE)
+```
+
+```{r}
+length(completion_time)
+typeof(completion_time)
+```
+
+연속된 값이나 반복값은 다음과 같이 만들 수 있습니다.
+
+```{r}
+1:7
+7:1
+seq(from = 0, to = 1, by = 0.2)
+seq(from = 0, to = 1, length.out = 6)
+rep(c("control", "AI"), times = 3)
+rep(c("control", "AI"), each = 3)
+```
+
+### Accessing elements
+
+R의 인덱스는 1부터 시작합니다.
+
+```{r}
+completion_time[1]
+completion_time[c(1, 3)]
+completion_time[2:4]
+```
+
+음수 인덱스는 해당 위치를 제외합니다.
+
+```{r}
+completion_time[-1]
+completion_time[-c(1, 3)]
+```
+
+논리 벡터로 조건에 맞는 값만 추출할 수 있습니다.
+
+```{r}
+completion_time[completion_time < 45]
+participant_id[success]
+```
+
+#### 잘못된 인덱싱을 찾아봅시다
+
+```{r}
+#| eval: false
+# 벡터는 1차원이므로 다음 코드는 오류입니다.
+completion_time[1, 2]
+```
+
+여러 위치를 선택하려면 위치를 하나의 벡터로 묶습니다.
+
+```{r}
+completion_time[c(1, 2)]
+```
+
+### Named vector
+
+값에 이름을 붙이면 코드의 의미가 더 분명해집니다.
+
+```{r}
+mean_time_by_condition <- c(
+  text = 36.8,
+  voice = 48.6
+)
+
+mean_time_by_condition
+mean_time_by_condition["voice"]
+```
+
+### Vectorized operations
+
+R은 벡터 전체에 연산을 적용합니다.
+
+```{r}
+completion_time + 1
+completion_time / 60
+```
+
+두 벡터의 길이가 같으면 같은 위치의 원소끼리 계산합니다.
+
+```{r}
+baseline_time <- c(40, 40, 50, 36)
+completion_time - baseline_time
+```
+
+#### 반복문 없이 조건을 만들기
+
+```{r}
+fast_and_successful <- (completion_time < 45) & success
+fast_and_successful
+participant_id[fast_and_successful]
+```
+
+### Recycling rule
+
+짧은 벡터는 긴 벡터의 길이에 맞춰 반복될 수 있습니다.
+
+```{r}
+1:4 + c(10, 20)
+```
+
+`c(10, 20)`이 `10, 20, 10, 20`처럼 재활용된 결과입니다. 그러나 길이가 정확히 나누어지지 않으면 경고가 발생합니다.
+
+```{r}
+#| warning: true
+# 의도적으로 경고가 발생하는 예시
+1:4 + 1:3
+```
+
+::: {.callout-warning}
+재활용 규칙은 편리하지만 조용한 오류를 만들 수 있습니다. 길이가 다른 벡터를 계산할 때는 `length()`를 확인하고, 의도한 반복은 `rep()`으로 명시하세요.
+:::
+
+### Common functions with vectors
+
+```{r}
+length(completion_time)
+sum(success)
+mean(completion_time)
+median(completion_time)
+min(completion_time)
+max(completion_time)
+range(completion_time)
+sd(completion_time)
+```
+
+```{r}
+head(completion_time, 2)
+tail(completion_time, 2)
+sort(completion_time)
+```
+
+### `all()` and `any()`
+
+```{r}
+all(completion_time > 0)
+any(completion_time > 50)
+```
+
+- `all()`: 모든 조건이 참인가?
+- `any()`: 하나라도 참인가?
+
+### Sets: 서로 다른 데이터 소스의 ID 비교
+
+설문 응답자와 로그 기록 참여자가 완전히 일치하는지 확인한다고 가정해 봅시다.
+
+```{r}
+survey_ids <- c("P01", "P02", "P03", "P04")
+log_ids <- c("P02", "P03", "P04", "P05")
+```
+
+```{r}
+union(survey_ids, log_ids)
+intersect(survey_ids, log_ids)
+setdiff(survey_ids, log_ids)
+setdiff(log_ids, survey_ids)
+setequal(survey_ids, log_ids)
+```
+
+| 함수 | 연구 데이터에서의 질문 |
+|---|---|
+| `intersect()` | 두 데이터에 모두 있는 참여자는 누구인가? |
+| `setdiff(A, B)` | A에는 있지만 B에는 없는 ID는 무엇인가? |
+| `union()` | 두 자료에 등장한 전체 ID는 무엇인가? |
+| `setequal()` | 순서와 무관하게 두 ID 집합이 같은가? |
+
+::: {.callout-tip title="GenAI Micro-lab — 내 연구 맥락으로 벡터 문제 만들기"}
+자신의 연구 주제와 변수 예시를 알려주고, `c()`, 논리 인덱싱, `%in%`, `setdiff()`를 각각 한 번씩 사용하는 짧은 문제를 만들어 달라고 합니다. 답안은 별도로 요청하고, 먼저 결과를 예측한 뒤 R에서 실행합니다.
+:::
+
+------------------------------------------------------------------------
+
+## Array와 Matrix
+
+### 벡터에서 다차원 구조로
+
+- **vector:** 한 차원의 동일 유형 값
+- **matrix:** 행과 열을 가진 2차원 동일 유형 값
+- **array:** 2개 이상의 차원을 가질 수 있는 동일 유형 값
+
+HCI 연구에서는 다음과 같은 자료에 활용될 수 있습니다.
+
+- 참여자 × 문항 응답 행렬
+- 실제값 × 예측값의 혼동행렬(confusion matrix)
+- 채널 × 시간 × 시행 형태의 생리·센서 신호
+- 높이 × 너비 × 색상 채널 형태의 이미지
+
+### Creating a matrix
+
+```{r}
+response_matrix <- matrix(
+  1:12,
+  nrow = 3,
+  ncol = 4,
+  byrow = TRUE
+)
+
+response_matrix
+```
+
+R은 기본적으로 열 방향으로 값을 채우므로, 행 방향으로 채우려면 `byrow = TRUE`를 명시합니다.
+
+```{r}
+matrix(1:12, nrow = 3)
+matrix(1:12, nrow = 3, byrow = TRUE)
+```
+
+행과 열 이름을 붙일 수 있습니다.
+
+```{r}
+rownames(response_matrix) <- c("P01", "P02", "P03")
+colnames(response_matrix) <- c("trust_1", "trust_2", "trust_3", "trust_4")
+
+response_matrix
+```
+
+### Accessing matrix elements
+
+```{r}
+response_matrix[1, 2]
+response_matrix[1, ]
+response_matrix[, 2]
+response_matrix[c("P01", "P03"), c("trust_1", "trust_4")]
+```
+
+행 또는 열 하나를 추출하면 기본적으로 벡터가 반환됩니다. 행렬 형태를 유지하려면 `drop = FALSE`를 사용할 수 있습니다.
+
+```{r}
+response_matrix[1, , drop = FALSE]
+```
+
+### Matrix operations
+
+```{r}
+x <- matrix(1:4, nrow = 2)
+y <- matrix(5:8, nrow = 2)
+
+x + y      # 원소별 덧셈
+x * y      # 원소별 곱셈
+x %*% y    # 행렬 곱셈
+t(x)       # 전치
+```
+
+행별·열별 함수를 적용할 수 있습니다.
+
+```{r}
+apply(response_matrix, 1, mean)  # 참여자별 평균
+apply(response_matrix, 2, mean)  # 문항별 평균
+```
+
+### Creating an array
+
+다음은 `participant × time × condition` 형태의 가상 센서 자료입니다.
+
+```{r}
+sensor_array <- array(
+  data = 1:24,
+  dim = c(3, 4, 2),
+  dimnames = list(
+    participant = c("P01", "P02", "P03"),
+    time = paste0("T", 1:4),
+    condition = c("control", "AI")
+  )
+)
+
+sensor_array
+```
+
+```{r}
+sensor_array["P02", "T3", "AI"]
+sensor_array[, , "AI"]
+```
+
+::: {.callout-note}
+일반적인 설문·실험 자료는 `data.frame`의 long format이 분석과 시각화에 더 편리합니다. 배열은 차원이 명확한 신호·이미지·행렬 계산에 특히 적합합니다.
+:::
+
+::: {.callout-tip title="GenAI Checkpoint 4 — 차원의 순서를 자연어로 감사하기"}
+
+```text
+다음 객체는 participant × time × condition 순서의 array이다.
+dim과 dimnames를 읽고, sensor_array["P02", "T3", "AI"]가
+어떤 관측을 가리키는지 자연어로 설명하라.
+그 다음 차원 순서를 잘못 이해했을 때 생길 수 있는 오류를 하나 제시하라.
+```
+
+AI의 설명은 `dim()`, `dimnames()`, 실제 인덱싱 결과로 검증합니다.
+:::
+
+------------------------------------------------------------------------
+
+## Data.frame
+
+> `data.frame`은 서로 다른 자료형의 열을 같은 행 구조 안에 묶는 2차원 자료구조입니다. HCI의 설문, 실험, 로그 자료에서 가장 자주 만나게 됩니다.
+
+### 핵심 원칙
+
+- 한 열은 하나의 변수(variable)
+- 한 행은 하나의 관측(observation)
+- 한 셀은 하나의 값(value)
+
+하지만 “한 관측”의 의미는 연구마다 다릅니다.
+
+- 참여자 수준 자료: 한 행 = 한 참여자
+- 시행 수준 자료: 한 행 = 한 참여자의 한 trial
+- 로그 자료: 한 행 = 한 클릭 또는 사건
+- 게시물 자료: 한 행 = 한 게시물
+
+### Creating an HCI data frame
+
+```{r}
+hci_trials <- data.frame(
+  participant_id = rep(c("P01", "P02", "P03", "P04"), each = 2),
+  interface = rep(c("text", "voice"), times = 4),
+  task = c("search", "booking", "booking", "search",
+           "search", "booking", "booking", "search"),
+  completion_time = c(35.2, 43.8, 31.7, 39.5, 44.0, 52.1, 33.6, 41.4),
+  errors = c(0, 1, 0, 0, 2, 1, 0, 1),
+  trust = c(5, 6, 6, 5, 4, NA, 5, 6)
+)
+
+hci_trials
+```
+
+```{r}
+str(hci_trials)
+dim(hci_trials)
+names(hci_trials)
+head(hci_trials)
+summary(hci_trials)
+```
+
+### 행 수와 참여자 수는 다르다
+
+```{r}
+nrow(hci_trials)
+length(unique(hci_trials$participant_id))
+```
+
+이 데이터는 8행이지만 참여자는 4명입니다. 같은 참여자의 두 행은 서로 완전히 독립적인 관측이 아닐 수 있습니다.
+
+::: {.callout-important}
+**행의 수를 표본크기로 착각하지 마세요.** 반복측정 데이터에서는 독립 참여자 수, 시행 수, 세션 수를 구분해야 합니다.
+:::
+
+### Accessing rows and columns
+
+```{r}
+hci_trials$completion_time
+hci_trials[, "completion_time"]
+hci_trials[1, ]
+hci_trials[2, 4]
+hci_trials[1:3, c("participant_id", "interface", "completion_time")]
+```
+
+`$`는 한 열을 빠르게 추출할 때 편리하고, `[rows, columns]`는 행과 열을 동시에 선택할 때 유용합니다.
+
+### 조건에 맞는 행 선택
+
+Base R:
+
+```{r}
+hci_trials[hci_trials$interface == "voice", ]
+```
+
+`dplyr`:
+
+```{r}
+hci_trials |>
+  filter(interface == "voice")
+```
+
+여러 조건을 결합할 수 있습니다.
+
+```{r}
+hci_trials |>
+  filter(interface == "voice", errors <= 1)
+```
+
+### 열 선택과 새 변수 만들기
+
+```{r}
+hci_trials |>
+  select(participant_id, interface, completion_time, errors)
+```
+
+```{r}
+hci_trials <- hci_trials |>
+  mutate(
+    success = errors == 0,
+    time_per_error = completion_time / (errors + 1)
+  )
+
+head(hci_trials)
+```
+
+`errors + 1`을 사용한 이유를 생각해 봅시다. 오류가 0일 때 0으로 나누는 문제를 피하지만, 이 새 지표가 이론적으로 의미 있는지는 별개의 질문입니다.
+
+> 계산할 수 있는 변수라고 해서 모두 좋은 측정값은 아닙니다.
+
+### Grouped summaries
+
+```{r}
+hci_trials |>
+  group_by(interface) |>
+  summarise(
+    n_rows = n(),
+    n_participants = n_distinct(participant_id),
+    mean_time = mean(completion_time),
+    median_errors = median(errors),
+    mean_trust = mean(trust, na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+해석 전에 확인할 점:
+
+- 각 조건에 같은 참여자들이 포함되는가?
+- 결측 신뢰 점수는 어느 조건에 있는가?
+- 평균 차이는 특정 참여자 한 명의 영향인가?
+- 참여자 내 설계라면 짝을 이룬 비교가 필요한가?
+
+### Missingness and duplicates
+
+```{r}
+colSums(is.na(hci_trials))
+anyNA(hci_trials)
+sum(duplicated(hci_trials))
+```
+
+결측이 있는 행을 바로 삭제하기 전에 어떤 값이 빠졌는지 확인합니다.
+
+```{r}
+hci_trials |>
+  filter(is.na(trust))
+```
+
+### 데이터프레임 결합: key가 먼저다
+
+참여자 수준의 배경정보가 별도 표에 있다고 가정합니다.
+
+```{r}
+participants <- data.frame(
+  participant_id = c("P01", "P02", "P03", "P04"),
+  age = c(24, 29, 27, 31),
+  ai_experience = c("low", "high", "medium", "high")
+)
+
+participants
+```
+
+`participant_id`를 key로 시행 자료에 참여자 정보를 붙입니다.
+
+```{r}
+hci_joined <- hci_trials |>
+  left_join(participants, by = "participant_id")
+
+head(hci_joined)
+```
+
+Base R의 `merge()`로도 같은 목적을 수행할 수 있습니다.
+
+```{r}
+hci_merged <- merge(
+  hci_trials,
+  participants,
+  by = "participant_id",
+  all.x = TRUE
+)
+
+head(hci_merged)
+```
+
+::: {.callout-warning}
+조인 전에 key가 각 표에서 고유한지 확인하세요. 양쪽 표에 같은 ID가 여러 번 존재하면 예상보다 행이 크게 늘어나는 many-to-many join이 발생할 수 있습니다.
+:::
+
+```{r}
+anyDuplicated(participants$participant_id)
+```
+
+### Long format과 wide format
+
+반복측정 자료는 대개 long format이 분석에 유리합니다.
+
+**Long format**
+
+| participant_id | interface | completion_time |
+|---|---|---:|
+| P01 | text | 35.2 |
+| P01 | voice | 43.8 |
+| P02 | text | 31.7 |
+| P02 | voice | 39.5 |
+
+**Wide format**
+
+| participant_id | time_text | time_voice |
+|---|---:|---:|
+| P01 | 35.2 | 43.8 |
+| P02 | 31.7 | 39.5 |
+
+- long format: 조건·시점이 별도 변수로 존재하며 `ggplot2`, 혼합모형, 반복측정 분석에 편리
+- wide format: 사람별 요약표, 일부 설문 점수 정리, 특정 분석에서 편리
+
+::: {.callout-tip}
+데이터 모양은 보기 좋은 표를 만드는 문제가 아니라 **관측단위와 분석구조를 표현하는 문제**입니다.
+:::
+
+::: {.callout-tip title="GenAI Checkpoint 5 — long/wide 변환 전에 스키마 리뷰 받기"}
+
+```text
+다음 HCI 연구는 40명이 text와 voice 조건에서 각각 3개 과업을 수행한다.
+참여자 배경정보는 한 번만 측정하고, completion_time과 errors는 과업마다 기록한다.
+
+1. participant table과 trial table을 분리해 제안하라.
+2. 각 표의 primary key와 join key를 명시하라.
+3. long format의 예시 4행을 보여라.
+4. 잘못 join했을 때 행이 늘어나는 사례를 설명하라.
+5. 내가 확인할 R 진단 코드를 제안하라.
+```
+
+AI가 만든 열 이름보다 더 중요한 것은 **한 행의 의미, key의 고유성, 반복측정 구조**입니다.
+:::
+
+### 피해야 할 습관: `attach()`
+
+```{r}
+#| eval: false
+# 권장하지 않는 방식
+attach(cars)
+mean(speed)
+detach(cars)
+```
+
+`attach()`는 어떤 객체의 변수를 사용하고 있는지 모호하게 만들 수 있습니다. 다음처럼 출처를 명시합니다.
+
+```{r}
+mean(cars$speed)
+with(cars, mean(speed))
+```
+
+------------------------------------------------------------------------
+
+## List
+
+> 리스트는 서로 다른 유형과 길이의 객체를 하나의 구조 안에 담을 수 있습니다. 데이터프레임도 내부적으로는 같은 길이의 벡터들을 모은 특별한 리스트입니다.
+
+### Creating a list
+
+연구 프로젝트의 여러 구성요소를 하나로 묶어 봅시다.
+
+```{r}
+research_bundle <- list(
+  study_title = "AI Interface Study",
+  data = hci_trials,
+  participant_ids = unique(hci_trials$participant_id),
+  settings = list(
+    design = "within-subject",
+    conditions = c("text", "voice"),
+    outcome = "completion_time"
+  )
+)
+
+str(research_bundle, max.level = 2)
+```
+
+### Accessing list elements
+
+```{r}
+research_bundle$study_title
+research_bundle[["participant_ids"]]
+research_bundle[[2]]
+research_bundle["study_title"]
+```
+
+- `[[ ]]`와 `$`: 리스트 안의 **원소 자체**를 꺼냄
+- `[ ]`: 원소를 포함한 **하위 리스트**를 반환
+
+```{r}
+class(research_bundle[["data"]])
+class(research_bundle["data"])
+```
+
+### Modifying a list
+
+```{r}
+research_bundle$created_by <- "Student A"
+research_bundle$created_by
+```
+
+```{r}
+research_bundle$created_by <- NULL
+names(research_bundle)
+```
+
+리스트 요소에 `NULL`을 할당하면 해당 요소가 제거됩니다.
+
+### Nested lists
+
+API나 JSON에서 가져온 데이터는 중첩 리스트 형태인 경우가 많습니다.
+
+```{r}
+participant_record <- list(
+  participant_id = "P01",
+  profile = list(
+    age = 24,
+    ai_experience = "low"
+  ),
+  trials = hci_trials[hci_trials$participant_id == "P01", ]
+)
+
+participant_record$profile$age
+participant_record[["profile"]][["ai_experience"]]
+```
+
+### Model objects are often lists
+
+```{r}
+preview_model <- lm(completion_time ~ interface, data = hci_trials)
+
+class(preview_model)
+str(preview_model, max.level = 1)
+preview_model$coefficients
+```
+
+지금은 모형의 통계적 의미를 해석하지 않습니다. 핵심은 `lm()`이 숫자 하나가 아니라 계수, 잔차, 적합값, 식, 데이터 정보 등을 포함한 복합 객체를 반환한다는 점입니다.
+
+### Applying a function to list elements
+
+```{r}
+numeric_list <- list(
+  text = c(35.2, 31.7, 44.0, 33.6),
+  voice = c(43.8, 39.5, 52.1, 41.4)
+)
+
+lapply(numeric_list, mean)
+sapply(numeric_list, mean)
+```
+
+- `lapply()`는 항상 리스트를 반환합니다.
+- `sapply()`는 가능한 경우 벡터나 행렬로 단순화합니다.
+- 반환 형태가 중요할 때는 단순화 규칙을 의식해야 합니다.
+
+::: {.callout-tip title="GenAI Checkpoint 6 — `str()`를 지도처럼 사용하기"}
+중첩 리스트 전체를 붙이기보다 `str(object, max.level = 2)` 출력을 제공하고, 원하는 값까지 가는 접근 경로를 설명하게 합니다. AI가 제안한 `$`, `[[ ]]`, `[ ]` 표현은 반환 객체의 `class()`와 `str()`로 다시 확인합니다.
+:::
+
+------------------------------------------------------------------------
+
+## 어떤 자료구조를 선택할까?
+
+| 상황 | 적합한 구조 | 이유 |
+|---|---|---|
+| 참여자 100명의 나이 | vector | 같은 유형의 1차원 값 |
+| 참여자 × 설문문항 점수 | matrix 또는 data.frame | 모두 수치형이면 matrix, 문항별 속성이 다르면 data.frame |
+| 참여자별 실험·설문·로그 통합표 | data.frame | 열마다 서로 다른 유형을 가짐 |
+| 채널 × 시간 × 조건 센서자료 | array | 명확한 다차원 구조 |
+| 데이터, 설정, 모형, 메타데이터 묶음 | list | 서로 다른 구조와 길이를 함께 보관 |
+
+### 구조 선택 퀴즈
+
+1. 20개 설문문항의 응답만 담은 500 × 20 수치 표
+2. 참여자 ID, 나이, 조건, 신뢰, 자유응답이 함께 있는 표
+3. 이미지의 높이 × 너비 × RGB 채널 값
+4. 한 분석에서 원자료, 정제자료, 회귀모형, 그래프를 함께 보관
+
+::: {.callout-note}
+정답보다 중요한 것은 **왜 그 구조가 연구질문과 후속 분석에 적합한지 설명하는 것**입니다.
+:::
+
+
+
+
+
+<!-- ## R & R Studio -->
+
+<!-- <br> -->
+
+<!-- ### Base R -->
+
+<!-- -   The Data given in base R -->
+
+<!--     -   Can be checked by `data()` command -->
+
+<!--     -   ex) `ChickWeight` data “Weight versus age of chicks on different diets”, women data “Average heights and weights for American women aged 30-39” -->
+
+<!-- ```{r} -->
+<!-- women -->
+<!-- ``` -->
+
+<!-- -   `Car` datset -->
+
+<!-- ```{r} -->
+<!-- str(cars) -->
+<!-- cars -->
+<!-- ``` -->
+
+<!-- *`str`* function: Function summarizing the contents of the data -->
+
+<!-- -   Various visualization functions -->
+
+<!--     -   Most widely used function in base R: plot -->
+
+<!--         ```{r} -->
+<!--         plot(women) -->
+<!--         ``` -->
+
+<!-- -   Apply different visualization options -->
+
+<!--     -   Color options (parameters) *`col`*, -->
+
+<!--     -   *`xlab`* and *`ylab`* to name the axis, -->
+
+<!--     -   *`pch`* to specify the symbol shape -->
+
+<!--         ```{r} -->
+<!--         plot(cars) -->
+<!--         ``` -->
+
+<!--         ```{r} -->
+<!--         plot(cars, col = 'blue') -->
+<!--         ``` -->
+
+<!--         ```{r} -->
+<!--         plot(cars, col = 'blue', xlab = "speed") -->
+<!--         ``` -->
+
+<!--         ```{r} -->
+<!--         plot(cars, col = 'blue', xlab = "speed", ylab = 'distance') -->
+<!--         ``` -->
+
+<!--         ```{r} -->
+<!--         plot(cars, col = 'blue', xlab = "speed", ylab = 'distance', pch = 18) -->
+<!--         ``` -->
+
+<!-- <br> -->
+
+<!-- ### Good habits in learning data science -->
+
+<!-- <br> -->
+
+<!-- ```{r} -->
+<!-- # ?plot -->
+<!-- # help(plot) -->
+<!-- ``` -->
+
+<!-- -   **Think** **incrementally** (Step by Step) -->
+
+<!--     -   After creating the most basic features, check the behavior, add a new feature to it, and add another feature to verify it. -->
+
+<!--     -   Once you've created everything and checked it, it's hard to find out where the cause is -->
+
+<!--     -   See Figure above: Check the most basic plot function, add the `col` option to check, add the `xlab` and `ylab` options, and add the `pch` option to check -->
+
+<!-- -   Specify working directory -->
+
+<!--     -   The way to Save Data Files in a Specified Directory (Folder) -->
+
+<!--     -   *`getwd()`* function displays the current working directory (the red part is the computer name) -->
+
+<!--         ```{r} -->
+<!--         getwd() -->
+<!--         ``` -->
+
+<!--     -   *setwd()* to set the new working directory -->
+
+<!-- -   Use of library (package) -->
+
+<!--     -   Libraries are software that collects R functions developed for specific fields. -->
+
+<!--         -   E.g.) `ggplot2` is a collection of functions that visualize your data neatly and consistently -->
+
+<!--         -   E.g.) `gapminder` is a collection of functions needed to utilize gapminder data, which gathers population, GDP per capita, and life expectancy in five years from 1952 to 2007. -->
+
+<!--     -   R is so powerful and popular because of its huge library -->
+
+<!--     -   If you access the CRAN site, you will see that it is still being added. -->
+
+<!--         -   \[Packages\] menu: see all libraries provided by R \[Task Views\] menu: Introduce libraries field by field -->
+
+<!-- -   When using it, attach it using the library function -->
+
+<!-- -   Library installation saves library files to your hard disk -->
+
+<!-- -   Library Attachment loads it from Hard Disk to Main Memory -->
+
+<!-- ### Data for example.. -->
+
+<!-- -   Lovely *`iris`* data -->
+
+<!--     -   In 1936, Edger Anderson collected irises in the Gaspe Peninsula in eastern Canada. -->
+
+<!--     -   Collect 50 from each three species(setosa, versicolor, verginica) on the same day -->
+
+<!--     -   The same person measures the width and length of the petals and sepals with the same ruler -->
+
+<!--     -   Has been famous since Statistician Professor Ronald Fisher published a paper with this data and is still widely used. -->
+
+<!--     ![](images/clipboard-248449149.png) -->
+
+<!--     ```{r} -->
+<!--     str(iris) -->
+<!--     ``` -->
+
+<!--     ```{r} -->
+<!--     head(iris, 10) -->
+<!--     ``` -->
+
+<!--     ```{r} -->
+<!--     plot(iris) -->
+<!--     ``` -->
+
+<!-- -   See the correlation of two properties -->
+
+<!--     -   `col = iris$Species` is an option to draw colors differently by species -->
+
+<!--         ```{r} -->
+<!--         plot(iris$Petal.Width,  -->
+<!--              iris$Petal.Length, -->
+<!--              col = iris$Species) -->
+<!--         ``` -->
+
+<!-- ### Data Science Process with example data -->
+
+<!-- ```{mermaid} -->
+<!-- flowchart LR -->
+<!--   A[Collecting Data] --> B(EDA) -->
+<!--   B --> C{Modeling} -->
+<!-- ``` -->
+
+<!-- -   `Tips` data -->
+
+<!--     -   Tips earning at tables in a restaurant -->
+
+<!--     -   Can we get more tips using data science? -->
+
+<!-- -   **Step 1:** Data collecting -->
+
+<!--     -   Collect values in seven variables -->
+
+<!--         -   total_bill -->
+
+<!--         -   tip -->
+
+<!--         -   gender -->
+
+<!--         -   smoker -->
+
+<!--         -   day -->
+
+<!--         -   time -->
+
+<!--         -   size: number of people in a table -->
+
+<!--     -   After weeks of hard work, collected 244 and saved it to the tips.csv file -->
+
+<!-- ```{r} -->
+<!-- tips = read.csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv') -->
+<!-- str(tips) -->
+<!-- head(tips, 10) -->
+<!-- ``` -->
+
+<!-- Interpreting the first sample, it was shown that two people had dinner on Sunday, no smokers, and a \$1.01 tip at the table where a woman paid the total \$16.99. -->
+
+<!-- <br> -->
+
+<!-- -   **Step 2:** Exploratory Data Analysis (EDA) -->
+
+<!--     -   summary function to check the summary statistics -->
+
+<!--     -   How to explain the summary statistics below? -->
+
+<!-- ```{r} -->
+<!-- summary(tips)               -->
+<!-- ``` -->
+
+<!-- This statistic summary doesn't reveal the effect of day or gender on the tip, so let's explore it further with visualization. -->
+
+<!-- -   Attach dplyr and `ggplot2` libraries (for now just run it and study the meaning) -->
+
+<!-- ```{r} -->
+<!-- library(dplyr) -->
+<!-- library(ggplot2) -->
+
+
+<!-- ``` -->
+
+<!-- -   What do you see in the figures below? -->
+
+<!--     -   Distribution of fellow persons in a table -->
+
+<!-- ```{r} -->
+
+<!-- tips %>% ggplot(aes(size)) + geom_histogram()                                             -->
+<!-- ``` -->
+
+<!-- Tip amount according to bill amount (total_bill) -->
+
+<!-- ```{r} -->
+
+<!-- tips %>% ggplot(aes(total_bill, tip)) + geom_point()                                      -->
+<!-- ``` -->
+
+<!-- Added day information using color -->
+
+<!-- ```{r} -->
+
+<!-- tips %>% ggplot(aes(total_bill, tip)) +  -->
+<!--   geom_point(aes(col = day))                        -->
+<!-- ``` -->
+
+<!-- Women and men separated by different symbols -->
+
+<!-- ```{r} -->
+
+<!-- tips %>% ggplot(aes(total_bill, tip)) +  -->
+<!--   geom_point(aes(col = day, pch = sex), size = 3)  -->
+<!-- ``` -->
+
+<!-- -   **Step 3:** Modeling -->
+
+<!--     -   Limitations of Exploratory Data Analysis: You can design a strategy to make more money, but you can't predict exactly how much more income will come from the new strategy. -->
+
+<!--     -   Modeling allows predictions -->
+
+<!--     -   Create future financial portfolios -->
+
+<!--         -   E.g.) Know how much your income will increase as fellows in a table grow, and how much your income will change when paying people’s gender changes -->
+
+<!-- <br> -->
+
+<!-- ## Setup your project! -->
+
+<!-- -   Create a new project -->
+
+<!--     -   *\*.Rproj* -->
+
+<!--     -   \*.R -->
+
+<!--     -   getwd() -->
+
+<!-- -   **Variable** and **Object** -->
+
+<!--     -   An `object` in R is a data structure used for storing data: [Everything in R is an object]{.underline}, including functions, numbers, character strings, vectors, and lists. Each object has attributes such as its type (e.g., integer, numeric, character), its length, and often its dimensions. Objects can be complex structures, like data frames that hold tabular data, or simpler structures like a single numeric value or vector. -->
+
+<!--     -   A variable in R is a name that you assign to an object so that you can refer to it later in your code. When you assign data to a variable, you are effectively labeling that data with a name that you can use to call up the object later on. -->
+
+<!-- Here's a simple example in R: -->
+
+<!-- ```{r} -->
+<!-- my_vector <- c(1, 2, 3) -->
+<!-- ``` -->
+
+<!-- -   `my_vector` is a variable. It's a symbolic name that we're using to refer to some data we're interested in. -->
+
+<!-- -   `c(1, 2, 3)` creates a vector object containing the numbers 1, 2, and 3. -->
+
+<!-- -   This vector is the object, and it's the actual data structure that R is storing in memory. -->
+
+<!-- ```{r} -->
+<!-- # remove all objects stored -->
+<!-- rm() -->
+
+<!-- # Create a vector 1 to 10 -->
+<!-- 1:10 -->
+
+<!-- # Sampling 10 values from the vector 1:10 -->
+<!-- sample(1:10, 10) -->
+
+
+<!-- X <- sample(1:10, 10) -->
+<!-- # Extract 2nd to 5th elements of X -->
+<!-- X[2:5] -->
+
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ## Basic Syntax -->
+
+<!-- -   Grammar of data science. -->
+
+<!--     -   **Variable**: data storage space -->
+
+<!--     -   **Data types**: numeric, character, categorical, logical, special constants, etc. -->
+
+<!--     -   **Operators**: arithmetic, comparison, logical operators -->
+
+<!--     -   **Vector**: a collection of single values -->
+
+<!--     -   **Array**: A set of data with columns and rows (or A set of vectors) -->
+
+<!--     -   **Data frame**: A structure in which different data types are organized in a tabular form. Each properㄹty has the same size. -->
+
+<!--     -   **List**: A tabular structure similar to “Data frame”. The size of each property can be different. -->
+
+<!-- -   Grammar study is essential to save data and process operations -->
+
+<!--     -   `a = 1` -->
+
+<!--     -   `b = 2` -->
+
+<!--     -   `c = a+b` -->
+
+<!-- -   When there needs a lot of data, such as student grade processing -->
+
+<!--     -   A single variable cannot represent all the data -->
+
+<!--     -   By using vector, matrix, data frame, list, etc., it is possible to store a lot of data with one variable name. -->
+
+<!--     -   There are many things around us are organized in a tabular form for easy data management. (e.g. attendance checking, grade, and member management, etc.) -->
+
+<!-- -   Storing values in variables -->
+
+<!--     -   Value assignment using =, \<-, -\> -->
+
+<!--         ```{r} -->
+<!--         # Assign 1 to X -->
+<!--         x = 1  -->
+
+<!--         # Assign 2 to Y. -->
+<!--         y = 2 -->
+
+<!--         z = x + y -->
+
+<!--         z -->
+<!--         ``` -->
+
+<!--         ```{r} -->
+<!--         x + y -> z -->
+
+<!--         z -->
+<!--         ``` -->
+
+<!-- -   Example of exchanging two values -->
+
+<!--     -   Make temporary storage space and save one value in advance -->
+
+<!--         ```{r} -->
+<!--         x = 1 -->
+<!--         y = 2 -->
+<!--         temp = x -->
+<!--         x = y -->
+<!--         y = temp -->
+
+<!--         x -->
+
+<!--         y -->
+<!--         ``` -->
+
+<!-- -   Basic data types of R -->
+
+<!--     -   **Numeric**: int / num / cplx -->
+
+<!--     -   **Character**: chr -->
+
+<!--     -   **Categorical**: factor -->
+
+<!--     -   **Logical**: True(T), FALSE(F) -->
+
+<!--     -   Special constant -->
+
+<!--         -   NULL: undefined value -->
+
+<!--         -   NA: missing value -->
+
+<!--         -   Inf & -Inf: Positive & Negative infinity -->
+
+<!--         -   NaN: Not a Number, values cannot be computed such as 0/0, Inf/Inf, etc -->
+
+<!-- -   Examples for basic data types in R -->
+
+<!-- Numeric -->
+
+<!-- ```{r} -->
+<!-- # Data type # -->
+
+<!-- x = 5 -->
+<!-- y = 2 -->
+<!-- x/y -->
+
+<!-- ``` -->
+
+<!-- Complex -->
+
+<!-- ```{r} -->
+<!-- xi = 1 + 2i -->
+<!-- yi = 1 - 2i -->
+<!-- xi+yi -->
+
+<!-- ``` -->
+
+<!-- Character (string) -->
+
+<!-- ```{r} -->
+<!-- str = "Hello, World!" -->
+<!-- str -->
+
+<!-- ``` -->
+
+<!-- Categorical (factor) -->
+
+<!-- ```{r} -->
+<!-- blood.type = factor(c('A', 'B', 'O', 'AB')) -->
+<!-- blood.type -->
+
+<!-- ``` -->
+
+<!-- Logical & Special constant -->
+
+<!-- ```{r} -->
+<!-- T -->
+<!-- F -->
+<!-- xinf = Inf -->
+<!-- yinf = -Inf -->
+<!-- xinf/yinf -->
+
+<!-- ``` -->
+
+<!-- -   Data type verification and conversion functions -->
+
+<!--     -   Functions to check data type -->
+
+<!--         -   class(x) -->
+
+<!--         -   typeof(x) -->
+
+<!--         -   is.integer(x) -->
+
+<!--         -   is.numeric(x) -->
+
+<!--         -   is.complex(x) -->
+
+<!--         -   is.character(x) -->
+
+<!--         -   is.na(x) -->
+
+<!--     -   Functions to transform data type -->
+
+<!--         -   as.factor(x) -->
+
+<!--         -   as.integer(x) -->
+
+<!--         -   as.numeric(x) -->
+
+<!--         -   as.character(x) -->
+
+<!--         -   as.matrix(x) -->
+
+<!--         -   as.array(x) -->
+
+<!-- ```{r} -->
+
+<!-- x = 1 		# If you simply put 1 in x, x is a numeric type. -->
+<!-- x -->
+<!-- is.integer(x) -->
+
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- x = 1L 		# If 1L is entered in x, x is an integer. -->
+<!-- x -->
+
+<!-- is.integer(x) -->
+
+<!-- x = as.integer(1) 	  -->
+
+<!-- is.integer(x) -->
+
+<!-- ``` -->
+
+<!-- -   Arithmetic Operators -->
+
+<!--     |                |                             | -->
+<!--     |----------------|-----------------------------| -->
+<!--     | **Operator**   | **Description**             | -->
+<!--     | **+**          | addition                    | -->
+<!--     | **-**          | subtraction                 | -->
+<!--     | **\***         | multiplication              | -->
+<!--     | **/**          | division                    | -->
+<!--     | **\^ or \*\*** | exponentiation              | -->
+<!--     | **x %% y**     | modulus (x mod y) 5%%2 is 1 | -->
+<!--     | **x %/% y**    | integer division 5%/%2 is 2 | -->
+
+<!-- -   Logical Operators -->
+
+<!--     |               |                          | -->
+<!--     |---------------|--------------------------| -->
+<!--     | **Operator**  | **Description**          | -->
+<!--     | **\<**        | less than                | -->
+<!--     | **\<=**       | less than or equal to    | -->
+<!--     | **\>**        | greater than             | -->
+<!--     | **\>=**       | greater than or equal to | -->
+<!--     | **==**        | exactly equal to         | -->
+<!--     | **!=**        | not equal to             | -->
+<!--     | **!x**        | Not x                    | -->
+<!--     | \*\*x         | y\*\*                    | -->
+<!--     | **x & y**     | x AND y                  | -->
+<!--     | **isTRUE(x)** | test if X is TRUE        | -->
+
+<!-- -   More information for operators: <https://www.statmethods.net/management/operators.html> -->
+
+<!-- <br> -->
+
+<!-- ## Vector -->
+
+<!-- > In R, a vector is one of the most basic data structures used to store a sequence of elements of the same type. Vectors can hold numeric, character, or logical data. They are a fundamental part of R programming, especially for statistical operations. -->
+
+<!-- <br> -->
+
+<!-- ### Creating a Vector -->
+
+<!-- You can create a vector in R using the `c()` function, which combines individual values into a single vector -->
+
+<!-- ```{r} -->
+<!-- # Numeric vector -->
+<!-- numeric_vector <- c(1, 2, 3, 4, 5) -->
+
+<!-- # Character vector -->
+<!-- char_vector <- c("apple", "banana", "cherry") -->
+
+<!-- # Logical vector -->
+<!-- logical_vector <- c(TRUE, FALSE, TRUE) -->
+
+<!-- ``` -->
+
+<!-- ### Accessing Elements of a Vector -->
+
+<!-- You can access elements in a vector using square brackets `[ ]`: -->
+
+<!-- ```{r} -->
+<!-- # Access the second element of the numeric vector -->
+<!-- numeric_vector[2]  # Output: 2 -->
+
+<!-- # Access multiple elements -->
+<!-- numeric_vector[c(1, 3)]  # Output: 1 3 -->
+
+<!-- ``` -->
+
+<!-- ### Vectorized Operations -->
+
+<!-- R supports vectorized operations, meaning you can perform operations on entire vectors without needing to loop through individual elements: -->
+
+<!-- ```{r} -->
+<!-- # Adding a constant to each element of a numeric vector -->
+<!-- numeric_vector + 1  # Output: 2 3 4 5 6 -->
+
+<!-- # Element-wise addition of two vectors -->
+<!-- other_vector <- c(5, 4, 3, 2, 1) -->
+<!-- numeric_vector + other_vector  # Output: 6 6 6 6 6 -->
+
+<!-- ``` -->
+
+<!-- ### Common Functions with Vectors -->
+
+<!-- Here are some basic functions you can use with vectors: -->
+
+<!-- -   `length()`: Returns the number of elements in a vector. -->
+
+<!-- -   `sum()`: Sums all elements (for numeric vectors). -->
+
+<!-- -   `mean()`: Calculates the average (for numeric vectors). -->
+
+<!-- Example: -->
+
+<!-- ```{r} -->
+<!-- length(numeric_vector)  # Output: 5 -->
+<!-- sum(numeric_vector)     # Output: 15 -->
+<!-- mean(numeric_vector)    # Output: 3 -->
+
+<!-- ``` -->
+
+<!-- ### More Practices.. -->
+
+<!-- ```{r} -->
+<!-- # Create a vector with 7 elements by increasing the numbers 1 to 7 by 1. -->
+<!-- 1:7 		 -->
+
+<!-- # Decrease by 1 from 7 to 1 to create a vector with 7 elements. -->
+<!-- 7:1 	 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- vector(length = 5) -->
+<!-- # Create a vector consisting of 1 to 5 elements. Same as 1:5 -->
+<!-- c(1:5)	 	 -->
+
+<!-- # Create a vector of elements 1 to 6 by combining elements 1 to 3 and elements 4 to 6 -->
+<!-- c(1, 2, 3, c(4:6)) 	 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Store a vector consisting of 1 to 3 elements in x -->
+<!-- x = c(1, 2, 3) 	 -->
+<!-- x 		 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Create y as an empty vector -->
+<!-- y = c() 		 -->
+
+<!-- # Created by adding the c(1:3) vector to the existing y vector -->
+<!-- y = c(y, c(1:3)) 	 -->
+<!-- y 	 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Create a vector from 1 to 10 in increments of 2 -->
+<!-- seq(from = 1, to = 10, by = 2) 	 -->
+
+<!-- # Same code with above -->
+<!-- seq(1, 10, by = 2) 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Create a vector with 11 elements from 0 to 1 in increments of 0.1 -->
+<!-- seq(0, 1, by = 0.1) 			 -->
+
+<!-- # Create a vector with 11 elements from 0 to 1 -->
+<!-- seq(0, 1, length.out = 11) 		 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Create a vector by repeating the (1, 2, 3) vector twice -->
+<!-- rep(c(1:3), times = 2)	 -->
+
+<!-- # (1, 2, 3) Creates a vector by repeating the individual elements of the vector twice -->
+<!-- rep(c(1:3), each = 2) 		 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- x = c(2, 4, 6, 8, 10) -->
+
+<!-- # Find the length (size) of the x vector -->
+<!-- length(x) 	 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Find the value of element 1 of the x vector -->
+<!-- x[1] 		 -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- # An error occurs if you enter elements 1, 2, and 3 of the x vector. -->
+
+<!-- # x[1, 2, 3] 		 -->
+
+<!-- # When finding elements 1, 2, and 3 of the x vector, they must be grouped into a vector. -->
+
+<!-- x[c(1, 2, 3)]  -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Output the value excluding elements 1, 2, and 3 from the x vector -->
+
+<!-- x[-c(1, 2, 3)]  -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Print elements 1 to 3 in the x vector -->
+<!-- x[c(1:3)] 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Add 2 to each individual element of the x vector -->
+<!-- x = c(1, 2, 3, 4) -->
+<!-- y = c(5, 6, 7, 8) -->
+<!-- z = c(3, 4) -->
+<!-- w = c(5, 6, 7) -->
+<!-- x+2 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Since the size of the x vector and y vector are the same, each element is added -->
+<!-- x + y 	 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # If the x vector is an integer multiple of the size of the z vector, add the smaller vector elements in a circular motion. -->
+<!-- x + z 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Operation error because the sizes of x and w are not integer multiples -->
+<!-- x + w 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Check if element value of x vector is greater than 5 -->
+
+<!-- x > 5 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Check if all elements of the x vector are greater than 5 -->
+<!-- all(x > 5) 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Check if any of the element values of the x vector are greater than 5 -->
+<!-- any(x > 5) 	 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- x = 1:10 -->
+<!-- # Extract the first 6 elements of data -->
+<!-- head(x) 		 -->
+<!-- # Extract the last 6 elements of data -->
+<!-- tail(x) 		 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Extract the first 3 elements of data -->
+<!-- head(x, 3) 	 -->
+<!-- # Extract the last 3 elements of data -->
+<!-- tail(x, 3)  -->
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ### Sets -->
+
+<!-- ```{r} -->
+<!-- x = c(1, 2, 3) -->
+<!-- y = c(3, 4, 5) -->
+<!-- z = c(3, 1, 2) -->
+
+<!-- # Union set -->
+<!-- union(x, y)  -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Intersection set -->
+<!-- intersect(x, y)  -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Set difference (X - Y) -->
+<!-- setdiff(x, y) 	 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Set difference (Y - X) -->
+<!-- setdiff(y, x) 	 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Compare whether x and y have the same elements -->
+<!-- setequal(x, y) 	 -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Compare whether x and z have the same elements -->
+<!-- setequal(x, z)  -->
+<!-- ``` -->
+
+<!-- -   Vectorized codes -->
+
+<!-- ```{r} -->
+<!-- c(1, 2, 4) + c(2, 3, 5) -->
+
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ```{r} -->
+<!-- X <- c(1,2,4,5) -->
+
+<!-- X * 2 -->
+
+<!-- ``` -->
+
+<!-- -   Recycling rule -->
+
+<!-- ```{r} -->
+<!-- 1:4 + c(1, 2) -->
+
+<!-- X<-c(1,2,4,5) -->
+<!-- X * 2 -->
+
+<!-- 1:4 + 1:3 -->
+
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ## Array -->
+
+<!-- ### **Understanding Arrays in R: Concepts and Examples** -->
+
+<!-- Arrays are a fundamental data structure in R that extend vectors by allowing you to store multi-dimensional data. While a vector has one dimension, arrays in R can have two or more dimensions, making them incredibly versatile for complex data organization. -->
+
+<!-- #### What is an Array in R? -->
+
+<!-- An array in R is a collection of elements of the same type arranged in a grid of a specified dimensionality. It is a multi-dimensional data structure that can hold values in more than two dimensions. Arrays are particularly useful in scenarios where operations on multi-dimensional data are required, such as matrix computations, tabulations, and various applications in data analysis and statistics. -->
+
+<!-- #### Creating an Array -->
+
+<!-- To create an array in R, you can use the **`array`** function. This function takes a vector of data and a vector of dimensions as arguments. For example: -->
+
+<!-- ```{r} -->
+<!-- # Create a 2x3 array -->
+<!-- my_array <- array(1:6, dim = c(2, 3)) -->
+<!-- print(my_array) -->
+
+<!-- ``` -->
+
+<!-- This code snippet creates a 2x3 array (2 rows and 3 columns) with the numbers 1 to 6. -->
+
+<!-- #### Accessing Array Elements -->
+
+<!-- Elements within an array can be accessed using indices for each dimension in square brackets **`[]`**. For example: -->
+
+<!-- ```{r} -->
+<!-- # Access the element in the 1st row and 2nd column -->
+<!-- element <- my_array[1, 2] -->
+<!-- print(element) -->
+
+<!-- ``` -->
+
+<!-- #### Modifying Arrays -->
+
+<!-- Just like vectors, you can modify the elements of an array by accessing them using their indices and assigning new values. For example: -->
+
+<!-- ```{r} -->
+<!-- # Modify the element in the 1st row and 2nd column to be 20 -->
+<!-- my_array[1, 2] <- 20 -->
+<!-- print(my_array) -->
+
+<!-- ``` -->
+
+<!-- #### Operations on Arrays -->
+
+<!-- R allows you to perform operations on arrays. These operations can be element-wise or can involve the entire array. For example, you can add two arrays of the same dimensions, and R will perform element-wise addition. -->
+
+<!-- #### Example: Creating and Manipulating a 3D Array -->
+
+<!-- ```{r} -->
+<!-- # Create a 3x2x2 array -->
+<!-- my_3d_array <- array(1:12, dim = c(3, 2, 2)) -->
+<!-- print(my_3d_array) -->
+
+<!-- # Access an element (2nd row, 1st column, 2nd matrix) -->
+<!-- element_3d <- my_3d_array[2, 1, 2] -->
+<!-- print(element_3d) -->
+
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ```{r} -->
+<!-- # Create N-dimensional array -->
+
+<!-- # Assign values 1 to 5 to a 2×4 matrix -->
+<!-- x = array(1:5, c(2, 4))  -->
+
+<!-- x -->
+
+<!-- # Print row 1 element value -->
+<!-- x[1, ]  -->
+
+<!-- # Print 2nd column element values -->
+<!-- x[, 2]  -->
+
+<!-- # Set row and column names -->
+<!-- dimnamex = list(c("1st", "2nd"), c("1st", "2nd", "3rd", "4th"))  -->
+
+<!-- x = array(1:5, c(2, 4), dimnames = dimnamex) -->
+<!-- x -->
+<!-- x["1st", ] -->
+<!-- x[, "4th"] -->
+
+
+<!-- # Create a two-dimensional array -->
+<!-- x = 1:12 -->
+<!-- x -->
+<!-- matrix(x, nrow = 3) -->
+<!-- matrix(x, nrow = 3, byrow = T) -->
+
+
+<!-- # Create an array by combining vectors -->
+<!-- v1 = c(1, 2, 3, 4) -->
+<!-- v2 = c(5, 6, 7, 8) -->
+<!-- v3 = c(9, 10, 11, 12) -->
+
+<!-- # Create an array by binding by column -->
+<!-- cbind(v1, v2, v3)  -->
+<!-- # Create array by binding row by row -->
+<!-- rbind(v1, v2, v3)  -->
+
+<!-- # Various matrix operations using the operators in [Table 3-7] -->
+<!-- # Store two 2×2 matrices in x and y, respectively -->
+<!-- x = array(1:4, dim = c(2, 2)) -->
+<!-- y = array(5:8, dim = c(2, 2)) -->
+<!-- x -->
+<!-- y -->
+<!-- x+y -->
+<!-- x-y -->
+
+<!-- # multiplication for each column -->
+<!-- x * y  -->
+
+<!-- # mathematical matrix multiplication -->
+<!-- x %*% y  -->
+
+<!-- # transpose matrix of x -->
+<!-- t(x)  -->
+
+<!-- # inverse of x -->
+<!-- solve(x)  -->
+
+<!-- # determinant of x -->
+<!-- det(x)  -->
+<!-- x = array(1:12, c(3, 4)) -->
+<!-- x -->
+
+<!-- # If the center value is 1, apply the function row by row -->
+<!-- apply(x, 1, mean)  -->
+
+<!-- # If the center value is 2, apply the function to each column -->
+<!-- apply(x, 2, mean)  -->
+<!-- x = array(1:12, c(3, 4)) -->
+<!-- dim(x) -->
+<!-- x = array(1:12, c(3, 4)) -->
+
+<!-- # Randomly mix and extract array elements -->
+<!-- sample(x)  -->
+
+<!-- # Select and extract 10 elements from the array -->
+<!-- sample(x, 10)  -->
+<!-- library(dplyr) -->
+<!-- # ?sample -->
+
+<!-- # The extraction probability for each element can be varied -->
+<!-- sample(x, 10, prob = c(1:12)/24)  -->
+
+<!-- # You can create a sample using just numbers -->
+<!-- sample(10)  -->
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ## Data.frame -->
+
+<!-- > In R, a `data.frame` is a two-dimensional table-like data structure that holds data in rows and columns. It's one of the most commonly used data structures, especially when dealing with tabular data, similar to spreadsheets or SQL tables. -->
+
+<!-- ### Characteristics of `data.frame` -->
+
+<!-- -   Each column can hold different types of data (numeric, character, logical, etc.). -->
+
+<!-- -   Each row represents a single observation, and each column represents a variable. -->
+
+<!-- -   Columns can have different data types, but all values within a column must be of the same type. -->
+
+<!-- ### Creating a `data.frame` -->
+
+<!-- You can create a `data.frame` using the `data.frame()` function by combining vectors of equal length. -->
+
+<!-- ```{r} -->
+<!-- # Create a data frame with numeric, character, and logical columns -->
+<!-- my_data <- data.frame( -->
+<!--   ID = c(1, 2, 3), -->
+<!--   Name = c("John", "Sarah", "Mike"), -->
+<!--   Age = c(25, 30, 22), -->
+<!--   IsStudent = c(TRUE, FALSE, TRUE) -->
+<!-- ) -->
+
+<!-- # View the data frame -->
+<!-- my_data -->
+
+<!-- ``` -->
+
+<!-- ### Accessing Elements in a `data.frame` -->
+
+<!-- You can access elements by referring to rows and columns: -->
+
+<!-- -   **By column name**: You can use the `$` operator or square brackets `[ , ]` to extract a column. -->
+
+<!-- ```{r} -->
+<!-- # Extract the 'Name' column using $ -->
+<!-- my_data$Name  # Output: "John" "Sarah" "Mike" -->
+
+<!-- # Extract the 'Age' column using square brackets -->
+<!-- my_data[, "Age"]  # Output: 25 30 22 -->
+
+<!-- ``` -->
+
+<!-- **By row number**: You can also use row indices to access specific rows or a combination of rows and columns. -->
+
+<!-- ```{r} -->
+<!-- # Extract the first row -->
+<!-- my_data[1, ]  # Output: 1 "John" 25 TRUE -->
+
+<!-- # Extract the value in the second row, third column -->
+<!-- my_data[2, 3]  # Output: 30 -->
+
+<!-- ``` -->
+
+<!-- ### Adding New Columns or Rows -->
+
+<!-- You can add new columns or rows to an existing `data.frame`: -->
+
+<!-- -   **Adding a new column**: -->
+
+<!-- ```{r} -->
+<!-- my_data$Grade <- c("A", "B", "A") -->
+<!-- my_data -->
+
+<!-- ``` -->
+
+<!-- -   **Adding a new row**: -->
+
+<!-- ```{r} -->
+<!-- new_row <- data.frame(ID = 4, Name = "Emma", Age = 28, IsStudent = FALSE, Grade = "B") -->
+<!-- my_data <- rbind(my_data, new_row) -->
+<!-- my_data -->
+
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ### More Practices -->
+
+<!-- ```{r} -->
+<!-- # Data Frame # -->
+<!-- name = c("Cheolsu", "Chunhyang", "Gildong") -->
+<!-- age = c(22, 20, 25) -->
+<!-- gender = factor(c("M", "F", "M")) -->
+<!-- blood.type = factor(c("A", "O", "B")) -->
+<!-- patients = data.frame(name, age, gender, blood.type) -->
+<!-- patients -->
+
+<!-- # Can also be written in one line like this: -->
+<!-- patients1 = data.frame(name = c("Cheolsu", "Chunhyang", "Gildong"),  -->
+<!--                        age = c(22, 20, 25),  -->
+<!--                        gender = factor(c("M", "F", "M ")),  -->
+<!--                        blood.type = factor(c("A", "O", "B"))) -->
+
+<!-- patients1 -->
+
+<!-- patients$name # Print name attribute value -->
+<!-- patients[1, ] # Print row 1 value -->
+<!-- patients[, 2] # Print 2nd column values -->
+<!-- patients[3, 1] # Prints 3 rows and 1 column values -->
+
+
+<!-- patients[patients$name=="Withdrawal", ] # Extract information about withdrawal among patients -->
+<!-- patients[patients$name=="Cheolsu", c("name", "age")] # Extract only Cheolsu's name and age information -->
+
+<!-- head(cars) # Check the cars data set. The basic function of the head function is to extract the first 6 data. -->
+
+<!-- attach(cars) # Use the attach function to use each property of cars as a variable -->
+<!-- speed # The variable name speed can be used directly. -->
+<!-- detach(cars) # Deactivates the use of each property of cars as a variable through the detach function -->
+<!-- # speed # Try to access the variable called speed, but there is no such variable. -->
+
+<!-- # Apply functions using data properties -->
+<!-- mean(cars$speed) -->
+<!-- max(cars$speed) -->
+
+<!-- # Apply a function using the with function -->
+<!-- with(cars, mean(speed)) -->
+<!-- with(cars, max(speed)) -->
+
+<!-- # Extract only data with speed greater than 20 -->
+<!-- subset(cars, speed > 20) -->
+
+<!-- # Extract only dist data with speed over 20, select multiple columns, separate c() with , -->
+<!-- subset(cars, speed > 20, select = c(dist)) -->
+
+<!-- # Extract only data excluding dist from data with a speed exceeding 20 -->
+<!-- subset(cars, speed > 20, select = -c(dist)) -->
+<!-- head(airquality) # airquality data contains NA -->
+<!-- head(na.omit(airquality)) # Extract by excluding values containing NA -->
+
+<!-- # merge(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all, sort = TRUE, suffixes = c(".x",".y"), incomparables = NULL, ...) -->
+
+<!-- name = c("Cheolsu", "Chunhyang", "Gildong") -->
+<!-- age = c(22, 20, 25) -->
+<!-- gender = factor(c("M", "F", "M")) -->
+<!-- blood.type = factor(c("A", "O", "B")) -->
+<!-- patients1 = data.frame(name, age, gender) -->
+<!-- patients1 -->
+
+<!-- patients2 = data.frame(name, blood.type) -->
+<!-- patients2 -->
+
+<!-- patients = merge(patients1, patients2, by = "name") -->
+<!-- patients -->
+
+<!-- # If there are no column variables with the same name, when merging them into by.x and by.y of the merge function -->
+<!-- # You must enter the attribute name of each column to be used. -->
+<!-- name1 = c("Cheolsu", "Chunhyang", "Gildong") -->
+<!-- name2 = c("Minsu", "Chunhyang", "Gildong") -->
+<!-- age = c(22, 20, 25) -->
+<!-- gender = factor(c("M", "F", "M")) -->
+<!-- blood.type = factor(c("A", "O", "B")) -->
+<!-- patients1 = data.frame(name1, age, gender) -->
+<!-- patients1 -->
+
+<!-- patients2 = data.frame(name2, blood.type) -->
+<!-- patients2 -->
+
+<!-- patients = merge(patients1, patients2, by.x = "name1", by.y = "name2") -->
+<!-- patients -->
+
+<!-- patients = merge(patients1, patients2, by.x = "name1", by.y = "name2", all = TRUE) -->
+<!-- patients -->
+<!-- x = array(1:12, c(3, 4)) -->
+
+<!-- # Currently x is not a data frame -->
+<!-- is.data.frame(x)  -->
+<!-- as.data.frame(x) -->
+
+<!-- # Just calling the is.data.frame function does not turn x into a data frame -->
+<!-- is.data.frame(x) -->
+<!-- # Convert x to data frame format with the as.data.frame function -->
+<!-- x = as.data.frame(x) -->
+<!-- x -->
+<!-- # Verify that x has been converted to data frame format -->
+<!-- is.data.frame(x) -->
+<!-- # When converting to a data frame, automatically assigned column names are reassigned to the names function. -->
+<!-- names(x) = c("1st", "2nd", "3rd", "4th") -->
+<!-- x -->
+<!-- ``` -->
+
+<!-- ## List -->
+
+<!-- > In R, a **list** is a data structure that can store multiple types of elements, including vectors, other lists, data frames, functions, and more. Unlike vectors or data frames, lists can contain elements of different types and lengths. -->
+
+<!-- ### Characteristics of a List -->
+
+<!-- -   A list can hold different data types (numeric, character, logical, etc.) within the same structure. -->
+
+<!-- -   Each element in a list can be of different lengths and types, including even other lists or data frames. -->
+
+<!-- ### Creating a List -->
+
+<!-- You can create a list in R using the `list()` function: -->
+
+<!-- ```{r} -->
+<!-- # Creating a list with different data types -->
+<!-- my_list <- list( -->
+<!--   Name = "John", -->
+<!--   Age = 25, -->
+<!--   Scores = c(90, 85, 88), -->
+<!--   Passed = TRUE -->
+<!-- ) -->
+
+<!-- # View the list -->
+<!-- my_list -->
+
+<!-- ``` -->
+
+<!-- ### Accessing Elements of a List -->
+
+<!-- You can access elements in a list using the `$` operator, double square brackets `[[ ]]`, or single square brackets `[ ]`: -->
+
+<!-- -   **By name** (using `$` or `[[ ]]`): -->
+
+<!-- ```{r} -->
+<!-- # Access the 'Name' element using $ -->
+<!-- my_list$Name  # Output: "John" -->
+
+<!-- # Access the 'Scores' element using [[ ]] -->
+<!-- my_list[["Scores"]]  # Output: 90 85 88 -->
+
+<!-- ``` -->
+
+<!-- -   **By position** (using `[[ ]]`): -->
+
+<!-- ```{r} -->
+<!-- # Access the second element (Age) by position -->
+<!-- my_list[[2]]  # Output: 25 -->
+
+<!-- ``` -->
+
+<!-- -   **Using single square brackets `[ ]`**: This returns a sublist, rather than the element itself. -->
+
+<!-- ```{r} -->
+<!-- # Access the 'Name' element as a sublist -->
+<!-- my_list["Name"]  # Output: a sublist containing "Name" -->
+
+<!-- ``` -->
+
+<!-- ### Modifying a List -->
+
+<!-- -   **Adding new elements**: You can add new elements to an existing list by simply assigning a new name. -->
+
+<!-- ```{r} -->
+<!-- # Adding a new element 'Grade' -->
+<!-- my_list$Grade <- "A" -->
+<!-- my_list -->
+
+<!-- ``` -->
+
+<!-- -   **Modifying existing elements**: You can modify elements by assigning a new value to them. -->
+
+<!-- ```{r} -->
+<!-- # Modify the 'Age' element -->
+<!-- my_list$Age <- 26 -->
+<!-- my_list$Age  # Output: 26 -->
+
+<!-- ``` -->
+
+<!-- -   **Removing elements**: To remove an element from a list, you can set it to `NULL`. -->
+
+<!-- ```{r} -->
+<!-- # Remove the 'Grade' element -->
+<!-- my_list$Grade <- NULL -->
+<!-- my_list -->
+
+<!-- ``` -->
+
+<!-- ### Nested Lists -->
+
+<!-- Lists can also contain other lists, making them very flexible for storing hierarchical or structured data. -->
+
+<!-- ```{r} -->
+<!-- # Creating a nested list -->
+<!-- nested_list <- list( -->
+<!--   Name = "Sarah", -->
+<!--   Details = list(Age = 28, Occupation = "Data Scientist"), -->
+<!--   Skills = c("R", "Python", "SQL") -->
+<!-- ) -->
+
+<!-- # Accessing elements within a nested list -->
+<!-- nested_list$Details$Age  # Output: 28 -->
+<!-- nested_list[["Details"]][["Occupation"]]  # Output: "Data Scientist" -->
+
+<!-- ``` -->
+
+<!-- ### Combining Lists -->
+
+<!-- You can combine multiple lists using the `c()` function: -->
+
+<!-- ```{r} -->
+<!-- # Combine two lists -->
+<!-- list1 <- list(A = 1, B = 2) -->
+<!-- list2 <- list(C = 3, D = 4) -->
+<!-- combined_list <- c(list1, list2) -->
+<!-- combined_list -->
+
+<!-- ``` -->
+
+<!-- ### Common Functions for Lists -->
+
+<!-- -   `length()`: Returns the number of elements in a list. -->
+
+<!-- ```{r} -->
+<!-- length(my_list)  # Output: 4 (after removing Grade) -->
+
+<!-- ``` -->
+
+<!-- -   `str()`: Displays the structure of the list. -->
+
+<!-- <!-- --> -->
+
+<!-- -   `lapply()`: Applies a function to each element of a list and returns a list. -->
+
+<!-- ```{r} -->
+<!-- # Apply the 'mean' function to each element (for lists with numeric values) -->
+<!-- num_list <- list(a = c(1, 2, 3), b = c(4, 5, 6)) -->
+<!-- lapply(num_list, mean) -->
+
+<!-- ``` -->
+
+<!-- -   `unlist()`: Converts a list into a vector (flattening it). -->
+
+<!-- ```{r} -->
+<!-- # Convert a list to a vector -->
+<!-- unlist(my_list) -->
+
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ### More Practices -->
+
+<!-- ```{r} -->
+<!-- # List # -->
+<!-- patients = data.frame(name = c("Cheolsu", "Chunhyang", "Gildong"),  -->
+<!--                       age = c(22, 20, 25),  -->
+<!--                       gender = factor(c("M", "F", "M ")),  -->
+<!--                       blood.type = factor(c("A", "O", "B"))) -->
+
+<!-- no.patients = data.frame(day = c(1:6), no = c(50, 60, 55, 52, 65, 58)) -->
+
+
+<!-- # Simple addition of data -->
+<!-- listPatients = list(patients, no.patients) -->
+<!-- listPatients -->
+
+
+<!-- # Add names to each data -->
+<!-- listPatients = list(patients=patients, no.patients = no.patients) -->
+<!-- listPatients -->
+
+
+<!-- # Enter element name -->
+<!-- listPatients$patients  -->
+
+
+<!-- # Enter index -->
+<!-- listPatients[[1]]  -->
+
+
+<!-- # Enter the element name in "" -->
+<!-- listPatients[["patients"]]  -->
+
+
+<!-- # Enter the element name in "" -->
+<!-- listPatients[["no.patients"]]  -->
+
+
+<!-- # Calculate the average of no.patients elements -->
+<!-- lapply(listPatients$no.patients, mean) -->
+
+<!-- # Calculate the average of the patients elements. Anything that is not in numeric form is not averaged. -->
+<!-- lapply(listPatients$patients, mean) -->
+
+<!-- sapply(listPatients$no.patients, mean) -->
+
+<!-- # If the simplify option of sapply() is set to F, the same result as lapply() is returned. -->
+<!-- sapply(listPatients$no.patients, mean, simplify = F) -->
+<!-- ``` -->
+
+<!-- <br> -->
+
+<!-- ------------------------------------------------------------------------ -->
+
+<!-- <br> -->
+
+<!-- ## Activity -->
+
+<!-- <br> -->
+
+<!-- **개인 미니 프로젝트 “나만의 팁 데이터 탐험기”** -->
+
+<!-- -   목표 -->
+
+<!--     -   tips 데이터를 직접 살펴보고 -->
+
+<!--     -   간단한 요약 + 시각화 2개를 만든 뒤 -->
+
+<!--     -   개인적으로 발견한 흥미로운 사실 3가지를 정리 -->
+
+<!-- -   아래 노션 링크에 시각화와 내용 업로드 -->
+
+<!--     -   <https://www.notion.so/cjleeskku/2025-2-STAT101-270297b19ad080659d03f67c55570d64?source=copy_link> -->
+
+
+
