@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>데이터 시각화 – CJL &amp; Lab</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">CJL &amp; Lab</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ds101/index.html">
+ <span class="dropdown-text">DS101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ml101/index.html">
+ <span class="dropdown-text">ML101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/grad_stat/index.html">
+ <span class="dropdown-text">STAT101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://axislabskku.com/"> 
+<span class="menu-text">LAB</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#주차-학습목표" id="toc-주차-학습목표" class="nav-link active" data-scroll-target="#주차-학습목표">5주차 학습목표</a>
+  <ul class="collapse">
+  <li><a href="#오늘의-핵심-질문" id="toc-오늘의-핵심-질문" class="nav-link" data-scroll-target="#오늘의-핵심-질문">오늘의 핵심 질문</a></li>
+  </ul></li>
+  <li><a href="#이번-주의-genai-활용-방식" id="toc-이번-주의-genai-활용-방식" class="nav-link" data-scroll-target="#이번-주의-genai-활용-방식">이번 주의 GenAI 활용 방식</a>
+  <ul class="collapse">
+  <li><a href="#그래프를-부탁하는-대신-그래프-설계를-검토받기" id="toc-그래프를-부탁하는-대신-그래프-설계를-검토받기" class="nav-link" data-scroll-target="#그래프를-부탁하는-대신-그래프-설계를-검토받기">그래프를 부탁하는 대신 그래프 설계를 검토받기</a></li>
+  </ul></li>
+  <li><a href="#준비-이번-주의-공통-데이터" id="toc-준비-이번-주의-공통-데이터" class="nav-link" data-scroll-target="#준비-이번-주의-공통-데이터">준비: 이번 주의 공통 데이터</a>
+  <ul class="collapse">
+  <li><a href="#패키지" id="toc-패키지" class="nav-link" data-scroll-target="#패키지">패키지</a></li>
+  <li><a href="#hci-반복측정-예제-만들기" id="toc-hci-반복측정-예제-만들기" class="nav-link" data-scroll-target="#hci-반복측정-예제-만들기">HCI 반복측정 예제 만들기</a></li>
+  </ul></li>
+  <li><a href="#시각화는-그림-그리기가-아니라-인코딩-선택이다" id="toc-시각화는-그림-그리기가-아니라-인코딩-선택이다" class="nav-link" data-scroll-target="#시각화는-그림-그리기가-아니라-인코딩-선택이다">시각화는 “그림 그리기”가 아니라 “인코딩 선택”이다</a>
+  <ul class="collapse">
+  <li><a href="#그래프를-만들기-전-다섯-문장" id="toc-그래프를-만들기-전-다섯-문장" class="nav-link" data-scroll-target="#그래프를-만들기-전-다섯-문장">그래프를 만들기 전 다섯 문장</a></li>
+  </ul></li>
+  <li><a href="#grammar-of-graphics" id="toc-grammar-of-graphics" class="nav-link" data-scroll-target="#grammar-of-graphics">Grammar of Graphics</a>
+  <ul class="collapse">
+  <li><a href="#가장-작은-ggplot" id="toc-가장-작은-ggplot" class="nav-link" data-scroll-target="#가장-작은-ggplot">가장 작은 ggplot</a></li>
+  <li><a href="#mapping과-setting을-구분하기" id="toc-mapping과-setting을-구분하기" class="nav-link" data-scroll-target="#mapping과-setting을-구분하기">Mapping과 setting을 구분하기</a></li>
+  <li><a href="#그래프-객체를-저장하고-층을-추가하기" id="toc-그래프-객체를-저장하고-층을-추가하기" class="nav-link" data-scroll-target="#그래프-객체를-저장하고-층을-추가하기">그래프 객체를 저장하고 층을 추가하기</a></li>
+  </ul></li>
+  <li><a href="#질문과-변수-유형에-따라-그래프-선택하기" id="toc-질문과-변수-유형에-따라-그래프-선택하기" class="nav-link" data-scroll-target="#질문과-변수-유형에-따라-그래프-선택하기">질문과 변수 유형에 따라 그래프 선택하기</a></li>
+  <li><a href="#한-변수-분포를-본다는-것" id="toc-한-변수-분포를-본다는-것" class="nav-link" data-scroll-target="#한-변수-분포를-본다는-것">한 변수: 분포를 본다는 것</a>
+  <ul class="collapse">
+  <li><a href="#연속형-변수-histogram의-binwidth는-분석-선택이다" id="toc-연속형-변수-histogram의-binwidth는-분석-선택이다" class="nav-link" data-scroll-target="#연속형-변수-histogram의-binwidth는-분석-선택이다">연속형 변수: histogram의 binwidth는 분석 선택이다</a></li>
+  <li><a href="#histogram과-density를-겹칠-때" id="toc-histogram과-density를-겹칠-때" class="nav-link" data-scroll-target="#histogram과-density를-겹칠-때">histogram과 density를 겹칠 때</a></li>
+  <li><a href="#ecdf-bin을-정하지-않고-누적-분포-보기" id="toc-ecdf-bin을-정하지-않고-누적-분포-보기" class="nav-link" data-scroll-target="#ecdf-bin을-정하지-않고-누적-분포-보기">ECDF: bin을 정하지 않고 누적 분포 보기</a></li>
+  <li><a href="#범주형-변수-geom_bar와-geom_col" id="toc-범주형-변수-geom_bar와-geom_col" class="nav-link" data-scroll-target="#범주형-변수-geom_bar와-geom_col">범주형 변수: <code>geom_bar()</code>와 <code>geom_col()</code></a></li>
+  <li><a href="#count와-proportion을-구분하기" id="toc-count와-proportion을-구분하기" class="nav-link" data-scroll-target="#count와-proportion을-구분하기">Count와 proportion을 구분하기</a></li>
+  </ul></li>
+  <li><a href="#두-변수-관계와-집단-비교" id="toc-두-변수-관계와-집단-비교" class="nav-link" data-scroll-target="#두-변수-관계와-집단-비교">두 변수: 관계와 집단 비교</a>
+  <ul class="collapse">
+  <li><a href="#연속형-연속형-scatterplot" id="toc-연속형-연속형-scatterplot" class="nav-link" data-scroll-target="#연속형-연속형-scatterplot">연속형 × 연속형: scatterplot</a></li>
+  <li><a href="#겹침overplotting을-다루기" id="toc-겹침overplotting을-다루기" class="nav-link" data-scroll-target="#겹침overplotting을-다루기">겹침(overplotting)을 다루기</a></li>
+  <li><a href="#범주형-연속형-평균-막대보다-분포를-먼저-보기" id="toc-범주형-연속형-평균-막대보다-분포를-먼저-보기" class="nav-link" data-scroll-target="#범주형-연속형-평균-막대보다-분포를-먼저-보기">범주형 × 연속형: 평균 막대보다 분포를 먼저 보기</a></li>
+  <li><a href="#범주의-순서를-질문에-맞게-바꾸기" id="toc-범주의-순서를-질문에-맞게-바꾸기" class="nav-link" data-scroll-target="#범주의-순서를-질문에-맞게-바꾸기">범주의 순서를 질문에 맞게 바꾸기</a></li>
+  <li><a href="#범주형-범주형-분모가-핵심이다" id="toc-범주형-범주형-분모가-핵심이다" class="nav-link" data-scroll-target="#범주형-범주형-분모가-핵심이다">범주형 × 범주형: 분모가 핵심이다</a></li>
+  </ul></li>
+  <li><a href="#세-변수-이상-색보다-facet을-먼저-고려하기" id="toc-세-변수-이상-색보다-facet을-먼저-고려하기" class="nav-link" data-scroll-target="#세-변수-이상-색보다-facet을-먼저-고려하기">세 변수 이상: 색보다 facet을 먼저 고려하기</a>
+  <ul class="collapse">
+  <li><a href="#색으로-세-번째-변수-추가하기" id="toc-색으로-세-번째-변수-추가하기" class="nav-link" data-scroll-target="#색으로-세-번째-변수-추가하기">색으로 세 번째 변수 추가하기</a></li>
+  <li><a href="#작은-다중-그래프small-multiples" id="toc-작은-다중-그래프small-multiples" class="nav-link" data-scroll-target="#작은-다중-그래프small-multiples">작은 다중 그래프(small multiples)</a></li>
+  <li><a href="#색과-형태를-함께-사용하기" id="toc-색과-형태를-함께-사용하기" class="nav-link" data-scroll-target="#색과-형태를-함께-사용하기">색과 형태를 함께 사용하기</a></li>
+  </ul></li>
+  <li><a href="#시간-변화와-선-그래프" id="toc-시간-변화와-선-그래프" class="nav-link" data-scroll-target="#시간-변화와-선-그래프">시간 변화와 선 그래프</a></li>
+  <li><a href="#scale과-coordinate-값의-변환과-화면의-확대는-다르다" id="toc-scale과-coordinate-값의-변환과-화면의-확대는-다르다" class="nav-link" data-scroll-target="#scale과-coordinate-값의-변환과-화면의-확대는-다르다">Scale과 coordinate: 값의 변환과 화면의 확대는 다르다</a>
+  <ul class="collapse">
+  <li><a href="#로그-변환은-질문의-척도를-바꾼다" id="toc-로그-변환은-질문의-척도를-바꾼다" class="nav-link" data-scroll-target="#로그-변환은-질문의-척도를-바꾼다">로그 변환은 질문의 척도를 바꾼다</a></li>
+  <li><a href="#coord_cartesian은-데이터를-버리지-않고-화면만-확대한다" id="toc-coord_cartesian은-데이터를-버리지-않고-화면만-확대한다" class="nav-link" data-scroll-target="#coord_cartesian은-데이터를-버리지-않고-화면만-확대한다"><code>coord_cartesian()</code>은 데이터를 버리지 않고 화면만 확대한다</a></li>
+  <li><a href="#축을-자를-때의-윤리" id="toc-축을-자를-때의-윤리" class="nav-link" data-scroll-target="#축을-자를-때의-윤리">축을 자를 때의 윤리</a></li>
+  </ul></li>
+  <li><a href="#원자료와-요약통계를-함께-보여-주기" id="toc-원자료와-요약통계를-함께-보여-주기" class="nav-link" data-scroll-target="#원자료와-요약통계를-함께-보여-주기">원자료와 요약통계를 함께 보여 주기</a></li>
+  <li><a href="#labels-annotation-caption" id="toc-labels-annotation-caption" class="nav-link" data-scroll-target="#labels-annotation-caption">Labels, annotation, caption</a>
+  <ul class="collapse">
+  <li><a href="#필요한-곳만-주석-달기" id="toc-필요한-곳만-주석-달기" class="nav-link" data-scroll-target="#필요한-곳만-주석-달기">필요한 곳만 주석 달기</a></li>
+  </ul></li>
+  <li><a href="#quarto에서-그래프를-연구-산출물로-만들기" id="toc-quarto에서-그래프를-연구-산출물로-만들기" class="nav-link" data-scroll-target="#quarto에서-그래프를-연구-산출물로-만들기">Quarto에서 그래프를 연구 산출물로 만들기</a>
+  <ul class="collapse">
+  <li><a href="#alt-text는-그래프-해석을-대신하지-않는다" id="toc-alt-text는-그래프-해석을-대신하지-않는다" class="nav-link" data-scroll-target="#alt-text는-그래프-해석을-대신하지-않는다">Alt text는 그래프 해석을 대신하지 않는다</a></li>
+  </ul></li>
+  <li><a href="#그래프-저장하기" id="toc-그래프-저장하기" class="nav-link" data-scroll-target="#그래프-저장하기">그래프 저장하기</a></li>
+  <li><a href="#visual-integrity-audit" id="toc-visual-integrity-audit" class="nav-link" data-scroll-target="#visual-integrity-audit">Visual integrity audit</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#encoding" id="toc-encoding" class="nav-link" data-scroll-target="#encoding">Encoding</a></li>
+  <li><a href="#communication" id="toc-communication" class="nav-link" data-scroll-target="#communication">Communication</a></li>
+  <li><a href="#genai" id="toc-genai" class="nav-link" data-scroll-target="#genai">GenAI</a></li>
+  </ul></li>
+  <li><a href="#genai-red-team-그래프를-공격하게-하기" id="toc-genai-red-team-그래프를-공격하게-하기" class="nav-link" data-scroll-target="#genai-red-team-그래프를-공격하게-하기">GenAI Red Team: 그래프를 공격하게 하기</a></li>
+  <li><a href="#activity-visual-evidence-lab" id="toc-activity-visual-evidence-lab" class="nav-link" data-scroll-target="#activity-visual-evidence-lab">Activity: Visual Evidence Lab</a>
+  <ul class="collapse">
+  <li><a href="#연구질문-선택" id="toc-연구질문-선택" class="nav-link" data-scroll-target="#연구질문-선택">연구질문 선택</a></li>
+  <li><a href="#round-1-human-first" id="toc-round-1-human-first" class="nav-link" data-scroll-target="#round-1-human-first">Round 1 — Human first</a></li>
+  <li><a href="#round-2-build-incrementally" id="toc-round-2-build-incrementally" class="nav-link" data-scroll-target="#round-2-build-incrementally">Round 2 — Build incrementally</a></li>
+  <li><a href="#round-3-ai-audit" id="toc-round-3-ai-audit" class="nav-link" data-scroll-target="#round-3-ai-audit">Round 3 — AI audit</a></li>
+  <li><a href="#제출물" id="toc-제출물" class="nav-link" data-scroll-target="#제출물">제출물</a></li>
+  <li><a href="#visual-claim-card" id="toc-visual-claim-card" class="nav-link" data-scroll-target="#visual-claim-card">Visual Claim Card</a></li>
+  <li><a href="#ai-collaboration-log" id="toc-ai-collaboration-log" class="nav-link" data-scroll-target="#ai-collaboration-log">AI Collaboration Log</a></li>
+  </ul></li>
+  <li><a href="#마무리" id="toc-마무리" class="nav-link" data-scroll-target="#마무리">마무리</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">데이터 시각화</h1>
+<p class="subtitle lead">ggplot2로 연구 질문을 시각적 증거로 바꾸기</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
+<p><br></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/GxRLbnzs5mc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p><br></p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/uh_rRwhG7zg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p><br></p>
+<section id="주차-학습목표" class="level2">
+<h2 class="anchored" data-anchor-id="주차-학습목표">5주차 학습목표</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이번 주 학습을 마치면 다음을 할 수 있어야 합니다.</p>
+<ol type="1">
+<li>데이터 시각화를 장식이 아니라 <strong>연구 질문에 대한 시각적 증거</strong>로 설명한다.</li>
+<li><code>ggplot2</code>의 문법을 data, mapping, geom, stat, position, scale, coordinate, facet, theme의 조합으로 이해한다.</li>
+<li>변수 유형과 질문에 맞춰 분포, 관계, 비교, 구성, 시간 변화 그래프를 선택한다.</li>
+<li><code>aes()</code> 안의 <strong>mapping</strong>과 밖의 <strong>setting</strong>을 구분한다.</li>
+<li>겹침, 표본 수, 분모, 축 범위, 변환, 불확실성을 점검하여 오해를 줄인다.</li>
+<li>색상·라벨·범례·대체텍스트를 사용해 읽기 쉽고 접근 가능한 그래프를 만든다.</li>
+<li>그래프를 Quarto에 재현 가능하게 포함하고 <code>ggsave()</code>로 명시적으로 저장한다.</li>
+<li>ChatGPT와 같은 GenAI를 그래프 생성기보다 <strong>차트 설계 검토자와 시각적 주장 비평가</strong>로 활용한다.</li>
+</ol>
+</div>
+</div>
+<section id="오늘의-핵심-질문" class="level3">
+<h3 class="anchored" data-anchor-id="오늘의-핵심-질문">오늘의 핵심 질문</h3>
+<blockquote class="blockquote">
+<p><strong>이 그래프는 무엇을 보여 주며, 그 패턴을 믿기 위해 무엇을 함께 확인해야 할까?</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Research Question&lt;br&gt;무엇을 비교할까?"] --&gt; B["Data Structure&lt;br&gt;관측단위와 변수 유형"]
+    B --&gt; C["Visual Encoding&lt;br&gt;위치·색·크기·형태"]
+    C --&gt; D["Audit&lt;br&gt;표본·결측·축·분모"]
+    D --&gt; E["Interpretation&lt;br&gt;관찰과 설명 구분"]
+    E --&gt; F["Claim&lt;br&gt;가능한 주장과 한계"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>좋은 그래프는 단순히 예쁜 그래프가 아닙니다. 독자가 다음을 알아볼 수 있어야 합니다.</p>
+<ul>
+<li>무엇이 한 점, 한 막대, 한 선인가?</li>
+<li>어떤 값이 비교되고 있는가?</li>
+<li>표본 수와 분모는 무엇인가?</li>
+<li>원자료의 분포와 불확실성이 얼마나 남아 있는가?</li>
+<li>그래프가 보여 주는 것과 연구자가 덧붙인 해석은 어디서 갈리는가?</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="이번-주의-genai-활용-방식" class="level2">
+<h2 class="anchored" data-anchor-id="이번-주의-genai-활용-방식">이번 주의 GenAI 활용 방식</h2>
+<p>이번 주에도 다음 순서를 유지합니다.</p>
+<blockquote class="blockquote">
+<p><strong>Attempt → Ask → Test → Audit → Explain</strong></p>
+</blockquote>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>학생이 먼저 할 일</th>
+<th>GenAI에 맡길 수 있는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Attempt</strong></td>
+<td>질문, 관측단위, 변수 유형, 예상 패턴을 적는다.</td>
+<td>아직 사용하지 않는다.</td>
+</tr>
+<tr class="even">
+<td><strong>Ask</strong></td>
+<td>현재 그래프와 설계 의도를 함께 제공한다.</td>
+<td>대안 시각화, 누락된 점검 항목, 모호한 라벨을 제안한다.</td>
+</tr>
+<tr class="odd">
+<td><strong>Test</strong></td>
+<td>제안된 코드를 직접 실행하고 원자료와 대조한다.</td>
+<td>실행 결과를 만들어 달라고 하지 않는다.</td>
+</tr>
+<tr class="even">
+<td><strong>Audit</strong></td>
+<td>분모, 표본 수, 축, 결측, 과도한 인코딩을 점검한다.</td>
+<td>reviewer처럼 오해 가능성을 지적하게 한다.</td>
+</tr>
+<tr class="odd">
+<td><strong>Explain</strong></td>
+<td>최종 그래프 선택과 기각한 대안을 설명한다.</td>
+<td>설명의 과장이나 인과적 비약을 비판하게 한다.</td>
+</tr>
+</tbody>
+</table>
+<section id="그래프를-부탁하는-대신-그래프-설계를-검토받기" class="level3">
+<h3 class="anchored" data-anchor-id="그래프를-부탁하는-대신-그래프-설계를-검토받기">그래프를 부탁하는 대신 그래프 설계를 검토받기</h3>
+<pre class="text"><code>나는 HCI 대학원 수업에서 ggplot2를 사용하고 있다.
+연구질문은 “voice와 text 인터페이스의 과업완료시간 분포가 어떻게 다른가?”이다.
+한 행은 한 참여자의 한 과업 시행이며, 동일 참여자가 두 인터페이스를 모두 경험했다.
+
+내가 선택한 그래프와 R 코드를 아래에 제공하겠다.
+1. 먼저 이 그래프가 질문에 답하기에 적절한지 평가하라.
+2. 표본 수, 반복측정, 겹침, 결측, 축 범위에서 확인할 점을 제시하라.
+3. 대안 그래프를 두 개만 제안하고 각각 무엇을 더 잘/덜 보여 주는지 설명하라.
+4. 코드를 다시 작성하기 전에 내가 답해야 할 질문을 먼저 제시하라.
+5. 인과관계는 추론하지 말라.</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled" title="민감한 자료를 입력하지 않기">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+민감한 자료를 입력하지 않기
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>실제 IRB 자료, 사용자 식별자, 비공개 로그를 공개형 GenAI에 업로드하지 않습니다. 다음만으로도 시각화 상담이 가능합니다.</p>
+<ul>
+<li>비식별·합성 자료 10–20행</li>
+<li><code>glimpse()</code>와 <code>summary()</code> 출력</li>
+<li>변수 설명과 관측단위</li>
+<li>현재 그래프 코드</li>
+<li>그래프에서 발견한 패턴을 자신의 말로 적은 문장</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="준비-이번-주의-공통-데이터" class="level2">
+<h2 class="anchored" data-anchor-id="준비-이번-주의-공통-데이터">준비: 이번 주의 공통 데이터</h2>
+<section id="패키지" class="level3">
+<h3 class="anchored" data-anchor-id="패키지">패키지</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>install.packages("tidyverse")</code>는 패키지가 컴퓨터에 없을 때 한 번 실행합니다. 강의자료를 렌더링하는 코드 청크에서는 설치보다 <code>library(tidyverse)</code>로 명시적으로 불러오는 편이 재현 가능성이 높습니다.</p>
+</div>
+</div>
+</section>
+<section id="hci-반복측정-예제-만들기" class="level3">
+<h3 class="anchored" data-anchor-id="hci-반복측정-예제-만들기">HCI 반복측정 예제 만들기</h3>
+<p>이번 주에는 가상의 인터페이스 과업 자료를 공통 예제로 사용합니다.</p>
+<ul>
+<li>72명의 참여자</li>
+<li>두 인터페이스: <code>text</code>, <code>voice</code></li>
+<li>두 과업: <code>search</code>, <code>booking</code></li>
+<li>결과: 과업완료시간, 오류 수, 신뢰, 성공 여부</li>
+<li>한 행: <strong>한 참여자의 한 인터페이스 × 과업 시행</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(hci_trials)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 288
+Columns: 8
+$ participant_id   &lt;chr&gt; "P001", "P001", "P001", "P001", "P002", "P002", "P002…
+$ digital_literacy &lt;dbl&gt; 5.2, 5.2, 5.2, 5.2, 3.1, 3.1, 3.1, 3.1, 4.7, 4.7, 4.7…
+$ interface        &lt;fct&gt; text, text, voice, voice, text, text, voice, voice, t…
+$ task             &lt;fct&gt; search, booking, search, booking, search, booking, se…
+$ completion_time  &lt;dbl&gt; 53.9, 65.7, 51.7, 67.3, 40.7, 34.1, 32.0, 39.6, 43.8,…
+$ errors           &lt;int&gt; 0, 1, 0, 2, 1, 1, 0, 1, 1, 2, 1, 0, 1, 0, 2, 1, 0, 1,…
+$ trust            &lt;dbl&gt; 4.6, 4.7, 5.9, 5.7, 4.0, 3.1, 4.7, 5.2, 4.1, 5.8, 5.9…
+$ success          &lt;fct&gt; success, failure, success, failure, success, success,…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">n</span>(),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">participants =</span> <span class="fu">n_distinct</span>(participant_id),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">interfaces =</span> <span class="fu">n_distinct</span>(interface),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">tasks =</span> <span class="fu">n_distinct</span>(task)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+   rows participants interfaces tasks
+  &lt;int&gt;        &lt;int&gt;      &lt;int&gt; &lt;int&gt;
+1   288           72          2     2</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>288개의 행이 있다고 해서 표본이 288명인 것은 아닙니다. 독립 참여자는 72명이고, 각 참여자가 네 번 관찰되었습니다. 그래프의 점은 시행(trial)을 나타낼 수 있지만, 통계적 추론의 단위는 연구설계에 맞게 별도로 판단해야 합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="시각화는-그림-그리기가-아니라-인코딩-선택이다" class="level2">
+<h2 class="anchored" data-anchor-id="시각화는-그림-그리기가-아니라-인코딩-선택이다">시각화는 “그림 그리기”가 아니라 “인코딩 선택”이다</h2>
+<p>데이터 시각화는 값을 다음과 같은 시각적 속성으로 변환하는 일입니다.</p>
+<ul>
+<li><strong>Position:</strong> x·y 위치</li>
+<li><strong>Length:</strong> 막대 길이</li>
+<li><strong>Colour / fill:</strong> 색 또는 면색</li>
+<li><strong>Shape:</strong> 점 모양</li>
+<li><strong>Size:</strong> 점 크기</li>
+<li><strong>Alpha:</strong> 투명도</li>
+<li><strong>Facet:</strong> 작은 다중 그래프</li>
+</ul>
+<p>일반적으로 정확한 비교에는 <strong>위치와 길이</strong>가 강하고, 색·형태·크기는 보조적인 구분에 더 적합합니다. 한 그래프에 너무 많은 속성을 동시에 매핑하면 정보량보다 해석 비용이 커질 수 있습니다.</p>
+<section id="그래프를-만들기-전-다섯-문장" class="level3">
+<h3 class="anchored" data-anchor-id="그래프를-만들기-전-다섯-문장">그래프를 만들기 전 다섯 문장</h3>
+<ol type="1">
+<li><strong>Question:</strong> 무엇을 알고 싶은가?</li>
+<li><strong>Unit:</strong> 한 행과 한 점은 무엇인가?</li>
+<li><strong>Variables:</strong> 변수는 연속형, 범주형, 시간형 중 무엇인가?</li>
+<li><strong>Comparison:</strong> 분포, 관계, 집단 차이, 구성, 변화 중 무엇을 비교하는가?</li>
+<li><strong>Claim:</strong> 이 그래프로 말할 수 있는 가장 좁은 주장은 무엇인가?</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="grammar-of-graphics" class="level2">
+<h2 class="anchored" data-anchor-id="grammar-of-graphics">Grammar of Graphics</h2>
+<p><code>ggplot2</code>는 그래프를 하나의 완성된 명령이 아니라 여러 구성요소의 조합으로 만듭니다.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Data"] --&gt; B["Aesthetic mapping"]
+    B --&gt; C["Geom + Stat"]
+    C --&gt; D["Position"]
+    D --&gt; E["Scale"]
+    E --&gt; F["Coordinate"]
+    F --&gt; G["Facet + Theme + Labels"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구성요소</th>
+<th>핵심 질문</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Data</strong></td>
+<td>어떤 관측을 그리는가?</td>
+<td><code>hci_trials</code></td>
+</tr>
+<tr class="even">
+<td><strong>Mapping</strong></td>
+<td>변수를 어떤 시각 속성에 연결하는가?</td>
+<td><code>aes(x = completion_time, colour = interface)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Geom</strong></td>
+<td>어떤 기하 객체로 나타내는가?</td>
+<td><code>geom_point()</code>, <code>geom_histogram()</code></td>
+</tr>
+<tr class="even">
+<td><strong>Stat</strong></td>
+<td>그리기 전에 무엇을 계산하는가?</td>
+<td>count, bin, smooth</td>
+</tr>
+<tr class="odd">
+<td><strong>Position</strong></td>
+<td>겹치는 객체를 어떻게 배치하는가?</td>
+<td>stack, dodge, jitter, fill</td>
+</tr>
+<tr class="even">
+<td><strong>Scale</strong></td>
+<td>데이터 값을 화면 값으로 어떻게 변환하는가?</td>
+<td>log, percent, viridis</td>
+</tr>
+<tr class="odd">
+<td><strong>Coordinate</strong></td>
+<td>화면의 좌표 범위를 어떻게 보여 주는가?</td>
+<td>Cartesian zoom</td>
+</tr>
+<tr class="even">
+<td><strong>Facet</strong></td>
+<td>집단별 작은 그래프로 나눌 것인가?</td>
+<td><code>facet_wrap()</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Theme / labels</strong></td>
+<td>정보 위계를 어떻게 정리하는가?</td>
+<td><code>theme_minimal()</code>, <code>labs()</code></td>
+</tr>
+</tbody>
+</table>
+<section id="가장-작은-ggplot" class="level3">
+<h3 class="anchored" data-anchor-id="가장-작은-ggplot">가장 작은 ggplot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> hci_trials)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>데이터만 지정했기 때문에 빈 좌표계가 나타납니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> hci_trials,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> completion_time, <span class="at">y =</span> trust)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>변수와 축의 관계는 생겼지만, 아직 어떤 기하 객체로 그릴지 정하지 않았습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> hci_trials,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> completion_time, <span class="at">y =</span> trust)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mapping과-setting을-구분하기" class="level3">
+<h3 class="anchored" data-anchor-id="mapping과-setting을-구분하기">Mapping과 setting을 구분하기</h3>
+<p><code>aes()</code> 안은 <strong>데이터 변수와 시각 속성의 연결(mapping)</strong>입니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time, trust)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> interface))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>고정된 모양이나 색은 <code>aes()</code> 밖에서 <strong>설정(setting)</strong>합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time, trust)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>아래 코드는 문자열 <code>"steelblue"</code>을 하나의 범주로 매핑하므로 원하지 않는 범례가 생깁니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time, trust)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"steelblue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="스스로 설명해 보기">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+스스로 설명해 보기
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>다음 두 문장을 구분할 수 있어야 합니다.</p>
+<ul>
+<li>“인터페이스에 따라 점의 색이 달라진다.” → mapping</li>
+<li>“모든 점을 파란색으로 그린다.” → setting</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="그래프-객체를-저장하고-층을-추가하기" class="level3">
+<h3 class="anchored" data-anchor-id="그래프-객체를-저장하고-층을-추가하기">그래프 객체를 저장하고 층을 추가하기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>base_scatter <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  hci_trials,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> completion_time, <span class="at">y =</span> trust)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>base_scatter <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>base_scatter <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> interface), <span class="at">alpha =</span> <span class="fl">0.55</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>geom_smooth()</code>의 선은 관계를 요약하지만, 인과관계를 보여 주지는 않습니다. 회귀선은 관측된 패턴에 대한 시각적 요약입니다.</p>
+<hr>
+</section>
+</section>
+<section id="질문과-변수-유형에-따라-그래프-선택하기" class="level2">
+<h2 class="anchored" data-anchor-id="질문과-변수-유형에-따라-그래프-선택하기">질문과 변수 유형에 따라 그래프 선택하기</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>질문</th>
+<th>변수 구조</th>
+<th>출발점이 되는 그래프</th>
+<th>반드시 확인할 것</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>값은 어떻게 분포하는가?</td>
+<td>연속형 1개</td>
+<td>histogram, density, ECDF</td>
+<td>binwidth, 표본 수, 결측, 극단값</td>
+</tr>
+<tr class="even">
+<td>범주별 관측은 몇 개인가?</td>
+<td>범주형 1개</td>
+<td>bar chart</td>
+<td>count인지 proportion인지</td>
+</tr>
+<tr class="odd">
+<td>두 수치가 함께 변하는가?</td>
+<td>연속형 2개</td>
+<td>scatterplot</td>
+<td>겹침, 비선형성, 영향점</td>
+</tr>
+<tr class="even">
+<td>집단별 분포가 다른가?</td>
+<td>범주형 + 연속형</td>
+<td>raw points + box/violin</td>
+<td>집단별 n, 분포, 반복측정</td>
+</tr>
+<tr class="odd">
+<td>두 범주가 관련되어 보이는가?</td>
+<td>범주형 2개</td>
+<td>count/proportion bar, heatmap</td>
+<td>분모와 조건부 비율</td>
+</tr>
+<tr class="even">
+<td>시간에 따라 어떻게 변하는가?</td>
+<td>시간 + 연속형</td>
+<td>line chart</td>
+<td>정렬, 간격, 집계 단위</td>
+</tr>
+<tr class="odd">
+<td>세 번째 변수가 패턴을 바꾸는가?</td>
+<td>3개 이상</td>
+<td>colour, shape, facet</td>
+<td>과도한 인코딩, 작은 집단</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>그래프 유형은 변수 유형만으로 자동 결정되지 않습니다. 같은 자료라도 질문이 “개수”인지 “비율”인지, “원자료 분포”인지 “평균 변화”인지에 따라 적절한 그래프가 달라집니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="한-변수-분포를-본다는-것" class="level2">
+<h2 class="anchored" data-anchor-id="한-변수-분포를-본다는-것">한 변수: 분포를 본다는 것</h2>
+<section id="연속형-변수-histogram의-binwidth는-분석-선택이다" class="level3">
+<h3 class="anchored" data-anchor-id="연속형-변수-histogram의-binwidth는-분석-선택이다">연속형 변수: histogram의 binwidth는 분석 선택이다</h3>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>p_bin_3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>, <span class="at">boundary =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Trials"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>p_bin_12 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time)) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">12</span>, <span class="at">boundary =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Trials"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>p_bin_3</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>p_bin_12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-binwidth-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="과업완료시간을 3초 폭으로 나눈 세밀한 히스토그램">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-binwidth-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06_week_modern_files/figure-html/fig-binwidth-1.png" class="img-fluid figure-img" alt="과업완료시간을 3초 폭으로 나눈 세밀한 히스토그램" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-binwidth-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: 과업완료시간: 3초 간격의 histogram
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-binwidth-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="같은 과업완료시간을 12초 폭으로 나눈 거친 히스토그램">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-binwidth-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06_week_modern_files/figure-html/fig-binwidth-2.png" class="img-fluid figure-img" alt="같은 과업완료시간을 12초 폭으로 나눈 거친 히스토그램" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-binwidth-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: 과업완료시간: 12초 간격의 histogram
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>같은 데이터라도 binwidth에 따라 봉우리와 꼬리의 인상이 달라집니다. 하나의 값만 사용하기보다 몇 가지 합리적 간격에서 패턴이 유지되는지 확인합니다.</p>
+</section>
+<section id="histogram과-density를-겹칠-때" class="level3">
+<h3 class="anchored" data-anchor-id="histogram과-density를-겹칠-때">histogram과 density를 겹칠 때</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="dv">4</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.45</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"과업완료시간의 분포"</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>after_stat(density)</code>는 histogram의 빈도를 밀도 척도로 변환하여 density curve와 같은 y축에서 비교하게 합니다.</p>
+</section>
+<section id="ecdf-bin을-정하지-않고-누적-분포-보기" class="level3">
+<h3 class="anchored" data-anchor-id="ecdf-bin을-정하지-않고-누적-분포-보기">ECDF: bin을 정하지 않고 누적 분포 보기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time, <span class="at">colour =</span> interface)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_ecdf</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Cumulative proportion"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"인터페이스별 과업완료시간의 누적 분포"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>특정 시간 안에 완료한 시행의 비율을 읽고 싶다면 ECDF가 유용합니다.</p>
+</section>
+<section id="범주형-변수-geom_bar와-geom_col" class="level3">
+<h3 class="anchored" data-anchor-id="범주형-변수-geom_bar와-geom_col">범주형 변수: <code>geom_bar()</code>와 <code>geom_col()</code></h3>
+<p><code>geom_bar()</code>는 원자료에서 범주별 <strong>관측 수를 직접 계산</strong>합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(task)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Task"</span>, <span class="at">y =</span> <span class="st">"Trials"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>이미 요약한 값을 그릴 때는 <code>geom_col()</code>을 사용합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>task_counts <span class="ot">&lt;-</span> hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(task, <span class="at">name =</span> <span class="st">"trials"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(task_counts, <span class="fu">aes</span>(<span class="at">x =</span> task, <span class="at">y =</span> trials)) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Task"</span>, <span class="at">y =</span> <span class="st">"Trials"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>geom_bar()</code> → 각 x 범주의 행을 센다.</li>
+<li><code>geom_col()</code> → 데이터에 이미 존재하는 y값을 막대 높이로 사용한다.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="count와-proportion을-구분하기" class="level3">
+<h3 class="anchored" data-anchor-id="count와-proportion을-구분하기">Count와 proportion을 구분하기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>success_by_interface <span class="ot">&lt;-</span> hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(interface, success) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="at">.by =</span> interface)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>success_by_interface</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  interface success     n proportion
+  &lt;fct&gt;     &lt;fct&gt;   &lt;int&gt;      &lt;dbl&gt;
+1 text      failure    17     0.118 
+2 text      success   127     0.882 
+3 voice     failure    13     0.0903
+4 voice     success   131     0.910 </code></pre>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>p_success_count <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  success_by_interface,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> interface, <span class="at">y =</span> n, <span class="at">fill =</span> success)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Interface"</span>, <span class="at">y =</span> <span class="st">"Trials"</span>, <span class="at">fill =</span> <span class="st">"Outcome"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>p_success_prop <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  success_by_interface,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> interface, <span class="at">y =</span> proportion, <span class="at">fill =</span> success)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Interface"</span>, <span class="at">y =</span> <span class="st">"Within-interface proportion"</span>, <span class="at">fill =</span> <span class="st">"Outcome"</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>p_success_count</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>p_success_prop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<p>두 그래프는 서로 다른 질문에 답합니다. 비율 그래프에는 <strong>분모가 인터페이스별 시행 수</strong>라는 사실이 라벨이나 본문에서 드러나야 합니다.</p>
+<hr>
+</section>
+</section>
+<section id="두-변수-관계와-집단-비교" class="level2">
+<h2 class="anchored" data-anchor-id="두-변수-관계와-집단-비교">두 변수: 관계와 집단 비교</h2>
+<section id="연속형-연속형-scatterplot" class="level3">
+<h3 class="anchored" data-anchor-id="연속형-연속형-scatterplot">연속형 × 연속형: scatterplot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time, trust)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Trust (1–7)"</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"과업완료시간과 신뢰의 관계"</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>관찰:</strong> 완료시간이 긴 시행에서 신뢰가 낮아지는 경향이 보이는가?<br>
+<strong>아직 말할 수 없는 것:</strong> 완료시간이 신뢰를 낮춘다고 단정할 수 있는가?</p>
+</section>
+<section id="겹침overplotting을-다루기" class="level3">
+<h3 class="anchored" data-anchor-id="겹침overplotting을-다루기">겹침(overplotting)을 다루기</h3>
+<p>점이 많이 겹치면 빈도가 숨겨질 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(errors, trust)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">height =</span> <span class="fl">0.08</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of errors"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Trust (1–7)"</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"이산형 값의 겹침을 jitter로 드러내기"</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>jitter</code>는 원래 데이터 값을 바꾸지 않고 화면 위치만 조금 이동합니다. 정확한 좌표보다 겹친 관측의 밀도를 보여 주는 것이 목적입니다.</p>
+</section>
+<section id="범주형-연속형-평균-막대보다-분포를-먼저-보기" class="level3">
+<h3 class="anchored" data-anchor-id="범주형-연속형-평균-막대보다-분포를-먼저-보기">범주형 × 연속형: 평균 막대보다 분포를 먼저 보기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(<span class="at">x =</span> interface, <span class="at">y =</span> completion_time)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.22</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.08</span>, <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"인터페이스별 과업완료시간의 분포"</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>점: 개별 시행</li>
+<li>상자 중앙선: median</li>
+<li>상자: 중간 50% 범위</li>
+<li>whisker 밖의 점: 자동 삭제 대상이 아니라 추가 확인 대상</li>
+</ul>
+</section>
+<section id="범주의-순서를-질문에-맞게-바꾸기" class="level3">
+<h3 class="anchored" data-anchor-id="범주의-순서를-질문에-맞게-바꾸기">범주의 순서를 질문에 맞게 바꾸기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">task =</span> <span class="fu">fct_reorder</span>(task, completion_time, <span class="at">.fun =</span> median)) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> completion_time, <span class="at">y =</span> task)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.08</span>, <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Task ordered by median time"</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>수평 막대나 상자그림이 필요할 때는 가능한 경우 x와 y를 바꾸어 표현합니다.</p>
+</section>
+<section id="범주형-범주형-분모가-핵심이다" class="level3">
+<h3 class="anchored" data-anchor-id="범주형-범주형-분모가-핵심이다">범주형 × 범주형: 분모가 핵심이다</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>success_table <span class="ot">&lt;-</span> hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(interface, task, success) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rate =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(interface, task)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>success_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+  interface task    success     n   rate
+  &lt;fct&gt;     &lt;fct&gt;   &lt;fct&gt;   &lt;int&gt;  &lt;dbl&gt;
+1 text      search  failure     2 0.0278
+2 text      search  success    70 0.972 
+3 text      booking failure    15 0.208 
+4 text      booking success    57 0.792 
+5 voice     search  failure     2 0.0278
+6 voice     search  success    70 0.972 
+7 voice     booking failure    11 0.153 
+8 voice     booking success    61 0.847 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(success_table, <span class="fu">aes</span>(<span class="at">x =</span> task, <span class="at">y =</span> rate, <span class="at">fill =</span> success)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(interface)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Task"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Proportion within interface × task"</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Outcome"</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"인터페이스와 과업별 성공 구성"</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>position = "fill"</code>은 각 막대를 100%로 정규화합니다. 시각적으로 비율을 비교하기는 쉽지만 집단별 관측 수가 숨겨집니다. 본문이나 표에서 각 집단의 <code>n</code>을 함께 확인합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="세-변수-이상-색보다-facet을-먼저-고려하기" class="level2">
+<h2 class="anchored" data-anchor-id="세-변수-이상-색보다-facet을-먼저-고려하기">세 변수 이상: 색보다 facet을 먼저 고려하기</h2>
+<section id="색으로-세-번째-변수-추가하기" class="level3">
+<h3 class="anchored" data-anchor-id="색으로-세-번째-변수-추가하기">색으로 세 번째 변수 추가하기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  hci_trials,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(completion_time, trust, <span class="at">colour =</span> interface)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Trust (1–7)"</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="작은-다중-그래프small-multiples" class="level3">
+<h3 class="anchored" data-anchor-id="작은-다중-그래프small-multiples">작은 다중 그래프(small multiples)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  hci_trials,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(completion_time, trust, <span class="at">colour =</span> interface)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.7</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(task)) <span class="sc">+</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Trust (1–7)"</span>,</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"과업별로 나누어 관계 비교하기"</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>facet은 같은 축과 같은 문법으로 하위 집단을 비교하게 합니다. 다만 각 패널의 표본 수가 매우 작으면 패턴이 과장될 수 있습니다.</p>
+</section>
+<section id="색과-형태를-함께-사용하기" class="level3">
+<h3 class="anchored" data-anchor-id="색과-형태를-함께-사용하기">색과 형태를 함께 사용하기</h3>
+<p>색만으로 집단을 구분하기 어려운 독자를 위해 형태를 함께 사용할 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  hci_trials,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    completion_time,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    trust,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> interface,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> interface</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.55</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Trust (1–7)"</span>,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">"Interface"</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>색, 모양, 크기, 투명도를 모두 변수에 매핑하지 않습니다. 중요한 비교 한두 개를 위치·facet에 맡기고, 색과 형태는 보조적으로 사용합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="시간-변화와-선-그래프" class="level2">
+<h2 class="anchored" data-anchor-id="시간-변화와-선-그래프">시간 변화와 선 그래프</h2>
+<p>선은 <strong>순서가 있는 x축</strong>에서 관측을 연결합니다. 순서가 없는 범주를 선으로 연결하면 존재하지 않는 연속성을 암시할 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>weekly_usage <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">week =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="fu">c</span>(<span class="dv">420</span>, <span class="dv">438</span>, <span class="dv">451</span>, <span class="dv">449</span>, <span class="dv">465</span>, <span class="dv">470</span>, <span class="dv">482</span>, <span class="dv">491</span>, <span class="dv">496</span>, <span class="dv">508</span>, <span class="dv">517</span>, <span class="dv">529</span>),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">voice =</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">193</span>, <span class="dv">207</span>, <span class="dv">225</span>, <span class="dv">241</span>, <span class="dv">260</span>, <span class="dv">278</span>, <span class="dv">301</span>, <span class="dv">326</span>, <span class="dv">348</span>, <span class="dv">371</span>, <span class="dv">399</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(text, voice),</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"interface"</span>,</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"active_sessions"</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  weekly_usage,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(week, active_sessions, <span class="at">colour =</span> interface)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Week"</span>,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Active sessions"</span>,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"주별 활성 세션 변화"</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>점검할 질문</strong></p>
+<ul>
+<li>주별 값은 사용자 수인가, 세션 수인가?</li>
+<li>동일 사용자가 여러 번 포함될 수 있는가?</li>
+<li>주별 관찰 간격은 동일한가?</li>
+<li>선의 변화가 제품 변경 때문인지 계절성 때문인지 이 그래프만으로 알 수 있는가?</li>
+</ul>
+<hr>
+</section>
+<section id="scale과-coordinate-값의-변환과-화면의-확대는-다르다" class="level2">
+<h2 class="anchored" data-anchor-id="scale과-coordinate-값의-변환과-화면의-확대는-다르다">Scale과 coordinate: 값의 변환과 화면의 확대는 다르다</h2>
+<section id="로그-변환은-질문의-척도를-바꾼다" class="level3">
+<h3 class="anchored" data-anchor-id="로그-변환은-질문의-척도를-바꾼다">로그 변환은 질문의 척도를 바꾼다</h3>
+<p><code>diamonds</code>의 가격과 carat은 오른쪽으로 긴 분포를 가집니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.08</span>) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Carat (log10 scale)"</span>,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Price (log10 scale)"</span>,</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"로그 척도에서 본 carat과 price"</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>로그 축에서는 같은 거리의 차이가 원래 척도의 같은 <strong>배수 변화</strong>를 뜻합니다. 단순히 보기 좋게 만드는 장식이 아니라 해석의 척도를 바꾸는 결정입니다.</p>
+</section>
+<section id="coord_cartesian은-데이터를-버리지-않고-화면만-확대한다" class="level3">
+<h3 class="anchored" data-anchor-id="coord_cartesian은-데이터를-버리지-않고-화면만-확대한다"><code>coord_cartesian()</code>은 데이터를 버리지 않고 화면만 확대한다</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>zoom_base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hci_trials, <span class="fu">aes</span>(completion_time, trust)) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>zoom_base <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">65</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>반면 <code>scale_x_continuous(limits = ...)</code>, <code>xlim()</code>, <code>ylim()</code>은 범위 밖 값을 통계 계산에서 제거할 수 있습니다. 단순 확대가 목적이라면 <code>coord_cartesian()</code>을 사용합니다.</p>
+</section>
+<section id="축을-자를-때의-윤리" class="level3">
+<h3 class="anchored" data-anchor-id="축을-자를-때의-윤리">축을 자를 때의 윤리</h3>
+<p>막대그래프는 길이 자체가 값을 나타내므로 y축을 중간에서 시작하면 차이를 과장할 수 있습니다. 축을 제한했다면 그 이유와 범위를 분명하게 드러냅니다.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="GenAI Checkpoint — 축과 변환 감사">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GenAI Checkpoint — 축과 변환 감사
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<pre class="text"><code>아래 ggplot2 코드에서 축 제한과 변환이 데이터 또는 통계 계산을 바꾸는지 검토하라.
+1. 화면 확대인지 데이터 제거인지 구분하라.
+2. 독자가 차이를 과대평가할 위험을 설명하라.
+3. 더 정직한 대안을 코드가 아닌 원칙으로 먼저 제시하라.</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="원자료와-요약통계를-함께-보여-주기" class="level2">
+<h2 class="anchored" data-anchor-id="원자료와-요약통계를-함께-보여-주기">원자료와 요약통계를 함께 보여 주기</h2>
+<p>평균만 있는 막대는 분포, 표본 수, 극단값을 숨길 수 있습니다. 먼저 참여자별 인터페이스 평균을 계산합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>participant_time <span class="ot">&lt;-</span> hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_time =</span> <span class="fu">mean</span>(completion_time),</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(participant_id, interface)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>time_summary <span class="ot">&lt;-</span> participant_time <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_participants =</span> <span class="fu">n</span>(),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_time =</span> <span class="fu">mean</span>(mean_time),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_time =</span> <span class="fu">sd</span>(mean_time),</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se_time =</span> sd_time <span class="sc">/</span> <span class="fu">sqrt</span>(n_participants),</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">critical_t =</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n_participants <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower =</span> mean_time <span class="sc">-</span> critical_t <span class="sc">*</span> se_time,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper =</span> mean_time <span class="sc">+</span> critical_t <span class="sc">*</span> se_time,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> interface</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>time_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 8
+  interface n_participants mean_time sd_time se_time critical_t lower upper
+  &lt;fct&gt;              &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 text                  72      49.4      NA      NA       1.99    NA    NA
+2 voice                 72      43.5      NA      NA       1.99    NA    NA</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(participant_time, <span class="fu">aes</span>(interface, mean_time)) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.07</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> time_summary,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> mean_time, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.7</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Participant-level mean completion time"</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"원자료 요약과 95% t interval을 함께 보기"</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이 interval은 참여자별 평균의 불확실성을 기술적으로 요약한 것입니다. 동일 참여자가 두 조건을 모두 경험한 paired design의 공식 가설검정이나 혼합모형을 대신하지 않습니다. 그래프의 불확실성 표시와 최종 통계모형은 연구설계에 맞게 선택해야 합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="labels-annotation-caption" class="level2">
+<h2 class="anchored" data-anchor-id="labels-annotation-caption">Labels, annotation, caption</h2>
+<p>좋은 제목은 그래프 종류가 아니라 <strong>질문 또는 핵심 패턴</strong>을 알려 줍니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>trust_plot <span class="ot">&lt;-</span> hci_trials <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_trust =</span> <span class="fu">mean</span>(trust),</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(interface, task)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(task, mean_trust, <span class="at">colour =</span> interface, <span class="at">group =</span> interface)) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">3.5</span>, <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"평균 신뢰는 과업과 인터페이스에 따라 달라 보인다"</span>,</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"기술적 평균이며 반복측정 구조를 반영한 추론 결과는 아님"</span>,</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Task"</span>,</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean trust (1–7)"</span>,</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span>,</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Synthetic HCI data generated for teaching"</span></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>trust_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="필요한-곳만-주석-달기" class="level3">
+<h3 class="anchored" data-anchor-id="필요한-곳만-주석-달기">필요한 곳만 주석 달기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>trust_plot <span class="sc">+</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">2</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fl">5.8</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"booking에서 두 조건 모두 신뢰가 낮아짐"</span>,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">3.5</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>주석은 그래프가 이미 보여 주는 모든 값을 반복하지 않고, 독자가 놓치기 쉬운 비교를 제한적으로 안내합니다.</p>
+<hr>
+</section>
+</section>
+<section id="quarto에서-그래프를-연구-산출물로-만들기" class="level2">
+<h2 class="anchored" data-anchor-id="quarto에서-그래프를-연구-산출물로-만들기">Quarto에서 그래프를 연구 산출물로 만들기</h2>
+<p>그래프 코드 청크에는 의미 있는 label, caption, alt text를 붙일 수 있습니다.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>::: {.cell}</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="in">```{.r .cell-code}</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="in">ggplot(hci_trials, aes(interface, completion_time)) +</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_boxplot()</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>::: {.cell-output-display}</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="al">![인터페이스별 과업완료시간 분포](06_week_modern_files/figure-html/fig-interface-time-1.png)</span>{#fig-interface-time fig-alt='text와 voice 조건의 완료시간을 점과 상자그림으로 비교한 그래프' width=672}</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>fig-cap</code>: 그림 아래에 표시되는 설명</li>
+<li><code>fig-alt</code>: 화면 낭독기 사용자를 위한 대체텍스트</li>
+<li><code>label</code>: 안정적인 파일명과 교차참조에 활용</li>
+<li><code>fig-width</code>, <code>fig-height</code>: 출력 크기 조정</li>
+</ul>
+<p><a href="https://quarto.org/docs/computations/execution-options.html#figure-options">Quarto figure options</a></p>
+<section id="alt-text는-그래프-해석을-대신하지-않는다" class="level3">
+<h3 class="anchored" data-anchor-id="alt-text는-그래프-해석을-대신하지-않는다">Alt text는 그래프 해석을 대신하지 않는다</h3>
+<p>좋은 alt text는 다음을 포함합니다.</p>
+<ol type="1">
+<li>그래프 유형</li>
+<li>축과 비교 집단</li>
+<li>가장 중요한 시각적 패턴</li>
+<li>이해에 필요한 핵심 예외</li>
+</ol>
+<pre class="text"><code>Scatterplot of completion time against trust for text and voice interfaces.
+Trust generally decreases as completion time increases, with substantial overlap
+between interfaces and several slow trials above 70 seconds.</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled" title="GenAI Checkpoint — 접근성 검토">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GenAI Checkpoint — 접근성 검토
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>그래프 코드와 자신이 작성한 alt text를 함께 제공하고 다음을 요청합니다.</p>
+<pre class="text"><code>이 alt text가 그래프 유형, 축, 집단, 핵심 패턴을 포함하는지 평가하라.
+색 이름만으로 집단을 설명하지 말고, 데이터에 없는 결론을 추가하지 말라.
+100단어 이내의 수정안을 제안하라.</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="그래프-저장하기" class="level2">
+<h2 class="anchored" data-anchor-id="그래프-저장하기">그래프 저장하기</h2>
+<p>마지막으로 생성된 그래프에 의존하기보다 저장할 객체를 명시합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  hci_trials,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(completion_time, trust, <span class="at">colour =</span> interface)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(task)) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Completion time (seconds)"</span>,</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Trust (1–7)"</span>,</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Interface"</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>final_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_week_modern_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"figures"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"figures/hci-completion-trust.png"</span>,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> final_plot,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">7</span>,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fl">4.5</span>,</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">units =</span> <span class="st">"in"</span>,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span>,</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">bg =</span> <span class="st">"white"</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>저장할 때 확인합니다.</p>
+<ul>
+<li>화면과 논문에서 필요한 가로세로 비율</li>
+<li>글자 크기와 범례 크기</li>
+<li>raster(<code>.png</code>)와 vector(<code>.pdf</code>, <code>.svg</code>) 형식의 목적</li>
+<li>파일명에 그래프의 내용을 알 수 있는 표현 사용</li>
+<li>결과를 재생성할 수 있는 코드 보존</li>
+</ul>
+<hr>
+</section>
+<section id="visual-integrity-audit" class="level2">
+<h2 class="anchored" data-anchor-id="visual-integrity-audit">Visual integrity audit</h2>
+<p>최종 그래프를 내보내기 전에 다음을 점검합니다.</p>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">관측단위와 표본 수를 알고 있다.</label></li>
+<li><label><input type="checkbox">결측값이 얼마나 제외되었는지 확인했다.</label></li>
+<li><label><input type="checkbox">반복측정이나 군집 구조를 독립 관측처럼 설명하지 않는다.</label></li>
+<li><label><input type="checkbox">요약값을 그릴 때 원자료 또는 분포를 확인했다.</label></li>
+</ul>
+</section>
+<section id="encoding" class="level3">
+<h3 class="anchored" data-anchor-id="encoding">Encoding</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">질문에 맞는 그래프 유형을 선택했다.</label></li>
+<li><label><input type="checkbox">count와 proportion의 분모가 명확하다.</label></li>
+<li><label><input type="checkbox">색·모양·크기를 과도하게 사용하지 않았다.</label></li>
+<li><label><input type="checkbox">축 변환과 제한이 해석을 왜곡하지 않는다.</label></li>
+<li><label><input type="checkbox">단순 확대에는 <code>coord_cartesian()</code>을 사용했다.</label></li>
+</ul>
+</section>
+<section id="communication" class="level3">
+<h3 class="anchored" data-anchor-id="communication">Communication</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">축에 변수명과 단위가 있다.</label></li>
+<li><label><input type="checkbox">제목이 질문 또는 관찰된 패턴을 설명한다.</label></li>
+<li><label><input type="checkbox">범례 이름이 변수명을 그대로 반복하지 않고 의미를 전달한다.</label></li>
+<li><label><input type="checkbox">색만으로 정보를 구분하지 않는다.</label></li>
+<li><label><input type="checkbox">caption과 alt text가 있다.</label></li>
+<li><label><input type="checkbox">관찰, 해석, 인과 주장을 구분한다.</label></li>
+</ul>
+</section>
+<section id="genai" class="level3">
+<h3 class="anchored" data-anchor-id="genai">GenAI</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">내가 먼저 그래프와 해석을 만들었다.</label></li>
+<li><label><input type="checkbox">AI가 제안한 코드를 직접 실행했다.</label></li>
+<li><label><input type="checkbox">AI가 읽지 못한 데이터 값을 만들어 내지 않았는지 확인했다.</label></li>
+<li><label><input type="checkbox">채택·수정·기각한 제안을 기록했다.</label></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="genai-red-team-그래프를-공격하게-하기" class="level2">
+<h2 class="anchored" data-anchor-id="genai-red-team-그래프를-공격하게-하기">GenAI Red Team: 그래프를 공격하게 하기</h2>
+<pre class="text"><code>당신은 데이터 시각화 reviewer다.
+아래 그래프 코드, 변수 설명, 내가 작성한 해석을 검토하라.
+
+다음 관점에서 가장 중요한 문제만 최대 5개 제시하라.
+- 관측단위와 반복측정
+- count와 proportion의 분모
+- 축 범위와 변환
+- 겹침과 숨겨진 분포
+- 색상 접근성
+- 표본 수가 작은 하위집단
+- 상관관계를 인과관계로 표현한 문장
+
+각 문제에 대해 “왜 문제인지 → 확인할 증거 → 가능한 수정” 순서로 답하라.
+그래프를 직접 보지 못했다면 보았다고 주장하지 말고 코드에서 판단 가능한 범위만 말하라.</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AI의 비판을 모두 받아들이는 것이 목표가 아닙니다. 자신의 연구질문과 자료구조에 비추어 <strong>채택·수정·기각 이유를 설명하는 것</strong>이 목표입니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="activity-visual-evidence-lab" class="level2">
+<h2 class="anchored" data-anchor-id="activity-visual-evidence-lab">Activity: Visual Evidence Lab</h2>
+<section id="연구질문-선택" class="level3">
+<h3 class="anchored" data-anchor-id="연구질문-선택">연구질문 선택</h3>
+<p>아래 중 하나를 선택하거나 자신의 HCI 질문을 사용합니다.</p>
+<ol type="1">
+<li>voice와 text 인터페이스의 완료시간 분포는 어떻게 다른가?</li>
+<li>오류 수와 신뢰 사이에는 어떤 패턴이 있는가?</li>
+<li>과업에 따라 인터페이스별 성공률이 다르게 보이는가?</li>
+<li>디지털 리터러시와 완료시간의 관계가 인터페이스별로 다른가?</li>
+</ol>
+</section>
+<section id="round-1-human-first" class="level3">
+<h3 class="anchored" data-anchor-id="round-1-human-first">Round 1 — Human first</h3>
+<p>AI 없이 다음을 작성합니다.</p>
+<ul>
+<li>연구질문</li>
+<li>한 행과 한 점의 관측단위</li>
+<li>변수 유형</li>
+<li>선택할 그래프와 이유</li>
+<li>예상되는 패턴</li>
+<li>가장 먼저 확인할 위험 한 가지</li>
+</ul>
+</section>
+<section id="round-2-build-incrementally" class="level3">
+<h3 class="anchored" data-anchor-id="round-2-build-incrementally">Round 2 — Build incrementally</h3>
+<p>최소 세 단계의 버전을 저장합니다.</p>
+<ol type="1">
+<li>data + mapping + geom</li>
+<li>겹침·분포·분모를 보완한 버전</li>
+<li>labels·scale·facet·접근성을 보완한 최종 버전</li>
+</ol>
+</section>
+<section id="round-3-ai-audit" class="level3">
+<h3 class="anchored" data-anchor-id="round-3-ai-audit">Round 3 — AI audit</h3>
+<p>GenAI에게 완성 그래프를 다시 그려 달라고 하기보다 다음을 검토하게 합니다.</p>
+<ul>
+<li>질문과 그래프의 일치</li>
+<li>누락된 표본 수 또는 분모</li>
+<li>축과 색상의 오해 가능성</li>
+<li>대안 그래프 한 가지</li>
+<li>과도한 해석 문장</li>
+</ul>
+</section>
+<section id="제출물" class="level3">
+<h3 class="anchored" data-anchor-id="제출물">제출물</h3>
+<ol type="1">
+<li>최종 그래프 2개</li>
+<li>각 그래프의 research question</li>
+<li>caption과 alt text</li>
+<li><strong>Visual Claim Card</strong></li>
+<li><strong>AI Collaboration Log</strong></li>
+</ol>
+</section>
+<section id="visual-claim-card" class="level3">
+<h3 class="anchored" data-anchor-id="visual-claim-card">Visual Claim Card</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>작성할 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Question</td>
+<td>그래프가 답하려는 질문</td>
+</tr>
+<tr class="even">
+<td>Unit</td>
+<td>한 행과 한 점의 의미</td>
+</tr>
+<tr class="odd">
+<td>Visual evidence</td>
+<td>실제로 보이는 패턴</td>
+</tr>
+<tr class="even">
+<td>Numerical check</td>
+<td>패턴을 확인한 수치 요약</td>
+</tr>
+<tr class="odd">
+<td>Interpretation</td>
+<td>가능한 설명</td>
+</tr>
+<tr class="even">
+<td>Alternative</td>
+<td>다른 설명 또는 교란 가능성</td>
+</tr>
+<tr class="odd">
+<td>Boundary</td>
+<td>그래프로 말할 수 없는 것</td>
+</tr>
+<tr class="even">
+<td>Next step</td>
+<td>추가 자료 또는 분석</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ai-collaboration-log" class="level3">
+<h3 class="anchored" data-anchor-id="ai-collaboration-log">AI Collaboration Log</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>기록할 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>목적</td>
+<td>차트 선택, 코드 디버깅, 접근성, reviewer 등</td>
+</tr>
+<tr class="even">
+<td>내가 먼저 한 시도</td>
+<td>AI 사용 전 그래프와 예상</td>
+</tr>
+<tr class="odd">
+<td>프롬프트</td>
+<td>실제 요청의 핵심</td>
+</tr>
+<tr class="even">
+<td>AI 제안</td>
+<td>제안 요약</td>
+</tr>
+<tr class="odd">
+<td>검증</td>
+<td>실행한 코드와 확인한 결과</td>
+</tr>
+<tr class="even">
+<td>결정</td>
+<td>채택·수정·기각과 이유</td>
+</tr>
+<tr class="odd">
+<td>최종 변화</td>
+<td>그래프 또는 해석의 변화</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="마무리" class="level2">
+<h2 class="anchored" data-anchor-id="마무리">마무리</h2>
+<p>오늘 익혀야 할 것은 geom의 긴 목록이 아니라 다음의 반복 가능한 사고 과정입니다.</p>
+<blockquote class="blockquote">
+<p><strong>질문을 정한다 → 관측단위와 변수 유형을 확인한다 → 가장 단순한 그래프를 만든다 → 분포·표본·분모·축을 감사한다 → 필요한 층만 추가한다 → 관찰과 해석의 경계를 설명한다</strong></p>
+</blockquote>
+<p>다음 주에는 그래프에서 발견한 패턴을 평균, 중앙값, 표준편차, IQR, 비율과 같은 <strong>기술통계</strong>로 요약하고, 체계적인 EDA workflow로 확장합니다.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
