@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>측정모형과 구조방정식 – CJL &amp; Lab</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">CJL &amp; Lab</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ds101/index.html">
+ <span class="dropdown-text">DS101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ml101/index.html">
+ <span class="dropdown-text">ML101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/grad_stat/index.html">
+ <span class="dropdown-text">STAT101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://axislabskku.com/"> 
+<span class="menu-text">LAB</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#주차-학습목표" id="toc-주차-학습목표" class="nav-link active" data-scroll-target="#주차-학습목표">13주차 학습목표</a>
+  <ul class="collapse">
+  <li><a href="#오늘의-핵심-질문" id="toc-오늘의-핵심-질문" class="nav-link" data-scroll-target="#오늘의-핵심-질문">오늘의 핵심 질문</a></li>
+  </ul></li>
+  <li><a href="#genai-활용-원칙" id="toc-genai-활용-원칙" class="nav-link" data-scroll-target="#genai-활용-원칙">1. GenAI 활용 원칙</a>
+  <ul class="collapse">
+  <li><a href="#lavaan-코드를-대신-생성하게-하기-전에" id="toc-lavaan-코드를-대신-생성하게-하기-전에" class="nav-link" data-scroll-target="#lavaan-코드를-대신-생성하게-하기-전에">lavaan 코드를 대신 생성하게 하기 전에</a></li>
+  <li><a href="#금지할-사용-방식" id="toc-금지할-사용-방식" class="nav-link" data-scroll-target="#금지할-사용-방식">금지할 사용 방식</a></li>
+  </ul></li>
+  <li><a href="#준비" id="toc-준비" class="nav-link" data-scroll-target="#준비">2. 준비</a>
+  <ul class="collapse">
+  <li><a href="#한-번만-설치" id="toc-한-번만-설치" class="nav-link" data-scroll-target="#한-번만-설치">한 번만 설치</a></li>
+  <li><a href="#기본-패키지" id="toc-기본-패키지" class="nav-link" data-scroll-target="#기본-패키지">기본 패키지</a></li>
+  </ul></li>
+  <li><a href="#part-i.-측정모형을-먼저-생각하기" id="toc-part-i.-측정모형을-먼저-생각하기" class="nav-link" data-scroll-target="#part-i.-측정모형을-먼저-생각하기">Part I. 측정모형을 먼저 생각하기</a>
+  <ul class="collapse">
+  <li><a href="#관찰변수와-잠재변수" id="toc-관찰변수와-잠재변수" class="nav-link" data-scroll-target="#관찰변수와-잠재변수">3. 관찰변수와 잠재변수</a>
+  <ul class="collapse">
+  <li><a href="#합성점수와-latent-score" id="toc-합성점수와-latent-score" class="nav-link" data-scroll-target="#합성점수와-latent-score">합성점수와 latent score</a></li>
+  </ul></li>
+  <li><a href="#hci-척도-데이터-생성" id="toc-hci-척도-데이터-생성" class="nav-link" data-scroll-target="#hci-척도-데이터-생성">4. HCI 척도 데이터 생성</a>
+  <ul class="collapse">
+  <li><a href="#점-ordinal-응답-만들기" id="toc-점-ordinal-응답-만들기" class="nav-link" data-scroll-target="#점-ordinal-응답-만들기">5점 ordinal 응답 만들기</a></li>
+  </ul></li>
+  <li><a href="#탐색용-표본과-확인용-표본-분리" id="toc-탐색용-표본과-확인용-표본-분리" class="nav-link" data-scroll-target="#탐색용-표본과-확인용-표본-분리">5. 탐색용 표본과 확인용 표본 분리</a></li>
+  </ul></li>
+  <li><a href="#part-ii.-reliability는-무엇을-말하는가" id="toc-part-ii.-reliability는-무엇을-말하는가" class="nav-link" data-scroll-target="#part-ii.-reliability는-무엇을-말하는가">Part II. Reliability는 무엇을 말하는가?</a>
+  <ul class="collapse">
+  <li><a href="#cronbachs-alpha" id="toc-cronbachs-alpha" class="nav-link" data-scroll-target="#cronbachs-alpha">6. Cronbach’s alpha</a>
+  <ul class="collapse">
+  <li><a href="#alpha가-높아도-자동으로-성립하지-않는-것" id="toc-alpha가-높아도-자동으로-성립하지-않는-것" class="nav-link" data-scroll-target="#alpha가-높아도-자동으로-성립하지-않는-것">Alpha가 높아도 자동으로 성립하지 않는 것</a></li>
+  <li><a href="#alpha의-주요-조건" id="toc-alpha의-주요-조건" class="nav-link" data-scroll-target="#alpha의-주요-조건">Alpha의 주요 조건</a></li>
+  <li><a href="#계산" id="toc-계산" class="nav-link" data-scroll-target="#계산">계산</a></li>
+  <li><a href="#문항삭제보다-먼저-할-일" id="toc-문항삭제보다-먼저-할-일" class="nav-link" data-scroll-target="#문항삭제보다-먼저-할-일">문항삭제보다 먼저 할 일</a></li>
+  </ul></li>
+  <li><a href="#omega와-composite-reliability" id="toc-omega와-composite-reliability" class="nav-link" data-scroll-target="#omega와-composite-reliability">7. Omega와 composite reliability</a></li>
+  </ul></li>
+  <li><a href="#part-iii.-exploratory-factor-analysis" id="toc-part-iii.-exploratory-factor-analysis" class="nav-link" data-scroll-target="#part-iii.-exploratory-factor-analysis">Part III. Exploratory Factor Analysis</a>
+  <ul class="collapse">
+  <li><a href="#efa의-목적" id="toc-efa의-목적" class="nav-link" data-scroll-target="#efa의-목적">8. EFA의 목적</a>
+  <ul class="collapse">
+  <li><a href="#요인-수를-정하는-근거" id="toc-요인-수를-정하는-근거" class="nav-link" data-scroll-target="#요인-수를-정하는-근거">요인 수를 정하는 근거</a></li>
+  </ul></li>
+  <li><a href="#ordinal-문항의-efa" id="toc-ordinal-문항의-efa" class="nav-link" data-scroll-target="#ordinal-문항의-efa">9. Ordinal 문항의 EFA</a>
+  <ul class="collapse">
+  <li><a href="#parallel-analysis" id="toc-parallel-analysis" class="nav-link" data-scroll-target="#parallel-analysis">Parallel analysis</a></li>
+  <li><a href="#oblique-rotation을-사용한-efa" id="toc-oblique-rotation을-사용한-efa" class="nav-link" data-scroll-target="#oblique-rotation을-사용한-efa">Oblique rotation을 사용한 EFA</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-iv.-confirmatory-factor-analysis" id="toc-part-iv.-confirmatory-factor-analysis" class="nav-link" data-scroll-target="#part-iv.-confirmatory-factor-analysis">Part IV. Confirmatory Factor Analysis</a>
+  <ul class="collapse">
+  <li><a href="#cfa-모형-명시" id="toc-cfa-모형-명시" class="nav-link" data-scroll-target="#cfa-모형-명시">10. CFA 모형 명시</a>
+  <ul class="collapse">
+  <li><a href="#lavaan-syntax" id="toc-lavaan-syntax" class="nav-link" data-scroll-target="#lavaan-syntax">lavaan syntax</a></li>
+  </ul></li>
+  <li><a href="#ordinal-cfa-wlsmv" id="toc-ordinal-cfa-wlsmv" class="nav-link" data-scroll-target="#ordinal-cfa-wlsmv">11. Ordinal CFA: WLSMV</a></li>
+  <li><a href="#연속형-근사-mlr와-fiml" id="toc-연속형-근사-mlr와-fiml" class="nav-link" data-scroll-target="#연속형-근사-mlr와-fiml">12. 연속형 근사: MLR와 FIML</a></li>
+  <li><a href="#모형-식별" id="toc-모형-식별" class="nav-link" data-scroll-target="#모형-식별">13. 모형 식별</a>
+  <ul class="collapse">
+  <li><a href="#지표-수에-관한-주의" id="toc-지표-수에-관한-주의" class="nav-link" data-scroll-target="#지표-수에-관한-주의">지표 수에 관한 주의</a></li>
+  </ul></li>
+  <li><a href="#적합도는-dashboard이지-신호등-하나가-아니다" id="toc-적합도는-dashboard이지-신호등-하나가-아니다" class="nav-link" data-scroll-target="#적합도는-dashboard이지-신호등-하나가-아니다">14. 적합도는 dashboard이지 신호등 하나가 아니다</a>
+  <ul class="collapse">
+  <li><a href="#함께-볼-정보" id="toc-함께-볼-정보" class="nav-link" data-scroll-target="#함께-볼-정보">함께 볼 정보</a></li>
+  <li><a href="#절단값을-기계적으로-사용하지-않기" id="toc-절단값을-기계적으로-사용하지-않기" class="nav-link" data-scroll-target="#절단값을-기계적으로-사용하지-않기">절단값을 기계적으로 사용하지 않기</a></li>
+  <li><a href="#chi-square의-해석" id="toc-chi-square의-해석" class="nav-link" data-scroll-target="#chi-square의-해석">Chi-square의 해석</a></li>
+  </ul></li>
+  <li><a href="#factor-loadings와-factor-correlations" id="toc-factor-loadings와-factor-correlations" class="nav-link" data-scroll-target="#factor-loadings와-factor-correlations">15. Factor loadings와 factor correlations</a>
+  <ul class="collapse">
+  <li><a href="#loading을-해석할-때" id="toc-loading을-해석할-때" class="nav-link" data-scroll-target="#loading을-해석할-때">loading을 해석할 때</a></li>
+  <li><a href="#잠재상관" id="toc-잠재상관" class="nav-link" data-scroll-target="#잠재상관">잠재상관</a></li>
+  </ul></li>
+  <li><a href="#composite-reliability와-ave" id="toc-composite-reliability와-ave" class="nav-link" data-scroll-target="#composite-reliability와-ave">16. Composite reliability와 AVE</a></li>
+  <li><a href="#residual과-modification-index" id="toc-residual과-modification-index" class="nav-link" data-scroll-target="#residual과-modification-index">17. Residual과 modification index</a>
+  <ul class="collapse">
+  <li><a href="#modification-index를-보기-전에" id="toc-modification-index를-보기-전에" class="nav-link" data-scroll-target="#modification-index를-보기-전에">Modification index를 보기 전에</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-v.-structural-equation-model" id="toc-part-v.-structural-equation-model" class="nav-link" data-scroll-target="#part-v.-structural-equation-model">Part V. Structural Equation Model</a>
+  <ul class="collapse">
+  <li><a href="#측정모형과-구조모형-결합" id="toc-측정모형과-구조모형-결합" class="nav-link" data-scroll-target="#측정모형과-구조모형-결합">18. 측정모형과 구조모형 결합</a>
+  <ul class="collapse">
+  <li><a href="#lavaan-model" id="toc-lavaan-model" class="nav-link" data-scroll-target="#lavaan-model">lavaan model</a></li>
+  <li><a href="#주요-경로와-defined-parameters" id="toc-주요-경로와-defined-parameters" class="nav-link" data-scroll-target="#주요-경로와-defined-parameters">주요 경로와 defined parameters</a></li>
+  </ul></li>
+  <li><a href="#competing-models" id="toc-competing-models" class="nav-link" data-scroll-target="#competing-models">19. Competing models</a></li>
+  </ul></li>
+  <li><a href="#part-vi.-measurement-invariance" id="toc-part-vi.-measurement-invariance" class="nav-link" data-scroll-target="#part-vi.-measurement-invariance">Part VI. Measurement Invariance</a>
+  <ul class="collapse">
+  <li><a href="#왜-동일성이-필요한가" id="toc-왜-동일성이-필요한가" class="nav-link" data-scroll-target="#왜-동일성이-필요한가">20. 왜 동일성이 필요한가?</a></li>
+  <li><a href="#연속형-자료로-invariance-workflow-보기" id="toc-연속형-자료로-invariance-workflow-보기" class="nav-link" data-scroll-target="#연속형-자료로-invariance-workflow-보기">21. 연속형 자료로 invariance workflow 보기</a>
+  <ul class="collapse">
+  <li><a href="#fit-dashboard" id="toc-fit-dashboard" class="nav-link" data-scroll-target="#fit-dashboard">Fit dashboard</a></li>
+  <li><a href="#해석-원칙" id="toc-해석-원칙" class="nav-link" data-scroll-target="#해석-원칙">해석 원칙</a></li>
+  </ul></li>
+  <li><a href="#표본크기-sem은-200명-규칙을-넘어서기" id="toc-표본크기-sem은-200명-규칙을-넘어서기" class="nav-link" data-scroll-target="#표본크기-sem은-200명-규칙을-넘어서기">22. 표본크기: “SEM은 200명” 규칙을 넘어서기</a></li>
+  </ul></li>
+  <li><a href="#optional-appendix.-clustering을-현대적으로-감사하기" id="toc-optional-appendix.-clustering을-현대적으로-감사하기" class="nav-link" data-scroll-target="#optional-appendix.-clustering을-현대적으로-감사하기">Optional Appendix. Clustering을 현대적으로 감사하기</a>
+  <ul class="collapse">
+  <li><a href="#k-means-준비" id="toc-k-means-준비" class="nav-link" data-scroll-target="#k-means-준비">23. K-means 준비</a></li>
+  <li><a href="#k-후보-비교" id="toc-k-후보-비교" class="nav-link" data-scroll-target="#k-후보-비교">24. k 후보 비교</a></li>
+  <li><a href="#선택한-k의-프로파일" id="toc-선택한-k의-프로파일" class="nav-link" data-scroll-target="#선택한-k의-프로파일">25. 선택한 k의 프로파일</a>
+  <ul class="collapse">
+  <li><a href="#원단위-profile" id="toc-원단위-profile" class="nav-link" data-scroll-target="#원단위-profile">원단위 profile</a></li>
+  <li><a href="#standardized-profile-시각화" id="toc-standardized-profile-시각화" class="nav-link" data-scroll-target="#standardized-profile-시각화">Standardized profile 시각화</a></li>
+  </ul></li>
+  <li><a href="#초기값과-안정성" id="toc-초기값과-안정성" class="nav-link" data-scroll-target="#초기값과-안정성">26. 초기값과 안정성</a></li>
+  </ul></li>
+  <li><a href="#activity-measurement-sem-audit-lab" id="toc-activity-measurement-sem-audit-lab" class="nav-link" data-scroll-target="#activity-measurement-sem-audit-lab">Activity: Measurement &amp; SEM Audit Lab</a>
+  <ul class="collapse">
+  <li><a href="#mission-1.-construct-map" id="toc-mission-1.-construct-map" class="nav-link" data-scroll-target="#mission-1.-construct-map">Mission 1. Construct map</a></li>
+  <li><a href="#mission-2.-reliability-audit" id="toc-mission-2.-reliability-audit" class="nav-link" data-scroll-target="#mission-2.-reliability-audit">Mission 2. Reliability audit</a></li>
+  <li><a href="#mission-3.-efa-또는-cfa" id="toc-mission-3.-efa-또는-cfa" class="nav-link" data-scroll-target="#mission-3.-efa-또는-cfa">Mission 3. EFA 또는 CFA</a>
+  <ul class="collapse">
+  <li><a href="#efa를-선택한-경우" id="toc-efa를-선택한-경우" class="nav-link" data-scroll-target="#efa를-선택한-경우">EFA를 선택한 경우</a></li>
+  <li><a href="#cfa를-선택한-경우" id="toc-cfa를-선택한-경우" class="nav-link" data-scroll-target="#cfa를-선택한-경우">CFA를 선택한 경우</a></li>
+  </ul></li>
+  <li><a href="#mission-4.-sem" id="toc-mission-4.-sem" class="nav-link" data-scroll-target="#mission-4.-sem">Mission 4. SEM</a></li>
+  <li><a href="#mission-5.-invariance" id="toc-mission-5.-invariance" class="nav-link" data-scroll-target="#mission-5.-invariance">Mission 5. Invariance</a></li>
+  <li><a href="#measurement-sem-model-card" id="toc-measurement-sem-model-card" class="nav-link" data-scroll-target="#measurement-sem-model-card">Measurement &amp; SEM Model Card</a></li>
+  <li><a href="#ai-collaboration-log" id="toc-ai-collaboration-log" class="nav-link" data-scroll-target="#ai-collaboration-log">AI Collaboration Log</a></li>
+  <li><a href="#이번-주의-핵심-정리" id="toc-이번-주의-핵심-정리" class="nav-link" data-scroll-target="#이번-주의-핵심-정리">이번 주의 핵심 정리</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">측정모형과 구조방정식</h1>
+<p class="subtitle lead">Reliability, EFA, CFA, SEM, Invariance, and an Optional Clustering Lab</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
+<hr>
+<section id="주차-학습목표" class="level2">
+<h2 class="anchored" data-anchor-id="주차-학습목표">13주차 학습목표</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이번 주 학습을 마치면 다음을 할 수 있어야 합니다.</p>
+<ol type="1">
+<li>관찰변수, 잠재변수, 측정오류를 구분한다.</li>
+<li>합성점수 회귀와 latent-variable model의 차이를 설명한다.</li>
+<li>Cronbach’s alpha를 단일차원성·타당성의 자동 판정기로 사용하지 않는다.</li>
+<li>omega/composite reliability와 AVE가 답하는 질문을 구분한다.</li>
+<li>EFA와 CFA의 목적, 자료분할, 회전, 추정법을 구분한다.</li>
+<li>연속형 지표와 ordinal 지표에 맞는 SEM 추정법을 선택한다.</li>
+<li>적합도 지수를 절단값 하나로 pass/fail하지 않고, 잔차·계수·모형복잡성과 함께 평가한다.</li>
+<li>modification index를 이론 없는 모형개조 도구로 사용하지 않는다.</li>
+<li>측정동일성의 configural, metric, scalar 단계를 설명한다.</li>
+<li>구조경로의 화살표가 설계 없이 인과성을 만들어내지 않음을 이해한다.</li>
+<li>k-means clustering의 scaling, k 선택, 초기값, 안정성을 감사한다.</li>
+<li>GenAI를 lavaan syntax와 이론모형 사이의 <strong>measurement-model auditor</strong>로 활용한다.</li>
+</ol>
+</div>
+</div>
+<section id="오늘의-핵심-질문" class="level3">
+<h3 class="anchored" data-anchor-id="오늘의-핵심-질문">오늘의 핵심 질문</h3>
+<blockquote class="blockquote">
+<p><strong>우리가 만든 척도는 같은 구성개념을 안정적으로 측정하며, 그 측정이 집단과 조건을 넘어 비교 가능한가?</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Construct&lt;br&gt;무엇을 측정하는가?"] --&gt; B["Items&lt;br&gt;어떤 관찰변수인가?"]
+    B --&gt; C["EFA / Theory&lt;br&gt;가능한 구조"]
+    C --&gt; D["CFA&lt;br&gt;측정모형 검증"]
+    D --&gt; E["Reliability &amp; Validity&lt;br&gt;점수 해석 근거"]
+    E --&gt; F["Invariance&lt;br&gt;집단 간 비교 가능성"]
+    F --&gt; G["SEM&lt;br&gt;잠재변수 간 구조경로"]
+    G --&gt; H["Sensitivity&lt;br&gt;대안모형·잔차·복제"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>SEM은 복잡한 화살표를 그리는 기술이 아니라 <strong>측정모형과 구조모형을 동시에 명시하고, 그 가정이 데이터와 얼마나 일치하는지 평가하는 체계</strong>입니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="genai-활용-원칙" class="level2">
+<h2 class="anchored" data-anchor-id="genai-활용-원칙">1. GenAI 활용 원칙</h2>
+<p>이번 주의 순서는 다음과 같습니다.</p>
+<blockquote class="blockquote">
+<p><strong>Define → Diagram → Translate → Fit → Diagnose → Justify</strong></p>
+</blockquote>
+<section id="lavaan-코드를-대신-생성하게-하기-전에" class="level3">
+<h3 class="anchored" data-anchor-id="lavaan-코드를-대신-생성하게-하기-전에">lavaan 코드를 대신 생성하게 하기 전에</h3>
+<pre class="text"><code>다음은 내가 이론적으로 정의한 측정모형이다.
+
+Trust =~ trust_1 + trust_2 + trust_3
+Usefulness =~ useful_1 + useful_2 + useful_3
+Continuance =~ continue_1 + continue_2 + continue_3
+
+구조가설:
+Trust → Usefulness → Continuance
+Trust → Continuance
+
+다음을 SEM reviewer처럼 점검하라.
+1. 각 잠재변수의 개념적 정의와 문항 내용이 일치하는지 질문하라.
+2. 식별을 위해 어떤 scale-setting constraint가 필요한지 설명하라.
+3. lavaan syntax가 경로도와 정확히 일치하는지 한 줄씩 대조하라.
+4. ordinal 문항일 때의 estimator와 결측처리 제한을 점검하라.
+5. fit index 절단값만으로 결론내리지 않도록 필요한 잔차·계수·부적절해를 질문하라.
+6. modification index를 보기 전에 이론적으로 허용 가능한 대안만 목록화하라.
+임의의 오차공분산을 추가하지 말라.</code></pre>
+</section>
+<section id="금지할-사용-방식" class="level3">
+<h3 class="anchored" data-anchor-id="금지할-사용-방식">금지할 사용 방식</h3>
+<ul>
+<li>alpha를 높이기 위해 문항을 자동 삭제하기</li>
+<li>modification index 순서대로 경로를 추가하기</li>
+<li>동일 표본에서 EFA와 CFA를 반복하고 “검증”이라고 부르기</li>
+<li>fit가 좋아질 때까지 모형을 바꾸고 최종 모형만 보고하기</li>
+<li>잠재변수 화살표를 causal proof로 해석하기</li>
+<li>실제 설문 원자료나 개인정보를 공개형 GenAI에 업로드하기</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="준비" class="level2">
+<h2 class="anchored" data-anchor-id="준비">2. 준비</h2>
+<section id="한-번만-설치" class="level3">
+<h3 class="anchored" data-anchor-id="한-번만-설치">한 번만 설치</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tidyverse"</span>, <span class="st">"lavaan"</span>, <span class="st">"psych"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"semTools"</span>, <span class="st">"semPlot"</span>, <span class="st">"cluster"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"factoextra"</span>, <span class="st">"mclust"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="기본-패키지" class="level3">
+<h3 class="anchored" data-anchor-id="기본-패키지">기본 패키지</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-i.-측정모형을-먼저-생각하기" class="level1">
+<h1>Part I. 측정모형을 먼저 생각하기</h1>
+<section id="관찰변수와-잠재변수" class="level2">
+<h2 class="anchored" data-anchor-id="관찰변수와-잠재변수">3. 관찰변수와 잠재변수</h2>
+<ul>
+<li><strong>Observed variable:</strong> 직접 기록한 문항 응답, 로그, 수행시간</li>
+<li><strong>Latent variable:</strong> 여러 관찰지표로 추론하는 이론적 구성개념</li>
+<li><strong>Measurement error:</strong> 관찰값 중 잠재구성개념으로 설명되지 않는 부분</li>
+</ul>
+<p>예를 들어 <code>trust_1 = 6</code>이라는 응답은 신뢰 그 자체가 아닙니다.</p>
+<p><span class="math display">\[
+X_j=\lambda_j\eta+\epsilon_j
+\]</span></p>
+<ul>
+<li><span class="math inline">\(X_j\)</span>: j번째 문항</li>
+<li><span class="math inline">\(\eta\)</span>: 잠재구성개념</li>
+<li><span class="math inline">\(\lambda_j\)</span>: factor loading</li>
+<li><span class="math inline">\(\epsilon_j\)</span>: 문항 고유분산과 측정오류</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    T(("Trust")) --&gt; T1["trust_1"]
+    T --&gt; T2["trust_2"]
+    T --&gt; T3["trust_3"]
+    E1(("e₁")) --&gt; T1
+    E2(("e₂")) --&gt; T2
+    E3(("e₃")) --&gt; T3
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="합성점수와-latent-score" class="level3">
+<h3 class="anchored" data-anchor-id="합성점수와-latent-score">합성점수와 latent score</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>접근</th>
+<th>장점</th>
+<th>한계</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>문항 평균</td>
+<td>간단하고 재현하기 쉬움</td>
+<td>측정오류와 문항별 loading 차이를 직접 모델링하지 않음</td>
+</tr>
+<tr class="even">
+<td>CFA/SEM</td>
+<td>loading·오차·잠재상관을 명시</td>
+<td>더 많은 가정, 식별, 표본정보, 진단 필요</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="hci-척도-데이터-생성" class="level2">
+<h2 class="anchored" data-anchor-id="hci-척도-데이터-생성">4. HCI 척도 데이터 생성</h2>
+<p>세 구성개념을 가정합니다.</p>
+<ul>
+<li><strong>Trust:</strong> 시스템을 믿고 의존할 의향</li>
+<li><strong>Usefulness:</strong> 시스템이 과업에 도움이 된다는 평가</li>
+<li><strong>Continuance:</strong> 향후 계속 사용할 의도</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20261301</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>n_sem <span class="ot">&lt;-</span> <span class="dv">520</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>latent_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">participant_id =</span> <span class="fu">sprintf</span>(<span class="st">"S%03d"</span>, <span class="dv">1</span><span class="sc">:</span>n_sem),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">expertise =</span> <span class="fu">factor</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Novice"</span>, <span class="st">"Experienced"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      n_sem,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">trust_latent =</span> <span class="fu">rnorm</span>(n_sem)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">usefulness_latent =</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.55</span> <span class="sc">*</span> trust_latent <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n_sem, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.55</span><span class="sc">^</span><span class="dv">2</span>)),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuance_latent =</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.25</span> <span class="sc">*</span> trust_latent <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.55</span> <span class="sc">*</span> usefulness_latent <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n_sem, <span class="dv">0</span>, <span class="fl">0.70</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>make_indicator <span class="ot">&lt;-</span> <span class="cf">function</span>(latent, loading) {</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  loading <span class="sc">*</span> latent <span class="sc">+</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="fu">length</span>(latent), <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> loading<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>sem_continuous <span class="ot">&lt;-</span> latent_data <span class="sc">|&gt;</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    participant_id,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    expertise,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">trust_1 =</span> <span class="fu">make_indicator</span>(trust_latent, <span class="fl">0.82</span>),</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">trust_2 =</span> <span class="fu">make_indicator</span>(trust_latent, <span class="fl">0.76</span>),</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">trust_3 =</span> <span class="fu">make_indicator</span>(trust_latent, <span class="fl">0.70</span>),</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">useful_1 =</span> <span class="fu">make_indicator</span>(usefulness_latent, <span class="fl">0.84</span>),</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">useful_2 =</span> <span class="fu">make_indicator</span>(usefulness_latent, <span class="fl">0.78</span>),</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">useful_3 =</span> <span class="fu">make_indicator</span>(usefulness_latent, <span class="fl">0.72</span>),</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">continue_1 =</span> <span class="fu">make_indicator</span>(continuance_latent, <span class="fl">0.86</span>),</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">continue_2 =</span> <span class="fu">make_indicator</span>(continuance_latent, <span class="fl">0.79</span>),</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">continue_3 =</span> <span class="fu">make_indicator</span>(continuance_latent, <span class="fl">0.73</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>item_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"trust_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"useful_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>),</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"continue_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sem_continuous)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 520
+Columns: 11
+$ participant_id &lt;chr&gt; "S001", "S002", "S003", "S004", "S005", "S006", "S007",…
+$ expertise      &lt;fct&gt; Experienced, Experienced, Experienced, Experienced, Exp…
+$ trust_1        &lt;dbl&gt; 1.5605917, -1.1198263, 0.3577587, -0.4151902, 0.9128743…
+$ trust_2        &lt;dbl&gt; 2.41379915, 0.13449413, 0.72614768, -0.51680831, 0.1932…
+$ trust_3        &lt;dbl&gt; 1.13638748, -0.07733045, -0.62109033, -0.36100661, 0.81…
+$ useful_1       &lt;dbl&gt; -0.04436665, 0.67068635, 2.12169093, 0.53406020, 0.9349…
+$ useful_2       &lt;dbl&gt; -0.10423952, -0.22037922, 1.42877212, -0.39769407, 3.05…
+$ useful_3       &lt;dbl&gt; 0.78780436, -0.52480614, 0.40868216, 0.84085949, 0.9634…
+$ continue_1     &lt;dbl&gt; 1.18812180, 0.43168268, 0.61820602, -0.72487210, 1.0417…
+$ continue_2     &lt;dbl&gt; -0.5914039, -0.4242173, 0.1522465, 0.3225544, 1.4962088…
+$ continue_3     &lt;dbl&gt; 0.4668279918, 0.5648361041, 0.5036873440, -0.0008743062…</code></pre>
+</div>
+</div>
+<section id="점-ordinal-응답-만들기" class="level3">
+<h3 class="anchored" data-anchor-id="점-ordinal-응답-만들기">5점 ordinal 응답 만들기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>to_likert <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cut</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="sc">-</span><span class="fl">1.0</span>, <span class="sc">-</span><span class="fl">0.30</span>, <span class="fl">0.30</span>, <span class="fl">1.0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ordered_result =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>sem_ordinal <span class="ot">&lt;-</span> sem_continuous <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">all_of</span>(item_names),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      to_likert</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>sem_ordinal <span class="sc">|&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(item_names)) <span class="sc">|&gt;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 520
+Columns: 9
+$ trust_1    &lt;ord&gt; 5, 1, 4, 2, 4, 1, 1, 4, 2, 4, 4, 5, 3, 2, 2, 1, 4, 4, 5, 1,…
+$ trust_2    &lt;ord&gt; 5, 3, 4, 2, 3, 2, 2, 4, 1, 3, 5, 3, 2, 3, 4, 2, 3, 3, 3, 2,…
+$ trust_3    &lt;ord&gt; 5, 3, 2, 2, 4, 3, 2, 3, 3, 2, 4, 4, 3, 3, 3, 2, 4, 5, 3, 1,…
+$ useful_1   &lt;ord&gt; 3, 4, 5, 4, 4, 1, 3, 4, 1, 3, 2, 2, 3, 4, 1, 4, 4, 4, 4, 3,…
+$ useful_2   &lt;ord&gt; 3, 3, 5, 2, 5, 1, 5, 2, 3, 4, 1, 2, 2, 2, 2, 5, 2, 4, 3, 3,…
+$ useful_3   &lt;ord&gt; 4, 2, 4, 4, 4, 1, 4, 2, 3, 4, 1, 2, 2, 4, 3, 3, 2, 4, 4, 1,…
+$ continue_1 &lt;ord&gt; 5, 4, 4, 2, 5, 1, 2, 5, 1, 4, 1, 4, 1, 3, 2, 3, 1, 3, 3, 1,…
+$ continue_2 &lt;ord&gt; 2, 2, 3, 4, 5, 1, 4, 5, 1, 2, 1, 4, 4, 3, 4, 3, 4, 4, 1, 1,…
+$ continue_3 &lt;ord&gt; 4, 4, 4, 3, 4, 1, 3, 5, 2, 2, 2, 4, 1, 2, 3, 4, 1, 3, 2, 1,…</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>실제 연구에서는 문항이 ordinal이라는 이유만으로 언제나 같은 estimator를 써야 하는 것이 아니라, 응답범주 수, 분포, 표본, 결측, 모형을 함께 고려합니다. 다만 ordinal endogenous indicator를 명시하면 <code>lavaan</code>은 WLSMV 계열로 전환합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="탐색용-표본과-확인용-표본-분리" class="level2">
+<h2 class="anchored" data-anchor-id="탐색용-표본과-확인용-표본-분리">5. 탐색용 표본과 확인용 표본 분리</h2>
+<p>같은 자료에서 EFA로 구조를 찾고 CFA로 같은 구조를 확인하면 검증이 과도하게 낙관적일 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20261302</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>discovery_id <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  sem_ordinal<span class="sc">$</span>participant_id,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="fu">floor</span>(<span class="fl">0.50</span> <span class="sc">*</span> <span class="fu">nrow</span>(sem_ordinal))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>discovery_ordinal <span class="ot">&lt;-</span> sem_ordinal <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(participant_id <span class="sc">%in%</span> discovery_id)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>confirmation_ordinal <span class="ot">&lt;-</span> sem_ordinal <span class="sc">|&gt;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>participant_id <span class="sc">%in%</span> discovery_id)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>confirmation_continuous <span class="ot">&lt;-</span> sem_continuous <span class="sc">|&gt;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>participant_id <span class="sc">%in%</span> discovery_id)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">discovery =</span> <span class="fu">nrow</span>(discovery_ordinal),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">confirmation =</span> <span class="fu">nrow</span>(confirmation_ordinal)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   discovery confirmation 
+         260          260 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>표본분할이 불가능한 작은 자료라면 EFA 결과를 탐색적으로 표시하고, 독립 표본·후속연구에서 CFA를 수행하는 것이 더 정직합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-ii.-reliability는-무엇을-말하는가" class="level1">
+<h1>Part II. Reliability는 무엇을 말하는가?</h1>
+<section id="cronbachs-alpha" class="level2">
+<h2 class="anchored" data-anchor-id="cronbachs-alpha">6. Cronbach’s alpha</h2>
+<p><span class="math display">\[
+\alpha
+=
+\frac{k}{k-1}
+\left(
+1-
+\frac{\sum_{j=1}^{k}s_j^2}{s_T^2}
+\right)
+\]</span></p>
+<p>Alpha는 문항들의 공분산과 문항 수에 기반한 내적 일관성 지표입니다.</p>
+<section id="alpha가-높아도-자동으로-성립하지-않는-것" class="level3">
+<h3 class="anchored" data-anchor-id="alpha가-높아도-자동으로-성립하지-않는-것">Alpha가 높아도 자동으로 성립하지 않는 것</h3>
+<ul>
+<li>단일차원성</li>
+<li>타당성</li>
+<li>문항의 비중복성</li>
+<li>집단 간 동일한 측정</li>
+<li>개인 수준 점수의 정확성</li>
+<li>인과적 구성개념</li>
+</ul>
+</section>
+<section id="alpha의-주요-조건" class="level3">
+<h3 class="anchored" data-anchor-id="alpha의-주요-조건">Alpha의 주요 조건</h3>
+<p>Alpha를 척도 신뢰도로 해석하려면 문항들이 대체로 같은 구성개념을 측정하고, loading 구조에 관한 조건이 필요합니다. 문항 수가 많아지면 중복문항으로도 alpha가 높아질 수 있습니다.</p>
+</section>
+<section id="계산" class="level3">
+<h3 class="anchored" data-anchor-id="계산">계산</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>trust_items_numeric <span class="ot">&lt;-</span> discovery_ordinal <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">starts_with</span>(<span class="st">"trust_"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      as.numeric</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>trust_alpha <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">alpha</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  trust_items_numeric,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">check.keys =</span> <span class="cn">TRUE</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>trust_alpha<span class="sc">$</span>total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> raw_alpha std.alpha   G6(smc) average_r      S/N        ase     mean       sd
+  0.782325  0.782252 0.7068689  0.544935 3.592465 0.02338404 2.937179 1.058107
+  median_r
+ 0.5341214</code></pre>
+</div>
+</div>
+</section>
+<section id="문항삭제보다-먼저-할-일" class="level3">
+<h3 class="anchored" data-anchor-id="문항삭제보다-먼저-할-일">문항삭제보다 먼저 할 일</h3>
+<ol type="1">
+<li>역문항 코딩 오류 확인</li>
+<li>문항 내용과 구성개념 확인</li>
+<li>문항분포와 ceiling/floor 확인</li>
+<li>요인구조와 cross-loading 확인</li>
+<li>하위집단별 다르게 작동하는 문항 확인</li>
+<li>척도 사용 목적과 점수 산출방식 확인</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>alpha if item deleted</code>가 조금 높아진다는 이유만으로 문항을 제거하지 않습니다. 내용타당도와 독립자료에서의 재현성을 함께 봅니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="omega와-composite-reliability" class="level2">
+<h2 class="anchored" data-anchor-id="omega와-composite-reliability">7. Omega와 composite reliability</h2>
+<p>CFA 이후에는 추정된 loading과 error variance를 이용한 composite reliability를 고려할 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">compRelSEM</span>(cfa_fit)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">AVE</span>(cfa_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>핵심 질문</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Alpha</td>
+<td>특정 조건 아래 합성점수의 내적 일관성은 어느 정도인가?</td>
+</tr>
+<tr class="even">
+<td>Omega / Composite reliability</td>
+<td>서로 다른 loading과 오차를 반영한 점수 신뢰도는 어느 정도인가?</td>
+</tr>
+<tr class="odd">
+<td>AVE</td>
+<td>지표분산 중 구성개념이 설명하는 평균 비율은 어느 정도인가?</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AVE는 reliability와 같은 개념이 아닙니다. 지표 하나만으로 척도의 타당성을 pass/fail하지 않습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-iii.-exploratory-factor-analysis" class="level1">
+<h1>Part III. Exploratory Factor Analysis</h1>
+<section id="efa의-목적" class="level2">
+<h2 class="anchored" data-anchor-id="efa의-목적">8. EFA의 목적</h2>
+<p>EFA는 다음 상황에서 사용합니다.</p>
+<ul>
+<li>새로운 척도의 초기 구조 탐색</li>
+<li>문항들이 몇 개의 요인으로 묶이는지 불확실함</li>
+<li>cross-loading 가능성을 열어둠</li>
+<li>이론모형을 만들기 전 discovery 단계</li>
+</ul>
+<section id="요인-수를-정하는-근거" class="level3">
+<h3 class="anchored" data-anchor-id="요인-수를-정하는-근거">요인 수를 정하는 근거</h3>
+<ul>
+<li>이론과 척도 설계</li>
+<li>parallel analysis</li>
+<li>scree plot</li>
+<li>loading pattern과 해석가능성</li>
+<li>각 요인의 지표 수와 안정성</li>
+<li>대안 요인수의 민감도</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eigenvalue &gt; 1 규칙 하나만으로 요인 수를 결정하지 않습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="ordinal-문항의-efa" class="level2">
+<h2 class="anchored" data-anchor-id="ordinal-문항의-efa">9. Ordinal 문항의 EFA</h2>
+<p>먼저 polychoric correlation을 계산합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ordinal_for_efa <span class="ot">&lt;-</span> discovery_ordinal <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(item_names)) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(), as.numeric)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>poly_result <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">polychoric</span>(ordinal_for_efa)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>poly_cor <span class="ot">&lt;-</span> poly_result<span class="sc">$</span>rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="parallel-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="parallel-analysis">Parallel analysis</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">fa.parallel</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  poly_cor,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.obs =</span> <span class="fu">nrow</span>(ordinal_for_efa),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fa =</span> <span class="st">"fa"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fm =</span> <span class="st">"minres"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.iter =</span> <span class="dv">100</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="oblique-rotation을-사용한-efa" class="level3">
+<h3 class="anchored" data-anchor-id="oblique-rotation을-사용한-efa">Oblique rotation을 사용한 EFA</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>three_factor_efa <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">fa</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  poly_cor,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nfactors =</span> <span class="dv">3</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.obs =</span> <span class="fu">nrow</span>(ordinal_for_efa),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fm =</span> <span class="st">"minres"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">rotate =</span> <span class="st">"oblimin"</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  three_factor_efa,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">cut =</span> <span class="fl">0.30</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">sort =</span> <span class="cn">TRUE</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Orthogonal rotation:</strong> 요인상관을 0으로 제한</li>
+<li><strong>Oblique rotation:</strong> 요인상관을 허용</li>
+</ul>
+<p>HCI·심리·사회과학의 구성개념은 상관될 가능성이 높으므로 oblique rotation이 더 현실적인 출발점인 경우가 많습니다.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-iv.-confirmatory-factor-analysis" class="level1">
+<h1>Part IV. Confirmatory Factor Analysis</h1>
+<section id="cfa-모형-명시" class="level2">
+<h2 class="anchored" data-anchor-id="cfa-모형-명시">10. CFA 모형 명시</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cfa_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">  trust =~ trust_1 + trust_2 + trust_3</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">  usefulness =~ useful_1 + useful_2 + useful_3</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">  continuance =~ continue_1 + continue_2 + continue_3</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="lavaan-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="lavaan-syntax">lavaan syntax</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>기호</th>
+<th>의미</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>=~</code></td>
+<td>latent variable을 indicators로 측정</td>
+<td><code>trust =~ trust_1 + trust_2</code></td>
+</tr>
+<tr class="even">
+<td><code>~</code></td>
+<td>regression path</td>
+<td><code>usefulness ~ trust</code></td>
+</tr>
+<tr class="odd">
+<td><code>~~</code></td>
+<td>variance 또는 covariance</td>
+<td><code>trust ~~ usefulness</code></td>
+</tr>
+<tr class="even">
+<td><code>~ 1</code></td>
+<td>intercept 또는 mean</td>
+<td><code>trust_1 ~ 1</code></td>
+</tr>
+<tr class="odd">
+<td><code>:=</code></td>
+<td>정의된 모수</td>
+<td><code>indirect := a*b</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="ordinal-cfa-wlsmv" class="level2">
+<h2 class="anchored" data-anchor-id="ordinal-cfa-wlsmv">11. Ordinal CFA: WLSMV</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cfa_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> cfa_model,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> confirmation_ordinal,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> item_names,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"WLSMV"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  cfa_fit,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 19 iterations
+
+  Estimator                                       DWLS
+  Optimization method                           NLMINB
+  Number of model parameters                        48
+
+  Number of observations                           260
+
+Model Test User Model:
+                                              Standard      Scaled
+  Test Statistic                                 7.491      16.930
+  Degrees of freedom                                24          24
+  P-value (Chi-square)                           0.999       0.852
+  Scaling correction factor                                  0.569
+  Shift parameter                                            3.754
+    simple second-order correction                                
+
+Model Test Baseline Model:
+
+  Test statistic                              2184.687    1239.033
+  Degrees of freedom                                36          36
+  P-value                                        0.000       0.000
+  Scaling correction factor                                  1.786
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    1.000       1.000
+  Tucker-Lewis Index (TLI)                       1.012       1.009
+                                                                  
+  Robust Comparative Fit Index (CFI)                         1.000
+  Robust Tucker-Lewis Index (TLI)                            1.012
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.000       0.000
+  90 Percent confidence interval - lower         0.000       0.000
+  90 Percent confidence interval - upper         0.000       0.029
+  P-value H_0: RMSEA &lt;= 0.050                    1.000       0.996
+  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
+                                                                  
+  Robust RMSEA                                               0.000
+  90 Percent confidence interval - lower                     0.000
+  90 Percent confidence interval - upper                     0.043
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.973
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.023       0.023
+
+Parameter Estimates:
+
+  Parameterization                               Delta
+  Standard errors                           Robust.sem
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  trust =~                                                              
+    trust_1           0.792    0.046   17.133    0.000    0.792    0.792
+    trust_2           0.738    0.048   15.386    0.000    0.738    0.738
+    trust_3           0.721    0.049   14.781    0.000    0.721    0.721
+  usefulness =~                                                         
+    useful_1          0.824    0.036   23.115    0.000    0.824    0.824
+    useful_2          0.758    0.045   16.976    0.000    0.758    0.758
+    useful_3          0.700    0.046   15.128    0.000    0.700    0.700
+  continuance =~                                                        
+    continue_1        0.879    0.038   23.111    0.000    0.879    0.879
+    continue_2        0.745    0.040   18.679    0.000    0.745    0.745
+    continue_3        0.695    0.050   13.964    0.000    0.695    0.695
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  trust ~~                                                              
+    usefulness        0.485    0.067    7.279    0.000    0.485    0.485
+    continuance       0.464    0.065    7.161    0.000    0.464    0.464
+  usefulness ~~                                                         
+    continuance       0.676    0.054   12.540    0.000    0.676    0.676
+
+Thresholds:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    trust_1|t1       -1.239    0.104  -11.911    0.000   -1.239   -1.239
+    trust_1|t2       -0.365    0.080   -4.570    0.000   -0.365   -0.365
+    trust_1|t3        0.283    0.079    3.585    0.000    0.283    0.283
+    trust_1|t4        1.004    0.094   10.685    0.000    1.004    1.004
+    trust_2|t1       -1.087    0.097  -11.192    0.000   -1.087   -1.087
+    trust_2|t2       -0.385    0.080   -4.816    0.000   -0.385   -0.385
+    trust_2|t3        0.224    0.079    2.845    0.004    0.224    0.224
+    trust_2|t4        0.927    0.091   10.149    0.000    0.927    0.927
+    trust_3|t1       -1.160    0.100  -11.569    0.000   -1.160   -1.160
+    trust_3|t2       -0.427    0.081   -5.306    0.000   -0.427   -0.427
+    trust_3|t3        0.273    0.079    3.462    0.001    0.273    0.273
+    trust_3|t4        1.160    0.100   11.569    0.000    1.160    1.160
+    useful_1|t1      -1.123    0.099  -11.384    0.000   -1.123   -1.123
+    useful_1|t2      -0.385    0.080   -4.816    0.000   -0.385   -0.385
+    useful_1|t3       0.204    0.078    2.598    0.009    0.204    0.204
+    useful_1|t4       1.141    0.099   11.477    0.000    1.141    1.141
+    useful_2|t1      -0.855    0.089   -9.593    0.000   -0.855   -0.855
+    useful_2|t2      -0.314    0.079   -3.955    0.000   -0.314   -0.314
+    useful_2|t3       0.375    0.080    4.693    0.000    0.375    0.375
+    useful_2|t4       1.020    0.095   10.789    0.000    1.020    1.020
+    useful_3|t1      -1.020    0.095  -10.789    0.000   -1.020   -1.020
+    useful_3|t2      -0.385    0.080   -4.816    0.000   -0.385   -0.385
+    useful_3|t3       0.204    0.078    2.598    0.009    0.204    0.204
+    useful_3|t4       0.973    0.093   10.474    0.000    0.973    0.973
+    continue_1|t1    -0.927    0.091  -10.149    0.000   -0.927   -0.927
+    continue_1|t2    -0.273    0.079   -3.462    0.001   -0.273   -0.273
+    continue_1|t3     0.283    0.079    3.585    0.000    0.283    0.283
+    continue_1|t4     0.898    0.090    9.929    0.000    0.898    0.898
+    continue_2|t1    -1.020    0.095  -10.789    0.000   -1.020   -1.020
+    continue_2|t2    -0.314    0.079   -3.955    0.000   -0.314   -0.314
+    continue_2|t3     0.273    0.079    3.462    0.001    0.273    0.273
+    continue_2|t4     1.036    0.095   10.892    0.000    1.036    1.036
+    continue_3|t1    -0.988    0.093  -10.580    0.000   -0.988   -0.988
+    continue_3|t2    -0.263    0.079   -3.339    0.001   -0.263   -0.263
+    continue_3|t3     0.204    0.078    2.598    0.009    0.204    0.204
+    continue_3|t4     0.927    0.091   10.149    0.000    0.927    0.927
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .trust_1           0.373                               0.373    0.373
+   .trust_2           0.456                               0.456    0.456
+   .trust_3           0.481                               0.481    0.481
+   .useful_1          0.321                               0.321    0.321
+   .useful_2          0.425                               0.425    0.425
+   .useful_3          0.510                               0.510    0.510
+   .continue_1        0.228                               0.228    0.228
+   .continue_2        0.446                               0.446    0.446
+   .continue_3        0.516                               0.516    0.516
+    trust             1.000                               1.000    1.000
+    usefulness        1.000                               1.000    1.000
+    continuance       1.000                               1.000    1.000</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ordinal endogenous indicators에 <code>ordered =</code>를 지정하면 WLSMV 계열이 사용됩니다. 이 설정에서는 일반적인 ML 기반 FIML 결측처리를 그대로 사용할 수 없습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="연속형-근사-mlr와-fiml" class="level2">
+<h2 class="anchored" data-anchor-id="연속형-근사-mlr와-fiml">12. 연속형 근사: MLR와 FIML</h2>
+<p>문항을 연속형으로 다루기로 정당화한 경우의 대안입니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cfa_fit_mlr <span class="ot">&lt;-</span> <span class="fu">cfa</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> cfa_model,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> confirmation_continuous,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"MLR"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="st">"fiml"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  cfa_fit_mlr,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>두 접근은 다른 likelihood·상관구조·결측처리 가정을 사용합니다. 결과가 다르면 어느 쪽이 “더 유의한가”가 아니라 자료와 측정수준에 어느 접근이 더 적합한지 설명합니다.</p>
+<hr>
+</section>
+<section id="모형-식별" class="level2">
+<h2 class="anchored" data-anchor-id="모형-식별">13. 모형 식별</h2>
+<p>잠재변수의 척도를 정해야 모형을 추정할 수 있습니다.</p>
+<p>주요 방법:</p>
+<ul>
+<li>첫 번째 loading을 1로 고정하는 marker-variable 방식</li>
+<li>잠재변수 분산을 1로 고정하는 fixed-factor 방식 (<code>std.lv = TRUE</code>)</li>
+</ul>
+<section id="지표-수에-관한-주의" class="level3">
+<h3 class="anchored" data-anchor-id="지표-수에-관한-주의">지표 수에 관한 주의</h3>
+<ul>
+<li>세 개 이상의 좋은 지표는 식별과 진단에 유리한 설계 권고다.</li>
+<li>두 지표 factor도 추가 제약 아래 식별될 수 있지만 매우 제한적이고 취약하다.</li>
+<li>세 지표가 있다는 이유만으로 내용타당도와 단일차원성이 보장되지 않는다.</li>
+<li>지표 수보다 문항 품질, loading, 오차구조, 표본정보가 중요하다.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“잠재변수당 문항 3개”는 보편적 충분조건이 아닙니다. 나쁜 세 문항은 좋은 측정모형이 되지 않습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="적합도는-dashboard이지-신호등-하나가-아니다" class="level2">
+<h2 class="anchored" data-anchor-id="적합도는-dashboard이지-신호등-하나가-아니다">14. 적합도는 dashboard이지 신호등 하나가 아니다</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fit_summary <span class="ot">&lt;-</span> <span class="fu">fitMeasures</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  cfa_fit,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"chisq"</span>, <span class="st">"df"</span>, <span class="st">"pvalue"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cfi"</span>, <span class="st">"tli"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rmsea"</span>, <span class="st">"rmsea.ci.lower"</span>, <span class="st">"rmsea.ci.upper"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"srmr"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>fit_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         chisq             df         pvalue            cfi            tli 
+         7.491         24.000          0.999          1.000          1.012 
+         rmsea rmsea.ci.lower rmsea.ci.upper           srmr 
+         0.000          0.000          0.000          0.023 </code></pre>
+</div>
+</div>
+<section id="함께-볼-정보" class="level3">
+<h3 class="anchored" data-anchor-id="함께-볼-정보">함께 볼 정보</h3>
+<ul>
+<li>convergence와 warning</li>
+<li>improper solution: 음의 오차분산, 비정상적으로 큰 loading·상관</li>
+<li>factor loading과 CI</li>
+<li>표준화 잔차</li>
+<li>factor correlation</li>
+<li>CFI/TLI</li>
+<li>RMSEA와 90% CI</li>
+<li>SRMR</li>
+<li>이론적 단순성과 대안모형</li>
+</ul>
+</section>
+<section id="절단값을-기계적으로-사용하지-않기" class="level3">
+<h3 class="anchored" data-anchor-id="절단값을-기계적으로-사용하지-않기">절단값을 기계적으로 사용하지 않기</h3>
+<p>CFI, TLI, RMSEA, SRMR의 관례적 기준은 모형복잡성, 표본크기, loading, 지표 수, 자료분포에 따라 다르게 작동할 수 있습니다.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“CFI가 .95를 넘었으므로 모형이 참이다” 또는 “RMSEA가 .08을 넘었으므로 척도가 무효다”라고 쓰지 않습니다. 여러 진단과 이론적 정합성을 함께 보고 판단합니다.</p>
+</div>
+</div>
+</section>
+<section id="chi-square의-해석" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square의-해석">Chi-square의 해석</h3>
+<p>Chi-square는 모형이 모집단 공분산구조를 정확히 재현한다는 exact-fit 가설을 평가합니다.</p>
+<ul>
+<li>큰 표본에서는 작은 차이도 검출할 수 있음</li>
+<li>작은 표본에서는 큰 misspecification도 놓칠 수 있음</li>
+<li><code>p &gt; .05</code>는 모형이 참일 확률이 높다는 뜻이 아님</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="factor-loadings와-factor-correlations" class="level2">
+<h2 class="anchored" data-anchor-id="factor-loadings와-factor-correlations">15. Factor loadings와 factor correlations</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>standardized_loadings <span class="ot">&lt;-</span> <span class="fu">standardizedSolution</span>(cfa_fit) <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(op <span class="sc">==</span> <span class="st">"=~"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">factor =</span> lhs,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">item =</span> rhs,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> est.std,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    se, z, pvalue,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    ci.lower, ci.upper</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>standardized_loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 8
+  factor      item       estimate     se     z pvalue ci.lower ci.upper
+  &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 trust       trust_1       0.792 0.0462  17.1      0    0.701    0.883
+2 trust       trust_2       0.738 0.0479  15.4      0    0.644    0.831
+3 trust       trust_3       0.721 0.0488  14.8      0    0.625    0.816
+4 usefulness  useful_1      0.824 0.0356  23.1      0    0.754    0.894
+5 usefulness  useful_2      0.758 0.0447  17.0      0    0.671    0.846
+6 usefulness  useful_3      0.700 0.0463  15.1      0    0.609    0.790
+7 continuance continue_1    0.879 0.0380  23.1      0    0.804    0.953
+8 continuance continue_2    0.745 0.0399  18.7      0    0.666    0.823
+9 continuance continue_3    0.695 0.0498  14.0      0    0.598    0.793</code></pre>
+</div>
+</div>
+<section id="loading을-해석할-때" class="level3">
+<h3 class="anchored" data-anchor-id="loading을-해석할-때">loading을 해석할 때</h3>
+<ul>
+<li>크기와 방향</li>
+<li>CI와 표본정밀도</li>
+<li>문항 내용</li>
+<li>cross-loading 가능성</li>
+<li>오차분산</li>
+<li>집단별 차이</li>
+</ul>
+<p><code>loading &gt; .70</code> 같은 문턱값은 참고일 뿐 자동 문항선택 규칙이 아닙니다.</p>
+</section>
+<section id="잠재상관" class="level3">
+<h3 class="anchored" data-anchor-id="잠재상관">잠재상관</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>latent_covariance <span class="ot">&lt;-</span> <span class="fu">lavInspect</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  cfa_fit,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cor.lv"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>latent_covariance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            trust usflns cntnnc
+trust       1.000              
+usefulness  0.485  1.000       
+continuance 0.464  0.676  1.000</code></pre>
+</div>
+</div>
+<p>상관이 매우 높으면 다음을 질문합니다.</p>
+<ul>
+<li>이론적으로 구별되는 구성개념인가?</li>
+<li>문항 내용이 중복되는가?</li>
+<li>higher-order factor가 필요한가?</li>
+<li>두 factor 모형과 한 factor 모형 중 어느 것이 더 타당한가?</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="composite-reliability와-ave" class="level2">
+<h2 class="anchored" data-anchor-id="composite-reliability와-ave">16. Composite reliability와 AVE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">compRelSEM</span>(cfa_fit)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>semTools<span class="sc">::</span><span class="fu">AVE</span>(cfa_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>보고할 때는 다음을 함께 제시합니다.</p>
+<ul>
+<li>사용한 점수모형과 estimator</li>
+<li>standardized loading</li>
+<li>composite reliability</li>
+<li>AVE</li>
+<li>latent correlations</li>
+<li>척도의 내용적 근거</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AVE의 제곱근과 요인상관을 비교하는 단일 규칙만으로 discriminant validity를 확정하지 않습니다. competing CFA model과 문항내용을 함께 검토합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="residual과-modification-index" class="level2">
+<h2 class="anchored" data-anchor-id="residual과-modification-index">17. Residual과 modification index</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavResiduals</span>(cfa_fit, <span class="at">type =</span> <span class="st">"cor"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modindices</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  cfa_fit,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sort. =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">maximum.number =</span> <span class="dv">15</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="modification-index를-보기-전에" class="level3">
+<h3 class="anchored" data-anchor-id="modification-index를-보기-전에">Modification index를 보기 전에</h3>
+<ol type="1">
+<li>이론적으로 가능한 cross-loading을 사전에 적는다.</li>
+<li>방법효과, 역문항, 유사한 표현을 확인한다.</li>
+<li>오차공분산을 허용할 실질적 이유가 있는지 확인한다.</li>
+<li>수정모형을 독립자료에서 검증할 계획을 세운다.</li>
+</ol>
+<div class="callout-danger">
+<p>가장 큰 modification index부터 오차공분산을 추가하면 표본특이적 overfitting이 발생합니다. 최종 모형만 보고하면 탐색과 확증의 경계도 사라집니다.</p>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-v.-structural-equation-model" class="level1">
+<h1>Part V. Structural Equation Model</h1>
+<section id="측정모형과-구조모형-결합" class="level2">
+<h2 class="anchored" data-anchor-id="측정모형과-구조모형-결합">18. 측정모형과 구조모형 결합</h2>
+<p>이론가설:</p>
+<ol type="1">
+<li>Trust가 Usefulness를 높인다.</li>
+<li>Usefulness가 Continuance를 높인다.</li>
+<li>Trust는 Continuance에 직접효과도 가진다.</li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    T(("Trust")) --&gt;|"a"| U(("Usefulness"))
+    U --&gt;|"b"| C(("Continuance"))
+    T --&gt;|"c′"| C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="lavaan-model" class="level3">
+<h3 class="anchored" data-anchor-id="lavaan-model">lavaan model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sem_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # measurement model</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">  trust =~ trust_1 + trust_2 + trust_3</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">  usefulness =~ useful_1 + useful_2 + useful_3</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">  continuance =~ continue_1 + continue_2 + continue_3</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="st">  # structural model</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">  usefulness ~ a*trust</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">  continuance ~ b*usefulness + cp*trust</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">  # indirect and total effects</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="st">  indirect := a*b</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="st">  total := cp + (a*b)</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sem_fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> sem_model,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> confirmation_ordinal,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> item_names,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"WLSMV"</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  sem_fit,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit.measures =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">rsquare =</span> <span class="cn">TRUE</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-19 ended normally after 23 iterations
+
+  Estimator                                       DWLS
+  Optimization method                           NLMINB
+  Number of model parameters                        48
+
+  Number of observations                           260
+
+Model Test User Model:
+                                              Standard      Scaled
+  Test Statistic                                 7.491      16.930
+  Degrees of freedom                                24          24
+  P-value (Chi-square)                           0.999       0.852
+  Scaling correction factor                                  0.569
+  Shift parameter                                            3.754
+    simple second-order correction                                
+
+Model Test Baseline Model:
+
+  Test statistic                              2184.687    1239.033
+  Degrees of freedom                                36          36
+  P-value                                        0.000       0.000
+  Scaling correction factor                                  1.786
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    1.000       1.000
+  Tucker-Lewis Index (TLI)                       1.012       1.009
+                                                                  
+  Robust Comparative Fit Index (CFI)                         1.000
+  Robust Tucker-Lewis Index (TLI)                            1.012
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.000       0.000
+  90 Percent confidence interval - lower         0.000       0.000
+  90 Percent confidence interval - upper         0.000       0.029
+  P-value H_0: RMSEA &lt;= 0.050                    1.000       0.996
+  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
+                                                                  
+  Robust RMSEA                                               0.000
+  90 Percent confidence interval - lower                     0.000
+  90 Percent confidence interval - upper                     0.043
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.973
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.023       0.023
+
+Parameter Estimates:
+
+  Parameterization                               Delta
+  Standard errors                           Robust.sem
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  trust =~                                                              
+    trust_1           0.792    0.046   17.133    0.000    0.792    0.792
+    trust_2           0.738    0.048   15.386    0.000    0.738    0.738
+    trust_3           0.721    0.049   14.781    0.000    0.721    0.721
+  usefulness =~                                                         
+    useful_1          0.721    0.044   16.344    0.000    0.824    0.824
+    useful_2          0.663    0.046   14.286    0.000    0.758    0.758
+    useful_3          0.612    0.045   13.617    0.000    0.700    0.700
+  continuance =~                                                        
+    continue_1        0.633    0.052   12.263    0.000    0.879    0.879
+    continue_2        0.536    0.041   13.122    0.000    0.745    0.745
+    continue_3        0.501    0.045   11.040    0.000    0.695    0.695
+
+Regressions:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  usefulness ~                                                          
+    trust      (a)    0.554    0.100    5.569    0.000    0.485    0.485
+  continuance ~                                                         
+    usefulnss  (b)    0.716    0.125    5.726    0.000    0.590    0.590
+    trust     (cp)    0.247    0.110    2.247    0.025    0.178    0.178
+
+Thresholds:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    trust_1|t1       -1.239    0.104  -11.911    0.000   -1.239   -1.239
+    trust_1|t2       -0.365    0.080   -4.570    0.000   -0.365   -0.365
+    trust_1|t3        0.283    0.079    3.585    0.000    0.283    0.283
+    trust_1|t4        1.004    0.094   10.685    0.000    1.004    1.004
+    trust_2|t1       -1.087    0.097  -11.192    0.000   -1.087   -1.087
+    trust_2|t2       -0.385    0.080   -4.816    0.000   -0.385   -0.385
+    trust_2|t3        0.224    0.079    2.845    0.004    0.224    0.224
+    trust_2|t4        0.927    0.091   10.149    0.000    0.927    0.927
+    trust_3|t1       -1.160    0.100  -11.569    0.000   -1.160   -1.160
+    trust_3|t2       -0.427    0.081   -5.306    0.000   -0.427   -0.427
+    trust_3|t3        0.273    0.079    3.462    0.001    0.273    0.273
+    trust_3|t4        1.160    0.100   11.569    0.000    1.160    1.160
+    useful_1|t1      -1.123    0.099  -11.384    0.000   -1.123   -1.123
+    useful_1|t2      -0.385    0.080   -4.816    0.000   -0.385   -0.385
+    useful_1|t3       0.204    0.078    2.598    0.009    0.204    0.204
+    useful_1|t4       1.141    0.099   11.477    0.000    1.141    1.141
+    useful_2|t1      -0.855    0.089   -9.593    0.000   -0.855   -0.855
+    useful_2|t2      -0.314    0.079   -3.955    0.000   -0.314   -0.314
+    useful_2|t3       0.375    0.080    4.693    0.000    0.375    0.375
+    useful_2|t4       1.020    0.095   10.789    0.000    1.020    1.020
+    useful_3|t1      -1.020    0.095  -10.789    0.000   -1.020   -1.020
+    useful_3|t2      -0.385    0.080   -4.816    0.000   -0.385   -0.385
+    useful_3|t3       0.204    0.078    2.598    0.009    0.204    0.204
+    useful_3|t4       0.973    0.093   10.474    0.000    0.973    0.973
+    continue_1|t1    -0.927    0.091  -10.149    0.000   -0.927   -0.927
+    continue_1|t2    -0.273    0.079   -3.462    0.001   -0.273   -0.273
+    continue_1|t3     0.283    0.079    3.585    0.000    0.283    0.283
+    continue_1|t4     0.898    0.090    9.929    0.000    0.898    0.898
+    continue_2|t1    -1.020    0.095  -10.789    0.000   -1.020   -1.020
+    continue_2|t2    -0.314    0.079   -3.955    0.000   -0.314   -0.314
+    continue_2|t3     0.273    0.079    3.462    0.001    0.273    0.273
+    continue_2|t4     1.036    0.095   10.892    0.000    1.036    1.036
+    continue_3|t1    -0.988    0.093  -10.580    0.000   -0.988   -0.988
+    continue_3|t2    -0.263    0.079   -3.339    0.001   -0.263   -0.263
+    continue_3|t3     0.204    0.078    2.598    0.009    0.204    0.204
+    continue_3|t4     0.927    0.091   10.149    0.000    0.927    0.927
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .trust_1           0.373                               0.373    0.373
+   .trust_2           0.456                               0.456    0.456
+   .trust_3           0.481                               0.481    0.481
+   .useful_1          0.321                               0.321    0.321
+   .useful_2          0.425                               0.425    0.425
+   .useful_3          0.510                               0.510    0.510
+   .continue_1        0.228                               0.228    0.228
+   .continue_2        0.446                               0.446    0.446
+   .continue_3        0.516                               0.516    0.516
+    trust             1.000                               1.000    1.000
+   .usefulness        1.000                               0.765    0.765
+   .continuance       1.000                               0.519    0.519
+
+R-Square:
+                   Estimate
+    trust_1           0.627
+    trust_2           0.544
+    trust_3           0.519
+    useful_1          0.679
+    useful_2          0.575
+    useful_3          0.490
+    continue_1        0.772
+    continue_2        0.554
+    continue_3        0.484
+    usefulness        0.235
+    continuance       0.481
+
+Defined Parameters:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+    indirect          0.397    0.097    4.075    0.000    0.286    0.286
+    total             0.644    0.114    5.643    0.000    0.464    0.464</code></pre>
+</div>
+</div>
+</section>
+<section id="주요-경로와-defined-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="주요-경로와-defined-parameters">주요 경로와 defined parameters</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sem_parameters <span class="ot">&lt;-</span> <span class="fu">parameterEstimates</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  sem_fit,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">standardized =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ci =</span> <span class="cn">TRUE</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(op <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"~"</span>, <span class="st">":="</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    lhs, op, rhs,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    est, se, ci.lower, ci.upper,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    std.all, pvalue</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>sem_parameters</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          lhs op        rhs   est    se ci.lower ci.upper std.all pvalue
+1  usefulness  ~      trust 0.554 0.100    0.359    0.749   0.485  0.000
+2 continuance  ~ usefulness 0.716 0.125    0.471    0.962   0.590  0.000
+3 continuance  ~      trust 0.247 0.110    0.032    0.463   0.178  0.025
+4    indirect :=        a*b 0.397 0.097    0.206    0.588   0.286  0.000
+5       total :=   cp+(a*b) 0.644 0.114    0.421    0.868   0.464  0.000</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>SEM의 단방향 화살표는 연구자의 모형명세입니다. Cross-sectional covariance만으로 시간순서와 인과방향이 입증되지는 않습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="competing-models" class="level2">
+<h2 class="anchored" data-anchor-id="competing-models">19. Competing models</h2>
+<p>이론적으로 가능한 대안모형을 비교할 수 있습니다.</p>
+<ul>
+<li>Direct-only model</li>
+<li>Full mediation model</li>
+<li>Partial mediation model</li>
+<li>Reverse-path model</li>
+<li>One-factor measurement model</li>
+<li>Higher-order model</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>적합도가 가장 좋은 모형이 곧 참인 이론은 아닙니다. 관측 공분산만으로 구분되지 않는 equivalent model이 존재할 수 있습니다.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>full_mediation_model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="st">  trust =~ trust_1 + trust_2 + trust_3</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="st">  usefulness =~ useful_1 + useful_2 + useful_3</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">  continuance =~ continue_1 + continue_2 + continue_3</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="st">  usefulness ~ a*trust</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="st">  continuance ~ b*usefulness</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="st">  indirect := a*b</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>full_mediation_fit <span class="ot">&lt;-</span> <span class="fu">sem</span>(</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  full_mediation_model,</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> confirmation_ordinal,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">ordered =</span> item_names,</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"WLSMV"</span>,</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nested-model comparison도 estimator에 맞는 scaled difference procedure를 사용해야 하며, 이론·계수·잔차·정보기준을 함께 봅니다.</p>
+<hr>
+</section>
+</section>
+<section id="part-vi.-measurement-invariance" class="level1">
+<h1>Part VI. Measurement Invariance</h1>
+<section id="왜-동일성이-필요한가" class="level2">
+<h2 class="anchored" data-anchor-id="왜-동일성이-필요한가">20. 왜 동일성이 필요한가?</h2>
+<p>Novice와 experienced 사용자의 latent mean을 비교하려면 같은 점수가 두 집단에서 같은 의미를 가져야 합니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>제약</th>
+<th>허용되는 비교의 예</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Configural</td>
+<td>같은 factor pattern</td>
+<td>구조가 유사한가?</td>
+</tr>
+<tr class="even">
+<td>Metric</td>
+<td>loading 동일</td>
+<td>관계·회귀계수 비교</td>
+</tr>
+<tr class="odd">
+<td>Scalar</td>
+<td>loading + intercept 동일</td>
+<td>latent mean 비교</td>
+</tr>
+<tr class="even">
+<td>Strict</td>
+<td>loading + intercept + residual 동일</td>
+<td>매우 강한 점수 비교</td>
+</tr>
+</tbody>
+</table>
+<p>Ordinal 문항에서는 intercept 대신 threshold 제약이 핵심이 됩니다.</p>
+<hr>
+</section>
+<section id="연속형-자료로-invariance-workflow-보기" class="level2">
+<h2 class="anchored" data-anchor-id="연속형-자료로-invariance-workflow-보기">21. 연속형 자료로 invariance workflow 보기</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>configural_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  cfa_model,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sem_continuous,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">"expertise"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"MLR"</span>,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="st">"fiml"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>metric_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  cfa_model,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sem_continuous,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">"expertise"</span>,</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">group.equal =</span> <span class="st">"loadings"</span>,</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"MLR"</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="st">"fiml"</span>,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>scalar_fit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  cfa_model,</span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> sem_continuous,</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">"expertise"</span>,</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>, <span class="st">"intercepts"</span>),</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimator =</span> <span class="st">"MLR"</span>,</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing =</span> <span class="st">"fiml"</span>,</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">std.lv =</span> <span class="cn">TRUE</span></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="fit-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="fit-dashboard">Fit dashboard</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>extract_invariance_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, model_name) {</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> model_name,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cfi =</span> <span class="fu">fitMeasures</span>(fit, <span class="st">"cfi"</span>),</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">tli =</span> <span class="fu">fitMeasures</span>(fit, <span class="st">"tli"</span>),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmsea =</span> <span class="fu">fitMeasures</span>(fit, <span class="st">"rmsea"</span>),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">srmr =</span> <span class="fu">fitMeasures</span>(fit, <span class="st">"srmr"</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_invariance_fit</span>(configural_fit, <span class="st">"Configural"</span>),</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_invariance_fit</span>(metric_fit, <span class="st">"Metric"</span>),</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_invariance_fit</span>(scalar_fit, <span class="st">"Scalar"</span>)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestLRT</span>(</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  configural_fit,</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>  metric_fit,</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  scalar_fit</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="해석-원칙" class="level3">
+<h3 class="anchored" data-anchor-id="해석-원칙">해석 원칙</h3>
+<ul>
+<li>chi-square difference 하나만 사용하지 않는다.</li>
+<li>CFI/RMSEA/SRMR 변화와 parameter 차이를 함께 본다.</li>
+<li>집단별 표본크기와 문항분포를 확인한다.</li>
+<li>partial invariance를 사용할 경우 자유롭게 한 제약과 이론적 이유를 공개한다.</li>
+<li>동일성이 부족하면 latent mean 차이를 단순 비교하지 않는다.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>집단별 alpha가 비슷하다고 measurement invariance가 입증되는 것은 아닙니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="표본크기-sem은-200명-규칙을-넘어서기" class="level2">
+<h2 class="anchored" data-anchor-id="표본크기-sem은-200명-규칙을-넘어서기">22. 표본크기: “SEM은 200명” 규칙을 넘어서기</h2>
+<p>필요한 정보량은 다음에 따라 달라집니다.</p>
+<ul>
+<li>latent factor 수와 지표 수</li>
+<li>loading 크기</li>
+<li>구조경로 수</li>
+<li>지표의 범주 수와 분포</li>
+<li>결측률</li>
+<li>집단 수</li>
+<li>간접효과·interaction의 크기</li>
+<li>estimator</li>
+<li>원하는 CI 폭과 검정력</li>
+</ul>
+<p>가장 좋은 방법 중 하나는 예상 모수와 결측·비정규성을 반영한 Monte Carlo simulation입니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. plausible population model을 명시한다.</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 후보 sample size마다 여러 자료를 생성한다.</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 매 자료에 같은 분석모형을 적합한다.</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. convergence, bias, CI coverage, power를 요약한다.</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 가장 작은 효과와 가장 어려운 조건을 기준으로 계획한다.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="optional-appendix.-clustering을-현대적으로-감사하기" class="level1">
+<h1>Optional Appendix. Clustering을 현대적으로 감사하기</h1>
+<p>원 자료의 clustering 실습은 유지하되, SEM과 clustering이 서로 다른 질문에 답한다는 점을 분명히 합니다.</p>
+<ul>
+<li>SEM: 이론적으로 명시한 latent structure와 관계 평가</li>
+<li>Clustering: 관측값의 거리·유사성에 기반한 탐색적 그룹화</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cluster는 데이터 안에서 만든 요약이지 자연적으로 존재하는 사람 “유형”의 증거가 아닙니다. 알고리즘, 변수선택, scaling, k에 따라 membership이 달라질 수 있습니다.</p>
+</div>
+</div>
+<hr>
+<section id="k-means-준비" class="level2">
+<h2 class="anchored" data-anchor-id="k-means-준비">23. K-means 준비</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"USArrests"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>crime <span class="ot">&lt;-</span> USArrests <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"state"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>crime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 5
+   state       Murder Assault UrbanPop  Rape
+   &lt;chr&gt;        &lt;dbl&gt;   &lt;int&gt;    &lt;int&gt; &lt;dbl&gt;
+ 1 Alabama       13.2     236       58  21.2
+ 2 Alaska        10       263       48  44.5
+ 3 Arizona        8.1     294       80  31  
+ 4 Arkansas       8.8     190       50  19.5
+ 5 California     9       276       91  40.6
+ 6 Colorado       7.9     204       78  38.7
+ 7 Connecticut    3.3     110       77  11.1
+ 8 Delaware       5.9     238       72  15.8
+ 9 Florida       15.4     335       80  31.9
+10 Georgia       17.4     211       60  25.8
+# ℹ 40 more rows</code></pre>
+</div>
+</div>
+<p>K-means는 Euclidean distance와 평균을 사용하므로 변수의 단위에 민감합니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>crime_matrix <span class="ot">&lt;-</span> crime <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>state) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale</span>()</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>crime_scaled <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  crime_matrix,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">.name_repair =</span> <span class="st">"minimal"</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Z-score scaling은 기본 출발점일 뿐입니다. 극단값, 비대칭분포, 변수의 실질적 중요도, mixed data type을 고려해야 합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="k-후보-비교" class="level2">
+<h2 class="anchored" data-anchor-id="k-후보-비교">24. k 후보 비교</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>evaluate_k <span class="ot">&lt;-</span> <span class="cf">function</span>(k, x) {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">1000</span> <span class="sc">+</span> k)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">centers =</span> k,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nstart =</span> <span class="dv">50</span>,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter.max =</span> <span class="dv">100</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  silhouette_width <span class="ot">&lt;-</span> cluster<span class="sc">::</span><span class="fu">silhouette</span>(</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    fit<span class="sc">$</span>cluster,</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dist</span>(x)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  )[, <span class="st">"sil_width"</span>]</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">k =</span> k,</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_withinss =</span> fit<span class="sc">$</span>tot.withinss,</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_silhouette =</span> <span class="fu">mean</span>(silhouette_width)</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>k_audit <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>  evaluate_k,</span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> crime_matrix</span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>k_audit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 3
+      k total_withinss mean_silhouette
+  &lt;int&gt;          &lt;dbl&gt;           &lt;dbl&gt;
+1     2          103.            0.408
+2     3           78.3           0.309
+3     4           56.4           0.340
+4     5           48.9           0.303
+5     6           42.8           0.286
+6     7           38.3           0.294
+7     8           33.8           0.267</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  k_audit,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> mean_silhouette)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of clusters"</span>,</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean silhouette width"</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-k-audit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-k-audit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="13_week_modern_files/figure-html/fig-k-audit-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-k-audit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: k에 따른 평균 silhouette width
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>WSS의 elbow, silhouette, 이론적 해석가능성, 최소 cluster 크기, stability를 함께 봅니다.</p>
+<hr>
+</section>
+<section id="선택한-k의-프로파일" class="level2">
+<h2 class="anchored" data-anchor-id="선택한-k의-프로파일">25. 선택한 k의 프로파일</h2>
+<p>아래에서는 수업용으로 <code>k = 4</code>를 사용합니다. “정답”이 아니라 분석 선택입니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20261303</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>kmeans_fit <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  crime_matrix,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">centers =</span> <span class="dv">4</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">nstart =</span> <span class="dv">100</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter.max =</span> <span class="dv">100</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>crime_clustered <span class="ot">&lt;-</span> crime <span class="sc">|&gt;</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster =</span> <span class="fu">factor</span>(kmeans_fit<span class="sc">$</span>cluster)</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>crime_clustered <span class="sc">|&gt;</span></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  cluster     n
+  &lt;fct&gt;   &lt;int&gt;
+1 1          13
+2 2           8
+3 3          16
+4 4          13</code></pre>
+</div>
+</div>
+<section id="원단위-profile" class="level3">
+<h3 class="anchored" data-anchor-id="원단위-profile">원단위 profile</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>cluster_profile <span class="ot">&lt;-</span> crime_clustered <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">where</span>(is.numeric),</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>      mean</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> cluster</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>cluster_profile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  cluster Murder Assault UrbanPop  Rape     n
+  &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+1 2        13.9    244.      53.8  21.4     8
+2 1        10.8    257.      76    33.2    13
+3 3         5.66   139.      73.9  18.8    16
+4 4         3.6     78.5     52.1  12.2    13</code></pre>
+</div>
+</div>
+</section>
+<section id="standardized-profile-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="standardized-profile-시각화">Standardized profile 시각화</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>crime_clustered_scaled <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  crime <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(state),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  crime_scaled,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cluster =</span> <span class="fu">factor</span>(kmeans_fit<span class="sc">$</span>cluster)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>cluster_profile_long <span class="ot">&lt;-</span> crime_clustered_scaled <span class="sc">|&gt;</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">names</span>(USArrests)),</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"z_value"</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  cluster_profile_long,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> cluster, <span class="at">y =</span> z_value)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Cluster"</span>,</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Standardized value"</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-cluster-profile" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cluster-profile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="13_week_modern_files/figure-html/fig-cluster-profile-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cluster-profile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: 군집별 표준화 변수분포
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="초기값과-안정성" class="level2">
+<h2 class="anchored" data-anchor-id="초기값과-안정성">26. 초기값과 안정성</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>repeat_kmeans <span class="ot">&lt;-</span> <span class="cf">function</span>(seed, x, <span class="at">k =</span> <span class="dv">4</span>) {</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">centers =</span> k,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nstart =</span> <span class="dv">25</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> seed,</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_withinss =</span> fit<span class="sc">$</span>tot.withinss,</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">smallest_cluster =</span> <span class="fu">min</span>(<span class="fu">table</span>(fit<span class="sc">$</span>cluster)),</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">largest_cluster =</span> <span class="fu">max</span>(<span class="fu">table</span>(fit<span class="sc">$</span>cluster))</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>stability_runs <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>  repeat_kmeans,</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> crime_matrix,</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">4</span></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>stability_runs <span class="sc">|&gt;</span></span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_wss =</span> <span class="fu">min</span>(total_withinss),</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_wss =</span> <span class="fu">median</span>(total_withinss),</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_wss =</span> <span class="fu">max</span>(total_withinss),</span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_smallest_cluster =</span> <span class="fu">min</span>(smallest_cluster)</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  min_wss median_wss max_wss min_smallest_cluster
+    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;                &lt;int&gt;
+1    56.4       56.4    56.4                    8</code></pre>
+</div>
+</div>
+<p>Membership 안정성까지 평가하려면 bootstrap 또는 반복 subsampling에서 adjusted Rand index를 비교할 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>mclust<span class="sc">::</span><span class="fu">adjustedRandIndex</span>(</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  cluster_solution_a,</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  cluster_solution_b</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cluster 1을 “위험형 사용자”처럼 본질화하지 않습니다. “이 변수, scaling, distance, k, 표본에서 유사하게 묶인 관측”이라고 기술합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="activity-measurement-sem-audit-lab" class="level1">
+<h1>Activity: Measurement &amp; SEM Audit Lab</h1>
+<section id="mission-1.-construct-map" class="level2">
+<h2 class="anchored" data-anchor-id="mission-1.-construct-map">Mission 1. Construct map</h2>
+<p>세 개의 HCI 구성개념을 선택합니다.</p>
+<ul>
+<li>이론적 정의</li>
+<li>포함되는 내용</li>
+<li>포함되지 않는 내용</li>
+<li>각 3–5개 지표</li>
+<li>응답척도와 측정시점</li>
+</ul>
+</section>
+<section id="mission-2.-reliability-audit" class="level2">
+<h2 class="anchored" data-anchor-id="mission-2.-reliability-audit">Mission 2. Reliability audit</h2>
+<ul>
+<li>item distribution</li>
+<li>reverse coding 확인</li>
+<li>alpha</li>
+<li>CFA 이후 composite reliability</li>
+<li>문항삭제 전 내용타당도 검토</li>
+</ul>
+</section>
+<section id="mission-3.-efa-또는-cfa" class="level2">
+<h2 class="anchored" data-anchor-id="mission-3.-efa-또는-cfa">Mission 3. EFA 또는 CFA</h2>
+<section id="efa를-선택한-경우" class="level3">
+<h3 class="anchored" data-anchor-id="efa를-선택한-경우">EFA를 선택한 경우</h3>
+<ul>
+<li>discovery 목적</li>
+<li>요인수 근거</li>
+<li>correlation type</li>
+<li>extraction method</li>
+<li>oblique rotation</li>
+<li>loading·cross-loading·요인해석</li>
+</ul>
+</section>
+<section id="cfa를-선택한-경우" class="level3">
+<h3 class="anchored" data-anchor-id="cfa를-선택한-경우">CFA를 선택한 경우</h3>
+<ul>
+<li>사전 모형</li>
+<li>estimator 선택 근거</li>
+<li>identification</li>
+<li>loading과 latent correlation</li>
+<li>fit dashboard</li>
+<li>residual과 improper solution</li>
+</ul>
+</section>
+</section>
+<section id="mission-4.-sem" class="level2">
+<h2 class="anchored" data-anchor-id="mission-4.-sem">Mission 4. SEM</h2>
+<ul>
+<li>measurement model</li>
+<li>structural paths</li>
+<li>direct·indirect effect</li>
+<li>competing model</li>
+<li>causal claim에 필요한 추가 설계</li>
+</ul>
+</section>
+<section id="mission-5.-invariance" class="level2">
+<h2 class="anchored" data-anchor-id="mission-5.-invariance">Mission 5. Invariance</h2>
+<ul>
+<li>비교집단</li>
+<li>configural/metric/scalar 단계</li>
+<li>fit 변화</li>
+<li>어떤 집단비교가 정당화되는지</li>
+</ul>
+</section>
+<section id="measurement-sem-model-card" class="level2">
+<h2 class="anchored" data-anchor-id="measurement-sem-model-card">Measurement &amp; SEM Model Card</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>기록</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Construct</td>
+<td>이론적 정의</td>
+</tr>
+<tr class="even">
+<td>Indicators</td>
+<td>문항과 측정수준</td>
+</tr>
+<tr class="odd">
+<td>Sample</td>
+<td>표본과 분석단위</td>
+</tr>
+<tr class="even">
+<td>Estimator</td>
+<td>ML/MLR/WLSMV 선택 근거</td>
+</tr>
+<tr class="odd">
+<td>Identification</td>
+<td>척도 설정과 제약</td>
+</tr>
+<tr class="even">
+<td>Reliability</td>
+<td>alpha·omega/composite reliability</td>
+</tr>
+<tr class="odd">
+<td>Fit</td>
+<td>CFI/TLI/RMSEA CI/SRMR/잔차</td>
+</tr>
+<tr class="even">
+<td>Parameters</td>
+<td>loading·경로·CI</td>
+</tr>
+<tr class="odd">
+<td>Invariance</td>
+<td>집단 비교 가능성</td>
+</tr>
+<tr class="even">
+<td>Sensitivity</td>
+<td>대안모형·수정 전후</td>
+</tr>
+<tr class="odd">
+<td>Claim boundary</td>
+<td>SEM이 말하지 못하는 것</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ai-collaboration-log" class="level2">
+<h2 class="anchored" data-anchor-id="ai-collaboration-log">AI Collaboration Log</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>기록 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>목적</td>
+<td>문항 검토, syntax audit, fit review, claim audit</td>
+</tr>
+<tr class="even">
+<td>내가 먼저 만든 모형</td>
+<td>경로도와 lavaan syntax</td>
+</tr>
+<tr class="odd">
+<td>프롬프트</td>
+<td>실제 입력한 핵심 요청</td>
+</tr>
+<tr class="even">
+<td>AI가 찾은 불일치</td>
+<td>경로·변수·estimator·해석</td>
+</tr>
+<tr class="odd">
+<td>검증</td>
+<td>이론, 코드, 출력으로 확인한 방법</td>
+</tr>
+<tr class="even">
+<td>결정</td>
+<td>채택·수정·기각과 이유</td>
+</tr>
+<tr class="odd">
+<td>최종 변화</td>
+<td>측정모형 또는 주장 변화</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="이번-주의-핵심-정리" class="level2">
+<h2 class="anchored" data-anchor-id="이번-주의-핵심-정리">이번 주의 핵심 정리</h2>
+<ol type="1">
+<li>SEM은 구조경로 이전에 측정모형에서 시작한다.</li>
+<li>Alpha는 단일차원성과 타당성의 자동 증거가 아니다.</li>
+<li>EFA는 discovery, CFA는 theory-driven confirmation이며 독립 검증이 중요하다.</li>
+<li>Ordinal indicator와 continuous indicator는 estimator·결측처리가 다르다.</li>
+<li>Fit indices는 dashboard이며 보편적 절단값 하나로 판정하지 않는다.</li>
+<li>Modification index는 이론적 진단 단서이지 자동 모형개조 명령이 아니다.</li>
+<li>집단 평균을 비교하기 전에 measurement invariance를 점검한다.</li>
+<li>SEM의 화살표는 설계와 식별 가정 없이 인과성을 보장하지 않는다.</li>
+<li>Clustering 결과는 변수선택, scaling, k, 초기값에 의존하므로 안정성과 해석 범위를 감사한다.</li>
+<li>GenAI는 fit를 높이는 도구가 아니라 이론모형과 코드·주장의 불일치를 찾는 reviewer다.</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

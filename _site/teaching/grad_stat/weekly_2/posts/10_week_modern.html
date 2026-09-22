@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>논문 복기와 재현가능한 분석 – CJL &amp; Lab</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">CJL &amp; Lab</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-courses" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Courses</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-courses">    
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/index.html">
+ <span class="dropdown-text">All Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ds101/index.html">
+ <span class="dropdown-text">DS101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/ml101/index.html">
+ <span class="dropdown-text">ML101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/grad_stat/index.html">
+ <span class="dropdown-text">STAT101</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../teaching/grad_immersive/index.html">
+ <span class="dropdown-text">IMUX</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/index.html"> 
+<span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://axislabskku.com/"> 
+<span class="menu-text">LAB</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#주차-학습목표" id="toc-주차-학습목표" class="nav-link active" data-scroll-target="#주차-학습목표">10주차 학습목표</a>
+  <ul class="collapse">
+  <li><a href="#오늘의-핵심-질문" id="toc-오늘의-핵심-질문" class="nav-link" data-scroll-target="#오늘의-핵심-질문">오늘의 핵심 질문</a></li>
+  </ul></li>
+  <li><a href="#논문-복기의-세-수준" id="toc-논문-복기의-세-수준" class="nav-link" data-scroll-target="#논문-복기의-세-수준">1. 논문 복기의 세 수준</a>
+  <ul class="collapse">
+  <li><a href="#paper-reconstruction-canvas" id="toc-paper-reconstruction-canvas" class="nav-link" data-scroll-target="#paper-reconstruction-canvas">Paper Reconstruction Canvas</a></li>
+  </ul></li>
+  <li><a href="#genai를-재현성-reviewer로-활용하기" id="toc-genai를-재현성-reviewer로-활용하기" class="nav-link" data-scroll-target="#genai를-재현성-reviewer로-활용하기">2. GenAI를 재현성 reviewer로 활용하기</a>
+  <ul class="collapse">
+  <li><a href="#좋은-질문-방식" id="toc-좋은-질문-방식" class="nav-link" data-scroll-target="#좋은-질문-방식">좋은 질문 방식</a></li>
+  <li><a href="#genai가-해서는-안-되는-일" id="toc-genai가-해서는-안-되는-일" class="nav-link" data-scroll-target="#genai가-해서는-안-되는-일">GenAI가 해서는 안 되는 일</a></li>
+  </ul></li>
+  <li><a href="#분석-환경과-재현성-기록" id="toc-분석-환경과-재현성-기록" class="nav-link" data-scroll-target="#분석-환경과-재현성-기록">3. 분석 환경과 재현성 기록</a>
+  <ul class="collapse">
+  <li><a href="#한-번만-설치할-패키지" id="toc-한-번만-설치할-패키지" class="nav-link" data-scroll-target="#한-번만-설치할-패키지">한 번만 설치할 패키지</a></li>
+  <li><a href="#이-문서에서-사용할-패키지" id="toc-이-문서에서-사용할-패키지" class="nav-link" data-scroll-target="#이-문서에서-사용할-패키지">이 문서에서 사용할 패키지</a></li>
+  <li><a href="#분석-시작-전에-남길-기록" id="toc-분석-시작-전에-남길-기록" class="nav-link" data-scroll-target="#분석-시작-전에-남길-기록">분석 시작 전에 남길 기록</a></li>
+  </ul></li>
+  <li><a href="#part-i.-논문을-분석-가능한-명세로-바꾸기" id="toc-part-i.-논문을-분석-가능한-명세로-바꾸기" class="nav-link" data-scroll-target="#part-i.-논문을-분석-가능한-명세로-바꾸기">Part I. 논문을 분석 가능한 명세로 바꾸기</a>
+  <ul class="collapse">
+  <li><a href="#연구질문에서-estimand까지" id="toc-연구질문에서-estimand까지" class="nav-link" data-scroll-target="#연구질문에서-estimand까지">4. 연구질문에서 estimand까지</a>
+  <ul class="collapse">
+  <li><a href="#조작과-조건" id="toc-조작과-조건" class="nav-link" data-scroll-target="#조작과-조건">조작과 조건</a></li>
+  <li><a href="#세-가지-서로-다른-질문" id="toc-세-가지-서로-다른-질문" class="nav-link" data-scroll-target="#세-가지-서로-다른-질문">세 가지 서로 다른 질문</a></li>
+  </ul></li>
+  <li><a href="#원자료-불러오기와-구조-감사" id="toc-원자료-불러오기와-구조-감사" class="nav-link" data-scroll-target="#원자료-불러오기와-구조-감사">5. 원자료 불러오기와 구조 감사</a>
+  <ul class="collapse">
+  <li><a href="#필요한-변수-존재-여부-확인" id="toc-필요한-변수-존재-여부-확인" class="nav-link" data-scroll-target="#필요한-변수-존재-여부-확인">필요한 변수 존재 여부 확인</a></li>
+  <li><a href="#분석용-이름과-factor-순서-만들기" id="toc-분석용-이름과-factor-순서-만들기" class="nav-link" data-scroll-target="#분석용-이름과-factor-순서-만들기">분석용 이름과 factor 순서 만들기</a></li>
+  <li><a href="#분석단위와-key-감사" id="toc-분석단위와-key-감사" class="nav-link" data-scroll-target="#분석단위와-key-감사">분석단위와 key 감사</a></li>
+  <li><a href="#셀별-표본-수" id="toc-셀별-표본-수" class="nav-link" data-scroll-target="#셀별-표본-수">셀별 표본 수</a></li>
+  <li><a href="#결과변수별-결측" id="toc-결과변수별-결측" class="nav-link" data-scroll-target="#결과변수별-결측">결과변수별 결측</a></li>
+  <li><a href="#조건별-기술통계" id="toc-조건별-기술통계" class="nav-link" data-scroll-target="#조건별-기술통계">조건별 기술통계</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-ii.-핵심-결과를-하나의-모형으로-재현하기" id="toc-part-ii.-핵심-결과를-하나의-모형으로-재현하기" class="nav-link" data-scroll-target="#part-ii.-핵심-결과를-하나의-모형으로-재현하기">Part II. 핵심 결과를 하나의 모형으로 재현하기</a>
+  <ul class="collapse">
+  <li><a href="#요인모형" id="toc-요인모형" class="nav-link" data-scroll-target="#요인모형">6. 2×2 요인모형</a>
+  <ul class="collapse">
+  <li><a href="#회귀계수와-신뢰구간" id="toc-회귀계수와-신뢰구간" class="nav-link" data-scroll-target="#회귀계수와-신뢰구간">회귀계수와 신뢰구간</a></li>
+  <li><a href="#omnibus-test와-효과크기" id="toc-omnibus-test와-효과크기" class="nav-link" data-scroll-target="#omnibus-test와-효과크기">Omnibus test와 효과크기</a></li>
+  </ul></li>
+  <li><a href="#estimated-marginal-means와-계획된-비교" id="toc-estimated-marginal-means와-계획된-비교" class="nav-link" data-scroll-target="#estimated-marginal-means와-계획된-비교">7. Estimated marginal means와 계획된 비교</a>
+  <ul class="collapse">
+  <li><a href="#네-셀의-모형-기반-평균" id="toc-네-셀의-모형-기반-평균" class="nav-link" data-scroll-target="#네-셀의-모형-기반-평균">네 셀의 모형 기반 평균</a></li>
+  <li><a href="#각-라벨에서-response-source의-단순효과" id="toc-각-라벨에서-response-source의-단순효과" class="nav-link" data-scroll-target="#각-라벨에서-response-source의-단순효과">각 라벨에서 response source의 단순효과</a></li>
+  <li><a href="#각-response-source에서-label의-단순효과" id="toc-각-response-source에서-label의-단순효과" class="nav-link" data-scroll-target="#각-response-source에서-label의-단순효과">각 response source에서 label의 단순효과</a></li>
+  <li><a href="#추정된-셀-평균-시각화" id="toc-추정된-셀-평균-시각화" class="nav-link" data-scroll-target="#추정된-셀-평균-시각화">추정된 셀 평균 시각화</a></li>
+  <li><a href="#원자료도-숨기지-않기" id="toc-원자료도-숨기지-않기" class="nav-link" data-scroll-target="#원자료도-숨기지-않기">원자료도 숨기지 않기</a></li>
+  </ul></li>
+  <li><a href="#모형-진단과-강건성-검토" id="toc-모형-진단과-강건성-검토" class="nav-link" data-scroll-target="#모형-진단과-강건성-검토">8. 모형 진단과 강건성 검토</a>
+  <ul class="collapse">
+  <li><a href="#잔차와-영향점" id="toc-잔차와-영향점" class="nav-link" data-scroll-target="#잔차와-영향점">잔차와 영향점</a></li>
+  <li><a href="#이분산에-강건한-표준오차" id="toc-이분산에-강건한-표준오차" class="nav-link" data-scroll-target="#이분산에-강건한-표준오차">이분산에 강건한 표준오차</a></li>
+  <li><a href="#민감도-질문" id="toc-민감도-질문" class="nav-link" data-scroll-target="#민감도-질문">민감도 질문</a></li>
+  </ul></li>
+  <li><a href="#네-결과변수를-하나의-분석군으로-관리하기" id="toc-네-결과변수를-하나의-분석군으로-관리하기" class="nav-link" data-scroll-target="#네-결과변수를-하나의-분석군으로-관리하기">9. 네 결과변수를 하나의 분석군으로 관리하기</a>
+  <ul class="collapse">
+  <li><a href="#같은-모형을-체계적으로-적합하기" id="toc-같은-모형을-체계적으로-적합하기" class="nav-link" data-scroll-target="#같은-모형을-체계적으로-적합하기">같은 모형을 체계적으로 적합하기</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#part-iii.-논문의-후속-분석" id="toc-part-iii.-논문의-후속-분석" class="nav-link" data-scroll-target="#part-iii.-논문의-후속-분석">Part III. 논문의 후속 분석</a>
+  <ul class="collapse">
+  <li><a href="#연속형-moderator" id="toc-연속형-moderator" class="nav-link" data-scroll-target="#연속형-moderator">10. 연속형 moderator</a>
+  <ul class="collapse">
+  <li><a href="#평균중심화와-상호작용" id="toc-평균중심화와-상호작용" class="nav-link" data-scroll-target="#평균중심화와-상호작용">평균중심화와 상호작용</a></li>
+  <li><a href="#의미-있는-moderator-값에서-조건부-효과" id="toc-의미-있는-moderator-값에서-조건부-효과" class="nav-link" data-scroll-target="#의미-있는-moderator-값에서-조건부-효과">의미 있는 moderator 값에서 조건부 효과</a></li>
+  <li><a href="#예측값-시각화" id="toc-예측값-시각화" class="nav-link" data-scroll-target="#예측값-시각화">예측값 시각화</a></li>
+  </ul></li>
+  <li><a href="#follow-up-data-결합-감사" id="toc-follow-up-data-결합-감사" class="nav-link" data-scroll-target="#follow-up-data-결합-감사">11. Follow-up data 결합 감사</a>
+  <ul class="collapse">
+  <li><a href="#결합-전-key-확인" id="toc-결합-전-key-확인" class="nav-link" data-scroll-target="#결합-전-key-확인">결합 전 key 확인</a></li>
+  <li><a href="#어느-id가-매칭되지-않는가" id="toc-어느-id가-매칭되지-않는가" class="nav-link" data-scroll-target="#어느-id가-매칭되지-않는가">어느 ID가 매칭되지 않는가?</a></li>
+  <li><a href="#관계를-명시한-결합" id="toc-관계를-명시한-결합" class="nav-link" data-scroll-target="#관계를-명시한-결합">관계를 명시한 결합</a></li>
+  </ul></li>
+  <li><a href="#empathic-accuracy-여러-감정을-여러-t-test로-나누지-않기" id="toc-empathic-accuracy-여러-감정을-여러-t-test로-나누지-않기" class="nav-link" data-scroll-target="#empathic-accuracy-여러-감정을-여러-t-test로-나누지-않기">12. Empathic accuracy: 여러 감정을 여러 t-test로 나누지 않기</a></li>
+  </ul></li>
+  <li><a href="#part-iv.-결과를-논문의-주장으로-다시-연결하기" id="toc-part-iv.-결과를-논문의-주장으로-다시-연결하기" class="nav-link" data-scroll-target="#part-iv.-결과를-논문의-주장으로-다시-연결하기">Part IV. 결과를 논문의 주장으로 다시 연결하기</a>
+  <ul class="collapse">
+  <li><a href="#논문코드결과-대조표" id="toc-논문코드결과-대조표" class="nav-link" data-scroll-target="#논문코드결과-대조표">13. 논문–코드–결과 대조표</a>
+  <ul class="collapse">
+  <li><a href="#claim-card" id="toc-claim-card" class="nav-link" data-scroll-target="#claim-card">Claim Card</a></li>
+  </ul></li>
+  <li><a href="#discussion을-읽는-법" id="toc-discussion을-읽는-법" class="nav-link" data-scroll-target="#discussion을-읽는-법">14. Discussion을 읽는 법</a></li>
+  </ul></li>
+  <li><a href="#activity-replication-audit-lab" id="toc-activity-replication-audit-lab" class="nav-link" data-scroll-target="#activity-replication-audit-lab">Activity: Replication Audit Lab</a>
+  <ul class="collapse">
+  <li><a href="#목표" id="toc-목표" class="nav-link" data-scroll-target="#목표">목표</a></li>
+  <li><a href="#mission-1.-claim-reconstruction" id="toc-mission-1.-claim-reconstruction" class="nav-link" data-scroll-target="#mission-1.-claim-reconstruction">Mission 1. Claim reconstruction</a></li>
+  <li><a href="#mission-2.-data-audit" id="toc-mission-2.-data-audit" class="nav-link" data-scroll-target="#mission-2.-data-audit">Mission 2. Data audit</a></li>
+  <li><a href="#mission-3.-reproduction" id="toc-mission-3.-reproduction" class="nav-link" data-scroll-target="#mission-3.-reproduction">Mission 3. Reproduction</a></li>
+  <li><a href="#mission-4.-one-robustness-check" id="toc-mission-4.-one-robustness-check" class="nav-link" data-scroll-target="#mission-4.-one-robustness-check">Mission 4. One robustness check</a></li>
+  <li><a href="#mission-5.-replication-audit-card" id="toc-mission-5.-replication-audit-card" class="nav-link" data-scroll-target="#mission-5.-replication-audit-card">Mission 5. Replication Audit Card</a></li>
+  <li><a href="#mission-6.-ai-collaboration-log" id="toc-mission-6.-ai-collaboration-log" class="nav-link" data-scroll-target="#mission-6.-ai-collaboration-log">Mission 6. AI Collaboration Log</a></li>
+  <li><a href="#이번-주의-핵심-정리" id="toc-이번-주의-핵심-정리" class="nav-link" data-scroll-target="#이번-주의-핵심-정리">이번 주의 핵심 정리</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">논문 복기와 재현가능한 분석</h1>
+<p class="subtitle lead">논문의 주장, 설계, 코드, 결과를 역으로 연결하기</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/"><em>Weekly content</em></a></p>
+<p><br></p>
+<ul>
+<li><a href="https://www.pnas.org/doi/10.1073/pnas.2319112121">Paper: <em>AI Can Help People Feel Heard, but an AI Label Diminishes This Impact</em></a></li>
+<li><a href="https://osf.io/8wnmr/files/osfstorage?view_only=30f6db3f57954e9eaa016457a29264b6">Data &amp; R Code</a></li>
+</ul>
+<hr>
+<section id="주차-학습목표" class="level2">
+<h2 class="anchored" data-anchor-id="주차-학습목표">10주차 학습목표</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이번 주 학습을 마치면 다음을 할 수 있어야 합니다.</p>
+<ol type="1">
+<li>논문의 핵심 주장을 <strong>연구질문–설계–estimand–변수–모형–결과</strong>로 분해한다.</li>
+<li><strong>재현(reproduction)</strong>, <strong>강건성 검토(robustness check)</strong>, <strong>확장(extension)</strong>을 구분한다.</li>
+<li>공개 데이터와 코드를 불러오기 전에 파일, 변수, 표본, 조건 코딩을 감사한다.</li>
+<li>2×2 요인실험을 하나의 선형모형으로 표현하고 주효과, 단순효과, 상호작용을 구분한다.</li>
+<li>omnibus test보다 <strong>원단위 추정치, 신뢰구간, 계획된 contrast</strong>를 중심으로 결과를 해석한다.</li>
+<li>여러 결과변수와 후속분석에서 다중검정 문제를 확인하고 분석군(family)을 명시한다.</li>
+<li>논문, 코드, 표와 그림 사이의 불일치를 체계적으로 기록한다.</li>
+<li>GenAI를 결과 생성기가 아니라 <strong>재현성 reviewer와 claim auditor</strong>로 활용한다.</li>
+</ol>
+</div>
+</div>
+<section id="오늘의-핵심-질문" class="level3">
+<h3 class="anchored" data-anchor-id="오늘의-핵심-질문">오늘의 핵심 질문</h3>
+<blockquote class="blockquote">
+<p><strong>논문의 한 문장을 데이터와 코드까지 거꾸로 추적했을 때, 같은 주장에 도달하는가?</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Paper Claim&lt;br&gt;논문이 무엇을 주장하는가?"] --&gt; B["Design&lt;br&gt;누가 무엇을 경험했는가?"]
+    B --&gt; C["Estimand&lt;br&gt;어떤 평균적 차이를 알고 싶은가?"]
+    C --&gt; D["Operationalization&lt;br&gt;어떤 변수로 측정했는가?"]
+    D --&gt; E["Analysis Sample&lt;br&gt;누가 포함·제외되었는가?"]
+    E --&gt; F["Model &amp; Contrast&lt;br&gt;어떤 비교를 계산했는가?"]
+    F --&gt; G["Estimate + Uncertainty&lt;br&gt;크기와 정밀도"]
+    G --&gt; H["Claim Boundary&lt;br&gt;어디까지 말할 수 있는가?"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>논문 복기는 코드를 그대로 다시 실행하는 활동이 아닙니다. <strong>논문의 주장과 분석 선택이 서로 맞물리는지 감사하는 활동</strong>입니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="논문-복기의-세-수준" class="level2">
+<h2 class="anchored" data-anchor-id="논문-복기의-세-수준">1. 논문 복기의 세 수준</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>수준</th>
+<th>핵심 질문</th>
+<th>산출물</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Reproduction</strong></td>
+<td>같은 데이터와 같은 분석으로 같은 결과가 나오는가?</td>
+<td>표·계수·그림의 일치 여부</td>
+</tr>
+<tr class="even">
+<td><strong>Robustness</strong></td>
+<td>합리적인 대안 선택에서도 결론이 유지되는가?</td>
+<td>대안 SE, contrast, 결측 처리, 모형 진단</td>
+</tr>
+<tr class="odd">
+<td><strong>Extension</strong></td>
+<td>원 논문이 묻지 않은 후속 질문에 답할 수 있는가?</td>
+<td>새 가설과 별도의 분석 계획</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>원 논문의 분석을 바꾼 뒤 결과가 달라졌다고 해서 곧바로 “재현 실패”라고 부르면 안 됩니다. 먼저 <strong>동일 분석의 재현</strong>과 <strong>대안 분석의 강건성 검토</strong>를 분리합니다.</p>
+</div>
+</div>
+<section id="paper-reconstruction-canvas" class="level3">
+<h3 class="anchored" data-anchor-id="paper-reconstruction-canvas">Paper Reconstruction Canvas</h3>
+<p>논문을 읽으면서 아래 표를 먼저 채웁니다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>이번 논문에서 확인할 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>핵심 현상</td>
+<td>사람들이 AI·인간 응답을 어떻게 평가하는가?</td>
+</tr>
+<tr class="even">
+<td>주요 조작</td>
+<td>실제 응답 출처, 제시된 출처 라벨</td>
+</tr>
+<tr class="odd">
+<td>주요 결과</td>
+<td>Feeling heard, accuracy, understood, connection</td>
+</tr>
+<tr class="even">
+<td>단위</td>
+<td>한 참가자의 한 응답 평가</td>
+</tr>
+<tr class="odd">
+<td>주요 설계</td>
+<td>2(response) × 2(label) 집단 간 요인설계</td>
+</tr>
+<tr class="even">
+<td>1차 estimand</td>
+<td>AI 응답과 인간 응답의 평균 차이, AI 라벨과 인간 라벨의 평균 차이</td>
+</tr>
+<tr class="odd">
+<td>상호작용 estimand</td>
+<td>실제 출처 효과가 라벨에 따라 달라지는가?</td>
+</tr>
+<tr class="even">
+<td>일반화 범위</td>
+<td>모집 절차와 연구 상황이 포괄하는 참여자·상호작용</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="genai를-재현성-reviewer로-활용하기" class="level2">
+<h2 class="anchored" data-anchor-id="genai를-재현성-reviewer로-활용하기">2. GenAI를 재현성 reviewer로 활용하기</h2>
+<p>이번 주의 순서는 다음과 같습니다.</p>
+<blockquote class="blockquote">
+<p><strong>Read → Reconstruct → Run → Compare → Audit → Explain</strong></p>
+</blockquote>
+<section id="좋은-질문-방식" class="level3">
+<h3 class="anchored" data-anchor-id="좋은-질문-방식">좋은 질문 방식</h3>
+<pre class="text"><code>다음은 한 논문의 주장, 연구설계, R 모형식이다.
+
+주장:
+“AI-generated responses increased feeling heard, whereas an AI label reduced it.”
+
+설계:
+2(response source: human vs AI) × 2(label: human vs AI), between-subjects
+
+모형:
+feel_heard ~ response * label
+
+다음을 reviewer처럼 점검하라.
+1. 이 모형에서 직접 추정되는 estimand를 원단위로 설명하라.
+2. 주효과 해석이 상호작용에 의해 어떻게 달라질 수 있는지 질문하라.
+3. 논문의 문장이 인과, 모집단 일반화, 실질적 중요성을 과장하는지 확인하라.
+4. 결과를 보기 전에 필요한 표본·결측·코딩 감사를 제안하라.
+5. 최종 결론을 대신 쓰지 말고 내가 확인해야 할 출력 목록을 만들어라.</code></pre>
+</section>
+<section id="genai가-해서는-안-되는-일" class="level3">
+<h3 class="anchored" data-anchor-id="genai가-해서는-안-되는-일">GenAI가 해서는 안 되는 일</h3>
+<ul>
+<li>보지 못한 원문·부록·코드의 내용을 만들어내기</li>
+<li>통계적으로 유의하지 않은 결과를 “효과가 없다”고 단정하기</li>
+<li>겹치는 error bar만 보고 상호작용 여부를 판단하기</li>
+<li>공개되지 않은 참여자 자료를 업로드하도록 요구하기</li>
+<li>다른 분석을 실행한 뒤 그것을 원 논문의 “재현”이라고 부르기</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="민감한 연구자료를 입력하지 않기">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+민감한 연구자료를 입력하지 않기
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>실제 음성, 자유응답, 개인식별자, IRB 제한자료는 공개형 GenAI에 입력하지 않습니다. 변수명, 합성 예시, 집계표, 최소 재현 코드만 사용합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="분석-환경과-재현성-기록" class="level2">
+<h2 class="anchored" data-anchor-id="분석-환경과-재현성-기록">3. 분석 환경과 재현성 기록</h2>
+<section id="한-번만-설치할-패키지" class="level3">
+<h3 class="anchored" data-anchor-id="한-번만-설치할-패키지">한 번만 설치할 패키지</h3>
+<p>아래 코드는 R Console에서 한 번 실행합니다.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c(</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   "tidyverse", "broom", "emmeans", "effectsize",</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   "sandwich", "lmtest"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="이-문서에서-사용할-패키지" class="level3">
+<h3 class="anchored" data-anchor-id="이-문서에서-사용할-패키지">이 문서에서 사용할 패키지</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="분석-시작-전에-남길-기록" class="level3">
+<h3 class="anchored" data-anchor-id="분석-시작-전에-남길-기록">분석 시작 전에 남길 기록</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Git commit 또는 분석 버전</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>analysis_version <span class="ot">&lt;-</span> <span class="st">"week10-reproduction-v1"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># R과 패키지 버전</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>완성된 숫자보다 먼저 다음을 기록합니다.</p>
+<ul>
+<li>원자료 파일명과 내려받은 날짜</li>
+<li>코드 버전 또는 commit</li>
+<li>분석 표본 정의</li>
+<li>제외 기준</li>
+<li>주요 결과변수와 계획된 contrast</li>
+<li>사용한 패키지 버전</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-i.-논문을-분석-가능한-명세로-바꾸기" class="level1">
+<h1>Part I. 논문을 분석 가능한 명세로 바꾸기</h1>
+<section id="연구질문에서-estimand까지" class="level2">
+<h2 class="anchored" data-anchor-id="연구질문에서-estimand까지">4. 연구질문에서 estimand까지</h2>
+<section id="조작과-조건" class="level3">
+<h3 class="anchored" data-anchor-id="조작과-조건">조작과 조건</h3>
+<ul>
+<li><strong>Response source:</strong> 실제 응답이 인간 또는 AI에 의해 작성됨</li>
+<li><strong>Response label:</strong> 참가자에게 인간 또는 AI가 작성했다고 안내함</li>
+</ul>
+<p>네 개의 조건은 다음과 같습니다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>실제 응답</th>
+<th>제시 라벨</th>
+<th>셀</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Human</td>
+<td>Human</td>
+<td>Human response / Human label</td>
+</tr>
+<tr class="even">
+<td>Human</td>
+<td>AI</td>
+<td>Human response / AI label</td>
+</tr>
+<tr class="odd">
+<td>AI</td>
+<td>Human</td>
+<td>AI response / Human label</td>
+</tr>
+<tr class="even">
+<td>AI</td>
+<td>AI</td>
+<td>AI response / AI label</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="세-가지-서로-다른-질문" class="level3">
+<h3 class="anchored" data-anchor-id="세-가지-서로-다른-질문">세 가지 서로 다른 질문</h3>
+<ol type="1">
+<li><p><strong>Response main effect</strong><br>
+라벨을 평균냈을 때 AI 응답과 인간 응답의 평균 차이는 얼마인가?</p></li>
+<li><p><strong>Label main effect</strong><br>
+실제 응답 출처를 평균냈을 때 AI 라벨과 인간 라벨의 평균 차이는 얼마인가?</p></li>
+<li><p><strong>Interaction</strong><br>
+AI–인간 응답의 차이가 라벨에 따라 달라지는가?</p></li>
+</ol>
+<p>상호작용은 차이의 차이입니다.</p>
+<p><span class="math display">\[
+\big(\bar Y_{AI\ response,AI\ label}-\bar Y_{Human\ response,AI\ label}\big)
+-
+\big(\bar Y_{AI\ response,Human\ label}-\bar Y_{Human\ response,Human\ label}\big)
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>주효과와 상호작용은 서로 다른 estimand입니다. 상호작용이 포함된 모형에서 회귀계수의 주효과는 factor의 <strong>기준 수준에서의 조건부 효과</strong>이고, marginal main effect와 자동으로 같지 않습니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="원자료-불러오기와-구조-감사" class="level2">
+<h2 class="anchored" data-anchor-id="원자료-불러오기와-구조-감사">5. 원자료 불러오기와 구조 감사</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/Being Heard by AI OSF.csv"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 455
+Columns: 117
+$ id                    &lt;chr&gt; "614ea93d581d6f4281e9d232", "5dd5378596afdf4eb31…
+$ happiness_d           &lt;dbl&gt; 2, 4, 4, 2, 2, 1, 2, 2, 1, 3, 2, 4, 1, 1, 2, 1, …
+$ sadness_d             &lt;dbl&gt; 7, 6, 4, 4, 6, 7, 6, 1, 4, 5, 4, 5, 4, 6, 7, 1, …
+$ fear_d                &lt;dbl&gt; 5, 5, 1, 4, 1, 7, 5, 4, 6, 2, 5, 6, 4, 5, 3, 5, …
+$ anger_d               &lt;dbl&gt; 5, 5, 1, 3, 5, 7, 1, 1, 2, 1, 5, 1, 1, 5, 5, 6, …
+$ surprise_d            &lt;dbl&gt; 4, 1, 1, 2, 4, 7, 2, 1, 1, 1, 1, 2, 1, 6, 2, 2, …
+$ disgust_d             &lt;dbl&gt; 3, 1, 1, 2, 4, 7, 1, 1, 3, 1, 5, 1, 1, 7, 1, 6, …
+$ age_d                 &lt;dbl&gt; 38, 44, 37, 25, 33, 52, 48, 40, 36, 56, 36, 41, …
+$ gender_d              &lt;chr&gt; "Female", "Female", "Make", "Male", "female", "F…
+$ edu_d                 &lt;dbl&gt; 3, 5, 3, 5, 4, 3, 2, 5, 3, 2, 3, 5, 5, 5, 2, 3, …
+$ race_d                &lt;dbl&gt; 3, 3, NA, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 4, 3,…
+$ race_d_5_TEXT         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ employment_d          &lt;dbl&gt; 9, 12, 9, 9, 9, 14, 9, 9, 16, 9, 9, 9, 9, 10, 13…
+$ political_d           &lt;dbl&gt; 2, 1, 3, 4, 6, 2, 6, 6, 2, 1, 5, 3, 5, 3, 5, 2, …
+$ class_d               &lt;dbl&gt; 2, 2, 2, 3, 2, 1, 3, 3, 2, 3, 1, 2, 2, 2, 1, 2, …
+$ ladder_d              &lt;dbl&gt; 4, 4, 5, 6, 4, 2, 5, 5, 4, 6, 1, 4, 4, 3, 5, 4, …
+$ AI.response           &lt;chr&gt; "That sounds like a very difficult situation to …
+$ happiness_ai          &lt;dbl&gt; 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, …
+$ sadness_ai            &lt;dbl&gt; 6, 6, 4, 5, 7, 7, 6, 5, 5, 6, 4, 5, 7, 6, 5, 3, …
+$ fear_ai               &lt;dbl&gt; 5, 7, 3, 6, 5, 7, 6, 6, 4, 5, 5, 6, 6, 5, 3, 4, …
+$ anger_ai              &lt;dbl&gt; 4, 5, 3, 4, 6, 7, 2, 4, 2, 3, 3, 3, 4, 4, 4, 5, …
+$ surprise_ai           &lt;dbl&gt; 2, 4, 2, 3, 2, 6, 3, 2, 1, 2, 2, 1, 2, 2, 1, 2, …
+$ disgust_ai            &lt;dbl&gt; 3, 2, 2, 2, 4, 7, 1, 3, 1, 2, 2, 2, 3, 3, 2, 4, …
+$ Human.response        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, "I am sorry for the …
+$ happiness_r           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 3, NA, 3, 2, 4, NA, …
+$ sadness_r             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 4, NA, 4, 5, 5, NA, …
+$ fear_r                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 6, NA, 5, 7, 6, NA, …
+$ anger_r               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 1, NA, 2, 4, 2, NA, …
+$ surprise_r            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 1, NA, 1, 3, 1, NA, …
+$ disgust_r             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 1, NA, 1, 4, 1, NA, …
+$ understood            &lt;dbl&gt; 6, 7, 5, 6, 7, 7, 6, 7, 6, 7, 3, 5, 3, 7, 6, 7, …
+$ validated             &lt;dbl&gt; 5, 7, 4, 6, 7, 7, 4, 7, 6, 7, 5, 5, 3, 6, 5, 7, …
+$ affirmed              &lt;dbl&gt; 5, 7, 4, 5, 7, 7, 4, 7, 6, 7, 5, 5, 3, 7, 6, 7, …
+$ seen                  &lt;dbl&gt; 6, 7, 3, 6, 7, 7, 6, 6, 6, 7, 3, 6, 3, 6, 6, 7, …
+$ accepted              &lt;dbl&gt; 6, 7, 3, 6, 7, 7, 6, 6, 6, 7, 4, 4, 3, 6, 5, 4, …
+$ caredfor              &lt;dbl&gt; 6, 7, 4, 5, 7, 7, 7, 6, 6, 7, 5, 3, 3, 6, 6, 4, …
+$ accuracy1             &lt;dbl&gt; 6, 7, 4, 5, 7, 4, 5, 6, 6, 7, 3, 5, 2, 7, 6, 7, …
+$ accuracy2             &lt;dbl&gt; 6, 7, 5, 5, 7, 4, 7, 7, 6, 7, 2, 5, 2, 7, 6, 7, …
+$ knewmean_p            &lt;dbl&gt; NA, NA, NA, 6, 7, 7, 5, 7, NA, NA, 2, NA, 2, 7, …
+$ knewmean_b            &lt;dbl&gt; 7, 7, 4, NA, NA, NA, NA, NA, 6, 7, NA, 3, NA, NA…
+$ understood_p          &lt;dbl&gt; NA, NA, NA, 5, 7, 7, 6, 7, NA, NA, 3, NA, 2, 7, …
+$ understood_b          &lt;dbl&gt; 7, 7, 4, NA, NA, NA, NA, NA, 6, 7, NA, 5, NA, NA…
+$ close_p               &lt;dbl&gt; NA, NA, NA, 5, 6, 7, 5, 7, NA, NA, 3, NA, 2, 7, …
+$ connect_p             &lt;dbl&gt; NA, NA, NA, 5, 6, 7, 5, 7, NA, NA, 3, NA, 2, 7, …
+$ trust_p               &lt;dbl&gt; NA, NA, NA, 6, 5, 7, 6, 7, NA, NA, 3, NA, 4, 7, …
+$ close_b               &lt;dbl&gt; 6, 7, 3, NA, NA, NA, NA, NA, 6, 7, NA, 4, NA, NA…
+$ connect_b             &lt;dbl&gt; 6, 7, 3, NA, NA, NA, NA, NA, 6, 7, NA, 4, NA, NA…
+$ trust_b               &lt;dbl&gt; 6, 7, 3, NA, NA, NA, NA, NA, 6, 7, NA, 5, NA, NA…
+$ lonely                &lt;dbl&gt; 3, 1, 1, 3, 2, 4, 4, 1, 1, 6, 4, 4, 2, 1, 6, 1, …
+$ connected             &lt;dbl&gt; 3, 7, 4, 5, 6, 6, 3, 7, 6, 2, 4, 4, 3, 6, 2, 4, …
+$ distressed            &lt;dbl&gt; 3, 1, 1, 3, 1, 2, 3, 1, 1, 7, 1, 2, 1, 1, 6, 1, …
+$ excited               &lt;dbl&gt; 3, 4, 1, 2, 4, 3, 2, 3, 1, 1, 4, 2, 5, 5, 1, 4, …
+$ upset                 &lt;dbl&gt; 4, 1, 1, 2, 1, 4, 2, 1, 1, 2, 1, 1, 1, 2, 2, 1, …
+$ guilty                &lt;dbl&gt; 5, 1, 1, 2, 1, 1, 3, 1, 1, 7, 1, 1, 1, 5, 5, 1, …
+$ scared                &lt;dbl&gt; 4, 1, 1, 2, 1, 2, 5, 1, 1, 1, 2, 1, 1, 2, 5, 1, …
+$ enthusiastic          &lt;dbl&gt; 4, 5, 1, 3, 4, 6, 2, 5, 1, 2, 4, 3, 5, 5, 4, 5, …
+$ ashamed               &lt;dbl&gt; 4, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 2, 1, …
+$ nervous               &lt;dbl&gt; 4, 1, 1, 2, 1, 4, 6, 2, 1, 5, 1, 1, 1, 1, 1, 1, …
+$ happy                 &lt;dbl&gt; 2, 5, 4, 4, 5, 4, 2, 5, 6, 4, 6, 4, 5, 6, 4, 7, …
+$ sad                   &lt;dbl&gt; 4, 1, 1, 2, 1, 5, 3, 1, 1, 2, 2, 1, 1, 2, 6, 1, …
+$ surprised             &lt;dbl&gt; 2, 5, 1, 2, 4, 3, 1, 4, 5, 1, 1, 3, 1, 1, 1, 1, …
+$ hopeful               &lt;dbl&gt; 3, 7, 4, 4, 6, 6, 5, 5, 5, 4, 6, 5, 4, 6, 4, 6, …
+$ optimistic            &lt;dbl&gt; 5, 7, 4, 5, 5, 7, 6, 5, 6, 4, 6, 4, 5, 6, 5, 6, …
+$ ambivalent            &lt;dbl&gt; 5, 2, 4, 2, 4, 3, 1, 4, 1, 5, 1, 1, 1, 5, 1, 1, …
+$ uneasy                &lt;dbl&gt; 1, 1, 1, 2, 1, 4, 2, 1, 1, 6, 1, 3, 1, 1, 2, 4, …
+$ unnerved              &lt;dbl&gt; 1, 1, 1, 4, 4, 2, 1, 1, 1, 5, 2, 1, 1, 1, 2, 1, …
+$ creeped               &lt;dbl&gt; 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ uncomfortable         &lt;dbl&gt; 4, 1, 1, 2, 1, 3, 4, 1, 1, 6, 1, 5, 1, 1, 1, 1, …
+$ bothered              &lt;dbl&gt; 6, 1, 1, 2, 1, 4, 4, 1, 1, 5, 1, 2, 1, 5, 1, 1, …
+$ loneliness1           &lt;dbl&gt; 4, 2, 3, 4, 4, 5, 4, 1, 2, 6, 2, 5, 4, 4, 6, 1, …
+$ loneliness2           &lt;dbl&gt; 3, 4, 3, 3, 4, 5, 4, 1, 2, 4, 5, 4, 2, 5, 4, 1, …
+$ loneliness3           &lt;dbl&gt; 3, 4, 3, 4, 4, 5, 4, 1, 2, 5, 5, 5, 2, 4, 5, 1, …
+$ convey.thoughts       &lt;dbl&gt; 6, 5, 4, 2, 5, 5, 6, 3, 5, 7, 4, 5, 1, 5, 2, 5, …
+$ have.exp              &lt;dbl&gt; 5, 6, 3, 2, 6, 5, 4, 4, 5, 6, 3, 5, 3, 5, 5, 4, …
+$ longing.or.hoping     &lt;dbl&gt; 5, 1, 2, 1, 4, 2, 5, 4, 1, 7, 2, 2, 1, 7, 2, 1, …
+$ exp.embrssment        &lt;dbl&gt; 4, 1, 2, 1, 4, 3, 2, 2, 1, 5, 1, 2, 1, 5, 2, 1, …
+$ understand.feeling    &lt;dbl&gt; 6, 1, 3, 3, 6, 5, 6, 4, 5, 7, 3, 5, 1, 5, 5, 6, …
+$ feel.afraid           &lt;dbl&gt; 4, 1, 2, 1, 5, 2, 4, 2, 1, 4, 1, 2, 1, 3, 2, 1, …
+$ feel.hungry           &lt;dbl&gt; 1, 1, 2, 1, 2, 3, 1, 1, 1, 4, 1, 1, 1, 1, 2, 1, …
+$ exp.joy               &lt;dbl&gt; 5, 2, 2, 2, 4, 5, 2, 4, 1, 4, 1, 2, 1, 5, 5, 4, …
+$ remember              &lt;dbl&gt; 7, 7, 5, 5, 6, 5, 4, 5, 6, 7, 6, 7, 7, 6, 6, 6, …
+$ tell.right.from.wrong &lt;dbl&gt; 6, 1, 3, 4, 6, 5, 4, 3, 5, 7, 2, 5, 2, 6, 3, 6, …
+$ exp.pain              &lt;dbl&gt; 2, 1, 2, 1, 4, 2, 1, 2, 1, 6, 2, 2, 1, 2, 5, 1, …
+$ personality           &lt;dbl&gt; 5, 6, 2, 2, 5, 3, 4, 5, 1, 7, 3, 4, 2, 5, 3, 7, …
+$ make.plans            &lt;dbl&gt; 5, 2, 4, 4, 4, 5, 5, 3, 2, 6, 6, 6, 4, 6, 6, 4, …
+$ exp.pleasure          &lt;dbl&gt; 2, 1, 2, 1, 4, 2, 1, 4, 1, 7, 3, 2, 1, 1, 2, 4, …
+$ exp.pride             &lt;dbl&gt; 5, 1, 2, 2, 5, 2, 3, 4, 1, 4, 1, 5, 1, 3, 3, 6, …
+$ exp.anger             &lt;dbl&gt; 2, 1, 2, 1, 4, 3, 3, 2, 1, 1, 1, 3, 1, 6, 2, 1, …
+$ self.restraint        &lt;dbl&gt; 4, 1, 3, 2, 4, 5, 6, 4, 1, 5, 6, 3, 1, 3, 5, 4, …
+$ think                 &lt;dbl&gt; 7, 7, 4, 4, 6, 5, 6, 3, 6, 7, 6, 7, 1, 7, 7, 6, …
+$ familiar_bing         &lt;dbl&gt; 3, 4, 1, 4, 4, 1, 2, 3, 4, 1, 1, 4, 1, 2, 4, 7, …
+$ familiar_gpt          &lt;dbl&gt; 3, 7, 3, 6, 5, 2, 6, 6, 6, 4, 7, 4, 2, 6, 5, 4, …
+$ familiar_bard         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 2, 1, …
+$ often_bing            &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 4, 1, 1, 1, 4, …
+$ often_gpt             &lt;dbl&gt; 3, 6, 3, 3, 2, 1, 4, 5, 2, 2, 7, 4, 1, 6, 3, 1, …
+$ often_bard            &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, …
+$ atti_bing             &lt;dbl&gt; 3, 3, 0, 0, 0, 1, 0, 0, 2, 0, 0, 1, -3, 0, -1, 2…
+$ atti_gpt              &lt;dbl&gt; 2, 3, 0, 1, 0, 1, 0, 2, 2, 1, 3, 2, -3, 2, 0, 2,…
+$ atti_bard             &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, -3, 1, 0, 0,…
+$ loneliness            &lt;dbl&gt; 3.333333, 3.333333, 3.000000, 3.666667, 4.000000…
+$ responseR             &lt;chr&gt; "ai response", "ai response", "ai response", "ai…
+$ labelR                &lt;chr&gt; "ai label", "ai label", "ai label", "human label…
+$ empathicaccuracy.ai   &lt;dbl&gt; 0.8333333, 1.3333333, 1.5000000, 1.0000000, 1.50…
+$ empathicaccuracy.r    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, 1.0000000, NA, 0.833…
+$ experience            &lt;dbl&gt; 3.636364, 2.000000, 2.090909, 1.363636, 4.272727…
+$ agency                &lt;dbl&gt; 5.857143, 3.428571, 3.714286, 3.428571, 5.285714…
+$ feelheard             &lt;dbl&gt; 5.666667, 7.000000, 3.833333, 5.666667, 7.000000…
+$ accuracy              &lt;dbl&gt; 6.0, 7.0, 4.5, 5.0, 7.0, 4.0, 6.0, 6.5, 6.0, 7.0…
+$ understoodme          &lt;dbl&gt; 7.0, 7.0, 4.0, 5.5, 7.0, 7.0, 5.5, 7.0, 6.0, 7.0…
+$ connection            &lt;dbl&gt; 6.000000, 7.000000, 3.000000, 5.333333, 5.666667…
+$ statelonely           &lt;dbl&gt; 3.0, 4.0, 2.5, 4.0, 4.0, 5.0, 3.5, 4.0, 3.5, 4.0…
+$ excitement            &lt;dbl&gt; 3.5, 4.5, 1.0, 2.5, 4.0, 4.5, 2.0, 4.0, 1.0, 1.5…
+$ hope                  &lt;dbl&gt; 4.0, 7.0, 4.0, 4.5, 5.5, 6.5, 5.5, 5.0, 5.5, 4.0…
+$ fear                  &lt;dbl&gt; 4.0, 1.0, 1.0, 2.0, 1.0, 3.0, 5.5, 1.5, 1.0, 3.0…
+$ discomfort            &lt;dbl&gt; 2.000000, 1.000000, 1.000000, 2.666667, 2.000000…
+$ distress              &lt;dbl&gt; 4.25, 1.00, 1.00, 2.25, 1.00, 3.75, 3.00, 1.00, …
+$ shame                 &lt;dbl&gt; 4.5, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 1.0, 4.5…</code></pre>
+</div>
+</div>
+<section id="필요한-변수-존재-여부-확인" class="level3">
+<h3 class="anchored" data-anchor-id="필요한-변수-존재-여부-확인">필요한 변수 존재 여부 확인</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>required_variables <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span>, <span class="st">"responseR"</span>, <span class="st">"labelR"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"feelheard"</span>, <span class="st">"accuracy"</span>, <span class="st">"understoodme"</span>, <span class="st">"connection"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(required_variables, <span class="fu">names</span>(raw))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+</div>
+<p>출력이 <code>character(0)</code>이면 필요한 변수명이 모두 존재한다는 뜻입니다.</p>
+</section>
+<section id="분석용-이름과-factor-순서-만들기" class="level3">
+<h3 class="anchored" data-anchor-id="분석용-이름과-factor-순서-만들기">분석용 이름과 factor 순서 만들기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>analysis_data <span class="ot">&lt;-</span> raw <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_id =</span> <span class="fu">as.character</span>(id),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(<span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(responseR)), <span class="st">"^human"</span>) <span class="sc">~</span> <span class="st">"Human response"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(<span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(responseR)), <span class="st">"^ai"</span>) <span class="sc">~</span> <span class="st">"AI response"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">case_when</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(<span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(labelR)), <span class="st">"^human"</span>) <span class="sc">~</span> <span class="st">"Human label"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(<span class="fu">str_to_lower</span>(<span class="fu">as.character</span>(labelR)), <span class="st">"^ai"</span>) <span class="sc">~</span> <span class="st">"AI label"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">feel_heard =</span> <span class="fu">as.numeric</span>(feelheard),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">response_accuracy =</span> <span class="fu">as.numeric</span>(accuracy),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">understood_me =</span> <span class="fu">as.numeric</span>(understoodme),</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">connection =</span> <span class="fu">as.numeric</span>(connection),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">attitude_ai =</span> <span class="fu">as.numeric</span>(atti_bing),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">perceived_experience =</span> <span class="fu">as.numeric</span>(experience),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">perceived_agency =</span> <span class="fu">as.numeric</span>(agency)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> <span class="fu">factor</span>(</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>      response,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Human response"</span>, <span class="st">"AI response"</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">factor</span>(</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>      label,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Human label"</span>, <span class="st">"AI label"</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(analysis_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 455
+Columns: 10
+$ participant_id       &lt;chr&gt; "614ea93d581d6f4281e9d232", "5dd5378596afdf4eb31c…
+$ response             &lt;fct&gt; AI response, AI response, AI response, AI respons…
+$ label                &lt;fct&gt; AI label, AI label, AI label, Human label, Human …
+$ feel_heard           &lt;dbl&gt; 5.666667, 7.000000, 3.833333, 5.666667, 7.000000,…
+$ response_accuracy    &lt;dbl&gt; 6.0, 7.0, 4.5, 5.0, 7.0, 4.0, 6.0, 6.5, 6.0, 7.0,…
+$ understood_me        &lt;dbl&gt; 7.0, 7.0, 4.0, 5.5, 7.0, 7.0, 5.5, 7.0, 6.0, 7.0,…
+$ connection           &lt;dbl&gt; 6.000000, 7.000000, 3.000000, 5.333333, 5.666667,…
+$ attitude_ai          &lt;dbl&gt; 3, 3, 0, 0, 0, 1, 0, 0, 2, 0, 0, 1, -3, 0, -1, 2,…
+$ perceived_experience &lt;dbl&gt; 3.636364, 2.000000, 2.090909, 1.363636, 4.272727,…
+$ perceived_agency     &lt;dbl&gt; 5.857143, 3.428571, 3.714286, 3.428571, 5.285714,…</code></pre>
+</div>
+</div>
+</section>
+<section id="분석단위와-key-감사" class="level3">
+<h3 class="anchored" data-anchor-id="분석단위와-key-감사">분석단위와 key 감사</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">n</span>(),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">participants =</span> <span class="fu">n_distinct</span>(participant_id),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">duplicated_ids =</span> <span class="fu">sum</span>(<span class="fu">duplicated</span>(participant_id)),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_condition =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(response) <span class="sc">|</span> <span class="fu">is.na</span>(label))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+   rows participants duplicated_ids missing_condition
+  &lt;int&gt;        &lt;int&gt;          &lt;int&gt;             &lt;int&gt;
+1   455          455              0                 0</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>rows == participants</code>가 아니라면 한 참여자에게 여러 행이 있을 수 있습니다. 이 경우 단순한 집단 간 ANOVA보다 반복측정·군집 구조를 반영해야 합니다.</p>
+</div>
+</div>
+</section>
+<section id="셀별-표본-수" class="level3">
+<h3 class="anchored" data-anchor-id="셀별-표본-수">셀별 표본 수</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cell_n <span class="ot">&lt;-</span> analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(response, label, <span class="at">name =</span> <span class="st">"n"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(response, label, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cell_n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  response       label           n
+  &lt;fct&gt;          &lt;fct&gt;       &lt;int&gt;
+1 Human response Human label   111
+2 Human response AI label      110
+3 AI response    Human label   110
+4 AI response    AI label      124</code></pre>
+</div>
+</div>
+</section>
+<section id="결과변수별-결측" class="level3">
+<h3 class="anchored" data-anchor-id="결과변수별-결측">결과변수별 결측</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(feel_heard, response_accuracy, understood_me, connection),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(.x)),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">.names =</span> <span class="st">"missing_{.col}"</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">everything</span>(),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"outcome"</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"missing_n"</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  outcome                   missing_n
+  &lt;chr&gt;                         &lt;int&gt;
+1 missing_feel_heard                0
+2 missing_response_accuracy         0
+3 missing_understood_me             0
+4 missing_connection                0</code></pre>
+</div>
+</div>
+</section>
+<section id="조건별-기술통계" class="level3">
+<h3 class="anchored" data-anchor-id="조건별-기술통계">조건별 기술통계</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>cell_summary <span class="ot">&lt;-</span> analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(feel_heard)),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(feel_heard, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(feel_heard, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(feel_heard, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> <span class="fu">c</span>(response, label)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>cell_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  response       label           n  mean    sd median
+  &lt;fct&gt;          &lt;fct&gt;       &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 AI response    AI label      124  5.41 1.33    5.67
+2 AI response    Human label   110  6.12 0.967   6.33
+3 Human response Human label   111  5.51 1.51    6   
+4 Human response AI label      110  4.82 1.55    5.08</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-ii.-핵심-결과를-하나의-모형으로-재현하기" class="level1">
+<h1>Part II. 핵심 결과를 하나의 모형으로 재현하기</h1>
+<section id="요인모형" class="level2">
+<h2 class="anchored" data-anchor-id="요인모형">6. 2×2 요인모형</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>primary_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  feel_heard <span class="sc">~</span> response <span class="sc">*</span> label,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> analysis_data</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(primary_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = feel_heard ~ response * label, data = analysis_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5105 -0.6182  0.2594  0.8818  2.1803 
+
+Coefficients:
+                                  Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                        5.51051    0.12879  42.786  &lt; 2e-16 ***
+responseAI response                0.60767    0.18255   3.329 0.000944 ***
+labelAI label                     -0.69081    0.18255  -3.784 0.000175 ***
+responseAI response:labelAI label -0.02011    0.25478  -0.079 0.937122    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.357 on 451 degrees of freedom
+Multiple R-squared:  0.1011,    Adjusted R-squared:  0.0951 
+F-statistic:  16.9 on 3 and 451 DF,  p-value: 2.015e-10</code></pre>
+</div>
+</div>
+<section id="회귀계수와-신뢰구간" class="level3">
+<h3 class="anchored" data-anchor-id="회귀계수와-신뢰구간">회귀계수와 신뢰구간</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>primary_terms <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>primary_terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+  term                 estimate std.error statistic   p.value conf.low conf.high
+  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)            5.51       0.129   42.8    7.16e-161    5.26      5.76 
+2 responseAI response    0.608      0.183    3.33   9.44e-  4    0.249     0.966
+3 labelAI label         -0.691      0.183   -3.78   1.75e-  4   -1.05     -0.332
+4 responseAI response…  -0.0201     0.255   -0.0789 9.37e-  1   -0.521     0.481</code></pre>
+</div>
+</div>
+<p>기준 수준은 다음과 같습니다.</p>
+<ul>
+<li><code>response = Human response</code></li>
+<li><code>label = Human label</code></li>
+</ul>
+<p>따라서:</p>
+<ul>
+<li>절편: Human response / Human label 셀의 평균</li>
+<li><code>responseAI response</code>: Human label에서의 AI–Human response 차이</li>
+<li><code>labelAI label</code>: Human response에서의 AI–Human label 차이</li>
+<li>interaction: 두 단순효과 사이의 <strong>차이의 차이</strong></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>계수의 부호와 크기를 먼저 원척도에서 읽습니다. <code>p &lt; .05</code> 여부는 그 뒤의 불확실성 판단입니다.</p>
+</div>
+</div>
+</section>
+<section id="omnibus-test와-효과크기" class="level3">
+<h3 class="anchored" data-anchor-id="omnibus-test와-효과크기">Omnibus test와 효과크기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(primary_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: feel_heard
+                Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+response         1  37.55  37.550 20.3940 8.057e-06 ***
+label            1  55.82  55.815 30.3143 6.178e-08 ***
+response:label   1   0.01   0.011  0.0062    0.9371    
+Residuals      451 830.39   1.841                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>effectsize<span class="sc">::</span><span class="fu">eta_squared</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">partial =</span> <span class="cn">TRUE</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eta-squared는 설명된 분산의 한 표현이지만, 연구자가 실제로 알고 싶은 AI–Human 평균 차이를 대신하지는 않습니다. <strong>원단위 contrast와 신뢰구간을 함께 보고</strong>합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="estimated-marginal-means와-계획된-비교" class="level2">
+<h2 class="anchored" data-anchor-id="estimated-marginal-means와-계획된-비교">7. Estimated marginal means와 계획된 비교</h2>
+<section id="네-셀의-모형-기반-평균" class="level3">
+<h3 class="anchored" data-anchor-id="네-셀의-모형-기반-평균">네 셀의 모형 기반 평균</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>emm_cells <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> response <span class="sc">*</span> label</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>emm_cells</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> response       label       emmean    SE  df lower.CL upper.CL
+ Human response Human label   5.51 0.129 451     5.26     5.76
+ AI response    Human label   6.12 0.129 451     5.86     6.37
+ Human response AI label      4.82 0.129 451     4.57     5.07
+ AI response    AI label      5.41 0.122 451     5.17     5.65
+
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+</section>
+<section id="각-라벨에서-response-source의-단순효과" class="level3">
+<h3 class="anchored" data-anchor-id="각-라벨에서-response-source의-단순효과">각 라벨에서 response source의 단순효과</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>response_simple_effects <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> response <span class="sc">|</span> label</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>(<span class="at">adjust =</span> <span class="st">"holm"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>response_simple_effects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>label = Human label:
+ contrast                     estimate    SE  df t.ratio p.value
+ Human response - AI response   -0.608 0.183 451  -3.329  0.0009
+
+label = AI label:
+ contrast                     estimate    SE  df t.ratio p.value
+ Human response - AI response   -0.588 0.178 451  -3.306  0.0010</code></pre>
+</div>
+</div>
+</section>
+<section id="각-response-source에서-label의-단순효과" class="level3">
+<h3 class="anchored" data-anchor-id="각-response-source에서-label의-단순효과">각 response source에서 label의 단순효과</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>label_simple_effects <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> label <span class="sc">|</span> response</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>(<span class="at">adjust =</span> <span class="st">"holm"</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>label_simple_effects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>response = Human response:
+ contrast               estimate    SE  df t.ratio p.value
+ Human label - AI label    0.691 0.183 451   3.784  0.0002
+
+response = AI response:
+ contrast               estimate    SE  df t.ratio p.value
+ Human label - AI label    0.711 0.178 451   4.000  0.0001</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>모든 가능한 pairwise comparison을 사후적으로 나열하지 않습니다. 논문의 가설과 연결된 <strong>계획된 contrast</strong>를 먼저 정의하고, 나머지는 탐색분석으로 표시합니다.</p>
+</div>
+</div>
+</section>
+<section id="추정된-셀-평균-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="추정된-셀-평균-시각화">추정된 셀 평균 시각화</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>emm_cells_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(emm_cells)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  emm_cells_df,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> response,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> emmean,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> label,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> label,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> label</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> lower.CL, <span class="at">ymax =</span> upper.CL),</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.08</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Estimated mean: feeling heard"</span>,</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"Presented label"</span>,</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">shape =</span> <span class="st">"Presented label"</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-model-estimates" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Human 및 AI response의 추정 평균을 Human label과 AI label 조건별로 연결해 보여주는 상호작용 그래프">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-estimates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10_week_modern_files/figure-html/fig-model-estimates-1.png" class="img-fluid figure-img" alt="Human 및 AI response의 추정 평균을 Human label과 AI label 조건별로 연결해 보여주는 상호작용 그래프" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-estimates-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: 응답 출처와 라벨에 따른 feeling heard의 모형 기반 평균과 95% 신뢰구간
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="원자료도-숨기지-않기" class="level3">
+<h3 class="anchored" data-anchor-id="원자료도-숨기지-않기">원자료도 숨기지 않기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  analysis_data,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> response, <span class="at">y =</span> feel_heard)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.12</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="dv">0</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.20</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.35</span>,</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier.shape =</span> <span class="cn">NA</span>,</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.25</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> label) <span class="sc">+</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Feeling heard"</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-raw-distribution" class="quarto-float quarto-figure quarto-figure-center anchored" alt="응답 출처와 라벨의 네 조건에서 개별 점, 상자그림, 중앙값을 비교한 그래프">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-raw-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10_week_modern_files/figure-html/fig-raw-distribution-1.png" class="img-fluid figure-img" alt="응답 출처와 라벨의 네 조건에서 개별 점, 상자그림, 중앙값을 비교한 그래프" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-raw-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: 네 실험조건의 feeling heard 원자료 분포
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>평균 막대와 표준오차만으로는 분포, 표본 수, 극단값을 볼 수 없습니다. 또한 error bar의 중첩 여부는 상호작용 검정이 아닙니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="모형-진단과-강건성-검토" class="level2">
+<h2 class="anchored" data-anchor-id="모형-진단과-강건성-검토">8. 모형 진단과 강건성 검토</h2>
+<section id="잔차와-영향점" class="level3">
+<h3 class="anchored" data-anchor-id="잔차와-영향점">잔차와 영향점</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>primary_augmented <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">augment</span>(primary_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  primary_augmented,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Fitted value"</span>, <span class="at">y =</span> <span class="st">"Residual"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,
+: pseudoinverse used at 4.8132</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,
+: neighborhood radius 0.69731</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,
+: reciprocal condition number 2.22e-15</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in simpleLoess(y, x, w, span, degree = degree, parametric = parametric,
+: There are other near singularities as well. 0.51469</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-residual-fitted" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-residual-fitted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10_week_modern_files/figure-html/fig-residual-fitted-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-residual-fitted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: 2×2 선형모형의 적합값과 잔차
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(primary_augmented, <span class="fu">aes</span>(<span class="at">sample =</span> .std.resid)) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Theoretical quantile"</span>, <span class="at">y =</span> <span class="st">"Standardized residual"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-residual-qq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-residual-qq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="10_week_modern_files/figure-html/fig-residual-qq-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-residual-qq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: 2×2 선형모형 잔차의 Q-Q plot
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="이분산에-강건한-표준오차" class="level3">
+<h3 class="anchored" data-anchor-id="이분산에-강건한-표준오차">이분산에 강건한 표준오차</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>robust_vcov <span class="ot">&lt;-</span> sandwich<span class="sc">::</span><span class="fu">vcovHC</span>(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"HC3"</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>lmtest<span class="sc">::</span><span class="fu">coeftest</span>(</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">vcov. =</span> robust_vcov</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>robust_emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  primary_model,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> response <span class="sc">*</span> label,</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">vcov. =</span> robust_vcov</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>robust_emm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>HC3 표준오차는 이분산에 대한 추론을 보완할 수 있지만, 잘못된 변수 코딩, 선택 편향, 측정 오류, 누락된 군집 구조를 해결하지는 않습니다.</p>
+</div>
+</div>
+</section>
+<section id="민감도-질문" class="level3">
+<h3 class="anchored" data-anchor-id="민감도-질문">민감도 질문</h3>
+<ul>
+<li>Likert 합성점수를 연속형으로 다루는 결론이 합리적인가?</li>
+<li>특정 셀에서 ceiling effect가 강하지 않은가?</li>
+<li>결측률이 조건별로 다른가?</li>
+<li>제외 기준을 적용하기 전후 결과가 달라지는가?</li>
+<li>고전적 SE와 HC3 SE의 결론이 달라지는가?</li>
+<li>표본을 만든 세 단계의 이탈이 조건과 관련되어 있지 않은가?</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="네-결과변수를-하나의-분석군으로-관리하기" class="level2">
+<h2 class="anchored" data-anchor-id="네-결과변수를-하나의-분석군으로-관리하기">9. 네 결과변수를 하나의 분석군으로 관리하기</h2>
+<p>원 자료에는 여러 관련 결과변수가 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>outcomes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"feel_heard"</span>,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"response_accuracy"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"understood_me"</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"connection"</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="같은-모형을-체계적으로-적합하기" class="level3">
+<h3 class="anchored" data-anchor-id="같은-모형을-체계적으로-적합하기">같은 모형을 체계적으로 적합하기</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fit_factorial_outcome <span class="ot">&lt;-</span> <span class="cf">function</span>(outcome, data) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  model_formula <span class="ot">&lt;-</span> <span class="fu">reformulate</span>(</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">termlabels =</span> <span class="st">"response * label"</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> outcome</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(model_formula, <span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">outcome =</span> outcome, <span class="at">.before =</span> <span class="dv">1</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>outcome_results <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  outcomes,</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>  fit_factorial_outcome,</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> analysis_data</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_holm =</span> <span class="fu">p.adjust</span>(p.value, <span class="at">method =</span> <span class="st">"holm"</span>)</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>outcome_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 9
+   outcome term  estimate std.error statistic p.value conf.low conf.high  p_holm
+   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 feel_h… resp…   0.608      0.183    3.33   9.44e-4    0.249    0.966  7.55e-3
+ 2 feel_h… labe…  -0.691      0.183   -3.78   1.75e-4   -1.05    -0.332  1.75e-3
+ 3 feel_h… resp…  -0.0201     0.255   -0.0789 9.37e-1   -0.521    0.481  1   e+0
+ 4 respon… resp…   0.600      0.187    3.20   1.46e-3    0.232    0.968  1.02e-2
+ 5 respon… labe…  -0.441      0.187   -2.36   1.89e-2   -0.809   -0.0733 9.44e-2
+ 6 respon… resp…   0.197      0.261    0.755  4.51e-1   -0.316    0.711  1   e+0
+ 7 unders… resp…   0.781      0.195    4.00   7.33e-5    0.398    1.16   8.06e-4
+ 8 unders… labe…  -0.692      0.195   -3.55   4.34e-4   -1.08    -0.308  3.90e-3
+ 9 unders… resp…  -0.0718     0.272   -0.264  7.92e-1   -0.607    0.463  1   e+0
+10 connec… resp…   0.626      0.220    2.85   4.59e-3    0.194    1.06   2.76e-2
+11 connec… labe…  -1.00       0.220   -4.57   6.43e-6   -1.44    -0.572  7.72e-5
+12 connec… resp…   0.0926     0.307    0.302  7.63e-1   -0.510    0.696  1   e+0</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>다중검정 보정은 분석이 끝난 뒤 자동으로 붙이는 장식이 아닙니다. 먼저 다음을 정합니다.</p>
+<ol type="1">
+<li>1차 결과변수는 무엇인가?</li>
+<li>어떤 효과들이 하나의 confirmatory family를 구성하는가?</li>
+<li>secondary outcome은 확증적인가, 탐색적인가?</li>
+<li>조정하지 않은 결과를 보고할 경우 그 이유는 무엇인가?</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-iii.-논문의-후속-분석" class="level1">
+<h1>Part III. 논문의 후속 분석</h1>
+<section id="연속형-moderator" class="level2">
+<h2 class="anchored" data-anchor-id="연속형-moderator">10. 연속형 moderator</h2>
+<p>논문은 AI에 대한 태도, agency, experience와 같은 변수가 라벨 효과를 바꾸는지 살펴봅니다.</p>
+<section id="평균중심화와-상호작용" class="level3">
+<h3 class="anchored" data-anchor-id="평균중심화와-상호작용">평균중심화와 상호작용</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>moderation_data <span class="ot">&lt;-</span> analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">attitude_ai_c =</span> attitude_ai <span class="sc">-</span> <span class="fu">mean</span>(attitude_ai, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>moderation_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  feel_heard <span class="sc">~</span> label <span class="sc">*</span> attitude_ai_c,</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> moderation_data</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  moderation_model,</span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+  term                 estimate std.error statistic   p.value conf.low conf.high
+  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)             5.83     0.0848     68.8  3.04e-241  5.66        6.00 
+2 labelAI label          -0.760    0.118      -6.44 3.10e- 10 -0.992      -0.528
+3 attitude_ai_c           0.159    0.0761      2.08 3.77e-  2  0.00907     0.308
+4 labelAI label:attit…    0.412    0.0954      4.32 1.90e-  5  0.225       0.600</code></pre>
+</div>
+</div>
+<ul>
+<li><code>labelAI label</code>: 평균적인 AI 태도에서의 label 차이</li>
+<li><code>attitude_ai_c</code>: Human label 조건에서 태도와 feeling heard의 관계</li>
+<li><code>labelAI label:attitude_ai_c</code>: label 차이가 태도 1단위 증가마다 얼마나 달라지는지</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>평균중심화는 주효과의 기준점을 더 의미 있게 만들지만, 상호작용의 존재 여부나 모형 적합도를 마법처럼 개선하지 않습니다.</p>
+</div>
+</div>
+</section>
+<section id="의미-있는-moderator-값에서-조건부-효과" class="level3">
+<h3 class="anchored" data-anchor-id="의미-있는-moderator-값에서-조건부-효과">의미 있는 moderator 값에서 조건부 효과</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># Representative moderator values: mean ± 1 SD</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>attitude_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  moderation_data<span class="sc">$</span>attitude_ai_c,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>attitude_values <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">low =</span> <span class="sc">-</span>attitude_sd,</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">average =</span> <span class="dv">0</span>,</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">high =</span> attitude_sd</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Conditional label effects</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>moderation_emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  moderation_model,</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="sc">~</span> label <span class="sc">|</span> attitude_ai_c,</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">at =</span> <span class="fu">list</span>(</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">attitude_ai_c =</span> <span class="fu">unname</span>(attitude_values)</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>moderation_emm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>attitude_ai_c = -1.29:
+ label       emmean     SE  df lower.CL upper.CL
+ Human label   5.63 0.1230 451     5.38     5.87
+ AI label      4.34 0.1146 451     4.11     4.56
+
+attitude_ai_c =  0.00:
+ label       emmean     SE  df lower.CL upper.CL
+ Human label   5.83 0.0848 451     5.66     6.00
+ AI label      5.07 0.0822 451     4.91     5.23
+
+attitude_ai_c =  1.29:
+ label       emmean     SE  df lower.CL upper.CL
+ Human label   6.04 0.1359 451     5.77     6.30
+ AI label      5.81 0.1064 451     5.60     6.01
+
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the three conditional contrasts into one adjustment family</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>label_contrasts <span class="ot">&lt;-</span> moderation_emm <span class="sc">|&gt;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>(<span class="at">adjust =</span> <span class="st">"none"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update</span>(<span class="at">by =</span> <span class="cn">NULL</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  label_contrasts,</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">adjust =</span> <span class="st">"holm"</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast               attitude_ai_c estimate    SE  df t.ratio p.value
+ Human label - AI label         -1.29    1.291 0.168 451   7.681  &lt;.0001
+ Human label - AI label          0.00    0.760 0.118 451   6.438  &lt;.0001
+ Human label - AI label          1.29    0.229 0.173 451   1.328  0.1847
+
+P value adjustment: holm method for 3 tests </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Difference between the two attitude slopes</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>moderation_trends <span class="ot">&lt;-</span> <span class="fu">emtrends</span>(</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  moderation_model,</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">specs =</span> <span class="sc">~</span> label,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">var =</span> <span class="st">"attitude_ai_c"</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(moderation_trends)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> contrast               estimate     SE  df t.ratio p.value
+ Human label - AI label   -0.412 0.0954 451  -4.323  &lt;.0001</code></pre>
+</div>
+</div>
+</section>
+<section id="예측값-시각화" class="level3">
+<h3 class="anchored" data-anchor-id="예측값-시각화">예측값 시각화</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>moderation_grid <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">levels</span>(moderation_data<span class="sc">$</span>label),</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">attitude_ai_c =</span> <span class="fu">seq</span>(</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(moderation_data<span class="sc">$</span>attitude_ai_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">max</span>(moderation_data<span class="sc">$</span>attitude_ai_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">length.out =</span> <span class="dv">80</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">predicted =</span> <span class="fu">predict</span>(</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>      moderation_model,</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">newdata =</span> <span class="fu">pick</span>(<span class="fu">everything</span>())</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-moderation</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "AI 태도에 따른 라벨의 조건부 예측값"</span></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>  moderation_grid,</span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> attitude_ai_c,</span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> predicted,</span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> label</span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Attitude toward AI: centered"</span>,</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Predicted feeling heard"</span>,</span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"Presented label"</span></span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="10_week_modern_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Moderator가 처치 이후에 측정되었거나 처치의 영향을 받는다면, 단순한 “개인차 moderator” 해석이 어려울 수 있습니다. 측정시점과 인과적 위치를 확인합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="follow-up-data-결합-감사" class="level2">
+<h2 class="anchored" data-anchor-id="follow-up-data-결합-감사">11. Follow-up data 결합 감사</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>followup_raw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/Followup Study OSF.csv"</span>,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>followup <span class="ot">&lt;-</span> followup_raw <span class="sc">|&gt;</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">participant_id =</span> <span class="fu">as.character</span>(OriginalDiscloserID)</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="결합-전-key-확인" class="level3">
+<h3 class="anchored" data-anchor-id="결합-전-key-확인">결합 전 key 확인</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>followup <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">rows =</span> <span class="fu">n</span>(),</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">participants =</span> <span class="fu">n_distinct</span>(participant_id),</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">duplicate_ids =</span> <span class="fu">sum</span>(<span class="fu">duplicated</span>(participant_id))</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+   rows participants duplicate_ids
+  &lt;int&gt;        &lt;int&gt;         &lt;int&gt;
+1   482          482             0</code></pre>
+</div>
+</div>
+</section>
+<section id="어느-id가-매칭되지-않는가" class="level3">
+<h3 class="anchored" data-anchor-id="어느-id가-매칭되지-않는가">어느 ID가 매칭되지 않는가?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(participant_id) <span class="sc">|&gt;</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    followup <span class="sc">|&gt;</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">distinct</span>(participant_id),</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"participant_id"</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 1
+# ℹ 1 variable: participant_id &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>followup <span class="sc">|&gt;</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(participant_id) <span class="sc">|&gt;</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">distinct</span>(participant_id),</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"participant_id"</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 1
+   participant_id          
+   &lt;chr&gt;                   
+ 1 6108469c7d486eac3c1629d3
+ 2 5dd2e29b2c5c102e6454227a
+ 3 63b73bd5a6179e2e7297d96e
+ 4 6100763b065868c002c1ad96
+ 5 63f654ed5005f1db020f0e53
+ 6 62961bfdbe5f238d3225db72
+ 7 62e7f798dcd4c1db5abbc023
+ 8 62fbc9730a4b70bcc1c942b3
+ 9 63ea5fe3c03c77c607e33990
+10 5b4cb885af5c4e00013aa33b
+# ℹ 17 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="관계를-명시한-결합" class="level3">
+<h3 class="anchored" data-anchor-id="관계를-명시한-결합">관계를 명시한 결합</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>joined_data <span class="ot">&lt;-</span> analysis_data <span class="sc">|&gt;</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    followup,</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"participant_id"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">relationship =</span> <span class="st">"one-to-one"</span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(analysis_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 455</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(joined_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 455</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Join이 실행되었다는 것은 join이 올바르다는 뜻이 아닙니다. 결합 전후 행 수, key 중복, 미매칭, 새 결측값을 확인합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="empathic-accuracy-여러-감정을-여러-t-test로-나누지-않기" class="level2">
+<h2 class="anchored" data-anchor-id="empathic-accuracy-여러-감정을-여러-t-test로-나누지-않기">12. Empathic accuracy: 여러 감정을 여러 t-test로 나누지 않기</h2>
+<p>원 코드에서는 감정별로 AI와 인간 응답의 절대오차를 만들고 여러 paired t-test를 수행합니다. 먼저 자료를 long format으로 바꿔 반복측정 구조를 드러낼 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>emotions <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"happiness"</span>, <span class="st">"sadness"</span>, <span class="st">"fear"</span>,</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"anger"</span>, <span class="st">"surprise"</span>, <span class="st">"disgust"</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>empathic_accuracy <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(</span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>  emotions,</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(emotion) {</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">participant_id =</span> <span class="fu">as.character</span>(raw<span class="sc">$</span>id),</span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">emotion =</span> emotion,</span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">AI =</span> <span class="fu">abs</span>(</span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>        raw[[<span class="fu">paste0</span>(emotion, <span class="st">"_ai"</span>)]] <span class="sc">-</span></span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a>          raw[[<span class="fu">paste0</span>(emotion, <span class="st">"_d"</span>)]]</span>
+<span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb66-16"><a href="#cb66-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">Human =</span> <span class="fu">abs</span>(</span>
+<span id="cb66-17"><a href="#cb66-17" aria-hidden="true" tabindex="-1"></a>        raw[[<span class="fu">paste0</span>(emotion, <span class="st">"_r"</span>)]] <span class="sc">-</span></span>
+<span id="cb66-18"><a href="#cb66-18" aria-hidden="true" tabindex="-1"></a>          raw[[<span class="fu">paste0</span>(emotion, <span class="st">"_d"</span>)]]</span>
+<span id="cb66-19"><a href="#cb66-19" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb66-20"><a href="#cb66-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb66-21"><a href="#cb66-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb66-22"><a href="#cb66-22" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb66-23"><a href="#cb66-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb66-24"><a href="#cb66-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(AI, Human),</span>
+<span id="cb66-25"><a href="#cb66-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"judge"</span>,</span>
+<span id="cb66-26"><a href="#cb66-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"absolute_error"</span></span>
+<span id="cb66-27"><a href="#cb66-27" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>반복측정이므로 참가자별 의존성을 반영한 모형이 더 자연스러울 수 있습니다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>accuracy_model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  absolute_error <span class="sc">~</span> judge <span class="sc">*</span> emotion <span class="sc">+</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">1</span> <span class="sc">|</span> participant_id),</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> empathic_accuracy</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(accuracy_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>여섯 개의 paired t-test와 하나의 반복측정 모형은 서로 다른 질문과 가정을 가집니다. 대안 분석을 했다면 원 논문의 재현 결과와 별도로 보고합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-iv.-결과를-논문의-주장으로-다시-연결하기" class="level1">
+<h1>Part IV. 결과를 논문의 주장으로 다시 연결하기</h1>
+<section id="논문코드결과-대조표" class="level2">
+<h2 class="anchored" data-anchor-id="논문코드결과-대조표">13. 논문–코드–결과 대조표</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>논문 요소</th>
+<th>감사 질문</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Abstract claim</td>
+<td>실제 estimand와 같은 문장인가?</td>
+</tr>
+<tr class="even">
+<td>Methods</td>
+<td>제외기준, 조건코딩, 분석표본이 코드와 같은가?</td>
+</tr>
+<tr class="odd">
+<td>Table 1</td>
+<td>평균·SD·n이 직접 계산한 값과 같은가?</td>
+</tr>
+<tr class="even">
+<td>Figure</td>
+<td>원자료인가, 모형 추정치인가, error bar는 무엇인가?</td>
+</tr>
+<tr class="odd">
+<td>Main effect</td>
+<td>기준수준 계수인가, marginal contrast인가?</td>
+</tr>
+<tr class="even">
+<td>Interaction</td>
+<td>차이의 차이를 직접 검정했는가?</td>
+</tr>
+<tr class="odd">
+<td>Moderator</td>
+<td>사전에 가설화했는가, 탐색분석인가?</td>
+</tr>
+<tr class="even">
+<td>Follow-up</td>
+<td>다른 표본·측정·분석이라는 점이 명시되었는가?</td>
+</tr>
+<tr class="odd">
+<td>Discussion</td>
+<td>통계적 결과보다 인과·일반화·실무적 중요성을 과장하지 않았는가?</td>
+</tr>
+</tbody>
+</table>
+<section id="claim-card" class="level3">
+<h3 class="anchored" data-anchor-id="claim-card">Claim Card</h3>
+<pre class="text"><code>Claim:
+AI-generated responses increased feeling heard.
+
+Design support:
+Response source was manipulated in a between-subjects factorial design.
+
+Estimand:
+Average difference in feeling-heard score between AI and human responses,
+averaged over label conditions.
+
+Estimate:
+[원단위 차이] with [95% CI].
+
+Uncertainty:
+Sampling uncertainty, attrition, measurement error, condition-specific variance.
+
+Boundary:
+The estimate applies to the study task, sample, response-generation procedure,
+and measurement used here. It does not by itself show long-term relational benefit.</code></pre>
+<hr>
+</section>
+</section>
+<section id="discussion을-읽는-법" class="level2">
+<h2 class="anchored" data-anchor-id="discussion을-읽는-법">14. Discussion을 읽는 법</h2>
+<p>Discussion은 결과를 반복하는 장이 아니라 다음을 수행해야 합니다.</p>
+<ol type="1">
+<li><strong>결과를 이론적 질문으로 되돌린다.</strong></li>
+<li>예상과 일치한 결과와 그렇지 않은 결과를 구분한다.</li>
+<li>통계적 유의성과 실질적 중요성을 구분한다.</li>
+<li>설계·측정·표집이 허용하는 주장 범위를 명시한다.</li>
+<li>경쟁 설명과 대안 메커니즘을 제안한다.</li>
+<li>후속연구가 어떤 불확실성을 줄여야 하는지 구체화한다.</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“AI label이 부정적 영향을 주었다”는 실험 내 평균차이에 관한 주장과, “사람은 AI를 신뢰하지 않는다”는 광범위한 심리적 일반화는 같은 문장이 아닙니다.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="activity-replication-audit-lab" class="level1">
+<h1>Activity: Replication Audit Lab</h1>
+<section id="목표" class="level2">
+<h2 class="anchored" data-anchor-id="목표">목표</h2>
+<p>논문의 한 결과를 선택하여 <strong>주장–설계–데이터–모형–그림–해석</strong>을 끝까지 추적합니다.</p>
+</section>
+<section id="mission-1.-claim-reconstruction" class="level2">
+<h2 class="anchored" data-anchor-id="mission-1.-claim-reconstruction">Mission 1. Claim reconstruction</h2>
+<ul>
+<li>논문의 정확한 주장 한 문장</li>
+<li>연구질문 또는 가설</li>
+<li>목표 모집단과 관측된 표본</li>
+<li>조작, 결과변수, 분석단위</li>
+<li>estimand</li>
+</ul>
+</section>
+<section id="mission-2.-data-audit" class="level2">
+<h2 class="anchored" data-anchor-id="mission-2.-data-audit">Mission 2. Data audit</h2>
+<ul>
+<li>원자료 행 수와 고유 참여자 수</li>
+<li>네 조건의 표본 수</li>
+<li>변수 코딩과 factor 기준 수준</li>
+<li>결과변수별 결측</li>
+<li>제외기준을 코드에서 확인할 수 있는지</li>
+</ul>
+</section>
+<section id="mission-3.-reproduction" class="level2">
+<h2 class="anchored" data-anchor-id="mission-3.-reproduction">Mission 3. Reproduction</h2>
+<ul>
+<li>동일한 분석모형</li>
+<li>원단위 추정치와 95% CI</li>
+<li>omnibus result가 필요한 경우 함께 제시</li>
+<li>논문 표·그림과 일치 여부</li>
+</ul>
+</section>
+<section id="mission-4.-one-robustness-check" class="level2">
+<h2 class="anchored" data-anchor-id="mission-4.-one-robustness-check">Mission 4. One robustness check</h2>
+<p>다음 중 하나를 선택합니다.</p>
+<ul>
+<li>HC3 robust SE</li>
+<li>원자료 분포와 영향점 확인</li>
+<li>계획된 contrast 중심 재분석</li>
+<li>다중검정 조정</li>
+<li>결측·제외 기준 민감도</li>
+<li>반복측정 구조를 반영한 대안 모형</li>
+</ul>
+</section>
+<section id="mission-5.-replication-audit-card" class="level2">
+<h2 class="anchored" data-anchor-id="mission-5.-replication-audit-card">Mission 5. Replication Audit Card</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>기록</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Claim</td>
+<td>복기한 논문 문장</td>
+</tr>
+<tr class="even">
+<td>Design</td>
+<td>배정과 측정 절차</td>
+</tr>
+<tr class="odd">
+<td>Estimand</td>
+<td>알고 싶은 평균적 차이</td>
+</tr>
+<tr class="even">
+<td>Analysis sample</td>
+<td>포함·제외와 최종 n</td>
+</tr>
+<tr class="odd">
+<td>Model</td>
+<td>모형식과 주요 가정</td>
+</tr>
+<tr class="even">
+<td>Estimate</td>
+<td>효과크기와 CI</td>
+</tr>
+<tr class="odd">
+<td>Reproduction</td>
+<td>일치·부분 일치·불일치</td>
+</tr>
+<tr class="even">
+<td>Robustness</td>
+<td>대안 분석 결과</td>
+</tr>
+<tr class="odd">
+<td>Boundary</td>
+<td>말할 수 없는 것</td>
+</tr>
+<tr class="even">
+<td>Open question</td>
+<td>추가로 필요한 자료·분석</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mission-6.-ai-collaboration-log" class="level2">
+<h2 class="anchored" data-anchor-id="mission-6.-ai-collaboration-log">Mission 6. AI Collaboration Log</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>목적</td>
+<td>설계 복기, 코드 감사, 결과 대조, claim review</td>
+</tr>
+<tr class="even">
+<td>내가 먼저 한 시도</td>
+<td>AI 사용 전 작성한 canvas·코드</td>
+</tr>
+<tr class="odd">
+<td>프롬프트</td>
+<td>실제 사용한 핵심 요청</td>
+</tr>
+<tr class="even">
+<td>AI 제안</td>
+<td>제안 내용 요약</td>
+</tr>
+<tr class="odd">
+<td>검증</td>
+<td>논문·코드·R 출력으로 확인한 방법</td>
+</tr>
+<tr class="even">
+<td>결정</td>
+<td>채택·수정·기각과 이유</td>
+</tr>
+<tr class="odd">
+<td>최종 변화</td>
+<td>분석이나 주장 범위가 어떻게 달라졌는가</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled" title="제출 기준">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+제출 기준
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AI 대화의 길이가 아니라 <strong>스스로 만든 분석 명세, 재현 가능한 코드, 검증 기록, 주장 범위의 정확성</strong>을 평가합니다.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="이번-주의-핵심-정리" class="level2">
+<h2 class="anchored" data-anchor-id="이번-주의-핵심-정리">이번 주의 핵심 정리</h2>
+<ol type="1">
+<li>논문 복기는 숫자를 다시 만드는 작업이 아니라 <strong>주장을 추적하는 작업</strong>이다.</li>
+<li>reproduction, robustness, extension을 분리한다.</li>
+<li>분석 전에 표본, key, factor 수준, 결측, 셀 크기를 감사한다.</li>
+<li>2×2 설계는 하나의 모형으로 표현하고, 계획된 contrast로 질문에 답한다.</li>
+<li>평균 막대와 p-value보다 원자료, 효과크기, 신뢰구간, 진단을 함께 본다.</li>
+<li>여러 결과·moderator·후속검정은 분석군과 탐색성을 명시한다.</li>
+<li>GenAI는 결론을 대신 쓰는 도구가 아니라 논문과 코드 사이의 불일치를 찾는 reviewer다.</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>License: <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ChangjunChrisLee/">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
