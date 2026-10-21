@@ -1,6 +1,6 @@
 ---
-title: "메커니즘과 조건부 효과"
-subtitle: "Mediation, Moderation, and Conditional Process Models"
+title: "측정모형과 구조방정식"
+subtitle: "Reliability, EFA, CFA, SEM, Invariance, and an Optional Clustering Lab"
 Week: 12
 format: html
 slide-format: revealjs
@@ -10,97 +10,95 @@ slide-format: revealjs
 
 ------------------------------------------------------------------------
 
-## 12주차 학습목표
+## 13주차 학습목표
 
 ::: {.callout-note}
 이번 주 학습을 마치면 다음을 할 수 있어야 합니다.
 
-1. 매개, 조절, 조절된 매개가 답하는 연구질문을 구분한다.
-2. mediation의 total, direct, indirect effect를 회귀식과 경로도로 연결한다.
-3. 간접효과의 유의성 자체와 **인과적 메커니즘 주장**을 구분한다.
-4. bootstrap confidence interval이 해결하는 문제와 해결하지 못하는 문제를 설명한다.
-5. moderation coefficient를 조건부 slope로 해석하고 의미 있는 moderator 값에서 탐색한다.
-6. 평균중심화와 표준화가 해석 기준을 바꾸지만 interaction을 만들어내지는 않음을 이해한다.
-7. 조절된 매개에서 conditional indirect effect와 index of moderated mediation를 구분한다.
-8. cross-sectional, longitudinal, experimental mediation의 증거 수준을 구분한다.
-9. 측정오류와 반복측정 구조가 mediation 결과에 미치는 영향을 점검한다.
-10. GenAI를 경로 생성기가 아니라 **causal-assumption auditor**로 활용한다.
+1. 관찰변수, 잠재변수, 측정오류를 구분한다.
+2. 합성점수 회귀와 latent-variable model의 차이를 설명한다.
+3. Cronbach's alpha를 단일차원성·타당성의 자동 판정기로 사용하지 않는다.
+4. omega/composite reliability와 AVE가 답하는 질문을 구분한다.
+5. EFA와 CFA의 목적, 자료분할, 회전, 추정법을 구분한다.
+6. 연속형 지표와 ordinal 지표에 맞는 SEM 추정법을 선택한다.
+7. 적합도 지수를 절단값 하나로 pass/fail하지 않고, 잔차·계수·모형복잡성과 함께 평가한다.
+8. modification index를 이론 없는 모형개조 도구로 사용하지 않는다.
+9. 측정동일성의 configural, metric, scalar 단계를 설명한다.
+10. 구조경로의 화살표가 설계 없이 인과성을 만들어내지 않음을 이해한다.
+11. k-means clustering의 scaling, k 선택, 초기값, 안정성을 감사한다.
+12. GenAI를 lavaan syntax와 이론모형 사이의 **measurement-model auditor**로 활용한다.
 :::
 
 ### 오늘의 핵심 질문
 
-> **통계적 경로가 관측되었다는 사실만으로 “왜”와 “언제”를 인과적으로 설명할 수 있는가?**
+> **우리가 만든 척도는 같은 구성개념을 안정적으로 측정하며, 그 측정이 집단과 조건을 넘어 비교 가능한가?**
 
 ```{mermaid}
 flowchart LR
-    A["Theory<br>왜·언제 효과가 생기는가?"] --> B["Temporal Order<br>X → M → Y"]
-    B --> C["Identification<br>무작위화·confounding·selection"]
-    C --> D["Statistical Model<br>direct·indirect·interaction"]
-    D --> E["Uncertainty<br>bootstrap·CI"]
-    E --> F["Sensitivity<br>대안 경로·측정오류"]
-    F --> G["Claim<br>통계적·인과적 주장 구분"]
+    A["Construct<br>무엇을 측정하는가?"] --> B["Items<br>어떤 관찰변수인가?"]
+    B --> C["EFA / Theory<br>가능한 구조"]
+    C --> D["CFA<br>측정모형 검증"]
+    D --> E["Reliability & Validity<br>점수 해석 근거"]
+    E --> F["Invariance<br>집단 간 비교 가능성"]
+    F --> G["SEM<br>잠재변수 간 구조경로"]
+    G --> H["Sensitivity<br>대안모형·잔차·복제"]
 ```
 
-------------------------------------------------------------------------
-
-## 1. 세 가지 질문
-
-| 분석 | 질문 | 핵심 수량 |
-|---|---|---|
-| **Mediation** | X의 효과가 어떤 중간과정을 통해 나타나는가? | indirect effect |
-| **Moderation** | X와 Y의 관계가 언제·누구에게·어떤 조건에서 달라지는가? | interaction, conditional effect |
-| **Conditional process** | 간접효과 자체가 조건에 따라 달라지는가? | conditional indirect effect, index |
-
 ::: {.callout-important}
-“Mediation = why”는 이론적 질문을 요약한 표현입니다. 통계적 mediation만으로 causal mechanism이 자동으로 입증되는 것은 아닙니다.
+SEM은 복잡한 화살표를 그리는 기술이 아니라 **측정모형과 구조모형을 동시에 명시하고, 그 가정이 데이터와 얼마나 일치하는지 평가하는 체계**입니다.
 :::
 
 ------------------------------------------------------------------------
 
-## 2. GenAI 활용 원칙
+## 1. GenAI 활용 원칙
 
 이번 주의 순서는 다음과 같습니다.
 
-> **Theorize → Draw → Identify → Estimate → Stress-test → State limits**
+> **Define → Diagram → Translate → Fit → Diagnose → Justify**
 
-### 경로를 만들어 달라고 하지 말고 가정을 공격하게 하기
+### lavaan 코드를 대신 생성하게 하기 전에
 
 ```text
-다음 mediation 가설을 검토하라.
+다음은 내가 이론적으로 정의한 측정모형이다.
 
-X: AI 설명 제공 여부, 무작위 배정
-M: 설명 직후 측정한 perceived transparency
-Y: 같은 세션 마지막에 측정한 trust
+Trust =~ trust_1 + trust_2 + trust_3
+Usefulness =~ useful_1 + useful_2 + useful_3
+Continuance =~ continue_1 + continue_2 + continue_3
 
-가설: 설명 제공이 transparency를 높이고, transparency가 trust를 높인다.
+구조가설:
+Trust → Usefulness → Continuance
+Trust → Continuance
 
-다음을 causal-assumption reviewer처럼 질문하라.
-1. X→M, M→Y, X→Y 경로 각각에서 필요한 식별 가정은 무엇인가?
-2. M과 Y 사이의 가능한 미측정 confounder를 제안하라.
-3. 처치 이후 confounder 또는 collider를 통제할 위험이 있는가?
-4. 시간 순서와 측정오류를 어떻게 개선할 수 있는가?
-5. 통계적 indirect effect와 causal mediation claim을 구분한 보고문장을 제안하라.
-완성된 경로를 임의로 추가하지 말고, 필요한 이론적 근거를 질문하라.
+다음을 SEM reviewer처럼 점검하라.
+1. 각 잠재변수의 개념적 정의와 문항 내용이 일치하는지 질문하라.
+2. 식별을 위해 어떤 scale-setting constraint가 필요한지 설명하라.
+3. lavaan syntax가 경로도와 정확히 일치하는지 한 줄씩 대조하라.
+4. ordinal 문항일 때의 estimator와 결측처리 제한을 점검하라.
+5. fit index 절단값만으로 결론내리지 않도록 필요한 잔차·계수·부적절해를 질문하라.
+6. modification index를 보기 전에 이론적으로 허용 가능한 대안만 목록화하라.
+임의의 오차공분산을 추가하지 말라.
 ```
 
-### GenAI 사용 금지 패턴
+### 금지할 사용 방식
 
-- 상관이 높은 변수를 자동으로 mediator로 지정하기
-- 유의한 경로만 남겨 이론을 사후적으로 구성하기
-- cross-sectional 설문에서 causal chain을 확정하기
-- bootstrap CI가 0을 포함하지 않는다는 이유만으로 메커니즘을 “입증”했다고 쓰기
-- modification index 또는 PROCESS model 번호를 이론 대신 사용하기
+- alpha를 높이기 위해 문항을 자동 삭제하기
+- modification index 순서대로 경로를 추가하기
+- 동일 표본에서 EFA와 CFA를 반복하고 “검증”이라고 부르기
+- fit가 좋아질 때까지 모형을 바꾸고 최종 모형만 보고하기
+- 잠재변수 화살표를 causal proof로 해석하기
+- 실제 설문 원자료나 개인정보를 공개형 GenAI에 업로드하기
 
 ------------------------------------------------------------------------
 
-## 3. 준비
+## 2. 준비
 
 ### 한 번만 설치
 
 ```r
 install.packages(c(
-  "tidyverse", "broom", "emmeans",
-  "lavaan", "interactions"
+  "tidyverse", "lavaan", "psych",
+  "semTools", "semPlot", "cluster",
+  "factoextra", "mclust"
 ))
 ```
 
@@ -112,577 +110,661 @@ install.packages(c(
 #| warning: false
 
 library(tidyverse)
-library(broom)
-library(emmeans)
 library(lavaan)
+library(psych)
 
 theme_set(theme_minimal(base_size = 12))
 ```
 
 ------------------------------------------------------------------------
 
-# Part I. Mediation
+# Part I. 측정모형을 먼저 생각하기
 
-## 4. HCI mediation 사례
+## 3. 관찰변수와 잠재변수
 
-AI가 답변의 근거를 설명하면 사용자는 시스템을 더 투명하다고 느끼고, 그 결과 신뢰가 높아지는지 살펴봅니다.
+- **Observed variable:** 직접 기록한 문항 응답, 로그, 수행시간
+- **Latent variable:** 여러 관찰지표로 추론하는 이론적 구성개념
+- **Measurement error:** 관찰값 중 잠재구성개념으로 설명되지 않는 부분
 
-- **X:** explanation 제공 여부, 무작위 배정
-- **M:** perceived transparency
-- **Y:** trust
-- **C:** 사전 신뢰도, 처치 이전 측정
+예를 들어 `trust_1 = 6`이라는 응답은 신뢰 그 자체가 아닙니다.
 
-```{r}
-#| label: simulate-mediation
+$$
+X_j=\lambda_j\eta+\epsilon_j
+$$
 
-set.seed(20261201)
-
-n_mediation <- 420
-
-mediation_data <- tibble(
-  participant_id = sprintf("M%03d", 1:n_mediation),
-  prior_trust = rnorm(n_mediation, 0, 1),
-  explanation_num = rbinom(n_mediation, 1, 0.50)
-) |>
-  mutate(
-    explanation = factor(
-      explanation_num,
-      levels = c(0, 1),
-      labels = c("No explanation", "Explanation")
-    ),
-    transparency =
-      0.65 * explanation_num +
-      0.30 * prior_trust +
-      rnorm(n_mediation, 0, 0.90),
-    trust =
-      0.60 * transparency +
-      0.20 * explanation_num +
-      0.25 * prior_trust +
-      rnorm(n_mediation, 0, 0.95)
-  )
-
-glimpse(mediation_data)
-```
-
-### 설계 감사
-
-```{r}
-mediation_data |>
-  summarise(
-    rows = n(),
-    participants = n_distinct(participant_id),
-    explanation_rate = mean(explanation_num),
-    missing_m = sum(is.na(transparency)),
-    missing_y = sum(is.na(trust))
-  )
-```
-
-------------------------------------------------------------------------
-
-## 5. 경로와 회귀식
+- $X_j$: j번째 문항
+- $\eta$: 잠재구성개념
+- $\lambda_j$: factor loading
+- $\epsilon_j$: 문항 고유분산과 측정오류
 
 ```{mermaid}
 flowchart LR
-    X["X<br>Explanation"] -->|"a"| M["M<br>Transparency"]
-    M -->|"b"| Y["Y<br>Trust"]
-    X -->|"c′"| Y
-    C["C<br>Prior trust"] --> M
-    C --> Y
+    T(("Trust")) --> T1["trust_1"]
+    T --> T2["trust_2"]
+    T --> T3["trust_3"]
+    E1(("e₁")) --> T1
+    E2(("e₂")) --> T2
+    E3(("e₃")) --> T3
 ```
 
-Mediator 모형:
+### 합성점수와 latent score
 
-$$
-M_i=\alpha_M+aX_i+\gamma_M C_i+\varepsilon_{Mi}
-$$
-
-Outcome 모형:
-
-$$
-Y_i=\alpha_Y+c'X_i+bM_i+\gamma_Y C_i+\varepsilon_{Yi}
-$$
-
-선형·가법 모형에서:
-
-$$
-\text{Indirect effect}=ab
-$$
-
-$$
-\text{Total effect}=c'+ab
-$$
-
-::: {.callout-warning}
-$c=c'+ab$라는 단순 분해는 동일한 선형척도, 올바른 함수형태, 필요한 interaction 부재 등의 조건에서 가장 자연스럽습니다. Logistic outcome, nonlinear link, X–M interaction에서는 효과 분해가 더 복잡해집니다.
-:::
+| 접근 | 장점 | 한계 |
+|---|---|---|
+| 문항 평균 | 간단하고 재현하기 쉬움 | 측정오류와 문항별 loading 차이를 직접 모델링하지 않음 |
+| CFA/SEM | loading·오차·잠재상관을 명시 | 더 많은 가정, 식별, 표본정보, 진단 필요 |
 
 ------------------------------------------------------------------------
 
-## 6. 과거의 단계적 유의성 규칙을 넘어서기
+## 4. HCI 척도 데이터 생성
 
-과거에는 다음 경로가 모두 유의해야 mediation이라고 설명하는 경우가 많았습니다.
+세 구성개념을 가정합니다.
 
-1. X → Y total effect
-2. X → M
-3. M → Y controlling X
-4. M을 넣은 뒤 X → Y 감소
-
-현대적 접근에서는 **indirect effect 자체의 추정치와 불확실성**을 직접 평가합니다.
-
-::: {.callout-important}
-Total effect가 유의하지 않아도 indirect effect가 존재할 수 있습니다. 서로 반대 방향의 경로, 낮은 정밀도, heterogeneous effect가 total effect를 약화할 수 있기 때문입니다.
-:::
-
-------------------------------------------------------------------------
-
-## 7. lavaan으로 simple mediation 적합하기
+- **Trust:** 시스템을 믿고 의존할 의향
+- **Usefulness:** 시스템이 과업에 도움이 된다는 평가
+- **Continuance:** 향후 계속 사용할 의도
 
 ```{r}
-mediation_model <- '
-  # mediator model
-  transparency ~ a*explanation_num + g1*prior_trust
+#| label: simulate-measurement-data
 
-  # outcome model
-  trust ~ b*transparency + cp*explanation_num + g2*prior_trust
+set.seed(20261301)
 
-  # defined parameters
+n_sem <- 520
+
+latent_data <- tibble(
+  participant_id = sprintf("S%03d", 1:n_sem),
+  expertise = factor(
+    sample(
+      c("Novice", "Experienced"),
+      n_sem,
+      replace = TRUE
+    )
+  ),
+  trust_latent = rnorm(n_sem)
+) |>
+  mutate(
+    usefulness_latent =
+      0.55 * trust_latent +
+      rnorm(n_sem, 0, sqrt(1 - 0.55^2)),
+    continuance_latent =
+      0.25 * trust_latent +
+      0.55 * usefulness_latent +
+      rnorm(n_sem, 0, 0.70)
+  )
+
+make_indicator <- function(latent, loading) {
+  loading * latent +
+    rnorm(length(latent), 0, sqrt(1 - loading^2))
+}
+
+sem_continuous <- latent_data |>
+  transmute(
+    participant_id,
+    expertise,
+    trust_1 = make_indicator(trust_latent, 0.82),
+    trust_2 = make_indicator(trust_latent, 0.76),
+    trust_3 = make_indicator(trust_latent, 0.70),
+    useful_1 = make_indicator(usefulness_latent, 0.84),
+    useful_2 = make_indicator(usefulness_latent, 0.78),
+    useful_3 = make_indicator(usefulness_latent, 0.72),
+    continue_1 = make_indicator(continuance_latent, 0.86),
+    continue_2 = make_indicator(continuance_latent, 0.79),
+    continue_3 = make_indicator(continuance_latent, 0.73)
+  )
+
+item_names <- c(
+  paste0("trust_", 1:3),
+  paste0("useful_", 1:3),
+  paste0("continue_", 1:3)
+)
+
+glimpse(sem_continuous)
+```
+
+### 5점 ordinal 응답 만들기
+
+```{r}
+to_likert <- function(x) {
+  cut(
+    x,
+    breaks = c(-Inf, -1.0, -0.30, 0.30, 1.0, Inf),
+    labels = 1:5,
+    ordered_result = TRUE
+  )
+}
+
+sem_ordinal <- sem_continuous |>
+  mutate(
+    across(
+      all_of(item_names),
+      to_likert
+    )
+  )
+
+sem_ordinal |>
+  select(all_of(item_names)) |>
+  glimpse()
+```
+
+::: {.callout-note}
+실제 연구에서는 문항이 ordinal이라는 이유만으로 언제나 같은 estimator를 써야 하는 것이 아니라, 응답범주 수, 분포, 표본, 결측, 모형을 함께 고려합니다. 다만 ordinal endogenous indicator를 명시하면 `lavaan`은 WLSMV 계열로 전환합니다.
+:::
+
+------------------------------------------------------------------------
+
+## 5. 탐색용 표본과 확인용 표본 분리
+
+같은 자료에서 EFA로 구조를 찾고 CFA로 같은 구조를 확인하면 검증이 과도하게 낙관적일 수 있습니다.
+
+```{r}
+set.seed(20261302)
+
+discovery_id <- sample(
+  sem_ordinal$participant_id,
+  size = floor(0.50 * nrow(sem_ordinal))
+)
+
+discovery_ordinal <- sem_ordinal |>
+  filter(participant_id %in% discovery_id)
+
+confirmation_ordinal <- sem_ordinal |>
+  filter(!participant_id %in% discovery_id)
+
+confirmation_continuous <- sem_continuous |>
+  filter(!participant_id %in% discovery_id)
+
+c(
+  discovery = nrow(discovery_ordinal),
+  confirmation = nrow(confirmation_ordinal)
+)
+```
+
+::: {.callout-warning}
+표본분할이 불가능한 작은 자료라면 EFA 결과를 탐색적으로 표시하고, 독립 표본·후속연구에서 CFA를 수행하는 것이 더 정직합니다.
+:::
+
+------------------------------------------------------------------------
+
+# Part II. Reliability는 무엇을 말하는가?
+
+## 6. Cronbach's alpha
+
+$$
+\alpha
+=
+\frac{k}{k-1}
+\left(
+1-
+\frac{\sum_{j=1}^{k}s_j^2}{s_T^2}
+\right)
+$$
+
+Alpha는 문항들의 공분산과 문항 수에 기반한 내적 일관성 지표입니다.
+
+### Alpha가 높아도 자동으로 성립하지 않는 것
+
+- 단일차원성
+- 타당성
+- 문항의 비중복성
+- 집단 간 동일한 측정
+- 개인 수준 점수의 정확성
+- 인과적 구성개념
+
+### Alpha의 주요 조건
+
+Alpha를 척도 신뢰도로 해석하려면 문항들이 대체로 같은 구성개념을 측정하고, loading 구조에 관한 조건이 필요합니다. 문항 수가 많아지면 중복문항으로도 alpha가 높아질 수 있습니다.
+
+### 계산
+
+```{r}
+trust_items_numeric <- discovery_ordinal |>
+  transmute(
+    across(
+      starts_with("trust_"),
+      as.numeric
+    )
+  )
+
+trust_alpha <- psych::alpha(
+  trust_items_numeric,
+  check.keys = TRUE
+)
+
+trust_alpha$total
+```
+
+### 문항삭제보다 먼저 할 일
+
+1. 역문항 코딩 오류 확인
+2. 문항 내용과 구성개념 확인
+3. 문항분포와 ceiling/floor 확인
+4. 요인구조와 cross-loading 확인
+5. 하위집단별 다르게 작동하는 문항 확인
+6. 척도 사용 목적과 점수 산출방식 확인
+
+::: {.callout-warning}
+`alpha if item deleted`가 조금 높아진다는 이유만으로 문항을 제거하지 않습니다. 내용타당도와 독립자료에서의 재현성을 함께 봅니다.
+:::
+
+------------------------------------------------------------------------
+
+## 7. Omega와 composite reliability
+
+CFA 이후에는 추정된 loading과 error variance를 이용한 composite reliability를 고려할 수 있습니다.
+
+```{r}
+#| eval: false
+#| code-summary: "CFA 이후 실행할 reliability 함수 예고"
+
+semTools::compRelSEM(cfa_fit)
+semTools::AVE(cfa_fit)
+```
+
+| 지표 | 핵심 질문 |
+|---|---|
+| Alpha | 특정 조건 아래 합성점수의 내적 일관성은 어느 정도인가? |
+| Omega / Composite reliability | 서로 다른 loading과 오차를 반영한 점수 신뢰도는 어느 정도인가? |
+| AVE | 지표분산 중 구성개념이 설명하는 평균 비율은 어느 정도인가? |
+
+::: {.callout-note}
+AVE는 reliability와 같은 개념이 아닙니다. 지표 하나만으로 척도의 타당성을 pass/fail하지 않습니다.
+:::
+
+------------------------------------------------------------------------
+
+# Part III. Exploratory Factor Analysis
+
+## 8. EFA의 목적
+
+EFA는 다음 상황에서 사용합니다.
+
+- 새로운 척도의 초기 구조 탐색
+- 문항들이 몇 개의 요인으로 묶이는지 불확실함
+- cross-loading 가능성을 열어둠
+- 이론모형을 만들기 전 discovery 단계
+
+### 요인 수를 정하는 근거
+
+- 이론과 척도 설계
+- parallel analysis
+- scree plot
+- loading pattern과 해석가능성
+- 각 요인의 지표 수와 안정성
+- 대안 요인수의 민감도
+
+::: {.callout-warning}
+Eigenvalue > 1 규칙 하나만으로 요인 수를 결정하지 않습니다.
+:::
+
+------------------------------------------------------------------------
+
+## 9. Ordinal 문항의 EFA
+
+먼저 polychoric correlation을 계산합니다.
+
+```{r}
+#| eval: false
+#| code-summary: "시간이 걸릴 수 있는 EFA 실습"
+
+ordinal_for_efa <- discovery_ordinal |>
+  select(all_of(item_names)) |>
+  mutate(
+    across(everything(), as.numeric)
+  )
+
+poly_result <- psych::polychoric(ordinal_for_efa)
+poly_cor <- poly_result$rho
+```
+
+### Parallel analysis
+
+```{r}
+#| eval: false
+
+psych::fa.parallel(
+  poly_cor,
+  n.obs = nrow(ordinal_for_efa),
+  fa = "fa",
+  fm = "minres",
+  n.iter = 100
+)
+```
+
+### Oblique rotation을 사용한 EFA
+
+```{r}
+#| eval: false
+
+three_factor_efa <- psych::fa(
+  poly_cor,
+  nfactors = 3,
+  n.obs = nrow(ordinal_for_efa),
+  fm = "minres",
+  rotate = "oblimin"
+)
+
+print(
+  three_factor_efa,
+  cut = 0.30,
+  sort = TRUE
+)
+```
+
+- **Orthogonal rotation:** 요인상관을 0으로 제한
+- **Oblique rotation:** 요인상관을 허용
+
+HCI·심리·사회과학의 구성개념은 상관될 가능성이 높으므로 oblique rotation이 더 현실적인 출발점인 경우가 많습니다.
+
+------------------------------------------------------------------------
+
+# Part IV. Confirmatory Factor Analysis
+
+## 10. CFA 모형 명시
+
+```{r}
+cfa_model <- '
+  trust =~ trust_1 + trust_2 + trust_3
+  usefulness =~ useful_1 + useful_2 + useful_3
+  continuance =~ continue_1 + continue_2 + continue_3
+'
+```
+
+### lavaan syntax
+
+| 기호 | 의미 | 예시 |
+|---|---|---|
+| `=~` | latent variable을 indicators로 측정 | `trust =~ trust_1 + trust_2` |
+| `~` | regression path | `usefulness ~ trust` |
+| `~~` | variance 또는 covariance | `trust ~~ usefulness` |
+| `~ 1` | intercept 또는 mean | `trust_1 ~ 1` |
+| `:=` | 정의된 모수 | `indirect := a*b` |
+
+------------------------------------------------------------------------
+
+## 11. Ordinal CFA: WLSMV
+
+```{r}
+#| label: ordinal-cfa
+
+cfa_fit <- cfa(
+  model = cfa_model,
+  data = confirmation_ordinal,
+  ordered = item_names,
+  estimator = "WLSMV",
+  std.lv = TRUE
+)
+
+summary(
+  cfa_fit,
+  fit.measures = TRUE,
+  standardized = TRUE
+)
+```
+
+::: {.callout-note}
+Ordinal endogenous indicators에 `ordered =`를 지정하면 WLSMV 계열이 사용됩니다. 이 설정에서는 일반적인 ML 기반 FIML 결측처리를 그대로 사용할 수 없습니다.
+:::
+
+------------------------------------------------------------------------
+
+## 12. 연속형 근사: MLR와 FIML
+
+문항을 연속형으로 다루기로 정당화한 경우의 대안입니다.
+
+```{r}
+#| eval: false
+#| code-summary: "선택 실습: continuous indicators"
+
+cfa_fit_mlr <- cfa(
+  model = cfa_model,
+  data = confirmation_continuous,
+  estimator = "MLR",
+  missing = "fiml",
+  std.lv = TRUE
+)
+
+summary(
+  cfa_fit_mlr,
+  fit.measures = TRUE,
+  standardized = TRUE
+)
+```
+
+두 접근은 다른 likelihood·상관구조·결측처리 가정을 사용합니다. 결과가 다르면 어느 쪽이 “더 유의한가”가 아니라 자료와 측정수준에 어느 접근이 더 적합한지 설명합니다.
+
+------------------------------------------------------------------------
+
+## 13. 모형 식별
+
+잠재변수의 척도를 정해야 모형을 추정할 수 있습니다.
+
+주요 방법:
+
+- 첫 번째 loading을 1로 고정하는 marker-variable 방식
+- 잠재변수 분산을 1로 고정하는 fixed-factor 방식 (`std.lv = TRUE`)
+
+### 지표 수에 관한 주의
+
+- 세 개 이상의 좋은 지표는 식별과 진단에 유리한 설계 권고다.
+- 두 지표 factor도 추가 제약 아래 식별될 수 있지만 매우 제한적이고 취약하다.
+- 세 지표가 있다는 이유만으로 내용타당도와 단일차원성이 보장되지 않는다.
+- 지표 수보다 문항 품질, loading, 오차구조, 표본정보가 중요하다.
+
+::: {.callout-warning}
+“잠재변수당 문항 3개”는 보편적 충분조건이 아닙니다. 나쁜 세 문항은 좋은 측정모형이 되지 않습니다.
+:::
+
+------------------------------------------------------------------------
+
+## 14. 적합도는 dashboard이지 신호등 하나가 아니다
+
+```{r}
+fit_summary <- fitMeasures(
+  cfa_fit,
+  c(
+    "chisq", "df", "pvalue",
+    "cfi", "tli",
+    "rmsea", "rmsea.ci.lower", "rmsea.ci.upper",
+    "srmr"
+  )
+)
+
+fit_summary
+```
+
+### 함께 볼 정보
+
+- convergence와 warning
+- improper solution: 음의 오차분산, 비정상적으로 큰 loading·상관
+- factor loading과 CI
+- 표준화 잔차
+- factor correlation
+- CFI/TLI
+- RMSEA와 90% CI
+- SRMR
+- 이론적 단순성과 대안모형
+
+### 절단값을 기계적으로 사용하지 않기
+
+CFI, TLI, RMSEA, SRMR의 관례적 기준은 모형복잡성, 표본크기, loading, 지표 수, 자료분포에 따라 다르게 작동할 수 있습니다.
+
+::: {.callout-important}
+“CFI가 .95를 넘었으므로 모형이 참이다” 또는 “RMSEA가 .08을 넘었으므로 척도가 무효다”라고 쓰지 않습니다. 여러 진단과 이론적 정합성을 함께 보고 판단합니다.
+:::
+
+### Chi-square의 해석
+
+Chi-square는 모형이 모집단 공분산구조를 정확히 재현한다는 exact-fit 가설을 평가합니다.
+
+- 큰 표본에서는 작은 차이도 검출할 수 있음
+- 작은 표본에서는 큰 misspecification도 놓칠 수 있음
+- `p > .05`는 모형이 참일 확률이 높다는 뜻이 아님
+
+------------------------------------------------------------------------
+
+## 15. Factor loadings와 factor correlations
+
+```{r}
+standardized_loadings <- standardizedSolution(cfa_fit) |>
+  as_tibble() |>
+  filter(op == "=~") |>
+  select(
+    factor = lhs,
+    item = rhs,
+    estimate = est.std,
+    se, z, pvalue,
+    ci.lower, ci.upper
+  )
+
+standardized_loadings
+```
+
+### loading을 해석할 때
+
+- 크기와 방향
+- CI와 표본정밀도
+- 문항 내용
+- cross-loading 가능성
+- 오차분산
+- 집단별 차이
+
+`loading > .70` 같은 문턱값은 참고일 뿐 자동 문항선택 규칙이 아닙니다.
+
+### 잠재상관
+
+```{r}
+latent_covariance <- lavInspect(
+  cfa_fit,
+  "cor.lv"
+)
+
+latent_covariance
+```
+
+상관이 매우 높으면 다음을 질문합니다.
+
+- 이론적으로 구별되는 구성개념인가?
+- 문항 내용이 중복되는가?
+- higher-order factor가 필요한가?
+- 두 factor 모형과 한 factor 모형 중 어느 것이 더 타당한가?
+
+------------------------------------------------------------------------
+
+## 16. Composite reliability와 AVE
+
+```{r}
+#| eval: false
+#| code-summary: "선택 실습: semTools"
+
+semTools::compRelSEM(cfa_fit)
+semTools::AVE(cfa_fit)
+```
+
+보고할 때는 다음을 함께 제시합니다.
+
+- 사용한 점수모형과 estimator
+- standardized loading
+- composite reliability
+- AVE
+- latent correlations
+- 척도의 내용적 근거
+
+::: {.callout-warning}
+AVE의 제곱근과 요인상관을 비교하는 단일 규칙만으로 discriminant validity를 확정하지 않습니다. competing CFA model과 문항내용을 함께 검토합니다.
+:::
+
+------------------------------------------------------------------------
+
+## 17. Residual과 modification index
+
+```{r}
+#| eval: false
+#| code-summary: "선택 실습: 잔차와 수정지수"
+
+lavResiduals(cfa_fit, type = "cor")
+
+modindices(
+  cfa_fit,
+  sort. = TRUE,
+  maximum.number = 15
+)
+```
+
+### Modification index를 보기 전에
+
+1. 이론적으로 가능한 cross-loading을 사전에 적는다.
+2. 방법효과, 역문항, 유사한 표현을 확인한다.
+3. 오차공분산을 허용할 실질적 이유가 있는지 확인한다.
+4. 수정모형을 독립자료에서 검증할 계획을 세운다.
+
+::: {.callout-danger}
+가장 큰 modification index부터 오차공분산을 추가하면 표본특이적 overfitting이 발생합니다. 최종 모형만 보고하면 탐색과 확증의 경계도 사라집니다.
+:::
+
+------------------------------------------------------------------------
+
+# Part V. Structural Equation Model
+
+## 18. 측정모형과 구조모형 결합
+
+이론가설:
+
+1. Trust가 Usefulness를 높인다.
+2. Usefulness가 Continuance를 높인다.
+3. Trust는 Continuance에 직접효과도 가진다.
+
+```{mermaid}
+flowchart LR
+    T(("Trust")) -->|"a"| U(("Usefulness"))
+    U -->|"b"| C(("Continuance"))
+    T -->|"c′"| C
+```
+
+### lavaan model
+
+```{r}
+sem_model <- '
+  # measurement model
+  trust =~ trust_1 + trust_2 + trust_3
+  usefulness =~ useful_1 + useful_2 + useful_3
+  continuance =~ continue_1 + continue_2 + continue_3
+
+  # structural model
+  usefulness ~ a*trust
+  continuance ~ b*usefulness + cp*trust
+
+  # indirect and total effects
   indirect := a*b
-  direct := cp
   total := cp + (a*b)
 '
 ```
 
 ```{r}
-#| label: fit-mediation
+#| label: fit-sem
 
-mediation_fit <- sem(
-  mediation_model,
-  data = mediation_data,
-  se = "bootstrap",
-  bootstrap = 5000
+sem_fit <- sem(
+  model = sem_model,
+  data = confirmation_ordinal,
+  ordered = item_names,
+  estimator = "WLSMV",
+  std.lv = TRUE
 )
 
 summary(
-  mediation_fit,
+  sem_fit,
+  fit.measures = TRUE,
   standardized = TRUE,
   rsquare = TRUE
 )
 ```
 
-### 간접·직접·총효과와 bootstrap CI
+### 주요 경로와 defined parameters
 
 ```{r}
-mediation_estimates <- parameterEstimates(
-  mediation_fit,
+sem_parameters <- parameterEstimates(
+  sem_fit,
   standardized = TRUE,
-  ci = TRUE,
-  boot.ci.type = "perc"
-) |>
-  filter(
-    op %in% c("~", ":=")
-  ) |>
-  select(
-    lhs, op, rhs,
-    est, se, ci.lower, ci.upper,
-    std.all, pvalue
-  )
-
-mediation_estimates
-```
-
-### 무엇을 보고할까?
-
-- path a의 추정치와 CI
-- path b의 추정치와 CI
-- direct effect $c'$와 CI
-- indirect effect $ab$와 bootstrap CI
-- total effect와 CI
-- outcome의 원단위와 분석표본
-- 포함한 baseline covariate와 근거
-- causal interpretation을 지지하는 설계와 남은 가정
-
-------------------------------------------------------------------------
-
-## 8. Bootstrap이 하는 일과 하지 않는 일
-
-### Bootstrap이 하는 일
-
-- 원표본에서 복원추출하여 통계량의 표집분포를 근사한다.
-- $ab$처럼 비대칭일 수 있는 통계량의 CI를 구성한다.
-- 정규근사에만 의존하지 않는 불확실성 추정을 제공한다.
-
-### Bootstrap이 하지 않는 일
-
-- X–M 또는 M–Y confounding 제거
-- 잘못된 시간 순서 수정
-- 측정오류 제거
-- 잘못된 함수형태 교정
-- 선택 편향·결측 편향 제거
-- 극단적으로 작은 표본에서 정보를 새로 생성
-- 반복측정 행을 독립적인 참여자로 바꾸기
-
-::: {.callout-warning}
-Bootstrap은 원자료가 대표하는 경험적 분포를 재표집합니다. 원자료 자체가 편향되었거나 분석단위를 잘못 정했다면 그 문제도 함께 재표집합니다.
-:::
-
-### 재표집 단위
-
-- 집단 간 연구: 참여자 단위
-- 반복측정 연구: 참여자의 모든 행을 하나의 cluster로 재표집
-- 팀·학교·가족 자료: 상위 cluster 단위 고려
-- 시계열: 단순 행 bootstrap보다 block 또는 time-aware 방법 고려
-
-------------------------------------------------------------------------
-
-## 9. Mediation의 인과적 가정
-
-통계적 indirect effect를 causal mediation effect로 읽으려면 강한 가정이 필요합니다.
-
-### 핵심 질문
-
-1. X가 무작위화되었는가?
-2. X 이전의 M–Y confounder를 충분히 고려했는가?
-3. X의 영향을 받은 변수가 다시 M과 Y를 confound하지 않는가?
-4. M을 특정 값으로 바꾸는 개입을 일관되게 정의할 수 있는가?
-5. 모든 relevant covariate 조합에서 처치와 mediator 값이 관측될 가능성이 있는가?
-6. 측정시점이 X → M → Y의 순서를 지지하는가?
-7. 결측과 이탈이 경로와 관련되어 있지 않은가?
-
-### 통계적 문장과 인과적 문장
-
-**통계적 문장**
-
-> Explanation condition was associated with higher transparency, and the estimated indirect association through transparency was positive.
-
-**더 강한 인과적 문장**
-
-> Providing an explanation increased trust by increasing perceived transparency.
-
-두 번째 문장은 설계와 식별 가정에 대해 더 많은 근거가 필요합니다.
-
-------------------------------------------------------------------------
-
-## 10. Cross-sectional mediation의 한계
-
-X, M, Y를 한 시점의 설문으로 측정하면 다음 대안이 열려 있습니다.
-
-- Y가 M에 영향을 주는 역방향 경로
-- 공통방법편향
-- 안정적인 개인차가 M과 Y 모두를 설명
-- 같은 문항 내용이 두 척도에 중복
-- 사후적 이론 구성
-
-### 더 강한 설계
-
-| 설계 | 개선점 | 남는 한계 |
-|---|---|---|
-| X 무작위화, M·Y 순차측정 | X 경로 강화 | M–Y confounding |
-| Longitudinal mediation | 시간순서 정보 | time-varying confounding |
-| Mediator manipulation | mechanism 직접 개입 | 조작 타당성 |
-| Sequential randomization | 여러 경로 식별 강화 | 복잡한 설계·일반화 |
-| Within-person intensive data | 개인 내 과정 분석 | 시계열·측정 반응성 |
-
-------------------------------------------------------------------------
-
-# Part II. Moderation
-
-## 11. HCI moderation 사례
-
-프로액티브 AI 지원 강도(X)가 만족도(Y)에 미치는 관계가 AI literacy(W)에 따라 달라지는지 살펴봅니다.
-
-```{r}
-#| label: simulate-moderation
-
-set.seed(20261202)
-
-n_moderation <- 360
-
-moderation_data <- tibble(
-  participant_id = sprintf("W%03d", 1:n_moderation),
-  support_z = rnorm(n_moderation),
-  ai_literacy_z = rnorm(n_moderation)
-) |>
-  mutate(
-    satisfaction =
-      4.2 +
-      0.35 * support_z +
-      0.25 * ai_literacy_z +
-      0.45 * support_z * ai_literacy_z +
-      rnorm(n_moderation, 0, 0.90)
-  )
-
-glimpse(moderation_data)
-```
-
-------------------------------------------------------------------------
-
-## 12. Interaction model
-
-$$
-Y=b_0+b_1X+b_2W+b_3XW+e
-$$
-
-X의 조건부 효과는:
-
-$$
-\frac{\partial E(Y)}{\partial X}=b_1+b_3W
-$$
-
-```{r}
-moderation_model <- lm(
-  satisfaction ~ support_z * ai_literacy_z,
-  data = moderation_data
-)
-
-broom::tidy(
-  moderation_model,
-  conf.int = TRUE
-)
-```
-
-### 계수 해석
-
-- $b_1$: AI literacy가 평균일 때 support intensity의 slope
-- $b_2$: support intensity가 평균일 때 AI literacy의 slope
-- $b_3$: AI literacy가 1단위 높아질 때 support slope가 얼마나 변하는가
-
-::: {.callout-warning}
-Interaction이 유의하면 주효과가 “무의미”해지는 것이 아닙니다. 주효과는 기준점에서의 조건부 효과로 해석합니다.
-:::
-
-------------------------------------------------------------------------
-
-## 13. Simple slopes
-
-의미 있는 moderator 값에서 X의 slope를 추정합니다.
-
-```{r}
-simple_slopes <- emtrends(
-  moderation_model,
-  ~ ai_literacy_z,
-  var = "support_z",
-  at = list(
-    ai_literacy_z = c(-1, 0, 1)
-  )
-)
-
-simple_slopes
-```
-
-- `ai_literacy_z = -1`: 평균보다 1 SD 낮은 사용자
-- `ai_literacy_z = 0`: 평균적인 사용자
-- `ai_literacy_z = 1`: 평균보다 1 SD 높은 사용자
-
-::: {.callout-note}
-±1 SD는 편리한 관례일 뿐입니다. 실제 척도의 임상적·정책적 기준, 분위수, 관측범위를 기준으로 probe하는 것이 더 의미 있을 수 있습니다.
-:::
-
-### Conditional predictions
-
-```{r}
-moderation_grid <- crossing(
-  support_z = seq(-2.5, 2.5, length.out = 100),
-  ai_literacy_z = c(-1, 0, 1)
-) |>
-  mutate(
-    literacy_level = factor(
-      ai_literacy_z,
-      levels = c(-1, 0, 1),
-      labels = c("Low literacy", "Average literacy", "High literacy")
-    )
-  )
-
-moderation_pred <- predict(
-  moderation_model,
-  newdata = moderation_grid,
-  se.fit = TRUE
-)
-
-moderation_grid <- moderation_grid |>
-  mutate(
-    fit = moderation_pred$fit,
-    lower = fit - qt(0.975, df.residual(moderation_model)) *
-      moderation_pred$se.fit,
-    upper = fit + qt(0.975, df.residual(moderation_model)) *
-      moderation_pred$se.fit
-  )
-```
-
-```{r}
-#| label: fig-moderation
-#| fig-cap: "AI literacy 수준별 지원 강도와 만족도의 조건부 관계"
-#| fig-alt: "AI literacy가 높을수록 프로액티브 지원 강도와 만족도의 양의 관계가 강해지는 세 개의 예측선"
-
-ggplot(
-  moderation_grid,
-  aes(
-    x = support_z,
-    y = fit,
-    linetype = literacy_level
-  )
-) +
-  geom_ribbon(
-    aes(ymin = lower, ymax = upper, group = literacy_level),
-    alpha = 0.12,
-    linetype = 0
-  ) +
-  geom_line(linewidth = 0.9) +
-  labs(
-    x = "Proactive support intensity (z)",
-    y = "Predicted satisfaction",
-    linetype = "AI literacy"
-  )
-```
-
-### Johnson–Neyman interval
-
-```{r}
-#| eval: false
-#| code-summary: "선택 실습: Johnson–Neyman 분석"
-
-interactions::johnson_neyman(
-  moderation_model,
-  pred = support_z,
-  modx = ai_literacy_z
-)
-```
-
-::: {.callout-warning}
-Johnson–Neyman 경계도 표본과 모형에 의존하는 추정치입니다. 관측범위 밖의 moderator 값이나 매우 적은 자료가 있는 구간을 해석하지 않습니다.
-:::
-
-------------------------------------------------------------------------
-
-## 14. Centering에 관한 오해
-
-평균중심화:
-
-$$
-X_c=X-\bar X
-$$
-
-### Centering이 하는 일
-
-- intercept의 기준점을 평균으로 옮김
-- interaction 모형의 lower-order term을 평균적인 상대 변수 수준에서 해석하게 함
-- 수치적 크기를 다루기 쉽게 할 수 있음
-
-### Centering이 하지 않는 일
-
-- interaction을 새로 만들거나 제거
-- confounding 제거
-- measurement error 제거
-- 전체적인 predictor 상관구조 해결
-- causal interpretation 제공
-
-------------------------------------------------------------------------
-
-# Part III. Moderated Mediation
-
-## 15. 조건부 간접효과
-
-AI 설명 제공(X)이 transparency(M)를 거쳐 trust(Y)에 미치는 간접효과가 AI literacy(W)에 따라 달라진다고 가정합니다.
-
-```{mermaid}
-flowchart LR
-    X["X<br>Explanation"] -->|"a₁ + a₃W"| M["M<br>Transparency"]
-    M -->|"b"| Y["Y<br>Trust"]
-    X -->|"c′"| Y
-    W["W<br>AI literacy"] -. "moderates X→M" .-> M
-```
-
-Mediator 모형:
-
-$$
-M=a_0+a_1X+a_2W+a_3XW+e_M
-$$
-
-Outcome 모형:
-
-$$
-Y=b_0+bM+c'X+b_WW+e_Y
-$$
-
-조건부 간접효과:
-
-$$
-IE(W)=(a_1+a_3W)b
-$$
-
-Index of moderated mediation:
-
-$$
-Index=a_3b
-$$
-
-------------------------------------------------------------------------
-
-## 16. 조건부 과정 데이터
-
-```{r}
-#| label: simulate-moderated-mediation
-
-set.seed(20261203)
-
-n_conditional <- 480
-
-conditional_data <- tibble(
-  participant_id = sprintf("C%03d", 1:n_conditional),
-  explanation_num = rbinom(n_conditional, 1, 0.50),
-  ai_literacy_z = rnorm(n_conditional)
-) |>
-  mutate(
-    xw = explanation_num * ai_literacy_z,
-    transparency =
-      0.55 * explanation_num +
-      0.20 * ai_literacy_z +
-      0.35 * xw +
-      rnorm(n_conditional, 0, 0.90),
-    trust =
-      0.65 * transparency +
-      0.15 * explanation_num +
-      0.10 * ai_literacy_z +
-      rnorm(n_conditional, 0, 0.95)
-  )
-```
-
-------------------------------------------------------------------------
-
-## 17. lavaan으로 conditional indirect effects 추정하기
-
-W가 표준화되어 있으므로 `-1`, `0`, `1`은 각각 평균보다 1 SD 낮음, 평균, 1 SD 높음을 나타냅니다.
-
-```{r}
-moderated_mediation_model <- '
-  # first-stage moderation
-  transparency ~ a1*explanation_num + a2*ai_literacy_z + a3*xw
-
-  # outcome equation
-  trust ~ b*transparency + cp*explanation_num + bw*ai_literacy_z
-
-  # conditional indirect effects at W = -1, 0, +1
-  indirect_low := (a1 - a3)*b
-  indirect_mean := a1*b
-  indirect_high := (a1 + a3)*b
-
-  # index of moderated mediation
-  index_mm := a3*b
-'
-```
-
-```{r}
-conditional_fit <- sem(
-  moderated_mediation_model,
-  data = conditional_data,
-  se = "bootstrap",
-  bootstrap = 5000
-)
-
-conditional_estimates <- parameterEstimates(
-  conditional_fit,
-  ci = TRUE,
-  boot.ci.type = "perc",
-  standardized = TRUE
+  ci = TRUE
 ) |>
   filter(op %in% c("~", ":=")) |>
   select(
@@ -691,203 +773,504 @@ conditional_estimates <- parameterEstimates(
     std.all, pvalue
   )
 
-conditional_estimates
+sem_parameters
 ```
-
-### 해석 순서
-
-1. X×W interaction이 mediator 모형에서 어떤 방향인가?
-2. path b의 크기와 불확실성은 어떠한가?
-3. 낮음·평균·높음 W에서 indirect effect는 얼마인가?
-4. `index_mm`의 bootstrap CI가 무엇을 말하는가?
-5. W의 관측범위와 자료밀도 안에서만 해석했는가?
-
-::: {.callout-important}
-한 수준의 indirect effect는 유의하고 다른 수준은 유의하지 않다는 사실만으로 두 indirect effect가 서로 다르다고 결론내리지 않습니다. **차이 자체를 나타내는 index of moderated mediation**를 확인합니다.
-:::
-
-------------------------------------------------------------------------
-
-## 18. Conditional indirect effect 시각화
-
-```{r}
-conditional_plot_data <- conditional_estimates |>
-  filter(
-    lhs %in% c(
-      "indirect_low",
-      "indirect_mean",
-      "indirect_high"
-    )
-  ) |>
-  mutate(
-    literacy = factor(
-      lhs,
-      levels = c(
-        "indirect_low",
-        "indirect_mean",
-        "indirect_high"
-      ),
-      labels = c(
-        "Low literacy",
-        "Average literacy",
-        "High literacy"
-      )
-    )
-  )
-```
-
-```{r}
-#| label: fig-conditional-indirect
-#| fig-cap: "AI literacy 수준별 조건부 간접효과와 bootstrap 95% 신뢰구간"
-
-ggplot(
-  conditional_plot_data,
-  aes(x = literacy, y = est)
-) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_pointrange(
-    aes(ymin = ci.lower, ymax = ci.upper)
-  ) +
-  labs(
-    x = NULL,
-    y = "Conditional indirect effect"
-  )
-```
-
-------------------------------------------------------------------------
-
-# Part IV. 측정·설계·자료구조 감사
-
-## 19. Composite score의 측정오류
-
-관찰된 합성점수를 X, M, Y로 사용하는 회귀 기반 mediation은 각 점수가 완벽하게 측정되었다고 암묵적으로 다루기 쉽습니다.
-
-측정오류는 다음을 일으킬 수 있습니다.
-
-- path attenuation 또는 예측하기 어려운 bias
-- mediator와 outcome의 문항중복
-- 집단별 측정비동일성
-- indirect effect의 불안정성
-
-다음 주에는 CFA와 SEM을 이용해 latent construct와 measurement error를 함께 모델링합니다.
-
-------------------------------------------------------------------------
-
-## 20. 반복측정과 다수준 mediation
-
-다음 자료에서는 단일수준 OLS mediation이 적절하지 않을 수 있습니다.
-
-- 같은 사용자의 여러 세션
-- 학생이 수업에 속한 자료
-- 팀원이 팀에 속한 자료
-- 일별 experience sampling
-- 대화 턴이 대화에 속한 자료
-
-이 경우 다음을 구분합니다.
-
-- within-person X, M, Y
-- between-person 평균차이
-- cluster-level intervention
-- 시간 지연과 자기상관
-- random slope
 
 ::: {.callout-warning}
-행 수가 많아도 독립적인 참여자 수가 작다면 유효 정보량은 행 수와 같지 않습니다. Bootstrap 역시 cluster 단위를 보존해야 합니다.
+SEM의 단방향 화살표는 연구자의 모형명세입니다. Cross-sectional covariance만으로 시간순서와 인과방향이 입증되지는 않습니다.
 :::
 
 ------------------------------------------------------------------------
 
-## 21. 흔한 과도한 해석
+## 19. Competing models
 
-| 분석결과 | 과도한 문장 | 더 정확한 문장 |
-|---|---|---|
-| indirect CI excludes 0 | M이 메커니즘임을 증명했다 | 지정된 모형에서 간접효과가 추정되었다 |
-| interaction p < .05 | 모든 하위집단이 서로 다르다 | X slope가 W에 따라 변한다는 증거가 있다 |
-| one slope significant, one not | 두 slope가 서로 유의하게 다르다 | slope 차이를 직접 검정해야 한다 |
-| direct effect non-significant | 완전매개가 입증됐다 | direct estimate가 현재 정밀도에서 0과 구분되지 않았다 |
-| bootstrap CI | confounding이 해결됐다 | 간접효과 표집불확실성을 재표집으로 추정했다 |
-| cross-sectional path | 시간적 인과경로가 확인됐다 | 관측된 공분산이 지정된 경로모형과 일치한다 |
+이론적으로 가능한 대안모형을 비교할 수 있습니다.
+
+- Direct-only model
+- Full mediation model
+- Partial mediation model
+- Reverse-path model
+- One-factor measurement model
+- Higher-order model
+
+::: {.callout-note}
+적합도가 가장 좋은 모형이 곧 참인 이론은 아닙니다. 관측 공분산만으로 구분되지 않는 equivalent model이 존재할 수 있습니다.
+:::
+
+```{r}
+#| eval: false
+
+full_mediation_model <- '
+  trust =~ trust_1 + trust_2 + trust_3
+  usefulness =~ useful_1 + useful_2 + useful_3
+  continuance =~ continue_1 + continue_2 + continue_3
+
+  usefulness ~ a*trust
+  continuance ~ b*usefulness
+
+  indirect := a*b
+'
+
+full_mediation_fit <- sem(
+  full_mediation_model,
+  data = confirmation_ordinal,
+  ordered = item_names,
+  estimator = "WLSMV",
+  std.lv = TRUE
+)
+```
+
+Nested-model comparison도 estimator에 맞는 scaled difference procedure를 사용해야 하며, 이론·계수·잔차·정보기준을 함께 봅니다.
 
 ------------------------------------------------------------------------
 
-# Activity: Mechanism & Conditional Effect Audit
+# Part VI. Measurement Invariance
 
-## Mission 1. 이론적 경로
+## 20. 왜 동일성이 필요한가?
 
-HCI 사례를 하나 선택합니다.
+Novice와 experienced 사용자의 latent mean을 비교하려면 같은 점수가 두 집단에서 같은 의미를 가져야 합니다.
 
-- 설명 제공 → transparency → trust
-- 챗봇 공감표현 → perceived support → worry reduction
-- 아바타 유사성 → identification → continued use
-- 알림 빈도 → cognitive load → disengagement
+| 단계 | 제약 | 허용되는 비교의 예 |
+|---|---|---|
+| Configural | 같은 factor pattern | 구조가 유사한가? |
+| Metric | loading 동일 | 관계·회귀계수 비교 |
+| Scalar | loading + intercept 동일 | latent mean 비교 |
+| Strict | loading + intercept + residual 동일 | 매우 강한 점수 비교 |
 
-다음을 작성합니다.
+Ordinal 문항에서는 intercept 대신 threshold 제약이 핵심이 됩니다.
 
-- X, M, Y, W의 정의
-- 각 변수의 측정시점
-- 어떤 변수에 개입 가능한가?
-- 대안적 역방향 경로
-- 잠재적 confounder
+------------------------------------------------------------------------
 
-## Mission 2. Mediation
+## 21. 연속형 자료로 invariance workflow 보기
 
-- path a, b, c′
-- indirect, direct, total effect
-- bootstrap 95% CI
-- statistical mediation 문장
-- causal mediation을 위해 추가로 필요한 설계
+```{r}
+#| eval: false
+#| code-summary: "선택 실습: multi-group CFA"
 
-## Mission 3. Moderation
+configural_fit <- cfa(
+  cfa_model,
+  data = sem_continuous,
+  group = "expertise",
+  estimator = "MLR",
+  missing = "fiml",
+  std.lv = TRUE
+)
 
-- interaction model
-- 기준점과 centering
-- 의미 있는 W 값에서 conditional effect
-- interaction plot
-- 관측범위 밖 외삽 여부
+metric_fit <- cfa(
+  cfa_model,
+  data = sem_continuous,
+  group = "expertise",
+  group.equal = "loadings",
+  estimator = "MLR",
+  missing = "fiml",
+  std.lv = TRUE
+)
 
-## Mission 4. Conditional process
+scalar_fit <- cfa(
+  cfa_model,
+  data = sem_continuous,
+  group = "expertise",
+  group.equal = c("loadings", "intercepts"),
+  estimator = "MLR",
+  missing = "fiml",
+  std.lv = TRUE
+)
+```
 
-- 어느 경로가 조절되는가?
-- conditional indirect effects
-- index of moderated mediation
-- 대안 모형 또는 sensitivity question
+### Fit dashboard
 
-## Mechanism Claim Card
+```{r}
+#| eval: false
+
+extract_invariance_fit <- function(fit, model_name) {
+  tibble(
+    model = model_name,
+    cfi = fitMeasures(fit, "cfi"),
+    tli = fitMeasures(fit, "tli"),
+    rmsea = fitMeasures(fit, "rmsea"),
+    srmr = fitMeasures(fit, "srmr")
+  )
+}
+
+bind_rows(
+  extract_invariance_fit(configural_fit, "Configural"),
+  extract_invariance_fit(metric_fit, "Metric"),
+  extract_invariance_fit(scalar_fit, "Scalar")
+)
+
+lavTestLRT(
+  configural_fit,
+  metric_fit,
+  scalar_fit
+)
+```
+
+### 해석 원칙
+
+- chi-square difference 하나만 사용하지 않는다.
+- CFI/RMSEA/SRMR 변화와 parameter 차이를 함께 본다.
+- 집단별 표본크기와 문항분포를 확인한다.
+- partial invariance를 사용할 경우 자유롭게 한 제약과 이론적 이유를 공개한다.
+- 동일성이 부족하면 latent mean 차이를 단순 비교하지 않는다.
+
+::: {.callout-warning}
+집단별 alpha가 비슷하다고 measurement invariance가 입증되는 것은 아닙니다.
+:::
+
+------------------------------------------------------------------------
+
+## 22. 표본크기: “SEM은 200명” 규칙을 넘어서기
+
+필요한 정보량은 다음에 따라 달라집니다.
+
+- latent factor 수와 지표 수
+- loading 크기
+- 구조경로 수
+- 지표의 범주 수와 분포
+- 결측률
+- 집단 수
+- 간접효과·interaction의 크기
+- estimator
+- 원하는 CI 폭과 검정력
+
+가장 좋은 방법 중 하나는 예상 모수와 결측·비정규성을 반영한 Monte Carlo simulation입니다.
+
+```{r}
+#| eval: false
+#| code-summary: "개념 예시: 모형별 Monte Carlo 계획"
+
+# 1. plausible population model을 명시한다.
+# 2. 후보 sample size마다 여러 자료를 생성한다.
+# 3. 매 자료에 같은 분석모형을 적합한다.
+# 4. convergence, bias, CI coverage, power를 요약한다.
+# 5. 가장 작은 효과와 가장 어려운 조건을 기준으로 계획한다.
+```
+
+------------------------------------------------------------------------
+
+# Optional Appendix. Clustering을 현대적으로 감사하기
+
+원 자료의 clustering 실습은 유지하되, SEM과 clustering이 서로 다른 질문에 답한다는 점을 분명히 합니다.
+
+- SEM: 이론적으로 명시한 latent structure와 관계 평가
+- Clustering: 관측값의 거리·유사성에 기반한 탐색적 그룹화
+
+::: {.callout-important}
+Cluster는 데이터 안에서 만든 요약이지 자연적으로 존재하는 사람 “유형”의 증거가 아닙니다. 알고리즘, 변수선택, scaling, k에 따라 membership이 달라질 수 있습니다.
+:::
+
+------------------------------------------------------------------------
+
+## 23. K-means 준비
+
+```{r}
+data("USArrests")
+
+crime <- USArrests |>
+  as.data.frame() |>
+  rownames_to_column("state") |>
+  as_tibble()
+
+crime
+```
+
+K-means는 Euclidean distance와 평균을 사용하므로 변수의 단위에 민감합니다.
+
+```{r}
+crime_matrix <- crime |>
+  select(-state) |>
+  scale()
+
+crime_scaled <- as_tibble(
+  crime_matrix,
+  .name_repair = "minimal"
+)
+```
+
+::: {.callout-warning}
+Z-score scaling은 기본 출발점일 뿐입니다. 극단값, 비대칭분포, 변수의 실질적 중요도, mixed data type을 고려해야 합니다.
+:::
+
+------------------------------------------------------------------------
+
+## 24. k 후보 비교
+
+```{r}
+evaluate_k <- function(k, x) {
+  set.seed(1000 + k)
+
+  fit <- kmeans(
+    x,
+    centers = k,
+    nstart = 50,
+    iter.max = 100
+  )
+
+  silhouette_width <- cluster::silhouette(
+    fit$cluster,
+    dist(x)
+  )[, "sil_width"]
+
+  tibble(
+    k = k,
+    total_withinss = fit$tot.withinss,
+    mean_silhouette = mean(silhouette_width)
+  )
+}
+
+k_audit <- map_dfr(
+  2:8,
+  evaluate_k,
+  x = crime_matrix
+)
+
+k_audit
+```
+
+```{r}
+#| label: fig-k-audit
+#| fig-cap: "k에 따른 평균 silhouette width"
+
+ggplot(
+  k_audit,
+  aes(x = k, y = mean_silhouette)
+) +
+  geom_line() +
+  geom_point() +
+  scale_x_continuous(breaks = 2:8) +
+  labs(
+    x = "Number of clusters",
+    y = "Mean silhouette width"
+  )
+```
+
+WSS의 elbow, silhouette, 이론적 해석가능성, 최소 cluster 크기, stability를 함께 봅니다.
+
+------------------------------------------------------------------------
+
+## 25. 선택한 k의 프로파일
+
+아래에서는 수업용으로 `k = 4`를 사용합니다. “정답”이 아니라 분석 선택입니다.
+
+```{r}
+set.seed(20261303)
+
+kmeans_fit <- kmeans(
+  crime_matrix,
+  centers = 4,
+  nstart = 100,
+  iter.max = 100
+)
+
+crime_clustered <- crime |>
+  mutate(
+    cluster = factor(kmeans_fit$cluster)
+  )
+
+crime_clustered |>
+  count(cluster)
+```
+
+### 원단위 profile
+
+```{r}
+cluster_profile <- crime_clustered |>
+  summarise(
+    across(
+      where(is.numeric),
+      mean
+    ),
+    n = n(),
+    .by = cluster
+  )
+
+cluster_profile
+```
+
+### Standardized profile 시각화
+
+```{r}
+crime_clustered_scaled <- bind_cols(
+  crime |>
+    select(state),
+  crime_scaled,
+  cluster = factor(kmeans_fit$cluster)
+)
+
+cluster_profile_long <- crime_clustered_scaled |>
+  pivot_longer(
+    cols = all_of(names(USArrests)),
+    names_to = "variable",
+    values_to = "z_value"
+  )
+```
+
+```{r}
+#| label: fig-cluster-profile
+#| fig-cap: "군집별 표준화 변수분포"
+
+ggplot(
+  cluster_profile_long,
+  aes(x = cluster, y = z_value)
+) +
+  geom_boxplot(outlier.alpha = 0.4) +
+  facet_wrap(~ variable) +
+  labs(
+    x = "Cluster",
+    y = "Standardized value"
+  )
+```
+
+------------------------------------------------------------------------
+
+## 26. 초기값과 안정성
+
+```{r}
+repeat_kmeans <- function(seed, x, k = 4) {
+  set.seed(seed)
+
+  fit <- kmeans(
+    x,
+    centers = k,
+    nstart = 25
+  )
+
+  tibble(
+    seed = seed,
+    total_withinss = fit$tot.withinss,
+    smallest_cluster = min(table(fit$cluster)),
+    largest_cluster = max(table(fit$cluster))
+  )
+}
+
+stability_runs <- map_dfr(
+  1:50,
+  repeat_kmeans,
+  x = crime_matrix,
+  k = 4
+)
+
+stability_runs |>
+  summarise(
+    min_wss = min(total_withinss),
+    median_wss = median(total_withinss),
+    max_wss = max(total_withinss),
+    min_smallest_cluster = min(smallest_cluster)
+  )
+```
+
+Membership 안정성까지 평가하려면 bootstrap 또는 반복 subsampling에서 adjusted Rand index를 비교할 수 있습니다.
+
+```{r}
+#| eval: false
+#| code-summary: "선택 실습: membership agreement"
+
+mclust::adjustedRandIndex(
+  cluster_solution_a,
+  cluster_solution_b
+)
+```
+
+::: {.callout-warning}
+Cluster 1을 “위험형 사용자”처럼 본질화하지 않습니다. “이 변수, scaling, distance, k, 표본에서 유사하게 묶인 관측”이라고 기술합니다.
+:::
+
+------------------------------------------------------------------------
+
+# Activity: Measurement & SEM Audit Lab
+
+## Mission 1. Construct map
+
+세 개의 HCI 구성개념을 선택합니다.
+
+- 이론적 정의
+- 포함되는 내용
+- 포함되지 않는 내용
+- 각 3–5개 지표
+- 응답척도와 측정시점
+
+## Mission 2. Reliability audit
+
+- item distribution
+- reverse coding 확인
+- alpha
+- CFA 이후 composite reliability
+- 문항삭제 전 내용타당도 검토
+
+## Mission 3. EFA 또는 CFA
+
+### EFA를 선택한 경우
+
+- discovery 목적
+- 요인수 근거
+- correlation type
+- extraction method
+- oblique rotation
+- loading·cross-loading·요인해석
+
+### CFA를 선택한 경우
+
+- 사전 모형
+- estimator 선택 근거
+- identification
+- loading과 latent correlation
+- fit dashboard
+- residual과 improper solution
+
+## Mission 4. SEM
+
+- measurement model
+- structural paths
+- direct·indirect effect
+- competing model
+- causal claim에 필요한 추가 설계
+
+## Mission 5. Invariance
+
+- 비교집단
+- configural/metric/scalar 단계
+- fit 변화
+- 어떤 집단비교가 정당화되는지
+
+## Measurement & SEM Model Card
 
 | 항목 | 기록 |
 |---|---|
-| Theory | 왜 이 mediator·moderator인가? |
-| Temporal order | X, M, Y 측정순서 |
-| Identification | 무작위화와 confounding 가정 |
-| Measurement | 척도와 측정오류 |
-| Model | 회귀식 또는 lavaan syntax |
-| Estimate | direct·indirect·conditional effect |
-| Uncertainty | bootstrap CI와 재표집단위 |
-| Sensitivity | 대안 경로·자료처리 |
-| Claim level | 통계적 연관 / causal mechanism |
-| Next study | 더 강한 설계 |
+| Construct | 이론적 정의 |
+| Indicators | 문항과 측정수준 |
+| Sample | 표본과 분석단위 |
+| Estimator | ML/MLR/WLSMV 선택 근거 |
+| Identification | 척도 설정과 제약 |
+| Reliability | alpha·omega/composite reliability |
+| Fit | CFI/TLI/RMSEA CI/SRMR/잔차 |
+| Parameters | loading·경로·CI |
+| Invariance | 집단 비교 가능성 |
+| Sensitivity | 대안모형·수정 전후 |
+| Claim boundary | SEM이 말하지 못하는 것 |
 
 ## AI Collaboration Log
 
 | 항목 | 기록 내용 |
 |---|---|
-| 목적 | 경로 감사, 가정 탐색, 코드 검토, claim review |
-| 내가 먼저 한 모형 | AI 전 경로도와 식 |
-| 프롬프트 | 실제 입력한 요청 |
-| AI가 제안한 위험 | confounder, timing, measurement, selection |
-| 검증 | 문헌·설계·R 출력으로 확인한 방법 |
+| 목적 | 문항 검토, syntax audit, fit review, claim audit |
+| 내가 먼저 만든 모형 | 경로도와 lavaan syntax |
+| 프롬프트 | 실제 입력한 핵심 요청 |
+| AI가 찾은 불일치 | 경로·변수·estimator·해석 |
+| 검증 | 이론, 코드, 출력으로 확인한 방법 |
 | 결정 | 채택·수정·기각과 이유 |
-| 최종 변화 | 경로 또는 주장 수준의 변화 |
+| 최종 변화 | 측정모형 또는 주장 변화 |
 
 ------------------------------------------------------------------------
 
 ## 이번 주의 핵심 정리
 
-1. Mediation은 indirect effect를 추정하지만 causal mechanism은 추가 가정을 요구한다.
-2. Total effect의 유의성은 indirect effect의 필수조건이 아니다.
-3. Bootstrap은 $ab$의 불확실성 추정에 유용하지만 설계 편향을 고치지 않는다.
-4. Moderation은 interaction이며 lower-order coefficient는 기준점에서의 조건부 효과다.
-5. ±1 SD simple slopes보다 이론적으로 의미 있는 값과 관측범위를 우선한다.
-6. 조절된 매개는 conditional indirect effect와 index를 함께 본다.
-7. 측정오류와 반복측정은 경로계수와 표준오차에 직접 영향을 준다.
-8. GenAI는 흥미로운 경로를 만들어내는 도구가 아니라 인과적 가정과 과도한 문장을 공격하는 reviewer다.
+1. SEM은 구조경로 이전에 측정모형에서 시작한다.
+2. Alpha는 단일차원성과 타당성의 자동 증거가 아니다.
+3. EFA는 discovery, CFA는 theory-driven confirmation이며 독립 검증이 중요하다.
+4. Ordinal indicator와 continuous indicator는 estimator·결측처리가 다르다.
+5. Fit indices는 dashboard이며 보편적 절단값 하나로 판정하지 않는다.
+6. Modification index는 이론적 진단 단서이지 자동 모형개조 명령이 아니다.
+7. 집단 평균을 비교하기 전에 measurement invariance를 점검한다.
+8. SEM의 화살표는 설계와 식별 가정 없이 인과성을 보장하지 않는다.
+9. Clustering 결과는 변수선택, scaling, k, 초기값에 의존하므로 안정성과 해석 범위를 감사한다.
+10. GenAI는 fit를 높이는 도구가 아니라 이론모형과 코드·주장의 불일치를 찾는 reviewer다.

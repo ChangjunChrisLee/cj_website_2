@@ -1,80 +1,59 @@
 ---
-title: "회귀분석: 설명, 추론, 예측"
-subtitle: "Linear Models, GLMs, Diagnostics, and Honest Validation"
+title: "메커니즘과 조건부 효과"
+subtitle: "Mediation, Moderation, and Conditional Process Models"
 Week: 11
 format: html
 slide-format: revealjs
-editor:
-  markdown:
-    wrap: 72
 ---
 
 [Weekly content](https://changjunlee.com/teaching/grad_stat/weekly_2/)
 
 ------------------------------------------------------------------------
 
-## 11주차 학습목표
+## 12주차 학습목표
 
-::: callout-note
+::: {.callout-note}
 이번 주 학습을 마치면 다음을 할 수 있어야 합니다.
 
-1.  회귀모형을 **조건부 평균을 설명하는 모형**으로 해석한다.
-2.  설명, 통계적 추론, 인과추론, 예측이 서로 다른 목표임을 구분한다.
-3.  수치형·범주형 predictor, interaction, 비선형 항을 올바르게 해석한다.
-4.  계수, 원단위 예측값, 신뢰구간을 함께 보고한다.
-5.  선형회귀의 가정을 “데이터가 정규분포인가?”라는 단일 질문으로
-    축소하지 않는다.
-6.  잔차, 이분산, 영향점, 함수형태, 군집구조, 공선성을 진단한다.
-7.  confidence interval과 prediction interval을 구분한다.
-8.  binary outcome에는 logistic regression을 적용하고 odds ratio와
-    예측확률을 구분한다.
-9.  학습자료와 평가자료를 분리하고 resampling 안에서 전처리하여
-    leakage를 피한다.
-10. GenAI를 모형 선택기가 아니라 **specification·diagnostic·claim
-    reviewer**로 활용한다.
+1. 매개, 조절, 조절된 매개가 답하는 연구질문을 구분한다.
+2. mediation의 total, direct, indirect effect를 회귀식과 경로도로 연결한다.
+3. 간접효과의 유의성 자체와 **인과적 메커니즘 주장**을 구분한다.
+4. bootstrap confidence interval이 해결하는 문제와 해결하지 못하는 문제를 설명한다.
+5. moderation coefficient를 조건부 slope로 해석하고 의미 있는 moderator 값에서 탐색한다.
+6. 평균중심화와 표준화가 해석 기준을 바꾸지만 interaction을 만들어내지는 않음을 이해한다.
+7. 조절된 매개에서 conditional indirect effect와 index of moderated mediation를 구분한다.
+8. cross-sectional, longitudinal, experimental mediation의 증거 수준을 구분한다.
+9. 측정오류와 반복측정 구조가 mediation 결과에 미치는 영향을 점검한다.
+10. GenAI를 경로 생성기가 아니라 **causal-assumption auditor**로 활용한다.
 :::
 
 ### 오늘의 핵심 질문
 
-> **이 회귀계수는 어떤 조건부 비교를 나타내며, 그 비교를 과학적 주장이나
-> 새로운 사례의 예측으로 확장해도 되는가?**
+> **통계적 경로가 관측되었다는 사실만으로 “왜”와 “언제”를 인과적으로 설명할 수 있는가?**
 
 ```{mermaid}
 flowchart LR
-    A["Goal<br>설명·추론·예측·인과"] --> B["Target<br>Outcome과 estimand"]
-    B --> C["Specification<br>변수·함수형태·상호작용"]
-    C --> D["Fit<br>계수와 예측값"]
-    D --> E["Diagnostics<br>잔차·영향점·의존성"]
-    E --> F["Validation<br>새 자료에서 평가"]
-    F --> G["Claim<br>효과·연관·예측의 범위"]
+    A["Theory<br>왜·언제 효과가 생기는가?"] --> B["Temporal Order<br>X → M → Y"]
+    B --> C["Identification<br>무작위화·confounding·selection"]
+    C --> D["Statistical Model<br>direct·indirect·interaction"]
+    D --> E["Uncertainty<br>bootstrap·CI"]
+    E --> F["Sensitivity<br>대안 경로·측정오류"]
+    F --> G["Claim<br>통계적·인과적 주장 구분"]
 ```
 
 ------------------------------------------------------------------------
 
-## 1. 회귀분석을 시작하기 전에 목적부터 정하기
+## 1. 세 가지 질문
 
-같은 회귀식도 목적에 따라 평가 기준이 달라집니다.
+| 분석 | 질문 | 핵심 수량 |
+|---|---|---|
+| **Mediation** | X의 효과가 어떤 중간과정을 통해 나타나는가? | indirect effect |
+| **Moderation** | X와 Y의 관계가 언제·누구에게·어떤 조건에서 달라지는가? | interaction, conditional effect |
+| **Conditional process** | 간접효과 자체가 조건에 따라 달라지는가? | conditional indirect effect, index |
 
-| 목표 | 핵심 질문 | 중요한 산출물 | 대표적 위험 |
-|------------------|------------------|------------------|------------------|
-| **Description** | 표본 안에서 변수들이 어떻게 함께 변하는가? | 조건부 평균, 그림 | 표본 밖 일반화 |
-| **Statistical inference** | 목표 모집단의 계수는 어느 범위인가? | estimate, SE, CI | 표집·모형 가정 |
-| **Causal inference** | X를 개입해 바꾸면 Y가 얼마나 변하는가? | causal estimand | confounding, selection |
-| **Prediction** | 새로운 사례의 Y를 얼마나 잘 맞히는가? | out-of-sample error | leakage, overfitting |
-
-::: callout-important
-높은 $R^2$는 인과성을 보장하지 않고, 유의한 계수는 좋은 예측을 보장하지
-않으며, 좋은 예측은 이론적 설명을 자동으로 제공하지 않습니다.
+::: {.callout-important}
+“Mediation = why”는 이론적 질문을 요약한 표현입니다. 통계적 mediation만으로 causal mechanism이 자동으로 입증되는 것은 아닙니다.
 :::
-
-### 네 문장을 구분해 보기
-
-1.  Voice interface 사용자는 표본에서 평균적으로 더 빨랐다.
-2.  다른 변수를 통제했을 때 voice coefficient가 음수였다.
-3.  Voice interface로 바꾸면 같은 사용자의 시간이 줄어든다.
-4.  이 모형은 새로운 사용자의 완료시간을 정확히 예측한다.
-
-각 문장은 필요한 설계와 증거가 다릅니다.
 
 ------------------------------------------------------------------------
 
@@ -82,37 +61,35 @@ flowchart LR
 
 이번 주의 순서는 다음과 같습니다.
 
-> **Specify → Predict → Fit → Diagnose → Challenge → Explain**
+> **Theorize → Draw → Identify → Estimate → Stress-test → State limits**
 
-### 모형을 대신 고르게 하지 말고 명세를 비판하게 하기
+### 경로를 만들어 달라고 하지 말고 가정을 공격하게 하기
 
-``` text
-나는 HCI 완료시간을 다음 모형으로 분석하려고 한다.
+```text
+다음 mediation 가설을 검토하라.
 
-completion_time ~ interface * task_difficulty + digital_literacy
+X: AI 설명 제공 여부, 무작위 배정
+M: 설명 직후 측정한 perceived transparency
+Y: 같은 세션 마지막에 측정한 trust
 
-연구설계:
-- interface는 참여자에게 무작위 배정했다.
-- 한 참여자는 한 조건만 경험한다.
-- task_difficulty는 0~1 연속변수다.
-- completion_time은 초 단위 양수값이다.
+가설: 설명 제공이 transparency를 높이고, transparency가 trust를 높인다.
 
-다음을 reviewer처럼 점검하라.
-1. 각 계수가 어떤 기준점에서 해석되는지 질문하라.
-2. 인과효과 해석에 필요한 설계 가정을 구분하라.
-3. 함수형태, 이분산, 영향점, 범위 밖 외삽을 점검할 그래프를 제안하라.
-4. prediction이 목적일 때 추가로 필요한 validation 절차를 제안하라.
-5. 완성 코드를 한꺼번에 쓰지 말고 내가 먼저 결정해야 할 사항을 질문하라.
+다음을 causal-assumption reviewer처럼 질문하라.
+1. X→M, M→Y, X→Y 경로 각각에서 필요한 식별 가정은 무엇인가?
+2. M과 Y 사이의 가능한 미측정 confounder를 제안하라.
+3. 처치 이후 confounder 또는 collider를 통제할 위험이 있는가?
+4. 시간 순서와 측정오류를 어떻게 개선할 수 있는가?
+5. 통계적 indirect effect와 causal mediation claim을 구분한 보고문장을 제안하라.
+완성된 경로를 임의로 추가하지 말고, 필요한 이론적 근거를 질문하라.
 ```
 
-### 안전한 사용
+### GenAI 사용 금지 패턴
 
--   실제 민감자료 대신 변수사전, 합성자료, `glimpse()` 결과를 제공한다.
--   AI가 제안한 변수를 “유의할 것 같아서” 추가하지 않는다.
--   데이터 전체를 본 뒤 test set을 다시 정의하지 않는다.
--   결과를 본 뒤 nonlinear term이나 interaction을 몰래 confirmatory
-    가설로 바꾸지 않는다.
--   AI 코드도 직접 실행하고, 출력과 도움말로 검증한다.
+- 상관이 높은 변수를 자동으로 mediator로 지정하기
+- 유의한 경로만 남겨 이론을 사후적으로 구성하기
+- cross-sectional 설문에서 causal chain을 확정하기
+- bootstrap CI가 0을 포함하지 않는다는 이유만으로 메커니즘을 “입증”했다고 쓰기
+- modification index 또는 PROCESS model 번호를 이론 대신 사용하기
 
 ------------------------------------------------------------------------
 
@@ -120,15 +97,14 @@ completion_time ~ interface * task_difficulty + digital_literacy
 
 ### 한 번만 설치
 
-``` r
-# install.packages(c(
-#   "tidyverse", "broom", "emmeans",
-#   "sandwich", "lmtest", "performance",
-#   "tidymodels", "glmnet"
-# ))
+```r
+install.packages(c(
+  "tidyverse", "broom", "emmeans",
+  "lavaan", "interactions"
+))
 ```
 
-### 이번 문서의 기본 패키지
+### 기본 패키지
 
 ```{r}
 #| label: setup
@@ -138,1147 +114,780 @@ completion_time ~ interface * task_difficulty + digital_literacy
 library(tidyverse)
 library(broom)
 library(emmeans)
+library(lavaan)
 
 theme_set(theme_minimal(base_size = 12))
 ```
 
 ------------------------------------------------------------------------
 
-# Part I. 선형회귀를 조건부 평균 모형으로 이해하기
+# Part I. Mediation
 
-## 4. HCI 예제 데이터 생성
+## 4. HCI mediation 사례
 
-한 참여자가 하나의 인터페이스 조건에서 하나의 과업을 수행한 집단 간
-실험을 가정합니다.
+AI가 답변의 근거를 설명하면 사용자는 시스템을 더 투명하다고 느끼고, 그 결과 신뢰가 높아지는지 살펴봅니다.
+
+- **X:** explanation 제공 여부, 무작위 배정
+- **M:** perceived transparency
+- **Y:** trust
+- **C:** 사전 신뢰도, 처치 이전 측정
 
 ```{r}
-#| label: simulate-hci
+#| label: simulate-mediation
 
-set.seed(202611)
+set.seed(20261201)
 
-n_participants <- 240
+n_mediation <- 420
 
-hci <- tibble(
-  participant_id = sprintf("P%03d", 1:n_participants),
-  interface = factor(
-    sample(
-      c("Text", "Voice"),
-      n_participants,
-      replace = TRUE
-    ),
-    levels = c("Text", "Voice")
-  ),
-  task_difficulty = runif(n_participants, 0, 1),
-  digital_literacy = rnorm(n_participants, 0, 1),
-  prior_ai_use = rbinom(n_participants, 1, 0.55)
+mediation_data <- tibble(
+  participant_id = sprintf("M%03d", 1:n_mediation),
+  prior_trust = rnorm(n_mediation, 0, 1),
+  explanation_num = rbinom(n_mediation, 1, 0.50)
 ) |>
   mutate(
-    voice = as.numeric(interface == "Voice"),
-    completion_time =
-      42 -
-      4.5 * voice -
-      3.0 * digital_literacy +
-      14 * task_difficulty +
-      7 * task_difficulty^2 +
-      5 * voice * task_difficulty +
-      rnorm(n_participants, 0, 6.5),
-    success_probability = plogis(
-      1.1 +
-        0.45 * voice +
-        0.65 * digital_literacy -
-        1.7 * task_difficulty
+    explanation = factor(
+      explanation_num,
+      levels = c(0, 1),
+      labels = c("No explanation", "Explanation")
     ),
-    task_success = rbinom(
-      n_participants,
-      size = 1,
-      prob = success_probability
-    )
-  ) |>
-  select(-voice, -success_probability)
+    transparency =
+      0.65 * explanation_num +
+      0.30 * prior_trust +
+      rnorm(n_mediation, 0, 0.90),
+    trust =
+      0.60 * transparency +
+      0.20 * explanation_num +
+      0.25 * prior_trust +
+      rnorm(n_mediation, 0, 0.95)
+  )
 
-glimpse(hci)
+glimpse(mediation_data)
 ```
 
-### 관측단위와 설계 감사
+### 설계 감사
 
 ```{r}
-hci |>
+mediation_data |>
   summarise(
     rows = n(),
     participants = n_distinct(participant_id),
-    duplicate_ids = sum(duplicated(participant_id)),
-    missing_completion_time = sum(is.na(completion_time))
+    explanation_rate = mean(explanation_num),
+    missing_m = sum(is.na(transparency)),
+    missing_y = sum(is.na(trust))
   )
 ```
-
--   한 행: 한 참여자의 한 과업
--   독립적인 배정단위: 참여자
--   outcome: `completion_time`
--   randomized predictor: `interface`
--   measured predictors: `task_difficulty`, `digital_literacy`,
-    `prior_ai_use`
 
 ------------------------------------------------------------------------
 
-## 5. 단순선형회귀
+## 5. 경로와 회귀식
 
-조건부 평균을 다음처럼 표현합니다.
-
-$$
-E(Y_i\mid X_i)=\beta_0+\beta_1X_i
-$$
-
-관측값은 다음과 같습니다.
-
-$$
-Y_i=\beta_0+\beta_1X_i+\varepsilon_i
-$$
-
-### 과업 난이도와 완료시간
-
-```{r}
-simple_model <- lm(
-  completion_time ~ task_difficulty,
-  data = hci
-)
-
-broom::tidy(
-  simple_model,
-  conf.int = TRUE
-)
+```{mermaid}
+flowchart LR
+    X["X<br>Explanation"] -->|"a"| M["M<br>Transparency"]
+    M -->|"b"| Y["Y<br>Trust"]
+    X -->|"c′"| Y
+    C["C<br>Prior trust"] --> M
+    C --> Y
 ```
 
--   $\beta_0$: `task_difficulty = 0`일 때의 예상 완료시간
--   $\beta_1$: 난이도가 1단위 증가할 때 조건부 평균 완료시간의 변화
+Mediator 모형:
 
-::: callout-warning
-회귀계수는 두 변수가 “얼마나 강하게 관련되는가”라는 추상적 숫자만이
-아닙니다. **단위, 기준점, 비교대상**을 포함한 문장으로 해석해야 합니다.
+$$
+M_i=\alpha_M+aX_i+\gamma_M C_i+\varepsilon_{Mi}
+$$
+
+Outcome 모형:
+
+$$
+Y_i=\alpha_Y+c'X_i+bM_i+\gamma_Y C_i+\varepsilon_{Yi}
+$$
+
+선형·가법 모형에서:
+
+$$
+\text{Indirect effect}=ab
+$$
+
+$$
+\text{Total effect}=c'+ab
+$$
+
+::: {.callout-warning}
+$c=c'+ab$라는 단순 분해는 동일한 선형척도, 올바른 함수형태, 필요한 interaction 부재 등의 조건에서 가장 자연스럽습니다. Logistic outcome, nonlinear link, X–M interaction에서는 효과 분해가 더 복잡해집니다.
 :::
 
-### 데이터와 적합선
+------------------------------------------------------------------------
+
+## 6. 과거의 단계적 유의성 규칙을 넘어서기
+
+과거에는 다음 경로가 모두 유의해야 mediation이라고 설명하는 경우가 많았습니다.
+
+1. X → Y total effect
+2. X → M
+3. M → Y controlling X
+4. M을 넣은 뒤 X → Y 감소
+
+현대적 접근에서는 **indirect effect 자체의 추정치와 불확실성**을 직접 평가합니다.
+
+::: {.callout-important}
+Total effect가 유의하지 않아도 indirect effect가 존재할 수 있습니다. 서로 반대 방향의 경로, 낮은 정밀도, heterogeneous effect가 total effect를 약화할 수 있기 때문입니다.
+:::
+
+------------------------------------------------------------------------
+
+## 7. lavaan으로 simple mediation 적합하기
 
 ```{r}
-#| label: fig-simple-regression
-#| fig-cap: "과업 난이도와 완료시간의 관계 및 선형 적합선"
-#| fig-alt: "과업 난이도가 높을수록 완료시간이 증가하는 산점도와 선형 회귀선"
+mediation_model <- '
+  # mediator model
+  transparency ~ a*explanation_num + g1*prior_trust
 
-ggplot(
-  hci,
-  aes(x = task_difficulty, y = completion_time)
-) +
-  geom_point(alpha = 0.45) +
-  geom_smooth(method = "lm", formula = y ~ x) +
-  labs(
-    x = "Task difficulty",
-    y = "Completion time (seconds)"
-  )
+  # outcome model
+  trust ~ b*transparency + cp*explanation_num + g2*prior_trust
+
+  # defined parameters
+  indirect := a*b
+  direct := cp
+  total := cp + (a*b)
+'
 ```
 
-### 잔차는 무엇인가?
+```{r}
+#| label: fit-mediation
 
-$$
-\hat\varepsilon_i=Y_i-\hat Y_i
-$$
+mediation_fit <- sem(
+  mediation_model,
+  data = mediation_data,
+  se = "bootstrap",
+  bootstrap = 5000
+)
+
+summary(
+  mediation_fit,
+  standardized = TRUE,
+  rsquare = TRUE
+)
+```
+
+### 간접·직접·총효과와 bootstrap CI
 
 ```{r}
-simple_augmented <- broom::augment(simple_model)
-
-simple_augmented |>
-  select(
-    completion_time,
-    task_difficulty,
-    .fitted,
-    .resid
+mediation_estimates <- parameterEstimates(
+  mediation_fit,
+  standardized = TRUE,
+  ci = TRUE,
+  boot.ci.type = "perc"
+) |>
+  filter(
+    op %in% c("~", ":=")
   ) |>
-  slice_head(n = 8)
+  select(
+    lhs, op, rhs,
+    est, se, ci.lower, ci.upper,
+    std.all, pvalue
+  )
+
+mediation_estimates
 ```
+
+### 무엇을 보고할까?
+
+- path a의 추정치와 CI
+- path b의 추정치와 CI
+- direct effect $c'$와 CI
+- indirect effect $ab$와 bootstrap CI
+- total effect와 CI
+- outcome의 원단위와 분석표본
+- 포함한 baseline covariate와 근거
+- causal interpretation을 지지하는 설계와 남은 가정
 
 ------------------------------------------------------------------------
 
-## 6. 기준점을 의미 있게 만들기
+## 8. Bootstrap이 하는 일과 하지 않는 일
 
-`task_difficulty = 0`이 의미 없거나 자료 범위의 끝이라면 intercept가
-해석하기 어려울 수 있습니다.
+### Bootstrap이 하는 일
 
-```{r}
-hci_centered <- hci |>
-  mutate(
-    difficulty_c =
-      task_difficulty - mean(task_difficulty),
-    literacy_c =
-      digital_literacy - mean(digital_literacy)
-  )
-```
+- 원표본에서 복원추출하여 통계량의 표집분포를 근사한다.
+- $ab$처럼 비대칭일 수 있는 통계량의 CI를 구성한다.
+- 정규근사에만 의존하지 않는 불확실성 추정을 제공한다.
 
-```{r}
-centered_model <- lm(
-  completion_time ~ difficulty_c,
-  data = hci_centered
-)
+### Bootstrap이 하지 않는 일
 
-broom::tidy(
-  centered_model,
-  conf.int = TRUE
-)
-```
+- X–M 또는 M–Y confounding 제거
+- 잘못된 시간 순서 수정
+- 측정오류 제거
+- 잘못된 함수형태 교정
+- 선택 편향·결측 편향 제거
+- 극단적으로 작은 표본에서 정보를 새로 생성
+- 반복측정 행을 독립적인 참여자로 바꾸기
 
-이제 intercept는 **평균적인 과업 난이도에서의 예상 완료시간**입니다.
-
-::: callout-note
-중심화는 기준점을 바꾸지만 적합값, 잔차, $R^2$, 단순선형 관계의 실질적
-내용은 바꾸지 않습니다.
+::: {.callout-warning}
+Bootstrap은 원자료가 대표하는 경험적 분포를 재표집합니다. 원자료 자체가 편향되었거나 분석단위를 잘못 정했다면 그 문제도 함께 재표집합니다.
 :::
 
-------------------------------------------------------------------------
+### 재표집 단위
 
-# Part II. 다중회귀와 조건부 해석
-
-## 7. 다중선형회귀
-
-$$
-E(Y\mid X_1,\ldots,X_p)
-=\beta_0+\beta_1X_1+\cdots+\beta_pX_p
-$$
-
-```{r}
-multiple_model <- lm(
-  completion_time ~
-    interface +
-    difficulty_c +
-    literacy_c +
-    prior_ai_use,
-  data = hci_centered
-)
-
-multiple_terms <- broom::tidy(
-  multiple_model,
-  conf.int = TRUE
-)
-
-multiple_terms
-```
-
-### “다른 변수를 통제한 효과”의 정확한 뜻
-
-`interfaceVoice` 계수는 모형에 포함된 다른 predictor가 같은 관측을
-비교할 때 Text 대비 Voice의 조건부 평균 차이입니다.
-
-하지만 다음은 자동으로 성립하지 않습니다.
-
--   포함하지 않은 변수가 모두 통제됨
--   두 집단이 현실에서 교환가능함
--   coefficient가 인과효과임
--   측정오류가 없음
--   함수형태가 올바름
-
-이 예제에서는 `interface`가 무작위 배정되었다고 가정했으므로, 설계가 잘
-유지되었다면 해당 계수에 인과적 해석의 근거가 생깁니다. 측정변수의
-계수는 여전히 조심해서 해석합니다.
-
-### 모형 전체 요약
-
-```{r}
-broom::glance(multiple_model)
-```
-
-| 지표 | 무엇을 말하는가 | 말하지 않는 것 |
-|------------------------|------------------------|------------------------|
-| $R^2$ | 표본 내 outcome 변동의 설명 비율 | 인과성, 새 자료 예측성 |
-| Adjusted $R^2$ | predictor 수를 일부 고려한 적합도 | leakage 없는 일반화 성능 |
-| Residual SD | 원단위의 잔차 규모 | 모든 개인의 예측 오차 |
-| F-test | 지정된 계수 묶음의 omnibus evidence | 어느 효과가 중요한지 |
-| AIC/BIC | 특정 likelihood 아래 상대적 적합도 | 절대적 모형 진실성 |
+- 집단 간 연구: 참여자 단위
+- 반복측정 연구: 참여자의 모든 행을 하나의 cluster로 재표집
+- 팀·학교·가족 자료: 상위 cluster 단위 고려
+- 시계열: 단순 행 bootstrap보다 block 또는 time-aware 방법 고려
 
 ------------------------------------------------------------------------
 
-## 8. 범주형 predictor와 interaction
+## 9. Mediation의 인과적 가정
 
-실제 데이터 생성과정에서는 voice 효과가 과업 난이도에 따라 달라지도록
-설정했습니다.
+통계적 indirect effect를 causal mediation effect로 읽으려면 강한 가정이 필요합니다.
 
-```{r}
-interaction_model <- lm(
-  completion_time ~
-    interface * difficulty_c +
-    literacy_c +
-    prior_ai_use,
-  data = hci_centered
-)
+### 핵심 질문
 
-broom::tidy(
-  interaction_model,
-  conf.int = TRUE
-)
-```
+1. X가 무작위화되었는가?
+2. X 이전의 M–Y confounder를 충분히 고려했는가?
+3. X의 영향을 받은 변수가 다시 M과 Y를 confound하지 않는가?
+4. M을 특정 값으로 바꾸는 개입을 일관되게 정의할 수 있는가?
+5. 모든 relevant covariate 조합에서 처치와 mediator 값이 관측될 가능성이 있는가?
+6. 측정시점이 X → M → Y의 순서를 지지하는가?
+7. 결측과 이탈이 경로와 관련되어 있지 않은가?
 
-### interaction 계수
+### 통계적 문장과 인과적 문장
 
-$$
-\frac{\partial E(Y)}{\partial Difficulty}
-=
-\beta_{Difficulty}
-+
-\beta_{Interaction}\times I(Voice)
-$$
+**통계적 문장**
 
--   `difficulty_c`: Text 조건의 난이도 slope
--   `interfaceVoice`: 평균 난이도에서 Voice–Text 차이
--   `interfaceVoice:difficulty_c`: Voice 조건에서 slope가 얼마나
-    달라지는가
+> Explanation condition was associated with higher transparency, and the estimated indirect association through transparency was positive.
 
-::: callout-important
-상호작용이 있는 모형에서 `interfaceVoice`는 모든 난이도에 걸친 보편적
-주효과가 아닙니다. `difficulty_c = 0`, 즉 평균 난이도에서의 조건부
-차이입니다.
-:::
+**더 강한 인과적 문장**
 
-### 의미 있는 난이도에서 조건 비교
+> Providing an explanation increased trust by increasing perceived transparency.
 
-```{r}
-difficulty_values <- with(
-  hci_centered,
-  c(
-    easy = quantile(difficulty_c, 0.20),
-    typical = median(difficulty_c),
-    difficult = quantile(difficulty_c, 0.80)
-  )
-)
+두 번째 문장은 설계와 식별 가정에 대해 더 많은 근거가 필요합니다.
 
-interface_emm <- emmeans(
-  interaction_model,
-  ~ interface | difficulty_c,
-  at = list(difficulty_c = difficulty_values)
-)
+------------------------------------------------------------------------
 
-pairs(interface_emm, adjust = "holm")
-```
+## 10. Cross-sectional mediation의 한계
 
-### 예측값으로 interaction 보기
+X, M, Y를 한 시점의 설문으로 측정하면 다음 대안이 열려 있습니다.
+
+- Y가 M에 영향을 주는 역방향 경로
+- 공통방법편향
+- 안정적인 개인차가 M과 Y 모두를 설명
+- 같은 문항 내용이 두 척도에 중복
+- 사후적 이론 구성
+
+### 더 강한 설계
+
+| 설계 | 개선점 | 남는 한계 |
+|---|---|---|
+| X 무작위화, M·Y 순차측정 | X 경로 강화 | M–Y confounding |
+| Longitudinal mediation | 시간순서 정보 | time-varying confounding |
+| Mediator manipulation | mechanism 직접 개입 | 조작 타당성 |
+| Sequential randomization | 여러 경로 식별 강화 | 복잡한 설계·일반화 |
+| Within-person intensive data | 개인 내 과정 분석 | 시계열·측정 반응성 |
+
+------------------------------------------------------------------------
+
+# Part II. Moderation
+
+## 11. HCI moderation 사례
+
+프로액티브 AI 지원 강도(X)가 만족도(Y)에 미치는 관계가 AI literacy(W)에 따라 달라지는지 살펴봅니다.
 
 ```{r}
-interaction_grid <- crossing(
-  interface = levels(hci_centered$interface),
-  difficulty_c = seq(
-    min(hci_centered$difficulty_c),
-    max(hci_centered$difficulty_c),
-    length.out = 100
-  )
+#| label: simulate-moderation
+
+set.seed(20261202)
+
+n_moderation <- 360
+
+moderation_data <- tibble(
+  participant_id = sprintf("W%03d", 1:n_moderation),
+  support_z = rnorm(n_moderation),
+  ai_literacy_z = rnorm(n_moderation)
 ) |>
   mutate(
-    interface = factor(
-      interface,
-      levels = levels(hci_centered$interface)
-    ),
-    literacy_c = 0,
-    prior_ai_use = 0
+    satisfaction =
+      4.2 +
+      0.35 * support_z +
+      0.25 * ai_literacy_z +
+      0.45 * support_z * ai_literacy_z +
+      rnorm(n_moderation, 0, 0.90)
   )
 
-interaction_prediction <- predict(
-  interaction_model,
-  newdata = interaction_grid,
+glimpse(moderation_data)
+```
+
+------------------------------------------------------------------------
+
+## 12. Interaction model
+
+$$
+Y=b_0+b_1X+b_2W+b_3XW+e
+$$
+
+X의 조건부 효과는:
+
+$$
+\frac{\partial E(Y)}{\partial X}=b_1+b_3W
+$$
+
+```{r}
+moderation_model <- lm(
+  satisfaction ~ support_z * ai_literacy_z,
+  data = moderation_data
+)
+
+broom::tidy(
+  moderation_model,
+  conf.int = TRUE
+)
+```
+
+### 계수 해석
+
+- $b_1$: AI literacy가 평균일 때 support intensity의 slope
+- $b_2$: support intensity가 평균일 때 AI literacy의 slope
+- $b_3$: AI literacy가 1단위 높아질 때 support slope가 얼마나 변하는가
+
+::: {.callout-warning}
+Interaction이 유의하면 주효과가 “무의미”해지는 것이 아닙니다. 주효과는 기준점에서의 조건부 효과로 해석합니다.
+:::
+
+------------------------------------------------------------------------
+
+## 13. Simple slopes
+
+의미 있는 moderator 값에서 X의 slope를 추정합니다.
+
+```{r}
+simple_slopes <- emtrends(
+  moderation_model,
+  ~ ai_literacy_z,
+  var = "support_z",
+  at = list(
+    ai_literacy_z = c(-1, 0, 1)
+  )
+)
+
+simple_slopes
+```
+
+- `ai_literacy_z = -1`: 평균보다 1 SD 낮은 사용자
+- `ai_literacy_z = 0`: 평균적인 사용자
+- `ai_literacy_z = 1`: 평균보다 1 SD 높은 사용자
+
+::: {.callout-note}
+±1 SD는 편리한 관례일 뿐입니다. 실제 척도의 임상적·정책적 기준, 분위수, 관측범위를 기준으로 probe하는 것이 더 의미 있을 수 있습니다.
+:::
+
+### Conditional predictions
+
+```{r}
+moderation_grid <- crossing(
+  support_z = seq(-2.5, 2.5, length.out = 100),
+  ai_literacy_z = c(-1, 0, 1)
+) |>
+  mutate(
+    literacy_level = factor(
+      ai_literacy_z,
+      levels = c(-1, 0, 1),
+      labels = c("Low literacy", "Average literacy", "High literacy")
+    )
+  )
+
+moderation_pred <- predict(
+  moderation_model,
+  newdata = moderation_grid,
   se.fit = TRUE
 )
 
-interaction_grid <- interaction_grid |>
+moderation_grid <- moderation_grid |>
   mutate(
-    fit = interaction_prediction$fit,
-    lower = fit - qt(0.975, df.residual(interaction_model)) *
-      interaction_prediction$se.fit,
-    upper = fit + qt(0.975, df.residual(interaction_model)) *
-      interaction_prediction$se.fit
+    fit = moderation_pred$fit,
+    lower = fit - qt(0.975, df.residual(moderation_model)) *
+      moderation_pred$se.fit,
+    upper = fit + qt(0.975, df.residual(moderation_model)) *
+      moderation_pred$se.fit
   )
 ```
 
 ```{r}
-#| label: fig-interaction
-#| fig-cap: "과업 난이도에 따른 인터페이스별 예측 완료시간"
-#| fig-alt: "Text와 Voice 인터페이스의 예측 완료시간 선이 과업 난이도에 따라 다르게 증가하는 그래프"
+#| label: fig-moderation
+#| fig-cap: "AI literacy 수준별 지원 강도와 만족도의 조건부 관계"
+#| fig-alt: "AI literacy가 높을수록 프로액티브 지원 강도와 만족도의 양의 관계가 강해지는 세 개의 예측선"
 
 ggplot(
-  interaction_grid,
+  moderation_grid,
   aes(
-    x = difficulty_c,
+    x = support_z,
     y = fit,
-    linetype = interface
+    linetype = literacy_level
   )
 ) +
   geom_ribbon(
-    aes(ymin = lower, ymax = upper, group = interface),
-    alpha = 0.15,
+    aes(ymin = lower, ymax = upper, group = literacy_level),
+    alpha = 0.12,
     linetype = 0
   ) +
   geom_line(linewidth = 0.9) +
   labs(
-    x = "Task difficulty: centered",
-    y = "Predicted completion time",
-    linetype = "Interface"
+    x = "Proactive support intensity (z)",
+    y = "Predicted satisfaction",
+    linetype = "AI literacy"
   )
 ```
 
-------------------------------------------------------------------------
-
-## 9. 비선형 관계를 선형모형 안에서 표현하기
-
-“선형회귀”는 predictor가 반드시 직선으로만 들어가야 한다는 뜻이 아니라,
-**모수가 선형적으로 결합된다**는 뜻입니다.
-
-### 2차항
-
-```{r}
-quadratic_model <- lm(
-  completion_time ~
-    interface * difficulty_c +
-    I(difficulty_c^2) +
-    literacy_c +
-    prior_ai_use,
-  data = hci_centered
-)
-
-broom::tidy(
-  quadratic_model,
-  conf.int = TRUE
-)
-```
-
-### 모형 비교
-
-```{r}
-anova(
-  multiple_model,
-  interaction_model,
-  quadratic_model
-)
-```
-
-```{r}
-bind_rows(
-  broom::glance(multiple_model) |>
-    mutate(model = "Additive linear"),
-  broom::glance(interaction_model) |>
-    mutate(model = "Interaction"),
-  broom::glance(quadratic_model) |>
-    mutate(model = "Interaction + quadratic")
-) |>
-  select(model, r.squared, adj.r.squared, sigma, AIC, BIC)
-```
-
-::: callout-warning
-데이터를 보고 여러 차수와 interaction을 무제한으로 시험한 뒤 가장 작은
-p-value만 보고하면 불확실성이 과소평가됩니다. 탐색과 확증을 구분하고,
-prediction 목적이면 resampling 안에서 선택합니다.
-:::
-
-### 더 유연한 함수형태: spline
+### Johnson–Neyman interval
 
 ```{r}
 #| eval: false
-#| code-summary: "선택 실습: 자연 spline"
+#| code-summary: "선택 실습: Johnson–Neyman 분석"
 
-spline_model <- lm(
-  completion_time ~
-    interface +
-    splines::ns(difficulty_c, df = 3) +
-    literacy_c,
-  data = hci_centered
+interactions::johnson_neyman(
+  moderation_model,
+  pred = support_z,
+  modx = ai_literacy_z
 )
-
-summary(spline_model)
 ```
 
-------------------------------------------------------------------------
-
-# Part III. 회귀모형 진단
-
-## 10. 가정을 정확히 표현하기
-
-| 가정 | 실제 질문 | 위반 시 고려할 것 |
-|------------------------|------------------------|------------------------|
-| Conditional mean | 지정한 함수형태가 평균구조를 잘 표현하는가? | interaction, transformation, spline |
-| Independence | 행들이 설계상 독립인가? | mixed model, cluster-robust SE |
-| Exogeneity | 오차와 predictor가 체계적으로 관련되지 않는가? | 연구설계, confounder, IV, sensitivity |
-| Constant variance | 잔차 분산이 적합값에 따라 달라지는가? | robust SE, variance model, transformation |
-| Residual distribution | 작은 표본의 고전적 추론에 잔차 형태가 문제인가? | robust/bootstrap inference |
-| No perfect collinearity | predictor가 정확한 선형결합은 아닌가? | 변수 코딩·설계 수정 |
-| Influence | 일부 관측이 결론을 지배하는가? | 자료 검토, robust analysis, sensitivity |
-
-::: callout-note
-원자료의 모든 변수가 정규분포여야 하는 것은 아닙니다. 선형회귀의 정규성
-논의는 주로 **조건부 오차와 작은 표본의 정확한 추론**에 관한 것입니다.
+::: {.callout-warning}
+Johnson–Neyman 경계도 표본과 모형에 의존하는 추정치입니다. 관측범위 밖의 moderator 값이나 매우 적은 자료가 있는 구간을 해석하지 않습니다.
 :::
 
 ------------------------------------------------------------------------
 
-## 11. 잔차, 영향점, 함수형태
+## 14. Centering에 관한 오해
 
-```{r}
-model_augmented <- broom::augment(quadratic_model)
-```
-
-### Residuals vs fitted
-
-```{r}
-#| label: fig-regression-residual
-#| fig-cap: "회귀모형의 적합값과 잔차"
-
-ggplot(
-  model_augmented,
-  aes(x = .fitted, y = .resid)
-) +
-  geom_point(alpha = 0.45) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  geom_smooth(se = FALSE) +
-  labs(x = "Fitted value", y = "Residual")
-```
-
-### Q–Q plot
-
-```{r}
-#| label: fig-regression-qq
-#| fig-cap: "회귀모형 표준화 잔차의 Q-Q plot"
-
-ggplot(model_augmented, aes(sample = .std.resid)) +
-  stat_qq(alpha = 0.45) +
-  stat_qq_line()
-```
-
-### Scale–location
-
-```{r}
-#| label: fig-scale-location
-#| fig-cap: "적합값에 따른 잔차 규모"
-
-ggplot(
-  model_augmented,
-  aes(x = .fitted, y = sqrt(abs(.std.resid)))
-) +
-  geom_point(alpha = 0.45) +
-  geom_smooth(se = FALSE) +
-  labs(
-    x = "Fitted value",
-    y = "Sqrt(|standardized residual|)"
-  )
-```
-
-### Influence audit
-
-```{r}
-stopifnot(
-  "participant_id" %in% names(hci_centered)
-)
-
-model_augmented <- broom::augment(
-  quadratic_model,
-  data = hci_centered
-)
-
-names(model_augmented)
-
-model_augmented |>
-  dplyr::transmute(
-    participant_id,
-    fitted = .fitted,
-    residual = .resid,
-    leverage = .hat,
-    cooks_distance = .cooksd
-  ) |>
-  dplyr::arrange(
-    dplyr::desc(cooks_distance)
-  ) |>
-  dplyr::slice_head(n = 10)
-```
-
-::: callout-warning
-Cook's distance가 크다고 관측을 자동 삭제하지 않습니다. 먼저 입력 오류,
-범위 밖 사례, 실제로 중요한 하위집단인지 확인하고 포함·제외 결과를 함께
-비교합니다.
-:::
-
-### 통합 진단 도구
-
-```{r}
-#| eval: false
-#| code-summary: "선택 실습: performance 패키지"
-
-performance::check_model(quadratic_model)
-performance::check_collinearity(quadratic_model)
-performance::check_heteroscedasticity(quadratic_model)
-```
-
-------------------------------------------------------------------------
-
-## 12. 이분산에 강건한 표준오차
-
-```{r}
-#| eval: false
-#| code-summary: "선택 실습: classical vs HC3 SE"
-
-classical <- broom::tidy(
-  quadratic_model,
-  conf.int = TRUE
-) |>
-  mutate(se_type = "Classical")
-
-robust_vcov <- sandwich::vcovHC(
-  quadratic_model,
-  type = "HC3"
-)
-
-robust <- lmtest::coeftest(
-  quadratic_model,
-  vcov. = robust_vcov
-) |>
-  broom::tidy(conf.int = TRUE) |>
-  mutate(se_type = "HC3")
-
-bind_rows(classical, robust)
-```
-
-::: callout-important
-Robust SE는 같은 계수 추정치에 대한 표준오차를 바꿉니다. 잘못된
-함수형태, confounding, 측정 오류, 의존적인 행을 자동으로 해결하지
-않습니다.
-:::
-
-------------------------------------------------------------------------
-
-## 13. 공선성은 자동 변수삭제 규칙이 아니다
-
-공선성은 predictor가 서로 정보를 공유하여 개별 계수의 표준오차와
-안정성에 영향을 주는 현상입니다.
+평균중심화:
 
 $$
-VIF_j=\frac{1}{1-R_j^2}
+X_c=X-\bar X
 $$
 
-```{r}
-#| eval: false
+### Centering이 하는 일
 
-performance::check_collinearity(quadratic_model)
-```
+- intercept의 기준점을 평균으로 옮김
+- interaction 모형의 lower-order term을 평균적인 상대 변수 수준에서 해석하게 함
+- 수치적 크기를 다루기 쉽게 할 수 있음
 
-### 공선성이 높을 때 먼저 물을 질문
+### Centering이 하지 않는 일
 
-1.  두 변수가 개념적으로 다른가, 거의 같은 측정인가?
-2.  변수 코딩으로 완전한 선형결합을 만들었는가?
-3.  개별 계수 해석이 목적인가, 예측이 목적인가?
-4.  interaction이나 다항식 때문에 구조적으로 상관이 생겼는가?
-5.  변수 하나를 삭제하면 estimand가 바뀌는가?
-
-::: callout-warning
-VIF가 5 또는 10을 넘었다는 이유만으로 변수를 제거하면 연구질문과
-confounding control이 바뀔 수 있습니다. 문턱값은 진단의 시작이지 자동
-결정 규칙이 아닙니다.
-:::
+- interaction을 새로 만들거나 제거
+- confounding 제거
+- measurement error 제거
+- 전체적인 predictor 상관구조 해결
+- causal interpretation 제공
 
 ------------------------------------------------------------------------
 
-# Part IV. 불확실한 예측과 새로운 자료
+# Part III. Moderated Mediation
 
-## 14. Confidence interval과 prediction interval
+## 15. 조건부 간접효과
 
-같은 predictor 값에서:
-
--   **Confidence interval:** 조건부 평균의 불확실성
--   **Prediction interval:** 새로운 한 관측값의 불확실성
-
-```{r}
-new_users <- tibble(
-  interface = factor(
-    c("Text", "Voice"),
-    levels = levels(hci_centered$interface)
-  ),
-  difficulty_c = 0,
-  literacy_c = 0,
-  prior_ai_use = 0
-)
-
-mean_interval <- predict(
-  quadratic_model,
-  newdata = new_users,
-  interval = "confidence"
-)
-
-individual_interval <- predict(
-  quadratic_model,
-  newdata = new_users,
-  interval = "prediction"
-)
-
-bind_cols(
-  new_users,
-  as_tibble(mean_interval, .name_repair = ~ paste0(.x, "_mean")),
-  as_tibble(individual_interval, .name_repair = ~ paste0(.x, "_individual"))
-)
-```
-
-Prediction interval이 더 넓은 이유는 평균 추정의 불확실성뿐 아니라
-개인별 잔차변동까지 포함하기 때문입니다.
-
-------------------------------------------------------------------------
-
-## 15. 예측모형은 새 자료에서 평가한다
-
-### 한 번의 train/test split
-
-```{r}
-set.seed(202612)
-
-test_id <- sample(
-  hci_centered$participant_id,
-  size = floor(0.20 * nrow(hci_centered))
-)
-
-train_data <- hci_centered |>
-  filter(!participant_id %in% test_id)
-
-test_data <- hci_centered |>
-  filter(participant_id %in% test_id)
-
-prediction_model <- lm(
-  completion_time ~
-    interface * difficulty_c +
-    I(difficulty_c^2) +
-    literacy_c +
-    prior_ai_use,
-  data = train_data
-)
-
-test_predictions <- test_data |>
-  mutate(
-    .pred = predict(
-      prediction_model,
-      newdata = test_data
-    )
-  )
-```
-
-### 평가자료에서 RMSE, MAE, $R^2$
-
-```{r}
-test_predictions |>
-  summarise(
-    RMSE = sqrt(mean((completion_time - .pred)^2)),
-    MAE = mean(abs(completion_time - .pred)),
-    R2 = cor(completion_time, .pred)^2
-  )
-```
-
-::: callout-warning
-같은 자료에서 모형을 선택하고 성능을 보고하면 낙관적입니다. test set은
-마지막 한 번의 평가를 위해 보호하고, 모형 선택과 tuning은 training
-data의 resampling 안에서 수행합니다.
-:::
-
-### Cross-validation을 포함한 현대적 workflow
-
-```{r}
-#| eval: false
-#| code-summary: "선택 실습: tidymodels workflow"
-
-library(tidymodels)
-
-set.seed(202613)
-
-split <- initial_split(
-  hci_centered,
-  prop = 0.80,
-  strata = interface
-)
-
-training_set <- training(split)
-test_set <- testing(split)
-
-folds <- vfold_cv(
-  training_set,
-  v = 10,
-  strata = interface
-)
-
-reg_recipe <- recipe(
-  completion_time ~
-    interface + difficulty_c + literacy_c + prior_ai_use,
-  data = training_set
-) |>
-  step_dummy(all_nominal_predictors()) |>
-  step_normalize(all_numeric_predictors())
-
-lm_spec <- linear_reg() |>
-  set_engine("lm")
-
-lm_workflow <- workflow() |>
-  add_recipe(reg_recipe) |>
-  add_model(lm_spec)
-
-cv_results <- fit_resamples(
-  lm_workflow,
-  resamples = folds,
-  metrics = metric_set(rmse, mae, rsq),
-  control = control_resamples(save_pred = TRUE)
-)
-
-collect_metrics(cv_results)
-
-final_result <- last_fit(
-  lm_workflow,
-  split = split,
-  metrics = metric_set(rmse, mae, rsq)
-)
-
-collect_metrics(final_result)
-```
-
-------------------------------------------------------------------------
-
-## 16. Regularization은 resampling 안에서 tuning하기
-
--   **Ridge:** 모든 계수를 축소하며 상관된 predictor에서 안정성을 높일
-    수 있음
--   **Lasso:** 일부 계수를 정확히 0으로 만들 수 있음
--   **Elastic net:** 두 penalty를 결합함
-
-```{r}
-#| eval: false
-#| code-summary: "선택 실습: elastic net tuning"
-
-elastic_spec <- linear_reg(
-  penalty = tune(),
-  mixture = tune()
-) |>
-  set_engine("glmnet")
-
-elastic_workflow <- workflow() |>
-  add_recipe(reg_recipe) |>
-  add_model(elastic_spec)
-
-set.seed(202614)
-
-elastic_results <- tune_grid(
-  elastic_workflow,
-  resamples = folds,
-  grid = grid_regular(
-    penalty(range = c(-4, 1)),
-    mixture(),
-    levels = c(20, 6)
-  ),
-  metrics = metric_set(rmse, mae)
-)
-
-show_best(elastic_results, metric = "rmse")
-```
-
-::: callout-important
-정규화, 결측대체, 변수선택, SMOTE 같은 전처리는 각 resample의 analysis
-fold에서만 학습해야 합니다. 전체 데이터에 먼저 적용하면 leakage가
-생깁니다.
-:::
-
-------------------------------------------------------------------------
-
-# Part V. Binary outcome과 Logistic Regression
-
-## 17. 왜 선형회귀가 아닌가?
-
-`task_success`는 0/1입니다. 선형확률모형은 예측값이 0–1 범위를 벗어나고
-분산구조가 outcome 평균에 의존할 수 있습니다.
-
-Logistic regression은 다음을 모델링합니다.
-
-$$
-\text{logit}(p_i)
-=
-\log\left(\frac{p_i}{1-p_i}\right)
-=
-\beta_0+\beta_1X_{i1}+\cdots+\beta_pX_{ip}
-$$
-
-```{r}
-logit_model <- glm(
-  task_success ~
-    interface * difficulty_c +
-    literacy_c +
-    prior_ai_use,
-  family = binomial(link = "logit"),
-  data = hci_centered
-)
-
-broom::tidy(
-  logit_model,
-  conf.int = TRUE
-)
-```
-
-### Odds ratio
-
-```{r}
-broom::tidy(
-  logit_model,
-  conf.int = TRUE,
-  exponentiate = TRUE
-)
-```
-
-::: callout-warning
-Odds ratio는 probability ratio가 아닙니다. baseline probability가 다르면
-같은 odds ratio도 확률 차이로는 다르게 나타납니다.
-:::
-
-### 원단위의 예측확률
-
-```{r}
-probability_grid <- crossing(
-  interface = levels(hci_centered$interface),
-  difficulty_c = seq(
-    min(hci_centered$difficulty_c),
-    max(hci_centered$difficulty_c),
-    length.out = 100
-  )
-) |>
-  mutate(
-    interface = factor(
-      interface,
-      levels = levels(hci_centered$interface)
-    ),
-    literacy_c = 0,
-    prior_ai_use = 0,
-    probability = predict(
-      logit_model,
-      newdata = pick(everything()),
-      type = "response"
-    )
-  )
-```
-
-```{r}
-#| label: fig-logistic-probability
-#| fig-cap: "과업 난이도와 인터페이스에 따른 예측 성공확률"
-
-ggplot(
-  probability_grid,
-  aes(
-    x = difficulty_c,
-    y = probability,
-    linetype = interface
-  )
-) +
-  geom_line(linewidth = 0.9) +
-  scale_y_continuous(
-    limits = c(0, 1),
-    labels = scales::label_percent()
-  ) +
-  labs(
-    x = "Task difficulty: centered",
-    y = "Predicted probability of success",
-    linetype = "Interface"
-  )
-```
-
-### Calibration audit
-
-```{r}
-logit_augmented <- broom::augment(
-  logit_model,
-  type.predict = "response"
-)
-
-calibration_table <- logit_augmented |>
-  mutate(probability_bin = ntile(.fitted, 10)) |>
-  summarise(
-    predicted = mean(.fitted),
-    observed = mean(task_success),
-    n = n(),
-    .by = probability_bin
-  )
-
-calibration_table
-```
-
-```{r}
-#| label: fig-calibration
-#| fig-cap: "예측확률 구간별 예측 성공률과 관측 성공률"
-
-ggplot(
-  calibration_table,
-  aes(x = predicted, y = observed)
-) +
-  geom_abline(
-    intercept = 0,
-    slope = 1,
-    linetype = "dashed"
-  ) +
-  geom_point(aes(size = n)) +
-  coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
-  labs(
-    x = "Mean predicted probability",
-    y = "Observed success rate",
-    size = "Bin n"
-  )
-```
-
-::: callout-note
-분류 임계값 0.5는 자연법칙이 아닙니다. false positive와 false negative의
-비용, 기저율, 실제 의사결정 목적에 맞춰 선택합니다.
-:::
-
-------------------------------------------------------------------------
-
-## 18. Count outcome과 exposure
-
-세션당 오류 수처럼 count outcome이라면 Poisson 계열을 고려할 수
-있습니다.
-
-$$
-\log E(Y_i\mid X_i)
-=
-\beta_0+\beta_1X_i+
-\log(Exposure_i)
-$$
-
--   관찰시간이 다르면 `offset(log(exposure))`를 고려한다.
--   평균보다 분산이 훨씬 크면 overdispersion을 점검한다.
--   사용자별 반복 세션이면 mixed model 또는 cluster structure를
-    고려한다.
--   많은 0이 구조적으로 발생하면 생성과정을 다시 생각한다.
-
-```{r}
-#| eval: false
-
-poisson_model <- glm(
-  error_count ~ interface + task_difficulty +
-    offset(log(session_minutes)),
-  family = poisson(link = "log"),
-  data = session_data
-)
-
-performance::check_overdispersion(poisson_model)
-```
-
-------------------------------------------------------------------------
-
-# Part VI. 회귀계수를 인과효과로 읽기 전에
-
-## 19. 무엇을 통제할 것인가?
+AI 설명 제공(X)이 transparency(M)를 거쳐 trust(Y)에 미치는 간접효과가 AI literacy(W)에 따라 달라진다고 가정합니다.
 
 ```{mermaid}
 flowchart LR
-    C["Prior skill<br>Confounder"] --> X["Interface choice"]
-    C --> Y["Completion time"]
-    X --> M["Perceived ease<br>Mediator"]
-    M --> Y
-    X --> S["Study completion<br>Selection"]
-    Y --> S
+    X["X<br>Explanation"] -->|"a₁ + a₃W"| M["M<br>Transparency"]
+    M -->|"b"| Y["Y<br>Trust"]
+    X -->|"c′"| Y
+    W["W<br>AI literacy"] -. "moderates X→M" .-> M
 ```
 
--   **Confounder:** X와 Y 모두의 원인이라면 조정이 필요할 수 있음
--   **Mediator:** 총효과가 관심이라면 기계적으로 통제하지 않음
--   **Collider/selection:** 공통 결과를 조건화하면 새로운 편향이 생길 수
-    있음
--   **Post-treatment variable:** 처치 이후 측정된 변수는 조정 목적을
-    명확히 해야 함
+Mediator 모형:
 
-::: callout-warning
-“통제변수를 많이 넣을수록 더 정확한 인과효과”라는 원칙은 없습니다. 변수
-선택은 데이터 상관표보다 연구설계와 causal structure에서 출발합니다.
+$$
+M=a_0+a_1X+a_2W+a_3XW+e_M
+$$
+
+Outcome 모형:
+
+$$
+Y=b_0+bM+c'X+b_WW+e_Y
+$$
+
+조건부 간접효과:
+
+$$
+IE(W)=(a_1+a_3W)b
+$$
+
+Index of moderated mediation:
+
+$$
+Index=a_3b
+$$
+
+------------------------------------------------------------------------
+
+## 16. 조건부 과정 데이터
+
+```{r}
+#| label: simulate-moderated-mediation
+
+set.seed(20261203)
+
+n_conditional <- 480
+
+conditional_data <- tibble(
+  participant_id = sprintf("C%03d", 1:n_conditional),
+  explanation_num = rbinom(n_conditional, 1, 0.50),
+  ai_literacy_z = rnorm(n_conditional)
+) |>
+  mutate(
+    xw = explanation_num * ai_literacy_z,
+    transparency =
+      0.55 * explanation_num +
+      0.20 * ai_literacy_z +
+      0.35 * xw +
+      rnorm(n_conditional, 0, 0.90),
+    trust =
+      0.65 * transparency +
+      0.15 * explanation_num +
+      0.10 * ai_literacy_z +
+      rnorm(n_conditional, 0, 0.95)
+  )
+```
+
+------------------------------------------------------------------------
+
+## 17. lavaan으로 conditional indirect effects 추정하기
+
+W가 표준화되어 있으므로 `-1`, `0`, `1`은 각각 평균보다 1 SD 낮음, 평균, 1 SD 높음을 나타냅니다.
+
+```{r}
+moderated_mediation_model <- '
+  # first-stage moderation
+  transparency ~ a1*explanation_num + a2*ai_literacy_z + a3*xw
+
+  # outcome equation
+  trust ~ b*transparency + cp*explanation_num + bw*ai_literacy_z
+
+  # conditional indirect effects at W = -1, 0, +1
+  indirect_low := (a1 - a3)*b
+  indirect_mean := a1*b
+  indirect_high := (a1 + a3)*b
+
+  # index of moderated mediation
+  index_mm := a3*b
+'
+```
+
+```{r}
+conditional_fit <- sem(
+  moderated_mediation_model,
+  data = conditional_data,
+  se = "bootstrap",
+  bootstrap = 5000
+)
+
+conditional_estimates <- parameterEstimates(
+  conditional_fit,
+  ci = TRUE,
+  boot.ci.type = "perc",
+  standardized = TRUE
+) |>
+  filter(op %in% c("~", ":=")) |>
+  select(
+    lhs, op, rhs,
+    est, se, ci.lower, ci.upper,
+    std.all, pvalue
+  )
+
+conditional_estimates
+```
+
+### 해석 순서
+
+1. X×W interaction이 mediator 모형에서 어떤 방향인가?
+2. path b의 크기와 불확실성은 어떠한가?
+3. 낮음·평균·높음 W에서 indirect effect는 얼마인가?
+4. `index_mm`의 bootstrap CI가 무엇을 말하는가?
+5. W의 관측범위와 자료밀도 안에서만 해석했는가?
+
+::: {.callout-important}
+한 수준의 indirect effect는 유의하고 다른 수준은 유의하지 않다는 사실만으로 두 indirect effect가 서로 다르다고 결론내리지 않습니다. **차이 자체를 나타내는 index of moderated mediation**를 확인합니다.
 :::
 
 ------------------------------------------------------------------------
 
-# Activity: Regression Model Card Lab
+## 18. Conditional indirect effect 시각화
 
-## Mission 1. 목적과 estimand
+```{r}
+conditional_plot_data <- conditional_estimates |>
+  filter(
+    lhs %in% c(
+      "indirect_low",
+      "indirect_mean",
+      "indirect_high"
+    )
+  ) |>
+  mutate(
+    literacy = factor(
+      lhs,
+      levels = c(
+        "indirect_low",
+        "indirect_mean",
+        "indirect_high"
+      ),
+      labels = c(
+        "Low literacy",
+        "Average literacy",
+        "High literacy"
+      )
+    )
+  )
+```
 
-다음 중 하나를 선택합니다.
+```{r}
+#| label: fig-conditional-indirect
+#| fig-cap: "AI literacy 수준별 조건부 간접효과와 bootstrap 95% 신뢰구간"
 
--   Interface가 완료시간에 미치는 평균적 차이 추정
--   과업 난이도와 완료시간의 함수형태 설명
--   새로운 사용자의 완료시간 예측
--   과업 성공확률 예측
+ggplot(
+  conditional_plot_data,
+  aes(x = literacy, y = est)
+) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_pointrange(
+    aes(ymin = ci.lower, ymax = ci.upper)
+  ) +
+  labs(
+    x = NULL,
+    y = "Conditional indirect effect"
+  )
+```
 
-그리고 다음을 적습니다.
+------------------------------------------------------------------------
 
--   목표 모집단
--   관측단위
--   outcome
--   주요 predictor
--   estimand 또는 prediction target
--   인과·연관·예측 중 어떤 주장인지
+# Part IV. 측정·설계·자료구조 감사
 
-## Mission 2. 모형 명세
+## 19. Composite score의 측정오류
 
--   기준 수준과 중심화 기준
--   포함할 interaction 또는 nonlinear term
--   포함하지 않을 변수와 이유
--   결측 처리
--   반복측정·군집 여부
+관찰된 합성점수를 X, M, Y로 사용하는 회귀 기반 mediation은 각 점수가 완벽하게 측정되었다고 암묵적으로 다루기 쉽습니다.
 
-## Mission 3. 모형 적합과 원단위 해석
+측정오류는 다음을 일으킬 수 있습니다.
 
--   coefficient table과 95% CI
--   대표적 사례의 예측값
--   confidence interval 또는 prediction interval
--   binary outcome이면 odds ratio와 predicted probability
+- path attenuation 또는 예측하기 어려운 bias
+- mediator와 outcome의 문항중복
+- 집단별 측정비동일성
+- indirect effect의 불안정성
 
-## Mission 4. 진단
+다음 주에는 CFA와 SEM을 이용해 latent construct와 measurement error를 함께 모델링합니다.
 
-최소 세 가지를 수행합니다.
+------------------------------------------------------------------------
 
--   residual–fitted plot
--   Q–Q plot
--   scale–location plot
--   leverage와 Cook's distance
--   HC3 robust SE 비교
--   collinearity audit
--   외삽 범위 확인
+## 20. 반복측정과 다수준 mediation
 
-## Mission 5. Validation
+다음 자료에서는 단일수준 OLS mediation이 적절하지 않을 수 있습니다.
 
-예측 목적이라면:
+- 같은 사용자의 여러 세션
+- 학생이 수업에 속한 자료
+- 팀원이 팀에 속한 자료
+- 일별 experience sampling
+- 대화 턴이 대화에 속한 자료
 
--   train/test 또는 cross-validation
--   RMSE·MAE·$R^2$, 또는 calibration·ROC-AUC
--   전처리를 resample 안에서 수행했는지
--   평가자료를 모형선택에 재사용하지 않았는지
+이 경우 다음을 구분합니다.
 
-## Regression Model Card
+- within-person X, M, Y
+- between-person 평균차이
+- cluster-level intervention
+- 시간 지연과 자기상관
+- random slope
 
-| 항목           | 기록                          |
-|----------------|-------------------------------|
-| Goal           | 설명·추론·인과·예측           |
-| Target         | outcome과 단위                |
-| Estimand       | 조건부 평균차이 또는 예측대상 |
-| Formula        | 모형식                        |
-| Reference      | factor 기준수준과 중심화      |
-| Estimate       | 원단위 계수·CI                |
-| Diagnostics    | 발견된 문제와 대응            |
-| Validation     | 새 자료 성능                  |
-| Sensitivity    | 대안 모형과 결론 변화         |
-| Claim boundary | 말할 수 없는 것               |
+::: {.callout-warning}
+행 수가 많아도 독립적인 참여자 수가 작다면 유효 정보량은 행 수와 같지 않습니다. Bootstrap 역시 cluster 단위를 보존해야 합니다.
+:::
+
+------------------------------------------------------------------------
+
+## 21. 흔한 과도한 해석
+
+| 분석결과 | 과도한 문장 | 더 정확한 문장 |
+|---|---|---|
+| indirect CI excludes 0 | M이 메커니즘임을 증명했다 | 지정된 모형에서 간접효과가 추정되었다 |
+| interaction p < .05 | 모든 하위집단이 서로 다르다 | X slope가 W에 따라 변한다는 증거가 있다 |
+| one slope significant, one not | 두 slope가 서로 유의하게 다르다 | slope 차이를 직접 검정해야 한다 |
+| direct effect non-significant | 완전매개가 입증됐다 | direct estimate가 현재 정밀도에서 0과 구분되지 않았다 |
+| bootstrap CI | confounding이 해결됐다 | 간접효과 표집불확실성을 재표집으로 추정했다 |
+| cross-sectional path | 시간적 인과경로가 확인됐다 | 관측된 공분산이 지정된 경로모형과 일치한다 |
+
+------------------------------------------------------------------------
+
+# Activity: Mechanism & Conditional Effect Audit
+
+## Mission 1. 이론적 경로
+
+HCI 사례를 하나 선택합니다.
+
+- 설명 제공 → transparency → trust
+- 챗봇 공감표현 → perceived support → worry reduction
+- 아바타 유사성 → identification → continued use
+- 알림 빈도 → cognitive load → disengagement
+
+다음을 작성합니다.
+
+- X, M, Y, W의 정의
+- 각 변수의 측정시점
+- 어떤 변수에 개입 가능한가?
+- 대안적 역방향 경로
+- 잠재적 confounder
+
+## Mission 2. Mediation
+
+- path a, b, c′
+- indirect, direct, total effect
+- bootstrap 95% CI
+- statistical mediation 문장
+- causal mediation을 위해 추가로 필요한 설계
+
+## Mission 3. Moderation
+
+- interaction model
+- 기준점과 centering
+- 의미 있는 W 값에서 conditional effect
+- interaction plot
+- 관측범위 밖 외삽 여부
+
+## Mission 4. Conditional process
+
+- 어느 경로가 조절되는가?
+- conditional indirect effects
+- index of moderated mediation
+- 대안 모형 또는 sensitivity question
+
+## Mechanism Claim Card
+
+| 항목 | 기록 |
+|---|---|
+| Theory | 왜 이 mediator·moderator인가? |
+| Temporal order | X, M, Y 측정순서 |
+| Identification | 무작위화와 confounding 가정 |
+| Measurement | 척도와 측정오류 |
+| Model | 회귀식 또는 lavaan syntax |
+| Estimate | direct·indirect·conditional effect |
+| Uncertainty | bootstrap CI와 재표집단위 |
+| Sensitivity | 대안 경로·자료처리 |
+| Claim level | 통계적 연관 / causal mechanism |
+| Next study | 더 강한 설계 |
 
 ## AI Collaboration Log
 
-| 항목              | 기록 내용                             |
-|-------------------|---------------------------------------|
-| 목적              | specification, 디버깅, 진단, reviewer |
-| 내가 먼저 한 시도 | AI 사용 전 모형과 예측                |
-| 프롬프트          | 실제 입력한 핵심 요청                 |
-| AI 제안           | 제안 요약                             |
-| 검증              | 실행한 코드와 확인한 출력             |
-| 결정              | 채택·수정·기각과 이유                 |
-| 최종 변화         | 모형 또는 주장 범위의 변화            |
+| 항목 | 기록 내용 |
+|---|---|
+| 목적 | 경로 감사, 가정 탐색, 코드 검토, claim review |
+| 내가 먼저 한 모형 | AI 전 경로도와 식 |
+| 프롬프트 | 실제 입력한 요청 |
+| AI가 제안한 위험 | confounder, timing, measurement, selection |
+| 검증 | 문헌·설계·R 출력으로 확인한 방법 |
+| 결정 | 채택·수정·기각과 이유 |
+| 최종 변화 | 경로 또는 주장 수준의 변화 |
 
 ------------------------------------------------------------------------
 
 ## 이번 주의 핵심 정리
 
-1.  회귀분석은 먼저 **목적과 estimand**를 정해야 한다.
-2.  계수는 기준점과 다른 predictor 조건을 포함해 해석한다.
-3.  interaction이 있으면 main effect는 조건부 효과다.
-4.  선형모형도 다항식과 spline으로 비선형 평균구조를 표현할 수 있다.
-5.  잔차 정규성 하나보다 함수형태, 독립성, 이분산, 영향점, confounding이
-    더 중요할 수 있다.
-6.  robust SE는 만능 교정이 아니다.
-7.  예측은 새 자료와 resampling으로 평가하며 전처리 leakage를 막는다.
-8.  logistic coefficient는 log odds이며, 실무 해석에는 예측확률과
-    calibration이 필요하다.
-9.  GenAI는 변수 자동선택기가 아니라 모형의 숨은 가정과 과도한 주장을
-    찾는 reviewer다.
+1. Mediation은 indirect effect를 추정하지만 causal mechanism은 추가 가정을 요구한다.
+2. Total effect의 유의성은 indirect effect의 필수조건이 아니다.
+3. Bootstrap은 $ab$의 불확실성 추정에 유용하지만 설계 편향을 고치지 않는다.
+4. Moderation은 interaction이며 lower-order coefficient는 기준점에서의 조건부 효과다.
+5. ±1 SD simple slopes보다 이론적으로 의미 있는 값과 관측범위를 우선한다.
+6. 조절된 매개는 conditional indirect effect와 index를 함께 본다.
+7. 측정오류와 반복측정은 경로계수와 표준오차에 직접 영향을 준다.
+8. GenAI는 흥미로운 경로를 만들어내는 도구가 아니라 인과적 가정과 과도한 문장을 공격하는 reviewer다.
