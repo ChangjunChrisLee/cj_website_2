@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -67,6 +101,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -142,7 +205,90 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#class" id="toc-class" class="nav-link active" data-scroll-target="#class">Class</a></li>
+  <li><a href="#오늘의-연구-질문" id="toc-오늘의-연구-질문" class="nav-link active" data-scroll-target="#오늘의-연구-질문">오늘의 연구 질문</a>
+  <ul class="collapse">
+  <li><a href="#수식을-읽기-전에-기호-세-가지를-익혀-두기" id="toc-수식을-읽기-전에-기호-세-가지를-익혀-두기" class="nav-link" data-scroll-target="#수식을-읽기-전에-기호-세-가지를-익혀-두기">수식을 읽기 전에 기호 세 가지를 익혀 두기</a></li>
+  </ul></li>
+  <li><a href="#did-밤에-ott를-보기-시작하면-덜-잘까" id="toc-did-밤에-ott를-보기-시작하면-덜-잘까" class="nav-link" data-scroll-target="#did-밤에-ott를-보기-시작하면-덜-잘까">1. DID · 밤에 OTT를 보기 시작하면 덜 잘까?</a>
+  <ul class="collapse">
+  <li><a href="#이론의-출발점-같은-사람에게-두-가지-결과가-있다면" id="toc-이론의-출발점-같은-사람에게-두-가지-결과가-있다면" class="nav-link" data-scroll-target="#이론의-출발점-같은-사람에게-두-가지-결과가-있다면">이론의 출발점 · 같은 사람에게 두 가지 결과가 있다면</a></li>
+  <li><a href="#왜-두-번-빼는가-편향이-남는-자리를-찾아보기" id="toc-왜-두-번-빼는가-편향이-남는-자리를-찾아보기" class="nav-link" data-scroll-target="#왜-두-번-빼는가-편향이-남는-자리를-찾아보기">왜 두 번 빼는가 · 편향이 남는 자리를 찾아보기</a>
+  <ul class="collapse">
+  <li><a href="#평행추세의-식을-문장으로-번역하기" id="toc-평행추세의-식을-문장으로-번역하기" class="nav-link" data-scroll-target="#평행추세의-식을-문장으로-번역하기">평행추세의 식을 문장으로 번역하기</a></li>
+  </ul></li>
+  <li><a href="#수업에서-그려-보는-연구설계-좋은-비교집단의-조건" id="toc-수업에서-그려-보는-연구설계-좋은-비교집단의-조건" class="nav-link" data-scroll-target="#수업에서-그려-보는-연구설계-좋은-비교집단의-조건">수업에서 그려 보는 연구설계 · 좋은 비교집단의 조건</a>
+  <ul class="collapse">
+  <li><a href="#시점이-여러-개라면-무엇을-더-볼-수-있나" id="toc-시점이-여러-개라면-무엇을-더-볼-수-있나" class="nav-link" data-scroll-target="#시점이-여러-개라면-무엇을-더-볼-수-있나">시점이 여러 개라면 무엇을 더 볼 수 있나?</a></li>
+  <li><a href="#점추정과-불확실성을-따로-읽기" id="toc-점추정과-불확실성을-따로-읽기" class="nav-link" data-scroll-target="#점추정과-불확실성을-따로-읽기">점추정과 불확실성을 따로 읽기</a></li>
+  </ul></li>
+  <li><a href="#관찰하지-못한-한-칸" id="toc-관찰하지-못한-한-칸" class="nav-link" data-scroll-target="#관찰하지-못한-한-칸">관찰하지 못한 한 칸</a></li>
+  <li><a href="#같은-계산을-회귀식으로" id="toc-같은-계산을-회귀식으로" class="nav-link" data-scroll-target="#같은-계산을-회귀식으로">같은 계산을 회귀식으로</a></li>
+  <li><a href="#수면-논문의-설계와-표-읽기" id="toc-수면-논문의-설계와-표-읽기" class="nav-link" data-scroll-target="#수면-논문의-설계와-표-읽기">수면 논문의 설계와 표 읽기</a></li>
+  <li><a href="#jeg-위기-전후에는-어떤-지역이-더-잘-버텼나" id="toc-jeg-위기-전후에는-어떤-지역이-더-잘-버텼나" class="nav-link" data-scroll-target="#jeg-위기-전후에는-어떤-지역이-더-잘-버텼나">JEG · 위기 전후에는 어떤 지역이 더 잘 버텼나?</a></li>
+  <li><a href="#논문을-읽는-연습-표의-숫자를-연구-질문으로-되돌리기" id="toc-논문을-읽는-연습-표의-숫자를-연구-질문으로-되돌리기" class="nav-link" data-scroll-target="#논문을-읽는-연습-표의-숫자를-연구-질문으로-되돌리기">논문을 읽는 연습 · 표의 숫자를 연구 질문으로 되돌리기</a>
+  <ul class="collapse">
+  <li><a href="#첫-번째-읽기-결과변수를-바꾸면-질문도-달라진다" id="toc-첫-번째-읽기-결과변수를-바꾸면-질문도-달라진다" class="nav-link" data-scroll-target="#첫-번째-읽기-결과변수를-바꾸면-질문도-달라진다">첫 번째 읽기 · 결과변수를 바꾸면 질문도 달라진다</a></li>
+  <li><a href="#두-번째-읽기-유의하다-두-개를-비교할-때" id="toc-두-번째-읽기-유의하다-두-개를-비교할-때" class="nav-link" data-scroll-target="#두-번째-읽기-유의하다-두-개를-비교할-때">두 번째 읽기 · ‘유의하다’ 두 개를 비교할 때</a></li>
+  <li><a href="#세-번째-읽기-연속적인-특성과-사후의-상호작용" id="toc-세-번째-읽기-연속적인-특성과-사후의-상호작용" class="nav-link" data-scroll-target="#세-번째-읽기-연속적인-특성과-사후의-상호작용">세 번째 읽기 · 연속적인 특성과 사후의 상호작용</a></li>
+  <li><a href="#짧은-설계-과제-내-자료에서-네-칸을-채울-수-있는가" id="toc-짧은-설계-과제-내-자료에서-네-칸을-채울-수-있는가" class="nav-link" data-scroll-target="#짧은-설계-과제-내-자료에서-네-칸을-채울-수-있는가">짧은 설계 과제 · 내 자료에서 네 칸을 채울 수 있는가?</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#도구변수-근로시간이-가족생활을-바꿀까" id="toc-도구변수-근로시간이-가족생활을-바꿀까" class="nav-link" data-scroll-target="#도구변수-근로시간이-가족생활을-바꿀까">2. 도구변수 · 근로시간이 가족생활을 바꿀까?</a>
+  <ul class="collapse">
+  <li><a href="#이론의-출발점-기울기에-무엇이-섞이는가" id="toc-이론의-출발점-기울기에-무엇이-섞이는가" class="nav-link" data-scroll-target="#이론의-출발점-기울기에-무엇이-섞이는가">이론의 출발점 · 기울기에 무엇이 섞이는가?</a></li>
+  <li><a href="#도구-z를-도입하면-왜-다른-기울기가-나오는가" id="toc-도구-z를-도입하면-왜-다른-기울기가-나오는가" class="nav-link" data-scroll-target="#도구-z를-도입하면-왜-다른-기울기가-나오는가">도구 Z를 도입하면 왜 다른 기울기가 나오는가?</a>
+  <ul class="collapse">
+  <li><a href="#손계산-두-집단-평균으로-wald-추정량-만들기" id="toc-손계산-두-집단-평균으로-wald-추정량-만들기" class="nav-link" data-scroll-target="#손계산-두-집단-평균으로-wald-추정량-만들기">손계산 · 두 집단 평균으로 Wald 추정량 만들기</a></li>
+  <li><a href="#누구의-효과인가-네-가지-반응-유형" id="toc-누구의-효과인가-네-가지-반응-유형" class="nav-link" data-scroll-target="#누구의-효과인가-네-가지-반응-유형">누구의 효과인가 · 네 가지 반응 유형</a></li>
+  </ul></li>
+  <li><a href="#단계-최소제곱법-무엇을-예측하는가" id="toc-단계-최소제곱법-무엇을-예측하는가" class="nav-link" data-scroll-target="#단계-최소제곱법-무엇을-예측하는가">2단계 최소제곱법 · 무엇을 예측하는가?</a>
+  <ul class="collapse">
+  <li><a href="#세-가지-반례로-도구의-조건-구분하기" id="toc-세-가지-반례로-도구의-조건-구분하기" class="nav-link" data-scroll-target="#세-가지-반례로-도구의-조건-구분하기">세 가지 반례로 도구의 조건 구분하기</a></li>
+  <li><a href="#did를-배운-학생에게-던지는-연결-질문" id="toc-did를-배운-학생에게-던지는-연결-질문" class="nav-link" data-scroll-target="#did를-배운-학생에게-던지는-연결-질문">DID를 배운 학생에게 던지는 연결 질문</a></li>
+  </ul></li>
+  <li><a href="#같은-정책으로-서로-다른-질문을-던지기" id="toc-같은-정책으로-서로-다른-질문을-던지기" class="nav-link" data-scroll-target="#같은-정책으로-서로-다른-질문을-던지기">같은 정책으로 서로 다른 질문을 던지기</a></li>
+  <li><a href="#부모-방문-연구의-1단계와-2단계" id="toc-부모-방문-연구의-1단계와-2단계" class="nav-link" data-scroll-target="#부모-방문-연구의-1단계와-2단계">부모 방문 연구의 1단계와 2단계</a></li>
+  <li><a href="#왜-나누는가-왜-도구를-믿는가" id="toc-왜-나누는가-왜-도구를-믿는가" class="nav-link" data-scroll-target="#왜-나누는가-왜-도구를-믿는가">왜 나누는가? 왜 도구를 믿는가?</a></li>
+  <li><a href="#혼인해체-연구에서-or과-확률-읽기" id="toc-혼인해체-연구에서-or과-확률-읽기" class="nav-link" data-scroll-target="#혼인해체-연구에서-or과-확률-읽기">혼인해체 연구에서 OR과 확률 읽기</a></li>
+  <li><a href="#논문을-읽는-연습-무엇의-한-단위인가" id="toc-논문을-읽는-연습-무엇의-한-단위인가" class="nav-link" data-scroll-target="#논문을-읽는-연습-무엇의-한-단위인가">논문을 읽는 연습 · 무엇의 한 단위인가?</a>
+  <ul class="collapse">
+  <li><a href="#실제-근로시간과-법정-기준의-단위를-연결하기" id="toc-실제-근로시간과-법정-기준의-단위를-연결하기" class="nav-link" data-scroll-target="#실제-근로시간과-법정-기준의-단위를-연결하기">실제 근로시간과 법정 기준의 단위를 연결하기</a></li>
+  <li><a href="#오즈를-확률로-바꾸어-보기" id="toc-오즈를-확률로-바꾸어-보기" class="nav-link" data-scroll-target="#오즈를-확률로-바꾸어-보기">오즈를 확률로 바꾸어 보기</a></li>
+  <li><a href="#도구를-비판적으로-읽는-구두-연습" id="toc-도구를-비판적으로-읽는-구두-연습" class="nav-link" data-scroll-target="#도구를-비판적으로-읽는-구두-연습">도구를 비판적으로 읽는 구두 연습</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#k-means-미국-50개-주와-한국-제조기업의-협력-전략" id="toc-k-means-미국-50개-주와-한국-제조기업의-협력-전략" class="nav-link" data-scroll-target="#k-means-미국-50개-주와-한국-제조기업의-협력-전략">3. K-means · 미국 50개 주와 한국 제조기업의 협력 전략</a>
+  <ul class="collapse">
+  <li><a href="#이론의-출발점-정답-열이-없는-데이터" id="toc-이론의-출발점-정답-열이-없는-데이터" class="nav-link" data-scroll-target="#이론의-출발점-정답-열이-없는-데이터">이론의 출발점 · 정답 열이 없는 데이터</a></li>
+  <li><a href="#거리와-중심-점-두-개에서-출발하기" id="toc-거리와-중심-점-두-개에서-출발하기" class="nav-link" data-scroll-target="#거리와-중심-점-두-개에서-출발하기">거리와 중심 · 점 두 개에서 출발하기</a>
+  <ul class="collapse">
+  <li><a href="#왜-하필-평균이-중심인가" id="toc-왜-하필-평균이-중심인가" class="nav-link" data-scroll-target="#왜-하필-평균이-중심인가">왜 하필 평균이 중심인가?</a></li>
+  </ul></li>
+  <li><a href="#목적함수와-반복-누가-어디에-속하는가" id="toc-목적함수와-반복-누가-어디에-속하는가" class="nav-link" data-scroll-target="#목적함수와-반복-누가-어디에-속하는가">목적함수와 반복 · 누가 어디에 속하는가?</a></li>
+  <li><a href="#척도-선택-자료를-바꾸지-않았는데-군집이-달라지는-이유" id="toc-척도-선택-자료를-바꾸지-않았는데-군집이-달라지는-이유" class="nav-link" data-scroll-target="#척도-선택-자료를-바꾸지-않았는데-군집이-달라지는-이유">척도 선택 · 자료를 바꾸지 않았는데 군집이 달라지는 이유</a>
+  <ul class="collapse">
+  <li><a href="#변수-선택-퀴즈" id="toc-변수-선택-퀴즈" class="nav-link" data-scroll-target="#변수-선택-퀴즈">변수 선택 퀴즈</a></li>
+  </ul></li>
+  <li><a href="#k를-선택하는-세-가지-질문" id="toc-k를-선택하는-세-가지-질문" class="nav-link" data-scroll-target="#k를-선택하는-세-가지-질문">K를 선택하는 세 가지 질문</a></li>
+  <li><a href="#거리를-정하면-비슷하다의-의미가-정해진다" id="toc-거리를-정하면-비슷하다의-의미가-정해진다" class="nav-link" data-scroll-target="#거리를-정하면-비슷하다의-의미가-정해진다">거리를 정하면 ’비슷하다’의 의미가 정해진다</a></li>
+  <li><a href="#r-실습-k를-고르고-중심을-읽기" id="toc-r-실습-k를-고르고-중심을-읽기" class="nav-link" data-scroll-target="#r-실습-k를-고르고-중심을-읽기">R 실습 · K를 고르고 중심을 읽기</a></li>
+  <li><a href="#연구-사례-기업은-누구와-rd를-하는가" id="toc-연구-사례-기업은-누구와-rd를-하는가" class="nav-link" data-scroll-target="#연구-사례-기업은-누구와-rd를-하는가">연구 사례 · 기업은 누구와 R&amp;D를 하는가?</a>
+  <ul class="collapse">
+  <li><a href="#그림-1을-읽는-순서" id="toc-그림-1을-읽는-순서" class="nav-link" data-scroll-target="#그림-1을-읽는-순서">그림 1을 읽는 순서</a></li>
+  <li><a href="#군집을-찾은-다음-무엇을-비교했을까" id="toc-군집을-찾은-다음-무엇을-비교했을까" class="nav-link" data-scroll-target="#군집을-찾은-다음-무엇을-비교했을까">군집을 찾은 다음 무엇을 비교했을까?</a></li>
+  </ul></li>
+  <li><a href="#두-응용-사례를-연결하는-해석-실험" id="toc-두-응용-사례를-연결하는-해석-실험" class="nav-link" data-scroll-target="#두-응용-사례를-연결하는-해석-실험">두 응용 사례를 연결하는 해석 실험</a>
+  <ul class="collapse">
+  <li><a href="#군집중심에서-한-관찰치의-배정을-설명하기" id="toc-군집중심에서-한-관찰치의-배정을-설명하기" class="nav-link" data-scroll-target="#군집중심에서-한-관찰치의-배정을-설명하기">군집중심에서 한 관찰치의 배정을 설명하기</a></li>
+  <li><a href="#두-중심에서-거리가-거의-같은-기업" id="toc-두-중심에서-거리가-거의-같은-기업" class="nav-link" data-scroll-target="#두-중심에서-거리가-거의-같은-기업">두 중심에서 거리가 거의 같은 기업</a></li>
+  <li><a href="#효율성을-어느-단계에-넣는가" id="toc-효율성을-어느-단계에-넣는가" class="nav-link" data-scroll-target="#효율성을-어느-단계에-넣는가">효율성을 어느 단계에 넣는가?</a></li>
+  <li><a href="#실습-마무리-결과를-한-장에-정리한다면" id="toc-실습-마무리-결과를-한-장에-정리한다면" class="nav-link" data-scroll-target="#실습-마무리-결과를-한-장에-정리한다면">실습 마무리 · 결과를 한 장에 정리한다면</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#마무리-계수-하나를-문장-하나로" id="toc-마무리-계수-하나를-문장-하나로" class="nav-link" data-scroll-target="#마무리-계수-하나를-문장-하나로">마무리 · 계수 하나를 문장 하나로</a>
+  <ul class="collapse">
+  <li><a href="#원문과-실습-자료" id="toc-원문과-실습-자료" class="nav-link" data-scroll-target="#원문과-실습-자료">원문과 실습 자료</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -170,28 +316,1090 @@ ul.task-list li input[type="checkbox"] {
 
 <p><a href="https://changjunlee.com/teaching/grad_stat/weekly_2/">Weekly content</a></p>
 <p><br></p>
-<section id="class" class="level3">
-<h3 class="anchored" data-anchor-id="class">Class</h3>
+<!-- ### Class -->
+<!-- -   Recommended books for the text mining in R -->
+<!--     -   [Text Mining with R](https://www.tidytextmining.com/index.html) (written by *Julia Silge* & *David Robinson*) -->
+<!--     -   [R로 하는 텍스트마이닝](https://bookdown.org/ahn_media/bookdown-demo/) (written by *안도현 교수님*) -->
+<!--     -   [Do it 쉽게 배우는 R 텍스트마이닝](https://github.com/youngwoos/Doit_textmining) (written by *김영우*) -->
+<!-- Code for hands-on practice -->
+<!-- -   [NLP_1](https://changjunlee.com/teaching/media_ds/about/nlp_1) -->
+<!-- -   [NLP_2](https://changjunlee.com/teaching/media_ds/about/nlp_2) -->
+<!-- -   [NLP_3](https://changjunlee.com/teaching/media_ds/about/nlp_3) -->
+<!-- -   [NLP_4](https://changjunlee.com/teaching/media_ds/about/nlp_4) -->
+<!-- <hr> -->
+<!-- **Recorded lecture** -->
+<!--  -->
+<section id="오늘의-연구-질문" class="level1">
+<h1>오늘의 연구 질문</h1>
+<p><strong>밤에 OTT를 보기 시작한 사람이 덜 잔다. 이 말은 밤에 OTT를 보지 않았으면 그 사람이 더 잤을 것이라는 뜻일까?</strong> 오늘 전반부에는 관찰하지 못한 결과를 어떻게 추정하는지 다룬다. 후반부에는 기업의 협력 기록에서 비슷한 전략을 가진 기업들을 어떻게 찾는지 살펴본다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>시간</th>
+<th>연구자가 묻는 질문</th>
+<th>수업에서 직접 해 볼 일</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>도입 + DID</td>
+<td>처치를 받은 집단은 처치가 없었으면 얼마나 변했을까?</td>
+<td>반사실을 그려 보고 수면 논문의 회귀계수를 분으로 환산한다.</td>
+</tr>
+<tr class="even">
+<td>도구변수</td>
+<td>정책 때문에 달라진 근로시간을 이용하면 무엇을 추정할 수 있을까?</td>
+<td>부모 방문과 이혼 논문에서 정책변수가 맡은 역할을 구별한다.</td>
+</tr>
+<tr class="odd">
+<td>K-means</td>
+<td>여러 지표에서 비슷한 관찰치는 무엇일까?</td>
+<td>미국 주별 군집중심을 읽고, 한국 제조기업의 R&amp;D 협력 전략을 해석한다.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>오늘 수업에서는</strong> 각 단원의 첫 수식과 손계산을 함께 풀고 대표 연구 논문의 표 하나를 읽는다. 사전 추세·약한 도구·군집 안정성에 관한 심화 설명은 토론과 복습에 활용할 수 있다.</p>
+<p><br></p>
+<section id="수식을-읽기-전에-기호-세-가지를-익혀-두기" class="level2">
+<h2 class="anchored" data-anchor-id="수식을-읽기-전에-기호-세-가지를-익혀-두기">수식을 읽기 전에 기호 세 가지를 익혀 두기</h2>
+<p>이 강의의 수식은 세 가지 질문으로 읽을 수 있다. <strong>무엇을 하나로 세는가? 무엇끼리 비교하는가? 마지막 숫자의 단위는 무엇인가?</strong> 첫 번째 질문을 놓치면 한 사람의 여러 날을 여러 사람으로 잘못 셀 수 있다. 두 번째를 놓치면 원래 있던 집단 차이를 처치 후의 효과로 읽기 쉽다. 마지막을 놓치면 확률이 0.05 변한 것과 점수가 0.05점 변한 것을 같은 크기의 변화로 착각한다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>자주 나오는 표기</th>
+<th>어떻게 읽을까?</th>
+<th>간단한 예</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>아래첨자 <span class="math inline">\(i,t\)</span></td>
+<td>누구의 어느 시점 값인가?</td>
+<td><span class="math inline">\(Y_{2,1}\)</span>은 두 번째 관찰 대상의 첫 번째 시점 결과다.</td>
+</tr>
+<tr class="even">
+<td>평균 <span class="math inline">\(\bar{x}\)</span>, 기댓값 <span class="math inline">\(E[X]\)</span></td>
+<td>어떤 대상을 평균내는가?</td>
+<td>관측한 세 값이 3, 5, 7이면 표본 평균은 5다. 기댓값은 우리가 모형화하는 모집단의 평균이다.</td>
+</tr>
+<tr class="odd">
+<td>조건부 표기 <span class="math inline">\(P(A\mid B)\)</span></td>
+<td>B를 이미 안다고 할 때 A는 얼마나 가능한가?</td>
+<td>야간 시청자 중 대학생의 비율과 대학생 중 야간 시청자의 비율은 분모가 다르다.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>손을 들고 답해 보자.</strong> 학생 열 명이 사흘 동안 수면과 미디어 이용을 기록했다. 개인별 일지는 30일분이다. “누가 덜 잤나?”를 물으면 한 행이 학생인지 학생의 하루인지 정해야 한다. “어떤 이용 유형이 있는가?”를 물으면 학생별로 사흘의 행동을 요약할지 고민한다. 자료가 같아도 관찰 단위가 바뀌면 평균의 분모와 수식의 기호가 바뀐다.</p>
+<p>전반부에서는 하나의 수치를 인과적으로 읽기 위해 가상 세계 하나를 설계한다. DID에서는 처치가 없었을 때의 변화이고, IV에서는 도구가 행동을 다르게 유도했을 때의 결과다. 후반부에서는 연구자가 고른 협력 지표를 바탕으로 관측한 자료의 구조를 요약한다. 한 단원을 마칠 때마다 같은 질문으로 돌아가자. <strong>방금 얻은 숫자 하나만으로 답할 수 있는 연구 질문은 어디까지인가?</strong></p>
+</section>
+</section>
+<section id="did-밤에-ott를-보기-시작하면-덜-잘까" class="level1">
+<h1>1. DID · 밤에 OTT를 보기 시작하면 덜 잘까?</h1>
+<section id="이론의-출발점-같은-사람에게-두-가지-결과가-있다면" class="level2">
+<h2 class="anchored" data-anchor-id="이론의-출발점-같은-사람에게-두-가지-결과가-있다면">이론의 출발점 · 같은 사람에게 두 가지 결과가 있다면</h2>
+<p>밤에 OTT를 보기 시작한 민지가 하루에 6시간을 잔다. “OTT 때문에 잠이 줄었다”는 주장은 무엇과 무엇을 비교한 것일까? 민지와 8시간 자는 친구의 차이일까? 지난 학기와 이번 학기 민지의 차이일까? 인과 질문에서 원하는 비교는 <strong>이번 학기의 같은 민지가 시청을 시작했을 때와, 같은 시점에 시청을 시작하지 않았을 때</strong>의 차이다. 두 상황에서 수업 시간표와 시험 일정 등 다른 조건은 같다고 생각한다. 이 비교를 명확하게 적는 언어가 잠재결과다.</p>
+<p><span class="math display">\[Y_{it}(1),\qquad Y_{it}(0),\qquad \tau_{it}=Y_{it}(1)-Y_{it}(0).\]</span></p>
+<p><span class="math inline">\(i\)</span>는 사람, <span class="math inline">\(t\)</span>는 시점이다. 괄호 안 1과 0은 각각 시청을 시작한 상황과 시작하지 않은 상황이다. <span class="math inline">\(Y\)</span>는 그 상황에서의 수면시간이다. 예컨대 두 값이 360분과 380분이라면 효과는 −20분이다. 실제로 시청을 시작한 민지에게서 관찰할 수 있는 값은 360분 하나다. 380분은 계산 설명을 위해 가정한 수치다. 민지에게 다음 날 시청을 멈춰 보라고 하면 날짜도 달라진다. 그다음 날의 수면을 곧바로 전날의 미관찰 결과 자리에 쓸 수는 없다.</p>
+<p>연구자는 한 사람의 두 결과를 모두 관찰하려는 대신, 관심 집단의 <strong>평균</strong>을 추정한다. DID에서 흔히 묻는 대상은 실제로 처치를 받은 사람들의 평균 처치효과(ATT)다. <span class="math inline">\(G=1\)</span>을 나중에 시청을 시작한 집단으로, <span class="math inline">\(t=1\)</span>을 시작 후 시점으로 두자.</p>
+<p><span class="math display">\[ATT=E[Y_1(1)-Y_1(0)\mid G=1].\]</span></p>
+<p><span class="math inline">\(E\)</span>는 여러 사람에 걸친 평균, 세로선 뒤의 <span class="math inline">\(G=1\)</span>은 평균을 낼 대상을 지정한다. 소리 내어 읽으면 “시청 시작자들이 시작한 뒤에, 시작했을 때와 시작하지 않았을 때의 수면 평균 차이”다. 이미 보던 사람이나 앞으로도 전혀 보지 않을 사람에게 같은 효과가 난다는 내용은 이 식에 들어 있지 않다.</p>
+</section>
+<section id="왜-두-번-빼는가-편향이-남는-자리를-찾아보기" class="level2">
+<h2 class="anchored" data-anchor-id="왜-두-번-빼는가-편향이-남는-자리를-찾아보기">왜 두 번 빼는가 · 편향이 남는 자리를 찾아보기</h2>
+<p>가장 쉬운 추정은 시청 시작자들의 앞뒤 평균을 빼는 것이다. 그러나 두 시험 사이 성적이 올랐다면 공부법 덕분일 수도 있고 두 번째 시험이 쉬웠기 때문일 수도 있다. 수면도 계절, 통학시간, 취업, 시험 일정에 영향을 받는다. 전후 비교는 같은 사람에게 원래부터 있던 차이를 상당 부분 걷어내지만 <strong>시간이 흐르는 동안 일어난 다른 변화</strong>는 함께 담는다.</p>
+<p>다른 방법은 사후 시점에 시청자와 미시청자의 평균을 빼는 것이다. 양쪽이 같은 연도의 계절과 학사 일정을 경험한다는 장점이 있다. 하지만 시청을 시작한 사람들이 원래부터 더 늦게 자던 사람들이라면 사후 격차에는 오래된 차이가 남는다. DID는 이 두 비교를 결합한다. 우선 각 집단 안에서 변화량을 계산하고, 양쪽 변화량에 공통으로 들어 있는 부분을 한 번 더 뺀다.</p>
+<p><span class="math display">\[\widehat\delta=(\bar Y_{A,후}-\bar Y_{A,전})-(\bar Y_{B,후}-\bar Y_{B,전}).\]</span></p>
+<p>윗줄의 막대는 집단 평균이다. 먼저 괄호 하나를 가리고 남은 괄호의 뜻을 말해 보자. 왼쪽은 <strong>실제로 시작한 사람들에게 일어난 모든 변화</strong>다. 오른쪽은 <strong>계속 미시청인 사람들에게 일어난 모든 변화</strong>다. 오른쪽을 왼쪽에서 뺄 때 “시작자들에게도 처치가 없었다면 이만큼의 변화가 생겼을 것”이라는 생각이 들어간다. 바로 이 대목에서 산술 문제가 연구설계 문제가 된다.</p>
+<p>같은 식은 <span class="math inline">\((\bar Y_{A,후}-\bar Y_{B,후})-(\bar Y_{A,전}-\bar Y_{B,전})\)</span>으로도 쓸 수 있다. 전자는 <strong>두 집단의 변화량 차이</strong>, 후자는 <strong>두 시점의 집단 격차 차이</strong>다. 숫자 네 개가 같으면 계산 결과도 같다. 뒤에서 JEG 논문의 위기 전·후 기울기를 읽을 때는 두 번째 관점이 특히 편리하다.</p>
+<section id="평행추세의-식을-문장으로-번역하기" class="level3">
+<h3 class="anchored" data-anchor-id="평행추세의-식을-문장으로-번역하기">평행추세의 식을 문장으로 번역하기</h3>
+<p><span class="math display">\[E[Y_1(0)-Y_0(0)\mid G=1]=E[Y_1(0)-Y_0(0)\mid G=0].\]</span></p>
+<p>양변에서 괄호 안 숫자는 모두 0이다. “두 집단 모두 처치를 받지 않은 세계를 상상한다”는 뜻이다. 왼쪽은 나중에 시작할 사람들의 무처치 변화, 오른쪽은 끝까지 미시청한 사람들의 무처치 변화다. 왼쪽의 사후 값은 실제 자료에서 보이지 않는다. 그러므로 두 집단의 관찰된 <em>사후</em> 추세가 같아야 한다고 읽으면 안 된다. 처치가 효과를 냈다면 실제 사후 추세는 오히려 갈라질 수 있다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>관찰한 상황</th>
+<th>평행추세와의 관계</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>시작 전 A가 B보다 매해 20분 덜 잤다.</td>
+<td>고정된 수준 차이는 허용된다. 시간에 따라 그 차이가 얼마나 움직였는지를 본다.</td>
+</tr>
+<tr class="even">
+<td>시작 전부터 해마다 A가 B보다 10분씩 더 빨리 수면이 줄었다.</td>
+<td>처치가 없어도 두 집단이 다르게 변할 수 있다는 증거다.</td>
+</tr>
+<tr class="odd">
+<td>두 집단이 여러 해 나란히 움직이다가 시청 시작과 동시에 A에만 야간근무가 생겼다.</td>
+<td>과거 추세가 유사했어도 사후의 별도 충격이 추정을 흐릴 수 있다.</td>
+</tr>
+</tbody>
+</table>
+<p>어디까지 틀릴 수 있는지도 계산해 보자. 관찰된 DID가 −20분이고 시청 시작자들이 처치가 없어도 비교집단보다 8분 더 적게 자게 되었을 상황이라면, DID에는 이미 −8분이 섞여 있다. 우리가 찾던 효과는 <span class="math inline">\(-20-(-8)=-12\)</span>분이다. 반대로 A가 원래 8분 더 많이 자게 되었을 상황이라면 추정된 −20분은 실제 감소를 과소평가한다. 이 계산은 평행추세를 증명하는 검정이 아니다. <strong>어떤 방향의 가정 위반이 결론을 얼마나 바꾸는가</strong>를 학생 스스로 따져 보는 연습이다.</p>
+</section>
+</section>
+<section id="수업에서-그려-보는-연구설계-좋은-비교집단의-조건" class="level2">
+<h2 class="anchored" data-anchor-id="수업에서-그려-보는-연구설계-좋은-비교집단의-조건">수업에서 그려 보는 연구설계 · 좋은 비교집단의 조건</h2>
+<p>같은 설문에 응답했다는 사실만으로 비교집단이 결정되지는 않는다. 시청을 시작한 고등학생과 이미 은퇴한 미시청자를 비교하면 연령에 따른 시간표 변화가 크게 다를 수 있다. 같은 학년의 미시청자를 비교하면 학기 일정은 더 비슷하지만 한쪽에만 수능 준비반이 생겼을 수 있다. <strong>누가, 언제, 어떤 이유로 시작했는지</strong>를 먼저 알아야 평행추세를 옹호할 수 있다. 비교집단을 고르면 결론을 적용할 수 있는 대상도 함께 정해진다.</p>
+<p><strong>시작 시점도 정의해야 한다.</strong> 앱 설치일, 구독 결제일, 밤에 처음 실제로 시청한 날은 세 가지 다른 날짜다. 수면을 바꾸는 사건을 ’야간 시청 시작’으로 정의했는데 설치일을 사용하면 실제 처치 전 며칠을 사후로 묶을 수 있다. 또 가입 전부터 체험판으로 밤에 시청했다면 ’처치 전에는 효과가 없었다’는 가정도 흔들린다. 논문의 연 단위 기록을 해석할 때는 관찰 사이에 시작한 정확한 시각까지 안다고 가정하지 않는다.</p>
+<p><strong>누구의 변화인지 확인한다.</strong> 같은 개인을 추적하는 패널에서는 전후가 같은 사람인지 확인할 수 있다. 매년 새 표본을 뽑는 반복 횡단면에서도 집단 평균으로 DID를 구할 수 있지만, 첫해의 A와 다음 해의 A가 같은 모집단을 대표해야 한다. 예를 들어 둘째 해에 야간 근무자만 대거 응답을 중단했다면 A의 평균 변화에는 응답자 구성 변화가 들어간다. 패널에서도 탈락이 있으므로 연도별 관측치 수와 남은 표본의 특성을 살핀다.</p>
+<p><strong>한 집단의 처치가 다른 집단에 전달되는가?</strong> 기숙사 룸메이트가 이어폰 없이 늦게까지 OTT를 본다면, 본인은 미시청자여도 잠이 줄 수 있다. 이때 미시청 집단도 처치의 영향을 받았기 때문에 비교의 의미가 달라진다. “이용자 본인의 효과”를 물을지 “기숙사 도입 전체의 효과”를 물을지에 따라 처치 단위를 학생으로 잡을 수도, 방이나 기숙사로 잡을 수도 있다. 같은 데이터를 받아도 연구 질문이 먼저 와야 하는 이유다.</p>
+<section id="시점이-여러-개라면-무엇을-더-볼-수-있나" class="level3">
+<h3 class="anchored" data-anchor-id="시점이-여러-개라면-무엇을-더-볼-수-있나">시점이 여러 개라면 무엇을 더 볼 수 있나?</h3>
+<p>도입 전 3년과 도입 후 2년이 있다면 가로축을 달력 연도와 함께 <strong>시작까지 남은 시간</strong>으로 표시해 보자. 시작 1년 전을 기준 시점으로 정하고 각 시점의 집단 격차가 기준 시점과 얼마나 다른지 그리면 사전 추세와 사후 효과의 변화를 한눈에 볼 수 있다. 이를 사건연구(event study) 그림이라고 한다. 세로축은 어느 집단의 수면시간 자체가 아니라 기준 시점 대비 <strong>집단 격차의 변화</strong>임을 판서해 두자.</p>
+<p>교육용으로 사전 두 시점의 집단 격차가 −21분과 −20분, 사후 두 시점이 −28분과 −35분이라고 하자. 마지막 사전 시점을 기준으로 하면 그림의 점은 차례로 −1, 0, −8, −15다. 기준 연도의 0은 선택한 기준으로부터의 거리라서 정의상 0이다. 사전의 −1은 작은 차이지만 표본오차가 크다면 다른 크기의 차이도 자료와 양립할 수 있다. 사전 검정의 p값 하나로 가정이 충족되었다고 확정할 수 없다.</p>
+<p>지역이나 학과가 차례로 도입한다면 같은 연도에도 어떤 집단은 이미 오래 이용했고 어떤 집단은 이제 막 시작한다. 늦게 시작한 집단의 효과를 재면서 일찍 시작한 집단을 비교 대상으로 쓰면 무엇이 섞일까? 일찍 시작한 집단의 효과가 두 번째 해에도 자라는 중이라면 그 성장분이 비교집단의 시간 변화에 들어간다. 이런 설계에서는 도입 시점이 같은 집단끼리 묶고, 해당 시점에 아직 도입하지 않은 집단 또는 끝까지 도입하지 않은 집단을 비교 대상으로 삼는 접근을 검토한다. 아래 수면 사례는 두 연도의 기본 설계에 집중한다.</p>
+</section>
+<section id="점추정과-불확실성을-따로-읽기" class="level3">
+<h3 class="anchored" data-anchor-id="점추정과-불확실성을-따로-읽기">점추정과 불확실성을 따로 읽기</h3>
+<p>DID가 −20분이라는 것과 그 −20분이 얼마나 정확한지는 다른 질문이다. 같은 학교 학생 500명이 하나의 학교 정책을 공유하면 500명이 독립적으로 500번 정책을 배정받은 셈이 아니다. 같은 학생을 여러 번 관찰해도 그 학생의 수면 기록은 서로 닮을 수 있다. 실제 분석에서는 처치가 배정된 단위와 오차가 함께 움직일 가능성을 고려해 표준오차를 설계한다. 처리 학교 하나와 비교 학교 하나뿐이라면 학생 수를 늘려도 학교 차원의 우연한 충격을 구분하기 어렵다.</p>
+<p><strong>해석 연습.</strong> 두 연구의 점추정이 모두 −20분이고 하나의 95% 신뢰구간은 [−24, −16], 다른 하나는 [−48, +8]이라고 하자. 첫 연구는 감소 크기를 더 좁게 추정한다. 둘째 연구는 상당한 감소와 작은 증가 모두와 양립한다. 두 연구의 비교집단이 모두 부적절했다면 좁은 구간도 그 설계 문제를 해결하지 못한다. 표를 읽을 때는 추정치, 불확실성, 비교의 설득력을 별도의 문장으로 말해 보자.</p>
+<details>
+<summary>
+판서 문제 · 부호를 바꿔도 이야기가 유지될까?
+</summary>
+<p>
+처치집단의 수면이 20분 늘고 비교집단은 35분 늘었다. 처치집단의 전후 변화는 양수지만 DID는 20 − 35 = −15분이다. 수면이 실제로 15분 줄었다고 읽으면 틀린다. 평행추세 아래에서는 처치가 없었다면 기대할 증가보다 15분 덜 늘었다. 반대로 두 집단이 모두 덜 잤더라도 비교집단이 훨씬 더 줄었다면 DID는 양수가 된다. 부호는 반사실과의 차이를 말해 준다.
+</p>
+</details>
+</section>
+</section>
+<section id="관찰하지-못한-한-칸" class="level2">
+<h2 class="anchored" data-anchor-id="관찰하지-못한-한-칸">관찰하지 못한 한 칸</h2>
+<p><strong>수업용 가상 예시.</strong> 같은 사람들을 두 해에 걸쳐 관찰했다. 2018년에는 모두 야간 OTT를 보지 않았다. 2019년에 시청을 시작한 사람을 A, 계속 보지 않은 사람을 B라고 하자. 표의 값은 하루 평균 수면 분이다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>집단</th>
+<th style="text-align: right;">2018</th>
+<th style="text-align: right;">2019</th>
+<th style="text-align: right;">변화</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A · 시청 시작</td>
+<td style="text-align: right;">430</td>
+<td style="text-align: right;">405</td>
+<td style="text-align: right;">−25</td>
+</tr>
+<tr class="even">
+<td>B · 계속 미시청</td>
+<td style="text-align: right;">450</td>
+<td style="text-align: right;">445</td>
+<td style="text-align: right;">−5</td>
+</tr>
+</tbody>
+</table>
+<p>A의 수면은 25분 줄었고, 2019년에 두 집단은 40분 차이가 난다. 첫 번째 수치에는 두 해 사이 모두에게 작용한 변화가, 두 번째 수치에는 2018년부터 있던 집단 차이가 들어 있다. 우리가 알고 싶은 것은 <strong>2019년의 A가 시청을 시작하지 않았다면 평균 몇 분을 잤을까</strong>이다.</p>
+<details>
+<summary>
+반사실을 계산해 보기
+</summary>
+<p>
+B의 변화량 −5분을 A의 출발점에 적용하면 430 − 5 = 425분이다. A의 관찰값은 405분이므로 추정효과는 405 − 425 = −20분이다. 변화량으로 계산해도 (405 − 430) − (445 − 450) = −20분이다. 두 계산이 같다는 것이 DID의 산술이다.
+</p>
+</details>
+<div class="demo">
+<p><label for="bpost"><strong>B의 2019년 수면시간을 바꿔 보자</strong> ·</label></p>
+<output id="bv">
+<p>445</p>
+</output>
+<p>분 <input id="bpost" type="range" min="415" max="465" step="1" value="445"> <svg viewbox="0 0 510 215" role="img" aria-label="두 집단의 전후 수면시간과 A의 반사실"> <g stroke="#cccccc"><path d="M70 20V174H330" fill="none"></path></g> <g font-size="13" fill="#345"><text x="8" y="24">465분</text><text x="8" y="174">390분</text><text x="77" y="202">2018</text><text x="290" y="202">2019</text></g> <path d="M95 90L300 140" fill="none" stroke="#006963" stroke-width="4"></path><path id="bline" d="M95 50L300 60" stroke="#425ca0" stroke-width="4"></path><path id="cfline" d="M95 90L300 100" stroke="#93621c" stroke-dasharray="7 4" stroke-width="3"></path> <g font-size="14"><text x="340" y="60" fill="#425ca0">━ B 미시청</text><text x="340" y="94" fill="#93621c">┄ A 반사실</text><text x="340" y="128" fill="#006963">━ A 관찰</text></g></svg></p>
+<output id="didout" aria-live="polite">
+<p>B의 변화 −5분 · A의 반사실 425분 · DID −20분</p>
+</output>
+</div>
+<script>
+document.getElementById('bpost').addEventListener('input',function(){const b=Number(this.value),cf=430+b-450;const y=v=>20+2*(465-v);document.getElementById('bv').textContent=b;document.getElementById('bline').setAttribute('d','M95 50L300 '+y(b));document.getElementById('cfline').setAttribute('d','M95 90L300 '+y(cf));document.getElementById('didout').textContent='B의 변화 '+(b-450)+'분 · A의 반사실 '+cf+'분 · DID '+(405-cf)+'분';});
+</script>
+<p><strong>질문.</strong> B도 25분 덜 자도록 슬라이더를 움직여 보자. A의 관찰값을 그대로 두었는데 효과가 0이 되는 이유는 무엇인가?</p>
+</section>
+<section id="같은-계산을-회귀식으로" class="level2">
+<h2 class="anchored" data-anchor-id="같은-계산을-회귀식으로">같은 계산을 회귀식으로</h2>
+<p><span class="math display">\[Y_{it}=a+bG_i+cP_t+d(G_iP_t)+e_{it}\]</span></p>
+<p><span class="math inline">\(G_i\)</span>는 시청 시작 집단이면 1, <span class="math inline">\(P_t\)</span>는 2019년이면 1이다. 네 칸의 평균을 식에 대입하면 <span class="math inline">\(a=450\)</span>은 B의 출발점, <span class="math inline">\(b=-20\)</span>은 도입 전 집단 격차, <span class="math inline">\(c=-5\)</span>는 B의 연도 변화, <span class="math inline">\(d=-20\)</span>은 A에서 추가로 나타난 변화다. 앞에서 배운 조절효과의 언어로 말하면 <strong>연도에 따른 기울기가 집단별로 얼마나 다른가</strong>이다. 표본 평균 네 개를 그대로 맞추는 단순 모형에서 이 대응이 정확히 성립한다.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 네 셀의 평균으로 계수만 확인하는 교실 예제</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cells <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">G =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">P =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sleep_min =</span> <span class="fu">c</span>(<span class="dv">450</span>, <span class="dv">445</span>, <span class="dv">430</span>, <span class="dv">405</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(sleep_min <span class="sc">~</span> G <span class="sc">*</span> P, <span class="at">data =</span> cells))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (Intercept) 450, G -20, P -5, G:P -20</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 네 평균에 모수 네 개를 맞췄으므로 이 예제로 표준오차를 구할 수 없다.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>평행추세</strong>는 A가 시작하지 않았을 경우 A와 B의 평균 수면 변화량이 같았을 것이라는 가정이다. 출발점은 달라도 된다. 예를 들어 A에서만 야간 근무가 늘어 시청 여부와 무관하게 수면이 10분 더 줄었을 상황이라면 A의 반사실은 415분이다. 이 경우 실제 효과는 −10분이고 단순 DID −20분에는 야간 근무의 영향이 섞인다. 사전 시점이 여러 개라면 추세를 그려 이런 우려를 점검할 수 있다. 사전 추세가 비슷해도 사후에 시작한 집단별 충격은 따로 살펴야 한다.</p>
+</section>
+<section id="수면-논문의-설계와-표-읽기" class="level2">
+<h2 class="anchored" data-anchor-id="수면-논문의-설계와-표-읽기">수면 논문의 설계와 표 읽기</h2>
+<blockquote class="blockquote">
+<p><strong>발제 도입</strong>　“방송 편성표에 맞춰 보던 때에는 프로그램이 끝나면 잘 시간이 왔죠. OTT에서는 다음 회를 언제 볼지 내가 정합니다. 이 자유가 생기면 원래 보던 방송의 시간대만 바뀔까요, 아니면 잠자리에 드는 시간까지 밀릴까요?”</p>
+</blockquote>
+<p><strong>왜 이 질문인가.</strong> 밤에 영상을 보는 사람과 일찍 자는 사람을 한 번 비교하면, 원래 늦게 자는 사람이 영상을 더 많이 본다는 설명도 가능하다. 연구진은 한국미디어패널에서 <strong>기존 미시청자가 시청을 시작하는 전환</strong>을 찾았다. 같은 사람의 이전 수면을 알 수 있다는 점이 이 자료를 선택한 이유다.</p>
+<p><strong>어떻게 측정했나.</strong> 정보통신정책연구원(KISDI)의 2018·2019년 미디어 다이어리는 응답자가 하루 24시간의 활동을 3일간 기록한 자료다. 연구진은 시청 활동과 이용 서비스 기록을 함께 읽어 OTT를 식별하고, 수면으로 기록된 구간으로 평일의 평균 수면시간과 취침 시각을 구성했다. 여기서 ’시청 시작’은 두 해의 일지에서 관찰된 전환이다. 가입 날짜나 한 해 동안의 모든 시청을 관측한 것은 아니다.</p>
+<p><strong>표 1을 띄우며.</strong> “전체 OTT 분석에서 처음부터 두 집단이 각각 858명이었던 것은 아닙니다. 미시청 후보 6,839명 중 시작자와 비교할 858명을 찾았습니다.” 매칭에는 성별, 2018년 연령, 교육 수준, 혼인 상태와 <strong>2018년의 총 수면시간·취침 시각</strong>을 썼다. 시작자 858명과 비교자 858명을 두 해 관찰하면 <strong>1,716명, 3,432명-연도</strong>다. 일지 3일을 독립적인 세 사람으로 세지 않는다. 뒤의 야간 시청 모형은 노출을 다시 정의해 매칭한 별도 표본이다. <em>원문 Data and methods, 그림 1–3, 표 1–5.</em></p>
+<p>Lee, Na &amp; Kim(2023)은 한국미디어패널 미디어 다이어리에서 2018년과 2019년을 비교했다. 주말과 특수한 날을 제외해 일상적인 수면을 포착한다. <strong>야간 OTT는 22–02시</strong>, <strong>심야 수면시간은 00–04시 중 잠든 시간</strong>이다. 두 시간창이 다르므로 결과표에서도 노출과 결과를 구분한다.</p>
+<ol type="1">
+<li><strong>집단을 정의한다.</strong> 전체 OTT 분석에서 2018년 미시청 후 2019년 시청을 시작한 표본은 858, 두 해 모두 미시청한 후보는 6,839였다.</li>
+<li><strong>비교집단을 구성한다.</strong> 랜덤포레스트로 관측 특성에 따른 처치 확률을 추정하고 가까운 성향점수로 비교 대상을 찾았다. 표 1에서 매칭 후 각 집단·연도 셀은 858, 합계는 3,432 관측치다. 비슷한 관측 특성을 가진 사람을 찾는 절차와, 그 사람들의 수면 변화량을 빼는 절차는 역할이 다르다.</li>
+<li><strong>분석을 두 번 읽는다.</strong> 먼저 하루 중 어느 때든 OTT를 시작한 집단을 분석한다. 이어 노출을 야간 시청으로 다시 정의하고 매칭과 분석을 반복한다. 후자의 표본은 2,112 관측치다.</li>
+<li><strong>개인 고정효과(FE)를 읽는다.</strong> 같은 사람을 반복 관찰해 평소의 수면 성향 같은 시간불변 차이를 흡수한다. 집단의 주효과도 개인 FE에 흡수되지만 집단×연도는 시간에 따라 달라져 추정할 수 있다.</li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 18%">
+<col style="width: 25%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>노출과 모형</th>
+<th style="text-align: right;">총 수면시간</th>
+<th style="text-align: right;">00–04시 수면시간</th>
+<th style="text-align: right;">취침 시각</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>전체 OTT · 표 2 OLS</td>
+<td style="text-align: right;">−0.116</td>
+<td style="text-align: right;">−0.043</td>
+<td style="text-align: right;">+0.111</td>
+</tr>
+<tr class="even">
+<td>전체 OTT · 표 3 개인 FE</td>
+<td style="text-align: right;">−0.114</td>
+<td style="text-align: right;">−0.044</td>
+<td style="text-align: right;">+0.110*</td>
+</tr>
+<tr class="odd">
+<td>야간 OTT · 표 4 OLS</td>
+<td style="text-align: right;">−0.318**</td>
+<td style="text-align: right;">−0.061</td>
+<td style="text-align: right;">+0.275**</td>
+</tr>
+<tr class="even">
+<td>야간 OTT · 표 5 개인 FE</td>
+<td style="text-align: right;">−0.281**</td>
+<td style="text-align: right;">−0.059</td>
+<td style="text-align: right;">+0.280***</td>
+</tr>
+</tbody>
+</table>
+<p>각 셀은 <strong>집단×2019 계수</strong>, 단위는 시간이다. 별 하나 이상은 원문에서 5% 수준 유의성을 표시한 값이다. 별이 없는 계수도 추정값과 불확실성을 함께 가진다.</p>
+<p><strong>표 5의 한 줄을 말로 읽으면</strong> 야간 시청 시작 집단의 총 수면시간은 비교집단의 변화에 비해 약 16.9분 더 줄었고, 취침 시각은 약 16.8분 더 늦어졌다. 00–04시 수면시간 차이는 약 −3.5분이며 통계적으로 유의하지 않았다. 원문 초록은 총 수면 감소를 약 18–20분, 취침 지연을 약 18분으로 요약한다. 위 계산은 표의 계수에 60을 곱한 값이다. 표 4의 취침 계수는 양수이고 본문 한 곳에 음수로 표기되어 있어, 여기서는 표와 ’지연’이라는 해석을 따랐다.</p>
+<details>
+<summary>
+토론 · 매칭이 성공하면 평행추세도 확인한 것일까?
+</summary>
+<p>
+성향점수의 중첩은 관측 특성이 비슷한 비교 대상을 찾을 수 있었다는 근거다. 두 해만 사용한 설계에서는 시작 전 여러 해의 수면 추세를 확인할 수 없다. 예컨대 야간 교대근무를 시작하면서 OTT 시청도 시작한 사람이 많았다면 개인 FE를 넣어도 그 변화는 남는다. 학생에게 추가로 수집하고 싶은 변수 하나와 필요한 사전 시점을 제안하게 하자.
+</p>
+</details>
+</section>
+<section id="jeg-위기-전후에는-어떤-지역이-더-잘-버텼나" class="level2">
+<h2 class="anchored" data-anchor-id="jeg-위기-전후에는-어떤-지역이-더-잘-버텼나">JEG · 위기 전후에는 어떤 지역이 더 잘 버텼나?</h2>
+<blockquote class="blockquote">
+<p><strong>발제 도입</strong>　“같은 금융위기를 겪은 두 지역이 있습니다. 두 곳 모두 기술 종류는 많지만, 한 곳에서는 기존 기술을 서로 결합해 새로운 제품을 만들기 쉽습니다. 위기가 닥쳤을 때 어느 쪽이 고용을 더 잘 유지할까요?”</p>
+</blockquote>
+<p><strong>연구 동기.</strong> 산업이 다양하면 특정 산업의 충격을 분산할 수 있다. 저자들은 여기서 한 걸음 더 나아가, 지역에 축적된 기술들이 <em>어떻게 연결되어 있는지</em>에 주목했다. 기존 역량을 재조합할 수 있다면 위기 때 생산이나 고용을 조정할 여지가 다를 수 있기 때문이다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>발제할 때 짚을 부분</th>
+<th>논문에서 실제로 한 일</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>관찰 단위와 기간</td>
+<td>EU 15개국의 NUTS II 통계지역 212곳을 2004–2011년 동안 매년 관찰했다. 결합한 패널은 212지역 × 8년 = <strong>1,696지역-연도</strong>다.</td>
+</tr>
+<tr class="even">
+<td>자료 결합</td>
+<td>European Regional Database의 고용·생산·인구, Eurostat의 노동자 교육 수준, 유럽특허청 PATSTAT의 특허출원을 지역 코드와 연도로 연결했다. 특허는 발명자 거주지 기준으로 배정하고 여러 발명자가 있으면 분할 계산했다.</td>
+</tr>
+<tr class="odd">
+<td>회복력의 측정</td>
+<td>인구 대비 취업자 비율을 먼저 구하고 그 로그의 전년 대비 차이를 계산했다. 위기 전후 이 증가율을 보면 충격을 단기적으로 흡수한 정도를 비교할 수 있다. 장기적으로 완전히 회복하기까지 걸린 시간을 재는 지표와는 구별한다.</td>
+</tr>
+<tr class="even">
+<td>결과표의 표본</td>
+<td>표 3 열 (1)–(3)은 1,158개, 상호작용을 읽는 열 (4)–(6)은 <strong>1,187개 지역-연도</strong>를 보고한다. 자료 구축 단계의 1,696행과 실제 계수 추정에 사용된 행 수를 구분한다.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>표 3으로 넘어가는 말.</strong> “특허는 지역이 갖고 있던 기술을 보여주고, 고용은 위기를 얼마나 버텼는지를 보여줍니다. 이제 위기 전과 후에 이 두 변수의 관계가 얼마나 달라졌는지 보겠습니다.” <em>원문 §3.1–3.2, §4, 표 3.</em></p>
+<p>Rocchetta 등(2022)은 EU 15개국 212개 지역을 분석했다(표 3). 질문은 <strong>금융위기 이후 기존 기술들이 서로 관련된 지역에서 고용성장률이 상대적으로 잘 유지되었는가</strong>이다. 여러 산업 기술을 보유한다는 ’다양성’과, 그 기술들이 함께 활용될 수 있을 만큼 연결되어 있다는 ’정합성(coherence, C)’을 구별한다.</p>
+<p>수면 연구에서는 시청 시작 여부가 이분형이다. 여기서는 지역들이 공통으로 위기를 겪고 기술적 정합성이 연속적으로 다르다. 원 연구는 <strong>지역·국가 수준을 고려한 다층 랜덤절편 모형</strong>을 사용한다. 위기 더미는 2008년까지 0, 이후 1이다. 핵심 해석은 다음 축약식에서 볼 수 있다. 원 모형에는 다른 기술변수와 그 상호작용, 통제변수도 포함된다.</p>
+<p><span class="math display">\[gEmp= a + bC + c\,Crisis + d(C\times Crisis)+\cdots\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 39%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>표 3, 열 (4)</th>
+<th style="text-align: right;">계수</th>
+<th>기울기 해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정합성 C</td>
+<td style="text-align: right;">0.00128</td>
+<td>위기 이전 정합성 한 단위 차이에 대응하는 고용성장률 차이</td>
+</tr>
+<tr class="even">
+<td>C × Crisis</td>
+<td style="text-align: right;">0.00706</td>
+<td>위기 이후 정합성 기울기에 더해지는 크기</td>
+</tr>
+<tr class="odd">
+<td>위기 이후 기울기</td>
+<td style="text-align: right;">0.00834</td>
+<td>0.00128 + 0.00706으로 직접 계산</td>
+</tr>
+</tbody>
+</table>
+<p>정합성이 한 단위 다른 두 지역을 떠올리자. 두 지역의 예측 격차가 위기 전 0.00128에서 위기 후 0.00834로 커진다. 이 두 격차의 차이가 0.00706이다. <strong>모든 지역의 고용이 늘었다는 뜻일까?</strong> 위기 때 모두 고용이 감소해도 정합성이 높은 지역의 하락폭이 상대적으로 작으면 이런 패턴이 나타난다. 기울기 합의 표준오차는 두 추정치의 공분산까지 필요하다.</p>
+<details>
+<summary>
+수면 논문과 어디까지 같은 논리인가?
+</summary>
+<p>
+두 연구 모두 전후 차이가 집단이나 특성에 따라 달라지는지 본다. JEG의 계수는 위기 이후 정합성과 고용성장의 관계가 얼마나 달라졌는지를 보여준다. 이를 정합성을 높이는 정책의 인과효과로 해석하려면 산업구성이나 국가별 정책 대응 같은 요인에 따라 위기 충격이 다르지 않았을지 추가 근거가 필요하다. 원문은 공간패널(표 4), 고정효과(표 5), 대안적 회복력 지표(표 6)로 결과를 점검한다.
+</p>
+</details>
+</section>
+<section id="논문을-읽는-연습-표의-숫자를-연구-질문으로-되돌리기" class="level2">
+<h2 class="anchored" data-anchor-id="논문을-읽는-연습-표의-숫자를-연구-질문으로-되돌리기">논문을 읽는 연습 · 표의 숫자를 연구 질문으로 되돌리기</h2>
+<section id="첫-번째-읽기-결과변수를-바꾸면-질문도-달라진다" class="level3">
+<h3 class="anchored" data-anchor-id="첫-번째-읽기-결과변수를-바꾸면-질문도-달라진다">첫 번째 읽기 · 결과변수를 바꾸면 질문도 달라진다</h3>
+<p>총 수면시간은 하루에 누적해서 얼마나 잤는지를 묻는다. 취침 시각은 언제 잠들었는지를 묻는다. 00–04시 수면시간은 특정 시간창에서 얼마나 잤는지를 묻는다. 예를 들어 평소 자정부터 아침 7시까지 자던 사람이 새벽 1시부터 아침 8시까지 잤다고 하자. 총 수면은 7시간으로 유지되고, 취침 시각은 한 시간 늦어지고, 00–04시 수면은 4시간에서 3시간으로 줄어든다. 반대로 오후 11시부터 아침 7시까지 자던 사람이 자정부터 아침 7시까지 자면 총 수면은 한 시간 줄지만 00–04시 수면은 그대로다. 하나의 행동 변화로도 결과 세 개의 방향과 크기가 달라질 수 있다.</p>
+<p>이제 표 5로 돌아가 보자. 총 수면과 취침 시각의 계수가 거의 같은 크기에 반대 부호를 보인다. 이를 “같은 사람이 늦게 잔 만큼 정확하게 덜 잤다”라고 읽어도 될까? 각 열은 <strong>결과별 집단 평균의 상대적 변화</strong>다. A라는 사람은 취침이 크게 늦어지고 B라는 사람은 수면이 크게 줄어도 평균 계수는 비슷할 수 있다. 두 결과 사이의 개인 수준 관계나 매개 경로를 보이려면 개인별 변화를 직접 분석해야 한다. 같은 표에 있다는 사실이 매개 분석을 대신하지 않는다.</p>
+</section>
+<section id="두-번째-읽기-유의하다-두-개를-비교할-때" class="level3">
+<h3 class="anchored" data-anchor-id="두-번째-읽기-유의하다-두-개를-비교할-때">두 번째 읽기 · ‘유의하다’ 두 개를 비교할 때</h3>
+<p>전체 OTT 모형의 총 수면 계수와 야간 OTT 모형의 총 수면 계수를 보고 “한쪽만 유의하므로 둘의 효과는 유의하게 다르다”고 쓰기 쉽다. 두 모형은 노출 정의가 다르고 매칭을 거친 분석 표본도 다르다. 각 별표는 해당 계수가 자기 모형 안에서 0과 구분되는지를 표시한다. 두 계수의 <strong>차이</strong>에 대한 표준오차는 그 차이를 목표로 설계한 분석에서 구해야 한다. 수업에서는 먼저 “야간 노출에 집중했을 때 총 수면 감소 추정치가 더 크게 나타났다” 정도로 읽고, 어떤 분석이 두 노출의 차이를 직접 검정할 수 있을지 토론한다.</p>
+<p>시간 단위도 점검하자. 표 5의 총 수면 추정치 −0.281시간을 −28.1분으로 읽는 오류가 자주 나온다. 소수점 뒤 값은 시간의 분수이므로 60을 곱한다. 취침 시각의 +0.280도 마찬가지다. 만약 결과변수가 ’수면 부족 여부’라는 0·1 변수였다면 선형확률모형에서 −0.05는 5분이 아니라 5%포인트 감소다. 같은 DID 식을 보더라도 결과 열의 단위가 해석을 결정한다.</p>
+</section>
+<section id="세-번째-읽기-연속적인-특성과-사후의-상호작용" class="level3">
+<h3 class="anchored" data-anchor-id="세-번째-읽기-연속적인-특성과-사후의-상호작용">세 번째 읽기 · 연속적인 특성과 사후의 상호작용</h3>
+<p>JEG의 단순화한 식에서 위기 전에는 <span class="math inline">\(Crisis=0\)</span>이므로 정합성 기울기는 <span class="math inline">\(b\)</span>다. 위기 후에는 <span class="math inline">\(Crisis=1\)</span>이므로 정합성에 곱해지는 계수를 모으면 <span class="math inline">\((b+d)C\)</span>가 된다. 원문 표에서 <span class="math inline">\(d=0.00706\)</span>이다. 비교할 두 지역의 정합성 차이가 정확히 한 단위일 때 두 지역 간 예측 격차의 전후 차이가 0.00706이다. 차이가 0.2단위라면 같은 선형식에서 기대되는 격차 변화는 <span class="math inline">\(0.2\times0.00706=0.001412\)</span>다. 이는 가상으로 정한 정합성 차이에 대한 계산이며 특정 지역들의 실제 관측 차이를 보고한 값은 아니다.</p>
+<p>이번에는 정합성 수준이 주어진 지역 하나를 고정하고 전후를 비교해 보자. 축약식에서 위기 전후의 예측 차이는 <span class="math inline">\(c+dC\)</span>다. 따라서 위기 더미의 주효과 <span class="math inline">\(c\)</span>는 정합성이 0일 때의 조건부 변화다. 실제 원 모형에는 다른 변수와의 위기 상호작용도 있어서 그것들의 값 역시 지정해야 한다. 이처럼 “위기의 효과는 얼마인가?”라는 질문과 “정합성과 고용성장의 관계는 위기 때 얼마나 달라졌는가?”라는 질문은 같은 표에서도 서로 다른 계수 조합을 요구한다.</p>
+</section>
+<section id="짧은-설계-과제-내-자료에서-네-칸을-채울-수-있는가" class="level3">
+<h3 class="anchored" data-anchor-id="짧은-설계-과제-내-자료에서-네-칸을-채울-수-있는가">짧은 설계 과제 · 내 자료에서 네 칸을 채울 수 있는가?</h3>
+<p>학생 각자가 관심 있는 플랫폼 기능을 하나 고른다. 예를 들어 일부 이용자에게만 자동재생 기본 설정이 바뀌었다고 가정한다. 종이에 도입 전과 도입 후 두 열, 기능이 바뀐 이용자와 그대로인 이용자 두 행을 그리고 각 칸에 어떤 기록을 넣을지 적는다. 한 사람이 두 기기를 쓰거나 계정을 공유하면 관찰 단위를 어떻게 잡을지도 논의한다. 도입 직후 신규 회원이 급증했다면 가입 시점이 기존 집단 비교를 흔드는 이유도 설명해 본다.</p>
+<details>
+<summary>
+답안에 꼭 들어갈 문장
+</summary>
+<p>
+“비교집단이 필요한 이유는 기능이 바뀐 이용자에게도 설정 변경이 없었다면 발생했을 시간 변화를 추정하기 위해서다.” 여기에 평행추세를 위협할 구체적인 사건과 확보할 수 있는 사전 자료를 하나씩 덧붙인다. 예를 들어 같은 주에 처치집단만 요금제를 변경했다면, 변경 전 여러 달의 추세가 비슷했다는 확인만으로 그 충격을 제거하기는 어렵다.
+</p>
+</details>
+</section>
+</section>
+</section>
+<section id="도구변수-근로시간이-가족생활을-바꿀까" class="level1">
+<h1>2. 도구변수 · 근로시간이 가족생활을 바꿀까?</h1>
+<section id="이론의-출발점-기울기에-무엇이-섞이는가" class="level2">
+<h2 class="anchored" data-anchor-id="이론의-출발점-기울기에-무엇이-섞이는가">이론의 출발점 · 기울기에 무엇이 섞이는가?</h2>
+<p>근무시간이 짧은 사람일수록 부모를 자주 방문한다고 하자. 한 시간 일찍 퇴근해서 방문할 여유가 생겼을 수 있다. 반대로 부모를 돌봐야 해서 직장을 옮기거나 근무시간을 줄였을 수도 있다. 두 설명 모두 자료에서 같은 방향의 상관을 만들 수 있지만, 회사가 근무시간을 줄였을 때의 결과를 예측하는 근거는 서로 다르다. 도구변수(instrumental variable, IV)는 <strong>관심 행동을 바꾼 여러 이유 중 어떤 이유에서 비롯된 변화인가</strong>를 추적한다.</p>
+<p><span class="math display">\[Y_i=\alpha+\beta X_i+u_i.\]</span></p>
+<p><span class="math inline">\(X\)</span>는 실제 근로시간, <span class="math inline">\(Y\)</span>는 방문 빈도, <span class="math inline">\(u\)</span>는 식에 따로 쓰지 않은 방문의 결정요인을 모은 항이다. <span class="math inline">\(\beta\)</span>를 근로시간의 인과효과로 해석하고 싶다. 그런데 가족의 돌봄 필요가 시간에 따라 변하고 그것이 근로시간도 바꾼다면 <span class="math inline">\(X\)</span>와 <span class="math inline">\(u\)</span>는 같이 움직인다. 이것을 <strong>내생성</strong>이라고 부른다. 수식을 쓰는 목적은 막연히 ’교란이 있을 것’이라고 말하는 데 머무르지 않고 어디에 무엇이 섞이는지를 밝히는 것이다.</p>
+<p>단순회귀에서 모집단 기울기는 다음처럼 나뉜다. Cov는 두 변수가 함께 움직이는 정도인 공분산이고, Var는 하나의 변수가 퍼진 정도인 분산이다.</p>
+<p><span class="math display">\[\frac{\operatorname{Cov}(X,Y)}{\operatorname{Var}(X)}
+=\beta+\frac{\operatorname{Cov}(X,u)}{\operatorname{Var}(X)}.\]</span></p>
+<p>오른쪽 둘째 항이 0이면 자료에서 관찰한 기울기를 원하는 효과로 읽을 수 있다. 반면 가까이 사는 자녀가 방문을 자주 하면서 일도 더 오래 할 수 있다면, 오래 일할수록 방문이 줄어드는 효과가 상쇄되어 관찰된 기울기가 0에 가까워질 수도 있다. 편향의 부호는 사례에 따라 달라진다. “통제변수를 넣으면 계수가 항상 작아진다”는 규칙은 없다.</p>
+</section>
+<section id="도구-z를-도입하면-왜-다른-기울기가-나오는가" class="level2">
+<h2 class="anchored" data-anchor-id="도구-z를-도입하면-왜-다른-기울기가-나오는가">도구 Z를 도입하면 왜 다른 기울기가 나오는가?</h2>
+<p>관심 변수 <span class="math inline">\(X\)</span> 밖에서 그 변화를 유도하는 변수 <span class="math inline">\(Z\)</span>를 찾는다. 쉬운 예로 튜터 이용권을 추첨하는 수업을 생각해 보자. <span class="math inline">\(Z\)</span>는 당첨 여부, <span class="math inline">\(X\)</span>는 실제 이용 여부, <span class="math inline">\(Y\)</span>는 시험 점수다. 추첨 결과는 누가 이용할지를 어느 정도 바꾼다. 이용 여부에는 여전히 학생의 동기가 들어 있지만 당첨 여부는 학생이 고르지 않았다. 따라서 ’당첨 때문에 달라진 이용’에 집중할 여지가 생긴다.</p>
+<p>위에서 쓴 결과식의 양변에 대해 <span class="math inline">\(Z\)</span>와의 공분산을 취하면 다음 식을 얻는다.</p>
+<p><span class="math display">\[\operatorname{Cov}(Z,Y)=\beta\operatorname{Cov}(Z,X)+\operatorname{Cov}(Z,u).\]</span></p>
+<p>단순한 선형 구조식에서 <span class="math inline">\(Z\)</span>가 결과식의 오차와 체계적으로 함께 움직이지 않는다고 두면 마지막 항은 0이다. 또한 <span class="math inline">\(Z\)</span>가 실제로 <span class="math inline">\(X\)</span>를 움직이면 나눗셈의 분모가 0이 아니다. 이때 <span class="math inline">\(\beta=\operatorname{Cov}(Z,Y)/\operatorname{Cov}(Z,X)\)</span>다. 앞 절의 OLS는 <strong>X의 모든 변동</strong>을 사용했다. IV 식의 분자와 분모에는 모두 <strong>Z와 함께 움직이는 변동</strong>이 들어간다. 두 기울기가 달라지는 이유를 이 차이에서 찾을 수 있다.</p>
+<section id="손계산-두-집단-평균으로-wald-추정량-만들기" class="level3">
+<h3 class="anchored" data-anchor-id="손계산-두-집단-평균으로-wald-추정량-만들기">손계산 · 두 집단 평균으로 Wald 추정량 만들기</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>수업용 가상 추첨</th>
+<th style="text-align: right;">학생 수</th>
+<th style="text-align: right;">실제 튜터 이용률</th>
+<th style="text-align: right;">평균 시험점수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>당첨</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">70%</td>
+<td style="text-align: right;">78점</td>
+</tr>
+<tr class="even">
+<td>미당첨</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">30%</td>
+<td style="text-align: right;">76점</td>
+</tr>
+</tbody>
+</table>
+<p>먼저 추첨 자체의 효과를 구한다. 당첨자는 평균 2점 높다. 이를 <strong>축약형 효과</strong> 또는 무작위 배정의 맥락에서 배정의도 효과(ITT)라고 부른다. 다음은 행동 변화를 본다. 추첨은 이용률을 0.70 − 0.30 = 0.40 높였다. 이 값이 <strong>1단계 효과</strong>다. 이제 두 값을 나눈다.</p>
+<p><span class="math display">\[\hat\beta_{Wald}=\frac{\bar Y_{Z=1}-\bar Y_{Z=0}}{\bar X_{Z=1}-\bar X_{Z=0}}=\frac{78-76}{0.70-0.30}=5.\]</span></p>
+<p>왜 2점을 다시 나눌까? 100명으로 환산하면 추첨으로 생긴 평균 점수 차이의 총합은 200점이고 이용자 수 차이는 40명이다. 추첨이 점수에 영향을 미치는 유일한 경로가 실제 이용이고 아래의 조건이 맞으면, 그 200점을 이용 여부가 바뀐 40명에 대응시켜 평균 5점으로 읽는다. <strong>40%포인트는 식에서 0.40</strong>이다. 40으로 나눠 0.05점을 얻으면 단위가 틀린다. 이 표는 교육용 가상 사례이며 아래 노동패널 연구의 추정값과 구별한다.</p>
+</section>
+<section id="누구의-효과인가-네-가지-반응-유형" class="level3">
+<h3 class="anchored" data-anchor-id="누구의-효과인가-네-가지-반응-유형">누구의 효과인가 · 네 가지 반응 유형</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>한 학생을 두 상황에 놓았을 때</th>
+<th>미당첨이면</th>
+<th>당첨이면</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>늘 이용하는 학생</td>
+<td>이용</td>
+<td>이용</td>
+</tr>
+<tr class="even">
+<td>추첨 결과에 반응하는 학생</td>
+<td>미이용</td>
+<td>이용</td>
+</tr>
+<tr class="odd">
+<td>어느 쪽이든 이용하지 않는 학생</td>
+<td>미이용</td>
+<td>미이용</td>
+</tr>
+<tr class="even">
+<td>반대 방향으로 반응하는 학생</td>
+<td>이용</td>
+<td>미이용</td>
+</tr>
+</tbody>
+</table>
+<p>각자에게 실제 추첨 결과는 하나뿐이어서 개인의 유형을 관측값 하나로 확정할 수 없다. 당첨자가 이용했다고 해서 모두 두 번째 유형인 것도 아니다. 무작위 배정, 관련성, 배제제약, 그리고 당첨 때문에 오히려 이용을 중단하는 학생이 없다는 <strong>단조성</strong>을 가정하면, 위 표의 5점은 두 번째 유형의 평균 효과다. 이를 국소평균처치효과(LATE)라고 한다. 이용 의지가 아주 강하거나 전혀 없는 학생에게는 다른 효과가 있을 수 있다.</p>
+<p>이 네 유형 설명은 행동이 이용·미이용인 <strong>이분형 처치</strong>에 해당한다. 근로시간은 연속적이다. 어떤 근로자는 정책 때문에 1시간, 다른 근로자는 4시간 줄일 수 있다. 이 경우에는 이분형 사례의 ’40명’을 그대로 찾는 대신, 정책이 유도한 시간 변화에 의해 어떤 사람의 어느 범위 효과가 추정에 더 많이 반영되는지를 생각한다. 시간을 한 시간 줄이는 효과가 근로자마다 다르면 모든 사람에게 적용되는 단일 효과로 일반화하려면 추가 가정이 필요하다.</p>
+</section>
+</section>
+<section id="단계-최소제곱법-무엇을-예측하는가" class="level2">
+<h2 class="anchored" data-anchor-id="단계-최소제곱법-무엇을-예측하는가">2단계 최소제곱법 · 무엇을 예측하는가?</h2>
+<p><strong>1단계.</strong> <span class="math inline">\(X_i=\pi_0+\pi_1Z_i+v_i\)</span>를 적합한다. 각 학생의 이용 여부를 도구에 회귀해 예측값 <span class="math inline">\(\widehat X_i\)</span>를 만든다. 가상 사례에서 당첨자의 예측 이용률은 0.70, 미당첨자는 0.30이다. 학습 동기를 바탕으로 개인별 이용 여부를 최대한 정확하게 맞히는 기계학습 문제가 아니다. 여기서 예측값의 역할은 <strong>추첨이 만든 이용률 차이</strong>를 추려내는 것이다.</p>
+<p><strong>2단계.</strong> <span class="math inline">\(Y_i=\alpha+\beta\widehat X_i+e_i\)</span>의 기울기를 구한다. 위 표에서 좌표 두 개는 (0.30, 76)과 (0.70, 78)이다. 이 둘을 잇는 직선의 기울기는 세로 변화 2를 가로 변화 0.40으로 나눈 5다. 이분형 도구 하나와 상수항만 있는 경우 이 계산은 바로 위의 Wald 비율과 일치한다. 도구 또는 공변량이 여럿일 때는 회귀를 이용해 이 논리를 확장한다.</p>
+<p><strong>표준오차에는 왜 전용 추정기를 쓸까?</strong> 두 번째 회귀에 넣은 <span class="math inline">\(\widehat X\)</span>는 원래 관측한 행동을 대신해 1단계에서 만들어 낸 값이다. 일반 OLS 프로그램은 사용자가 넣은 열이 어떻게 만들어졌는지를 알지 못한다. 수업에서는 두 단계로 점추정이 나오는 과정을 손으로 확인하고, 실제 논문에서는 IV 추정과 그에 맞는 분산 계산을 지원하는 함수를 사용한다. 패널에서 개인별 반복 관찰을 사용하면 어떤 단위에서 오차가 연관되는지도 함께 고려한다.</p>
+<section id="세-가지-반례로-도구의-조건-구분하기" class="level3">
+<h3 class="anchored" data-anchor-id="세-가지-반례로-도구의-조건-구분하기">세 가지 반례로 도구의 조건 구분하기</h3>
+<ol type="1">
+<li><strong>약한 도구.</strong> 추첨 후 이용률이 50%와 49%라면 분모는 0.01이다. 점수 차이가 우연히 0.2점만 움직여도 비율은 20점이나 움직인다. 무작위 추첨이라도 실제 이용을 거의 바꾸지 못하면 이용의 효과를 정확히 추정하기 어렵다. 1단계에서 계수의 크기, 구간, 도구의 통계적 강도를 함께 읽는 이유다.</li>
+<li><strong>배제제약 위반.</strong> 당첨된 학생에게 튜터뿐 아니라 시험 요약지도 준다면, 2점에는 요약지의 효과가 들어간다. 추첨이 완벽했고 이용률 차이가 커도 이용의 효과에는 별도 경로가 섞인다. 연구자는 정책이나 프로그램의 실제 운영을 알아야 이 우려에 답할 수 있다.</li>
+<li><strong>외생성 위반.</strong> 추첨이라고 설명했지만 실제로는 성적이 오를 것으로 예상되는 학생에게 우선권을 주었다면 당첨 집단과 미당첨 집단의 잠재 점수가 다를 수 있다. 여기서는 추첨이 이루어지는 과정이 문제다. 당첨자에게 무엇을 추가로 제공했는지를 묻는 앞선 반례와 구별해 보자.</li>
+</ol>
+<details>
+<summary>
+확인 문제 · 1단계가 강하면 방향도 믿을 수 있을까?
+</summary>
+<p>
+가령 당첨이 이용률을 0.50 올리고 점수는 2점 올렸다고 하자. 단순 비율은 4점이다. 그런데 당첨자 전원에게 준 시험 요약지가 평균 1점을 올렸음을 별도의 실험에서 알았다면, 이용을 통해 설명할 몫은 1점이고 같은 단순 모형의 비율은 2점이다. 큰 이용률 차이는 나눗셈을 안정시키지만 분자에 어떤 경로가 들어갔는지까지 알려주지는 않는다.
+</p>
+</details>
+</section>
+<section id="did를-배운-학생에게-던지는-연결-질문" class="level3">
+<h3 class="anchored" data-anchor-id="did를-배운-학생에게-던지는-연결-질문">DID를 배운 학생에게 던지는 연결 질문</h3>
+<p>같은 주 40시간제 자료라도 연구 질문에 따라 정책의 역할은 달라진다. ’제도가 시행된 사업장에서 방문이 더 늘었는가?’를 묻는다면 <strong>정책 적용</strong>을 처치로 놓고 적용 전후와 비교집단을 설계할 수 있다. ’실제 근로시간을 줄이면 방문이 늘어나는가?’를 묻는다면 <strong>실제 시간</strong>이 처치이며 정책은 그 시간을 움직이는 도구의 후보가 된다. 첫 질문에 설득력 있게 답해도 두 번째 질문에는 추가로 강한 1단계와 배제제약이 필요하다. 정책이 주말 배치도 바꾼다면 그 경로는 첫 질문에서는 정책 효과의 일부지만 둘째 질문에서는 시간 효과를 분리하는 데 장애가 된다.</p>
+</section>
+</section>
+<section id="같은-정책으로-서로-다른-질문을-던지기" class="level2">
+<h2 class="anchored" data-anchor-id="같은-정책으로-서로-다른-질문을-던지기">같은 정책으로 서로 다른 질문을 던지기</h2>
+<p>부모님이 갑자기 아파서 근무시간을 줄이고 방문을 늘렸다고 하자. 이 사람의 기록에서는 근로시간과 방문 빈도가 반대로 움직인다. 그렇지만 근로시간을 줄여 준 정책이 같은 변화를 일으킨다고 바로 결론 내리기는 어렵다. 부모 건강이 두 변수에 동시에 영향을 주었기 때문이다. 이런 이유로 실제 근로시간이 결과식의 오차와 관련될 때 <strong>내생성</strong>이 생긴다.</p>
+<p>김혜원 교수님과의 두 연구는 한국의 법정 주당 근로시간이 <strong>44시간에서 40시간으로 단계적으로 단축</strong>된 같은 제도 변화에 주목했다. 2004년부터 2011년까지 사업장 규모와 업종에 따라 적용 시점이 달랐다. 법정 기준이 네 시간 줄어도 초과근무 때문에 실제 근로시간은 네 시간보다 적게 줄 수 있다. 이 차이가 두 논문의 질문을 가른다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>논문</th>
+<th>정책변수 Z가 하는 일</th>
+<th>결과 Y</th>
+<th>계수를 읽는 단위</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kim, Lee &amp; Do (2019), 부모 방문</td>
+<td>실제 주당 근로시간 X를 움직이는 도구</td>
+<td>연간 부모 방문 빈도의 로그</td>
+<td>정책이 유도한 실제 근로시간 1시간 차이</td>
+</tr>
+<tr class="even">
+<td>Kim &amp; Lee (2019), 혼인해체</td>
+<td>결과 모형에 직접 넣는 설명변수</td>
+<td>다음 해 또는 2년 후의 이혼 사건</td>
+<td>남편이 주 40시간 기준의 적용을 받는 경우와 비교 조건의 차이</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="부모-방문-연구의-1단계와-2단계" class="level2">
+<h2 class="anchored" data-anchor-id="부모-방문-연구의-1단계와-2단계">부모 방문 연구의 1단계와 2단계</h2>
+<blockquote class="blockquote">
+<p><strong>발제 도입</strong>　“부모님을 자주 찾아뵙는 사람이 근무시간도 짧다면, 퇴근이 빨라서 방문이 늘었을까요? 아니면 부모님을 돌볼 일이 생겨 근무를 줄였을까요? 이 둘을 구분하려고 개인의 가족 사정 바깥에서 근무시간을 바꾼 제도를 찾았습니다.”</p>
+</blockquote>
+<p><strong>자료 선택과 표본 선정.</strong> 한국노동패널은 1998년에 시작됐지만 이 연구의 출발점은 <strong>2005년</strong>이다. 그해부터 부모 생존 여부를 물어 별거 중인 부모를 방문할 수 있는 사람을 확인할 수 있었다. 2005년에 18–64세인 남성 가운데 주 35시간 이상 일하는 전일제 임금근로자로 범위를 좁히고, 살아 계신 부모 중 적어도 한 분과 따로 거주하는 경우를 포함했다. 5인 미만 사업장의 전일제 임금근로자도 표본에는 들어가지만 당시 단축 제도의 적용 대상은 아니었다. 남성으로 제한한 데에는 여성의 전일제 취업 여부 자체가 정책과 함께 바뀔 가능성을 고려한 이유도 있다.</p>
+<p><strong>측정과 분모.</strong> 가구주 또는 배우자가 별거 부모를 지난 1년간 얼마나 방문했는지 응답했다. 근로시간은 휴게시간을 제외한 본인의 실제 주당 근무시간이다. 기준연도 <strong>1,072명</strong>을 출발점으로 2014년까지 분석에 포함된 기록이 <strong>7,005명-연도</strong>다. 7,005명의 서로 다른 근로자를 조사한 결과로 소개하면 안 된다. 방문 횟수의 분포가 치우쳐 있어 아래 표에서는 로그 단위의 계수를 읽는다. <em>원문 Methods, 표 1–2, 표 4–5.</em></p>
+<p><strong>표본.</strong> 2005–2014년 한국노동패널(KLIPS), 기준연도 1,072명, 총 7,005명-연도 관측치다. 남성 근로자의 연간 부모 방문 횟수에서 0회는 1로 바꾼 후 로그를 취했다. 따라서 반로그 해석은 논문에서 이렇게 구성한 방문 빈도에 적용된다.</p>
+<p><strong>1단계. 제도가 실제 행동을 바꾸었는가?</strong> 개인·연도 고정효과와 공변량을 넣고 실제 근로시간을 해당 연도 법 적용 여부에 회귀한다. 같은 근로자의 불변 특성과 공통 연도 변화를 고려한 뒤에도 적용이 실제 시간 변화를 예측해야 한다.</p>
+<p><span class="math display">\[X_{it}=\pi Z_{it}+\alpha_i+\lambda_t+W_{it}'\gamma+v_{it}\]</span></p>
+<p>표 4의 <span class="math inline">\(\hat\pi=-1.553\)</span>시간, 95% CI [−2.434, −0.672], 1단계 F=11.96이다. 즉, 법 적용은 주당 약 1시간 33분의 실제 근로시간 감소를 예측했다. F 통계량은 <strong>관련성</strong>을 평가하는 자료다. 흔히 말하는 10은 경험적 참고값이며 정책의 외생성이나 배제제약은 F로 검사할 수 없다.</p>
+<p><strong>2단계. 정책이 움직인 근로시간과 방문은 어떻게 연결되는가?</strong> 1단계의 예측 근로시간을 이용해 방문 빈도와의 관계를 추정한다. 두 단계 모두 같은 통제변수와 고정효과를 사용한다. 추론은 두 단계를 함께 처리하는 IV 추정기의 표준오차를 사용한다.</p>
+<p><span class="math display">\[\log(Visits_{it})=\beta\widehat X_{it}+\alpha_i+\lambda_t+W_{it}'\delta+u_{it}\]</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>표 5에서 실제 근로시간 1시간의 계수</th>
+<th style="text-align: right;">추정치</th>
+<th>95% 신뢰구간</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>개인·연도 FE</td>
+<td style="text-align: right;">−0.001</td>
+<td>[−0.003, 0.002]</td>
+</tr>
+<tr class="even">
+<td>IV와 FE 결합</td>
+<td style="text-align: right;">−0.065</td>
+<td>[−0.130, 0.000]</td>
+</tr>
+</tbody>
+</table>
+<p>저자는 근로시간이 1시간 늘 때 방문 빈도가 약 6.5% 감소한다고 해석한다. 이는 <span class="math inline">\(100\beta\)</span> 근사이고, 지수변환하면 <span class="math inline">\(100(e^{-0.065}-1)\)</span>은 약 −6.3%다. <strong>한 번 방문할 확률이 6.5%포인트 줄었다는 뜻은 아니다.</strong> 반올림한 신뢰구간 상한이 0.000에 닿고 IV 구간은 FE보다 넓다. 방향과 추정의 정밀도를 함께 설명하자.</p>
+</section>
+<section id="왜-나누는가-왜-도구를-믿는가" class="level2">
+<h2 class="anchored" data-anchor-id="왜-나누는가-왜-도구를-믿는가">왜 나누는가? 왜 도구를 믿는가?</h2>
+<p><strong>수업용 가상 예시.</strong> 정책 적용이 주당 2시간을 줄이고, 같은 비교에서 연간 방문이 평균 1회 늘었다고 하자. 다른 경로가 없다면 정책이 움직인 근로시간 1시간당 효과는 <span class="math inline">\(1/(-2)=-0.5\)</span>회다. 분자는 <strong>정책이 결과에 미친 변화(축약형)</strong>, 분모는 <strong>정책이 근로시간에 미친 변화(1단계)</strong>다. 이 숫자는 원문 로그계수와 별개의 단순 예시다. 분모가 0에 가까우면 작은 표본 변동에도 비율이 크게 흔들린다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>조건</th>
+<th>이 사례에서 던질 질문</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>관련성</td>
+<td>법 적용 이후 실제 근로시간이 움직였는가? 표 4를 확인한다.</td>
+</tr>
+<tr class="even">
+<td>조건부 외생성</td>
+<td>먼저 적용된 대형 사업장과 나중에 적용된 사업장에서 방문 추세를 다르게 만드는 다른 변화가 있었는가? 원문은 사업장 규모·업종 관련 변수 등을 통제한다.</td>
+</tr>
+<tr class="odd">
+<td>배제제약</td>
+<td>총 근로시간이 같아도 토요일이 통째로 비어 장거리 방문이 쉬워졌는가? 그렇다면 일정 배치라는 별도 경로가 남는다. 이는 수업에서 검토할 가설이다.</td>
+</tr>
+<tr class="even">
+<td>효과를 누구에게 해석할지</td>
+<td>정책에 반응해 실제 시간이 변한 근로자의 변화가 추정에 기여한다. 개인별 효과가 다르면 이를 모든 근로자에게 동일하게 적용하기 어렵다.</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary>
+학생 질문 · 개인 FE를 넣었는데 왜 IV가 또 필요한가?
+</summary>
+<p>
+고향까지 거리가 계속 같다면 개인 FE가 그 차이를 흡수한다. 반면 특정 해에 부모가 아파 근무시간과 방문 일정을 함께 바꾼 변화는 남는다. IV는 정책 적용 시점에서 비롯된 근로시간 변화를 분리해 쓰려는 설계다. 정책 시점이 이런 가족 사정과 체계적으로 연결된다면 그 논거도 약해진다.
+</p>
+</details>
+</section>
+<section id="혼인해체-연구에서-or과-확률-읽기" class="level2">
+<h2 class="anchored" data-anchor-id="혼인해체-연구에서-or과-확률-읽기">혼인해체 연구에서 OR과 확률 읽기</h2>
+<blockquote class="blockquote">
+<p><strong>발제 도입</strong>　“같은 주 40시간제를 이번에는 부부의 관점에서 보겠습니다. 함께 보낼 시간이 늘 수 있지만, 이혼처럼 준비에 시간이 걸리는 사건은 제도가 바뀐 달에 바로 드러나지 않을 수 있습니다. 그래서 어느 해의 정책을 어느 해의 이혼과 연결할지가 중요합니다.”</p>
+</blockquote>
+<p><strong>자료와 추적.</strong> 한국노동패널에서 필요한 변수가 일관되게 측정된 2000년(3차)부터 2015년(18차)까지 16개 차수를 사용했다. 각 차수에서 현재 혼인 중이고 남편이 18–64세인 부부를 포함했다. 초혼과 재혼 모두 해당하며 이혼하거나 추적이 끝날 때까지 관찰했다. 사업장 규모·업종·정확한 면접일을 시행 일정과 대조해 해당 시점의 법 적용 여부를 코딩했다. 같은 부부가 여러 행을 제공하므로 표준오차도 부부 단위로 군집화했다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>시점 연결</th>
+<th>전체 분석 표본</th>
+<th style="text-align: right;">아래에서 읽을 적용 대상 제한 모형 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정책 상태 2000–2014년 → 다음 해 이혼</td>
+<td>5,368쌍, 39,211부부-연도</td>
+<td style="text-align: right;">19,257부부-연도</td>
+</tr>
+<tr class="even">
+<td>정책 상태 2000–2013년 → 2년 후 이혼</td>
+<td>5,015쌍, 34,345부부-연도</td>
+<td style="text-align: right;">16,937부부-연도</td>
+</tr>
+</tbody>
+</table>
+<p><strong>숫자를 읽기 전에.</strong> “2년 뒤를 보려면 해당 부부의 결과를 더 멀리까지 관찰해야 합니다. 그래서 같은 패널이라도 가능한 기준연도와 표본 수가 줄어듭니다.” 전체 모형의 비교조건에는 종전 44시간 기준 및 법정 기준 비적용 사례가 포함된다. 표 2·3의 모형 3·4는 남편이 법정 기준 적용 대상인 부부로 범위를 좁힌 비교다. <em>원문 Methods, 표 1–3.</em></p>
+<p>Kim &amp; Lee(2019)는 남편에게 주 40시간 기준이 적용된 후 부부의 이혼 위험이 달라지는지 <strong>이산시간 사건사 로짓모형</strong>으로 분석했다. 각 시점까지 혼인이 유지되어 위험집합에 있는 부부를 관찰한다. 표 2는 <span class="math inline">\(t+1\)</span>, 표 3은 <span class="math inline">\(t+2\)</span>의 사건을 본다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>법정 기준 적용 대상인 남편의 부부로 제한한 모형 4</th>
+<th style="text-align: right;">오즈비(OR)</th>
+<th style="text-align: right;">보고된 한계효과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>표 2 · 다음 해 이혼</td>
+<td style="text-align: right;">0.590</td>
+<td style="text-align: right;">−0.00205</td>
+</tr>
+<tr class="even">
+<td>표 3 · 2년 후 이혼</td>
+<td style="text-align: right;">0.489</td>
+<td style="text-align: right;">−0.00280</td>
+</tr>
+</tbody>
+</table>
+<p>다음 해 OR 0.590은 다른 조건이 같을 때 추정 이혼 <strong>오즈</strong>가 약 41% 낮다는 뜻이다. 확률 척도에서 보고한 한계효과 −0.00205는 약 <strong>0.205%포인트 감소</strong>다. 2년 후 모형의 한계효과는 약 0.280%포인트 감소다. 사건이 드물면 상대적인 오즈 변화가 커 보여도 절대 확률 차이는 작을 수 있다.</p>
+<p><strong>토론.</strong> “근무를 한 시간 줄이면 이혼 확률이 0.205%포인트 낮아진다”라고 써도 될까?</p>
+<details>
+<summary>
+두 논문을 함께 읽어야 하는 이유
+</summary>
+<p>
+0.205%포인트는 정책 적용 여부의 비교다. 혼인해체 논문은 법 적용에서 이혼까지의 관계를 직접 추정했다. 실제 시간 1시간의 효과를 물으려면 근로시간을 명시적으로 모형화하고 정책이 다른 경로로 이혼에 영향을 주는지도 검토해야 한다. 로짓의 오즈비를 1단계 계수로 나눠 그 효과를 얻을 수는 없다.
+</p>
+</details>
+</section>
+<section id="논문을-읽는-연습-무엇의-한-단위인가" class="level2">
+<h2 class="anchored" data-anchor-id="논문을-읽는-연습-무엇의-한-단위인가">논문을 읽는 연습 · 무엇의 한 단위인가?</h2>
+<section id="실제-근로시간과-법정-기준의-단위를-연결하기" class="level3">
+<h3 class="anchored" data-anchor-id="실제-근로시간과-법정-기준의-단위를-연결하기">실제 근로시간과 법정 기준의 단위를 연결하기</h3>
+<p>주 44시간 기준에서 40시간으로 이동하는 정책의 명목 변화는 4시간이다. 실제 근로시간은 표 4에서 약 1.553시간 줄었다. 이 값을 4로 나누면 약 0.39다. 같은 단위로 표현하자면 법정 기준 감소 폭의 약 39%에 해당하는 평균 변화를 추정했다는 뜻이다. 이 숫자가 근로자의 39%만 법을 준수했다는 의미는 아니다. 모든 근로자가 조금씩 줄인 경우와 일부 근로자가 크게 줄인 경우 모두 같은 평균을 만들 수 있다. 평균 시간과 사람의 비율은 다른 양이다.</p>
+<p>1단계와 2단계의 부호를 곱하는 연습도 해 보자. 법 적용은 시간을 줄이고(음수), 시간이 길수록 방문은 감소하는 방향(음수)으로 추정됐다. 그렇다면 선형 IV 모형에서 시간 경로를 통해 정책이 방문에 미치는 변화의 부호는 양수다. 같은 표본·통제변수·고정효과를 쓴 단일 도구의 정확식별 선형 모형에서는 축약형 계수가 1단계와 IV 계수의 곱이다. 반올림한 표 수치로 계산하면 <span class="math inline">\((-1.553)\times(-0.065)\approx0.101\)</span> 로그 단위다. 이는 <strong>각 표의 수치를 연결한 수업용 역산</strong>이다. 논문이 별도로 보고한 축약형 표준오차나 신뢰구간으로 읽지 않는다.</p>
+</section>
+<section id="오즈를-확률로-바꾸어-보기" class="level3">
+<h3 class="anchored" data-anchor-id="오즈를-확률로-바꾸어-보기">오즈를 확률로 바꾸어 보기</h3>
+<p>혼인해체 연구의 결과는 이혼 사건이 일어날 확률을 다룬다. 어떤 사건의 확률이 <span class="math inline">\(p\)</span>일 때 오즈는 <span class="math inline">\(p/(1-p)\)</span>다. 확률이 0.20이면 오즈는 0.20/0.80=0.25다. 오즈에 0.59를 곱하면 새 오즈는 0.1475, 확률로 되돌리면 <span class="math inline">\(0.1475/(1+0.1475)\approx0.129\)</span>다. 이 가상 사례의 확률 차이는 약 7.1%포인트다. 같은 오즈비라도 처음 확률이 0.01이라면 새 확률은 약 0.0059이고 차이는 약 0.41%포인트다. 그러므로 OR 하나만으로 절대 확률 차이를 정할 수 없다.</p>
+<p>두 가상 계산의 첫 확률은 설명을 위해 정했다. 실제 표본의 한계효과는 연구자가 적합한 모형과 공변량 분포를 이용해 구한다. 원문 수치를 소개할 때는 가상의 기초확률을 거꾸로 끼워 맞추지 말고 표에 보고된 한계효과를 사용한다. “오즈가 41% 낮다”와 “확률이 0.205%포인트 낮다”가 한 결과를 서로 다른 척도에서 표현할 수 있음을 이해하면 된다. 두 해 뒤 결과는 다음 해 결과와 같은 기간의 사건이 아니므로 표 2와 표 3의 수치를 단순히 합쳐 누적 효과라고 부르지 않는다.</p>
+</section>
+<section id="도구를-비판적으로-읽는-구두-연습" class="level3">
+<h3 class="anchored" data-anchor-id="도구를-비판적으로-읽는-구두-연습">도구를 비판적으로 읽는 구두 연습</h3>
+<p>두 사람이 연구자와 심사자 역할을 맡는다. 연구자는 사업장 규모에 따라 적용 시점이 달랐던 제도를 한 문장으로 설명한다. 심사자는 “근로시간이 같은 두 사람에게도 이 제도가 부모 방문을 달라지게 할 경로가 있습니까?”라고 묻는다. 연구자는 가능한 경로의 실제 작동 여부를 판단할 자료를 제안한다. 예를 들어 총시간과 별도로 근무 요일, 주말 근무 여부, 부모와의 거리가 있다면 일정 재배치가 특히 장거리 방문에 영향을 주었을지 탐색할 수 있다. 그 자료만으로 모든 직접 경로를 제거했다는 결론까지 나가지는 않는다.</p>
+<p>역할을 바꾸고 이번에는 혼인해체 논문을 읽어 보자. 같은 주말 재배치가 부부가 함께 보내는 시간을 늘렸다면 정책의 결과를 이해하는 하나의 메커니즘이다. 여기서 확인해야 할 것은 “총시간만을 통해 작동했는가?”보다 “정책 적용 시점과 함께 이혼 위험을 바꿀 다른 요인이 달라졌는가?”에 가깝다. 똑같은 제도적 사실이 한 연구에서는 배제제약에 대한 반론이 되고 다른 연구에서는 설명하고 싶은 경로가 될 수 있다. 마지막에 두 사람이 자신의 연구에서 처치와 도구를 각각 한 단어로 써 보면 차이가 분명해진다.</p>
+</section>
+</section>
+</section>
+<section id="k-means-미국-50개-주와-한국-제조기업의-협력-전략" class="level1">
+<h1>3. K-means · 미국 50개 주와 한국 제조기업의 협력 전략</h1>
+<section id="이론의-출발점-정답-열이-없는-데이터" class="level2">
+<h2 class="anchored" data-anchor-id="이론의-출발점-정답-열이-없는-데이터">이론의 출발점 · 정답 열이 없는 데이터</h2>
+<p>연구자가 100개 기업을 조사했다. 첫 연구자는 “어떤 기업이 내년에 신제품을 출시할까?”라고 묻는다. 과거의 출시 여부를 정답으로 두고 새 기업의 결과를 예측할 수 있다. 두 번째 연구자는 “이 기업들은 누구와 협력하는 방식에서 어떤 유형으로 나뉠까?”라고 묻는다. 이번에는 기업의 실제 유형이 적힌 정답 열이 없다. 연구자가 가진 것은 공급업체, 대학, 연구기관 등과의 협력 정도다. 관찰치끼리 <strong>무엇을 기준으로 얼마나 비슷한가</strong>를 먼저 정의해야 한다. 이 문제가 비지도학습의 한 예다.</p>
+<p>행 하나는 연구자가 묶고 싶은 대상, 열 하나는 대상을 비교할 속성이다. 한 열의 평균만으로는 프로필을 보지 못할 수 있다. 예를 들어 두 기업의 공급업체·대학 협력 점수가 각각 (5, 1), (1, 5)라면 둘 다 평균은 3이다. 두 열을 구분해 놓으면 서로 다른 협력 전략이 드러난다. 열을 한 숫자로 합칠지 따로 둘지는 계산 전에 내리는 연구 결정이다.</p>
+</section>
+<section id="거리와-중심-점-두-개에서-출발하기" class="level2">
+<h2 class="anchored" data-anchor-id="거리와-중심-점-두-개에서-출발하기">거리와 중심 · 점 두 개에서 출발하기</h2>
+<p><span class="math display">\[d(x_i,x_j)=\sqrt{\sum_{m=1}^{p}(x_{im}-x_{jm})^2}.\]</span></p>
+<p><span class="math inline">\(i\)</span>와 <span class="math inline">\(j\)</span>는 서로 다른 관찰치, <span class="math inline">\(m\)</span>은 비교할 변수 번호, <span class="math inline">\(p\)</span>는 변수 수다. 두 점의 같은 열끼리 빼고, 제곱한 다음 합한 뒤 제곱근을 취한다. 예를 들어 A=(1, 2), B=(4, 6)이라면 첫 축의 차이는 3, 둘째 축은 4다. 따라서 거리는 <span class="math inline">\(\sqrt{3^2+4^2}=5\)</span>다. 제곱을 하므로 어느 쪽이 더 큰지에 따라 차이가 상쇄되지 않는다. 거리가 5라는 사실만으로 방향은 알 수 없으므로 원래 좌표도 함께 본다.</p>
+<p>두 관찰치 중 어느 쪽이 중심에 더 가까운지만 판단할 때는 제곱근을 구하지 않아도 된다. 거리의 제곱이 9와 25라면 실제 거리도 3과 5로 순서가 같다. K-means에서는 군집 안에서 각 관찰치와 중심 사이의 <strong>제곱거리</strong>를 더한다. 중심에서 두 배 멀리 떨어진 점은 네 배 큰 값을 더한다. 이 성질이 멀리 떨어진 관찰치에 민감한 이유다.</p>
+<p>중심(centroid)은 군집에 속한 행들의 <strong>열별 평균</strong>이다. A=(1, 2), B=(3, 6)을 같은 군집에 넣으면 중심은 (2, 4)다. 실제 표본에 (2, 4)인 회사가 없어도 된다. 평균적인 협력 프로필을 나타내기 때문이다. 그래서 기업 대표 사례를 보여주려면 중심 좌표 자체를 실제 기업이라고 부르기보다 중심에 가까운 관찰치를 따로 찾아 특징을 확인한다.</p>
+<section id="왜-하필-평균이-중심인가" class="level3">
+<h3 class="anchored" data-anchor-id="왜-하필-평균이-중심인가">왜 하필 평균이 중심인가?</h3>
+<p>한 군집에 값 1, 2, 6이 있다고 하자. 중심 후보가 2라면 제곱거리 합은 <span class="math inline">\((1-2)^2+(2-2)^2+(6-2)^2=17\)</span>이다. 중심을 평균 3으로 옮기면 <span class="math inline">\(4+1+9=14\)</span>가 된다. 4로 옮기면 <span class="math inline">\(9+4+4=17\)</span>로 다시 커진다. 이처럼 제곱오차의 합을 가장 작게 하는 점은 평균이다. 여러 차원에서도 각 열마다 같은 논리가 적용된다.</p>
+<p><span class="math display">\[\sum_{i=1}^{n}(x_i-c)^2=\sum_{i=1}^{n}(x_i-\bar{x})^2+n(c-\bar{x})^2.\]</span></p>
+<p>첫 항은 관찰값들이 자기 평균을 중심으로 얼마나 흩어졌는가다. 평균을 기준으로 값을 정해 두면 이 항은 후보 중심 <span class="math inline">\(c\)</span>와 무관하다. 둘째 항은 중심을 평균에서 다른 곳으로 옮길 때 추가되는 값이다. 0 이상이고 <span class="math inline">\(c=\bar{x}\)</span>일 때만 0이다. 제곱 대신 절대거리를 사용하면 중앙값이 기준이 된다. 이름의 ’means’에는 바로 이 목적함수 선택이 들어 있다.</p>
+</section>
+</section>
+<section id="목적함수와-반복-누가-어디에-속하는가" class="level2">
+<h2 class="anchored" data-anchor-id="목적함수와-반복-누가-어디에-속하는가">목적함수와 반복 · 누가 어디에 속하는가?</h2>
+<p><span class="math display">\[W=\sum_{k=1}^{K}\sum_{i\in C_k}\lVert x_i-\mu_k\rVert^2.\]</span></p>
+<p><span class="math inline">\(K\)</span>는 연구자가 시도하는 군집 수, <span class="math inline">\(C_k\)</span>는 k번째 군집에 속한 행들의 모임, <span class="math inline">\(\mu_k\)</span>는 그 군집의 중심이다. 안쪽 합은 한 군집 안에서의 퍼짐, 바깥 합은 모든 군집의 퍼짐을 더한 값이다. 같은 데이터를 같은 척도로 분석하면서 K를 고정했다면 W가 더 작은 배치가 이 기준에서 더 잘 맞는다. 중심을 정하려면 구성원을 알아야 하고 구성원을 정하려면 중심을 알아야 한다. 그래서 둘을 번갈아 갱신한다.</p>
+<p><strong>칠판 예제.</strong> 수업용 가상 기업 네 곳에서 공급업체 협력과 대학 협력을 동일한 0–5점 척도로 측정했다고 하자. A=(1, 1), B=(1, 3), C=(5, 3), D=(5, 5)이고 초기 중심은 A와 D다. 첫 단계에서 각 행과 두 중심 간 제곱거리를 적는다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>기업</th>
+<th style="text-align: right;">중심 A까지</th>
+<th style="text-align: right;">중심 D까지</th>
+<th>처음 배정</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32</td>
+<td>첫째</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">20</td>
+<td>첫째</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4</td>
+<td>둘째</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0</td>
+<td>둘째</td>
+</tr>
+</tbody>
+</table>
+<p>배정한 직후 W는 0+4+4+0=8이다. 이제 첫째 군집의 두 행 평균은 (1, 2), 둘째 군집의 평균은 (5, 4)가 된다. 이 중심에서 네 관찰치는 각각 제곱거리 1만큼 떨어져 있으므로 W는 4로 줄었다. 다시 가까운 중심을 찾아도 이동하는 기업이 없어 종료한다. <strong>가까운 쪽에 배정</strong>하면 중심이 고정된 상태의 W가 커지지 않고, <strong>평균으로 이동</strong>하면 배정이 고정된 상태의 W가 커지지 않는다. 학생 한 명은 배정, 다른 한 명은 평균 갱신을 맡아 보면 두 동작을 구분하기 쉽다.</p>
+<p>그렇다고 어느 출발점에서나 가장 좋은 해를 찾는 것은 아니다. 예컨대 경계선 가까이에 점들이 모여 있으면 출발점에 따라 서로 다른 배치에서 더 이상 이동이 일어나지 않을 수 있다. 이를 국소 최적해라고 한다. 여러 초기 중심으로 맞춘 뒤 목적함수가 가장 작은 결과를 택하면 이 문제를 완화할 수 있다. R의 nstart는 시도 횟수이고 set.seed는 같은 난수열을 다시 사용할 수 있게 하는 장치다. 같은 시드로 같은 결과를 재현하는 것과, 다른 시드나 다른 표본에서도 비슷한 구조가 나타나는 것은 별개의 질문이다.</p>
+</section>
+<section id="척도-선택-자료를-바꾸지-않았는데-군집이-달라지는-이유" class="level2">
+<h2 class="anchored" data-anchor-id="척도-선택-자료를-바꾸지-않았는데-군집이-달라지는-이유">척도 선택 · 자료를 바꾸지 않았는데 군집이 달라지는 이유</h2>
+<p>기업 두 곳을 연간 R&amp;D 투자액과 협력 대학 수로 비교한다고 하자. 투자액을 ‘억 원’에서 ‘원’ 단위로 바꾸면 실제 기업의 행동은 그대로지만 첫 열의 숫자 차이가 1억 배가 된다. 제곱거리에서는 그 차이가 제곱되어 비용이 큰 기업끼리 주로 묶이는 결과가 나올 수 있다. 거리 기반 분석에서 단위 변경은 사소한 서식 변경이 아니다.</p>
+<p><span class="math display">\[z_{im}=\frac{x_{im}-\bar{x}_m}{s_m}.\]</span></p>
+<p>각 변수의 평균을 빼고 그 변수의 표준편차로 나눈다. 어떤 지표의 평균이 20이고 표준편차가 5일 때 30인 관찰치의 z점수는 2다. 다른 지표의 평균이 1,000이고 표준편차가 100일 때 1,200도 z점수 2다. 표준화 거리에서는 두 경우를 ’자기 변수에서 평균보다 두 표준편차 높다’는 동일한 크기의 차이로 본다. 표준화 뒤 중심이 −0.8이면 원래 수치가 음수라는 뜻이 아니라 그 군집의 평균이 전체 평균보다 0.8 표준편차 낮다는 뜻이다.</p>
+<p>표준화는 연구자의 가중치를 대신 결정하지 않는다. 일곱 협력 축이 모두 같은 척도이고 어떤 축의 높은 변동성이 중요한 현상이라면, 표준화로 그 차이가 줄어드는 것이 연구 질문에 맞는지 생각해야 한다. 거의 모든 기업이 같은 값을 기록한 열은 표준편차가 작아 작은 측정오차의 비중이 커질 수 있다. 상수인 열은 표준편차가 0이어서 나눌 수 없고 군집 구분 정보도 제공하지 않는다. 비슷한 열을 두 개 넣는 것도 중요하다. 사실상 같은 개념을 두 번 넣으면 그 개념의 거리 차이를 두 번 더한다.</p>
+<section id="변수-선택-퀴즈" class="level3">
+<h3 class="anchored" data-anchor-id="변수-선택-퀴즈">변수 선택 퀴즈</h3>
+<p>어떤 기업의 행에 조사 ID, 업종 번호, 협력 지표 일곱 개, 사후 매출이 있다고 하자. ID 100번과 101번은 숫자가 가깝지만 협력 방식이 가깝다는 뜻은 아니다. 업종 번호도 1에서 2까지의 차이와 2에서 3까지의 차이가 같은 경제적 의미를 갖는지 따져야 한다. 사후 매출은 연구 질문이 ’협력 전략별 성과 차이’라면 후속 비교에 남겨 두는 편이 해석하기 쉽다. 매출을 군집 배정과 결과 비교에 함께 쓰면 매출로 나눈 집단의 매출이 다르다는 이야기가 일부 반복된다. 이 구분을 기억하고 뒤의 기업 논문을 읽어 보자.</p>
+</section>
+</section>
+<section id="k를-선택하는-세-가지-질문" class="level2">
+<h2 class="anchored" data-anchor-id="k를-선택하는-세-가지-질문">K를 선택하는 세 가지 질문</h2>
+<p><strong>첫째, 중심을 하나 추가했을 때 얼마나 더 설명하는가?</strong> 관찰치 전체를 하나의 중심에 놓으면 W는 전체 제곱합(TSS)이다. 군집을 나누면 전체 퍼짐은 군집 안의 퍼짐(W)과 군집 중심 사이의 퍼짐(B)으로 분해된다. <span class="math inline">\(TSS=W+B\)</span>다. 만약 TSS=100, K=2의 W=45, K=3의 W=30이라면 중심 하나 추가로 15를 더 설명했다. K=4에서 W=28이라면 추가 개선은 2다. 이렇게 개선폭이 꺾이는 곳을 찾는 것이 엘보 방법이다. 눈에 띄는 꺾임이 없을 수도 있다.</p>
+<p><strong>둘째, 경계의 관찰치가 어디에 더 가까운가?</strong> <span class="math inline">\(a_i\)</span>를 같은 군집의 다른 점까지 평균거리, <span class="math inline">\(b_i\)</span>를 다른 각 군집까지의 평균거리 중 가장 작은 값이라고 하자. 실루엣은 <span class="math inline">\(s_i=(b_i-a_i)/\max(a_i,b_i)\)</span>다. 가령 <span class="math inline">\(a=2\)</span>, <span class="math inline">\(b=6\)</span>이면 <span class="math inline">\(s=4/6\)</span>으로 자기 군집 쪽에 가깝다. <span class="math inline">\(a=6\)</span>, <span class="math inline">\(b=4\)</span>이면 <span class="math inline">\(s=-2/6\)</span>으로 이 관찰치를 다른 군집과 함께 검토할 이유가 있다. 실루엣은 중심 한 점까지의 거리 대신 군집 구성원들과의 평균거리를 쓴다. 평균 실루엣이 높아도 특정 작은 군집의 구성원들은 경계에 몰려 있을 수 있다.</p>
+<p><strong>셋째, 다시 조사해도 이름 붙일 만한 유형이 남는가?</strong> 같은 K에서 초기 중심을 바꾸고, 몇몇 관찰치를 제외하고, 핵심 변수의 척도를 바꾸어 본다. 군집 1과 2의 번호만 서로 바뀐 경우는 내용상 같은 결과다. 중심의 모양이 바뀌거나 소수 관찰치를 빼자 유형 전체가 사라진다면 다른 결과다. 보고할 때는 선택한 K 외에도 한 단계 작고 큰 K에서 무엇이 합쳐지거나 나뉘는지 설명하면 연구자의 판단을 독자가 검토할 수 있다.</p>
+<details>
+<summary>
+판서 문제 · K-means가 그린 경계는 어떤 모양일까?
+</summary>
+<p>
+중심이 (0, 0)과 (4, 0)인 경우 가운데 선 x=2 위에서는 두 중심까지 거리가 같다. 선의 왼쪽은 첫 중심, 오른쪽은 둘째 중심에 더 가깝다. 이처럼 가장 가까운 중심으로 배정하는 규칙은 중심 사이에 직선 경계를 만든다. 안쪽 원을 한 군집, 그 바깥 고리를 다른 군집으로 보는 연구 문제라면 중심만으로 분리하기 어렵다. 자료의 모양과 목적함수가 맞는지 먼저 산점도를 보는 이유다.
+</p>
+</details>
+</section>
+<section id="거리를-정하면-비슷하다의-의미가-정해진다" class="level2">
+<h2 class="anchored" data-anchor-id="거리를-정하면-비슷하다의-의미가-정해진다">거리를 정하면 ’비슷하다’의 의미가 정해진다</h2>
+<p>교수님의 ML101 실습은 1973년 미국 50개 주를 행으로 삼는 R 내장 데이터 <strong>USArrests</strong>를 사용한다. Murder, Assault, Rape는 주민 10만 명당 해당 범죄의 체포 수이고, UrbanPop은 도시 거주 인구 비율(%)이다. 여기서 군집은 이 네 지표의 조합이 비슷한 주들의 모임이다. 체포 수에는 단속과 기록 방식도 반영될 수 있어 군집에 이름을 붙일 때 측정 단위를 유지한다. <a href="https://changjunlee.com/teaching/ml101/weekly/posts/10_week">ML101 원 강의</a> · <a href="https://jjallaire.shinyapps.io/shiny-k-means/">수업용 Shiny 실험</a></p>
+<p><strong>손으로 한 번.</strong> 한 변수에서 관찰값이 1, 2, 4, 10이고 두 초기 중심이 1과 4라고 하자. 가까운 중심에 배정하면 {1, 2}와 {4, 10}이다. 중심을 평균 1.5와 7로 바꾼다. 이제 값 4는 어디에 더 가까울까?</p>
+<details>
+<summary>
+다음 반복 보기
+</summary>
+<p>
+4에서 두 중심까지 거리는 2.5와 3이다. 4가 첫 군집으로 이동하면서 새 중심은 7/3과 10이 된다. 다시 배정해도 움직이는 점이 없다. 실제 실습은 네 변수의 유클리드 거리를 쓴다. 이 손계산은 배정과 평균 갱신을 반복하는 Lloyd 방식의 직관이고 R의 기본 구현은 Hartigan–Wong이다.
+</p>
+</details>
+<p>목표는 각 관찰치에서 자기 군집 중심까지의 <strong>제곱거리 합(WSS)</strong>을 작게 만드는 것이다. Assault 수치의 범위가 UrbanPop보다 크면 원 단위의 거리에서 Assault가 큰 비중을 차지할 수 있다. 각 열에서 평균을 빼고 표준편차로 나누면 한 단위 거리는 그 변수의 표준편차 하나가 된다. 이때도 네 변수에 비슷한 비중을 주겠다는 분석자의 선택이 들어간다.</p>
+</section>
+<section id="r-실습-k를-고르고-중심을-읽기" class="level2">
+<h2 class="anchored" data-anchor-id="r-실습-k를-고르고-중심을-읽기">R 실습 · K를 고르고 중심을 읽기</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests)                  <span class="co"># 주 이름은 행 이름으로 유지</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ks <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>fits <span class="ot">&lt;-</span> <span class="fu">lapply</span>(ks, <span class="cf">function</span>(k) <span class="fu">kmeans</span>(x, <span class="at">centers =</span> k, <span class="at">nstart =</span> <span class="dv">25</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>wss <span class="ot">&lt;-</span> <span class="fu">vapply</span>(fits, <span class="cf">function</span>(m) m<span class="sc">$</span>tot.withinss, <span class="fu">numeric</span>(<span class="dv">1</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ks, wss, <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">xlab =</span> <span class="st">"K"</span>, <span class="at">ylab =</span> <span class="st">"Within-cluster SS"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># silhouette는 자기 군집 내부의 평균거리와 가장 가까운 다른 군집까지의</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 평균거리를 비교한다. K=1이면 비교할 다른 군집이 없다.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>dist_x <span class="ot">&lt;-</span> <span class="fu">dist</span>(x)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sil <span class="ot">&lt;-</span> <span class="fu">vapply</span>(fits[<span class="sc">-</span><span class="dv">1</span>], <span class="cf">function</span>(m) {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(cluster<span class="sc">::</span><span class="fu">silhouette</span>(m<span class="sc">$</span>cluster, dist_x)[, <span class="st">"sil_width"</span>])</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}, <span class="fu">numeric</span>(<span class="dv">1</span>))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">K =</span> ks[<span class="sc">-</span><span class="dv">1</span>], <span class="at">mean_silhouette =</span> <span class="fu">round</span>(sil, <span class="dv">3</span>)))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(x, <span class="at">centers =</span> <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>size</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(fit<span class="sc">$</span>centers, <span class="dv">2</span>)                   <span class="co"># 표준편차 단위</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(USArrests, <span class="fu">list</span>(<span class="at">group =</span> fit<span class="sc">$</span>cluster), mean)  <span class="co"># 원 단위</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>pc <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(x)<span class="sc">$</span>x[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]                <span class="co"># 표현을 위한 두 차원</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc, <span class="at">col =</span> fit<span class="sc">$</span>cluster, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">xlab =</span> <span class="st">"PC1"</span>, <span class="at">ylab =</span> <span class="st">"PC2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>K를 늘리면 WSS는 왜 줄어드는가?</strong> 중심을 더 쓰면 설명할 수 있는 위치가 늘어난다. 최적해의 WSS는 K가 커질수록 증가하지 않으므로 최솟값만 찾으면 지나치게 많은 군집을 선택한다. 엘보는 추가 군집의 개선폭이 줄어드는 지점을, 평균 실루엣은 군집 안의 응집과 군집 사이의 분리를 본다. 실루엣이 0에 가까운 관찰치는 경계에 있고 음수이면 다른 군집에 평균적으로 더 가깝다. 두 지표가 서로 다른 K를 제안하면 중심의 해석과 작은 군집의 안정성도 살펴보자.</p>
+<p><strong>원 강의의 K=4 결과.</strong> 25개 초기값에서 얻은 해 가운데 WSS가 가장 작은 해를 채택한다. 아래 중심은 전체 주 평균이 0인 표준화 점수다. 번호는 임의로 붙으므로 다른 실행 결과와 비교할 때는 중심으로 대응시킨다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>원 강의 군집</th>
+<th style="text-align: right;">주 수</th>
+<th style="text-align: right;">Murder</th>
+<th style="text-align: right;">Assault</th>
+<th style="text-align: right;">UrbanPop</th>
+<th style="text-align: right;">Rape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1.41</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">−0.81</td>
+<td style="text-align: right;">0.02</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">−0.96</td>
+<td style="text-align: right;">−1.11</td>
+<td style="text-align: right;">−0.93</td>
+<td style="text-align: right;">−0.97</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">−0.49</td>
+<td style="text-align: right;">−0.38</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">−0.26</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">1.28</td>
+</tr>
+</tbody>
+</table>
+<p><strong>짝 활동.</strong> 군집 1과 4는 모두 Assault가 평균보다 높다. 나머지 열을 읽어 둘을 구분하는 문장을 써 보자. 이어 코드에서 K=3으로 바꾸고 어떤 유형이 합쳐지는지 교차표로 확인한다.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="at">K4 =</span> fit<span class="sc">$</span>cluster, <span class="at">K3 =</span> fits[[<span class="dv">3</span>]]<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>
+해석 예시
+</summary>
+<p>
+군집 1은 도시 거주 비율이 평균보다 낮고 Murder 체포 지표가 높다. 군집 4는 도시 거주 비율과 Rape 체포 지표가 모두 높다. 군집 간 차이를 근거로 도시화가 체포율을 높였다고 주장하려면 별도의 인과 설계가 필요하다. 그림에 쓴 두 주성분은 네 변수의 일부 정보를 압축하므로 점이 겹쳐 보여도 원래 공간의 거리는 다를 수 있다.
+</p>
+</details>
+</section>
+<section id="연구-사례-기업은-누구와-rd를-하는가" class="level2">
+<h2 class="anchored" data-anchor-id="연구-사례-기업은-누구와-rd를-하는가">연구 사례 · 기업은 누구와 R&amp;D를 하는가?</h2>
+<blockquote class="blockquote">
+<p><strong>발제 도입</strong>　“기업 두 곳이 각각 세 종류의 파트너와 협력한다고 해 보죠. 하나는 주로 대학·연구소에서 지식을 얻고, 다른 하나는 납품업체·고객사와 생산 문제를 풉니다. 협력 상대의 수만 세면 두 전략이 똑같아 보입니다. 파트너 구성을 그대로 두고 기업을 묶으면 무엇이 보일까요?”</p>
+</blockquote>
+<p><strong>연구 동기와 자료.</strong> 기존 네트워크 연구가 파트너의 수와 다양성에 주목했다면, 이 연구는 기업이 여러 상대를 <strong>어떤 조합으로, 어느 정도 활용했는지</strong>에 관심을 뒀다. 과학기술정책연구원(STEPI)의 <strong>2010년 한국기술혁신조사(KIS)</strong>는 2007–2009년 혁신활동을 돌아보는 조사다. 제조기업이 복수의 협력 상대와 각 상대에 대한 의존 정도를 응답해, 한 기업을 일곱 파트너 유형의 프로필로 나타낼 수 있었다.</p>
+<p><strong>표본을 설명하는 순서.</strong> 원문이 소개하는 조사 규모는 3,925개 기업이고 응답률은 51.03%다. 연구진은 제조업 자료에서 후속 효율성 분석에 필요한 회계정보가 갖춰진 사례를 사용했다. 군집화에서 나온 네 유형 중 협력 경험이 있는 세 유형을 대상으로 효율성을 비교한 최종 표본이 <strong>394개 기업, 1,164개 기업-연도</strong>다. 조사 규모에서 최종 기업 수를 뺀 값을 ’무협력 기업 수’로 읽으면 회계정보 등 다른 선정 조건을 놓치게 된다. <em>원문 Method, 그림 1, 표 1.</em></p>
+<p><strong>그림을 보여주기 전 질문.</strong> “이제 기업 이름과 매출을 가리고 파트너 응답만 보겠습니다. 여러 기업이 공통으로 높게 응답하는 축이 있다면 그 집단에 어떤 이름을 붙이겠습니까?”</p>
+<p><strong>협력 상대가 세 종류인 두 제조기업을 생각해 보자.</strong> 한 기업은 납품업체·고객사·경쟁사와 주로 협력하고, 다른 기업은 대학·공공연구기관과 깊이 협력하면서 고객사와 가끔 일한다. 파트너 유형의 <em>개수</em>만 세면 두 기업 모두 3이다. 어떤 협력 전략을 가진 기업인지 구별하려면 무엇을 기록해야 할까?</p>
+<p>Na, Lee, Hwang &amp; Lee(2021)는 <strong>2010년 한국기술혁신조사(KIS)</strong>의 제조업 자료에서 2007–2009년 혁신 활동을 살펴보았다. 한 기업을 한 점으로 놓고 <strong>공급기업, 수요기업, 기타 기업(경쟁사), 계열사, 민간 컨설팅사, 정부·공공 연구기관, 대학</strong>이라는 일곱 축에 파트너별 협력 정도를 기록했다. 앞의 USArrests에서 한 점은 미국의 한 주였고, 여기서 한 점은 한 기업의 협력 포트폴리오다. 같은 유형과 여러 번 협력해도 그때마다 기업이 별개의 점으로 늘어나지는 않는다.</p>
+<section id="그림-1을-읽는-순서" class="level3">
+<h3 class="anchored" data-anchor-id="그림-1을-읽는-순서">그림 1을 읽는 순서</h3>
+<ol type="1">
+<li><strong>K를 정한다.</strong> 저자들은 적정 군집 수를 제안하는 지표 30개를 비교했다. 20개가 K=4를 지지해 네 군집을 채택했다. 앞 실습에서 엘보와 실루엣을 함께 본 것처럼, 군집 수를 정할 때 사용한 근거를 독자에게 제시한 것이다.</li>
+<li><strong>중심에 이름을 붙인다.</strong> 아래 그림에서 선 하나를 골라 어느 파트너 축에서 값이 큰지 따라가 보자. 선은 집단에 속한 기업들의 평균 협력 정도를 나타낸다. 먼저 두드러진 축을 찾고, 그다음 다른 축에서도 폭넓게 협력하는지 살펴본다.</li>
+<li><strong>후속 분석의 모집단을 정한다.</strong> 군집화에서는 무협력형까지 네 유형이 나왔다. 이후 연구 질문은 <em>협력하는 기업들 사이에서</em> 포트폴리오와 효율성이 어떻게 연결되는가였다. 이 질문에 맞춰 세 협력 유형을 비교했다.</li>
+</ol>
+<figure class="figure">
+<p><img src="data:image/jpeg;base64,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2OdrFVViVDEgYAyDEYwhZpo0aVKMqMIxjn0JsqJF8e6Q6PgGlXUakNY1rbaq0xuY955nkAPEzG6PdLdD0geymutqL613mtyGyvdkEd/fzmFpKEKVcnebKl8Kx1elUY1ohU4xqUI2NPFsqTsREza5ERAREQEREBERAREQEREBERAREQEREBERAREQMLTG7rhu3FcWZzu9e7Oc+h3YkVxJrvNj9YSMHseTb4YmxSlq0fBZQSO7IBnDq12x0a01CFShVY0ZU4RnGE4WEJSlPZ19Sq8KnTjSrs7CSxw82tpKzdndjx78eHtJkxE3qlQtHQo0JxpV2jCE42cZQlNTSjXqUYylONkRETNBERAREQEREBERAREQAP/W6rERAREQEREBERAREQEREBETG9SGh80HS9fWLgwQ1lgG3EbguPKRzAgZMRKLrqtPU99zBK61LO7cgAOZJgVxPAcjInsBERAREQESmyxKkayw4VFLMeZwBzPdzlmjX6PU9V5ntW0X1ddUUO5Wr5DcCOWOYgZEREBERAREQEREBERAREQEREBERAREQEREBESK4xxwcIsAsrVkOlv1G5rOrJ6koCgG05J38ucCViR447w3mGsZSti1vuR8K5IG0nbtzlgDz8Yr49wq0Fq7923BICWbsEE7gNuSOR5jlygSESI03STh1mme/VONO9bWB0O5sBXtQMDtG4esieXdJDTazTawM2mfrFRipYA7cjIODjB5iBfkbrOHajU36hksRK9TpV0xyCzqMuWI5gE4flJKJEYQjZs6FUpVOM6Nnn8J4vPtGt9LOi78a0Gmq0ThLtHkViwnaykAEE8+fZHOYnQ3ohq+DaqziHEGTrTWa666zuABIJJOAPDlNviYRqNCNOFOVjBtUbZKtNGs1KssKULR0p4tYyjGcYTz+JESGPH2r1Vuj1FS02V3gI7Mertp5B7FO3zylu0p7u/ODLGkmYkY/SLhVZw9jgjzw6uzKg9WQx7PJcWqc/wjMrR8R0mvaxdK/WdVt3HBCkNnBBxgjke6BkxEQEREBERAREQEREBERAREQEREBERAREQEREBERAREQERLdl9dZwxyx7lXtMfSEEIRjZMGnjBe2pLqDWl+ou09bhg431F+RGARkISO+YnG+mPC+BagaS8WXXEBmSoA7Qe7JJHP0Jl08LQWLaA1ex7LE3sbGVrCS5AOVBOTz5zV+lHQjX6/iTa/hjK4uC9YlrEMrABc5OcjAlNUjVKNCdGE4z45xOsdSrDVq0Qo1elaOp12OLyhGlOwhGM4ysOPbhw3iWl4to012jbdVZnv5MCORUjwImVIPo3wi7o7wxdJbi8s5ttavJ2s2BgA94wB/Ck1XYlq7kIYehLKEYxowr1hGVjBpVooVOhVacKlGvVKFKMKNLK4YsqiImSkiIgA/9fqsREBERAREQEREBERAREQE1/XcG4hqeI26msqqHV6S9MudpFC4bcu3vOezz5HB8MTYIgarZwTpANNRXRaFdNKK7m803FnsatldskH3vhhjEvWcH4y9epoYrZVZVqV04bUWhqt5uCKeyQ4K2LnPdjx5TZIga5XwjjS3kNafMwe5qlXUOr15yV5mttwO7GCeWPHukxwunU6fRJTrGD2qWywzzBYlc58cYzjlnu5TLiAiIgIiIFFoY1uExuKsFycDOOXPnIGvo9q9OFOluSuopU1mk59V1gZGuVWABCOF5jHfz8SJsMQNX9V3jSZ6nVrv7luay0ts6oLsK4xjcAO/OOffJ/h+nbS6OuhwAygkgO9oBJLEBnwSBnlyHsJkxAREQEREBERAREQEREBERAREQEREBERATB13CdPr7Rbc9qkUW6cqjbVNdu0uDyPftHOZ0QIn1WuG9WKQbVRbWtVRYQFJ6vAHoDqxjyemYq6NaCmyu5LLxZSECOLCGCpv7ORjkd5yPH0pLRAiF6M6BGV1svV6zmtxYVZe3ZYcEAd5uYH0DM7S8P0+jtvuqzv1LBrGY5ztyB5O4HGe+ZMQEREBERATDs4ToLveeoXYvOoXrCW2uylCRnuG0kY7pmRAjH6O8LddhR8dWa8iyzJU7Bgndk4FagewmVotBpuHo1elDKjMWClndVzz2qGJ2rk9w5TJiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIEHd0mr0/FX4ddTgJql0+9WJbtUeaN+3YBgDkRnPkBl71Z+DitLGtdVsq65N1Vqlkyo3AFMnzwMvW8C4bdqH1NtbO9ly3sC77OsVOrV9u7AIUYEtP0Z4O5QtU+a6kqXFtowqKEUee8ij2UCjV9JdFTobdXpg17VVPYa9ti427sq52HYew3I+SXD0k4OoBa4r2bCwKWAp1e/cH7PZPrNu/yQejfCSLB1bgXI6WgW2gOGZnO4bsE5dsHwzylacA4bXa91a2K9gcWFbbRu3szksA2CQzsQT3Z5QMmuxdbTXfRYy1WLuGBtYg93f3S7XVXUMIAM957yfYk8zKNJpNPodOmk0qCuqsEKo7hkkn2pl6EzjKWLEREIJhcSZ9Hpb9fpq1svpqZ1Qsa1fAztJAPpEjlM2W76KtTS+nuG6uxdrDJXIPhkEGCckPR0p0bh7bQa1RcGrDNqEsRXe9HUDkUCc/L4d4zd9WjhRZ0BsLISFArc9YVbaQnLtc/JMq7g/DNRY11unQ2WMGdxlWYhDVzIIJ7DFT5Ryluzo9we0sX04yzFshrFILMLCQQwKncoPKBnVWrdWlqZ22KGXIKnBGRkHBB9AyuUoi1qEQYVQAB5AJVAP/Q6rERAREQEREBERAREQEREBEtPqaEtrpdwHtLCsH3sVGWA9HHPEt2cQ0tWtq4fY+NRfXZZWmDgrXt3nOMDG4d8DJiWRqtMbjpxanWrWLSm4bghOAxHkyO+Xdw5ej3ejA9iWm1WnS6vTtYottDmuvI3MExuIHoZ5y7AREQEREBERAREQEREBERAREQEREBERAREQEREBERARNWo6aJ5n1D6ukpbpbNU7BQerfT6fUnSvYhye0MgkH0pJ63pLoOH8RHDdQl2/bQxsVQ1K9e7V1ZO7Iy6Y7oEtE1/S9MtBr7tHToqbn82X11ZcLXsFlDapW88c9lZa4l0v8AMGpsr8zMadNxAaTUNyZyvmV9WzoAR3ADkYGyxI3Rce0PE7LKdEXc1oWLlGFWdqOVz5QLF5ey7jMPg/SiniHAH41emBptL12qFOHVWCGx617WdwXGQcd8Ceia83TjgyVC5k1AB67INY3DqTSGyN3kvUiVHpnwkap9IyahXS40sxrGwEXjSFshvOixgPTgT8TV+GdOdHfpKTxCt6dZau5aK0LiwFr1DV8ySMUNnPP2kmeH8Y0/ErtRTp67gNLa9NljptrLpjKg5yTgg90DPiIgIiICIiAiIgIiICIlLOqY3EDJwMwKoiICIiAiIgIiICIiAiIgIiICJS7rWjWOcKoJY+QDmTFdiWottTB0dQyspypB5gg+SBVE8JAGTKKL6tVSmooYPXYoZGGcEHuPOBciIgIlBsQOKiwDsCyrkbiBjJA8gyJXAREQEREBERAREQD/0eqxEQEREBERAREQEREBPGBIIHIkHn3z2IGqcO6Jazhz6es6kXqvEqtdZYF6oL1VBo2KN7eeJB9hmVavobqb9dqdZXrVHXtqmXfUXdRqeoypPWDIXqezy8ZtMQNSq6D3U0NUmtUl9LRpmdqizbadRZqAR608Vs2+lM89GbW0PCtJ5sZbeF1rX16g7nUKqMNpZhzC+OSDzBk9EDXeEdEzwvVaHVm9bbNHRqKbDsbNvWipRZlrG2tikZxyOTNiiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIEZb0d4TZXZUtC1rexN20c3U2dc6ZOcBn5tjvnlnANLdxpuM6g9axooqSllGxWpd7Fs7+ZzYe+SkQIzTdG+B6NlbTaOuopclyFc9l0U1qw58sKxHsJXquAcH1lllup0qO9riyw9obmFZp3HBHPYxX2EkIgYel4Tw/RNY2kpWk2oiWbSwDBFCLkZxnaAM9/KWqOj3BtLRdptPpUrp1NC0XIC2161BUKefkJHsJIxAiX6LdH7KxS+irZA7Pg7j2mCKxzuzzFa+yEqbozwN3axtIhZ2Lscvks1gvJ8981FDexkpECNHR3gqoK10lahXR1wCCpQsy7SDkYLtyB8T5Zl6XRaXRG06asV+aLmvtxntWNjc3MnmcS/EBERAREQEREBERATwkKMk4A7ye6Y+p19Om7JO5/XR7fySK1Grv1R9aHC+CDkvuYGbqeKquU0w3N6+fOj2HlmCt1rW77GLFuR8fYYlWm0duoOVGF8WPd7mSun0VOn5gbn9ePf6XkgXKC5rHWDDYlyIgIiICIiAiIgIiICIiAiIgRHEeE6jUcX0nFFcWU6SpwdM24HfuV1srIZRu7O07uWDIvU9FeJ6no9oOFVatNNdpi72Ph2wWLMFUqy+dLAZ8g5Ym1xA1NeiPEBql1A1owvEX1YQ73GyzG+s588Cc4zzXwOOUi16IcbNr6Cw7k8wDS167rXAVzQKzbswWIyMAbhg5PozoEQNMs6EcQc0jzVVtpstZV9a4Cvqk1QUdrwRSnpz1ehPExpX09mvDluGtpKmzcvVORaoYANzUiwHB7iBj0NyiBrXBui2o4bxGjX23V2ClNdWEAclV1FiWoFJPLbtIPsZssRAREQEREBERAREQD/0uqxEQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQETwkKMk4A7yZgariqLlNN229fPnR7DywMy6+qhd9rBR7U+wkXqeJ225Sj1mnl97H+FMV2suffYxdj5fbTM03DHsw93YXye9j/CgYdVNlrbUBZjJPTcMRO1f229dHnfczMqprpXbWoUSuB4AAMDkB4T2IgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgA/9PqsREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQKLrVoqa1+5Rk4ljUcQ09Cgg72IBCr6Pl8ko4s+3S7PGxgPSHP20iErZiFUEk9wHMwL2o1d+qPbOE8EHIe5nun0duoPZGF8WPd7mZem4X3PqOX0QPbmSIAUADkB3CBY0+ip04yBuf14+28kyIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIAP/U6rERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQERECiyqu0bbFDD0RmWRoKEcWVZRlORg5HtZkxAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQP/V6rERAREQEREBERAREQEREBERAREQEREBERAREQEREBEwL+L0U6i7TJXZc2mRHvKbAEFmdgO5lyxAzgeHpS96kdALOq80V794TbuXduOcDGe/sn2UDJiYb8X4XXnrNXSuApO6xR5/zvj4+E89TfB+r63zbR1e7bu6xNucbsZz5OcDNiYh4twsILDq6QjFwG6xMEpncM58MHMU8V4dqbk0+n1CW2WJZYgQhgVrIVzkZHIsIGXEjtJx7hurrrc2rQ9u/bVcyJbhGdCcbjyzW2PYSpuN8ND9Wt6OwCFgGAwr7wDzIz7xnkOfLugZ8TAPHeEDTDWeaq+qZVYHOThthHLv+Si+HjLicU0LAFrq0LNYqguhz1ZZSRhj66YGXEs6bV6XW19bpLkvQHBatg65wDjIz4ES9AREQEREBERAREQEREBERAREQEREBERAREQEREBESi2xKa3tsOFRSzH0AMmBXEh9N0gSxNPfqVSirW6YajTr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epLayms9t0KOEOMjcA5BK+Po4mBqjx7TdZTwilqqVrZ6FYJZnctzNncxIYWbdq5xg+yDY4mp6nX9JNJg322LXZqkpWw007gHvpRcAd7FHfw8B6dZs6XWIK7usrdE07E0104sG6o2HcXO18BsrjGO6BtE9msVHpHTZkJatLnawRKewOu1WbFXxYg1E+gT4yuq7pWCj3Asx1dSWUqlaoKtlRdlbte92bv7wO8HGQ2SIiAiIgIiICIiAiIgIiICIiAA/9fqsREBERAREQEREBERAREQEREBERAREQERECllDd/txKeq8jMPTz77mXIiQo22Duf2YB98xHrYeun2Y/hyuJEiTT+MajUjiFpvdk6tuxzICqO4ju9nNk4e2pu0VL3thmrBJHnj5D7KVWV6DiBtotRLjWDXYGAJG9e7mPIZH12aHoxRVwylT5lRPWFanc6DPMEseYycg5zNahUoVClVKpTqk6NKOL6mooUIVKNOnSp2EY9ql1rVTnGT5TzMrljR6yjXUi+g5UnBB5EEeBl+bNGMIwhGFjCOLwXQjCMJwsokRElJERAREQEREBES1ZqERtgy9nri829PwHpwLssvqF3FKgbXHIhe4exPcPfZ51V13O5tq/NND763In0sS6iKihEAVR3AchA8Cs1e20DLAhgM45+EU01aepKKVCV1qERF5AKOQA9CVxAREQEREBERAREQEREBERAREQKSiN3qD6U86lB3ZHsCR7eVxIlAUdWfB2Hsj76Jj66rUvo7kpbLtWQvLB/0xMuW77Voqa5gSEUnA7z5APRMilRhGEYWU4RskRhCMIwz5qfCdPqjxCrqlZCj5ckEAL459Kbb1QPNyXPo93su6eUWpfUl1fnbFDD05clVZ6zwqFGMJ16cZq6jUoVKjKc5xm8xiexEvWkREBERAREQEREBEpd0rUs5CqO8nkJa62673gXYvzUcH2i8ifTxAuWW11LusIUej4+gPLLYa+09gdUnrzjtn2C+Hp+ylVenRG3tl39fbm3peA9KXYHjKrDDAHBzz58xPYiAiIgIiICIiAiIgIiICIiAiIgIiID/0OqxEQEREBERAREQEREBERAREQEREBERAREQEREBPDnHKexAxKNAaLxethJNZW0Y5Oclg3ecYJPs5gcb4PqNbcuo0xBYLsZWO3uOQR7OTUSuqVGhVKEaEbLPmFKp0adG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Rc158+UC24LM+1m3HdgucchgeWScBERAREQEREBERAREQEREBERAREQEREBERAREQIvi3H9LwexU1KMQdPbqNymsdmpkVgAzKS3rQYA75fHGOFPZ1I1NZfrOqK55h84KHyHJxjy8pa4nwLTcVsFmossUeZ7dMUTZtNdxQv55GIPYGCDyll+jOjcVqLr1WrUvqEAZcb2dLRnKHIDVjHj38+cDJq4zwl6xZVq6nTctYYMCNxAIHsiOct6XpDwrU6VdU16UBmCMljKGRz3K3MiWdP0X0mltqvo1GoV6VRAQyc0VQhQ9jmCAM+PLliUp0T0Fdldq3X76ggUk1nsqGUqQayMENz8fIRAlqNVp9UGbTuLArFSV5jI8JdmHw7hlHDFtWhmIvtNrBiMBiADgAADOMnA5nnMyAiIgJZehS3WISj+VeW70D4GXp4YTCMYWSI0fSTSatQWRqChtXULaQGqKbduRz3BwwKkd8vjpBwY2CnzUgcqWwdwAADk5JAAPrNuR58jKLOjnDLgvWozWJQaBbuIt2b1tXJGMlXUFT4Sizovwu3f1nWEWndaN5Adj12WOAOZ69iceX0IQkNJrNLr6fNGksFtZZl3LnvUlWHPBBBEvyxo9KujoWhXewL73tbfYfRJ5S/AREQEREBERAREQEREBERAREQD/1uqxEQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERARLOr1Wn0Oms1eqcV00o1ljnJCqoyTyye6NPq9NqkL6ewWKrbWI8DgNg55jkQfYGBeiebh5ZYq12lu1N+kqsDXaXq+uTmCnWAlM55c8HugZES3XfTaXWp1c1ua3CkHawAJU+Q4PdLkBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBEtXarT6cot1io1rba1ZgrO3kXJGTLFfFuHvol4g16VadyV32kVgMCVZDuIwQVII9CBmRI7S8f4Xq94F61NXqLNOUtK1sXrfqjgE8wXOAfGV+pzhHXppxq6jY9dlqgMCNlWA7E9wA3CBnRMM8Y4SGCHWUBigsC9Ym4qeYbGc45d8tvxzhq6/S8NW0WX60O1QrKuAFQ25bByAVHI+MCQiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiIA/9fqsREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQITpR0ft6Q6auiq9adgvVlsQ21sLqnp3EBl7S7sqfLMSvo/brdBxjTG8VnXirTo4BO06apKd5GRzLJnGe7HObNMTh3vHd9bV/5+YGnJ0Z1I6Q0cOs1S769M+ua9FZWGdd5o215c7Tz25OeXhLre6fa06O7SrxCtGu6gG0UtvPU13V7z61HbPWgk+hJv5XX7ch/Q4k5A1ZOhlia1NV5qUoNffq7KwjpuNopOcrYDuVqeR8hIIm0xEBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQERECM4nwPTcS1uk4haxFmh6zYmFatw5RiGDK2CGrUgjmJir0XqfQabTXXst2n1tuu6ysKVNlzWtYpVwwKEXMuCJOHunsDW7eg+hsvXUeab1YamzUEDq8EvfXq9vNO4PWO7wlJ6CcM6l6RfeqvVqKsKUCqt71WnaNpC4eoEAcu/wmzRA1+zoZw62vUKbHVtTTpayyLUmw6V2uRlATAy7EsO4yvS9EtFo+J1cSotsU0v1gpArWreaRpicBAQNgHIHGZOxAREQEREBERAREQEREBERAREQEREBERAREQEREAP/Z" alt="원문 그림 1. 일곱 파트너 축에서 네 군집의 평균 협력 정도를 비교한 레이더 차트. 유형별 특징은 다음 표에 제시한다." style="width:100%;max-width:760px;height:auto" class="figure-img"></p>
+<figcaption>
+Na 등(2021), 그림 1, p.&nbsp;114. 일곱 파트너 유형에 대한 군집별 협력 프로필.
+</figcaption>
+</figure>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>그림 1의 군집</th>
+<th>중심에서 읽을 수 있는 협력 전략</th>
+<th style="text-align: right;">표 1의 기업 수</th>
+<th style="text-align: right;">표 1의 관측치 수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Public · 공공 협력형</td>
+<td>대학 및 공공 연구기관과의 협력이 두드러진다.</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">373</td>
+</tr>
+<tr class="even">
+<td>Private I · 거래·동종기업 협력형</td>
+<td>공급기업, 수요기업, 경쟁사 등 다른 기업과 주로 협력한다.</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">550</td>
+</tr>
+<tr class="odd">
+<td>Private II · 계열사 중심 협력형</td>
+<td>계열사와의 협력이 두드러지며 다른 기업과도 폭넓게 협력한다.</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">241</td>
+</tr>
+<tr class="even">
+<td>무협력형</td>
+<td>협력 파트너가 없는 집단이다.</td>
+<td style="text-align: right;">후속 분석 제외</td>
+<td style="text-align: right;">후속 분석 제외</td>
+</tr>
+</tbody>
+</table>
+<p>세 협력형을 합하면 <strong>394개 기업, 1,164개 기업-연도 관측치</strong>다. ’공공 협력형’의 <strong>공공</strong>은 해당 제조기업의 소유 형태가 아니라 주로 협력하는 <em>상대</em>를 가리킨다.</p>
+</section>
+<section id="군집을-찾은-다음-무엇을-비교했을까" class="level3">
+<h3 class="anchored" data-anchor-id="군집을-찾은-다음-무엇을-비교했을까">군집을 찾은 다음 무엇을 비교했을까?</h3>
+<p>기업을 군집에 배정할 때 사용한 정보는 <strong>파트너별 협력 정도</strong>다. 저자들은 그 뒤에 매출·매출원가·종업원 수를 이용해 생산 프런티어를 추정했다. 프런티어는 주어진 투입으로 달성할 수 있다고 추정한 산출의 경계다. 표 3의 두 열을 비교하면 ’어느 집단이 효율적인가?’라는 질문에도 비교 기준이 필요함을 알 수 있다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 33%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>원문 표 3의 평균값</th>
+<th style="text-align: right;">집단 내 기술효율성(TE)</th>
+<th style="text-align: right;">기술격차비율(TGR, LP 추정)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Public</td>
+<td style="text-align: right;">0.573</td>
+<td style="text-align: right;">0.717</td>
+</tr>
+<tr class="even">
+<td>Private I</td>
+<td style="text-align: right;">0.544</td>
+<td style="text-align: right;">0.763</td>
+</tr>
+<tr class="odd">
+<td>Private II</td>
+<td style="text-align: right;">0.482</td>
+<td style="text-align: right;">0.905</td>
+</tr>
+</tbody>
+</table>
+<p><strong>학생에게 물어보기.</strong> Private II가 첫째 열에서는 가장 낮고 둘째 열에서는 가장 높다. 두 결과는 어떻게 동시에 성립할까?</p>
+<details>
+<summary>
+해설 · 두 지표의 기준점
+</summary>
+<p>
+TE는 개별 기업이 <strong>자기 집단의 생산 경계</strong>에 얼마나 가까운지를 나타낸다. TGR은 그 기업의 투입 수준에서 <strong>자기 집단의 경계가 전체 집단을 포괄하는 경계</strong>에 얼마나 가까운지를 나타낸다. 계열사 중심 협력형에서는 집단의 경계가 전체 경계에 비교적 가깝지만, 개별 기업들이 자기 집단 경계에 도달하는 정도는 평균적으로 낮았다. 기업 규모나 R&amp;D 역량에 따라 파트너 선택도 달라질 수 있으므로, 이 표만으로 계열사 협력을 늘리면 기업의 성과가 개선된다고 해석할 수는 없다.
+</p>
+</details>
+</section>
+</section>
+<section id="두-응용-사례를-연결하는-해석-실험" class="level2">
+<h2 class="anchored" data-anchor-id="두-응용-사례를-연결하는-해석-실험">두 응용 사례를 연결하는 해석 실험</h2>
+<section id="군집중심에서-한-관찰치의-배정을-설명하기" class="level3">
+<h3 class="anchored" data-anchor-id="군집중심에서-한-관찰치의-배정을-설명하기">군집중심에서 한 관찰치의 배정을 설명하기</h3>
+<p>앞의 USArrests 표에서 군집 2의 네 중심은 모두 음수이고 군집 3은 UrbanPop에서만 양수다. 이제 가상의 주가 네 변수에서 각각 (−0.5, −0.4, 0.6, −0.3)이라는 표준화 값을 가진다고 하자. 눈으로도 군집 3에 가깝다. 확인하려면 각 중심의 네 숫자를 하나씩 빼고 제곱한 뒤 더한다. 군집 3의 반올림 중심을 쓰면 <span class="math inline">\((−0.5+0.49)^2+(−0.4+0.38)^2+(0.6-0.58)^2+(−0.3+0.26)^2=0.0025\)</span>다. 작은 차이들을 더해도 거의 0이라서 네 변수 전체의 프로필이 해당 중심과 가깝다는 것을 확인할 수 있다.</p>
+<p>군집 중심을 ’정확하게 그 집단의 모든 구성원이 가진 속성’으로 읽으면 다른 실수를 한다. 도시 거주 비율의 중심이 양수라는 말은 구성원들의 <strong>평균</strong>이 전체 평균보다 높다는 뜻이다. 구성원 중 일부는 평균보다 낮을 수 있다. 그래서 연구 결과를 발표할 때는 중심뿐 아니라 군집 크기, 구성원의 퍼짐, 경계 사례를 함께 제시한다. 표준화 값으로 특징을 찾은 다음 원 단위 평균을 다시 계산하면 청중은 실제로 어느 정도 차이인지 가늠할 수 있다.</p>
+</section>
+<section id="두-중심에서-거리가-거의-같은-기업" class="level3">
+<h3 class="anchored" data-anchor-id="두-중심에서-거리가-거의-같은-기업">두 중심에서 거리가 거의 같은 기업</h3>
+<p>가상의 기업이 두 중심에서 거의 같은 거리에 있다면 소폭의 조사 오차로 배정이 바뀔 수 있다. 이 기업이 실제로 두 가지 협력 전략을 병행하기 때문일 수도, 측정한 일곱 축만으로 구분이 어렵기 때문일 수도 있다. K-means의 군집 번호는 선택한 거리 기준에서 가장 가까운 중심을 알려 준다. 번호 자체에서 ’공공형일 확률 60%, 민간형일 확률 40%’라는 확률은 나오지 않는다. 이런 기업은 가장 가까운 두 중심까지의 거리를 함께 제시하면 경계에 놓였다는 점을 설명하기 쉽다.</p>
+</section>
+<section id="효율성을-어느-단계에-넣는가" class="level3">
+<h3 class="anchored" data-anchor-id="효율성을-어느-단계에-넣는가">효율성을 어느 단계에 넣는가?</h3>
+<p>기업을 묶는 문제를 다시 설계해 보자. 질문 A는 <strong>누구와 협력하는 기업들이 서로 닮았는가</strong>이고, 질문 B는 <strong>매출과 투입 구조가 비슷한 기업은 어디인가</strong>다. A에서는 일곱 파트너 축을 넣고, B에서는 매출과 인력 등 생산 관련 지표를 넣을 수 있다. 같은 기업을 대상으로 같은 K-means를 실행해도 각 문제에서 비슷하다고 정의하는 대상은 달라진다. 연구자가 보고 싶은 결과가 분석이 끝난 후의 해석 단계에서 갑자기 정해져서는 안 된다.</p>
+<p>첨부 논문의 흐름대로라면 첫 단계에서 군집명을 붙인 뒤 두 번째 단계에서 효율성을 추정한다. 이때 후속 표의 차이를 시간 순서가 보장된 처치효과처럼 읽고 싶은 유혹이 생긴다. 하지만 계열사가 있고 자원이 큰 기업이 애초부터 다른 파트너와 협력할 수 있다. 같은 규모 안에서 나누어 보는 분석도 생각할 수 있으나 규모만으로 모든 선택 과정을 설명할 수 있는지는 별도의 문제다. 수업 전반부의 DID나 IV처럼 비교의 근거를 요구하는 이유가 여기로 돌아온다.</p>
+</section>
+<section id="실습-마무리-결과를-한-장에-정리한다면" class="level3">
+<h3 class="anchored" data-anchor-id="실습-마무리-결과를-한-장에-정리한다면">실습 마무리 · 결과를 한 장에 정리한다면</h3>
+<p>첫 줄에는 <strong>무엇을 한 행으로 삼았는지</strong> 적는다. 둘째 줄에는 거리를 정한 변수와 척도를 적는다. 셋째 줄에는 K의 후보와 최종 선택 근거를 적는다. 마지막에는 중심이 가장 잘 구별되는 두 군집을 골라 원 단위로 설명한다. 이 네 줄이 있으면 다른 사람이 군집의 이름을 보지 않고도 분석을 어느 정도 재구성할 수 있다. 반대로 “네 가지 유의미한 유형이 발견됐다” 한 문장만 있으면 변수 선택과 K 선택이 결과에 얼마나 영향을 주었는지 판단하기 어렵다.</p>
+<p>다음 질문을 옆 사람과 바꾸어 답해 보자. 기업 사례에서 무협력 기업을 포함하면 ’협력의 유무’가 두드러지고, 협력 기업만 보면 ’협력 상대의 구성’이 강조된다. 만약 연구 목적이 <strong>어느 기업이 처음 협력을 시작하는지</strong>를 이해하는 것이라면 어느 범위를 써야 할까? 반대로 이미 협력 중인 기업을 위한 파트너 전략을 연구한다면 왜 다른 범위가 적절할까? 같은 자료에서도 분석 단위, 포함 기준, 후속 질문을 함께 정해야 군집 수를 해석할 수 있다.</p>
+</section>
+</section>
+</section>
+<section id="마무리-계수-하나를-문장-하나로" class="level1">
+<h1>마무리 · 계수 하나를 문장 하나로</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>학생이 완성할 문장</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DID</td>
+<td>“비교집단의 변화량을 기준으로 보았을 때, 시청 시작 집단에서 _<strong>가</strong> _만큼 더 변했다. 이 해석에 필요한 가정은 ___이다.”</td>
+</tr>
+<tr class="even">
+<td>IV</td>
+<td>“_<strong>가 실제 근로시간을 움직인 부분을 이용했다. 정책이</strong> _를 통해서도 부모 방문을 바꾼다면 배제제약이 흔들린다.”</td>
+</tr>
+<tr class="odd">
+<td>K-means</td>
+<td>“이 군집의 중심은 전체 평균과 비교해 _<strong>가 높고</strong> _가 낮다. 사용한 단위는 ___이다.”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>퇴실 질문.</strong> 자신의 연구 주제 하나를 정하고 ① 관찰 단위, ② 추정하려는 효과 또는 찾으려는 패턴, ③ 설득력 있는 비교 또는 해석을 위해 필요한 자료를 세 문장으로 적자.</p>
+<section id="원문과-실습-자료" class="level2">
+<h2 class="anchored" data-anchor-id="원문과-실습-자료">원문과 실습 자료</h2>
 <ul>
-<li><p>Recommended books for the text mining in R</p>
-<ul>
-<li><p><a href="https://www.tidytextmining.com/index.html">Text Mining with R</a> (written by <em>Julia Silge</em> &amp; <em>David Robinson</em>)</p></li>
-<li><p><a href="https://bookdown.org/ahn_media/bookdown-demo/">R로 하는 텍스트마이닝</a> (written by <em>안도현 교수님</em>)</p></li>
-<li><p><a href="https://github.com/youngwoos/Doit_textmining">Do it 쉽게 배우는 R 텍스트마이닝</a> (written by <em>김영우</em>)</p></li>
-</ul></li>
+<li>Lee, C., Na, C., &amp; Kim, K. (2023). <em>The effect of watching OTT late at night on the sleep pattern of users</em>. Sleep and Biological Rhythms. 설계는 표 1, 전체 OTT와 야간 OTT 비교는 표 2–5. <a href="https://doi.org/10.1007/s41105-023-00459-z">원문</a></li>
+<li>Rocchetta, S., Mina, A., Lee, C., &amp; Kogler, D. F. (2022). <em>Technological knowledge spaces and the resilience of European regions</em>. Journal of Economic Geography, 22, 27–51. 제4절 모형 1–2와 표 3 열 (4). <a href="https://doi.org/10.1093/jeg/lbab001">원문</a></li>
+<li>Kim, E. H.-W., Lee, C., &amp; Do, Y. K. (2019). <em>The effect of adult children’s working hours on visits to elderly parents: A natural experiment in Korea</em>. Population Research and Policy Review, 38, 53–72. 정책 도입 일정은 표 1, 1단계와 IV-FE 결과는 표 4–5. <a href="https://doi.org/10.1007/s11113-018-9486-0">원문</a></li>
+<li>Kim, E. H.-W., &amp; Lee, C. (2019). <em>Does working long hours cause marital dissolution? Evidence from the reduction in South Korea’s workweek standard</em>. Asian Population Studies, 15, 87–104. 사건사 분석은 표 2–3. <a href="https://doi.org/10.1080/17441730.2019.1565131">원문</a></li>
+<li>Na, C., Lee, D., Hwang, J., &amp; Lee, C. (2021). <em>Strategic groups emerged by selecting R&amp;D collaboration partners and firms’ efficiency</em>. Asian Journal of Technology Innovation, 29(1), 109–133. 그림 1과 표 1·3. <a href="https://doi.org/10.1080/19761597.2020.1788957">원문</a></li>
+<li>이창준. ML101, <em>Unsupervised Learning</em>. USArrests 데이터, 표준화, WSS·실루엣, K=4 군집 결과. <a href="https://changjunlee.com/teaching/ml101/weekly/posts/10_week">수업 페이지</a> · <a href="https://www.youtube.com/watch?v=ocauaL0BgnU">한국어 사전 강의</a></li>
 </ul>
-<p>Code for hands-on practice</p>
-<ul>
-<li><p><a href="https://changjunlee.com/teaching/media_ds/about/nlp_1">NLP_1</a></p></li>
-<li><p><a href="https://changjunlee.com/teaching/media_ds/about/nlp_2">NLP_2</a></p></li>
-<li><p><a href="https://changjunlee.com/teaching/media_ds/about/nlp_3">NLP_3</a></p></li>
-<li><p><a href="https://changjunlee.com/teaching/media_ds/about/nlp_4">NLP_4</a></p></li>
-</ul>
-<hr>
-<p><strong>Recorded lecture</strong></p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/JAWqLRIsr0k" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
